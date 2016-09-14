@@ -80,27 +80,54 @@
 %  Sectioning
 %-------------------------------------------------------------------------------
 
-% Add rubber to white space around chapter header
 \makeatletter
+
 \newif\ifnumberedchapter
 \def\@makechapterhead#1{\numberedchaptertrue\mychapterhead{#1}}
 \def\@makeschapterhead#1{\numberedchapterfalse\mychapterhead{#1}}
 
+\newif\iffirstchapterinpart
+\firstchapterinpartfalse
+\renewcommand\part{%
+  \clearpage\firstchapterinparttrue
+  \thispagestyle{plain}%
+  \if@twocolumn
+    \onecolumn
+    \@tempswatrue
+  \else
+    \@tempswafalse
+  \fi
+  \vspace*{50\p@ plus 10\p@ minus 10\p@}%
+  \secdef\@part\@spart}
+
+
+\def\@part[#1]#2{%
+    \refstepcounter{part}%
+    \addcontentsline{toc}{part}{Part~\thepart\hspace{1em}#1}%
+    \markboth{}{}%
+    {\interlinepenalty \@M
+     \normalfont
+     \ifnum \c@secnumdepth >-2\relax
+       \parindent \z@ \Large\bfseries \partname\nobreakspace\thepart
+       \par
+       \vskip 20\p@
+     \fi
+     \parindent \z@ \huge \bfseries #2\par}
+    }
+
+\renewcommand\chapter{
+  \iffirstchapterinpart\else\clearpage\fi
+  \firstchapterinpartfalse
+                    \thispagestyle{plain}%
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@chapter\@schapter}
+
 \def\mychapterhead#1{%
   \vspace*{50\p@ plus 10\p@ minus 10\p@}%
   {\parindent \z@ \normalfont
-    \ifnumberedchapter
     \raggedright
-    \Large\bfseries \@chapapp\space \thechapter
-    \par\nobreak
-    \vskip 20\p@ plus 4\p@ minus 4\p@
-    \interlinepenalty\@M
-    \fi
-%    \hrule
-    \vskip 10\p@ plus 2\p@ minus 2\p@
-    \interlinepenalty\@M
-    \raggedright
-  \huge \bfseries #1\par\nobreak
+    \LARGE \bfseries \ifnumberedchapter\thechapter~~\fi #1\par\nobreak
     \interlinepenalty\@M
     \vskip 10\p@ plus 2\p@ minus 2\p@
 %    \hrule
@@ -108,6 +135,7 @@
     \vskip 40\p@ plus 8\p@ minus 8\p@
   }}
 
+% Index, Bibliography, ...
 \def\otherchapter#1{
   \clearpage
   \phantomsection
@@ -253,21 +281,24 @@
 \def\mdbreakoff{\makeatletter\booltrue{mdf@nobreak}\makeatother}
 \def\mdbreakon{\makeatletter\boolfalse{mdf@nobreak}\makeatother}
 
-\def\marginSymbolLarge#1#2{\ifdraft{\textbf{#2~~~~}}{\raisebox{-3ex}%
-{\includegraphics[width=3em]{#1}\hspace{10pt}}}}
+\def\marginSymbolLarge#1#2{\raisebox{-3ex}{\includegraphics[width=3em]{#1}\hspace{10pt}}}
 
 \defineBox{boxWork}{boxxWork}{magenta!40}{magenta}
   {\marginSymbolLarge{fig/icons/Arbeiten.png}{TODO}}
 \defineBox{boxWarn}{boxxWarn}{magenta!40}{magenta}
   {\marginSymbolLarge{fig/icons/Achtung.png}{WARN}}
 \defineBox{boxNote}{boxxNote}{yellow!33}{yellow}{{}}
-\defineBox{boxTuto}{boxxTuto}{blue!20}{blue}{{}}
+\defineBox{boxTuto}{boxxTuto}{blue!25}{red}
+  {\marginSymbolLarge{fig/icons/Arbeiten.png}{TODO}}
 \defineBox{boxEmph}{boxxEmph}{green!20}{green}{{}}
+\defineBox{boxLink}{boxxLink}{blue!25}{blue}
+  {\marginSymbolLarge{fig/icons/Weblink.png}{LINK}}
 
 \def\Warn#1{\begin{boxWarn}#1\end{boxWarn}}
 \def\Work#1{\begin{boxWork}#1\end{boxWork}}
 \def\Note#1{\begin{boxNote}#1\end{boxNote}}
 \def\Tuto#1{\begin{boxTuto}#1\end{boxTuto}}
+\def\Link#1{\begin{boxLink}#1\end{boxLink}}
 \def\Emph#1{\begin{boxEmph}#1\end{boxEmph}}
 \def\Emphc#1{\begin{boxEmph}#1\vskip -5pt\end{boxEmph}}
 
@@ -292,6 +323,9 @@
 
 \crefformat{equation}{(#2#1#3)}
 \Crefformat{equation}{Equation~(#2#1#3)}
+
+\crefformat{part}{Part~#2#1#3}
+\Crefformat{part}{Part~#2#1#3}
 
 \crefformat{chapter}{Chapter~#2#1#3}
 \Crefformat{chapter}{Chapter~#2#1#3}

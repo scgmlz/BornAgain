@@ -101,18 +101,63 @@ Adhering to a strict object-oriented design,
 \BornAgain\ provides a solid base for future extensions
 in response to specific user needs.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\isection{Registration, contact, discussion forum}\label{Snews}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\index{Registration}
+\index{Newsletter}
+To stay informed about the ongoing development of \BornAgain,
+register on the project homepage \url{http://www.bornagainproject.org}
+(``Create new account'').
+You will then receive our occasional newsletters,
+and be authorized to post to the discussion forum.
+
+\index{Contact}
+To contact the \BornAgain\ development and maintenance team
+in the Scientific Computing Group
+of Heinz Maier-Leibnitz Zentrum (MLZ) Garching,
+write a mail to \url{contact@bornagainproject.org},
+or fill the form in the \textsc{Contact} section of the
+project web site.
+
+\index{Forum}
+For questions that might be of wider interest,
+please consider posting to the discussion forum,
+accessible through the \textsc{Forums} tab of the project web site.
+
+\index{Bug reports}%
+Please contact us for any question not answered here
+or in the online documentation.
+We are grateful for all kind of feedback:
+criticism, praise, bug reports, feature requests or contributed modules.
+If questions go beyond normal user support,
+we will be glad to discuss a scientific collaboration.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \isection{About this Manual}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This user manual is complementary to the online documentation
+This User Manual is complementary to the online documentation
 at \url{http://www.bornagainproject.org}.
 It does not duplicate information that is more conveniently read online.
-Therefore, \Cref{sec:online} just contains a few pointers to the web site.
-The remainder of this manual mostly contains background
-on the scattering theory and on the sample models implemented in \BornAgain,
-and some documentation of the corresponding \Python\ functions.
+The online documentation covers in particular
+how to download and install \BornAgain.
+
+This User Manual containes of three parts:
+\Cref{PPHYS} provides some physics background
+on the scattering theory and on the sample models implemented in \BornAgain.
+\Cref{PUSE} describes how to use \BornAgain\ through its three different interfaces:
+C$++$, Python, and graphical.
+\index{C++!using BornAgain from}
+\index{Python!using BornAgain from}
+\index{GUI|see {Graphical User Interface}}
+\index{Graphical User Interface}
+It then continues with a detailed tutorial on the Python interface.
+Finally, \cref{PREF} is a partial reference of the C$++$ and Python interfaces;
+it concentrates on physics related component,
+and thereby complements the automatically generated interface documentation
+that can be found online at \url{http://www.bornagainproject.org/???}. % TODO.
 
 \Work{\indent This manual is incomplete.
 Several important chapters are still missing.}
@@ -138,21 +183,6 @@ along with new software release.
 To avoid confusion, the manual carries
 the same version number as the software,
 even though it is in a less mature state.
-
-\Emph{\indent We urge users to subscribe to our newsletter
-(see \Cref{Snews}),
-and to contact us for any question not answered here
-or in the online documentation.}
-
-\index{Bug reports}%
-We are grateful for all kind of feedback:
-criticism, praise, bug reports, feature requests or contributed modules.
-If questions go beyond normal user support,
-we will be glad to discuss a scientific collaboration.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\isection{Typesetting conventions}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this manual, we use the following colored boxes to highlight
 certain information:
@@ -180,10 +210,11 @@ with the software or the documentation.}}
   how the theory exposed in this manual is actually used in \BornAgain.}}
 
 \medskip
-\demobox{\Tuto{\indent Such a box provides one or several links
-  to a usages examples in the online tutorial,
-  like the basic script \tuto{52}{cylinders in distorted wave Born approximation}
-  or the long list of \tuto{72}{all available form factors}.}}
+\demobox{\Tuto{\indent This is a link to a usage example in the online tutorial.
+  To be merged into this manual \ldots}}
+
+\medskip
+\demobox{\Link{\indent This is a link to the online docs.}}
 
 \bigskip
 Mathematical notations are explained in the symbol index, page~\pageref{Snomencl}.

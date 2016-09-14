@@ -11,4 +11,3 @@ from libBornAgainFit import *
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from plot_utils import *
-
