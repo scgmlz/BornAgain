@@ -1,0 +1,13 @@
+A software to simulate and fit neutron and x-ray scattering at grazing incidence
+(GISANS and GISAXS), using distorted-wave Born approximation (DWBA).
+
+license:      GNU General Public License v3 or higher (see COPYING)
+homepage:     http://bornagainproject.org
+tutorials:    http://bornagainproject.org/documentation
+installation: see INSTALL or
+              http://bornagainproject.org/documentation/installation
+changelog:    see CHANGELOG
+
+authors:      J. Burle, C. Durniak, J. M. Fisher, M. Ganeva,
+              G. Pospelov, W. Van Herck, J. Wuttke
+copyright:    Forschungszentrum Jülich GmbH, JCNS-MLZ, 2012-2016
