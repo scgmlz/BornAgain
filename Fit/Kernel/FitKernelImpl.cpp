@@ -64,7 +64,7 @@ void FitKernelImpl::minimize()
     m_minimizer->setObjectiveFunction(func);
 
     gradient_function_t gradient_func =
-        [&](const std::vector<double>& pars, int index, std::vector<double> &gradients)
+        [&](const std::vector<double>& pars, int index, std::vector<double>& gradients)
     {
         return m_objective_function.evaluate_gradient(pars, index, gradients);
     };

@@ -21,9 +21,8 @@
 
 namespace BA_ROOT { namespace Math { class GSLMinimizer; } }
 
-//! @class GSLMultiMinimizer
+//! Wrapper for the GSL multi minimizer family (gradient descent based).
 //! @ingroup fitting_internal
-//! @brief Wrapper for GSL multi minimizer (gradient descent based) family
 
 class BA_CORE_API_ GSLMultiMinimizer : public RootMinimizerAdapter {
 public:
@@ -31,7 +30,6 @@ public:
     ~GSLMultiMinimizer();
 
     //! Sets minimizer internal print level.
-    //! Default value is 0 (silent).
     void setPrintLevel(int value);
     int printLevel() const;
 

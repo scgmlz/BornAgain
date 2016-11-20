@@ -50,21 +50,22 @@ std::string MinimizerCatalogue::toString() const
 
 //! Returns list of algorithms defined for the minimizer with a given name.
 
-std::vector<std::string> MinimizerCatalogue::algorithmNames(const std::string &minimizerName) const
+std::vector<std::string> MinimizerCatalogue::algorithmNames(const std::string& minimizerName) const
 {
     return minimizerInfo(minimizerName).algorithmNames();
 }
 
 //! Returns list of algorithm's descriptions for the minimizer with a given name    .
 
-std::vector<std::string> MinimizerCatalogue::algorithmDescriptions(const std::string &minimizerName) const
+std::vector<std::string> MinimizerCatalogue::algorithmDescriptions(
+    const std::string& minimizerName) const
 {
     return minimizerInfo(minimizerName).algorithmDescriptions();
 }
 
 //! Returns info for minimizer with given name.
 
-MinimizerInfo MinimizerCatalogue::minimizerInfo(const std::string &minimizerName) const
+MinimizerInfo MinimizerCatalogue::minimizerInfo(const std::string& minimizerName) const
 {
     for(auto info : m_minimizers)
         if(info.name() == minimizerName)
@@ -76,7 +77,7 @@ MinimizerInfo MinimizerCatalogue::minimizerInfo(const std::string &minimizerName
 
 //! Adds minimizer info to the catalogue.
 
-void MinimizerCatalogue::addMinimizerInfo(const MinimizerInfo &info)
+void MinimizerCatalogue::addMinimizerInfo(const MinimizerInfo& info)
 {
     m_minimizers.push_back(info);
 }

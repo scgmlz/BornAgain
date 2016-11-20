@@ -20,7 +20,6 @@
 class FitParameterSet;
 
 //! A trivial minimizer that calls the objective function once. Used to test the whole chain.
-//! @class TestMinimizer
 
 class BA_CORE_API_ TestMinimizer : public IMinimizer
 {

@@ -20,9 +20,8 @@
 
 namespace BA_ROOT { namespace Math { class GeneticMinimizer; } }
 
-//! @class GeneticMinimizer
+//! Wrapper for the CERN ROOT Genetic minimizer.
 //! @ingroup fitting_internal
-//! @brief Wrapper for ROOT Genetic minimizer
 
 class BA_CORE_API_ GeneticMinimizer : public RootMinimizerAdapter {
 public:
@@ -33,31 +32,26 @@ public:
     //!< Minimization will stop when the estimated vertical distance to the minimum (EDM) is less
     //! than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5
     //! for negative log likelihood fit.
-    //! Default value is 0.01.
     void setTolerance(double value);
     double tolerance() const;
 
     //! Sets minimizer internal print level.
-    //! Default value is 0 (silent).
     void setPrintLevel(int value);
     int printLevel() const;
 
     //! Sets maximum number of iterations to try at each step.
-    //! Default values is 3.
     void setMaxIterations(int value);
     int maxIterations() const;
 
     //! Sets population size.
-    //! Default value is 300.
     void setPopulationSize(int value);
     int populationSize() const;
 
     //! Sets random seed.
-    //! Default value is 0.
     void setRandomSeed(int value);
     int randomSeed() const;
 
-    void setParameter(size_t index, const FitParameter *par);
+    void setParameter(size_t index, const FitParameter* par);
 
     std::string statusToString() const;
     std::map<std::string, std::string> statusMap() const;

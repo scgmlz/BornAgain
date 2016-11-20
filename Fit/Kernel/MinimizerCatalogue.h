@@ -20,9 +20,8 @@
 #include "MinimizerInfo.h"
 #include <map>
 
-//! @class MinimizerCatalogue
+//! Hard-coded information about all minimizers available.
 //! @ingroup fitting_internal
-//! @brief The MinimizerCatalogue class contains information over all minimizers available.
 
 /*
 --------------------------------------------------------------------------------
@@ -47,9 +46,9 @@ public:
     std::vector<std::string> algorithmDescriptions(const std::string& minimizerName) const;
 
 private:
-    MinimizerInfo minimizerInfo(const std::string &minimizerName) const;
+    MinimizerInfo minimizerInfo(const std::string& minimizerName) const;
 
-    void addMinimizerInfo(const MinimizerInfo &info);
+    void addMinimizerInfo(const MinimizerInfo& info);
     std::vector<MinimizerInfo> m_minimizers;
 };
 

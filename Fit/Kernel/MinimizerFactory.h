@@ -19,32 +19,18 @@
 #include "WinDllMacros.h"
 #include "MinimizerCatalogue.h"
 #include <string>
+
 class IMinimizer;
 
-//! @class MinimizerFactory
+//! Factory to create minimizers.
 //! @ingroup fitting
-//! @brief Factory to create minimizers
-
-/*!
-
---------------------------------------------------------------------------------
-Minimizer      | Algorithms
---------------------------------------------------------------------------------
-Minuit2        | Migrad Simplex Combined Scan Fumili
-GSLMultiMin    | SteepestDescent ConjugateFR ConjugatePR BFGS BFGS2
-GSLLMA         | Default
-GSLSimAn       | Default
-Genetic        | Default
-
-*/
-
 
 class BA_CORE_API_ MinimizerFactory
 {
  public:
     static IMinimizer* createMinimizer(const std::string& minimizerName,
-                                       const std::string& algorithmType = std::string(),
-                                       const std::string& optionString  = std::string());
+                                       const std::string& algorithmType="",
+                                       const std::string& optionString="");
 
     static void printCatalogue();
 

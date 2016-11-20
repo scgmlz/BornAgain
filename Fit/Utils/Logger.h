@@ -28,9 +28,8 @@ namespace Logging
 
 enum EMessageLevel { VERBOSE, DEBUG2, DEBUG, INFO, WARNING, ERROR, FATAL };
 
-//! @class Logger
+//! Message service, used through macro msglog.
 //! @ingroup tools_internal
-//! @brief Provides message service
 
 class BA_CORE_API_ Logger
 {

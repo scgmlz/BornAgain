@@ -20,16 +20,15 @@
 #include "AttLimits.h"
 #include <string>
 
-//! @class FitParameter
+//! A fittable parameter with value, error, step, and limits.
 //! @ingroup fitting
-//! @brief The FitParameter represents fittable parameter with value, error, step, and limits.
 
 class BA_CORE_API_ FitParameter : public IFitParameter
 {
 public:
     FitParameter();
     FitParameter(const std::string& name, double value,
-                    const AttLimits& limits=AttLimits::limitless(), double step=0.0);
+                 const AttLimits& limits=AttLimits::limitless(), double step=0.0);
     virtual ~FitParameter(){}
 
     FitParameter* clone() const;

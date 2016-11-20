@@ -19,7 +19,6 @@
 #include "WinDllMacros.h"
 
 //! General fitting options.
-//! @class FitOptions
 
 class BA_CORE_API_ FitOptions
 {

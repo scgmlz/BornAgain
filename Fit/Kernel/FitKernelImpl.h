@@ -26,9 +26,8 @@
 class IMinimizer;
 class FitParameter;
 
-//! @class FitKernelImpl
+//! The implementation of class FitKernel.
 //! @ingroup fitting_internal
-//! @brief The FitKernel implementation.
 
 class BA_CORE_API_ FitKernelImpl
 {
