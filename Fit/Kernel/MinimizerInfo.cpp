@@ -24,9 +24,9 @@ MinimizerInfo::MinimizerInfo(const std::string& minimizerType,
 {
 }
 
-void MinimizerInfo::setAlgorithmName(const std::string &algorithmName)
+void MinimizerInfo::setAlgorithmName(const std::string& algorithmName)
 {
-    for(AlgorithmInfo algo : m_algorithms) {
+    for (const AlgorithmInfo algo : m_algorithms) {
         if(algo.name() == algorithmName) {
             m_current_algorithm = algorithmName;
             return;
@@ -36,7 +36,7 @@ void MinimizerInfo::setAlgorithmName(const std::string &algorithmName)
     std::ostringstream msg;
     msg << "MinimizerInfo::setAlgorithmName() -> Error. Algorithm name '" << algorithmName
         <<"' is not in the list of defined algorithms (";
-    for(AlgorithmInfo algo : m_algorithms)
+    for (const AlgorithmInfo algo : m_algorithms)
         msg << algo.name() << " ";
     msg << ")";
     throw std::runtime_error(msg.str());
@@ -52,7 +52,7 @@ std::string MinimizerInfo::algorithmName() const
 std::vector<std::string> MinimizerInfo::algorithmNames() const
 {
     std::vector<std::string> result;
-    for(AlgorithmInfo algo : m_algorithms)
+    for (const AlgorithmInfo algo : m_algorithms)
         result.push_back(algo.name());
     return result;
 }
@@ -62,14 +62,14 @@ std::vector<std::string> MinimizerInfo::algorithmNames() const
 std::vector<std::string> MinimizerInfo::algorithmDescriptions() const
 {
     std::vector<std::string> result;
-    for(AlgorithmInfo algo : m_algorithms)
+    for (const AlgorithmInfo algo : m_algorithms)
         result.push_back(algo.description());
     return result;
 }
 
 //! Creates information for Minuit2Minimizer.
 
-MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string &defaultAlgo)
+MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string& defaultAlgo)
 {
     MinimizerInfo result(MinimizerNames::Minuit2, "Minuit2 minimizer from ROOT library");
 
@@ -90,18 +90,17 @@ MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string &defaultAlgo)
                                                 "Levenberg-Margquardt, sometimes can be better "
                                                 "than all others.");
 
-    if (defaultAlgo.empty()) {
+    if (defaultAlgo.empty())
         result.setAlgorithmName(AlgorithmNames::Migrad);
-    } else {
+    else
         result.setAlgorithmName(defaultAlgo);
-    }
 
     return result;
 }
 
 //! Creates information for GSLMultiMinMinimizer.
 
-MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string &defaultAlgo)
+MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string& defaultAlgo)
 {
     MinimizerInfo result(MinimizerNames::GSLMultiMin, "MultiMin minimizer from GSL library");
 
@@ -111,11 +110,10 @@ MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string &defaultAlgo
     result.addAlgorithm(AlgorithmNames::BFGS, "BFGS conjugate gradient");
     result.addAlgorithm(AlgorithmNames::BFGS2, "BFGS conjugate gradient (Version 2)");
 
-    if(defaultAlgo.empty()) {
+    if(defaultAlgo.empty())
         result.setAlgorithmName(AlgorithmNames::ConjugateFR);
-    } else {
+    else
         result.setAlgorithmName(defaultAlgo);
-    }
 
     return result;
 }

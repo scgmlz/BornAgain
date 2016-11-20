@@ -20,46 +20,44 @@
 #include <string>
 #include <vector>
 
-//! @class InfoItem
+//! A name and a description.
 //! @ingroup fitting_internal
-//! @brief Simple item to hold the name and the description.
 
 class BA_CORE_API_ InfoItem {
 public:
     InfoItem(){}
     InfoItem(const std::string& itemName, const std::string& itemDescription)
         : m_itemName(itemName)
-        , m_itemDescription(itemDescription){}
+        , m_itemDescription(itemDescription) {}
 
     std::string name() const { return m_itemName; }
     std::string description() const { return m_itemDescription; }
+
 private:
     std::string m_itemName;
     std::string m_itemDescription;
 };
 
 
-//! @class MinimizerInfo
+//! Info about a minimizer, including list of defined minimization algorithms.
 //! @ingroup fitting_internal
-//! @brief The MinimizerInfo class provides info about the minimizer, including list of defined
-//! minimization algorithms.
 
 class BA_CORE_API_ MinimizerInfo : public InfoItem {
 public:
     using AlgorithmInfo = InfoItem;
 
-    MinimizerInfo(){}
+    MinimizerInfo() {}
     MinimizerInfo(const std::string& minimizerType, const std::string& minimizerDescription);
 
     //! Sets currently active algorithm
-    void setAlgorithmName(const std::string &algorithmName);
+    void setAlgorithmName(const std::string& algorithmName);
     std::string algorithmName() const;
 
     std::vector<std::string> algorithmNames() const;
     std::vector<std::string> algorithmDescriptions() const;
 
-    static MinimizerInfo buildMinuit2Info(const std::string &defaultAlgo = std::string());
-    static MinimizerInfo buildGSLMultiMinInfo(const std::string &defaultAlgo = std::string());
+    static MinimizerInfo buildMinuit2Info(const std::string& defaultAlgo = std::string());
+    static MinimizerInfo buildGSLMultiMinInfo(const std::string& defaultAlgo = std::string());
     static MinimizerInfo buildGSLLMAInfo();
     static MinimizerInfo buildGSLSimAnInfo();
     static MinimizerInfo buildGeneticInfo();
