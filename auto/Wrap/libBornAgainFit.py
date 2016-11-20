@@ -1767,16 +1767,9 @@ class IMinimizer(_object):
         return _libBornAgainFit.IMinimizer_minValue(self)
 
 
-    def reportResults(self):
-        """
-        reportResults(IMinimizer self) -> std::string
-
-        std::string IMinimizer::reportResults() const
-
-        Prints fit results. 
-
-        """
-        return _libBornAgainFit.IMinimizer_reportResults(self)
+    def reportOutcome(self):
+        """reportOutcome(IMinimizer self) -> std::string"""
+        return _libBornAgainFit.IMinimizer_reportOutcome(self)
 
 
     def propagateResults(self, parameters):

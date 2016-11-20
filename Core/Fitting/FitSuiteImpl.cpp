@@ -58,13 +58,13 @@ void FitSuiteImpl::addSimulationAndRealData(const GISASSimulation& simulation,
 }
 
 //! Adds fit parameter, step is calculated from initial parameter value
-FitParameterLinked *FitSuiteImpl::addFitParameter(const std::string& name, double value,
+FitParameterLinked* FitSuiteImpl::addFitParameter(const std::string& name, double value,
                                   const AttLimits& limits, double step)
 {
     if(step <=0.0)
         step = value * getOptions().stepFactor();
 
-    FitParameterLinked *result = new FitParameterLinked(name, value, limits, step);
+    FitParameterLinked* result = new FitParameterLinked(name, value, limits, step);
     m_kernel->fitParameters()->addFitParameter(result);
     return result;
 }
@@ -122,7 +122,7 @@ void FitSuiteImpl::minimize()
     m_fit_objects.runSimulations(); // we run simulation once again for best values found
 }
 
-FitParameterSet *FitSuiteImpl::fitParameters() {
+FitParameterSet* FitSuiteImpl::fitParameters() {
     return m_kernel->fitParameters();
 }
 
@@ -142,7 +142,7 @@ std::string FitSuiteImpl::reportResults() const
     return m_kernel->reportResults();
 }
 
-const FitKernel *FitSuiteImpl::kernel() const
+const FitKernel* FitSuiteImpl::kernel() const
 {
    return m_kernel.get();
 }

@@ -53,7 +53,7 @@ public:
 
     double minValue() const override final;
 
-    std::string reportResults() const override final;
+    std::string reportOutcome() const override final;
 
     MinimizerOptions& options() { return m_options; }
     const MinimizerOptions& options() const { return m_options; }

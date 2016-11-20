@@ -37,7 +37,7 @@ namespace {
 } // namespace
 
 
-std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter* minimizer)
+std::string MinimizerResultsHelper::reportOutcome(const RootMinimizerAdapter* minimizer)
 {
     std::ostringstream result;
 

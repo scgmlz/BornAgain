@@ -39,10 +39,10 @@ void TestMinimizer::setObjectiveFunction(objective_function_t func)
     m_fcn = func;
 }
 
-std::string TestMinimizer::reportResults() const
+std::string TestMinimizer::reportOutcome() const
 {
     std::ostringstream result;
-    result << "TestMinimizer::printResult() -> Done. Objective function value = "
+    result << "TestMinimizer::printOutcome() -> Done. Objective function value = "
            << m_min_value << std::endl;
     return result.str();
 }

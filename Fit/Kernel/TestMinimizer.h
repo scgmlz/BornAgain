@@ -33,11 +33,11 @@ class BA_CORE_API_ TestMinimizer : public IMinimizer
 
     void minimize() override;
 
-    void setParameters(const FitParameterSet &parameters) override;
+    void setParameters(const FitParameterSet& parameters) override;
 
     void setObjectiveFunction(objective_function_t func) override;
 
-    std::string reportResults() const override;
+    std::string reportOutcome() const override;
 
  private:
     double m_min_value;

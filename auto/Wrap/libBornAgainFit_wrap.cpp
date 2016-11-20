@@ -19243,7 +19243,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_IMinimizer_reportResults(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_IMinimizer_reportOutcome(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   IMinimizer *arg1 = (IMinimizer *) 0 ;
   void *argp1 = 0 ;
@@ -19251,13 +19251,13 @@ SWIGINTERN PyObject *_wrap_IMinimizer_reportResults(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj0 = 0 ;
   std::string result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:IMinimizer_reportResults",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:IMinimizer_reportOutcome",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMinimizer, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IMinimizer_reportResults" "', argument " "1"" of type '" "IMinimizer const *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "IMinimizer_reportOutcome" "', argument " "1"" of type '" "IMinimizer const *""'"); 
   }
   arg1 = reinterpret_cast< IMinimizer * >(argp1);
-  result = ((IMinimizer const *)arg1)->reportResults();
+  result = ((IMinimizer const *)arg1)->reportOutcome();
   resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
 fail:
@@ -22145,14 +22145,7 @@ static PyMethodDef SwigMethods[] = {
 		"Returns minimum function value. \n"
 		"\n"
 		""},
-	 { (char *)"IMinimizer_reportResults", _wrap_IMinimizer_reportResults, METH_VARARGS, (char *)"\n"
-		"IMinimizer_reportResults(IMinimizer self) -> std::string\n"
-		"\n"
-		"std::string IMinimizer::reportResults() const\n"
-		"\n"
-		"Prints fit results. \n"
-		"\n"
-		""},
+	 { (char *)"IMinimizer_reportOutcome", _wrap_IMinimizer_reportOutcome, METH_VARARGS, (char *)"IMinimizer_reportOutcome(IMinimizer self) -> std::string"},
 	 { (char *)"IMinimizer_propagateResults", _wrap_IMinimizer_propagateResults, METH_VARARGS, (char *)"\n"
 		"IMinimizer_propagateResults(IMinimizer self, FitParameterSet parameters)\n"
 		"\n"

@@ -30,7 +30,7 @@ public:
     MinimizerResultsHelper() {}
 
     //! Reports results of minimization in the form of multi-line string
-    static std::string reportResults(const RootMinimizerAdapter* minimizer);
+    static std::string reportOutcome(const RootMinimizerAdapter* minimizer);
 
     //! Reports fit parameters settings and final results
     static std::string reportParameters(const FitParameterSet* parameters);

@@ -56,8 +56,7 @@ class BA_CORE_API_ IMinimizer
     //! Returns minimum function value
     virtual double minValue() const;
 
-    //! Prints fit results
-    virtual std::string reportResults() const =0;
+    virtual std::string reportOutcome() const =0;
 
     //! Propagates results of minimization to fit parameter set
     virtual void propagateResults(FitParameterSet& parameters);
