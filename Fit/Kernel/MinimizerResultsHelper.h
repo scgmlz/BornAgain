@@ -24,25 +24,23 @@
 class RootMinimizerAdapter;
 class FitParameterSet;
 
-//! @class MinimizerResultsHelper
+//! Contains all logic to generate reports with the result of minimization.
 //! @ingroup fitting_internal
-//! @brief The MinimizerResultsHelper class contains all logic to generate reports with the
-//! result of minimization.
 
 class BA_CORE_API_ MinimizerResultsHelper {
 public:
-    MinimizerResultsHelper(){}
+    MinimizerResultsHelper() {}
 
     //! Reports results of minimization in the form of multi-line string
-    std::string reportResults(const RootMinimizerAdapter *minimizer) const;
+    std::string reportResults(const RootMinimizerAdapter* minimizer) const;
 
     //! Reports fit parameters settings and final results
-    std::string reportResults(const FitParameterSet *parameters) const;
+    std::string reportResults(const FitParameterSet* parameters) const;
 
 private:
-    std::string reportDescription(const RootMinimizerAdapter *minimizer) const;
-    std::string reportOption(const RootMinimizerAdapter *minimizer) const;
-    std::string reportStatus(const RootMinimizerAdapter *minimizer) const;
+    std::string reportDescription(const RootMinimizerAdapter* minimizer) const;
+    std::string reportOption(const RootMinimizerAdapter* minimizer) const;
+    std::string reportStatus(const RootMinimizerAdapter* minimizer) const;
 };
 
 template <typename T>
@@ -51,7 +49,6 @@ std::string to_string_with_precision(const T a_value, int precision = 10, int wi
     std::ostringstream out;
     if(width != 0)
         out << std::setw(14) << std::left;
-
     out << std::setprecision(precision) << a_value;
     return out.str();
 }
@@ -65,4 +62,3 @@ std::string to_string_scientific(const T a_value, int n = 10)
 }
 
 #endif // MINIMIZERRESULTSHELPER_H
-

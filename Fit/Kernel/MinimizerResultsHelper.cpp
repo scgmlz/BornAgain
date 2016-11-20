@@ -22,20 +22,20 @@
 
 namespace {
 
-const int column_width = 18;
+    const int column_width = 18;
 
-template<typename T>
-std::string reportValue(const std::string &name, T value)
-{
-    std::ostringstream result;
-    result << std::setw(column_width) << std::left << name  << ": " << value << std::endl;
-    return result.str();
-}
+    template<typename T>
+    std::string reportValue(const std::string &name, T value)
+    {
+        std::ostringstream result;
+        result << std::setw(column_width) << std::left << name  << ": " << value << std::endl;
+        return result.str();
+    }
 
-}
+} // namespace
 
 
-std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter *minimizer) const
+std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter* minimizer) const
 {
     std::ostringstream result;
 
@@ -47,7 +47,7 @@ std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter *mi
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportResults(const FitParameterSet *parameters) const
+std::string MinimizerResultsHelper::reportResults(const FitParameterSet* parameters) const
 {
     std::ostringstream result;
 
@@ -56,7 +56,7 @@ std::string MinimizerResultsHelper::reportResults(const FitParameterSet *paramet
     result << "Npar Name        StartValue  Limits           FitValue  Error" << std::endl;
 
     int npar(0);
-    for(const FitParameter *par : *parameters) {
+    for(const FitParameter* par : *parameters) {
         result << boost::format("#%-2d  %-10s  %-6.4f      %-15s  %-6.4f    %5.4f \n")
                   % npar
                   % par->name()
@@ -72,9 +72,8 @@ std::string MinimizerResultsHelper::reportResults(const FitParameterSet *paramet
         result << MinimizerUtils::sectionString("Correlations");
         for(size_t i=0; i<matrix.size(); ++i) {
             result << boost::format("#%-2d       ") %i;
-            for(size_t j=0; j<matrix[i].size(); ++j) {
+            for(size_t j=0; j<matrix[i].size(); ++j)
                 result << boost::format("%_7.4f    ") % matrix[i][j];
-            }
             result << std::endl;
         }
 
@@ -83,7 +82,7 @@ std::string MinimizerResultsHelper::reportResults(const FitParameterSet *paramet
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter *minimizer) const
+std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter* minimizer) const
 {
     std::ostringstream result;
     result << reportValue("MinimizerType", minimizer->minimizerName());
@@ -91,7 +90,7 @@ std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter *minimizer) const
+std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter* minimizer) const
 {
     if(minimizer->options().size() == 0)
         return std::string();
@@ -109,15 +108,14 @@ std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter *min
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportStatus(const RootMinimizerAdapter *minimizer) const
+std::string MinimizerResultsHelper::reportStatus(const RootMinimizerAdapter* minimizer) const
 {
     std::ostringstream result;
     result << MinimizerUtils::sectionString("Status");
 
     auto status = minimizer->statusMap();
-    for(auto it : status) {
+    for(auto it : status)
         result << reportValue(it.first, it.second);
-    }
 
     return result.str();
 }
