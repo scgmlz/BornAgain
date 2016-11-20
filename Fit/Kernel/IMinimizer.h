@@ -32,7 +32,7 @@ class BA_CORE_API_ IMinimizer
     virtual ~IMinimizer() {}
 
     IMinimizer(const IMinimizer &other) =delete;
-    IMinimizer & operator=(const IMinimizer &other) =delete;
+    IMinimizer& operator=(const IMinimizer& other) =delete;
 
     //! return name of the minimizer
     virtual std::string minimizerName() const =0;
@@ -41,13 +41,13 @@ class BA_CORE_API_ IMinimizer
     virtual std::string algorithmName() const =0;
 
     //! run minimization
-    virtual void minimize();
+    virtual void minimize() =0;
 
     //! clear resources (parameters) for consecutives minimizations
-    virtual void clear();
+    virtual void clear() {};
 
     //! Sets internal minimizer parameters using external parameter list
-    virtual void setParameters(const FitParameterSet& parameters);
+    virtual void setParameters(const FitParameterSet& parameters) =0;
 
     virtual void setObjectiveFunction(objective_function_t ) {}
 
@@ -57,7 +57,7 @@ class BA_CORE_API_ IMinimizer
     virtual double minValue() const;
 
     //! Prints fit results
-    virtual std::string reportResults() const;
+    virtual std::string reportResults() const =0;
 
     //! Propagates results of minimization to fit parameter set
     virtual void propagateResults(FitParameterSet& parameters);
