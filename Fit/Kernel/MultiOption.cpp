@@ -16,10 +16,9 @@
 #include "MultiOption.h"
 #include <boost/lexical_cast.hpp>
 
-MultiOption::MultiOption(const std::string &name)
+MultiOption::MultiOption(const std::string& name)
     : m_name(name)
 {
-
 }
 
 std::string MultiOption::name() const
@@ -32,7 +31,7 @@ std::string MultiOption::description() const
     return m_description;
 }
 
-void MultiOption::setDescription(const std::string &description)
+void MultiOption::setDescription(const std::string& description)
 {
     m_description = description;
 }
@@ -50,15 +49,12 @@ MultiOption::variant_t& MultiOption::defaultValue()
 //! Sets the value of option from string.
 //! TODO find more elegant way (without if/else and boost::lexical_cast
 
-void MultiOption::setFromString(const std::string &value)
+void MultiOption::setFromString(const std::string& value)
 {
-    if(m_value.which() == 0) {
+    if (m_value.which() == 0) {
         m_value = boost::lexical_cast<int>(value);
-    }
-
-    else if(m_value.which() == 1) {
+    } else if (m_value.which() == 1) {
         m_value = boost::lexical_cast<double>(value);
-
     } else {
         m_value = value;
     }

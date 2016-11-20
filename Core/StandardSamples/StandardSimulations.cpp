@@ -29,11 +29,9 @@
 #include "SampleBuilderFactory.h"
 #include "Units.h"
 
-using namespace BornAgain;
-
 namespace {
-const int rdet_nbinsx(40), rdet_nbinsy(30);
-const double rdet_width(20.0), rdet_height(18.0), rdet_distance(1000.0);
+    const int rdet_nbinsx(40), rdet_nbinsy(30);
+    const double rdet_width(20.0), rdet_height(18.0), rdet_distance(1000.0);
 }
 
 GISASSimulation* StandardSimulations::PolarizedDWBAMagCylinders2()
@@ -106,13 +104,13 @@ GISASSimulation* StandardSimulations::MiniGISASBeamDivergence()
     DistributionGate phi_distr(-0.1*Units::degree, 0.1*Units::degree);
 
     ParameterPattern pattern1;
-    pattern1.beginsWith("*").add(BeamType).add(Wavelength);
+    pattern1.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Wavelength);
     result->addParameterDistribution(pattern1.toStdString(), wavelength_distr, 5);
     ParameterPattern pattern2;
-    pattern2.beginsWith("*").add(BeamType).add(Inclination);
+    pattern2.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Inclination);
     result->addParameterDistribution(pattern2.toStdString(), alpha_distr, 4);
     ParameterPattern pattern3;
-    pattern3.beginsWith("*").add(BeamType).add(Azimuth);
+    pattern3.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Azimuth);
     result->addParameterDistribution(pattern3.toStdString(), phi_distr, 3);
 
     return result;

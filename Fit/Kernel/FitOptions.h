@@ -18,15 +18,14 @@
 
 #include "WinDllMacros.h"
 
+//! General fitting options.
 //! @class FitOptions
-//! @ingroup fitting
-//! @brief General fitting options.
 
 class BA_CORE_API_ FitOptions
 {
  public:
     FitOptions();
-    ~FitOptions(){}
+    ~FitOptions() {}
 
     double derivEpsilon() const;
     void setDerivEpsilon(double deriv_epsilon);
@@ -35,15 +34,18 @@ class BA_CORE_API_ FitOptions
     void setStepFactor(double step_factor);
 
  private:
-    double m_deriv_epsilon;  //! epsilon for derivative calculation
-    double m_step_factor; //! default relative parameter step
+    double m_deriv_epsilon; //!< epsilon for derivative calculation
+    double m_step_factor;   //!< default relative parameter step
 };
+
+// ************************************************************************** //
+// everything is implemented below:
+// ************************************************************************** //
 
 inline FitOptions::FitOptions()
     : m_deriv_epsilon(1e-09)
     , m_step_factor(0.01)
-{
-}
+{}
 
 inline double FitOptions::derivEpsilon() const
 {
@@ -66,5 +68,3 @@ inline void FitOptions::setStepFactor(double step_factor)
 }
 
 #endif // FITOPTIONS_H
-
-

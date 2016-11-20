@@ -23,9 +23,8 @@
 #include <memory>
 #include <stdexcept>
 
-//! @class OptionContainer
+//! Stores multi option (int,double,string) in a container.
 //! @ingroup fitting_internal
-//! @brief The OptionContainer class stores multi option (int,double,string) in a container.
 
 class BA_CORE_API_ OptionContainer
 {
@@ -35,19 +34,19 @@ public:
     using iterator = container_t::iterator;
     using const_iterator = container_t::const_iterator;
 
-    OptionContainer(){}
-    OptionContainer(const OptionContainer &other);
+    OptionContainer() {}
+    OptionContainer(const OptionContainer& other);
     OptionContainer& operator=(const OptionContainer& other);
 
     template<class T>
-    option_t addOption(const std::string &optionName, T value,
-                       const std::string &description = std::string());
+    option_t addOption(const std::string& optionName, T value,
+                       const std::string& description = std::string());
 
-    option_t option(const std::string &optionName);
-    const option_t option(const std::string &optionName) const;
+    option_t option(const std::string& optionName);
+    const option_t option(const std::string& optionName) const;
 
     template<class T>
-    T optionValue(const std::string &optionName) const;
+    T optionValue(const std::string& optionName) const;
 
     //! Sets the value of option. Option should hold same value type already.
     template<class T>
@@ -62,18 +61,18 @@ public:
     size_t size() const { return m_options.size(); }
 
 protected:
-    bool exists(const std::string &name);
+    bool exists(const std::string& name);
     void swapContent(OptionContainer& other);
     container_t m_options;
 };
 
 template<class T>
-OptionContainer::option_t OptionContainer::addOption(const std::string &optionName, T value,
-                                 const std::string &description)
+OptionContainer::option_t OptionContainer::addOption(
+    const std::string& optionName, T value, const std::string& description)
 {
     if(exists(optionName))
-        throw std::runtime_error("OptionContainer::addOption() -> Error. Option '" + optionName +
-                                 "' exists.");
+        throw std::runtime_error(
+            "OptionContainer::addOption() -> Error. Option '" + optionName + "' exists.");
 
     option_t result(new MultiOption(optionName, value, description));
     m_options.push_back(result);
@@ -81,7 +80,7 @@ OptionContainer::option_t OptionContainer::addOption(const std::string &optionNa
 }
 
 template<class T>
-T OptionContainer::optionValue(const std::string &optionName) const
+T OptionContainer::optionValue(const std::string& optionName) const
 {
     return option(optionName)->get<T>();
 }
@@ -91,8 +90,9 @@ void OptionContainer::setOptionValue(const std::string& optionName, T value)
 {
     option(optionName)->value() = value;
     if(option(optionName)->value().which() != option(optionName)->defaultValue().which())
-        throw std::runtime_error("OptionContainer::setOptionValue() -> Error. Attempt to set different"
-                                 "type to option '"+optionName+"'");
+        throw std::runtime_error(
+            "OptionContainer::setOptionValue() -> Error. Attempt to set different"
+            "type to option '"+optionName+"'");
 }
 
 #endif // OPTIONCONTAINER_H

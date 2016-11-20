@@ -20,28 +20,25 @@
 #include <boost/variant.hpp>
 #include <string>
 
-//! @class MultiOption
-//! @ingroup fitting_internal
-//! @brief The MultiOption class is intended to store a single option for minimization
-//! algorithm. Int, double, string values are available.
+//! Stores a single option for minimization algorithm. Int, double, string values are available.
 //! Relies on boost::variant, will be switched to std::variant in C++-17.
-//! (before was https://github.com/mapbox/variant.
+//! @ingroup fitting_internal
 
 class BA_CORE_API_ MultiOption
 {
 public:
     using variant_t = boost::variant<int, double, std::string>;
 
-    explicit MultiOption(const std::string &name = std::string());
+    explicit MultiOption(const std::string& name = std::string());
 
     template<typename T>
-    explicit MultiOption(const std::string &name, const T &t,
-                             const std::string &descripion = std::string());
+    explicit MultiOption(const std::string& name, const T& t,
+                         const std::string& descripion = std::string());
 
     std::string name() const;
 
     std::string description() const;
-    void setDescription(const std::string &description);
+    void setDescription(const std::string& description);
 
     variant_t& value();
     variant_t& defaultValue();
@@ -54,7 +51,7 @@ public:
     template<typename T>
     T getDefault() const;
 
-    void setFromString(const std::string &value);
+    void setFromString(const std::string& value);
 
 private:
     std::string m_name;
@@ -65,7 +62,7 @@ private:
 
 
 template<typename T>
-MultiOption::MultiOption(const std::string &name, const T &t, const std::string &descripion)
+MultiOption::MultiOption(const std::string& name, const T& t, const std::string& descripion)
 {
     m_name = name;
     m_description = descripion;
@@ -86,4 +83,3 @@ T MultiOption::getDefault() const
 }
 
 #endif // MULTIOPTION_H
-

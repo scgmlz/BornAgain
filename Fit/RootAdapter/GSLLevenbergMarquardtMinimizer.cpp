@@ -17,6 +17,7 @@
 #include "GSLMultiMinimizer.h"
 #include "MinimizerResultsHelper.h"
 #include "MinimizerUtils.h"
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include "Math/PatchedGSLNLSMinimizer.h"
@@ -24,16 +25,16 @@
 
 namespace {
 
-std::map<int, std::string> covmatrixStatusDescription()
-{
-    std::map<int, std::string> result;
-    result[0] = std::string("Covariance matrix was not computed");
-    result[1] = std::string("Covariance matrix approximate because minimum is not valid");
-    result[3] = std::string("Covariance matrix OK");
-    return result;
-}
+    std::map<int, std::string> covmatrixStatusDescription()
+    {
+        std::map<int, std::string> result;
+        result[0] = "Covariance matrix was not computed";
+        result[1] = "Covariance matrix approximate because minimum is not valid";
+        result[3] = "Covariance matrix OK";
+        return result;
+    }
 
-}
+} // namespace
 
 GSLLevenbergMarquardtMinimizer::GSLLevenbergMarquardtMinimizer()
     : RootMinimizerAdapter(MinimizerInfo::buildGSLLMAInfo())
@@ -44,10 +45,7 @@ GSLLevenbergMarquardtMinimizer::GSLLevenbergMarquardtMinimizer()
     addOption(OptionNames::MaxIterations, 0, "Maximum number of iterations");
 }
 
-GSLLevenbergMarquardtMinimizer::~GSLLevenbergMarquardtMinimizer()
-{
-
-}
+GSLLevenbergMarquardtMinimizer::~GSLLevenbergMarquardtMinimizer() {}
 
 void GSLLevenbergMarquardtMinimizer::setTolerance(double value)
 {
@@ -100,7 +98,7 @@ void GSLLevenbergMarquardtMinimizer::propagateOptions()
     m_gsl_minimizer->SetMaxIterations(maxIterations());
 }
 
-const RootMinimizerAdapter::root_minimizer_t *GSLLevenbergMarquardtMinimizer::rootMinimizer() const
+const RootMinimizerAdapter::root_minimizer_t* GSLLevenbergMarquardtMinimizer::rootMinimizer() const
 {
     return m_gsl_minimizer.get();
 }

@@ -70,9 +70,18 @@ namespace {
         "if __name__ == '__main__': \n"
         "    ba.simulateThenPlotOrSave(simulate, plot)\n";
 
-    std::function<std::string(double)> printFunc(const IDetector2D *detector);
+    //! Returns a function that converts a coordinate to a Python code snippet with appropiate unit
+    std::function<std::string(double)> printFunc(const IDetector2D* detector)
+    {
+        if (detector->getDefaultAxesUnits() == IDetector2D::MM)
+            return PythonFormatting::printDouble;
+        if (detector->getDefaultAxesUnits() == IDetector2D::RADIANS)
+            return PythonFormatting::printDegrees;
+        throw Exceptions::RuntimeErrorException(
+            "ExportToPython::defineMasks() -> Error. Unknown detector units.");
+    }
 
-}
+} // namespace
 
 ExportToPython::ExportToPython(const MultiLayer& multilayer)
     : m_label(new SampleLabelHandler())
@@ -698,11 +707,10 @@ std::string ExportToPython::defineDetectorResolutionFunction(
                 result << "ba.ResolutionFunction2DGaussian(";
                 result << printFunc(detector)(resfunc->getSigmaX()) << ", ";
                 result << printFunc(detector)(resfunc->getSigmaY()) << "))\n";
-            } else {
+            } else
                 throw Exceptions::RuntimeErrorException(
                     "ExportToPython::defineDetectorResolutionFunction() -> Error. "
                     "Unknown detector resolution function");
-            }
         } else
             throw Exceptions::RuntimeErrorException(
                 "ExportToPython::defineDetectorResolutionFunction() -> Error. "
@@ -859,23 +867,4 @@ void ExportToPython::setPositionInformation(
                << name << ".setPosition("
                << name << "_position)\n";
     }
-}
-
-//! Returns print function for given detector type.
-namespace {
-std::function<std::string (double)> printFunc(const IDetector2D *detector)
-{
-    std::function<std::string(double)> result;
-
-    if(detector->getDefaultAxesUnits() == IDetector2D::MM) {
-        result = PythonFormatting::printDouble;
-    } else if(detector->getDefaultAxesUnits() == IDetector2D::RADIANS) {
-        result = PythonFormatting::printDegrees;
-    } else {
-        throw Exceptions::RuntimeErrorException("ExportToPython::defineMasks() -> Error. Unknown "
-                                                "detector units.");
-    }
-
-    return result;
-}
 }

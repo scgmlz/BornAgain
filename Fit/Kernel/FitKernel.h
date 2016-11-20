@@ -26,9 +26,8 @@ class AttLimits;
 class FitParameterSet;
 class IMinimizer;
 
-//! @class FitKernel
+//! Main class to setup and run a minimization. Implemented in pimpl idiom.
 //! @ingroup fitting_internal
-//! @brief Main class to setup and run the minimization.
 
 class BA_CORE_API_ FitKernel
 {
@@ -38,20 +37,13 @@ public:
 
     void clear();
 
-    //! Sets minimizer with given name and algorithm type
-    //! @param minimizerName The name of the minimizer
-    //! @param algorithmName Optional name of the minimizer's algorithm
-    void setMinimizer(const std::string& minimizerName,
-                      const std::string& algorithmName = std::string());
-
+    void setMinimizer(const std::string& minimizerName, const std::string& algorithmName = "");
     void setMinimizer(IMinimizer* minimizer);
 
-    //! Returns minimizer.
-    const IMinimizer *minimizer() const;
+    const IMinimizer* minimizer() const;
 
-    //! Adds fit parameter
-    void addFitParameter(const std::string& name, double value,
-                         const AttLimits& limits, double step);
+    void addFitParameter(
+        const std::string& name, double value, const AttLimits& limits, double step);
 
     void setObjectiveFunction(objective_function_t func);
 
@@ -59,16 +51,17 @@ public:
 
     void minimize();
 
-    //! Reports results of minimization in the form of multi-line string.
+    //! Returns multi-line string to report results of minimization.
     std::string reportResults() const;
 
     FitParameterSet* fitParameters();
     const FitParameterSet* fitParameters() const;
 
-    //! Number of objective function calls.
+    //! Returns number of objective function calls.
     int functionCalls() const;
+
 private:
-    std::unique_ptr<FitKernelImpl> m_impl;
+    std::unique_ptr<FitKernelImpl> m_impl; //!< Pointer to implementation.
 };
 
 #endif // FITKERNEL_H
