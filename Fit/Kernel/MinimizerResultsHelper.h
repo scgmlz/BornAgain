@@ -44,16 +44,6 @@ private:
 };
 
 template <typename T>
-std::string to_string_with_precision(const T a_value, int precision = 10, int width = 0)
-{
-    std::ostringstream out;
-    if(width != 0)
-        out << std::setw(14) << std::left;
-    out << std::setprecision(precision) << a_value;
-    return out.str();
-}
-
-template <typename T>
 std::string to_string_scientific(const T a_value, int n = 10)
 {
     std::ostringstream out;
