@@ -57,10 +57,10 @@ class BA_CORE_API_ FitParameterSet
     // Fit parameter's values and errors
 
     std::vector<double> values() const;
-    void setValues(const std::vector<double >& pars_values);
+    void setValues(const std::vector<double>& pars_values);
     bool valuesDifferFrom(const std::vector<double>& par_values, double tolerance = 2.0) const;
     std::vector<double> errors() const;
-    void setErrors(const std::vector<double >& pars_errors);
+    void setErrors(const std::vector<double>& pars_errors);
 
     // Make parameters fixed and free
 
