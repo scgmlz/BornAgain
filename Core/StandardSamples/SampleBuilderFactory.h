@@ -21,9 +21,8 @@
 
 class MultiLayer;
 
-//! @class SampleBuilderFactory
+//! Factory to create standard pre-defined samples
 //! @ingroup standard_samples
-//! @brief Factory to create standard pre-defined samples
 
 class BA_CORE_API_ SampleBuilderFactory : public IFactory<std::string, IMultiLayerBuilder>
 {

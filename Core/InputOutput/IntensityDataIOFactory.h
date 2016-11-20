@@ -22,15 +22,15 @@
 template <class T> class OutputData;
 class IHistogram;
 
-//! @class IntensityDataIOFactory
-//! @ingroup input_output
-//! @brief Provides users with possibility to read and write IntensityData from/to files
+//! Provides users with possibility to read and write IntensityData from/to files
 //! in different format. Type of the file will be deduced from file name.
 //! *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy.
 //! *.int - BornAgain internal ASCII format.
 //! *.tif - 32-bits tiff file.
 //! If file name ends woth "*.gz" or "*.bz2" the file will be zipped on the fly using
 //! appropriate algorithm.
+
+//! @ingroup input_output
 
 /*! Usage:
 \code{.py}

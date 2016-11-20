@@ -17,7 +17,6 @@
 #define PARAMETERSAMPLE_H
 
 //! Represents a sampled parameter value with its weight.
-//! @class ParameterSample
 
 class ParameterSample
 {

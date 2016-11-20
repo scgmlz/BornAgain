@@ -19,9 +19,8 @@
 #include "WinDllMacros.h"
 #include <string>
 
-//! @class ParameterPattern
+//! Helper class for constructing parameter patterns.
 //! @ingroup tools_internal
-//! @brief Helper class for constructing parameter patterns.
 
 class BA_CORE_API_ ParameterPattern
 {
@@ -33,6 +32,7 @@ public:
     ParameterPattern& add(std::string object_type);
 
     std::string toStdString() const { return m_pattern; }
+
 private:
     std::string m_pattern;
 };

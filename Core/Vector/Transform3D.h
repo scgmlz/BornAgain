@@ -20,9 +20,8 @@
 #include "Complex.h"
 #include "EigenCore.h"
 
-//! @class Transform3D
+//! Vector transformations in three dimensions.
 //! @ingroup tools_internal
-//! @brief Vector transformations in three dimensions.
 
 class BA_CORE_API_ Transform3D {
 public:

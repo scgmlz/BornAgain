@@ -20,9 +20,8 @@
 
 class ISample;
 
-//! @class MultiLayerWithRoughnessBuilder
+//! Builds sample: layers with correlated roughness.
 //! @ingroup standard_samples
-//! @brief Builds sample: layers with correlated roughness
 
 class BA_CORE_API_ MultiLayerWithRoughnessBuilder : public IMultiLayerBuilder
 {

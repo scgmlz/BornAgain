@@ -19,19 +19,18 @@
 #include "IFormFactorDecorator.h"
 #include "Rotations.h"
 
-//! @class FormFactorDecoratorRotation
+//! Equips a formfactor with a rotation.
 //! @ingroup formfactors_internal
-//! @brief Equips a formfactor with a rotation.
 
 class BA_CORE_API_ FormFactorDecoratorRotation : public IFormFactorDecorator
 {
 public:
     //! Constructor, setting form factor and rotation.
-    FormFactorDecoratorRotation(const IFormFactor &form_factor, const IRotation &rotation);
+    FormFactorDecoratorRotation(const IFormFactor& form_factor, const IRotation& rotation);
 
-    FormFactorDecoratorRotation *clone() const override final;
+    FormFactorDecoratorRotation* clone() const override final;
 
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     complex_t evaluate(const WavevectorInfo& wavevectors) const override final;
 #ifndef SWIG
@@ -41,7 +40,7 @@ public:
 private:
     Transform3D m_transform;
     //! Private constructor for cloning.
-    FormFactorDecoratorRotation(const IFormFactor &form_factor, const Transform3D &transform);
+    FormFactorDecoratorRotation(const IFormFactor& form_factor, const Transform3D& transform);
     WavevectorInfo rotate_wavevectors(const WavevectorInfo& wavevectors) const;
 };
 

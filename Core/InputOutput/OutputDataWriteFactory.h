@@ -18,10 +18,8 @@
 
 #include "OutputDataWriter.h"
 
-
-//! @class OutputDataWriteFactory
+//! Creates writer appropariate for given type of files.
 //! @ingroup input_output_internal
-//! @brief Creates writer appropariate for given type of files
 
 class BA_CORE_API_ OutputDataWriteFactory
 {

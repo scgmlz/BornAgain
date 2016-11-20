@@ -21,9 +21,9 @@
 
 template <class T> class OutputData;
 
-//! @class IOutputDataReadStrategy
+//! Interface for reading strategy of OutputData from file.
 //! @ingroup input_output_internal
-//! @brief Interface for reading strategy of OutputData from file
+
 class BA_CORE_API_ IOutputDataReadStrategy
 {
 public:
@@ -31,19 +31,18 @@ public:
     virtual OutputData<double>* readOutputData(std::istream& input_stream) = 0;
 };
 
-
-//! @class OutputDataReadINTStrategy
+//! Strategy to read BornAgain native IntensityData from ASCII file.
 //! @ingroup input_output_internal
-//! @brief Strategy to read BornAgain native IntensityData from ASCII file
+
 class OutputDataReadINTStrategy : public IOutputDataReadStrategy
 {
 public:
     OutputData<double>* readOutputData(std::istream& input_stream);
 };
 
-//! @class OutputDataReadNumpyTXTStrategy
+//! Strategy to read OutputData from simple ASCII file with the layout as in numpy.savetxt.
 //! @ingroup input_output_internal
-//! @brief Strategy to read OutputData from simple ASCII file with the layout as in numpy.savetxt
+
 class OutputDataReadNumpyTXTStrategy : public IOutputDataReadStrategy
 {
 public:
@@ -55,9 +54,8 @@ public:
 
 class TiffHandler;
 
-//! @class OutputDataReadTiffStrategy
+//! Strategy to read a TIFF file.
 //! @ingroup input_output_internal
-//! @brief Reads tiff files
 
 class BA_CORE_API_ OutputDataReadTiffStrategy : public IOutputDataReadStrategy
 {

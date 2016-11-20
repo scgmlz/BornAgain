@@ -20,9 +20,8 @@
 
 class ISample;
 
-//! @class Lattice1DBuilder
+//! Builds sample: cylinders with 1DDL structure factor.
 //! @ingroup standard_samples
-//! @brief Builds sample: cylinders with 1DDL structure factor
 
 class BA_CORE_API_ Lattice1DBuilder : public IMultiLayerBuilder
 {

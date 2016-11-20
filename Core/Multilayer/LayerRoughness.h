@@ -19,13 +19,13 @@
 #include "IRoughness.h"
 #include "Vectors3D.h"
 
-//! @class LayerRoughness
-//! @ingroup samples
-//! @brief A Roughness of interface between two layers.
+//! A Roughness of interface between two layers.
 //!
 //! Based on the article
 //! D.K.G. de Boer, Physical review B, Volume 51, Number 8, 15 February 1995
 //! "X-ray reflection and transmission by rough surfaces"
+//!
+//! @ingroup samples
 
 class BA_CORE_API_ LayerRoughness : public IRoughness
 {

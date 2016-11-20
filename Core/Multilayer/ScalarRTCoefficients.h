@@ -20,10 +20,9 @@
 #include "Complex.h"
 #include "EigenCore.h"
 
-//! @class ScalarRTCoefficients
+//! Specular reflection and transmission coefficients in a layer in case
+//! of scalar interactions between the layers and the scattered particle.
 //! @ingroup algorithms_internal
-//! @brief Specular reflection and transmission coefficients in a layer in case
-//! of scalar interactions between the layers and the scattered particle
 
 class BA_CORE_API_ ScalarRTCoefficients : public ILayerRTCoefficients
 {
@@ -50,9 +49,7 @@ public:
     // be used when the derived object is really scalar
     virtual complex_t getScalarT() const;
     virtual complex_t getScalarR() const;
-    virtual complex_t getScalarKz() const {
-        return kz;
-    }
+    virtual complex_t getScalarKz() const { return kz; }
 
     //! Relative unsigned vertical wavevector component +-k_z/K
 
@@ -78,6 +75,10 @@ private:
     Eigen::Vector2cd m_min;
 };
 
+// ************************************************************************** //
+// implementation
+// ************************************************************************** //
+
 inline ScalarRTCoefficients::ScalarRTCoefficients()
     : lambda(0), kz(0)
 {
@@ -88,7 +89,7 @@ inline ScalarRTCoefficients::ScalarRTCoefficients()
     t_r << complex_t(1.0, 0.0), complex_t(0.0, 0.0);
 }
 
-inline ScalarRTCoefficients *ScalarRTCoefficients::clone() const
+inline ScalarRTCoefficients* ScalarRTCoefficients::clone() const
 {
     return new ScalarRTCoefficients(*this);
 }

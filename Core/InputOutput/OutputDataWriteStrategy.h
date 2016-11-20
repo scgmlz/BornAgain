@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/InputOutput/OutputDataWriteStrategy.h
-//! @brief     Defines classes IOutputDataWriteStrategy and OutputDataWriteStreamIMA.
+//!     Defines classes IOutputDataWriteStrategy and OutputDataWriteStreamIMA.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -21,9 +21,8 @@
 
 template <class T> class OutputData;
 
-//! @class IOutputDataWriteStrategy
+//! Strategy interface to write OututData in file
 //! @ingroup input_output_internal
-//! @brief Strategy interface to write OututData in file
 
 class BA_CORE_API_ IOutputDataWriteStrategy
 {
@@ -34,18 +33,18 @@ public:
     virtual void writeOutputData(const OutputData<double>& data, std::ostream& output_stream) = 0;
 };
 
-//! @class OutputDataWriteINTStrategy
+//! Strategy to write OutputData to special BornAgain ASCII format
 //! @ingroup input_output_internal
-//! @brief Strategy to write OutputData to special BornAgain ASCII format
+
 class OutputDataWriteINTStrategy : public IOutputDataWriteStrategy
 {
 public:
     virtual void writeOutputData(const OutputData<double>& data, std::ostream& output_stream);
 };
 
-//! @class OutputDataWriteNumpyTXTStrategy
+//! Strategy to write OutputData to simple ASCII file with the layout as in numpy.savetxt
 //! @ingroup input_output_internal
-//! @brief Strategy to write OutputData to simple ASCII file with the layout as in numpy.savetxt
+
 class OutputDataWriteNumpyTXTStrategy : public IOutputDataWriteStrategy
 {
 public:
@@ -56,9 +55,9 @@ public:
 
 class TiffHandler;
 
-//! @class OutputDataWriteTiffStrategy
+//! Strategy to write OutputData to tiff files
 //! @ingroup input_output_internal
-//! @brief Strategy to write OutputData to tiff files
+
 class OutputDataWriteTiffStrategy : public IOutputDataWriteStrategy
 {
 public:

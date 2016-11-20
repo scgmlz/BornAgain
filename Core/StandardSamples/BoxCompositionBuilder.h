@@ -23,10 +23,9 @@ class HomogeneousMaterial;
 class MultiLayer;
 class ParticleComposition;
 
-//! @class BoxCompositionBuilder
-//! @ingroup standard_samples
-//! @brief Parent class to test all kind of compositions made out of boxes.
+//! Parent class to test all kind of compositions made out of boxes.
 //! Reproduces Python functional test transform_BoxComposition.py
+//! @ingroup standard_samples
 
 class BA_CORE_API_ BoxCompositionBuilder : public IMultiLayerBuilder
 {
@@ -43,9 +42,8 @@ protected:
     const double m_height;
 };
 
-//! @class BoxCompositionRotateXBuilder
+//! Two boxes in particle composition rotated in X by 90 degrees.
 //! @ingroup standard_samples
-//! @brief Two boxes in particle composition rotated in X by 90 degrees.
 
 class BA_CORE_API_ BoxCompositionRotateXBuilder : public BoxCompositionBuilder
 {
@@ -54,9 +52,8 @@ public:
     MultiLayer* buildSample() const;
 };
 
-//! @class BoxCompositionRotateYBuilder
+//! Two boxes in particle composition rotated in Y by 90 degrees.
 //! @ingroup standard_samples
-//! @brief Two boxes in particle composition rotated in Y by 90 degrees.
 
 class BA_CORE_API_ BoxCompositionRotateYBuilder : public BoxCompositionBuilder
 {
@@ -65,9 +62,8 @@ public:
     MultiLayer* buildSample() const;
 };
 
-//! @class BoxCompositionRotateZBuilder
+//! Two boxes in particle composition rotated in Z by 90 degrees.
 //! @ingroup standard_samples
-//! @brief Two boxes in particle composition rotated in Z by 90 degrees.
 
 class BA_CORE_API_ BoxCompositionRotateZBuilder : public BoxCompositionBuilder
 {
@@ -76,9 +72,8 @@ public:
     MultiLayer* buildSample() const;
 };
 
-//! @class BoxCompositionRotateZandYBuilder
+//! Two boxes in particle composition rotated in Z and Y by 90 degrees.
 //! @ingroup standard_samples
-//! @brief Two boxes in particle composition rotated in Z and Y by 90 degrees.
 
 class BA_CORE_API_ BoxCompositionRotateZandYBuilder : public BoxCompositionBuilder
 {
@@ -87,9 +82,8 @@ public:
     MultiLayer* buildSample() const;
 };
 
-//! @class BoxStackCompositionBuilder
+//! Two different boxes are first rotated and then composed, composition is then rotated.
 //! @ingroup standard_samples
-//! @brief Two different boxes are first rotated and then composed, composition is then rotated.
 
 class BA_CORE_API_ BoxStackCompositionBuilder : public BoxCompositionBuilder
 {
