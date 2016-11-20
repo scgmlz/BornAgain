@@ -33,7 +33,7 @@ public:
     static std::string reportResults(const RootMinimizerAdapter* minimizer);
 
     //! Reports fit parameters settings and final results
-    static std::string reportResults(const FitParameterSet* parameters);
+    static std::string reportParameters(const FitParameterSet* parameters);
 
 private:
     static std::string reportDescription(const RootMinimizerAdapter* minimizer);

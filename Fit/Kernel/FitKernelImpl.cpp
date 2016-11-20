@@ -88,7 +88,7 @@ std::string FitKernelImpl::reportResults() const
     result << "functionCalls: " << m_objective_function.functionCalls()
            << " (" << m_time_interval.runTime() << " sec total)" << "\n";
     result << m_minimizer->reportResults();
-    result << MinimizerResultsHelper().reportResults(&m_fit_parameters);
+    result << MinimizerResultsHelper().reportParameters(&m_fit_parameters);
     return result.str();
 }
 

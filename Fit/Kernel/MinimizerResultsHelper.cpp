@@ -49,7 +49,7 @@ std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter* mi
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportResults(const FitParameterSet* parameters)
+std::string MinimizerResultsHelper::reportParameters(const FitParameterSet* parameters)
 {
     std::ostringstream result;
 

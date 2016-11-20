@@ -88,8 +88,7 @@ double RootMinimizerAdapter::minValue() const
 
 std::string RootMinimizerAdapter::reportResults() const
 {
-    MinimizerResultsHelper reporter;
-    return reporter.reportResults(this);
+    return MinimizerResultsHelper().reportResults(this);
 }
 
 std::string RootMinimizerAdapter::statusToString() const
