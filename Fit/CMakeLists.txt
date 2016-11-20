@@ -10,10 +10,11 @@ endif()
 
 # --- source and include files ------
 set(FIT_SOURCE_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/Kernel
+    ${CMAKE_CURRENT_SOURCE_DIR}/Options
     ${CMAKE_CURRENT_SOURCE_DIR}/Parameters
     ${CMAKE_CURRENT_SOURCE_DIR}/RootAdapter
+    ${CMAKE_CURRENT_SOURCE_DIR}/Utils
     )
 
 set(include_dirs ${BUILD_INC_DIR} ${CMAKE_SOURCE_DIR}/Wrap ${FIT_SOURCE_DIRS})
