@@ -445,8 +445,8 @@ void TransformFromDomain::setDetectorMasks(DetectorItem* detectorItem, const GIS
         detectorItem->insertItem(-1, containerItem);
         for(size_t i_mask=0; i_mask<detectorMask->numberOfMasks(); ++i_mask) {
             bool mask_value(false);
-            const Geometry::IShape2D* shape = detectorMask->getMaskShape(i_mask, mask_value);
-            if(const Geometry::Ellipse* ellipse = dynamic_cast<const Geometry::Ellipse*>(shape)) {
+            const IShape2D* shape = detectorMask->getMaskShape(i_mask, mask_value);
+            if(const Ellipse* ellipse = dynamic_cast<const Ellipse*>(shape)) {
                 EllipseItem* ellipseItem = new EllipseItem();
                 ellipseItem->setItemValue(EllipseItem::P_XCENTER, scale*ellipse->getCenterX());
                 ellipseItem->setItemValue(EllipseItem::P_YCENTER, scale*ellipse->getCenterY());
@@ -457,7 +457,7 @@ void TransformFromDomain::setDetectorMasks(DetectorItem* detectorItem, const GIS
                 containerItem->insertItem(0, ellipseItem);
 
             }
-            else if(const Geometry::Rectangle* rectangle = dynamic_cast<const Geometry::Rectangle*>(shape)) {
+            else if(const Rectangle* rectangle = dynamic_cast<const Rectangle*>(shape)) {
                 RectangleItem* rectangleItem = new RectangleItem();
                 rectangleItem->setItemValue(RectangleItem::P_XLOW, scale*rectangle->getXlow());
                 rectangleItem->setItemValue(RectangleItem::P_YLOW, scale*rectangle->getYlow());
@@ -467,7 +467,7 @@ void TransformFromDomain::setDetectorMasks(DetectorItem* detectorItem, const GIS
                 containerItem->insertItem(0, rectangleItem);
 
             }
-            else if(const Geometry::Polygon* polygon = dynamic_cast<const Geometry::Polygon*>(shape)) {
+            else if(const Polygon* polygon = dynamic_cast<const Polygon*>(shape)) {
                 PolygonItem* polygonItem = new PolygonItem();
                 std::vector<double> xpos, ypos;
                 polygon->getPoints(xpos, ypos);
@@ -483,19 +483,19 @@ void TransformFromDomain::setDetectorMasks(DetectorItem* detectorItem, const GIS
 
                 containerItem->insertItem(0, polygonItem);
             }
-            else if(const Geometry::VerticalLine* vline = dynamic_cast<const Geometry::VerticalLine*>(shape)) {
+            else if(const VerticalLine* vline = dynamic_cast<const VerticalLine*>(shape)) {
                 VerticalLineItem* lineItem = new VerticalLineItem();
                 lineItem->setItemValue(VerticalLineItem::P_POSX, scale*vline->getXpos());
                 lineItem->setItemValue(MaskItem::P_MASK_VALUE, mask_value);
                 containerItem->insertItem(0, lineItem);
             }
-            else if(const Geometry::HorizontalLine* hline = dynamic_cast<const Geometry::HorizontalLine*>(shape)) {
+            else if(const HorizontalLine* hline = dynamic_cast<const HorizontalLine*>(shape)) {
                 HorizontalLineItem* lineItem = new HorizontalLineItem();
                 lineItem->setItemValue(HorizontalLineItem::P_POSY, scale*hline->getYpos());
                 lineItem->setItemValue(MaskItem::P_MASK_VALUE, mask_value);
                 containerItem->insertItem(0, lineItem);
             }
-            else if(const Geometry::InfinitePlane* plane = dynamic_cast<const Geometry::InfinitePlane*>(shape)) {
+            else if(const InfinitePlane* plane = dynamic_cast<const InfinitePlane*>(shape)) {
                 Q_UNUSED(plane);
                 MaskAllItem* planeItem = new MaskAllItem();
                 planeItem->setItemValue(MaskItem::P_MASK_VALUE, mask_value);

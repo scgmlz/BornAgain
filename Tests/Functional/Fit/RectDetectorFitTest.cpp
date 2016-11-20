@@ -38,7 +38,7 @@ std::unique_ptr<GISASSimulation> RectDetectorFitTest::createSimulation()
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
     result->setDetector(detector);
     result->setRegionOfInterest(6.0, 6.0, 14.0, 12.0);
-    result->addMask(Geometry::Rectangle(8.0, 8.0, 10.0, 10.0), true);
+    result->addMask(Rectangle(8.0, 8.0, 10.0, 10.0), true);
 
     return result;
 }

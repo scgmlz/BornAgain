@@ -19,8 +19,6 @@
 #include "IShape2D.h"
 #include <vector>
 
-namespace Geometry {
-
 class PolygonPrivate;
 
 //! A polygon in 2D space.
@@ -41,7 +39,7 @@ public:
     virtual Polygon* clone() const { return new Polygon(m_d); }
 
     virtual bool contains(double x, double y) const;
-    virtual bool contains(const Bin1D &binx, const Bin1D &biny) const;
+    virtual bool contains(const Bin1D& binx, const Bin1D& biny) const;
 
     double getArea() const;
 
@@ -53,7 +51,5 @@ protected:
 private:
     PolygonPrivate* m_d;
 };
-
-} // namespace Geometry
 
 #endif // POLYGON_H

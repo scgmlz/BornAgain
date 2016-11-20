@@ -28,8 +28,6 @@ typedef model::d2::point_xy<double> point_t;
 typedef model::box<point_t> box_t;
 typedef model::linestring<point_t> line_t;
 
-namespace Geometry {
-
 Line::Line(double x1, double y1, double x2, double y2)
     : IShape2D("Line"), m_x1(x1), m_y1(y1), m_x2(x2), m_y2(y2)
 {}
@@ -100,5 +98,3 @@ bool HorizontalLine::contains(const Bin1D& /*binx*/, const Bin1D& biny) const
 {
     return m_y>=biny.m_lower && m_y <= biny.m_upper;
 }
-
-} // namespace Geometry

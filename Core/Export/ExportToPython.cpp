@@ -761,7 +761,7 @@ std::string ExportToPython::defineMasks(const GISASSimulation* simulation) const
         result << "\n";
         for(size_t i_mask=0; i_mask<detectorMask->numberOfMasks(); ++i_mask) {
             bool mask_value(false);
-            const Geometry::IShape2D* shape = detectorMask->getMaskShape(i_mask, mask_value);
+            const IShape2D* shape = detectorMask->getMaskShape(i_mask, mask_value);
             result << representShape2D(indent(), shape, mask_value, printFunc(detector));
         }
         result << "\n";

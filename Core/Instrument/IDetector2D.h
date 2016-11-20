@@ -25,15 +25,13 @@
 
 template<class T> class OutputData;
 class Beam;
+class DetectionProperties;
 class IAxis;
 class IDetectorResolution;
 class IPixelMap;
-class SimulationElement;
-class DetectionProperties;
+class IShape2D;
 class RegionOfInterest;
-namespace Geometry {
-    class IShape2D;
-}
+class SimulationElement;
 
 //! @class IDetector
 //! @ingroup simulation
@@ -88,7 +86,7 @@ public:
     //! has priority.
     //! @param shape The shape of mask (Rectangle, Polygon, Line, Ellipse)
     //! @param mask_value The value of mask
-    void addMask(const Geometry::IShape2D& shape, bool mask_value = true);
+    void addMask(const IShape2D& shape, bool mask_value = true);
 
     //! Put the mask for all detector channels (i.e. exclude whole detector from the analysis)
     void maskAll();

@@ -3739,14 +3739,7 @@ CustomBinAxis_swigregister = _libBornAgainCore.CustomBinAxis_swigregister
 CustomBinAxis_swigregister(CustomBinAxis)
 
 class IShape2D(ICloneable, INamed):
-    """
-
-
-    Basic class for all shapes in 2D.
-
-    C++ includes: IShape2D.h
-
-    """
+    """Proxy of C++ IShape2D class."""
 
     __swig_setmethods__ = {}
     for _s in [ICloneable, INamed]:
@@ -3765,7 +3758,7 @@ class IShape2D(ICloneable, INamed):
         """
         clone(IShape2D self) -> IShape2D
 
-        virtual IShape2D* Geometry::IShape2D::clone() const =0
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.IShape2D_clone(self)
@@ -3775,11 +3768,6 @@ class IShape2D(ICloneable, INamed):
         """
         contains(IShape2D self, double x, double y) -> bool
         contains(IShape2D self, Bin1D binx, Bin1D biny) -> bool
-
-        virtual bool Geometry::IShape2D::contains(const Bin1D &binx, const Bin1D &biny) const =0
-
-        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-
         """
         return _libBornAgainCore.IShape2D_contains(self, *args)
 
@@ -8219,14 +8207,7 @@ DetectorMask_swigregister = _libBornAgainCore.DetectorMask_swigregister
 DetectorMask_swigregister(DetectorMask)
 
 class Ellipse(IShape2D):
-    """
-
-
-    Ellipse shape.
-
-    C++ includes: Ellipse.h
-
-    """
+    """Proxy of C++ Ellipse class."""
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -8240,29 +8221,8 @@ class Ellipse(IShape2D):
 
     def __init__(self, xcenter, ycenter, xradius, yradius, theta=0.0):
         """
-        __init__(Geometry::Ellipse self, double xcenter, double ycenter, double xradius, double yradius, double theta=0.0) -> Ellipse
-        __init__(Geometry::Ellipse self, double xcenter, double ycenter, double xradius, double yradius) -> Ellipse
-
-        Geometry::Ellipse::Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta=0.0)
-
-        Parameters:
-        -----------
-
-        xcenter: 
-        x-coordinate of  Ellipse's center
-
-        ycenter: 
-        y-coordinate of  Ellipse's center
-
-        xradius: 
-        Radius along x-axis
-
-        yradius: 
-        Radius along y-axis
-
-        theta: 
-        Angle of  Ellipse rotation in radians 
-
+        __init__(Ellipse self, double xcenter, double ycenter, double xradius, double yradius, double theta=0.0) -> Ellipse
+        __init__(Ellipse self, double xcenter, double ycenter, double xradius, double yradius) -> Ellipse
         """
         this = _libBornAgainCore.new_Ellipse(xcenter, ycenter, xradius, yradius, theta)
         try:
@@ -8274,7 +8234,7 @@ class Ellipse(IShape2D):
         """
         clone(Ellipse self) -> Ellipse
 
-        Ellipse* Geometry::Ellipse::clone() const
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.Ellipse_clone(self)
@@ -8284,62 +8244,32 @@ class Ellipse(IShape2D):
         """
         contains(Ellipse self, double x, double y) -> bool
         contains(Ellipse self, Bin1D binx, Bin1D biny) -> bool
-
-        bool Geometry::Ellipse::contains(const Bin1D &binx, const Bin1D &biny) const
-
-        Returns true if area defined by two bins is inside or on border of ellipse; more precisely, if mid point of two bins satisfy this condition. 
-
         """
         return _libBornAgainCore.Ellipse_contains(self, *args)
 
 
     def getCenterX(self):
-        """
-        getCenterX(Ellipse self) -> double
-
-        double Geometry::Ellipse::getCenterX() const
-
-        """
+        """getCenterX(Ellipse self) -> double"""
         return _libBornAgainCore.Ellipse_getCenterX(self)
 
 
     def getCenterY(self):
-        """
-        getCenterY(Ellipse self) -> double
-
-        double Geometry::Ellipse::getCenterY() const
-
-        """
+        """getCenterY(Ellipse self) -> double"""
         return _libBornAgainCore.Ellipse_getCenterY(self)
 
 
     def getRadiusX(self):
-        """
-        getRadiusX(Ellipse self) -> double
-
-        double Geometry::Ellipse::getRadiusX() const
-
-        """
+        """getRadiusX(Ellipse self) -> double"""
         return _libBornAgainCore.Ellipse_getRadiusX(self)
 
 
     def getRadiusY(self):
-        """
-        getRadiusY(Ellipse self) -> double
-
-        double Geometry::Ellipse::getRadiusY() const
-
-        """
+        """getRadiusY(Ellipse self) -> double"""
         return _libBornAgainCore.Ellipse_getRadiusY(self)
 
 
     def getTheta(self):
-        """
-        getTheta(Ellipse self) -> double
-
-        double Geometry::Ellipse::getTheta() const
-
-        """
+        """getTheta(Ellipse self) -> double"""
         return _libBornAgainCore.Ellipse_getTheta(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_Ellipse
@@ -20752,14 +20682,7 @@ LayerRoughness_swigregister = _libBornAgainCore.LayerRoughness_swigregister
 LayerRoughness_swigregister(LayerRoughness)
 
 class Line(IShape2D):
-    """
-
-
-    A line segment.
-
-    C++ includes: Line.h
-
-    """
+    """Proxy of C++ Line class."""
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -20772,12 +20695,7 @@ class Line(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, x1, y1, x2, y2):
-        """
-        __init__(Geometry::Line self, double x1, double y1, double x2, double y2) -> Line
-
-        Geometry::Line::Line(double x1, double y1, double x2, double y2)
-
-        """
+        """__init__(Line self, double x1, double y1, double x2, double y2) -> Line"""
         this = _libBornAgainCore.new_Line(x1, y1, x2, y2)
         try:
             self.this.append(this)
@@ -20788,7 +20706,7 @@ class Line(IShape2D):
         """
         clone(Line self) -> Line
 
-        Line* Geometry::Line::clone() const
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.Line_clone(self)
@@ -20798,11 +20716,6 @@ class Line(IShape2D):
         """
         contains(Line self, double x, double y) -> bool
         contains(Line self, Bin1D binx, Bin1D biny) -> bool
-
-        bool Geometry::Line::contains(const Bin1D &binx, const Bin1D &biny) const
-
-        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-
         """
         return _libBornAgainCore.Line_contains(self, *args)
 
@@ -20812,14 +20725,7 @@ Line_swigregister = _libBornAgainCore.Line_swigregister
 Line_swigregister(Line)
 
 class VerticalLine(IShape2D):
-    """
-
-
-    An infinite vertical line.
-
-    C++ includes: Line.h
-
-    """
+    """Proxy of C++ VerticalLine class."""
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -20832,18 +20738,7 @@ class VerticalLine(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, x):
-        """
-        __init__(Geometry::VerticalLine self, double x) -> VerticalLine
-
-        Geometry::VerticalLine::VerticalLine(double x)
-
-        Parameters:
-        -----------
-
-        x: 
-        The value at which it crosses x-axes 
-
-        """
+        """__init__(VerticalLine self, double x) -> VerticalLine"""
         this = _libBornAgainCore.new_VerticalLine(x)
         try:
             self.this.append(this)
@@ -20854,7 +20749,7 @@ class VerticalLine(IShape2D):
         """
         clone(VerticalLine self) -> VerticalLine
 
-        VerticalLine* Geometry::VerticalLine::clone() const
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.VerticalLine_clone(self)
@@ -20864,22 +20759,12 @@ class VerticalLine(IShape2D):
         """
         contains(VerticalLine self, double x, double y) -> bool
         contains(VerticalLine self, Bin1D binx, Bin1D biny) -> bool
-
-        bool Geometry::VerticalLine::contains(const Bin1D &binx, const Bin1D &biny) const
-
-        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-
         """
         return _libBornAgainCore.VerticalLine_contains(self, *args)
 
 
     def getXpos(self):
-        """
-        getXpos(VerticalLine self) -> double
-
-        double Geometry::VerticalLine::getXpos() const
-
-        """
+        """getXpos(VerticalLine self) -> double"""
         return _libBornAgainCore.VerticalLine_getXpos(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_VerticalLine
@@ -20888,14 +20773,7 @@ VerticalLine_swigregister = _libBornAgainCore.VerticalLine_swigregister
 VerticalLine_swigregister(VerticalLine)
 
 class HorizontalLine(IShape2D):
-    """
-
-
-    An infinite horizontal line.
-
-    C++ includes: Line.h
-
-    """
+    """Proxy of C++ HorizontalLine class."""
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -20908,18 +20786,7 @@ class HorizontalLine(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, y):
-        """
-        __init__(Geometry::HorizontalLine self, double y) -> HorizontalLine
-
-        Geometry::HorizontalLine::HorizontalLine(double y)
-
-        Parameters:
-        -----------
-
-        y: 
-        The value at which it crosses y-axes 
-
-        """
+        """__init__(HorizontalLine self, double y) -> HorizontalLine"""
         this = _libBornAgainCore.new_HorizontalLine(y)
         try:
             self.this.append(this)
@@ -20930,7 +20797,7 @@ class HorizontalLine(IShape2D):
         """
         clone(HorizontalLine self) -> HorizontalLine
 
-        HorizontalLine* Geometry::HorizontalLine::clone() const
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.HorizontalLine_clone(self)
@@ -20940,22 +20807,12 @@ class HorizontalLine(IShape2D):
         """
         contains(HorizontalLine self, double x, double y) -> bool
         contains(HorizontalLine self, Bin1D binx, Bin1D biny) -> bool
-
-        bool Geometry::HorizontalLine::contains(const Bin1D &binx, const Bin1D &biny) const
-
-        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-
         """
         return _libBornAgainCore.HorizontalLine_contains(self, *args)
 
 
     def getYpos(self):
-        """
-        getYpos(HorizontalLine self) -> double
-
-        double Geometry::HorizontalLine::getYpos() const
-
-        """
+        """getYpos(HorizontalLine self) -> double"""
         return _libBornAgainCore.HorizontalLine_getYpos(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_HorizontalLine
@@ -23321,14 +23178,7 @@ ParticleLayout_swigregister = _libBornAgainCore.ParticleLayout_swigregister
 ParticleLayout_swigregister(ParticleLayout)
 
 class Polygon(IShape2D):
-    """
-
-
-    A polygon in 2D space.Polygon defined by two arrays with x and y coordinates of points. Sizes of arrays should coincide. If polygon is unclosed (the last point doesn't repeat the first one), it will be closed automatically.
-
-    C++ includes: Polygon.h
-
-    """
+    """Proxy of C++ Polygon class."""
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -23342,12 +23192,9 @@ class Polygon(IShape2D):
 
     def __init__(self, *args):
         """
-        __init__(Geometry::Polygon self, vdouble1d_t x, vdouble1d_t y) -> Polygon
-        __init__(Geometry::Polygon self, vdouble2d_t points) -> Polygon
-        __init__(Geometry::Polygon self, Geometry::PolygonPrivate const * d) -> Polygon
-
-        Geometry::Polygon::Polygon(const PolygonPrivate *d)
-
+        __init__(Polygon self, vdouble1d_t x, vdouble1d_t y) -> Polygon
+        __init__(Polygon self, vdouble2d_t points) -> Polygon
+        __init__(Polygon self, PolygonPrivate const * d) -> Polygon
         """
         this = _libBornAgainCore.new_Polygon(*args)
         try:
@@ -23361,7 +23208,7 @@ class Polygon(IShape2D):
         """
         clone(Polygon self) -> Polygon
 
-        virtual Polygon* Geometry::Polygon::clone() const
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.Polygon_clone(self)
@@ -23371,32 +23218,17 @@ class Polygon(IShape2D):
         """
         contains(Polygon self, double x, double y) -> bool
         contains(Polygon self, Bin1D binx, Bin1D biny) -> bool
-
-        bool Geometry::Polygon::contains(const Bin1D &binx, const Bin1D &biny) const
-
-        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-
         """
         return _libBornAgainCore.Polygon_contains(self, *args)
 
 
     def getArea(self):
-        """
-        getArea(Polygon self) -> double
-
-        double Geometry::Polygon::getArea() const
-
-        """
+        """getArea(Polygon self) -> double"""
         return _libBornAgainCore.Polygon_getArea(self)
 
 
     def getPoints(self, xpos, ypos):
-        """
-        getPoints(Polygon self, vdouble1d_t xpos, vdouble1d_t ypos)
-
-        void Geometry::Polygon::getPoints(std::vector< double > &xpos, std::vector< double > &ypos) const
-
-        """
+        """getPoints(Polygon self, vdouble1d_t xpos, vdouble1d_t ypos)"""
         return _libBornAgainCore.Polygon_getPoints(self, xpos, ypos)
 
 Polygon_swigregister = _libBornAgainCore.Polygon_swigregister
@@ -23552,14 +23384,7 @@ RealParameter_swigregister = _libBornAgainCore.RealParameter_swigregister
 RealParameter_swigregister(RealParameter)
 
 class Rectangle(IShape2D):
-    """
-
-
-    The rectangle shape having its axis aligned to the (non-rotated) coordinate system.
-
-    C++ includes: Rectangle.h
-
-    """
+    """Proxy of C++ Rectangle class."""
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -23572,27 +23397,7 @@ class Rectangle(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, xlow, ylow, xup, yup):
-        """
-        __init__(Geometry::Rectangle self, double xlow, double ylow, double xup, double yup) -> Rectangle
-
-        Geometry::Rectangle::Rectangle(double xlow, double ylow, double xup, double yup)
-
-        Parameters:
-        -----------
-
-        xlow: 
-        x-coordinate of lower left corner
-
-        ylow: 
-        y-coordinate of lower left corner
-
-        xup: 
-        x-coordinate of upper right corner
-
-        yup: 
-        y-coordinate of upper right corner 
-
-        """
+        """__init__(Rectangle self, double xlow, double ylow, double xup, double yup) -> Rectangle"""
         this = _libBornAgainCore.new_Rectangle(xlow, ylow, xup, yup)
         try:
             self.this.append(this)
@@ -23603,7 +23408,7 @@ class Rectangle(IShape2D):
         """
         clone(Rectangle self) -> Rectangle
 
-        Rectangle* Geometry::Rectangle::clone() const
+        virtual ICloneable* ICloneable::clone() const =0
 
         """
         return _libBornAgainCore.Rectangle_clone(self)
@@ -23613,62 +23418,32 @@ class Rectangle(IShape2D):
         """
         contains(Rectangle self, double x, double y) -> bool
         contains(Rectangle self, Bin1D binx, Bin1D biny) -> bool
-
-        bool Geometry::Rectangle::contains(const Bin1D &binx, const Bin1D &biny) const
-
-        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-
         """
         return _libBornAgainCore.Rectangle_contains(self, *args)
 
 
     def getArea(self):
-        """
-        getArea(Rectangle self) -> double
-
-        double Geometry::Rectangle::getArea() const
-
-        """
+        """getArea(Rectangle self) -> double"""
         return _libBornAgainCore.Rectangle_getArea(self)
 
 
     def getXlow(self):
-        """
-        getXlow(Rectangle self) -> double
-
-        double Geometry::Rectangle::getXlow() const
-
-        """
+        """getXlow(Rectangle self) -> double"""
         return _libBornAgainCore.Rectangle_getXlow(self)
 
 
     def getYlow(self):
-        """
-        getYlow(Rectangle self) -> double
-
-        double Geometry::Rectangle::getYlow() const
-
-        """
+        """getYlow(Rectangle self) -> double"""
         return _libBornAgainCore.Rectangle_getYlow(self)
 
 
     def getXup(self):
-        """
-        getXup(Rectangle self) -> double
-
-        double Geometry::Rectangle::getXup() const
-
-        """
+        """getXup(Rectangle self) -> double"""
         return _libBornAgainCore.Rectangle_getXup(self)
 
 
     def getYup(self):
-        """
-        getYup(Rectangle self) -> double
-
-        double Geometry::Rectangle::getYup() const
-
-        """
+        """getYup(Rectangle self) -> double"""
         return _libBornAgainCore.Rectangle_getYup(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_Rectangle

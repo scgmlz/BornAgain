@@ -18,8 +18,6 @@
 
 #include "IShape2D.h"
 
-namespace Geometry {
-
 //! The rectangle shape having its axis aligned to the (non-rotated) coordinate system.
 //! @ingroup mask
 
@@ -29,7 +27,7 @@ public:
     Rectangle* clone() const { return new Rectangle(m_xlow, m_ylow, m_xup, m_yup); }
 
     bool contains(double x, double y) const;
-    bool contains(const Bin1D &binx, const Bin1D &biny) const;
+    bool contains(const Bin1D& binx, const Bin1D& biny) const;
 
     double getArea() const;
 
@@ -41,7 +39,5 @@ public:
 private:
     double m_xlow, m_ylow, m_xup, m_yup;
 };
-
-} // namespace Geometry
 
 #endif // RECTANGLE_H

@@ -86,8 +86,8 @@ TEST_F(SimulationAreaTest, detectorIteration)
 TEST_F(SimulationAreaTest, maskedIteration)
 {
     SphericalDetector detector(5, -1.0, 4.0, 4, 0.0, 4.0);
-    detector.addMask(Geometry::Rectangle(0.1, 1.1, 2.9, 2.9), true);
-    detector.addMask(Geometry::Rectangle(3.1, 3.1, 3.9, 3.9), true);
+    detector.addMask(Rectangle(0.1, 1.1, 2.9, 2.9), true);
+    detector.addMask(Rectangle(3.1, 3.1, 3.9, 3.9), true);
     SimulationArea area(&detector);
 
     std::vector<int> expectedIndexes = {0, 1, 2, 3, 4, 7, 8, 11, 12, 15, 16, 17, 18};
@@ -107,8 +107,8 @@ TEST_F(SimulationAreaTest, maskedIteration)
 TEST_F(SimulationAreaTest, maskedCornerIteration)
 {
     SphericalDetector detector(5, -1.0, 4.0, 4, 0.0, 4.0);
-    detector.addMask(Geometry::Rectangle(-0.9, 0.1, -0.1, 0.9), true);
-    detector.addMask(Geometry::Rectangle(3.1, 3.1, 3.9, 3.9), true);
+    detector.addMask(Rectangle(-0.9, 0.1, -0.1, 0.9), true);
+    detector.addMask(Rectangle(3.1, 3.1, 3.9, 3.9), true);
     SimulationArea area(&detector);
 
     std::vector<int> expectedIndexes
@@ -130,7 +130,7 @@ TEST_F(SimulationAreaTest, maskedCornerIteration)
 TEST_F(SimulationAreaTest, allMaskedIteration)
 {
     SphericalDetector detector(5, -1.0, 4.0, 4, 0.0, 4.0);
-    detector.addMask(Geometry::Rectangle(-0.9, 0.1, 3.9, 3.9), true);
+    detector.addMask(Rectangle(-0.9, 0.1, 3.9, 3.9), true);
     SimulationArea area(&detector);
 
     std::vector<int> indexes;
@@ -149,7 +149,7 @@ TEST_F(SimulationAreaTest, maskAndRoiIteration)
 {
     SphericalDetector detector(5, -1.0, 4.0, 4, 0.0, 4.0);
     detector.setRegionOfInterest(0.1, 1.1, 2.9, 3.9);
-    detector.addMask(Geometry::Rectangle(-0.9, 0.1, 0.9, 1.9), true);
+    detector.addMask(Rectangle(-0.9, 0.1, 0.9, 1.9), true);
     SimulationArea area(&detector);
 
     std::vector<int> expectedRoiIndexes = {1, 2, 3, 4, 5, 6, 7, 8};
@@ -177,7 +177,7 @@ TEST_F(SimulationAreaTest, indexInRoi)
 {
     SphericalDetector detector(5, -1.0, 4.0, 4, 0.0, 4.0);
     detector.setRegionOfInterest(0.1, 1.1, 2.9, 3.9);
-    detector.addMask(Geometry::Rectangle(-0.9, 0.1, 0.9, 1.9), true);
+    detector.addMask(Rectangle(-0.9, 0.1, 0.9, 1.9), true);
     SimulationArea area(&detector);
 
     std::vector<int> expectedIndexes = {1, 2, 3, 4, 5, 6, 7, 8};

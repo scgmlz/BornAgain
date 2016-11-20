@@ -41,7 +41,7 @@ TEST_F(DetectorMaskTest, AddMask)
 
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
 
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("x-axis", 12, -4.0, 8.0));
@@ -77,7 +77,7 @@ TEST_F(DetectorMaskTest, AddMask)
     // adding third mask
     x = {5.0, 5.0, 8.0, 8.0, 5.0};
     y = {2.0, 4.0, 4.0, 2.0, 2.0};
-    Geometry::Polygon polygon2(x, y);
+    Polygon polygon2(x, y);
     detectorMask.addMask(polygon2, true);
     detectorMask.initMaskData(detector);
     for(size_t index=0; index<detectorMask.getMaskData()->getAllocatedSize(); ++index) {
@@ -106,7 +106,7 @@ TEST_F(DetectorMaskTest, AssignmentOperator)
 
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
 
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("x-axis", 12, -4.0, 8.0));
@@ -140,7 +140,7 @@ TEST_F(DetectorMaskTest, CopyConstructor)
 
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
 
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("x-axis", 12, -4.0, 8.0));

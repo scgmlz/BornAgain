@@ -18,19 +18,16 @@
 
 #include "IShape2D.h"
 
-namespace Geometry {
-
-//! @class Ellipse
+//! Ellipse shape.
 //! @ingroup tools
-//! @brief Ellipse shape
 
 class  BA_CORE_API_ Ellipse : public IShape2D {
 public:
     Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta = 0.0);
-    Ellipse *clone() const { return new Ellipse(m_xc, m_yc, m_xr, m_yr, m_theta); }
+    Ellipse* clone() const { return new Ellipse(m_xc, m_yc, m_xr, m_yr, m_theta); }
 
     bool contains(double x, double y) const;
-    bool contains(const Bin1D &binx, const Bin1D &biny) const;
+    bool contains(const Bin1D& binx, const Bin1D& biny) const;
 
     double getCenterX() const { return m_xc; }
     double getCenterY() const { return m_yc; }
@@ -41,7 +38,5 @@ public:
 private:
     double m_xc, m_yc, m_xr, m_yr, m_theta;
 };
-
-} // namespace Geometry
 
 #endif // ELLIPSE_H

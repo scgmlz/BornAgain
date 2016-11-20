@@ -59,13 +59,13 @@ namespace PythonFormatting {
 
 //! Returns fixed Python code snippet that defines the function "runSimulation".
 
-std::string representShape2D(const std::string& indent, const Geometry::IShape2D* ishape,
+std::string representShape2D(const std::string& indent, const IShape2D* ishape,
                              bool mask_value, std::function<std::string(double)> printValueFunc)
 {
     std::ostringstream result;
     result << std::setprecision(12);
 
-    if (const Geometry::Polygon* shape = dynamic_cast<const Geometry::Polygon*>(ishape)) {
+    if (const Polygon* shape = dynamic_cast<const Polygon*>(ishape)) {
         std::vector<double> xpos, ypos;
         shape->getPoints(xpos, ypos);
         result << indent << "points = [";
@@ -78,10 +78,10 @@ std::string representShape2D(const std::string& indent, const Geometry::IShape2D
         result << indent << "simulation.addMask(" <<
             "ba.Polygon(points), " << printBool(mask_value) << ")\n";
 
-    } else if(dynamic_cast<const Geometry::InfinitePlane*>(ishape)) {
+    } else if(dynamic_cast<const InfinitePlane*>(ishape)) {
         result << indent << "simulation.maskAll()\n";
 
-    } else if(const Geometry::Ellipse* shape = dynamic_cast<const Geometry::Ellipse*>(ishape)) {
+    } else if(const Ellipse* shape = dynamic_cast<const Ellipse*>(ishape)) {
         result << indent << "simulation.addMask(";
         result << "ba.Ellipse("
                << printValueFunc(shape->getCenterX()) << ", "
@@ -92,7 +92,7 @@ std::string representShape2D(const std::string& indent, const Geometry::IShape2D
         result << "), " << printBool(mask_value) << ")\n";
     }
 
-    else if(const Geometry::Rectangle* shape = dynamic_cast<const Geometry::Rectangle*>(ishape)) {
+    else if(const Rectangle* shape = dynamic_cast<const Rectangle*>(ishape)) {
         result << indent << "simulation.addMask(";
         result << "ba.Rectangle("
                << printValueFunc(shape->getXlow()) << ", "
@@ -102,16 +102,16 @@ std::string representShape2D(const std::string& indent, const Geometry::IShape2D
                << printBool(mask_value) << ")\n";
     }
 
-    else if(const Geometry::VerticalLine* shape =
-            dynamic_cast<const Geometry::VerticalLine*>(ishape)) {
+    else if(const VerticalLine* shape =
+            dynamic_cast<const VerticalLine*>(ishape)) {
         result << indent << "simulation.addMask(";
         result << "ba.VerticalLine("
                << printValueFunc(shape->getXpos()) << "), "
                << printBool(mask_value) << ")\n";
     }
 
-    else if(const Geometry::HorizontalLine* shape =
-            dynamic_cast<const Geometry::HorizontalLine*>(ishape)) {
+    else if(const HorizontalLine* shape =
+            dynamic_cast<const HorizontalLine*>(ishape)) {
         result << indent << "simulation.addMask(";
         result << "ba.HorizontalLine("
                << printValueFunc(shape->getYpos()) << "), "

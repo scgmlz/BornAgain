@@ -161,7 +161,7 @@ void IDetector2D::removeMasks()
     m_detector_mask.removeMasks();
 }
 
-void IDetector2D::addMask(const Geometry::IShape2D &shape, bool mask_value)
+void IDetector2D::addMask(const IShape2D &shape, bool mask_value)
 {
     m_detector_mask.addMask(shape, mask_value);
     m_detector_mask.initMaskData(*this);
@@ -171,7 +171,7 @@ void IDetector2D::maskAll()
 {
     if(m_axes.size() != 2) return;
     m_detector_mask.removeMasks();
-    addMask(Geometry::InfinitePlane(), true);
+    addMask(InfinitePlane(), true);
 }
 
 const DetectorMask *IDetector2D::getDetectorMask() const

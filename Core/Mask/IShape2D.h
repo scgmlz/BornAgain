@@ -22,10 +22,6 @@
 
 struct Bin1D;
 
-//! Geometric shapes, used for detector masks.
-
-namespace Geometry {
-
 //! Basic class for all shapes in 2D.
 //! @ingroup tools
 
@@ -47,7 +43,5 @@ public:
 protected:
     virtual void print(std::ostream& ostr) const { ostr << getName(); }
 };
-
-} // namespace Geometry
 
 #endif // ISHAPE2D_H

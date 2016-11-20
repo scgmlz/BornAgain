@@ -120,7 +120,7 @@ void GISASSimulation::removeMasks()
     m_instrument.getDetector()->removeMasks();
 }
 
-void GISASSimulation::addMask(const Geometry::IShape2D& shape, bool mask_value)
+void GISASSimulation::addMask(const IShape2D& shape, bool mask_value)
 {
     m_instrument.getDetector()->addMask(shape, mask_value);
 }

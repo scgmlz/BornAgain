@@ -131,22 +131,22 @@ GISASSimulation* StandardSimulations::GISASWithMasks()
     result->maskAll();
     // pacman
     const double deg = Units::degree;
-    result->addMask(Geometry::Ellipse(0.0*deg, 1.0*deg, 0.5*deg, 0.5*deg), false);
-    result->addMask(Geometry::Ellipse(0.11*deg, 1.25*deg, 0.05*deg, 0.05*deg), true);
+    result->addMask(Ellipse(0.0*deg, 1.0*deg, 0.5*deg, 0.5*deg), false);
+    result->addMask(Ellipse(0.11*deg, 1.25*deg, 0.05*deg, 0.05*deg), true);
 
     std::vector<std::vector<double> >  points = {
         {0.0*deg, 1.0*deg}, {0.5*deg, 1.2*deg}, {0.5*deg, 0.8*deg}, {0.0*deg, 1.0*deg}
     };
-    result->addMask(Geometry::Polygon(points), true);
+    result->addMask(Polygon(points), true);
 
-    result->addMask(Geometry::Rectangle(0.45*deg, 0.95*deg, 0.55*deg, 1.05*deg), false);
-    result->addMask(Geometry::Rectangle(0.61*deg, 0.95*deg, 0.71*deg, 1.05*deg), false);
-    result->addMask(Geometry::Rectangle(0.75*deg, 0.95*deg, 0.85*deg, 1.05*deg), false);
+    result->addMask(Rectangle(0.45*deg, 0.95*deg, 0.55*deg, 1.05*deg), false);
+    result->addMask(Rectangle(0.61*deg, 0.95*deg, 0.71*deg, 1.05*deg), false);
+    result->addMask(Rectangle(0.75*deg, 0.95*deg, 0.85*deg, 1.05*deg), false);
 
     // more masks
-    result->addMask(Geometry::Ellipse(-0.5*deg, 1.5*deg, 0.3*deg, 0.1*deg, 45.*deg), false);
-    result->addMask(Geometry::VerticalLine(-0.6*deg), true);
-    result->addMask(Geometry::HorizontalLine(0.3*deg), false);
+    result->addMask(Ellipse(-0.5*deg, 1.5*deg, 0.3*deg, 0.1*deg, 45.*deg), false);
+    result->addMask(VerticalLine(-0.6*deg), true);
+    result->addMask(HorizontalLine(0.3*deg), false);
 
     return result;
 }
@@ -299,7 +299,7 @@ GISASSimulation *StandardSimulations::SphericalDetWithRoi() {
                                 30, 0.0 * Units::degree, 3.0 * Units::degree);
   result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree,
                             0.0 * Units::degree);
-  result->addMask(Geometry::Rectangle(-0.5 * Units::degree, 0.3 * Units::degree,
+  result->addMask(Rectangle(-0.5 * Units::degree, 0.3 * Units::degree,
                                       -0.2 * Units::degree,
                                       0.6 * Units::degree));
   result->setRegionOfInterest(-1.5 * Units::degree, 0.25 * Units::degree,
@@ -312,7 +312,7 @@ GISASSimulation *StandardSimulations::SphericalDetWithRoi() {
 GISASSimulation* StandardSimulations::RectDetWithRoi()
 {
     GISASSimulation* result = RectDetectorPerpToDirectBeam();
-    result->addMask(Geometry::Rectangle(3.0, 4.0, 5.0, 7.0));
+    result->addMask(Rectangle(3.0, 4.0, 5.0, 7.0));
     result->setRegionOfInterest(2.0, 3.0, 18.0, 15.0);
     return result;
 }

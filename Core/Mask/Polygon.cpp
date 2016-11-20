@@ -24,8 +24,6 @@ GCC_DIAG_ON(unused-parameter)
 
 using namespace boost::geometry;
 
-namespace Geometry {
-
 //! The private data for polygons to hide boost dependency from the header
 class PolygonPrivate {
 public:
@@ -110,7 +108,7 @@ bool Polygon::contains(double x, double y) const
     return covered_by(PolygonPrivate::point_t(x, y), m_d->polygon); // including borders
 }
 
-bool Polygon::contains(const Bin1D &binx, const Bin1D &biny) const
+bool Polygon::contains(const Bin1D& binx, const Bin1D& biny) const
 {
     return contains(binx.getMidPoint(), biny.getMidPoint());
 }
@@ -129,5 +127,3 @@ void Polygon::print(std::ostream &ostr) const
 {
     ostr << wkt<PolygonPrivate::polygon_t>(m_d->polygon);
 }
-
-} // namespace Geometry

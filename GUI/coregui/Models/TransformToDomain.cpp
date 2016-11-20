@@ -351,7 +351,7 @@ void TransformToDomain::initInstrumentFromDetectorItem(const SessionItem& detect
                     instrument->getDetector()->setRegionOfInterest(xlow, ylow, xup, yup);
 
                 } else {
-                    std::unique_ptr<Geometry::IShape2D > shape(maskItem->createShape(scale));
+                    std::unique_ptr<IShape2D > shape(maskItem->createShape(scale));
                     bool mask_value = maskItem->getItemValue(MaskItem::P_MASK_VALUE).toBool();
                     instrument->getDetector()->addMask(*shape, mask_value);
                 }

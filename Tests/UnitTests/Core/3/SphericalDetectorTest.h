@@ -284,7 +284,7 @@ TEST_F(SphericalDetectorTest, MaskOfDetector)
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
 
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
     detector.addMask(polygon, true);
 
     const OutputData<bool> *mask = detector.getDetectorMask()->getMaskData();
@@ -332,8 +332,8 @@ TEST_F(SphericalDetectorTest, Clone)
     SphericalDetector detector(6, -1.0*Units::deg, 5.0*Units::deg,
                                4, 0.0*Units::deg, 4.0*Units::deg);
     detector.setRegionOfInterest(0.1*Units::deg, 1.1*Units::deg, 3.0*Units::deg, 2.9*Units::deg);
-    detector.addMask(Geometry::Rectangle(-0.9*Units::deg, 0.1*Units::deg, 0.9*Units::deg, 1.9*Units::deg), true);
-    detector.addMask(Geometry::Rectangle(3.1*Units::deg, 2.1*Units::deg, 4.9*Units::deg, 3.9*Units::deg), true);
+    detector.addMask(Rectangle(-0.9*Units::deg, 0.1*Units::deg, 0.9*Units::deg, 1.9*Units::deg), true);
+    detector.addMask(Rectangle(3.1*Units::deg, 2.1*Units::deg, 4.9*Units::deg, 3.9*Units::deg), true);
     detector.setDetectorResolution(new ConvolutionDetectorResolution(
             new ResolutionFunction2DGaussian(1,1)));
 

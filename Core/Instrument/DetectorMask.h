@@ -37,7 +37,7 @@ public:
     //! The value "true" means that the area will be excluded from the analysis.
     //! @param shape The shape of mask.
     //! @param mask_value The value of mask
-    void addMask(const Geometry::IShape2D& shape, bool mask_value);
+    void addMask(const IShape2D& shape, bool mask_value);
 
     //! Init the map of masks for the given detector plane
     void initMaskData(const IDetector2D& detector);
@@ -60,12 +60,12 @@ public:
 
     size_t numberOfMasks() const;
 
-    const Geometry::IShape2D* getMaskShape(size_t mask_index, bool& mask_value) const;
+    const IShape2D* getMaskShape(size_t mask_index, bool& mask_value) const;
 
 private:
     void process_masks();
 
-    SafePointerVector<Geometry::IShape2D> m_shapes;
+    SafePointerVector<IShape2D> m_shapes;
     std::vector<bool> m_mask_of_shape;
     OutputData<bool> m_mask_data;
     int m_number_of_masked_channels;
