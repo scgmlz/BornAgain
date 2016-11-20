@@ -18,7 +18,7 @@
 
 #include <string>
 
-//! Mames of minimizer libraries, like Minuit2, GSLLMA, ...
+//! Names of minimizer libraries, like Minuit2, GSLLMA, ...
 
 namespace MinimizerNames {
 
