@@ -14,35 +14,35 @@
 // ************************************************************************** //
 
 #include "Minuit2Minimizer.h"
-#include "MinimizerResultsHelper.h"
 #include "Minuit2/Minuit2Minimizer.h"
+#include "StringUtils.h"
 
 namespace {
 
-std::map<int, std::string> statusDescription()
-{
-    std::map<int, std::string> result;
-    result[0] = std::string("OK, valid minimum");
-    result[1] = std::string("Didn't converge, covariance was made pos defined");
-    result[2] = std::string("Didn't converge, Hesse is invalid");
-    result[3] = std::string("Didn't converge, Edm is above max");
-    result[4] = std::string("Didn't converge, reached call limit");
-    result[5] = std::string("Didn't converge, unknown failure");
-    return result;
-}
+    std::map<int, std::string> statusDescription()
+    {
+        std::map<int, std::string> result;
+        result[0] = "OK, valid minimum";
+        result[1] = "Didn't converge, covariance was made pos defined";
+        result[2] = "Didn't converge, Hessian is invalid";
+        result[3] = "Didn't converge, Edm is above max";
+        result[4] = "Didn't converge, reached call limit";
+        result[5] = "Didn't converge, unknown failure";
+        return result;
+    }
 
-std::map<int, std::string> covmatrixStatusDescription()
-{
-    std::map<int, std::string> result;
-    result[-1] = std::string("Not available (inversion failed or Hesse failed)");
-    result[0] = std::string("Available but not positive defined");
-    result[1] = std::string("Covariance only approximate");
-    result[2] = std::string("Full matrix but forced pos def");
-    result[3] = std::string("Full accurate");
-    return result;
-}
+    std::map<int, std::string> covmatrixStatusDescription()
+    {
+        std::map<int, std::string> result;
+        result[-1] = "Not available (inversion failed or Hessian failed)";
+        result[ 0] = "Available but not positive defined";
+        result[ 1] = "Covariance only approximate";
+        result[ 2] = "Full matrix but forced pos def";
+        result[ 3] = "Full accurate";
+        return result;
+    }
 
-}
+} // namespace
 
 Minuit2Minimizer::Minuit2Minimizer(const std::string &algorithmName)
     : RootMinimizerAdapter(MinimizerInfo::buildMinuit2Info(algorithmName))
@@ -135,7 +135,7 @@ std::string Minuit2Minimizer::statusToString() const
 std::map<std::string, std::string> Minuit2Minimizer::statusMap() const
 {
     auto result = RootMinimizerAdapter::statusMap();
-    result["Edm"] = to_string_scientific(rootMinimizer()->Edm());
+    result["Edm"] = StringUtils::scientific(rootMinimizer()->Edm());
     result["CovMatrixStatus"] = covmatrixStatusDescription()[rootMinimizer()->CovMatrixStatus()];
     result["functionCalls"] = std::to_string(rootMinimizer()->NCalls());
     return result;
@@ -168,4 +168,3 @@ const RootMinimizerAdapter::root_minimizer_t *Minuit2Minimizer::rootMinimizer() 
 {
     return m_minuit2_minimizer.get();
 }
-

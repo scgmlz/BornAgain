@@ -18,8 +18,6 @@
 
 #include "WinDllMacros.h"
 #include <string>
-#include <sstream>
-#include <iomanip>
 
 class RootMinimizerAdapter;
 class FitParameterSet;
@@ -42,13 +40,5 @@ private:
     std::string reportOption(const RootMinimizerAdapter* minimizer) const;
     std::string reportStatus(const RootMinimizerAdapter* minimizer) const;
 };
-
-template <typename T>
-std::string to_string_scientific(const T a_value, int n = 10)
-{
-    std::ostringstream out;
-    out << std::scientific << std::setprecision(n) << a_value;
-    return out.str();
-}
 
 #endif // MINIMIZERRESULTSHELPER_H

@@ -19,13 +19,15 @@
 #include "FitParameter.h"
 #include "MinimizerUtils.h"
 #include <boost/format.hpp>
+#include <iomanip>
+#include <sstream>
 
 namespace {
 
     const int column_width = 18;
 
     template<typename T>
-    std::string reportValue(const std::string &name, T value)
+    std::string reportValue(const std::string& name, T value)
     {
         std::ostringstream result;
         result << std::setw(column_width) << std::left << name  << ": " << value << std::endl;

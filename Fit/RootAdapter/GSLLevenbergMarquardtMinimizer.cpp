@@ -15,8 +15,8 @@
 
 #include "GSLLevenbergMarquardtMinimizer.h"
 #include "GSLMultiMinimizer.h"
-#include "MinimizerResultsHelper.h"
 #include "MinimizerUtils.h"
+#include "StringUtils.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -85,7 +85,7 @@ std::string GSLLevenbergMarquardtMinimizer::statusToString() const
 std::map<std::string, std::string> GSLLevenbergMarquardtMinimizer::statusMap() const
 {
     auto result = RootMinimizerAdapter::statusMap();
-    result["Edm"] = to_string_scientific(rootMinimizer()->Edm());
+    result["Edm"] = StringUtils::scientific(rootMinimizer()->Edm());
     result["CovMatrixStatus"] = covmatrixStatusDescription()[rootMinimizer()->CovMatrixStatus()];
     result["functionCalls"] = std::to_string(rootMinimizer()->NCalls());
     return result;
