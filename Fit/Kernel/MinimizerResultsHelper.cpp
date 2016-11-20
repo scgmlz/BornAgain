@@ -37,7 +37,7 @@ namespace {
 } // namespace
 
 
-std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter* minimizer) const
+std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter* minimizer)
 {
     std::ostringstream result;
 
@@ -49,7 +49,7 @@ std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter* mi
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportResults(const FitParameterSet* parameters) const
+std::string MinimizerResultsHelper::reportResults(const FitParameterSet* parameters)
 {
     std::ostringstream result;
 
@@ -84,7 +84,7 @@ std::string MinimizerResultsHelper::reportResults(const FitParameterSet* paramet
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter* minimizer) const
+std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter* minimizer)
 {
     std::ostringstream result;
     result << reportValue("MinimizerType", minimizer->minimizerName());
@@ -92,7 +92,7 @@ std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter* minimizer) const
+std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter* minimizer)
 {
     if(minimizer->options().size() == 0)
         return std::string();
@@ -110,7 +110,7 @@ std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter* min
     return result.str();
 }
 
-std::string MinimizerResultsHelper::reportStatus(const RootMinimizerAdapter* minimizer) const
+std::string MinimizerResultsHelper::reportStatus(const RootMinimizerAdapter* minimizer)
 {
     std::ostringstream result;
     result << MinimizerUtils::sectionString("Status");

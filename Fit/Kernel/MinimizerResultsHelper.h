@@ -30,15 +30,15 @@ public:
     MinimizerResultsHelper() {}
 
     //! Reports results of minimization in the form of multi-line string
-    std::string reportResults(const RootMinimizerAdapter* minimizer) const;
+    static std::string reportResults(const RootMinimizerAdapter* minimizer);
 
     //! Reports fit parameters settings and final results
-    std::string reportResults(const FitParameterSet* parameters) const;
+    static std::string reportResults(const FitParameterSet* parameters);
 
 private:
-    std::string reportDescription(const RootMinimizerAdapter* minimizer) const;
-    std::string reportOption(const RootMinimizerAdapter* minimizer) const;
-    std::string reportStatus(const RootMinimizerAdapter* minimizer) const;
+    static std::string reportDescription(const RootMinimizerAdapter* minimizer);
+    static std::string reportOption(const RootMinimizerAdapter* minimizer);
+    static std::string reportStatus(const RootMinimizerAdapter* minimizer);
 };
 
 #endif // MINIMIZERRESULTSHELPER_H
