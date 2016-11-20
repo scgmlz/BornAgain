@@ -20982,28 +20982,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_FitParameterSet_reportResults(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  FitParameterSet *arg1 = (FitParameterSet *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  std::string result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:FitParameterSet_reportResults",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_FitParameterSet, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FitParameterSet_reportResults" "', argument " "1"" of type '" "FitParameterSet const *""'"); 
-  }
-  arg1 = reinterpret_cast< FitParameterSet * >(argp1);
-  result = ((FitParameterSet const *)arg1)->reportResults();
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_FitParameterSet_correlationMatrix(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   FitParameterSet *arg1 = (FitParameterSet *) 0 ;
@@ -22474,12 +22452,6 @@ static PyMethodDef SwigMethods[] = {
 		"std::string FitParameterSet::parametersToString() const\n"
 		"\n"
 		"Printing and reporting. \n"
-		"\n"
-		""},
-	 { (char *)"FitParameterSet_reportResults", _wrap_FitParameterSet_reportResults, METH_VARARGS, (char *)"\n"
-		"FitParameterSet_reportResults(FitParameterSet self) -> std::string\n"
-		"\n"
-		"std::string FitParameterSet::reportResults() const\n"
 		"\n"
 		""},
 	 { (char *)"FitParameterSet_correlationMatrix", _wrap_FitParameterSet_correlationMatrix, METH_VARARGS, (char *)"\n"

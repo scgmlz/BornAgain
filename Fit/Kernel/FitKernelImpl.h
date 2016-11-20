@@ -55,10 +55,11 @@ public:
 
     FitParameterSet* fitParameters();
 
-    IMinimizer *minimizer();
+    IMinimizer* minimizer();
 
     //! Number of objective function calls.
     int functionCalls() const;
+
 private:
     FitParameterSet m_fit_parameters;
     std::unique_ptr<IMinimizer> m_minimizer;

@@ -95,7 +95,7 @@ std::string MinimizerResultsHelper::reportDescription(const RootMinimizerAdapter
 std::string MinimizerResultsHelper::reportOption(const RootMinimizerAdapter* minimizer)
 {
     if(minimizer->options().size() == 0)
-        return std::string();
+        return "";
 
     std::ostringstream result;
     result << MinimizerUtils::sectionString("Options");

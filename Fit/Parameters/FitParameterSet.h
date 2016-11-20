@@ -72,7 +72,6 @@ class BA_CORE_API_ FitParameterSet
     // Printing and reporting
 
     std::string parametersToString() const;
-    std::string reportResults() const;
 
     corr_matrix_t correlationMatrix() const { return m_corr_matrix; }
     void setCorrelationMatrix(const corr_matrix_t& matrix);

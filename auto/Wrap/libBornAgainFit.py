@@ -2288,16 +2288,6 @@ class FitParameterSet(_object):
         return _libBornAgainFit.FitParameterSet_parametersToString(self)
 
 
-    def reportResults(self):
-        """
-        reportResults(FitParameterSet self) -> std::string
-
-        std::string FitParameterSet::reportResults() const
-
-        """
-        return _libBornAgainFit.FitParameterSet_reportResults(self)
-
-
     def correlationMatrix(self):
         """
         correlationMatrix(FitParameterSet self) -> vdouble2d_t

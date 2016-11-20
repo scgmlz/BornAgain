@@ -15,7 +15,6 @@
 
 #include "FitParameterSet.h"
 #include "FitParameter.h"
-#include "MinimizerResultsHelper.h"
 #include "MinimizerUtils.h"
 #include <cmath>
 #include <iostream>
@@ -225,12 +224,6 @@ std::string FitParameterSet::parametersToString() const
     for (auto par: m_parameters)
         result << "   # "<< npar++ << " " << par->toString() << "\n";
     return result.str();
-}
-
-std::string FitParameterSet::reportResults() const
-{
-    MinimizerResultsHelper helper;
-    return helper.reportResults(this);
 }
 
 void FitParameterSet::setCorrelationMatrix(const FitParameterSet::corr_matrix_t& matrix)
