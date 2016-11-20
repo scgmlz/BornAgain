@@ -15,7 +15,6 @@
 
 #include "SimAnMinimizer.h"
 #include "GSLMultiMinimizer.h"
-#include "MinimizerResultsHelper.h"
 #include "MinimizerConstants.h"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
@@ -36,10 +35,7 @@ SimAnMinimizer::SimAnMinimizer()
     addOption(OptionNames::BoltzmannTmin, 0.1, "Boltzmann minimal temperature");
 }
 
-SimAnMinimizer::~SimAnMinimizer()
-{
-
-}
+SimAnMinimizer::~SimAnMinimizer() {}
 
 void SimAnMinimizer::setPrintLevel(int value)
 {
@@ -140,8 +136,7 @@ void SimAnMinimizer::propagateOptions()
     pars.t_min = boltzmannMinTemp();
 }
 
-const RootMinimizerAdapter::root_minimizer_t *SimAnMinimizer::rootMinimizer() const
+const RootMinimizerAdapter::root_minimizer_t* SimAnMinimizer::rootMinimizer() const
 {
     return m_siman_minimizer.get();
 }
-
