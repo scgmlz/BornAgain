@@ -37,7 +37,7 @@ private:
     double m_thicknessB;
     double m_sigma;
     double m_hurst;
-    double m_latteralCorrLength;
+    double m_lateralCorrLength;
     double m_crossCorrLength;
 };
 
