@@ -30,10 +30,10 @@ void setZeroBelow(SpecularMatrix::MultiLayerCoeff_t& coeff, size_t current_layer
 bool calculateUpFromLayer(SpecularMatrix::MultiLayerCoeff_t& coeff, const MultiLayer& sample,
                           const kvector_t k, size_t layer_index);
 
-// Computes refraction angles and transmission/reflection coefficients
-// for given coherent wave propagation in a multilayer.
-// k : length: wavenumber in vacuum, direction: defined in layer 0
-// roughness is modelled by tanh profile (see e.g. Phys. Rev. B, vol. 47 (8), p. 4385 (1993) )
+//! Computes refraction angles and transmission/reflection coefficients
+//! for given coherent wave propagation in a multilayer.
+//! Roughness is modelled by tanh profile [see e.g. Phys. Rev. B, vol. 47 (8), p. 4385 (1993)].
+//! k : length: wavenumber in vacuum, direction: defined in layer 0.
 
 void SpecularMatrix::execute(const MultiLayer& sample, const kvector_t k, MultiLayerCoeff_t& coeff)
 {

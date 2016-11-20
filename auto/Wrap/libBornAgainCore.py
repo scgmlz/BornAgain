@@ -20542,7 +20542,7 @@ class LayerRoughness(IRoughness):
     def __init__(self, *args):
         """
         __init__(LayerRoughness self) -> LayerRoughness
-        __init__(LayerRoughness self, double sigma, double hurstParameter, double latteralCorrLength) -> LayerRoughness
+        __init__(LayerRoughness self, double sigma, double hurstParameter, double lateralCorrLength) -> LayerRoughness
 
         LayerRoughness::LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength)
 
@@ -20653,16 +20653,16 @@ class LayerRoughness(IRoughness):
         return _libBornAgainCore.LayerRoughness_getHurstParameter(self)
 
 
-    def setLatteralCorrLength(self, latteralCorrLength):
+    def setLatteralCorrLength(self, lateralCorrLength):
         """
-        setLatteralCorrLength(LayerRoughness self, double latteralCorrLength)
+        setLatteralCorrLength(LayerRoughness self, double lateralCorrLength)
 
         void LayerRoughness::setLatteralCorrLength(double latteralCorrLength)
 
         Sets lateral correlation length. 
 
         """
-        return _libBornAgainCore.LayerRoughness_setLatteralCorrLength(self, latteralCorrLength)
+        return _libBornAgainCore.LayerRoughness_setLatteralCorrLength(self, lateralCorrLength)
 
 
     def getLatteralCorrLength(self):

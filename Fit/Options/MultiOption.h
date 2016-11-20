@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/MultiOption.h
+//! @file      Fit/Options/MultiOption.h
 //! @brief     Declares class MultiOption
 //!
 //! @homepage  http://www.bornagainproject.org
