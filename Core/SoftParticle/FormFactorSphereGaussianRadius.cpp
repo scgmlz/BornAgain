@@ -18,14 +18,12 @@
 #include "RealLimits.h"
 #include "RealParameter.h"
 
-using namespace BornAgain;
-
 FormFactorSphereGaussianRadius::FormFactorSphereGaussianRadius(double mean, double sigma)
 : m_mean(mean)
 , m_sigma(sigma)
 , m_mean_r3(0.0)
 {
-    setName(FormFactorSphereGaussianRadiusType);
+    setName(BornAgain::FormFactorSphereGaussianRadiusType);
     m_mean_r3 = calculateMeanR3();
     P_ff_sphere.reset(new FormFactorFullSphere(m_mean_r3));
     registerParameter(BornAgain::MeanRadius, &m_mean).setUnit("nm").setNonnegative();

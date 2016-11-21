@@ -28,8 +28,6 @@
 #include "RealParameter.h"
 #include "Units.h"
 
-using namespace BornAgain;
-
 MultiLayer* SizeDistributionDAModelBuilder::buildSample() const
 {
         MultiLayer* multi_layer = new MultiLayer();
@@ -193,10 +191,12 @@ MultiLayer* CylindersInSSCABuilder::buildSample() const
 
     DistributionGaussian gauss(5.0*Units::nanometer, 1.25*Units::nanometer);
     ParameterPattern pattern_radius;
-    pattern_radius.add(ParticleType).add(FFCylinderType).add(Radius);
+    pattern_radius.
+        add(BornAgain::ParticleType).add(BornAgain::FFCylinderType).add(BornAgain::Radius);
     ParameterDistribution par_distr(pattern_radius.toStdString(), gauss, 30, 3.0);
     ParameterPattern pattern_height;
-    pattern_height.add(ParticleType).add(FFCylinderType).add(Height);
+    pattern_height.
+        add(BornAgain::ParticleType).add(BornAgain::FFCylinderType).add(BornAgain::Height);
     par_distr.linkParameter(pattern_height.toStdString());
     ParticleDistribution particle_collection(particle_prototype, par_distr);
     particle_layout.addParticle(particle_collection);
