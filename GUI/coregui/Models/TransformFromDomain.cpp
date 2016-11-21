@@ -56,8 +56,6 @@
 #include <QDebug>
 #include <limits>
 
-using namespace BornAgain;
-
 void SetPDF1D(SessionItem* item, const IFTDistribution1D* pdf, QString group_name);
 void setPDF2D(SessionItem* item, const IFTDistribution2D* pdf, QString group_name);
 void SetDecayFunction1D(SessionItem* item, const IFTDecayFunction1D* pdf, QString group_name);
@@ -220,11 +218,11 @@ void TransformFromDomain::setItemFromSample(BeamItem* beamItem, const GISASSimul
         = simulation.getDistributionHandler().getDistributions();
     for (size_t i = 0; i < distributions.size(); ++i) {
         ParameterPattern pattern_wavelength;
-        pattern_wavelength.beginsWith("*").add(BeamType).add(Wavelength);
+        pattern_wavelength.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Wavelength);
         ParameterPattern pattern_alpha;
-        pattern_alpha.beginsWith("*").add(BeamType).add(Inclination);
+        pattern_alpha.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Inclination);
         ParameterPattern pattern_phi;
-        pattern_phi.beginsWith("*").add(BeamType).add(Azimuth);
+        pattern_phi.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Azimuth);
         std::string mainParameterName = distributions[i].getMainParameterName();
         if (mainParameterName == pattern_wavelength.toStdString()) {
             BeamDistributionItem* beamWavelength = dynamic_cast<BeamDistributionItem*>(
