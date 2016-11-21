@@ -18,9 +18,8 @@
 
 #include <cmath>
 
-//! @class Lattice2DParameters
+//! Additional parameters for 2D lattice.
 //! @ingroup samples
-//! @brief Additional parameters for 2D lattice
 
 class Lattice2DParameters
 {

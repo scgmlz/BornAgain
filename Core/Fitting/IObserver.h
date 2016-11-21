@@ -22,9 +22,8 @@
 
 class IObservable;
 
-//! @class IObserver
+//! Observer interface from %Observer pattern, for 1:n object dependencies.
 //! @ingroup tools_internal
-//! @brief Observer interface from %Observer pattern, for 1:n object dependencies.
 
 class BA_CORE_API_ IObserver {
 public:
@@ -34,13 +33,12 @@ public:
     virtual void notify (IObservable* subject) = 0;
 };
 
-//! @class IObservable
+//! Observable interface from %Observer pattern, for 1:n object dependencies.
 //! @ingroup tools_internal
-//! @brief Observable interface from %Observer pattern, for 1:n object dependencies.
 
 class BA_CORE_API_ IObservable {
 public:
-    // Shared pointer is used when passing these objects from python to c++
+    //! Shared pointer is used when passing these objects from Python to C++
     typedef std::shared_ptr<IObserver> observer_t;
     typedef std::list<observer_t> observerlist_t;
 

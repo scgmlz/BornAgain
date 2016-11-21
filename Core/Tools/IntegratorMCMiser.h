@@ -24,9 +24,8 @@
 template <class T>
 using miser_integrand = double (T::*)(double *, size_t, void*) const;
 
-//! @class MCMiserIntegrator
-//! @ingroup tools_internal
-//! @brief Template class to use Monte Carlo MISER integration of class member functions
+
+//! Template class to use Monte Carlo MISER integration of class member functions.
 //!
 //! Wraps an integrator from GNU Scientific Library.
 //! Since this class holds a persistent workspace, we need at least one instance per thread.
@@ -34,6 +33,8 @@ using miser_integrand = double (T::*)(double *, size_t, void*) const;
 //! - Create a handle to an integrator:
 //!       'auto integrator = make_integrator_miser(this, mem_function, dimension)'
 //! - Call: 'integrator.integrate(lmin, lmax, data, nbr_points)'
+//! @ingroup tools_internal
+
 template <class T> class IntegratorMCMiser
 {
 public:
@@ -66,19 +67,25 @@ private:
     gsl_rng *m_random_gen;
 };
 
+
 //! Alias template for handle to a miser integrator
 template <class T>
 using P_integrator_miser = std::unique_ptr<IntegratorMCMiser<T>>;
 
-//! @fn make_integrator_miser
+
+//! Template function to create an integrator object
 //! @ingroup tools_internal
-//! @brief Template function to create an integrator object
+
 template <class T> P_integrator_miser<T>
 make_integrator_miser(const T *object, miser_integrand<T> mem_function, size_t dim)
 {
     P_integrator_miser<T> P_integrator(new IntegratorMCMiser<T>(object, mem_function, dim));
     return P_integrator;
 }
+
+// ************************************************************************** //
+// Implementation
+// ************************************************************************** //
 
 template<class T> IntegratorMCMiser<T>::IntegratorMCMiser(
         const T *p_object, miser_integrand<T> p_member_function, size_t dim)

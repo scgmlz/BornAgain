@@ -23,9 +23,8 @@
 
 class FitSuiteImpl;
 
-//! @class IFitSuiteFunction
+//! Fitting functions interface to be used by Minimizer.
 //! @ingroup fitting_internal
-//! @brief Fitting functions interface to be used by Minimizer.
 
 class BA_CORE_API_ IFitSuiteFunction
 {
@@ -40,9 +39,8 @@ class BA_CORE_API_ IFitSuiteFunction
 };
 
 
-//! @class FitSuiteChiSquaredFunction
+//! Chi squared fitting function for minimizer.
 //! @ingroup fitting_internal
-//! @brief Chi squared fitting function for minimizer
 
 class BA_CORE_API_ FitSuiteChiSquaredFunction : public IFitSuiteFunction
 {
@@ -50,13 +48,12 @@ class BA_CORE_API_ FitSuiteChiSquaredFunction : public IFitSuiteFunction
     FitSuiteChiSquaredFunction() {}
     virtual ~FitSuiteChiSquaredFunction() {}
     //! evaluate method for chi2 value called directly from the minimizer
-    double evaluate(const std::vector<double> &pars);
+    double evaluate(const std::vector<double>& pars);
 };
 
 
-//! @class FitSuiteGradientFunction
+//! Gradient fitting function for minimizer.
 //! @ingroup fitting_internal
-//! @brief Gradient fitting function for minimizer
 
 class BA_CORE_API_ FitSuiteGradientFunction : public IFitSuiteFunction
 {
@@ -67,7 +64,7 @@ class BA_CORE_API_ FitSuiteGradientFunction : public IFitSuiteFunction
     virtual ~FitSuiteGradientFunction() {}
 
     //! evaluate method for gradients and residuals called directly from the minimizer
-    double evaluate(const std::vector<double> &pars, unsigned int index,
+    double evaluate(const std::vector<double>& pars, unsigned int index,
                     std::vector<double>& gradients);
 
     virtual size_t getNCallsTotal() const { return m_ncalls_total; }
@@ -76,9 +73,9 @@ class BA_CORE_API_ FitSuiteGradientFunction : public IFitSuiteFunction
  private:
     void verify_arrays();
     void verify_minimizer_logic(bool parameters_have_changed, int current_index);
-    void calculate_residuals(const std::vector<double> &pars);
-    void calculate_gradients(const std::vector<double> &pars);
-    void runSimulation(const std::vector<double> &pars);
+    void calculate_residuals(const std::vector<double>& pars);
+    void calculate_gradients(const std::vector<double>& pars);
+    void runSimulation(const std::vector<double>& pars);
 
     size_t m_npars;
     size_t m_ndatasize;

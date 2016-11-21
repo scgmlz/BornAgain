@@ -18,9 +18,8 @@
 
 #include "IFitStrategy.h"
 
-//! @class AdjustMinimizerStrategy
+//! Strategy modifies mimimizer settings before running minimization round.
 //! @ingroup fitting
-//! @brief Strategy modifies mimimizer settings before running minimization round.
 
 class BA_CORE_API_ AdjustMinimizerStrategy : public IFitStrategy
 {
@@ -28,14 +27,14 @@ public:
     AdjustMinimizerStrategy();
 
     AdjustMinimizerStrategy(const std::string& minimizerName,
-                               const std::string& algorithmName = std::string(),
-                               const std::string& optionString=std::string());
+                               const std::string& algorithmName="",
+                               const std::string& optionString="");
 
     virtual AdjustMinimizerStrategy* clone() const;
 
     void setMinimizer(const std::string& minimizerName,
-                      const std::string& algorithmName = std::string(),
-                      const std::string& optionString=std::string());
+                      const std::string& algorithmName="",
+                      const std::string& optionString="");
 
     virtual void execute();
 

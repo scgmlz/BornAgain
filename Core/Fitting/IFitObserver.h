@@ -19,10 +19,9 @@
 #include "IObserver.h"
 class FitSuite;
 
-//! @class IFitObserver
-//! @ingroup fitting_internal
-//! @brief Base class for all fit observers. Calls update method in following cases:
+//! Base class for all fit observers. Calls update method in following cases:
 //! first iteration, every n-th iteration, last iteration and when fit strategy has changed.
+//! @ingroup fitting_internal
 
 class BA_CORE_API_ IFitObserver : public IObserver
 {

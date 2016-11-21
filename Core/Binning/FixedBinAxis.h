@@ -16,17 +16,15 @@
 #ifndef FIXEDBINAXIS_H
 #define FIXEDBINAXIS_H
 
-
 #include "IAxis.h"
 
-//! @class FixedBinAxis
+//! Axis with fixed bin size.
 //! @ingroup tools
-//! @brief Axis with fixed bin size.
 
 class BA_CORE_API_ FixedBinAxis : public IAxis
 {
 public:
-    //! @brief FixedBinAxis constructor
+    //! FixedBinAxis constructor.
     //! @param name Axis name
     //! @param nbins number of bins
     //! @param start low edge of first bin
@@ -64,7 +62,5 @@ private:
     double m_start;
     double m_end;
 };
-
-
 
 #endif // FIXEDBINAXIS_H

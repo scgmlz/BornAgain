@@ -18,14 +18,13 @@
 
 #include "VariableBinAxis.h"
 
-//! @class ConstKBinAxis
+//! Axis with fixed bin size in sin(angle) space.
 //! @ingroup tools
-//! @brief Axis with fixed bin size in sin(angle) space.
 
 class BA_CORE_API_ ConstKBinAxis : public VariableBinAxis
 {
 public:
-    //! @brief ConstKBinAxis constructor
+    //! ConstKBinAxis constructor.
     //! @param name Axis name
     //! @param nbins number of bins
     //! @param start low edge of first bin

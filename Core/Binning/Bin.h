@@ -32,9 +32,8 @@ struct BA_CORE_API_ Bin1D
 //! value in [m_lower, m_upper)
 bool BinContains(const Bin1D& bin, double value);
 
-//! @class Bin1DKVector
+//! An one-dimensional range of kvector_t's.
 //! @ingroup tools_internal
-//! @brief An one-dimensional range of kvector_t's
 
 struct BA_CORE_API_ Bin1DKVector
 {
@@ -49,9 +48,8 @@ struct BA_CORE_API_ Bin1DKVector
     kvector_t m_q_upper;  //!< upper bound of the bin
 };
 
-//! @class Bin1DCVector
+//! An one-dimensional range of cvector_t's.
 //! @ingroup tools_internal
-//! @brief An one-dimensional range of cvector_t's
 
 class BA_CORE_API_ Bin1DCVector
 {

@@ -19,9 +19,8 @@
 #include "IFitStrategy.h"
 #include "SafePointerVector.h"
 
-//! @class FitSuiteStrategies
+//! Collection of strategies to fit.
 //! @ingroup fitting_internal
-//! @brief Collection of strategies to fit
 
 class BA_CORE_API_ FitSuiteStrategies
 {

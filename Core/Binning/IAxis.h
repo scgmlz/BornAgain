@@ -19,9 +19,8 @@
 #include "Bin.h"
 #include <vector>
 
-//! @class IAxis
+//! Interface for one-dimensional axes.
 //! @ingroup tools_internal
-//! @brief Interface for one-dimensional axes
 
 class BA_CORE_API_ IAxis
 {

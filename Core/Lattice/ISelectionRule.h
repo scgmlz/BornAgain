@@ -18,9 +18,8 @@
 
 #include "Vectors3D.h"
 
-//! @class ISelectionRule
+//! Pure virtual base class for selection rules.
 //! @ingroup samples_internal
-//! @brief Pure virtual base class for selection rules.
 
 class BA_CORE_API_ ISelectionRule
 {
@@ -32,9 +31,8 @@ public:
     virtual bool coordinateSelected(const ivector_t& coordinate) const=0;
 };
 
-//! @class SimpleSelectionRule
+//! Selection rule (v*q)%modulus!=0, defined by vector v(a,b,c) and modulus.
 //! @ingroup samples_internal
-//! @brief Selection rule (v*q)%modulus!=0, defined by vector v(a,b,c) and modulus.
 
 class SimpleSelectionRule : public ISelectionRule
 {
@@ -50,8 +48,7 @@ private:
     int m_mod;
 };
 
-inline SimpleSelectionRule::SimpleSelectionRule(
-    int a, int b, int c, int modulus)
+inline SimpleSelectionRule::SimpleSelectionRule(int a, int b, int c, int modulus)
     : m_a(a), m_b(b), m_c(c), m_mod(modulus) {}
 
 inline SimpleSelectionRule* SimpleSelectionRule::clone() const
@@ -59,8 +56,7 @@ inline SimpleSelectionRule* SimpleSelectionRule::clone() const
     return new SimpleSelectionRule(m_a, m_b, m_c, m_mod);
 }
 
-inline bool SimpleSelectionRule::coordinateSelected(
-        const ivector_t& coordinate) const
+inline bool SimpleSelectionRule::coordinateSelected(const ivector_t& coordinate) const
 {
     return (m_a*coordinate[0]+m_b*coordinate[1]+m_c*coordinate[2])%m_mod == 0;
 }

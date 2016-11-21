@@ -18,14 +18,13 @@
 
 #include "IAxis.h"
 
-//! @class VariableBinAxis
+//! Axis with variable bin size.
 //! @ingroup tools
-//! @brief Axis with variable bin size.
 
 class BA_CORE_API_ VariableBinAxis : public IAxis
 {
 public:
-    //! @brief VariableBinAxis constructor
+    //! VariableBinAxis constructor.
     //! @param name Axis name
     //! @param nbins number of bins
     //! @param bin_boundaries Array of size nbins+1 containing low-edges for each
@@ -65,6 +64,5 @@ protected:
 private:
     std::vector<double> m_bin_boundaries;  //!< vector containing the bin limits
 };
-
 
 #endif // VARIABLEBINAXIS_H

@@ -21,9 +21,8 @@
 class IClusteredParticles;
 class IMaterial;
 
-//! @class MesoCrystal
+//! A particle with an internal structure of smaller particles.
 //! @ingroup samples
-//! @brief A particle with an internal structure of smaller particles
 
 class BA_CORE_API_ MesoCrystal : public IParticle
 {
