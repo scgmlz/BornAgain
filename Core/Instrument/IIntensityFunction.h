@@ -19,23 +19,20 @@
 
 #include "WinDllMacros.h"
 
-//! @class IIntensityFunction
+//! Interface for applying arbitrary function to the measured intensity.
 //! @ingroup algorithms_internal
-//! @brief Interface for applying arbitrary function to the measured intensity
 
 class BA_CORE_API_ IIntensityFunction
 {
 public:
     virtual ~IIntensityFunction() {}
-    virtual IIntensityFunction *clone() const=0;
-
-    virtual double evaluate(double value) const=0;
+    virtual IIntensityFunction *clone() const =0;
+    virtual double evaluate(double value) const =0;
 };
 
 
-//! @class IntensityFunctionLog
+//! Algorithm for applying log function to the measured intensity.
 //! @ingroup algorithms_internal
-//! @brief Algorithm for applying log function to the measured intensity
 
 class BA_CORE_API_ IntensityFunctionLog : public IIntensityFunction
 {
@@ -46,9 +43,8 @@ public:
 };
 
 
-//! @class IntensityFunctionSqrt
+//! Algorithm for applying sqrt function to the measured intensity.
 //! @ingroup algorithms_internal
-//! @brief Algorithm for applying sqrt function to the measured intensity
 
 class BA_CORE_API_ IntensityFunctionSqrt : public IIntensityFunction
 {
