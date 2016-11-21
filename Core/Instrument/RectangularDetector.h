@@ -19,9 +19,8 @@
 #include "IDetector2D.h"
 #include "IPixelMap.h"
 
-//! @class RectangularDetector
+//! A flat rectangular detector with axes and resolution function.
 //! @ingroup simulation
-//! @brief A rectangular plane detector with axes and resolution function.
 
 class BA_CORE_API_ RectangularDetector : public IDetector2D
 {

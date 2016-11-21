@@ -20,9 +20,8 @@
 #include "Exceptions.h"
 #include <limits>
 
-//! @class LLData
+//! Template class to store data of any type in multi-dimensional space (low-level).
 //! @ingroup tools_internal
-//! @brief Template class to store data of any type in multi-dimensional space (low-level)
 
 template <class T> class LLData
 {
@@ -200,33 +199,29 @@ template<class T> LLData<T>& LLData<T>::operator/=(const LLData& right)
 
 template<class T> void LLData<T>::setAll(const T& value)
 {
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] = value;
-    }
 }
 
 template<class T> void LLData<T>::scaleAll(const T& factor)
 {
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] *= factor;
-    }
 }
 
 template<class T> inline size_t LLData<T>::getTotalSize() const
 {
     size_t result = 1;
-    for (size_t i=0; i<m_rank; ++i) {
+    for (size_t i=0; i<m_rank; ++i)
         result *= m_dims[i];
-    }
     return result;
 }
 
 template<class T> T LLData<T>::getTotalSum() const
 {
     T result = getZeroElement();
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         result += m_data_array[i];
-    }
     return result;
 }
 
@@ -236,9 +231,8 @@ template<class T> void LLData<T>::allocate(size_t rank, const int* dimensions)
     m_rank = rank;
     if (m_rank) {
         m_dims = new int[m_rank];
-        for (size_t i=0; i<m_rank; ++i) {
+        for (size_t i=0; i<m_rank; ++i)
             m_dims[i] = checkPositiveDimension(dimensions[i]);
-        }
         m_data_array = new T[getTotalSize()];
     }
     else {
@@ -321,15 +315,13 @@ template<class T> LLData<T> operator/(const LLData<T>& left, const LLData<T>& ri
 
 template<class T> bool HaveSameDimensions(const LLData<T>& left, const LLData<T>& right)
 {
-    if (left.getRank() != right.getRank()) {
+    if (left.getRank() != right.getRank())
         return false;
-    }
     const int* ldims = left.getDimensions();
     const int* rdims = right.getDimensions();
     for (size_t i=0; i<left.getRank(); ++i) {
-        if (ldims[i] != rdims[i]) {
+        if (ldims[i] != rdims[i])
             return false;
-        }
     }
     return true;
 }

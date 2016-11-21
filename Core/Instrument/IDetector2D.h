@@ -33,9 +33,8 @@ class IShape2D;
 class RegionOfInterest;
 class SimulationElement;
 
-//! @class IDetector
+//! Pure virtual detector interface.
 //! @ingroup simulation
-//! @brief The detector interface.
 
 class BA_CORE_API_ IDetector2D : public ICloneable, public IParameterized
 {
@@ -44,7 +43,7 @@ public:
 
     IDetector2D();
 
-    virtual IDetector2D* clone() const=0;
+    virtual IDetector2D* clone() const =0;
 
     virtual ~IDetector2D();
 
@@ -78,7 +77,7 @@ public:
     void setAnalyzerProperties(const kvector_t direction, double efficiency,
                                double total_transmission);
 
-    //! removes all masks from the detector
+    //! Removes all masks from the detector
     void removeMasks();
 
     //! Adds mask of given shape to the stack of detector masks. The mask value 'true' means
@@ -122,10 +121,10 @@ public:
     //! Inits axes of OutputData to match the detector and sets values to zero.
     virtual void initOutputData(OutputData<double> &data) const;
 
-    //! returns vector of valid axes units
+    //! Returns vector of valid axes units
     virtual std::vector<EAxesUnits> getValidAxesUnits() const;
 
-    //! return default axes units
+    //! Return default axes units
     virtual EAxesUnits getDefaultAxesUnits() const { return DEFAULT; }
 
     //! Returns region of  interest if exists.
