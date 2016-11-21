@@ -23,9 +23,8 @@
 #include <tiffio.hxx>
 #include <memory>
 
-//! @class TiffHandler
+//! Reads/write tiff files, should be used through TiffReadStrategy.
 //! @ingroup input_output_internal
-//! @brief Reads/write tiff files, should be used through TiffReadStrategy
 
 class BA_CORE_API_ TiffHandler
 {
