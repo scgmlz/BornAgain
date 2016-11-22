@@ -94,22 +94,22 @@ TEST_F(LLDataTest, GetDimensions) {
 
 TEST_F(LLDataTest, DataCopyingConstructor) {
     LLData<int> *other_int_data_0d = new LLData<int>(*int_data_0d);
-    EXPECT_TRUE(HaveSameDimensions(*int_data_0d, *other_int_data_0d));
+    EXPECT_TRUE(haveSameDimensions(*int_data_0d, *other_int_data_0d));
 
     fl_data_1d->setAll(1.2);
     LLData<float> *other_fl_data_1d  = new LLData<float>(*fl_data_1d);
-    EXPECT_TRUE(HaveSameDimensions(*fl_data_1d, *other_fl_data_1d));
+    EXPECT_TRUE(haveSameDimensions(*fl_data_1d, *other_fl_data_1d));
     EXPECT_FLOAT_EQ( (*other_fl_data_1d)[0], 1.2f);
 
     db_data_3d->setAll(1.17);
     LLData<double> *other_db_data_3d  = new LLData<double>(*db_data_3d);
-    EXPECT_TRUE(HaveSameDimensions(*db_data_3d, *other_db_data_3d));
+    EXPECT_TRUE(haveSameDimensions(*db_data_3d, *other_db_data_3d));
     EXPECT_DOUBLE_EQ( (*other_db_data_3d)[10], 1.17);
 
 
     matrix_data_2d->setAll(Eigen::Matrix2d::Identity());
     LLData<Eigen::Matrix2d> *other_matrix_data_2d  = new LLData<Eigen::Matrix2d>(*matrix_data_2d);
-    EXPECT_TRUE(HaveSameDimensions(*matrix_data_2d, *other_matrix_data_2d));
+    EXPECT_TRUE(haveSameDimensions(*matrix_data_2d, *other_matrix_data_2d));
     EXPECT_EQ( (*other_matrix_data_2d)[7], Eigen::Matrix2d::Identity());
 
     delete other_int_data_0d;
@@ -278,7 +278,7 @@ TEST_F(LLDataTest, Division) {
     delete other_db_data_3d;
 }
 
-TEST_F (LLDataTest, HaveSameDimensions) {
+TEST_F (LLDataTest, haveSameDimensions) {
     int *odim0 = new int[0];
 
     int *odim1 = new int[1];
@@ -293,20 +293,19 @@ TEST_F (LLDataTest, HaveSameDimensions) {
     odim2[0] = 20;
     odim2[1] = 30;
 
-
     LLData<int>    *other_int_data_0d = new LLData<int>(0u, odim0);
     LLData<float>  *other_fl_data_1d  = new LLData<float>(1u, odim1);
     LLData<double> *other_db_data_3d  = new LLData<double>(3u, odim3);
     LLData<Eigen::Matrix2d> *other_matrix_data_2d = new LLData<Eigen::Matrix2d>(2u, odim2);
 
-    EXPECT_TRUE(HaveSameDimensions(*int_data_0d, *other_int_data_0d));
-    EXPECT_TRUE(HaveSameDimensions(*fl_data_1d, *other_fl_data_1d));
-    EXPECT_TRUE(HaveSameDimensions(*db_data_3d, *other_db_data_3d));
-    EXPECT_TRUE(HaveSameDimensions(*other_matrix_data_2d, *matrix_data_2d));
+    EXPECT_TRUE(haveSameDimensions(*int_data_0d, *other_int_data_0d));
+    EXPECT_TRUE(haveSameDimensions(*fl_data_1d, *other_fl_data_1d));
+    EXPECT_TRUE(haveSameDimensions(*db_data_3d, *other_db_data_3d));
+    EXPECT_TRUE(haveSameDimensions(*other_matrix_data_2d, *matrix_data_2d));
 
     odim3[1] = 25;
     LLData<double> *some_other_db_data_3d  = new LLData<double>(3u, odim3);
-    EXPECT_FALSE(HaveSameDimensions(*db_data_3d, *some_other_db_data_3d));
+    EXPECT_FALSE(haveSameDimensions(*db_data_3d, *some_other_db_data_3d));
 
     delete other_int_data_0d;
     delete other_fl_data_1d;
@@ -320,9 +319,8 @@ TEST_F (LLDataTest, HaveSameDimensions) {
 }
 
 TEST_F(LLDataTest, Accessors) {
-    for (size_t i=0; i < fl_data_1d->getTotalSize(); ++i) {
+    for (size_t i=0; i < fl_data_1d->getTotalSize(); ++i)
         (*fl_data_1d)[i] = 0.5f*i;
-    }
     EXPECT_FLOAT_EQ((*fl_data_1d)[2], 1.0f);
 
     int *coordinate = new int[1];

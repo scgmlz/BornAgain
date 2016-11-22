@@ -69,8 +69,20 @@ private:
     T* m_data_array;
 };
 
-// Global helper functions for comparison
-template <class T> bool HaveSameDimensions(const LLData<T>& left, const LLData<T>& right);
+namespace { // helper function
+    template<class T> bool haveSameDimensions(const LLData<T>& left, const LLData<T>& right)
+    {
+        if (left.getRank() != right.getRank())
+            return false;
+        const int* ldims = left.getDimensions();
+        const int* rdims = right.getDimensions();
+        for (size_t i=0; i<left.getRank(); ++i) {
+            if (ldims[i] != rdims[i])
+                return false;
+        }
+        return true;
+    }
+}
 
 // ************************************************************************** //
 // Implementation
@@ -116,7 +128,7 @@ template<class T> inline const T& LLData<T>::atCoordinate(int* coordinate) const
 
 template<class T> LLData<T>& LLData<T>::operator+=(const LLData<T>& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation += on LLData requires both operands to have the same dimensions");
     for (size_t i=0; i<getTotalSize(); ++i)
@@ -126,7 +138,7 @@ template<class T> LLData<T>& LLData<T>::operator+=(const LLData<T>& right)
 
 template<class T> LLData<T>& LLData<T>::operator-=(const LLData& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation -= on LLData requires both operands to have the same dimensions");
     for (size_t i=0; i<getTotalSize(); ++i)
@@ -136,7 +148,7 @@ template<class T> LLData<T>& LLData<T>::operator-=(const LLData& right)
 
 template<class T> LLData<T>& LLData<T>::operator*=(const LLData& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation *= on LLData requires both operands to have the same dimensions");
     for (size_t i=0; i<getTotalSize(); ++i)
@@ -146,7 +158,7 @@ template<class T> LLData<T>& LLData<T>::operator*=(const LLData& right)
 
 template<class T> LLData<T>& LLData<T>::operator/=(const LLData& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation /= on LLData requires both operands to have the same dimensions");
     for (size_t i=0; i<getTotalSize(); ++i) {
@@ -263,19 +275,6 @@ template<class T> LLData<T> LLData<T>::operator/(const LLData<T>& right)
     LLData<T> result(*this);
     result /= right;
     return result;
-}
-
-template<class T> bool HaveSameDimensions(const LLData<T>& left, const LLData<T>& right)
-{
-    if (left.getRank() != right.getRank())
-        return false;
-    const int* ldims = left.getDimensions();
-    const int* rdims = right.getDimensions();
-    for (size_t i=0; i<left.getRank(); ++i) {
-        if (ldims[i] != rdims[i])
-            return false;
-    }
-    return true;
 }
 
 #endif // LLDATA_H
