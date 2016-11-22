@@ -20,7 +20,7 @@
 
 namespace BA_ROOT { namespace Math { class GSLSimAnMinimizer; } }
 
-//! Wrapper for ROOT GSL simmulated annealing minimizer
+//! Wrapper for the CERN ROOT facade of the GSL simmulated annealing minimizer.
 //! @ingroup fitting_internal
 
 class BA_CORE_API_ SimAnMinimizer : public RootMinimizerAdapter {

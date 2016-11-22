@@ -22,7 +22,7 @@
 
 namespace BA_ROOT { namespace Minuit2 { class Minuit2Minimizer; } }
 
-//! Wrapper for the CERN ROOT Minuit2 minimizer.
+//! Wrapper for the CERN ROOT facade of the Minuit2 minimizer.
 //! See Minuit2 user manual https://root.cern.ch/root/htmldoc/guides/minuit2/Minuit2.pdf.
 //! @ingroup fitting_internal
 

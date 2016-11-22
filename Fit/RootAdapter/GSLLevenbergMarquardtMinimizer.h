@@ -20,8 +20,11 @@
 
 namespace BA_ROOT { namespace Math { class GSLNLSMinimizer; } }
 
-//! Wrapper for GSL Levenberg-Marquardt minimizer.
-//! http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html
+//! Wrapper for CERN ROOT facade of the GSL Levenberg-Marquardt minimizer.
+//! It's a facade to ROOT::Math::GSLNLSMinimizer which adapts ROOT::Math::GSLMultiFit
+//! minimizers to some CERN ROOT generic minimizer interface. ROOT::Math::GSLMultiFit,
+//! in turn, is a facade to the actual GSL's gsl_multifit_fdfsolver_type
+//! (http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html).
 //! @ingroup fitting_internal
 
 class BA_CORE_API_ GSLLevenbergMarquardtMinimizer : public RootMinimizerAdapter {
