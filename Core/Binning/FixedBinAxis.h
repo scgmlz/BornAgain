@@ -18,7 +18,7 @@
 
 #include "IAxis.h"
 
-//! Axis with fixed bin size.
+//! Axis with bins of uniform size.
 //! @ingroup tools
 
 class BA_CORE_API_ FixedBinAxis : public IAxis
@@ -29,10 +29,11 @@ public:
     //! @param nbins number of bins
     //! @param start low edge of first bin
     //! @param end upper edge of last bin
-    FixedBinAxis(const std::string &name, size_t nbins, double start, double end);
+    FixedBinAxis(const std::string& name, size_t nbins, double start, double end);
     virtual ~FixedBinAxis() {}
 
-    FixedBinAxis *clone() const;
+    FixedBinAxis* clone() const final {
+        return new FixedBinAxis(getName(), m_nbins, m_start, m_end); }
 
     size_t size() const { return m_nbins; }
 
@@ -51,7 +52,7 @@ public:
 
     std::vector<double > getBinBoundaries() const;
 
-    FixedBinAxis *createClippedAxis(double left, double right) const;
+    FixedBinAxis* createClippedAxis(double left, double right) const;
 
 protected:
     void print(std::ostream& ostr) const;
