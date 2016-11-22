@@ -15,7 +15,7 @@ TEST_F(PolygonTest, SimpleRectangle)
     // simple closed rectangle
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
     EXPECT_DOUBLE_EQ(32.0, polygon.getArea());
     EXPECT_TRUE(polygon.contains(0.0, 0.0));
     EXPECT_TRUE(polygon.contains(4.0, 2.0));
@@ -27,7 +27,7 @@ TEST_F(PolygonTest, SimpleRectangle)
     // unclosed rectangle (should be closed automatically)
     x = {4.0, -4.0, -4.0, 4.0};
     y = {2.0, 2.0, -2.0, -2.0};
-    Geometry::Polygon polygon2(x, y);
+    Polygon polygon2(x, y);
     EXPECT_DOUBLE_EQ(32.0, polygon2.getArea());
     EXPECT_TRUE(polygon2.contains(0.0, 0.0));
     EXPECT_TRUE(polygon2.contains(4.0, 2.0));
@@ -49,7 +49,7 @@ TEST_F(PolygonTest, SandWatchShape)
 {
     std::vector<double> x = {2.0, -2.0, 2.0, -2.0, 2.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
 //    std::cout << polygon << std::endl;
 
     // for some reason area calculation doesn't work for boost's polygon of such shape
@@ -70,7 +70,7 @@ TEST_F(PolygonTest, ContainsBin)
     // simple closed rectangle
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
 
     Bin1D binx1(3.5, 4.5);
     Bin1D biny1(1.5, 2.5);
@@ -86,9 +86,9 @@ TEST_F(PolygonTest, Clone)
 {
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-    Geometry::Polygon polygon(x, y);
+    Polygon polygon(x, y);
 
-    std::unique_ptr<Geometry::Polygon > clone(polygon.clone());
+    std::unique_ptr<Polygon > clone(polygon.clone());
     EXPECT_DOUBLE_EQ(32.0, clone->getArea());
     EXPECT_TRUE(clone->contains(0.0, 0.0));
     EXPECT_TRUE(clone->contains(4.0, 2.0));
@@ -110,7 +110,7 @@ TEST_F(PolygonTest, ConstructFrom2DArray)
         points.push_back(p);
     }
 
-    Geometry::Polygon polygon(points);
+    Polygon polygon(points);
     EXPECT_DOUBLE_EQ(32.0, polygon.getArea());
     EXPECT_TRUE(polygon.contains(0.0, 0.0));
     EXPECT_TRUE(polygon.contains(4.0, 2.0));
@@ -127,7 +127,7 @@ TEST_F(PolygonTest, ConstructFrom2DArray)
 
 //    std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
 //    std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
-//    Geometry::Polygon polygon(x, y);
+//    Polygon polygon(x, y);
 
 //    polygon.getPoints(xpos, ypos);
 //    for(size_t i=0; i<xpos.size(); ++i) {

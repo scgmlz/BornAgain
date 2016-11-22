@@ -17,7 +17,7 @@
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
 #include "ILayout.h"
-#include "Materials.h"
+#include "IMaterial.h"
 #include "ParameterPool.h"
 #include "RealParameter.h"
 
@@ -53,8 +53,7 @@ Layer::~Layer()
 
 Layer* Layer::cloneInvertB() const
 {
-    Layer* p_clone = new Layer(
-        *Materials::createInvertedMaterial(this->mp_material), this->m_thickness);
+    Layer* p_clone = new Layer(*mp_material->cloneInverted(), m_thickness);
     for (size_t i=0; i<getNumberOfLayouts(); ++i)
         p_clone->addLayoutPtr(getLayout(i)->cloneInvertB());
     p_clone->setNumberOfLayers(getNumberOfLayers());

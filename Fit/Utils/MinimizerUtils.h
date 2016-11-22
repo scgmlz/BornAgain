@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/MinimizerUtils.h
+//! @file      Fit/Utils/MinimizerUtils.h
 //! @brief     Declares namespace MinimizerUtils.
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -21,10 +21,11 @@
 #include <vector>
 #include <map>
 
+//! Utility functions for fit library
 
 namespace MinimizerUtils {
 
-BA_CORE_API_ std::string toString(const std::vector<std::string> &v, const std::string &delim = "");
+BA_CORE_API_ std::string toString(const std::vector<std::string>& v, const std::string& delim="");
 
 BA_CORE_API_ std::map<int, std::string> gslErrorDescriptionMap();
 
@@ -32,9 +33,8 @@ BA_CORE_API_ std::string gslErrorDescription(int errorCode);
 
 BA_CORE_API_ bool numbersDiffer(double a, double b, double tol);
 
-BA_CORE_API_ std::string sectionString(const std::string &sectionName = std::string(),
-                                       int report_width=80);
+BA_CORE_API_ std::string sectionString(const std::string& sectionName="", int report_width=80);
 
-}
+} // namespace MinimizerUtils
 
 #endif

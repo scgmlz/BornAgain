@@ -103,7 +103,7 @@ void ActionManager::createMenus()
 {
     m_menuBar = new QMenuBar(0); // No parent (System menu bar on Mac OS X)
 
-    if (!Utils::HostOsInfo::isMacHost())
+    if (!GUI_OS_Utils::HostOsInfo::isMacHost())
         m_mainWindow->setMenuBar(m_menuBar);
 
     // File Menu
@@ -137,20 +137,23 @@ void ActionManager::createGlobalShortcuts()
 {
     m_runSimulationShortcut =  new QShortcut(QKeySequence("Ctrl+r"), m_mainWindow);
     m_runSimulationShortcut->setContext((Qt::ApplicationShortcut));
-    connect(m_runSimulationShortcut, SIGNAL(activated()), m_mainWindow, SLOT(onRunSimulationShortcut()));
+    connect(m_runSimulationShortcut, SIGNAL(activated()),
+            m_mainWindow, SLOT(onRunSimulationShortcut()));
 }
 
 
 void ActionManager::aboutToShowRecentProjects()
 {
-    qDebug() << "ActionManager::aboutToShowRecentProjects() ->" << m_mainWindow->projectManager()->getRecentProjects();
+    qDebug() << "ActionManager::aboutToShowRecentProjects() ->"
+             << m_mainWindow->projectManager()->getRecentProjects();
     m_recentProjectsMenu->clear();
 
     bool hasRecentProjects = false;
     foreach(QString file, m_mainWindow->projectManager()->getRecentProjects() ) {
         hasRecentProjects = true;
-        qDebug() << file << QDir::toNativeSeparators(Utils::withTildeHomePath(file));
-        QAction *action = m_recentProjectsMenu->addAction(QDir::toNativeSeparators(Utils::withTildeHomePath(file)));
+        qDebug() << file << QDir::toNativeSeparators(GUI_StringUtils::withTildeHomePath(file));
+        QAction *action = m_recentProjectsMenu->addAction(
+            QDir::toNativeSeparators(GUI_StringUtils::withTildeHomePath(file)));
         action->setData(qVariantFromValue(file));
         connect(action, SIGNAL(triggered()), m_mainWindow, SLOT(openRecentProject()));
 
@@ -161,7 +164,8 @@ void ActionManager::aboutToShowRecentProjects()
     if (hasRecentProjects) {
         m_recentProjectsMenu->addSeparator();
         QAction *action = m_recentProjectsMenu->addAction("Clear Menu");
-        connect(action, SIGNAL(triggered()), m_mainWindow->projectManager(), SLOT(clearRecentProjects()));
+        connect(action, SIGNAL(triggered()),
+                m_mainWindow->projectManager(), SLOT(clearRecentProjects()));
     }
 
 }

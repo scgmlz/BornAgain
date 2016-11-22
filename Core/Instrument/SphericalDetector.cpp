@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Instrument/SphericalDetector.cpp
-//! @brief     Implements class SphericalDetector.
+//! @brief     Implements classes SphericalDetector and AngularPixelMap.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -20,6 +20,10 @@
 #include "SimulationElement.h"
 #include "Units.h"
 #include "MathConstants.h"
+
+// ************************************************************************** //
+// class SphericalDetector
+// ************************************************************************** //
 
 SphericalDetector::SphericalDetector()
 {
@@ -40,11 +44,6 @@ SphericalDetector::SphericalDetector(const SphericalDetector& other)
 {
     setName(BornAgain::SphericalDetectorType);
     init_parameters();
-}
-
-SphericalDetector* SphericalDetector::clone() const
-{
-    return new SphericalDetector(*this);
 }
 
 std::string SphericalDetector::addParametersToExternalPool(
@@ -108,10 +107,10 @@ void SphericalDetector::calculateAxisRange(size_t axis_index, const Beam &beam,
         IDetector2D::EAxesUnits units, double &amin, double &amax) const
 {
     amin = 0.0; amax=0.0;
-    if(units == DEGREES) {
+    if (units == DEGREES) {
         amin = getAxis(axis_index).getMin()/Units::degree;
         amax = getAxis(axis_index).getMax()/Units::degree;
-    }else if(units == RADIANS) {
+    } else if (units == RADIANS) {
         amin = getAxis(axis_index).getMin();
         amax = getAxis(axis_index).getMax();
     } else {
@@ -134,18 +133,22 @@ std::string SphericalDetector::getAxisName(size_t index) const
 
 size_t SphericalDetector::getIndexOfSpecular(const Beam& beam) const
 {
-    if (getDimension()!=2) return getTotalSize();
+    if (getDimension()!=2)
+        return getTotalSize();
     double alpha = beam.getAlpha();
     double phi = beam.getPhi();
     const IAxis& phi_axis = getAxis(BornAgain::X_AXIS_INDEX);
     const IAxis& alpha_axis = getAxis(BornAgain::Y_AXIS_INDEX);
     size_t phi_index = phi_axis.findIndex(phi);
     size_t alpha_index = alpha_axis.findIndex(alpha);
-    if (phi_index < phi_axis.size() && alpha_index < alpha_axis.size()) {
+    if (phi_index < phi_axis.size() && alpha_index < alpha_axis.size())
         return getGlobalIndex(phi_index, alpha_index);
-    }
     return getTotalSize();
 }
+
+// ************************************************************************** //
+// class AngularPixelMap
+// ************************************************************************** //
 
 AngularPixelMap::AngularPixelMap(Bin1D alpha_bin, Bin1D phi_bin)
     : m_alpha(alpha_bin.m_lower), m_phi(phi_bin.m_lower),

@@ -24,9 +24,8 @@
 class RootObjectiveFunction;
 class RootGradientFunction;
 
-//! @class RootObjectiveFunctionAdapter
+//! Adapts our objective functions to ROOT.
 //! @ingroup fitting_internal
-//! @brief The RootObjectiveFunctionAdapter class adapts our objective functions to ROOT.
 
 class BA_CORE_API_ RootObjectiveFunctionAdapter
 {
@@ -38,13 +37,13 @@ public:
 
     void setNumberOfParameters(int nparameters);
 
-    const RootObjectiveFunction *rootChiSquaredFunction();
+    const RootObjectiveFunction* rootChiSquaredFunction();
 
-    const RootGradientFunction *rootGradientFunction();
+    const RootGradientFunction* rootGradientFunction();
 
 private:
-    double evaluate(const double *pars);
-    double evaluate_gradient(const double *pars, unsigned int index, double *gradients);
+    double evaluate(const double* pars);
+    double evaluate_gradient(const double* pars, unsigned int index, double* gradients);
 
     objective_function_t m_objective_callback;
     gradient_function_t m_gradient_callback;

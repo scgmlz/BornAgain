@@ -16,7 +16,7 @@
 #include "Particle.h"
 #include "BornAgainNamespace.h"
 #include "FormFactorDecoratorPositionFactor.h"
-#include "Materials.h"
+#include "IMaterial.h"
 
 Particle::Particle()
 {
@@ -71,10 +71,9 @@ Particle* Particle::cloneInvertB() const
     if (mP_form_factor)
         p_result->setFormFactor(*mP_form_factor);
     if (mP_material)
-        p_result->mP_material.reset(Materials::createInvertedMaterial(mP_material.get()));
+        p_result->mP_material.reset(mP_material->cloneInverted());
     if (mP_ambient_material)
-        p_result->mP_ambient_material.reset(
-            Materials::createInvertedMaterial(mP_ambient_material.get()));
+        p_result->mP_ambient_material.reset(mP_ambient_material->cloneInverted());
     if (mP_rotation)
         p_result->setRotation(*mP_rotation);
     p_result->setPosition(m_position);

@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Fit/Utils/Logger.cpp
-//! @brief     Implement Logger class.
+//! @brief     Implements namespace Logging and class Logger.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -17,30 +17,30 @@
 #include <stdexcept>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-std::vector<std::string> MSG::Logger::m_level_names =
+std::vector<std::string> Logging::Logger::m_level_names =
     {"VERBOSE", "DEBUG2", "DEBUG", "INFO", "WARNING", "ERROR", "FATAL"};
 
-MSG::EMessageLevel MSG::Logger::m_logLevel = MSG::ERROR;
+Logging::EMessageLevel Logging::Logger::m_logLevel = Logging::ERROR;
 
-namespace MSG
+namespace Logging
 {
 
-void SetLevel(EMessageLevel level)
+void setLevel(EMessageLevel level)
 {
-    Logger::SetLevel(level);
+    Logger::setLevel(level);
 }
 
-void SetLevel(const std::string& levelname)
+void setLevel(const std::string& levelname)
 {
-    Logger::SetLevel(levelname);
+    Logger::setLevel(levelname);
 }
 
 
 Logger::Logger(EMessageLevel level)
 {
     //m_buffer << boost::this_thread::get_id();
-    m_buffer << "- " << NowTime();
-    m_buffer << " " << std::setw(8) << std::left << ToString(level) << ": ";
+    m_buffer << "- " << nowTime();
+    m_buffer << " " << std::setw(8) << std::left << toString(level) << ": ";
 }
 
 
@@ -50,22 +50,22 @@ Logger::~Logger()
     std::cout << m_buffer.str();
 }
 
-const std::string& Logger::ToString(EMessageLevel level)
+const std::string& Logger::toString(EMessageLevel level)
 {
     return m_level_names[level];
 }
 
-void Logger::SetLevel(EMessageLevel level)
+void Logger::setLevel(EMessageLevel level)
 {
     m_logLevel = level;
 }
 
-EMessageLevel Logger::GetLevel()
+EMessageLevel Logger::level()
 {
     return m_logLevel;
 }
 
-std::string Logger::NowTime()
+std::string Logger::nowTime()
 {
     //struct timeval tv;
     //gettimeofday(&tv, 0);
@@ -82,18 +82,18 @@ std::string Logger::NowTime()
     return msg.str();
 }
 
-void Logger::SetLevel(const std::string& levelname)
+void Logger::setLevel(const std::string& levelname)
 {
     int index(0);
-    for(auto it = m_level_names.begin(); it!=m_level_names.end(); ++it) {
+    for (auto it = m_level_names.begin(); it!=m_level_names.end(); ++it) {
         if( (*it) == levelname ) {
-            SetLevel(EMessageLevel(index));
+            setLevel(EMessageLevel(index));
             return;
         }
         ++index;
     }
     throw std::runtime_error(
-        "Logger::SetLevel() -> Error! There is no message level '"+levelname+"'");
+        "Logger::setLevel() -> Error! There is no message level '"+levelname+"'");
 }
 
 }

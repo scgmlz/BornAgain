@@ -21,9 +21,8 @@
 
 using std::size_t;
 
-//! @class SimulationOptions
+//! Collect the different options for simulation.
 //! @ingroup simulation
-//! @brief Collect the different options for simulation
 //! @ref SimulationOptions
 
 class BA_CORE_API_ SimulationOptions

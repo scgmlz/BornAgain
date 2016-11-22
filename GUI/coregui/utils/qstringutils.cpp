@@ -18,12 +18,12 @@
 #include "hostosinfo.h"
 #include <QDir>
 
-namespace Utils
+namespace GUI_StringUtils
 {
 
 QString withTildeHomePath(const QString &path)
 {
-    if (Utils::HostOsInfo::isWindowsHost())
+    if (GUI_OS_Utils::HostOsInfo::isWindowsHost())
         return path;
 
     static const QString homePath = QDir::homePath();
@@ -37,5 +37,4 @@ QString withTildeHomePath(const QString &path)
     return outPath;
 }
 
-
-} // namespace Utils
+} // namespace GUI_StringUtils

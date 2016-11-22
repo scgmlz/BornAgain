@@ -48,4 +48,4 @@ private:
     Eigen::Matrix2cd m_analyzer_operator; //!< polarization analyzer operator
 };
 
-#endif
+#endif // DETECTIONPROPERTIES_H

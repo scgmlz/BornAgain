@@ -50,8 +50,6 @@
 #include "Units.h"
 #include "VectorItem.h"
 
-using namespace BornAgain;
-
 std::unique_ptr<IMaterial> TransformToDomain::createDomainMaterial(const SessionItem& item)
 {
     MaterialProperty material_property;
@@ -351,7 +349,7 @@ void TransformToDomain::initInstrumentFromDetectorItem(const SessionItem& detect
                     instrument->getDetector()->setRegionOfInterest(xlow, ylow, xup, yup);
 
                 } else {
-                    std::unique_ptr<Geometry::IShape2D > shape(maskItem->createShape(scale));
+                    std::unique_ptr<IShape2D > shape(maskItem->createShape(scale));
                     bool mask_value = maskItem->getItemValue(MaskItem::P_MASK_VALUE).toBool();
                     instrument->getDetector()->addMask(*shape, mask_value);
                 }
@@ -365,11 +363,11 @@ void TransformToDomain::addDistributionParametersToSimulation(const SessionItem&
                                                               GISASSimulation* simulation)
 {
     ParameterPattern pattern_wavelength;
-    pattern_wavelength.beginsWith("*").add(BeamType).add(Wavelength);
+    pattern_wavelength.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Wavelength);
     ParameterPattern pattern_alpha;
-    pattern_alpha.beginsWith("*").add(BeamType).add(Inclination);
+    pattern_alpha.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Inclination);
     ParameterPattern pattern_phi;
-    pattern_phi.beginsWith("*").add(BeamType).add(Azimuth);
+    pattern_phi.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Azimuth);
     if (beam_item.modelType() == Constants::BeamType) {
         if (auto beamWavelength
             = dynamic_cast<BeamWavelengthItem*>(beam_item.getItem(BeamItem::P_WAVELENGTH))) {

@@ -43,31 +43,29 @@ GroupInfoBox::GroupInfoBox( QWidget *parent )
     init_box();
 }
 
-GroupInfoBox::GroupInfoBox( const QString &title, QWidget *parent )
+GroupInfoBox::GroupInfoBox( const QString &title, QWidget* parent )
     : QGroupBox( title, parent ), m_title(title)
 {
     init_box();
 }
 
-void GroupInfoBox::setButtonToolTip(const QString &text)
+void GroupInfoBox::setButtonToolTip(const QString& text)
 {
     m_toolTipText = text;
 }
 
-void GroupInfoBox::mousePressEvent( QMouseEvent *e )
+void GroupInfoBox::mousePressEvent( QMouseEvent* e )
 {
-    if( e->button() == Qt::LeftButton )
-    {
+    if( e->button() == Qt::LeftButton ) {
         QStyleOptionGroupBox option;
         initStyleOption( &option );
         QRect buttonArea( m_xImage, m_yImage, imageWidth , imageheigth );
-        if( buttonArea.contains( e->pos() ) ) {
+        if( buttonArea.contains( e->pos() ) )
             emit clicked(true);
-        }
     }
 }
 
-void GroupInfoBox::mouseMoveEvent(QMouseEvent *event)
+void GroupInfoBox::mouseMoveEvent(QMouseEvent* event)
 {
     QRect buttonArea(m_xImage, m_yImage, imageWidth, imageheigth);
 
@@ -84,7 +82,7 @@ void GroupInfoBox::init_box()
     m_toolTipText = QStringLiteral("Gives access to the extended distribution viewer.");
 }
 
-void GroupInfoBox::paintEvent(QPaintEvent *)
+void GroupInfoBox::paintEvent(QPaintEvent*)
 {
     QStylePainter paint(this);
     QStyleOptionGroupBox option;
@@ -95,12 +93,10 @@ void GroupInfoBox::paintEvent(QPaintEvent *)
     m_yImage = 0;
 
     // draw groupbox
-	int shift(1);
-	if(Utils::HostOsInfo::isLinuxHost()) shift = 3;
+    int shift(1);
+    if(GUI_OS_Utils::HostOsInfo::isLinuxHost())
+        shift = 3;
 
     paint.drawItemPixmap(option.rect.adjusted(0, shift, 0, 0), Qt::AlignTop | Qt::AlignRight,
                          QPixmap(":/images/magnifier.png"));
 }
-
-
-

@@ -18,15 +18,13 @@
 
 #include "IShape2D.h"
 
-namespace Geometry {
-
 //! A line segment.
 //! @ingroup mask
 
 class  BA_CORE_API_ Line : public IShape2D {
 public:
     Line(double x1, double y1, double x2, double y2);
-    Line *clone() const { return new Line(m_x1, m_y1, m_x2, m_y2); }
+    Line* clone() const { return new Line(m_x1, m_y1, m_x2, m_y2); }
 
     bool contains(double x, double y) const;
     bool contains(const Bin1D &binx, const Bin1D &biny) const;
@@ -42,10 +40,10 @@ private:
 class BA_CORE_API_ VerticalLine : public IShape2D {
 public:
     VerticalLine(double x);
-    VerticalLine *clone() const { return new VerticalLine(m_x); }
+    VerticalLine* clone() const { return new VerticalLine(m_x); }
 
     bool contains(double x, double y) const;
-    bool contains(const Bin1D &binx, const Bin1D &biny) const;
+    bool contains(const Bin1D& binx, const Bin1D& biny) const;
 
     double getXpos() const { return m_x; }
 
@@ -63,14 +61,12 @@ public:
     HorizontalLine *clone() const { return new HorizontalLine(m_y); }
 
     bool contains(double x, double y) const;
-    bool contains(const Bin1D &binx, const Bin1D &biny) const;
+    bool contains(const Bin1D& binx, const Bin1D& biny) const;
 
     double getYpos() const { return m_y; }
 
 private:
     double m_y;
 };
-
-} // namespace Geometry
 
 #endif // LINE_H

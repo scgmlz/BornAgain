@@ -41,6 +41,12 @@ HomogeneousMagneticMaterial* HomogeneousMagneticMaterial::clone() const
     return new HomogeneousMagneticMaterial(getName(), getRefractiveIndex(), getMagneticField());
 }
 
+HomogeneousMagneticMaterial* HomogeneousMagneticMaterial::cloneInverted() const
+{
+    return new HomogeneousMagneticMaterial(
+        getName()+"_inv", getRefractiveIndex(), -getMagneticField());
+}
+
 Eigen::Matrix2cd HomogeneousMagneticMaterial::getScatteringMatrix(
         double k_mag2) const
 {

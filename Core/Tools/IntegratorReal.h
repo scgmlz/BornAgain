@@ -23,15 +23,16 @@
 template <class T>
 using real_integrand = double (T::*)(double) const;
 
-//! @class IntegratorReal
-//! @ingroup tools_internal
-//! @brief Template class to integrate class member functions
+
+//! Template class to integrate class member functions.
 //!
 //! Wraps an integrator from the GNU Scientific Library.
 //! Since this class holds a persistent workspace, we need at least one instance per thread.
 //! Standard usage for integration inside a class T:
 //! - Create a handle to an integrator: 'auto integrator = make_integrator_real(this, mem_function)'
 //! - Call: 'integrator.integrate(lmin, lmax)'
+//! @ingroup tools_internal
+
 template <class T> class IntegratorReal
 {
 public:
@@ -59,13 +60,15 @@ private:
     gsl_integration_workspace *mp_gsl_workspace;
 };
 
+
 //! Alias template for handle to a real integrator
 template <class T>
 using P_integrator_real = std::unique_ptr<IntegratorReal<T>>;
 
-//! @fn make_integrator_real
+
+//! Template function to create an integrator object.
 //! @ingroup tools_internal
-//! @brief Template function to create an integrator object
+
 template <class T>
 P_integrator_real<T> make_integrator_real(const T *object, real_integrand<T> mem_function)
 {
@@ -73,11 +76,15 @@ P_integrator_real<T> make_integrator_real(const T *object, real_integrand<T> mem
     return P_integrator;
 }
 
+// ************************************************************************** //
+// Implementation
+// ************************************************************************** //
+
 template<class T> IntegratorReal<T>::IntegratorReal(
-        const T *p_object, real_integrand<T> p_member_function)
+    const T *p_object, real_integrand<T> p_member_function)
     : mp_gsl_workspace { nullptr }
 {
-	m_cb = CallBackHolder{ p_object, p_member_function };
+    m_cb = CallBackHolder{ p_object, p_member_function };
     mp_gsl_workspace = gsl_integration_workspace_alloc(200);
 }
 
@@ -86,16 +93,14 @@ template<class T> IntegratorReal<T>::~IntegratorReal()
     gsl_integration_workspace_free(mp_gsl_workspace);
 }
 
-template<class T> double IntegratorReal<T>::integrate(
-        double lmin, double lmax)
+template<class T> double IntegratorReal<T>::integrate(double lmin, double lmax)
 {
     gsl_function f;
     f.function = StaticCallBack;
     f.params =&m_cb;
 
     double result, error;
-    gsl_integration_qag(&f, lmin, lmax, 1e-10, 1e-8, 50, 1,
-                        mp_gsl_workspace, &result, &error);
+    gsl_integration_qag(&f, lmin, lmax, 1e-10, 1e-8, 50, 1,  mp_gsl_workspace, &result, &error);
 
     return result;
 }

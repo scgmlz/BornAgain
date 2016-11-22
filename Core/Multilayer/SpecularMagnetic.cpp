@@ -16,7 +16,7 @@
 #include "SpecularMagnetic.h"
 #include "Layer.h"
 #include "LayerInterface.h"
-#include "Materials.h"
+#include "IMaterial.h"
 #include "MultiLayer.h"
 #include <Eigen/LU>
 

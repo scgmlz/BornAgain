@@ -18,28 +18,28 @@
 
 
 ConvolutionDetectorResolution::ConvolutionDetectorResolution(
-        cumulative_DF_1d res_function_1d)
-: m_dimension(1)
-, m_res_function_1d(res_function_1d)
-, mp_res_function_2d(0)
+    cumulative_DF_1d res_function_1d)
+    : m_dimension(1)
+    , m_res_function_1d(res_function_1d)
+    , mp_res_function_2d(0)
 {
     setName("ConvolutionDetectorResolution");
 }
 
 ConvolutionDetectorResolution::ConvolutionDetectorResolution(
-        IResolutionFunction2D *p_res_function_2d)
-: m_dimension(2)
-, m_res_function_1d(0)
-, mp_res_function_2d(p_res_function_2d)
+    IResolutionFunction2D* p_res_function_2d)
+    : m_dimension(2)
+    , m_res_function_1d(0)
+    , mp_res_function_2d(p_res_function_2d)
 {
     setName("ConvolutionDetectorResolution");
 }
 
 ConvolutionDetectorResolution::ConvolutionDetectorResolution(
-        const IResolutionFunction2D &p_res_function_2d)
-: m_dimension(2)
-, m_res_function_1d(0)
-, mp_res_function_2d(p_res_function_2d.clone())
+    const IResolutionFunction2D &p_res_function_2d)
+    : m_dimension(2)
+    , m_res_function_1d(0)
+    , mp_res_function_2d(p_res_function_2d.clone())
 {
     setName("ConvolutionDetectorResolution");
 }
@@ -61,14 +61,13 @@ ConvolutionDetectorResolution::ConvolutionDetectorResolution(
 
 }
 
-//! clone object
-ConvolutionDetectorResolution *ConvolutionDetectorResolution::clone() const
+ConvolutionDetectorResolution* ConvolutionDetectorResolution::clone() const
 {
     return new ConvolutionDetectorResolution(*this);
 }
 
 void ConvolutionDetectorResolution::applyDetectorResolution(
-        OutputData<double>* p_intensity_map) const
+    OutputData<double>* p_intensity_map) const
 {
     if (p_intensity_map->getRank() != m_dimension) {
         throw Exceptions::RuntimeErrorException(
@@ -136,8 +135,7 @@ void ConvolutionDetectorResolution::apply1dConvolution(OutputData<double>* p_int
     }
     // Calculate convolution
     std::vector<double> result;
-    MathFunctions::Convolve cv;
-    cv.fftconvolve(source_vector, kernel, result);
+    Convolve().fftconvolve(source_vector, kernel, result);
     // Truncate negative values that can arise because of finite precision of Fourier Transform
     std::for_each(result.begin(), result.end(), [](double &val){ val = std::max(0.0, val); });
     // Populate intensity map with results
@@ -162,7 +160,7 @@ void ConvolutionDetectorResolution::apply2dConvolution(OutputData<double>* p_int
         return; // No 2d convolution for 1d data
     // Construct source vector array from original intensity map
     std::vector<double> raw_source_vector = p_intensity_map->getRawDataVector();
-    std::vector<std::vector<double> > source;
+    std::vector<std::vector<double>> source;
     size_t raw_data_size = raw_source_vector.size();
     if (raw_data_size != axis_size_1*axis_size_2)
         throw Exceptions::LogicErrorException(
@@ -173,7 +171,7 @@ void ConvolutionDetectorResolution::apply2dConvolution(OutputData<double>* p_int
         source.push_back(row_vector);
     }
     // Construct kernel vector from resolution function
-    std::vector<std::vector<double> > kernel;
+    std::vector<std::vector<double>> kernel;
     kernel.resize(axis_size_1);
     double mid_value_1 = axis_1[axis_size_1/2]; // because Convolve expects zero at midpoint
     double mid_value_2 = axis_2[axis_size_2/2]; // because Convolve expects zero at midpoint
@@ -191,9 +189,8 @@ void ConvolutionDetectorResolution::apply2dConvolution(OutputData<double>* p_int
         kernel[index_1] = row_vector;
     }
     // Calculate convolution
-    std::vector<std::vector<double> > result;
-    MathFunctions::Convolve cv;
-    cv.fftconvolve(source, kernel, result);
+    std::vector<std::vector<double>> result;
+    Convolve().fftconvolve(source, kernel, result);
     // Populate intensity map with results
     std::vector<double> result_vector;
     for (size_t index_1=0; index_1<axis_size_1; ++index_1) {

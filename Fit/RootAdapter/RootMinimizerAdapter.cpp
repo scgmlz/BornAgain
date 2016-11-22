@@ -14,26 +14,22 @@
 // ************************************************************************** //
 
 #include "RootMinimizerAdapter.h"
-#include "RootMinimizerFunctions.h"
-#include "Math/Minimizer.h"
 #include "FitParameter.h"
 #include "FitParameterSet.h"
+#include "Math/Minimizer.h"
 #include "MinimizerResultsHelper.h"
+#include "RootMinimizerFunctions.h"
 #include "RootObjectiveFuncAdapter.h"
+#include "StringUtils.h"
 
 
 RootMinimizerAdapter::RootMinimizerAdapter(const MinimizerInfo &minimizerInfo)
     :  m_minimizerInfo(minimizerInfo)
     , m_obj_func(new RootObjectiveFunctionAdapter)
     , m_status(false)
-{
+{}
 
-}
-
-RootMinimizerAdapter::~RootMinimizerAdapter()
-{
-
-}
+RootMinimizerAdapter::~RootMinimizerAdapter() {}
 
 void RootMinimizerAdapter::minimize()
 {
@@ -90,15 +86,14 @@ double RootMinimizerAdapter::minValue() const
     return rootMinimizer()->MinValue();
 }
 
-std::string RootMinimizerAdapter::reportResults() const
+std::string RootMinimizerAdapter::reportOutcome() const
 {
-    MinimizerResultsHelper reporter;
-    return reporter.reportResults(this);
+    return MinimizerResultsHelper().reportOutcome(this);
 }
 
 std::string RootMinimizerAdapter::statusToString() const
 {
-    return (m_status ? std::string("Minimum found") : std::string("Error in solving"));
+    return m_status ? std::string("Minimum found") : std::string("Error in solving");
 }
 
 bool RootMinimizerAdapter::providesError() const
@@ -111,13 +106,12 @@ std::map<std::string, std::string> RootMinimizerAdapter::statusMap() const
     std::map<std::string, std::string> result;
     result["Status"] = statusToString();
 
-    if(providesError()) {
+    if(providesError())
         result["ProvidesError"] = "Provides parameters error and error matrix";
-    } else {
+    else
         result["ProvidesError"] = "Doesn't provide error calculation";
-    }
 
-    result["MinValue"] = to_string_scientific(minValue());
+    result["MinValue"] = StringUtils::scientific(minValue());
 
     return result;
 }
@@ -135,9 +129,8 @@ void RootMinimizerAdapter::propagateResults(FitParameterSet &parameters)
 
         for(size_t i=0; i<(size_t)fitDimension(); ++i) {
             matrix[i].resize(fitDimension(), 0.0);
-            for(size_t j=0; j<(size_t)fitDimension(); ++j) {
+            for(size_t j=0; j<(size_t)fitDimension(); ++j)
                 matrix[i][j] = rootMinimizer()->Correlation(i,j);
-            }
         }
         parameters.setCorrelationMatrix(matrix);
     }

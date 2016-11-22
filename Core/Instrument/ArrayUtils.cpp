@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Instrument/NumpyUtils.cpp
+//! @file      Core/Instrument/ArrayUtils.cpp
 //! @brief     Implements various functions to interact from numpy on Python side
 //!
 //! @homepage  http://bornagainproject.org
@@ -13,17 +13,27 @@
 //
 // ************************************************************************** //
 
-#ifdef BORNAGAIN_PYTHON
-
-#include "NumpyUtils.h"
 #include "Exceptions.h"
+#include "ArrayUtils.h"
 
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+std::pair<size_t, size_t> ArrayUtils::getShape(const std::vector<std::vector<double>>& data)
+{
+    size_t nrows = data.size();
+    size_t ncols(0);
+    if(nrows) ncols = data[0].size();
+    for(size_t row=0; row<nrows; row++)
+        if(data[row].size() != ncols)
+            throw std::runtime_error("Util::getShape() -> Error. "
+                                     "Number of elements is different from row to row.");
+    return std::make_pair(nrows, ncols);
+}
+
+#ifdef BORNAGAIN_PYTHON
 #define PY_ARRAY_UNIQUE_SYMBOL BORNAGAIN_PYTHONAPI_ARRAY
 #define NO_IMPORT_ARRAY
 #include <numpy/arrayobject.h>
 
-PyObject* Utils::createNumpyArray(const std::vector<double>& data)
+PyObject* ArrayUtils::createNumpyArray(const std::vector<double>& data)
 {
     const size_t ndim(1);
     npy_int ndim_numpy = ndim;

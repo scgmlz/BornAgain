@@ -25,8 +25,6 @@ GCC_DIAG_OFF(unused-parameter)
 #include <boost/math/special_functions/round.hpp>
 GCC_DIAG_ON(unused-parameter)
 
-using namespace BornAgain;
-
 //! @param length_1 Lattice length 1
 //! @param length_2 Lattice length 2
 //! @param angle angle between lattice vectors
@@ -39,7 +37,7 @@ InterferenceFunction2DLattice::InterferenceFunction2DLattice(
     m_lattice_params.m_length_2 = length_2;
     m_lattice_params.m_angle = angle;
     m_lattice_params.m_xi = xi;
-    setName(InterferenceFunction2DLatticeType);
+    setName(BornAgain::InterferenceFunction2DLatticeType);
     init_parameters();
     initialize_rec_vectors();
 }
@@ -170,20 +168,22 @@ void InterferenceFunction2DLattice::calculateReciprocalVectorFraction(
 }
 
 InterferenceFunction2DLattice::InterferenceFunction2DLattice(
-    const Lattice2DParameters &lattice_params)
+    const Lattice2DParameters& lattice_params)
     : m_lattice_params(lattice_params), mp_pdf(0), m_na(0), m_nb(0)
 {
-    setName(InterferenceFunction2DLatticeType);
+    setName(BornAgain::InterferenceFunction2DLatticeType);
     init_parameters();
     initialize_rec_vectors();
 }
 
 void InterferenceFunction2DLattice::init_parameters()
 {
-    registerParameter(LatticeLength1, &m_lattice_params.m_length_1).setUnit("nm").setPositive();
-    registerParameter(LatticeLength2, &m_lattice_params.m_length_2).setUnit("nm").setPositive();
-    registerParameter(Alpha, &m_lattice_params.m_angle).setUnit("rad");
-    registerParameter(Xi,    &m_lattice_params.m_xi   ).setUnit("rad");
+    registerParameter(BornAgain::LatticeLength1,
+                      &m_lattice_params.m_length_1).setUnit("nm").setPositive();
+    registerParameter(BornAgain::LatticeLength2,
+                      &m_lattice_params.m_length_2).setUnit("nm").setPositive();
+    registerParameter(BornAgain::Alpha, &m_lattice_params.m_angle).setUnit("rad");
+    registerParameter(BornAgain::Xi,    &m_lattice_params.m_xi   ).setUnit("rad");
 }
 
 void InterferenceFunction2DLattice::initialize_rec_vectors()

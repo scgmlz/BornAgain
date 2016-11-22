@@ -14,7 +14,7 @@
 // ************************************************************************** //
 #include "OutputDataWriteFactory.h"
 #include "Exceptions.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 
 OutputDataWriter *OutputDataWriteFactory::getWriter(const std::string &file_name)
 {
@@ -27,16 +27,16 @@ OutputDataWriter *OutputDataWriteFactory::getWriter(const std::string &file_name
 IOutputDataWriteStrategy *OutputDataWriteFactory::getWriteStrategy(const std::string &file_name)
 {
     IOutputDataWriteStrategy *result(0);
-    if(OutputDataIOHelper::isIntFile(file_name)) {
+    if(DataFormatUtils::isIntFile(file_name)) {
         result = new OutputDataWriteINTStrategy();
     }
 
-    else if(OutputDataIOHelper::isTxtFile(file_name)) {
+    else if(DataFormatUtils::isTxtFile(file_name)) {
         result = new OutputDataWriteNumpyTXTStrategy();
     }
 
 #ifdef BORNAGAIN_TIFF_SUPPORT
-    else if(OutputDataIOHelper::isTiffFile(file_name)) {
+    else if(DataFormatUtils::isTiffFile(file_name)) {
         result = new OutputDataWriteTiffStrategy();
     }
 #endif // BORNAGAIN_TIFF_SUPPORT

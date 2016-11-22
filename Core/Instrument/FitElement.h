@@ -19,18 +19,17 @@
 #include "WinDllMacros.h"
 #include <cstddef>
 
-//! @class FitElement
-//! @ingroup fitting_internal
-//! @brief Measured ("real") and simulated scattering intensity value for one detector cell.
+//! Measured ("real") and simulated scattering intensity value for one detector cell.
 //! Used for chi2/residual calculations.
+//! @ingroup fitting_internal
 
 class BA_CORE_API_ FitElement
 {
 public:
     FitElement();
     FitElement(size_t index, double simul_value, double real_value, double weight = 1.0);
-    FitElement(const FitElement &other);
-    FitElement &operator=(const FitElement &other);
+    FitElement(const FitElement& other);
+    FitElement& operator=(const FitElement& other);
 
     size_t getIndex() const {  return m_index; }
     double getSimulValue() const { return m_simul_value; }
@@ -42,7 +41,7 @@ public:
     void setResidual(double value) { m_residual = value; }
 
 private:
-    void swapContent(FitElement &other);
+    void swapContent(FitElement& other);
     size_t m_index;
     double m_simul_value;
     double m_real_value;

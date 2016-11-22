@@ -28,23 +28,22 @@ class BA_CORE_API_ ParticleCoreShell : public IParticle
 {
 public:
     ParticleCoreShell(const Particle& shell, const Particle& core,
-            kvector_t relative_core_position=kvector_t(0.0, 0.0, 0.0));
+                      kvector_t relative_core_position=kvector_t(0.0, 0.0, 0.0));
     virtual ~ParticleCoreShell();
-    virtual ParticleCoreShell* clone() const;
 
-    //! Returns a clone with inverted magnetic fields
-    virtual ParticleCoreShell* cloneInvertB() const;
+    ParticleCoreShell* clone() const final;
+    ParticleCoreShell* cloneInvertB() const final;
 
     //! Calls the ISampleVisitor's visit method
-    virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
+    void accept(ISampleVisitor* visitor) const final { visitor->visit(this); }
 
     //! Sets the refractive index of the ambient material (which influences its scattering power)
-    virtual void setAmbientMaterial(const IMaterial& material);
-    virtual const IMaterial* getAmbientMaterial() const;
+    void setAmbientMaterial(const IMaterial& material) final;
+    const IMaterial* getAmbientMaterial() const final;
 
     //! Create a form factor for this particle with an extra scattering factor
-    virtual IFormFactor* createTransformedFormFactor(const IRotation* p_rotation,
-                                                     kvector_t translation) const;
+    IFormFactor* createTransformedFormFactor(
+        const IRotation* p_rotation, kvector_t translation) const final;
 
     //! Returns the core particle
     const Particle* getCoreParticle() const { return mp_core; }

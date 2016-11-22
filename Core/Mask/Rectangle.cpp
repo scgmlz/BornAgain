@@ -17,8 +17,6 @@
 #include "Bin.h"
 #include "Exceptions.h"
 
-namespace Geometry {
-
 //! @param xlow x-coordinate of lower left corner
 //! @param ylow y-coordinate of lower left corner
 //! @param xup x-coordinate of upper right corner
@@ -49,7 +47,7 @@ bool Rectangle::contains(double x, double y) const
     return x <= m_xup && x >= m_xlow && y <= m_yup && y >= m_ylow;
 }
 
-bool Rectangle::contains(const Bin1D &binx, const Bin1D &biny) const
+bool Rectangle::contains(const Bin1D& binx, const Bin1D& biny) const
 {
     return contains(binx.getMidPoint(), biny.getMidPoint());
 }
@@ -58,5 +56,3 @@ double Rectangle::getArea() const
 {
     return (m_xup-m_xlow)*(m_yup-m_ylow);
 }
-
-} // namespace Geometry

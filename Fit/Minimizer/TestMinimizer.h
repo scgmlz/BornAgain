@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/TestMinimizer.h
+//! @file      Fit/Minimizer/TestMinimizer.h
 //! @brief     Defines class TestMinimizer.
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -19,9 +19,7 @@
 #include "IMinimizer.h"
 class FitParameterSet;
 
-//! @class TestMinimizer
-//! @ingroup fitting_internal
-//! @brief Minimizer which calls minimization function once to test whole chain.
+//! A trivial minimizer that calls the objective function once. Used to test the whole chain.
 
 class BA_CORE_API_ TestMinimizer : public IMinimizer
 {
@@ -29,15 +27,16 @@ class BA_CORE_API_ TestMinimizer : public IMinimizer
     TestMinimizer() : m_min_value(0) {}
     ~TestMinimizer(){}
 
-    virtual std::string minimizerName() const override;
+    std::string minimizerName() const final;
+    std::string algorithmName() const final { return ""; };
 
     void minimize() override;
 
-    void setParameters(const FitParameterSet &parameters) override;
+    void setParameters(const FitParameterSet& parameters) override;
 
     void setObjectiveFunction(objective_function_t func) override;
 
-    std::string reportResults() const override;
+    std::string reportOutcome() const override;
 
  private:
     double m_min_value;

@@ -22,9 +22,8 @@
 
 class FitParameter;
 
-//! @class FitParameterSet
+//! The set of fit parameters.
 //! @ingroup fitting_internal
-//! @brief The FitParameterSet represents collection of fit parameters for the minimizer.
 
 class BA_CORE_API_ FitParameterSet
 {
@@ -37,8 +36,6 @@ class BA_CORE_API_ FitParameterSet
     FitParameterSet() {}
     ~FitParameterSet();
 
-    /// container specific
-
     void clear();
     size_t size() const;
     iterator begin();
@@ -46,46 +43,44 @@ class BA_CORE_API_ FitParameterSet
     iterator end();
     const_iterator end() const;
 
-    /// adding fit parameters
-
     void addFitParameter(FitParameter* par);
 
-    /// accessing fit parameters
+    // Access fit parameters
+
     const FitParameter* fitParameter(const std::string& name) const;
     FitParameter* fitParameter(const std::string& name);
-    const FitParameter* operator[](const std::string &name) const;
-    FitParameter* operator[](const std::string &name);
+    const FitParameter* operator[](const std::string& name) const;
+    FitParameter* operator[](const std::string& name);
     const FitParameter* operator[](size_t index) const;
     FitParameter* operator[](size_t index);
 
-    /// fit parameter's values and errors
+    // Fit parameter's values and errors
 
     std::vector<double> values() const;
-    void setValues(const std::vector<double >& pars_values);
+    void setValues(const std::vector<double>& pars_values);
     bool valuesDifferFrom(const std::vector<double>& par_values, double tolerance = 2.0) const;
     std::vector<double> errors() const;
-    void setErrors(const std::vector<double >& pars_errors);
+    void setErrors(const std::vector<double>& pars_errors);
 
-    /// Make parameters fixed and free
+    // Make parameters fixed and free
 
     size_t freeFitParameterCount() const;
     void fixAll();
     void releaseAll();
     void setFixed(const std::vector<std::string>& pars, bool is_fixed);
 
-    //! Printing and reporting
+    // Printing and reporting
 
     std::string parametersToString() const;
-    std::string reportResults() const;
 
     corr_matrix_t correlationMatrix() const { return m_corr_matrix; }
-    void setCorrelationMatrix(const corr_matrix_t &matrix);
+    void setCorrelationMatrix(const corr_matrix_t& matrix);
 
-    bool isExistingName(const std::string &name) const;
+    bool isExistingName(const std::string& name) const;
 
-private:    
+private:
     size_t check_index(size_t index) const;
-    void check_array_size(const std::vector<double> &values) const;
+    void check_array_size(const std::vector<double>& values) const;
     container_t m_parameters; //!< collection of fit parameters
     corr_matrix_t m_corr_matrix; //!< correlation matrix
 };

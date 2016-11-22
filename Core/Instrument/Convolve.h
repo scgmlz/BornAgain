@@ -20,24 +20,18 @@
 #include <fftw3.h>
 #include <vector>
 
-namespace MathFunctions
-{
-
-//! @class Convolve
-//! @ingroup tools_internal
-//! @brief Convolution of two real vectors (in 1D or 2D) using Fast Fourier Transform.
+//! Convolution of two real vectors (in 1D or 2D) using Fast Fourier Transform.
 //!
 //! Usage:
 //! std::vector<double> signal, kernel, result;
 //! Convolve cv;
 //! cv.fftconvolve(signal, kernel, result)
 //!
-//! Given code rely on code from Jeremy Fix page
-//! http://jeremy.fix.free.fr/spip.php?article15
-//! see also
-//! "Efficient convolution using the Fast Fourier Transform, Application in C++"
+//! Given code rely on code from Jeremy Fix page, http://jeremy.fix.free.fr/spip.php?article15,
+//! see also "Efficient convolution using the Fast Fourier Transform, Application in C++"
 //! by Jeremy Fix, May 30, 2011
 //!
+//! @ingroup tools_internal
 class BA_CORE_API_ Convolve
 {
 public:
@@ -120,7 +114,5 @@ private:
     EConvolutionMode m_mode;
     std::vector<size_t > m_implemented_factors; // favorite factorization terms of fftw3
 };
-
-}  // namespace MathFunctions
 
 #endif // CONVOLVE_H

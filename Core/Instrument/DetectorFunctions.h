@@ -55,5 +55,5 @@ BA_CORE_API_ std::unique_ptr<OutputData<double>> createDataSet(const Instrument&
 
 }
 
-#endif
+#endif // DETECTORFUNCTIONS_H
 

@@ -18,9 +18,10 @@
 
 #include "WinDllMacros.h"
 
-//! @class IFitParameter
+//! Pure virtual base class for fit parameters.
 //! @ingroup fitting_internal
-//! @brief The IFitParameter is a base class for fit parameters.
+
+// TODO: Either explain future usages, or merge with its sole child class FitParameter.
 
 class BA_CORE_API_ IFitParameter
 {

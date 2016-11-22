@@ -14,9 +14,9 @@
 //
 // ************************************************************************** //
 
+#include <thread>
 #include "SimulationOptionsItem.h"
 #include "ComboProperty.h"
-#include "Utils.h"
 
 namespace
 {
@@ -138,7 +138,7 @@ void SimulationOptionsItem::setNumberOfMonteCarloPoints(int npoints)
 QStringList SimulationOptionsItem::getCPUUsageOptions()
 {
     QStringList result;
-    int nthreads = Utils::System::getThreadHardwareConcurrency();
+    int nthreads = std::thread::hardware_concurrency();
     for(int i = nthreads; i>0; i--){
         if(i == nthreads) {
             result.append(QString("Max (%1 threads)").arg(QString::number(i)));

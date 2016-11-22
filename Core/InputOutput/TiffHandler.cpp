@@ -17,7 +17,7 @@
 
 #include "TiffHandler.h"
 #include "BornAgainNamespace.h"
-#include "Utils.h"
+#include "SysUtils.h"
 
 namespace {
 size_t supported_bitPerSample = 32;
@@ -29,8 +29,7 @@ TiffHandler::TiffHandler()
     : m_tiff(0)
     , m_width(0)
     , m_height(0)
-{
-}
+{}
 
 TiffHandler::~TiffHandler()
 {
@@ -143,7 +142,7 @@ void TiffHandler::write_header()
 {
     assert(m_tiff);
     TIFFSetField(m_tiff, TIFFTAG_ARTIST, "BornAgain.IOFactory");
-    TIFFSetField(m_tiff, TIFFTAG_DATETIME, Utils::System::getCurrentDateAndTime().c_str());
+    TIFFSetField(m_tiff, TIFFTAG_DATETIME, SysUtils::getCurrentDateAndTime().c_str());
     TIFFSetField(m_tiff, TIFFTAG_IMAGEDESCRIPTION,
            "Image converted from BornAgain intensity file.");
     TIFFSetField(m_tiff, TIFFTAG_SOFTWARE, "BornAgain");

@@ -113,7 +113,7 @@ class RotationEuler;
 class BA_CORE_API_ ISampleVisitor
 {
 public:
-    ISampleVisitor() : m_level(0) {}
+    ISampleVisitor() : m_depth(0) {}
     virtual ~ISampleVisitor(){}
 
     // visiting methods (the order according to the hierarchy as reported by IDE)
@@ -201,18 +201,17 @@ public:
     virtual void visit(const RotationZ*);
     virtual void visit(const RotationEuler*);
 
-    // enter and leave methods
     bool visitEnter(const ICompositeSample*);
     bool visitLeave(const ICompositeSample*);
 
-    //! return current level of the visitor in the composite hierarchy
-    int getLevel() const { return m_level; }
+    //! Returns depth of the visitor in the composite hierarchy
+    int depth() const { return m_depth; }
 
-    //! set current level of the visitor in the composite hierarchy
-    void setLevel(int level) { m_level = level; }
+    //! Sets depth  of the visitor in the composite hierarchy
+    void setDepth(int depth) { m_depth = depth; }
 
 private:
-    int m_level;
+    int m_depth;
 };
 
 BA_CORE_API_ void VisitSampleTreePreorder(const ISample& sample, ISampleVisitor& visitor);

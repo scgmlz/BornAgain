@@ -19,11 +19,9 @@
 #include "ISample.h"
 #include "Transform3D.h"
 
-//! @class IRotation
+//! Pure virtual interface for rotations.
+//! Must be subclass of sample, because it can be registered as a child in ICompositeSample.
 //! @ingroup samples
-//! @brief An interface for classes representing a rotation
-
-//! must be subclass of sample, because it can be registered as a child in ICompositeSample
 
 class BA_CORE_API_ IRotation : public ISample
 {

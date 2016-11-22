@@ -24,9 +24,8 @@
 #include "Math/FitMethodFunction.h"
 #pragma GCC diagnostic pop
 
-//! @class RootObjectiveFunction
+//! The chi2 function for use in minimizers.
 //! @ingroup fitting_internal
-//! @brief minimizer chi2 function
 
 class RootObjectiveFunction : public BA_ROOT::Math::Functor
 {
@@ -35,10 +34,9 @@ class RootObjectiveFunction : public BA_ROOT::Math::Functor
         : BA_ROOT::Math::Functor(fcn, ndims) {}
 };
 
-//! @class RootGradientFunction
+//! Minimizer function with access to single data element residuals,
+//! required by Fumili, Fumili2 and GSLMultiMin minimizers.
 //! @ingroup fitting_internal
-//! @brief Minimizer function with access to single data element residuals.
-//! Required by Fumili, Fumili2 and GSLMultiMin minimizers
 
 class RootGradientFunction : public BA_ROOT::Math::FitMethodFunction
 {

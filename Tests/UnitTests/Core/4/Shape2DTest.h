@@ -15,7 +15,7 @@ public:
 
 TEST_F(Shape2DTest, Rectangle)
 {
-    Geometry::Rectangle rect(-4.0, -2.0, 4.0, 2.0);
+    Rectangle rect(-4.0, -2.0, 4.0, 2.0);
     EXPECT_DOUBLE_EQ(32.0, rect.getArea());
     EXPECT_TRUE(rect.contains(0.0, 0.0));
     EXPECT_TRUE(rect.contains(4.0, 2.0));
@@ -32,7 +32,7 @@ TEST_F(Shape2DTest, Rectangle)
     Bin1D biny2(1.5, 2.6);
     EXPECT_FALSE(rect.contains(binx2, biny2));
 
-    std::unique_ptr<Geometry::Rectangle> clone(rect.clone());
+    std::unique_ptr<Rectangle> clone(rect.clone());
     EXPECT_DOUBLE_EQ(32.0, clone->getArea());
     EXPECT_TRUE(clone->contains(0.0, 0.0));
     EXPECT_TRUE(clone->contains(4.0, 2.0));
@@ -46,7 +46,7 @@ TEST_F(Shape2DTest, Rectangle)
 
 TEST_F(Shape2DTest, Ellipse)
 {
-    Geometry::Ellipse ellipse(10.0, 1.0, 8.0, 4.0);
+    Ellipse ellipse(10.0, 1.0, 8.0, 4.0);
     EXPECT_TRUE(ellipse.contains(10.0, 1.0));
     EXPECT_TRUE(ellipse.contains(18.0, 1.0));
     EXPECT_FALSE(ellipse.contains(18.01, 1.0));
@@ -57,12 +57,12 @@ TEST_F(Shape2DTest, Ellipse)
     EXPECT_FALSE(ellipse.contains(4.0, -2.0));
     EXPECT_TRUE(ellipse.contains(6.0, -2.0));
 
-    Geometry::Ellipse ellipse2(10.0, 1.0, 8.0, 4.0, 45.0*Units::degree);
+    Ellipse ellipse2(10.0, 1.0, 8.0, 4.0, 45.0*Units::degree);
     EXPECT_TRUE(ellipse2.contains(10.0, 1.0));
     EXPECT_FALSE(ellipse2.contains(15.0, 0.0));
     EXPECT_TRUE(ellipse2.contains(7.0, 3.0));
 
-    std::unique_ptr<Geometry::Ellipse> clone(ellipse2.clone());
+    std::unique_ptr<Ellipse> clone(ellipse2.clone());
     EXPECT_TRUE(clone->contains(10.0, 1.0));
     EXPECT_FALSE(clone->contains(15.0, 0.0));
     EXPECT_TRUE(clone->contains(7.0, 3.0));
@@ -70,24 +70,24 @@ TEST_F(Shape2DTest, Ellipse)
 
 TEST_F(Shape2DTest, Line)
 {
-    Geometry::Line line(0.0, 0.0, 1.0, 0.0);
+    Line line(0.0, 0.0, 1.0, 0.0);
     EXPECT_TRUE(line.contains(0.0, 0.0));
     EXPECT_TRUE(line.contains(0.5, 0.0));
     EXPECT_TRUE(line.contains(1.0, 0.0));
     EXPECT_FALSE(line.contains(1.01, 0.0));
 
-    Geometry::Line line2(0.0, 0.0, 1.0, 1.0);
+    Line line2(0.0, 0.0, 1.0, 1.0);
     EXPECT_TRUE(line2.contains(Bin1D(0.5, 1.0),Bin1D(0.0, 0.5)));
     EXPECT_FALSE(line2.contains(Bin1D(0.51, 1.0),Bin1D(0.0, 0.49)));
 
-    std::unique_ptr<Geometry::Line> clone(line2.clone());
+    std::unique_ptr<Line> clone(line2.clone());
     EXPECT_TRUE(clone->contains(Bin1D(0.5, 1.0),Bin1D(0.0, 0.5)));
     EXPECT_FALSE(clone->contains(Bin1D(0.51, 1.0),Bin1D(0.0, 0.49)));
 }
 
 TEST_F(Shape2DTest, VerticalLine)
 {
-    Geometry::VerticalLine line(1.0);
+    VerticalLine line(1.0);
     EXPECT_TRUE(line.contains(1.0, 0.0));
     EXPECT_FALSE(line.contains(1.01, 0.0));
 
@@ -97,7 +97,7 @@ TEST_F(Shape2DTest, VerticalLine)
 
 TEST_F(Shape2DTest, HorizontalLine)
 {
-    Geometry::HorizontalLine line(1.0);
+    HorizontalLine line(1.0);
     EXPECT_TRUE(line.contains(0.0, 1.0));
     EXPECT_FALSE(line.contains(0.0, 1.01));
 

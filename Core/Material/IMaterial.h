@@ -31,7 +31,8 @@ class BA_CORE_API_ IMaterial : public INamed
 public:
     explicit IMaterial(const std::string& name) : INamed(name) {}
     virtual ~IMaterial() {}
-    virtual IMaterial* clone() const;
+    virtual IMaterial* clone() const =0;
+    virtual IMaterial* cloneInverted() const =0;
 
     //! Indicates whether the interaction with the material is scalar.
     //! This means that different polarization states will be diffracted equally

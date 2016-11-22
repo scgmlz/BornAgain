@@ -81,7 +81,6 @@ protected:
 private:
     virtual void print(std::ostream& ostr) const;
 
-    std::string get_error_message(const std::string& criteria) const;
     void report_find_matched_parameters_error(const std::string& pattern) const;
     void report_set_value_error(const std::string& parname, double value) const;
 

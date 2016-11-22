@@ -17,8 +17,6 @@
 #include "Bin.h"
 #include "Exceptions.h"
 
-namespace Geometry {
-
 //! @param xcenter x-coordinate of Ellipse's center
 //! @param ycenter y-coordinate of Ellipse's center
 //! @param xradius Radius along x-axis
@@ -48,9 +46,7 @@ bool Ellipse::contains(double x, double y) const
 
 //! Returns true if area defined by two bins is inside or on border of ellipse;
 //! more precisely, if mid point of two bins satisfy this condition.
-bool Ellipse::contains(const Bin1D &binx, const Bin1D &biny) const
+bool Ellipse::contains(const Bin1D& binx, const Bin1D& biny) const
 {
     return contains(binx.getMidPoint(), biny.getMidPoint());
 }
-
-} // namespace Geometry

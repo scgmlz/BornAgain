@@ -26,9 +26,8 @@ class IAxis;
 class IResolutionFunction2D;
 class SimulationElement;
 
-//! @class Instrument
+//! Assembles beam, detector and their relative positions wrt the sample.
 //! @ingroup simulation_internal
-//! @brief Assembles beam, detector and their relative positions wrt the sample.
 
 class BA_CORE_API_ Instrument : public IParameterized
 {

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/MinimizerUtils.cpp
+//! @file      Fit/Utils/MinimizerUtils.cpp
 //! @brief     Declares namespace MinimizerUtils.
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -19,10 +19,10 @@
 #include <cmath>
 #include <limits>
 
-std::string MinimizerUtils::toString(const std::vector<std::string> &v, const std::string &delim)
+std::string MinimizerUtils::toString(const std::vector<std::string>& v, const std::string& delim)
 {
     std::stringstream s;
-    std::for_each(v.begin(), v.end(), [&s, &delim](const std::string &elem) {s << elem << delim; });
+    std::for_each(v.begin(), v.end(), [&s, &delim](const std::string& elem) {s << elem << delim; });
     return s.str();
 }
 
@@ -90,17 +90,15 @@ bool MinimizerUtils::numbersDiffer(double a, double b, double tol)
 
 //! Returns horizontal line of 80 characters length with section name in it.
 
-std::string MinimizerUtils::sectionString(const std::string &sectionName, int report_width)
+std::string MinimizerUtils::sectionString(const std::string& sectionName, int report_width)
 {
+    if(sectionName.empty())
+        return std::string(report_width, '-') + "\n";
+    // to make "--- SectionName ------------------------------"
+    std::string prefix(3, '-');
+    std::string body = std::string(" ") + sectionName + std::string(" ");
+    std::string postfix(report_width - body.size() - prefix.size(), '-');
     std::ostringstream result;
-    if(sectionName.empty()) {
-        result << std::string(report_width, '-') << std::endl;
-    } else {
-        // to make "--- SectionName ------------------------------"
-        std::string prefix(3, '-');
-        std::string body = std::string(" ") + sectionName + std::string(" ");
-        std::string postfix(report_width - body.size() - prefix.size(), '-');
-        result << prefix << body << postfix << std::endl;
-    }
+    result << prefix << body << postfix << std::endl;
     return result.str();
 }

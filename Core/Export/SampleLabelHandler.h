@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Export/SampleLabelHandler.h
-//! @brief     Defines SampleLabelHandler class
+//! @brief     Defines classes LabelMap and SampleLabelHandler.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -107,9 +107,8 @@ private:
     list_t m_list;
 };
 
-//! @class SampleLabelHandler
+//! The handler which construct labels for sample variables during python script generation.
 //! @ingroup tools_internal
-//! @brief The handler which construct labels for sample variables during python script generation
 
 class BA_CORE_API_ SampleLabelHandler
 {

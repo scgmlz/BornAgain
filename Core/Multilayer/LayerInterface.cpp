@@ -59,7 +59,7 @@ LayerInterface* LayerInterface::createRoughInterface(
 void LayerInterface::setRoughness(const LayerRoughness& roughness)
 {
     if(m_roughness) {
-        msglog(MSG::WARNING) << "LayerInterface::setRoughness() -> "
+        msglog(Logging::WARNING) << "LayerInterface::setRoughness() -> "
             "Info. Roughness already assigned to given interface, removing it ";
         deregisterChild(m_roughness);
         delete m_roughness;

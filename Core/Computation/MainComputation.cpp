@@ -14,11 +14,8 @@
 // ************************************************************************** //
 
 #include "MainComputation.h"
-#include "BornAgainNamespace.h"
 #include "DecoratedLayerComputation.h"
 #include "Layer.h"
-#include "LayerInterface.h"
-#include "LayerRoughness.h"
 #include "LayerSpecularInfo.h"
 #include "Logger.h"
 #include "MatrixSpecularInfoMap.h"
@@ -30,10 +27,7 @@
 #include "SimulationElement.h"
 #include "SpecularMagnetic.h"
 #include "SpecularMatrix.h"
-
-#include <algorithm>
 #include <iterator>
-#include <iostream>
 
 MainComputation::MainComputation(
     const MultiLayer* p_multi_layer,
@@ -47,7 +41,7 @@ MainComputation::MainComputation(
 {
     mp_multi_layer = p_multi_layer->clone();
 
-    msglog(MSG::DEBUG2) << "MainComputation::init()";
+    msglog(Logging::DEBUG2) << "MainComputation::init()";
     m_begin_it = begin_it;
     m_end_it = end_it;
 
@@ -93,7 +87,7 @@ void MainComputation::run()
 // This allows them to be added and normalized together to the beam afterwards
 void MainComputation::runProtected()
 {
-    msglog(MSG::DEBUG2) << "MainComputation::runProtected()";
+    msglog(Logging::DEBUG2) << "MainComputation::runProtected()";
 
     if (mp_multi_layer->requiresMatrixRTCoefficients())
         collectRTCoefficientsMatrix();
@@ -115,7 +109,7 @@ void MainComputation::runProtected()
     }
 
     if (!mp_multi_layer->requiresMatrixRTCoefficients() && mp_roughness_computation) {
-        msglog(MSG::DEBUG2) << "MainComputation::run() -> roughness";
+        msglog(Logging::DEBUG2) << "MainComputation::run() -> roughness";
         if (!m_progress->alive())
             return;
         mp_roughness_computation->eval(
@@ -131,7 +125,7 @@ void MainComputation::collectRTCoefficientsScalar()
 {
     // run through layers and construct T,R functions
     for(size_t i=0; i<mp_multi_layer->getNumberOfLayers(); ++i) {
-        msglog(MSG::DEBUG2) << "MainComputation::run() -> Layer " << i;
+        msglog(Logging::DEBUG2) << "MainComputation::run() -> Layer " << i;
         LayerSpecularInfo layer_coeff_map;
         layer_coeff_map.addRTCoefficients(new ScalarSpecularInfoMap(mp_multi_layer, i));
 
@@ -152,7 +146,7 @@ void MainComputation::collectRTCoefficientsMatrix()
 {
     // run through layers and construct T,R functions
     for(size_t i=0; i<mp_multi_layer->getNumberOfLayers(); ++i) {
-        msglog(MSG::DEBUG2) << "MainComputation::runMagnetic() -> Layer " << i;
+        msglog(Logging::DEBUG2) << "MainComputation::runMagnetic() -> Layer " << i;
         LayerSpecularInfo layer_coeff_map;
         layer_coeff_map.addRTCoefficients(new MatrixSpecularInfoMap(mp_multi_layer, i));
 

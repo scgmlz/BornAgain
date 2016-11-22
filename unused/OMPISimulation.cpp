@@ -27,9 +27,9 @@ void OMPISimulation::runSimulation(Simulation * simulation)
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
     if(world_size == 1) {
-        msglog(MSG::WARNING) <<
+        msglog(Logging::WARNING) <<
             "OMPISimulation::runSimulation() -> Warning. Not an OpenMPI environment.";
-        msglog(MSG::WARNING) << "For now continuing without OpenMPI support";
+        msglog(Logging::WARNING) << "For now continuing without OpenMPI support";
         simulation->runSimulation();
         return;
     }
@@ -40,7 +40,7 @@ void OMPISimulation::runSimulation(Simulation * simulation)
     MPI_Get_processor_name(processor_name, &name_len);
 
 
-    msglog(MSG::DEBUG) << "OMPISimulation::runSimulation() -> "
+    msglog(Logging::DEBUG) << "OMPISimulation::runSimulation() -> "
                       << " from processor " << processor_name
                       << " , rank " << world_rank
                       << " out of " << world_size << " processors.";
@@ -50,13 +50,13 @@ void OMPISimulation::runSimulation(Simulation * simulation)
         ThreadInfo threadInfo = simulation->m_thread_info;
         threadInfo.n_batches = world_size - 1;
         threadInfo.current_batch = world_rank - 1;
-        msglog(MSG::DEBUG) << "Preparing to run simulation (current_batch = " <<
+        msglog(Logging::DEBUG) << "Preparing to run simulation (current_batch = " <<
             threadInfo.current_batch << " , n_batches = " << threadInfo.n_batches << ").";
         simulation->setThreadInfo(threadInfo);
         simulation->runSimulation();
 
         std::vector<double> raw = simulation->getOutputData()->getRawDataVector();
-        msglog(MSG::DEBUG) << "Preparing to send raw data of size " << raw.size() <<
+        msglog(Logging::DEBUG) << "Preparing to send raw data of size " << raw.size() <<
             " (current_batch = " << threadInfo.current_batch <<
             " , n_batches = " << threadInfo.n_batches << ").";
         MPI_Send(&raw[0], raw.size(), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
@@ -69,7 +69,7 @@ void OMPISimulation::runSimulation(Simulation * simulation)
         for(int i=1; i<world_size; ++i) {
             std::vector<double> raw;
             raw.resize(total_size, 0.0);
-            msglog(MSG::DEBUG) << "Preparing to receive raw data of size " << raw.size() <<
+            msglog(Logging::DEBUG) << "Preparing to receive raw data of size " << raw.size() <<
                 " from batch = " << i;
             MPI_Recv(&raw[0], total_size, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &st);
             for(size_t i_raw=0; i_raw<total_size; ++i_raw)

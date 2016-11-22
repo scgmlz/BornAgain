@@ -25,19 +25,16 @@
 
 template<class T> class OutputData;
 class Beam;
+class DetectionProperties;
 class IAxis;
 class IDetectorResolution;
 class IPixelMap;
-class SimulationElement;
-class DetectionProperties;
+class IShape2D;
 class RegionOfInterest;
-namespace Geometry {
-    class IShape2D;
-}
+class SimulationElement;
 
-//! @class IDetector
+//! Pure virtual interface for two-dimensional detector classes.
 //! @ingroup simulation
-//! @brief The detector interface.
 
 class BA_CORE_API_ IDetector2D : public ICloneable, public IParameterized
 {
@@ -46,7 +43,7 @@ public:
 
     IDetector2D();
 
-    virtual IDetector2D* clone() const=0;
+    virtual IDetector2D* clone() const =0;
 
     virtual ~IDetector2D();
 
@@ -80,7 +77,7 @@ public:
     void setAnalyzerProperties(const kvector_t direction, double efficiency,
                                double total_transmission);
 
-    //! removes all masks from the detector
+    //! Removes all masks from the detector
     void removeMasks();
 
     //! Adds mask of given shape to the stack of detector masks. The mask value 'true' means
@@ -88,7 +85,7 @@ public:
     //! has priority.
     //! @param shape The shape of mask (Rectangle, Polygon, Line, Ellipse)
     //! @param mask_value The value of mask
-    void addMask(const Geometry::IShape2D& shape, bool mask_value = true);
+    void addMask(const IShape2D& shape, bool mask_value = true);
 
     //! Put the mask for all detector channels (i.e. exclude whole detector from the analysis)
     void maskAll();
@@ -115,19 +112,19 @@ public:
         const std::string& path, ParameterPool* external_pool, int copy_number = -1) const;
 
     //! Returns new intensity map with detector resolution applied and axes in requested units
-    OutputData<double>* createDetectorIntensity(const std::vector<SimulationElement> &elements,
+    OutputData<double>* createDetectorIntensity(const std::vector<SimulationElement>& elements,
             const Beam& beam, IDetector2D::EAxesUnits units_type=IDetector2D::DEFAULT) const;
 
     //! Returns empty detector map in given axes units.
     virtual OutputData<double>* createDetectorMap(const Beam& beam, EAxesUnits units) const;
 
     //! Inits axes of OutputData to match the detector and sets values to zero.
-    virtual void initOutputData(OutputData<double> &data) const;
+    virtual void initOutputData(OutputData<double>& data) const;
 
-    //! returns vector of valid axes units
+    //! Returns vector of valid axes units
     virtual std::vector<EAxesUnits> getValidAxesUnits() const;
 
-    //! return default axes units
+    //! Return default axes units
     virtual EAxesUnits getDefaultAxesUnits() const { return DEFAULT; }
 
     //! Returns region of  interest if exists.
@@ -152,7 +149,7 @@ protected:
     IDetector2D(const IDetector2D& other);
 
     //! Create an IPixelMap for the given OutputData object and index
-    virtual IPixelMap* createPixelMap(size_t index) const=0;
+    virtual IPixelMap* createPixelMap(size_t index) const =0;
 
     //! Registers some class members for later access via parameter pool.
     virtual void init_parameters() {}
@@ -169,7 +166,7 @@ protected:
                                     double &amin, double &amax) const;
 
     //! Returns the name for the axis with given index
-    virtual std::string getAxisName(size_t index) const=0;
+    virtual std::string getAxisName(size_t index) const =0;
 
     bool isCorrectAxisIndex(size_t index) const;
 
@@ -177,17 +174,17 @@ protected:
     size_t getGlobalIndex(size_t x, size_t y) const;
 
     //! Returns index of pixel that contains the specular wavevector.
-    //! If no pixel contains this specular wavevector, the number of pixels is
-    //! returned. This corresponds to an overflow index.
-    virtual size_t getIndexOfSpecular(const Beam& beam) const=0;
+    //! If no pixel contains this specular wavevector, the number of pixels is returned.
+    //! This corresponds to an overflow index.
+    virtual size_t getIndexOfSpecular(const Beam& beam) const =0;
 
     SafePointerVector<IAxis> m_axes;
     std::unique_ptr<IDetectorResolution> mP_detector_resolution;
     DetectorMask m_detector_mask;
 
 private:
-    void setDataToDetectorMap(OutputData<double> &detectorMap,
-                              const std::vector<SimulationElement> &elements) const;
+    void setDataToDetectorMap(OutputData<double>& detectorMap,
+                              const std::vector<SimulationElement>& elements) const;
     std::unique_ptr<RegionOfInterest> m_region_of_interest;
     DetectionProperties m_detection_properties;
 };

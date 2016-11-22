@@ -18,9 +18,8 @@
 
 #include "WinDllMacros.h"
 
-//! @class ThreadInfo
+//! Information to run simulation with dedicated number of threads.
 //! @ingroup simulation
-//! @brief Information to run simulation with dedicated number of threads
 
 struct BA_CORE_API_ ThreadInfo
 {

@@ -22,15 +22,13 @@
 #include "RealParameter.h"
 #include <limits>
 
-using namespace BornAgain;
-
 FormFactorTruncatedSphere::FormFactorTruncatedSphere(double radius, double height)
     : m_radius(radius), m_height(height)
 {
-    setName(FFTruncatedSphereType);
+    setName(BornAgain::FFTruncatedSphereType);
     check_initialization();
-    registerParameter(Radius, &m_radius).setUnit("nm").setNonnegative();
-    registerParameter(Height, &m_height).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::Radius, &m_radius).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::Height, &m_height).setUnit("nm").setNonnegative();
     mP_integrator = make_integrator_complex(this, &FormFactorTruncatedSphere::Integrand);
 }
 

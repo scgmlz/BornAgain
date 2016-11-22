@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Models/JobItemFunctions.h
+//! @file      GUI/coregui/Models/JobItemFunctions.cpp
 //! @brief     Defines auxiliary functions in JobItemFunctions namespace.
 //!
 //! @homepage  http://www.bornagainproject.org

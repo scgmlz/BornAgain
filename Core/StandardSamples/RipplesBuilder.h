@@ -18,9 +18,8 @@
 
 #include "IMultiLayerBuilder.h"
 
-//! @class CosineRippleBuilder
+//! Builds sample: cosine ripple within the 1D-paracrystal model.
 //! @ingroup standard_samples
-//! @brief Builds sample: cosine ripple within the 1D-paracrystal model
 
 class BA_CORE_API_ CosineRippleBuilder : public IMultiLayerBuilder
 {
@@ -41,10 +40,8 @@ private:
 };
 
 
-//! @class TriangularRippleBuilder
+//! Builds sample: triangular ripple within the 1D-paracrystal model (from PRB 85, 235415, 2012).
 //! @ingroup standard_samples
-//! @brief Builds sample: triangular ripple within the 1D-paracrystal model
-//! (from PRB 85, 235415, 2012)
 
 class BA_CORE_API_ TriangularRippleBuilder : public IMultiLayerBuilder
 {

@@ -17,20 +17,6 @@
 #include "Exceptions.h"
 #include "HomogeneousMagneticMaterial.h"
 
-IMaterial *IMaterial::clone() const
-{
-    throw Exceptions::NotImplementedException(
-        "IMaterial is an interface and should not be cloned!");
-}
-
-/*
-const IMaterial *IMaterial::createTransformedMaterial(const IRotation&) const
-{
-    throw Exceptions::NotImplementedException(
-        "IMaterial is an interface and should not be created!");
-}
-*/
-
 Eigen::Matrix2cd IMaterial::getScatteringMatrix(double k_mag2) const
 {
     (void)k_mag2;

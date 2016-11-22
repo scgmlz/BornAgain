@@ -15,7 +15,7 @@
 
 #include "OutputDataReadStrategy.h"
 #include "OutputData.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include "TiffHandler.h"
 #include <stdexcept> // need overlooked by g++ 5.4
 
@@ -32,13 +32,13 @@ OutputData<double>* OutputDataReadINTStrategy::readOutputData(std::istream& inpu
         }
 
         if (line.find("axis") != std::string::npos) {
-            IAxis* axis = OutputDataIOHelper::createAxis(input_stream);
+            IAxis* axis = DataFormatUtils::createAxis(input_stream);
             result->addAxis(*axis);
             delete axis;
         }
 
         if (line.find("data") != std::string::npos) {
-            OutputDataIOHelper::fillOutputData(result, input_stream);
+            DataFormatUtils::fillOutputData(result, input_stream);
         }
     }
     return result;
@@ -53,7 +53,7 @@ OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream&
     while( std::getline(input_stream, line) ) {
         if(line.empty() || line[0] == '#')
             continue;
-        std::vector<double> data_in_row = OutputDataIOHelper::parse_doubles(line);
+        std::vector<double> data_in_row = DataFormatUtils::parse_doubles(line);
         data.push_back(data_in_row);
     }
     // validating

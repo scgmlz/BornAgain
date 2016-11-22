@@ -15,7 +15,7 @@
 
 #include "OutputDataReader.h"
 #include "OutputData.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include "boost_streams.h"
 #include <fstream>
 
@@ -31,7 +31,7 @@ OutputData<double>* OutputDataReader::getOutputData()
 
     std::ifstream fin;
     std::ios_base::openmode openmode = std::ios::in;
-    if (OutputDataIOHelper::isBinaryFile(m_file_name))
+    if (DataFormatUtils::isBinaryFile(m_file_name))
         openmode = std::ios::in | std::ios_base::binary;
 
     fin.open(m_file_name.c_str(), openmode );
@@ -56,9 +56,9 @@ void OutputDataReader::setStrategy(IOutputDataReadStrategy* read_strategy)
 OutputData<double>* OutputDataReader::getFromFilteredStream(std::istream& input_stream)
 {
     boost::iostreams::filtering_streambuf<boost::iostreams::input> input_filtered;
-    if (OutputDataIOHelper::isGZipped(m_file_name))
+    if (DataFormatUtils::isGZipped(m_file_name))
         input_filtered.push(boost::iostreams::gzip_decompressor());
-    else if (OutputDataIOHelper::isBZipped(m_file_name))
+    else if (DataFormatUtils::isBZipped(m_file_name))
         input_filtered.push(boost::iostreams::bzip2_decompressor());
     input_filtered.push(input_stream);
     // we use stringstream since it provides random access which is important for tiff files

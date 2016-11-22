@@ -37,8 +37,8 @@ public:
     HomogeneousMagneticMaterial(const std::string &name, double refractive_index_delta,
                                 double refractive_index_beta, const kvector_t magnetic_field);
 
-    //! Clone
-    virtual HomogeneousMagneticMaterial *clone() const;
+    HomogeneousMagneticMaterial* clone() const final override;
+    HomogeneousMagneticMaterial* cloneInverted() const final override;
 
     //! Get the magnetic field (in Tesla)
     kvector_t getMagneticField() const { return m_magnetic_field; }

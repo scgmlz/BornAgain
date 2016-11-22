@@ -18,9 +18,8 @@
 
 #include "WinDllMacros.h"
 
-//! @class CumulativeValue
+//! The cumulative value with average and rms on-the-flight calculations.
 //! @ingroup tools
-//! @brief The cumulative value with average and rms on-the-flight calculations.
 
 class BA_CORE_API_ CumulativeValue
 {
@@ -46,6 +45,5 @@ private:
 
 BA_CORE_API_ bool operator< (const CumulativeValue& lhs, const CumulativeValue& rhs);
 BA_CORE_API_ bool operator> (const CumulativeValue& lhs, const CumulativeValue& rhs);
-
 
 #endif // CUMULATIVEVALUE_H

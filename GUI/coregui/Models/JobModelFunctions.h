@@ -33,5 +33,5 @@ BA_CORE_API_ void setupJobItemForFit(JobItem *jobItem, const RealDataItem *realD
 }
 
 
-#endif
+#endif // JOBMODELFUNCTIONS_H
 

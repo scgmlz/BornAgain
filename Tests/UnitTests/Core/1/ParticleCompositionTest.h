@@ -1,12 +1,11 @@
 #ifndef PARTICLECOMPOSITIONTEST_H
 #define PARTICLECOMPOSITIONTEST_H
 
-#include "ParticleComposition.h"
-#include "Particle.h"
-#include "Materials.h"
-#include "MathConstants.h"
-#include "HomogeneousMaterial.h"
 #include "FormFactorFullSphere.h"
+#include "HomogeneousMaterial.h"
+#include "MathConstants.h"
+#include "Particle.h"
+#include "ParticleComposition.h"
 #include <iostream>
 
 class ParticleCompositionTest : public ::testing::Test

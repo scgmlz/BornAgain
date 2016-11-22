@@ -3,7 +3,7 @@
 
 #include "FixedBinAxis.h"
 #include "Exceptions.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include <iostream>
 
 class FixedBinAxisTest: public ::testing::Test
@@ -125,7 +125,7 @@ TEST_F(FixedBinAxisTest, IOStream)
     std::ostringstream oss;
     oss << axis;
 
-    FixedBinAxis *result = dynamic_cast<FixedBinAxis *>(OutputDataIOHelper::createFixedBinAxis(oss.str()));
+    FixedBinAxis *result = dynamic_cast<FixedBinAxis *>(DataFormatUtils::createFixedBinAxis(oss.str()));
     EXPECT_TRUE(axis == *result);
     delete result;
 }

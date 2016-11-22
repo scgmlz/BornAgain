@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/MinimizerOptions.cpp
+//! @file      Fit/Options/MinimizerOptions.cpp
 //! @brief     Implements class MinimizerOptions.
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -20,7 +20,7 @@
 #include <stdexcept>
 
 namespace {
-const std::string delimeter(";");
+    const std::string delimeter = ";";
 }
 
 std::string MinimizerOptions::toOptionString() const
@@ -32,10 +32,10 @@ std::string MinimizerOptions::toOptionString() const
     return result.str();
 }
 
-void MinimizerOptions::setOptionString(const std::string &options)
+void MinimizerOptions::setOptionString(const std::string& options)
 {
     // splits multiple option string "Strategy=1;Tolerance=0.01;"
-    std::vector<std::string> tokens = Utils::String::split(options, delimeter);
+    std::vector<std::string> tokens = StringUtils::split(options, delimeter);
     try {
         for(std::string opt : tokens)
             if(opt.size())
@@ -52,9 +52,9 @@ void MinimizerOptions::setOptionString(const std::string &options)
 //! Process single option string 'Tolerance=0.01' and sets the value
 //! to corresponding MultiOption
 
-void MinimizerOptions::processCommand(const std::string &command)
+void MinimizerOptions::processCommand(const std::string& command)
 {
-    std::vector<std::string> tokens = Utils::String::split(command, "=");
+    std::vector<std::string> tokens = StringUtils::split(command, "=");
     if(tokens.size() != 2)
         throw std::runtime_error("MinimizerOptions::processOption() -> Can't parse option '"+
                                  command+"'");
@@ -65,4 +65,3 @@ void MinimizerOptions::processCommand(const std::string &command)
     OptionContainer::option_t opt = option(name);
     opt->setFromString(value);
 }
-

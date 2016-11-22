@@ -6,16 +6,18 @@
     <tab type="user" url="@ref userapi" title="User API"/>
     <tab type="pages" visible="no" title="" intro=""/>
     <tab type="modules" visible="no" title="" intro=""/>
-    <tab type="namespaces" visible="no" title="">
-      <tab type="namespacelist" visible="no" title="" intro=""/>
-      <tab type="namespacemembers" visible="no" title="" intro=""/>
-    </tab>
     <tab type="classes" visible="yes" title="Full C++ API">
       <tab type="classlist" visible="yes" title="" intro=""/>
       <tab type="classindex" visible="$ALPHABETICAL_INDEX" title=""/>
       <tab type="hierarchy" visible="yes" title="" intro=""/>
       <tab type="classmembers" visible="no" title="" intro=""/>
     </tab>
+    <tab type="namespaces" visible="yes" title="">
+      <tab type="namespacelist" visible="yes" title="" intro=""/>
+      <tab type="namespacemembers" visible="no" title="" intro=""/>
+    </tab>
+    <tab type="globals" visible="yes" title="Globals" intro=""/>
+    <tab type="filelist" visible="yes" title="Files" intro=""/>
     <tab type="filelist" visible="yes" title="">
     </tab>
   </navindex>

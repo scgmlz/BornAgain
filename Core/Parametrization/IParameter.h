@@ -26,7 +26,6 @@
 //! Holds a pointer to the wrapped parameter, a name, and a callback function to be called
 //! when the parameter is changed.
 //! This class is templated on the data type of the wrapped parameter.
-//! @class IParameter
 //! @ingroup tools_internal
 
 template<class T>

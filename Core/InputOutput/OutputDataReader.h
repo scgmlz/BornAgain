@@ -21,9 +21,8 @@
 
 template <class T> class OutputData;
 
-//! @class OutputDataReader
+//! Reads OutputData from file using different reading strategies.
 //! @ingroup input_output_internal
-//! @brief Reads OutputData from file using different reading strategies.
 
 class BA_CORE_API_ OutputDataReader
 {

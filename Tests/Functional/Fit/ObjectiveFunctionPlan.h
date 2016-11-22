@@ -64,4 +64,4 @@ public:
     WoodFour();
 };
 
-#endif
+#endif // OBJECTIVEFUNCTIONPLAN_H

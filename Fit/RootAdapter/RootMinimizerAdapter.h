@@ -27,9 +27,8 @@ class FitParameter;
 
 namespace BA_ROOT { namespace Math { class Minimizer; } }
 
-//! @class RootMinimizerAdapter
+//! Pure virtual interface that adapts the CERN ROOT minimizer to our IMinimizer.
 //! @ingroup fitting_internal
-//! @brief The RootMinimizerAdapter class adapts ROOT minimizer interface to our IMinimizer.
 
 class BA_CORE_API_ RootMinimizerAdapter : public IMinimizer
 {
@@ -54,7 +53,7 @@ public:
 
     double minValue() const override final;
 
-    std::string reportResults() const override final;
+    std::string reportOutcome() const override final;
 
     MinimizerOptions& options() { return m_options; }
     const MinimizerOptions& options() const { return m_options; }
@@ -72,10 +71,10 @@ public:
     void propagateResults(FitParameterSet& parameters) override;
 
     //! Sets option string to the minimizer
-    void setOptions(const std::string &optionString) override final;
+    void setOptions(const std::string& optionString) override final;
 
 protected:
-    RootMinimizerAdapter(const MinimizerInfo &minimizerInfo);
+    RootMinimizerAdapter(const MinimizerInfo& minimizerInfo);
 
     virtual bool isGradientBasedAgorithm() { return false;}
     virtual void setParameter(size_t index, const FitParameter *par);
@@ -88,14 +87,14 @@ protected:
     root_minimizer_t* rootMinimizer();
 
     template<class T>
-    OptionContainer::option_t addOption(const std::string &optionName, T value,
-                       const std::string &description = std::string());
+    OptionContainer::option_t addOption(
+        const std::string& optionName, T value, const std::string& description="");
 
     template<class T>
     void setOptionValue(const std::string& optionName, T value);
 
     template<class T>
-    T optionValue(const std::string &optionName) const;
+    T optionValue(const std::string& optionName) const;
 
 private:
     MinimizerOptions m_options;
@@ -105,8 +104,8 @@ private:
 };
 
 template<class T>
-OptionContainer::option_t RootMinimizerAdapter::addOption(const std::string &optionName, T value,
-                   const std::string &description)
+OptionContainer::option_t RootMinimizerAdapter::addOption(
+    const std::string& optionName, T value, const std::string& description)
 {
     return m_options.addOption(optionName, value, description);
 }
@@ -118,10 +117,9 @@ void RootMinimizerAdapter::setOptionValue(const std::string& optionName, T value
 }
 
 template<class T>
-T RootMinimizerAdapter::optionValue(const std::string &optionName) const
+T RootMinimizerAdapter::optionValue(const std::string& optionName) const
 {
     return m_options.optionValue<T>(optionName);
 }
 
 #endif // ROOTMINIMIZERADAPTER_H
-

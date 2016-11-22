@@ -17,7 +17,7 @@
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
 #include "FormFactorWeighted.h"
-#include "Materials.h"
+#include "IMaterial.h"
 #include "ParticleDistribution.h"
 
 ParticleComposition::ParticleComposition()
@@ -70,8 +70,8 @@ ParticleComposition* ParticleComposition::cloneInvertB() const
     for (size_t index=0; index<m_particles.size(); ++index)
         p_result->addParticlePointer(m_particles[index]->cloneInvertB());
 
-    if(getAmbientMaterial())
-        p_result->setAmbientMaterial(*Materials::createInvertedMaterial(getAmbientMaterial()));
+    if (getAmbientMaterial())
+        p_result->setAmbientMaterial(*getAmbientMaterial()->cloneInverted());
     if (mP_rotation)
         p_result->setRotation(*mP_rotation);
     p_result->setPosition(m_position);

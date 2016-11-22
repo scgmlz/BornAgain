@@ -20,9 +20,8 @@
 
 class ISample;
 
-//! @class MultiLayerWithRoughnessBuilder
+//! Builds sample: layers with correlated roughness.
 //! @ingroup standard_samples
-//! @brief Builds sample: layers with correlated roughness
 
 class BA_CORE_API_ MultiLayerWithRoughnessBuilder : public IMultiLayerBuilder
 {
@@ -38,7 +37,7 @@ private:
     double m_thicknessB;
     double m_sigma;
     double m_hurst;
-    double m_latteralCorrLength;
+    double m_lateralCorrLength;
     double m_crossCorrLength;
 };
 

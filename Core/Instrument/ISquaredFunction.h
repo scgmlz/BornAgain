@@ -18,11 +18,9 @@
 
 #include "Numeric.h" // TODO rm this from .h
 
-//! @class ISquaredFunction
+//! Interface providing measures for deviation between two values.
+//! Used By ChiSquaredModule for chi2 calculations.
 //! @ingroup fitting_internal
-//! @brief Interface providing measures for deviation between two values.
-//!
-//! Used By ChiSquaredModule for chi2 calculations
 
 class BA_CORE_API_ ISquaredFunction
 {
@@ -41,13 +39,9 @@ private:
 };
 
 
-//! @class SquaredFunctionDefault
+//! Squared difference between two values.
+//! value = (a-b)*(a-b)/norm, where norm = max(b, 1.0), a = simulated values, b = real_values.
 //! @ingroup fitting
-//! @brief Squared difference between two values.
-//!
-//! value = (a-b)*(a-b)/norm, where
-//! norm = max(b, 1.0)
-//! a - simulated values, b - real_values
 
 class BA_CORE_API_ SquaredFunctionDefault : public ISquaredFunction
 {
@@ -73,13 +67,9 @@ public:
 };
 
 
-//! @class SquaredFunctionSimError
+//! Squared difference between two values.
+//! value = (a-b)*(a-b)/norm, where norm = max(a, 1.0), a = simulated values, b = real_values.
 //! @ingroup fitting
-//! @brief Squared difference between two values.
-//!
-//! value = (a-b)*(a-b)/norm, where
-//! norm = max(a, 1.0)
-//! a - simulated values, b - real_values
 
 class BA_CORE_API_ SquaredFunctionSimError : public ISquaredFunction
 {
@@ -100,12 +90,10 @@ public:
 };
 
 
-//! @class SquaredFunctionMeanSquaredError
+//! Squared difference between two values normalized by mean squared error.
+//! value = (a-b)*(a-b)/norm, where norm = sqrt(sigma1*sigma1 + sigma2*sigma2),
+//! sigma1=max(a, 1.0), sigma2=max(b,1.0)
 //! @ingroup fitting
-//! @brief Squared difference between two values normalized by mean squared error
-//!
-//! value = (a-b)*(a-b)/norm, where
-//! norm = sqrt(sigma1*sigma1 + sigma2*sigma2), sigma1=max(a, 1.0), sigma2=max(b,1.0)
 
 class BA_CORE_API_ SquaredFunctionMeanSquaredError : public ISquaredFunction
 {
@@ -129,12 +117,9 @@ public:
 };
 
 
-//! @class SquaredFunctionSystematicError
+//! Squared difference between two values normalized by systematic error.
+//! value = (a-b)*(a-b)/norm, where norm = max(error, 1.0), error = b + (epsilon*b)**2.
 //! @ingroup fitting
-//! @brief Squared difference between two values normalized by systematic error
-//!
-//! value = (a-b)*(a-b)/norm, where
-//! norm = max(error, 1.0), error = b + (epsilon*b)**2
 
 class BA_CORE_API_ SquaredFunctionSystematicError : public ISquaredFunction
 {
@@ -156,12 +141,9 @@ private:
 };
 
 
-//! @class SquaredFunctionGaussianError
+//! Squared difference between two values with gaussian error.
+//! value = (a-b)*(a-b)/norm, where norm = sigma*sigma; sigma is set by user.
 //! @ingroup fitting
-//! @brief Squared difference between two values with gaussian error
-//!
-//! value = (a-b)*(a-b)/norm, where
-//! norm = sigma*sigma, sigma - is set by user
 
 class BA_CORE_API_ SquaredFunctionGaussianError : public ISquaredFunction
 {

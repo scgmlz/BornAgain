@@ -14,7 +14,7 @@
 // ************************************************************************** //
 
 #include "Histogram1D.h"
-#include "NumpyUtils.h"
+#include "ArrayUtils.h"
 #include "VariableBinAxis.h"
 #include <memory>
 
@@ -71,17 +71,17 @@ std::vector<double> Histogram1D::getBinErrors() const
 
 PyObject* Histogram1D::getBinCentersNumpy() const
 {
-    return Utils::createNumpyArray(getBinCenters());
+    return ArrayUtils::createNumpyArray(getBinCenters());
 }
 
 PyObject* Histogram1D::getBinValuesNumpy() const
 {
-    return Utils::createNumpyArray(getBinValues());
+    return ArrayUtils::createNumpyArray(getBinValues());
 }
 
 PyObject* Histogram1D::getBinErrorsNumpy() const
 {
-    return Utils::createNumpyArray(getBinErrors());
+    return ArrayUtils::createNumpyArray(getBinErrors());
 }
 
 #endif // BORNAGAIN_PYTHON

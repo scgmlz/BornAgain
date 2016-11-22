@@ -3,7 +3,6 @@
 
 #include "Layer.h"
 #include "HomogeneousMaterial.h"
-#include "Materials.h"
 #include "ParticleLayout.h"
 #include "Units.h"
 

@@ -20,11 +20,9 @@
 
 class FitSuiteImpl;
 
-//! @class IFitStrategy
+//! Interface to concrete fit strategy.
+//! Concrete implementation should manipulate with fit parameters/data and then call minimizer.
 //! @ingroup fitting_internal
-//! @brief Interface to concrete fit strategy.
-//!
-//!  Concrete implementation should manipulate with fit parameters/data and then call minimizer.
 
 class BA_CORE_API_ IFitStrategy : public INamed
 {
@@ -33,15 +31,13 @@ public:
     IFitStrategy& operator=(const IFitStrategy &other) = delete;
     virtual ~IFitStrategy() {}
 
-    virtual IFitStrategy* clone() const = 0;
+    virtual IFitStrategy* clone() const =0;
 
     virtual void init(FitSuiteImpl* fit_suite);
-    virtual void execute() = 0;
+    virtual void execute() =0;
 
-    friend std::ostream &operator<<(std::ostream &ostr, const IFitStrategy &m)
-    {
-        ostr << m.toString(); return ostr;
-    }
+    friend std::ostream &operator<<(std::ostream &ostr, const IFitStrategy &m) {
+        ostr << m.toString(); return ostr; }
 
 protected:
     IFitStrategy(const IFitStrategy &other);
@@ -51,9 +47,8 @@ protected:
 };
 
 
-//! @class FitStrategyDefault
+//! Default fit strategy just let FitSuite to run it's minimization round.
 //! @ingroup fitting
-//! @brief Default fit strategy just let FitSuite to run it's minimization round
 
 class BA_CORE_API_ FitStrategyDefault : public IFitStrategy
 {

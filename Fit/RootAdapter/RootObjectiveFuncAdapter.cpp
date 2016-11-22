@@ -21,9 +21,7 @@
 RootObjectiveFunctionAdapter::RootObjectiveFunctionAdapter()
     : m_nparameters(0)
     , m_ndatasize(0)
-{
-
-}
+{}
 
 //! Sets the function which will be used for finding objective function minimum value
 
@@ -70,7 +68,7 @@ const RootObjectiveFunction*
 
 //! Creates and returns gradient function suitable for ROOT minimizers.
 
-const RootGradientFunction *RootObjectiveFunctionAdapter::rootGradientFunction()
+const RootGradientFunction* RootObjectiveFunctionAdapter::rootGradientFunction()
 {
     if(!m_gradient_callback)
         throw std::runtime_error("RootObjectiveFunctionAdapter::rootGradientFunction() -> Error. "
@@ -85,8 +83,8 @@ const RootGradientFunction *RootObjectiveFunctionAdapter::rootGradientFunction()
                                  "Number of data elements is not defined.");
 
     root_gradient_t rootfun =
-        [&] (const double *pars, unsigned int index, double *gradients)
-        {   return evaluate_gradient(pars, index, gradients); };
+        [&] (const double* pars, unsigned int index, double* gradients)
+        { return evaluate_gradient(pars, index, gradients); };
 
     m_root_gradient_function.reset(new RootGradientFunction(rootfun, m_nparameters,
                                                                      m_ndatasize));
@@ -96,7 +94,7 @@ const RootGradientFunction *RootObjectiveFunctionAdapter::rootGradientFunction()
 
 //! Transfers call of root's pointer based objective function to our callback
 
-double RootObjectiveFunctionAdapter::evaluate(const double *pars)
+double RootObjectiveFunctionAdapter::evaluate(const double* pars)
 {
     std::vector<double> vec;
     vec.resize(m_nparameters, 0.0);
@@ -106,8 +104,8 @@ double RootObjectiveFunctionAdapter::evaluate(const double *pars)
 
 //! Transfers call of root's pointer based gradient function to our callback
 
-double RootObjectiveFunctionAdapter::evaluate_gradient(const double *pars, unsigned int index,
-                                                       double *gradients)
+double RootObjectiveFunctionAdapter::evaluate_gradient(
+    const double* pars, unsigned int index, double* gradients)
 {
     std::vector<double> vec;
     vec.resize(m_nparameters, 0.0);

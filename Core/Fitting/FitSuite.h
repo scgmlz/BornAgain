@@ -33,9 +33,8 @@ class FitSuiteImpl;
 class IMinimizer;
 class FitParameterLinked;
 
-//! @class FitSuite
-//! @ingroup fitting
 //! @brief User interface class that wraps all fit methods.
+//! @ingroup fitting
 
 class BA_CORE_API_ FitSuite : public IObservable
 {

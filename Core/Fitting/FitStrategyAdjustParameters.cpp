@@ -47,7 +47,7 @@ void FitStrategyAdjustParameters::execute()
     // releasing all parameters
     if( m_release_all ) {
         for(auto par: *fitParameters) {
-            msglog(MSG::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> releasing "
+            msglog(Logging::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> releasing "
                                 << par->name();
             par->limits().setFixed(false);
         }
@@ -55,13 +55,14 @@ void FitStrategyAdjustParameters::execute()
 
     // fixing dedicated list of fit parameters
     for(auto name: m_pars_to_fix) {
-        msglog(MSG::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> fixing " << name;
+        msglog(Logging::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> fixing " << name;
         fitParameters->fitParameter(name)->limits().setFixed(true);
     }
 
     // releasing dedicated list of fit parameters
     for(auto name: m_pars_to_release) {
-        msglog(MSG::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> releasing " << name;
+        msglog(Logging::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> releasing "
+                                << name;
         fitParameters->fitParameter(name)->limits().setFixed(false);
     }
 

@@ -1,16 +1,15 @@
 #ifndef MULTILAYERTEST_H
 #define MULTILAYERTEST_H
 
-#include "MultiLayer.h"
 #include "BornAgainNamespace.h"
+#include "HomogeneousMagneticMaterial.h"
 #include "Layer.h"
-#include "HomogeneousMaterial.h"
-#include "Materials.h"
-#include "MathConstants.h"
-#include "ParticleLayout.h"
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "LayerRoughness.h"
+#include "MathConstants.h"
+#include "MultiLayer.h"
+#include "ParticleLayout.h"
 
 class MultiLayerTest : public ::testing::Test
 {
@@ -360,7 +359,7 @@ TEST_F(MultiLayerTest, CloneInvertB)
 
 TEST_F(MultiLayerTest, WithRoughness)
 {
-    //LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength);
+    //LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength);
     LayerRoughness lr(1.1, -7.3, 0.1);
     mLayer.addLayer(topLayer);
     mLayer.addLayerWithTopRoughness(layer1,lr);
@@ -415,7 +414,7 @@ TEST_F(MultiLayerTest, CloneInvertBWithRoughness)
     Layer layer1(iron, 20*Units::nanometer);
     Layer layer2(stone, 5*Units::nanometer);
 
-    //LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength);
+    //LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength);
     LayerRoughness lr0(-2.1, 7.3,  12.1);
     LayerRoughness lr1(1.1, -7.3, 0.1);
 

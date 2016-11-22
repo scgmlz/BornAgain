@@ -18,15 +18,14 @@
 
 #include "IMultiLayerBuilder.h"
 
-//! @class ParticleCompositionBuilder
+//! Builds sample: two layers of spheres at hex lattice.
 //! @ingroup standard_samples
-//! @brief Builds sample: two layers of spheres at hex lattice
 
 class BA_CORE_API_ ParticleCompositionBuilder : public IMultiLayerBuilder
 {
 public:
     ParticleCompositionBuilder(){}
-    MultiLayer *buildSample() const;
+    MultiLayer* buildSample() const;
 };
 
 #endif // PARTICLECOMPOSITIONBUILDER_H

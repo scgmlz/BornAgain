@@ -69,7 +69,8 @@ class BA_CORE_API_ RealLimits
     // static creation methods
 
     //! Creates an object bounded from the left
-    static RealLimits lowerLimited(double bound_value) { return RealLimits(true, false, bound_value, 0.); }
+    static RealLimits lowerLimited(double bound_value) {
+        return RealLimits(true, false, bound_value, 0.); }
 
     //! Creates an object which can have only positive values (>0., zero is not included)
     static RealLimits positive();
@@ -78,7 +79,8 @@ class BA_CORE_API_ RealLimits
     static RealLimits nonnegative() { return lowerLimited(0.); }
 
     //! Creates an object bounded from the right
-    static RealLimits upperLimited(double bound_value) { return RealLimits(false, true, 0., bound_value); }
+    static RealLimits upperLimited(double bound_value) {
+        return RealLimits(false, true, 0., bound_value); }
 
     //! Creates an object bounded from the left and right
     static RealLimits limited(double left_bound_value, double right_bound_value) {

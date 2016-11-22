@@ -15,7 +15,7 @@
 
 #include "OutputDataWriter.h"
 #include "OutputData.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include "boost_streams.h"
 #include <fstream>
 
@@ -31,7 +31,7 @@ void OutputDataWriter::writeOutputData(const OutputData<double>& data)
                                                " Error! No read strategy defined");
     std::ofstream fout;
     std::ios_base::openmode openmode = std::ios::out;
-    if(OutputDataIOHelper::isBinaryFile(m_file_name))
+    if(DataFormatUtils::isBinaryFile(m_file_name))
         openmode = std::ios::out | std::ios_base::binary;
 
     fout.open(m_file_name.c_str(), openmode );
@@ -45,9 +45,9 @@ void OutputDataWriter::writeOutputData(const OutputData<double>& data)
     m_write_strategy->writeOutputData(data, ss);
 
     boost::iostreams::filtering_streambuf<boost::iostreams::input> input_filtered;
-    if(OutputDataIOHelper::isGZipped(m_file_name))
+    if(DataFormatUtils::isGZipped(m_file_name))
         input_filtered.push(boost::iostreams::gzip_compressor());
-    else if(OutputDataIOHelper::isBZipped(m_file_name))
+    else if(DataFormatUtils::isBZipped(m_file_name))
         input_filtered.push(boost::iostreams::bzip2_compressor());
     input_filtered.push(ss);
 

@@ -16,7 +16,9 @@
 #ifndef UNITS_H
 #define UNITS_H
 
-namespace Units {  // BornAgain namespace
+//! Constants and functions for physical unit conversions.
+
+namespace Units {
 
 // Length
 static const double nanometer   = 1.;
@@ -47,6 +49,6 @@ static const double deg  = degree;
 static const double tesla = 1.;
 static const double gauss = 1e-4;
 
-}
+} // namespace Units
 
 #endif // UNITS_H

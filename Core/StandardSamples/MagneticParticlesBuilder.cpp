@@ -18,7 +18,7 @@
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "LayerRoughness.h"
-#include "Materials.h"
+#include "HomogeneousMagneticMaterial.h"
 #include "MultiLayer.h"
 #include "Particle.h"
 #include "ParticleLayout.h"

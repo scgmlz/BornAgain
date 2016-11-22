@@ -18,10 +18,8 @@
 
 #include "OutputDataReader.h"
 
-
-//! @class OutputDataReadFactory
+//! Creates reader appropariate for given type of files.
 //! @ingroup input_output_internal
-//! @brief Creates reader appropariate for given type of files
 
 class BA_CORE_API_ OutputDataReadFactory
 {
@@ -29,7 +27,7 @@ public:
     static OutputDataReader* getReader(const std::string& file_name);
 
 private:
-    static IOutputDataReadStrategy *getReadStrategy(const std::string& file_name);
+    static IOutputDataReadStrategy* getReadStrategy(const std::string& file_name);
 };
 
 #endif // OUTPUTDATAREADFACTORY_H

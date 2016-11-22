@@ -15,18 +15,13 @@
 
 #include "FitKernelImpl.h"
 #include "IMinimizer.h"
+#include "MinimizerResultsHelper.h"
 #include "MinimizerUtils.h"
 #include <sstream>
 
-FitKernelImpl::FitKernelImpl()
-{
+FitKernelImpl::FitKernelImpl() {}
 
-}
-
-FitKernelImpl::~FitKernelImpl()
-{
-
-}
+FitKernelImpl::~FitKernelImpl() {}
 
 void FitKernelImpl::clear()
 {
@@ -34,12 +29,12 @@ void FitKernelImpl::clear()
     m_minimizer.reset();
 }
 
-void FitKernelImpl::setMinimizer(IMinimizer *minimizer)
+void FitKernelImpl::setMinimizer(IMinimizer* minimizer)
 {
     m_minimizer.reset(minimizer);
 }
 
-void FitKernelImpl::addFitParameter(FitParameter *par)
+void FitKernelImpl::addFitParameter(FitParameter* par)
 {
     m_fit_parameters.addFitParameter(par);
 }
@@ -69,7 +64,7 @@ void FitKernelImpl::minimize()
     m_minimizer->setObjectiveFunction(func);
 
     gradient_function_t gradient_func =
-        [&](const std::vector<double>& pars, int index, std::vector<double> &gradients)
+        [&](const std::vector<double>& pars, int index, std::vector<double>& gradients)
     {
         return m_objective_function.evaluate_gradient(pars, index, gradients);
     };
@@ -92,17 +87,17 @@ std::string FitKernelImpl::reportResults() const
     result << MinimizerUtils::sectionString("FitSuite::printResults");
     result << "functionCalls: " << m_objective_function.functionCalls()
            << " (" << m_time_interval.runTime() << " sec total)" << "\n";
-    result << m_minimizer->reportResults();
-    result << m_fit_parameters.reportResults();
+    result << m_minimizer->reportOutcome();
+    result << MinimizerResultsHelper().reportParameters(&m_fit_parameters);
     return result.str();
 }
 
-FitParameterSet *FitKernelImpl::fitParameters()
+FitParameterSet* FitKernelImpl::fitParameters()
 {
     return &m_fit_parameters;
 }
 
-IMinimizer *FitKernelImpl::minimizer()
+IMinimizer* FitKernelImpl::minimizer()
 {
     return m_minimizer.get();
 }

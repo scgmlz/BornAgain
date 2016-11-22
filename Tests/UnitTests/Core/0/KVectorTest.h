@@ -19,7 +19,7 @@ TEST_F(KVectorTest, BasicMethods)
     EXPECT_EQ( double(1.), v2.x()); EXPECT_EQ( double(2.), v2.y()); EXPECT_EQ( double(3.), v2.z());
     v2.setX(10.); v2.setY(20.); v2.setZ(30.);
     EXPECT_EQ( double(10.), v2.x()); EXPECT_EQ( double(20.), v2.y()); EXPECT_EQ( double(30.), v2.z());
-    v2.setXYZ(1., 2., 3.);
+    v2 = {1., 2., 3.};
     EXPECT_EQ( double(1.), v2.x()); EXPECT_EQ( double(2.), v2.y()); EXPECT_EQ( double(3.), v2.z());
 
     kvector_t v3(1.,2.,3.);
@@ -38,8 +38,7 @@ TEST_F(KVectorTest, BasicArithmetics)
     kvector_t v1;
     kvector_t v2(v1);
     EXPECT_EQ( double(0), v2.x()); EXPECT_EQ( double(0), v2.y()); EXPECT_EQ( double(0), v2.z());
-    v2.setXYZ(1., 2., 3.);
-    v2=v2;
+    v2 = { 1., 2., 3. };
     EXPECT_EQ( double(1), v2.x()); EXPECT_EQ( double(2), v2.y()); EXPECT_EQ( double(3), v2.z());
     kvector_t v3(v2);
     EXPECT_EQ( double(1), v3.x()); EXPECT_EQ( double(2), v3.y()); EXPECT_EQ( double(3), v3.z());
@@ -82,13 +81,13 @@ TEST_F(KVectorTest, BasicArithmetics)
     c = b - a;
     EXPECT_EQ( double(9.), c.x()); EXPECT_EQ( double(18.), c.y()); EXPECT_EQ( double(27.), c.z() );
     // multiplication by a scalar
-    a.setXYZ(1., 2., 3.);
+    a = { 1., 2., 3. };
     c = 2*a*2;
     EXPECT_EQ( double(1.), a.x()); EXPECT_EQ( double(2.), a.y()); EXPECT_EQ( double(3.), a.z() );
     EXPECT_EQ( double(4.), c.x()); EXPECT_EQ( double(8.), c.y()); EXPECT_EQ( double(12.), c.z() );
     // scalar product of two vectors
-    a.setXYZ(1., 2., 3.);
-    b.setXYZ(10., 10., 10.);
+    a = { 1., 2., 3. };
+    b = { 10., 10., 10. };
     EXPECT_EQ( double(60), a.dot(b) );
     // crossproduct
     c = a.cross(b);
@@ -96,7 +95,7 @@ TEST_F(KVectorTest, BasicArithmetics)
     EXPECT_EQ(c.y(), a.z()*b.x() - a.x()*b.z());
     EXPECT_EQ(c.z(), a.x()*b.y() - a.y()*b.x());
     // equality
-    a.setXYZ(1.,2.,3.);
+    a = { 1.,2.,3.};
     EXPECT_TRUE( a == kvector_t(1., 2., 3.) );
     EXPECT_TRUE( a != kvector_t(1., 1., 3.) );
 }

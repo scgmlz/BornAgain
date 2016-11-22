@@ -38,7 +38,7 @@ RegionOfInterest::RegionOfInterest(const OutputData<double> &data,
 }
 
 RegionOfInterest::RegionOfInterest(double xlow, double ylow, double xup, double yup)
-    : m_rectangle(new Geometry::Rectangle(xlow, ylow, xup, yup))
+    : m_rectangle(new Rectangle(xlow, ylow, xup, yup))
     , m_ax1(0)
     , m_ay1(0)
     , m_ax2(0)

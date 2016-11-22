@@ -16,7 +16,7 @@
 #include "CoreShellParticleBuilder.h"
 #include "FormFactorBox.h"
 #include "Layer.h"
-#include "Materials.h"
+#include "HomogeneousMaterial.h"
 #include "MultiLayer.h"
 #include "Particle.h"
 #include "ParticleCoreShell.h"

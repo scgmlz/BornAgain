@@ -36,4 +36,4 @@ BA_CORE_API_ QString realDataFileName(const RealDataItem& realDataItem);
 
 }
 
-#endif
+#endif // JOBITEMFUNCTIONS_H

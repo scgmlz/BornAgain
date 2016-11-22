@@ -21,7 +21,7 @@
 #include "ParameterPool.h"
 #include "ParameterSample.h"
 #include "SimulationElement.h"
-#include "Utils.h"
+#include "StringUtils.h"
 #include <gsl/gsl_errno.h>
 #include <thread>
 #include <iomanip>
@@ -242,7 +242,7 @@ void Simulation::runSingleSimulation()
     } else {
         // Multithreading.
 
-        msglog(MSG::DEBUG) << "Simulation::runSimulation() -> Info. Number of threads "
+        msglog(Logging::DEBUG) << "Simulation::runSimulation() -> Info. Number of threads "
                            << m_options.getNumberOfThreads()
                            << ", n_batches = " << m_options.getNumberOfBatches()
                            << ", current_batch = " << m_options.getCurrentBatch();
@@ -294,7 +294,7 @@ void Simulation::runSingleSimulation()
             throw Exceptions::RuntimeErrorException(
                 "Simulation::runSingleSimulation() -> "
                 "At least one simulation thread has terminated unexpectedly.\n"
-                "Messages: " + Utils::String::join(failure_messages, " --- "));
+                "Messages: " + StringUtils::join(failure_messages, " --- "));
     }
     normalize(batch_start, batch_end);
 }

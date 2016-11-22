@@ -5,7 +5,8 @@ C++ API Reference of <a href="http://www.bornagainproject.org">BornAgain Project
 
 <ul>
 <li> Section <a href="userapi.html">User API</a> contains list of main classes to run the simulation.
-<li> Section <a href="annotated.html">Full C++ API</a> gives an access to the full list of classes belonging to the %BornAgain framework.
+<li> Section <a href="annotated.html">Full C++ API</a> contains a full list of classes belonging to the %BornAgain framework.
+<li> Section <a href="namespace.html">Namespace List</a> contains a full list of namespaces belonging to the %BornAgain framework.
 <li> Section <a href="files.html">File List</a> lets you browse the C++ source code.
 
 </ul>

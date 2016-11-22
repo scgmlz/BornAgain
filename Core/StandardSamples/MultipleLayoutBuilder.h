@@ -20,10 +20,9 @@
 
 class ISample;
 
-//! @class MultipleLayoutBuilder
-//! @ingroup standard_samples
-//! @brief Builds sample: mixture of cylinders and prisms without interference
+//! Builds sample: mixture of cylinders and prisms without interference,
 //! using multiple particle layouts
+//! @ingroup standard_samples
 
 class BA_CORE_API_ MultipleLayoutBuilder : public IMultiLayerBuilder
 {

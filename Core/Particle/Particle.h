@@ -21,9 +21,8 @@
 #include "FormFactorDecoratorMaterial.h"
 #include "FormFactorDecoratorRotation.h"
 
-//! @class Particle
+//! A particle with a form factor and refractive index.
 //! @ingroup samples
-//! @brief A particle with a form factor and refractive index
 
 class BA_CORE_API_ Particle : public IParticle
 {

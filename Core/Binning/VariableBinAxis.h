@@ -18,14 +18,13 @@
 
 #include "IAxis.h"
 
-//! @class VariableBinAxis
+//! Axis with bins of non-uniform size. Inherited by ConstKBinAxis and CustomBinAxis
 //! @ingroup tools
-//! @brief Axis with variable bin size.
 
 class BA_CORE_API_ VariableBinAxis : public IAxis
 {
 public:
-    //! @brief VariableBinAxis constructor
+    //! VariableBinAxis constructor.
     //! @param name Axis name
     //! @param nbins number of bins
     //! @param bin_boundaries Array of size nbins+1 containing low-edges for each
@@ -34,7 +33,8 @@ public:
                     const std::vector<double>& bin_boundaries);
     virtual ~VariableBinAxis() {}
 
-    VariableBinAxis* clone() const;
+    virtual VariableBinAxis* clone() const {
+        return new VariableBinAxis(getName(), m_nbins, m_bin_boundaries); }
 
     size_t size() const { return m_nbins; }
 
@@ -65,6 +65,5 @@ protected:
 private:
     std::vector<double> m_bin_boundaries;  //!< vector containing the bin limits
 };
-
 
 #endif // VARIABLEBINAXIS_H

@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Instrument/RectangularDetector.h
-//! @brief     Defines class RectangularDetector.
+//! @brief     Defines classes RectangularDetector and RectPixelMap.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -19,9 +19,8 @@
 #include "IDetector2D.h"
 #include "IPixelMap.h"
 
-//! @class RectangularDetector
+//! A flat rectangular detector with axes and resolution function.
 //! @ingroup simulation
-//! @brief A rectangular plane detector with axes and resolution function.
 
 class BA_CORE_API_ RectangularDetector : public IDetector2D
 {
@@ -43,7 +42,7 @@ public:
 
     RectangularDetector(const RectangularDetector& other);
 
-    RectangularDetector* clone() const override;
+    RectangularDetector* clone() const override { return new RectangularDetector(*this); }
 
     ~RectangularDetector();
 
@@ -66,14 +65,15 @@ public:
     double getHeight() const;
     size_t getNbinsX() const;
     size_t getNbinsY() const;
-    kvector_t getNormalVector() const;
-    double getU0() const;
-    double getV0() const;
-    kvector_t getDirectionVector() const;
-    double getDistance() const;
-    double getDirectBeamU0() const;
-    double getDirectBeamV0() const;
-    EDetectorArrangement getDetectorArrangment() const;
+
+    kvector_t getNormalVector() const { return m_normal_to_detector; }
+    double getU0() const { return m_u0; }
+    double getV0() const { return m_v0; }
+    kvector_t getDirectionVector() const { return m_direction; }
+    double getDistance() const { return m_distance; }
+    double getDirectBeamU0() const { return m_dbeam_u0; }
+    double getDirectBeamV0() const { return m_dbeam_v0; }
+    EDetectorArrangement getDetectorArrangment() const { return m_detector_arrangement; }
 
     //! returns vector of valid axes units
     std::vector<EAxesUnits> getValidAxesUnits() const override;
@@ -95,7 +95,7 @@ protected:
 
     //! Calculates axis range from original detector axes in given units (mm, rad, etc)
     virtual void calculateAxisRange(size_t axis_index, const Beam& beam, EAxesUnits units,
-                                    double &amin, double &amax) const override;
+                                    double& amin, double& amax) const override;
 
     //! Returns the name for the axis with given index
     std::string getAxisName(size_t index) const override;
@@ -122,17 +122,19 @@ private:
     kvector_t m_v_unit;
 };
 
+//! Specializes IPixelMap to flat detector geometry.
+
 class RectPixelMap : public IPixelMap
 {
 public:
     RectPixelMap(kvector_t corner_pos, kvector_t width, kvector_t height);
     virtual ~RectPixelMap() {}
 
-    RectPixelMap* clone() const override;
-    RectPixelMap* createZeroSizeMap(double x, double y) const override;
-    kvector_t getK(double x, double y, double wavelength) const override;
-    double getIntegrationFactor(double x, double y) const override;
-    double getSolidAngle() const override;
+    RectPixelMap* clone() const final;
+    RectPixelMap* createZeroSizeMap(double x, double y) const final;
+    kvector_t getK(double x, double y, double wavelength) const final;
+    double getIntegrationFactor(double x, double y) const final;
+    double getSolidAngle() const final;
 private:
     kvector_t normalizeLength(const kvector_t direction, double length) const;
     double calculateSolidAngle() const;

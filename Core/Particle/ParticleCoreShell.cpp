@@ -16,7 +16,7 @@
 #include "ParticleCoreShell.h"
 #include "BornAgainNamespace.h"
 #include "FormFactorWeighted.h"
-#include "Materials.h"
+#include "IMaterial.h"
 #include "Particle.h"
 
 ParticleCoreShell::ParticleCoreShell(
@@ -37,10 +37,10 @@ ParticleCoreShell::~ParticleCoreShell()
 
 ParticleCoreShell* ParticleCoreShell::clone() const
 {
-    ParticleCoreShell* p_result =
-            new ParticleCoreShell(*mp_shell, *mp_core, kvector_t(0.0, 0.0, 0.0));
+    ParticleCoreShell* p_result = new ParticleCoreShell(*mp_shell, *mp_core);
     p_result->setAbundance(m_abundance);
-    p_result->setAmbientMaterial(*getAmbientMaterial());
+    if ( const IMaterial* ambientMaterial = getAmbientMaterial() )
+        p_result->setAmbientMaterial(*ambientMaterial);
     if (mP_rotation.get())
         p_result->setRotation(*mP_rotation);
     p_result->setPosition(m_position);
@@ -51,12 +51,12 @@ ParticleCoreShell* ParticleCoreShell::cloneInvertB() const
 {
     ParticleCoreShell* p_result = new ParticleCoreShell();
     p_result->setAbundance(m_abundance);
-    p_result->mp_shell = this->mp_shell->cloneInvertB();
-    p_result->mp_core = this->mp_core->cloneInvertB();
-    p_result->setAmbientMaterial( *Materials::createInvertedMaterial(getAmbientMaterial()) );
-    if (mP_rotation.get()) {
+    p_result->mp_shell = mp_shell->cloneInvertB();
+    p_result->mp_core = mp_core->cloneInvertB();
+    if ( const IMaterial* ambientMaterial = getAmbientMaterial() )
+        p_result->setAmbientMaterial(*ambientMaterial->cloneInverted());
+    if (mP_rotation.get())
         p_result->setRotation(*mP_rotation);
-    }
     p_result->setPosition(m_position);
     return p_result;
 }
@@ -68,12 +68,13 @@ void ParticleCoreShell::setAmbientMaterial(const IMaterial& material)
 
 const IMaterial* ParticleCoreShell::getAmbientMaterial() const
 {
-    if (!mp_shell) return 0;
+    if (!mp_shell)
+        return nullptr;
     return mp_shell->getAmbientMaterial();
 }
 
-IFormFactor* ParticleCoreShell::createTransformedFormFactor(const IRotation* p_rotation,
-                                                            kvector_t translation) const
+IFormFactor* ParticleCoreShell::createTransformedFormFactor(
+    const IRotation* p_rotation, kvector_t translation) const
 {
     if (!mp_core || !mp_shell)
         return nullptr;

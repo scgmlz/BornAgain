@@ -223,7 +223,7 @@ void MainWindow::initApplication()
     QCoreApplication::setApplicationVersion(GUIHelpers::getBornAgainVersionString());
     QCoreApplication::setOrganizationName(QLatin1String(Constants::APPLICATION_NAME));
 
-    if (!Utils::HostOsInfo::isMacHost())
+    if (!GUI_OS_Utils::HostOsInfo::isMacHost())
         QApplication::setWindowIcon(QIcon(":/images/BornAgain.ico"));
 
     QString baseName = QApplication::style()->objectName();

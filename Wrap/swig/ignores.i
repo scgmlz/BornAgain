@@ -7,17 +7,6 @@
 %ignore Instrument::setDetectorResolutionFunction(IResolutionFunction2D*);
 %ignore Instrument::setDetectorResolutionFunction(const IResolutionFunction2D*);
 
-
-// used to return numpy array
-/*
-%ignore Histogram1D::getBinCenters() const;
-%ignore Histogram1D::getBinValues() const;
-%ignore Histogram1D::getBinErrors() const;
-*/
-// need to fix SWIG error, PI2 multiply defined
-%ignore Units::PI2;
-
-
 // problems with BasicVector3D.h
 %ignore BasicVector3D<std::complex<double>>::complex() const;
 %ignore BasicVector3D<std::complex<double>>::angle(const BasicVector3D<std::complex<double>>&) const;
@@ -66,4 +55,3 @@
 %ignore DecoratedLayerComputation;
 %ignore RoughMultiLayerComputation;
 %ignore SpecularComputation;
-

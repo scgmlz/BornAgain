@@ -59,4 +59,4 @@ inline bool SimulationAreaIterator::operator!=(const SimulationAreaIterator &rig
     return !(*this == right);
 }
 
-#endif
+#endif // SIMULATIONAREAITERATOR_H

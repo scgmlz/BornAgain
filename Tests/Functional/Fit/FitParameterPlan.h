@@ -38,4 +38,4 @@ public:
     double m_threshold; //!< threshold on found value
 };
 
-#endif
+#endif // FITPARAMETERPLAN_H

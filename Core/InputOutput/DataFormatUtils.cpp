@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/InputOutput/OutputDataIOHelper.cpp
-//! @brief     Implements class OutputDataIOHelper.
+//! @file      Core/InputOutput/DataFormatUtils.cpp
+//! @brief     Implements class DataFormatUtils.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -13,36 +13,36 @@
 //
 // ************************************************************************** //
 
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include "ConstKBinAxis.h"
 #include "CustomBinAxis.h"
-#include "FileSystem.h"
+#include "FileSystemUtils.h"
 #include "OutputData.h"
-#include "Utils.h"
+#include "StringUtils.h"
 #include <iterator>
 #include <iostream>
 
-bool OutputDataIOHelper::isCompressed(const std::string& name)
+bool DataFormatUtils::isCompressed(const std::string& name)
 {
     return isGZipped(name) || isBZipped(name);
 }
 
 //! Does name contain *.gz extension?
 
-bool OutputDataIOHelper::isGZipped(const std::string& name)
+bool DataFormatUtils::isGZipped(const std::string& name)
 {
-    return FileSystem::GetFileExtension(name) == GzipExtention;
+    return FileSystemUtils::extension(name) == GzipExtention;
 }
 
-bool OutputDataIOHelper::isBZipped(const std::string& name)
+bool DataFormatUtils::isBZipped(const std::string& name)
 {
-    return FileSystem::GetFileExtension(name) == BzipExtention;
+    return FileSystemUtils::extension(name) == BzipExtention;
 }
 
 
 //! Returns file main extension (without .gz).
 
-std::string OutputDataIOHelper::GetFileMainExtension(const std::string& name)
+std::string DataFormatUtils::GetFileMainExtension(const std::string& name)
 {
     std::string stripped_name(name);
     if(isGZipped(name)) {
@@ -51,10 +51,10 @@ std::string OutputDataIOHelper::GetFileMainExtension(const std::string& name)
     else if(isBZipped(name)) {
         stripped_name = name.substr(0, name.size()-BzipExtention.size());
     }
-    return FileSystem::GetFileExtension(stripped_name);
+    return FileSystemUtils::extension(stripped_name);
 }
 
-bool OutputDataIOHelper::isBinaryFile(const std::string& file_name)
+bool DataFormatUtils::isBinaryFile(const std::string& file_name)
 {
     // all compressed files are always binary.
     if(isCompressed(file_name)) return true;
@@ -65,17 +65,17 @@ bool OutputDataIOHelper::isBinaryFile(const std::string& file_name)
     return true;
 }
 
-bool OutputDataIOHelper::isIntFile(const std::string& file_name)
+bool DataFormatUtils::isIntFile(const std::string& file_name)
 {
     return GetFileMainExtension(file_name) == IntExtention;
 }
 
-bool OutputDataIOHelper::isTxtFile(const std::string& file_name)
+bool DataFormatUtils::isTxtFile(const std::string& file_name)
 {
     return GetFileMainExtension(file_name) == TxtExtention;
 }
 
-bool OutputDataIOHelper::isTiffFile(const std::string& file_name)
+bool DataFormatUtils::isTiffFile(const std::string& file_name)
 {
     return GetFileMainExtension(file_name) == TiffExtention;
 }
@@ -83,21 +83,21 @@ bool OutputDataIOHelper::isTiffFile(const std::string& file_name)
 //! Returns true if string representation of the axis contains one of
 //! FixedBinAxis, ConstKBinAxis or CustomBinAxis to parse it later in
 //! similar way.
-bool OutputDataIOHelper::isSimilarToFixedBinAxisType(const std::string& line)
+bool DataFormatUtils::isSimilarToFixedBinAxisType(const std::string& line)
 {
     return line.find(FixedBinAxisType) != std::string::npos ||
         line.find(ConstKBinAxisType) != std::string::npos ||
         line.find(CustomBinAxisType) != std::string::npos;
 }
 
-bool OutputDataIOHelper::isVariableBinAxisType(const std::string& line)
+bool DataFormatUtils::isVariableBinAxisType(const std::string& line)
 {
     return line.find(VariableBinAxisType) != std::string::npos;
 }
 
 
 //! Creates axis of certain type from input stream
-IAxis *OutputDataIOHelper::createAxis(std::istream& input_stream)
+IAxis *DataFormatUtils::createAxis(std::istream& input_stream)
 {
     std::string line;
     std::getline(input_stream, line);
@@ -111,7 +111,7 @@ IAxis *OutputDataIOHelper::createAxis(std::istream& input_stream)
         return createVariableBinAxis(line);
     }
     else {
-        throw Exceptions::LogicErrorException("OutputDataIOHelper::createAxis() -> Error. "
+        throw Exceptions::LogicErrorException("DataFormatUtils::createAxis() -> Error. "
                                               "Unknown axis '"+line+"'");
     }
 }
@@ -120,10 +120,10 @@ IAxis *OutputDataIOHelper::createAxis(std::istream& input_stream)
 //! FixedBinAxis("axis0", 10, -1, 1)
 //! ConstKBinAxis("axis0", 10, -1, 1)
 //! CustomBinAxis("axis0", 10, -1, 1)
-IAxis *OutputDataIOHelper::createFixedBinAxis(std::string line)
+IAxis *DataFormatUtils::createFixedBinAxis(std::string line)
 {
     std::vector<std::string> to_replace = {",", "\"", "(", ")"};
-    Utils::String::replaceItemsFromString(line, to_replace, " ");
+    StringUtils::replaceItemsFromString(line, to_replace, " ");
 
     std::string type, name;
     size_t nbins(0);
@@ -131,14 +131,14 @@ IAxis *OutputDataIOHelper::createFixedBinAxis(std::string line)
     std::istringstream iss(line);
     if( !(iss >> type >> name >> nbins) )
         throw Exceptions::FormatErrorException(
-            "OutputDataIOHelper::createFixedBinAxis() -> Error. Can't parse the string.");
+            "DataFormatUtils::createFixedBinAxis() -> Error. Can't parse the string.");
 
     std::vector<double> boundaries;
     readLineOfDoubles(boundaries, iss);
 
     if(boundaries.size() != 2)
         throw Exceptions::FormatErrorException(
-            "OutputDataIOHelper::createFixedBinAxis() -> Error. Can't parse the string at p2.");
+            "DataFormatUtils::createFixedBinAxis() -> Error. Can't parse the string at p2.");
 
     if(type == FixedBinAxisType) {
         return new FixedBinAxis(name, nbins, boundaries[0], boundaries[1]);
@@ -151,17 +151,17 @@ IAxis *OutputDataIOHelper::createFixedBinAxis(std::string line)
     }
     else {
         throw Exceptions::LogicErrorException(
-            "OutputDataIOHelper::createOneOfFixedBinAxis() -> Error. Unexpected place.");
+            "DataFormatUtils::createOneOfFixedBinAxis() -> Error. Unexpected place.");
     }
 }
 
 
 //! Create VariableBinAxis from string representation
 //! VariableBinAxis("axis0", 4, [-1, -0.5, 0.5, 1, 2])
-IAxis *OutputDataIOHelper::createVariableBinAxis(std::string line)
+IAxis *DataFormatUtils::createVariableBinAxis(std::string line)
 {
     std::vector<std::string> to_replace = {",", "\"", "(", ")", "[", "]"};
-    Utils::String::replaceItemsFromString(line, to_replace, " ");
+    StringUtils::replaceItemsFromString(line, to_replace, " ");
 
     std::string type, name;
     size_t nbins(0);
@@ -169,17 +169,17 @@ IAxis *OutputDataIOHelper::createVariableBinAxis(std::string line)
     std::istringstream iss(line);
     if( !(iss >> type >> name >> nbins) )
         throw Exceptions::FormatErrorException(
-            "OutputDataIOHelper::createVariableBinAxis() -> Error. Can't parse the string.");
+            "DataFormatUtils::createVariableBinAxis() -> Error. Can't parse the string.");
     std::vector<double> boundaries;
     readLineOfDoubles(boundaries, iss);
     if(boundaries.size() != nbins+1)
         throw Exceptions::FormatErrorException(
-            "OutputDataIOHelper::createVariableBinAxis() -> Error. Can't parse the string at p2.");
+            "DataFormatUtils::createVariableBinAxis() -> Error. Can't parse the string at p2.");
     return new VariableBinAxis(name, nbins, boundaries);
 }
 
 //! Fills output data raw buffer from input stream
-void OutputDataIOHelper::fillOutputData(OutputData<double>* data, std::istream& input_stream)
+void DataFormatUtils::fillOutputData(OutputData<double>* data, std::istream& input_stream)
 {
     std::string line;
     data->setAllTo(0.0);
@@ -197,25 +197,25 @@ void OutputDataIOHelper::fillOutputData(OutputData<double>* data, std::istream& 
     }
     if(it!= data->end())
         throw Exceptions::FormatErrorException(
-            "OutputDataIOHelper::fillOutputData() -> Error while parsing data.");
+            "DataFormatUtils::fillOutputData() -> Error while parsing data.");
 }
 
 //! Parse double values from string to vector of double
 
-std::vector<double> OutputDataIOHelper::parse_doubles(const std::string& str)
+std::vector<double> DataFormatUtils::parse_doubles(const std::string& str)
 {
     std::vector<double> result;
     std::istringstream iss(str);
-    OutputDataIOHelper::readLineOfDoubles(result, iss);
+    DataFormatUtils::readLineOfDoubles(result, iss);
     if( result.empty() ) {
-        std::cout << "Utils::String::parse_doubles -> "
+        std::cout << "StringUtils::parse_doubles -> "
             "Warning! No parsed values in 1d vector of doubles." << std::endl;
         std::cout << "Line '" << str << "'" << std::endl;
     }
     return result;
 }
 
-void OutputDataIOHelper::readLineOfDoubles(std::vector<double>& buffer, std::istringstream& iss)
+void DataFormatUtils::readLineOfDoubles(std::vector<double>& buffer, std::istringstream& iss)
 {
     iss.imbue(std::locale::classic());
     std::copy(std::istream_iterator<double>(iss),

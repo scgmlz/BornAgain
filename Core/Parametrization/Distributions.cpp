@@ -20,15 +20,13 @@
 #include <cmath>
 #include <sstream>
 
-using namespace BornAgain;
-
 IDistribution1D* IDistribution1D::clone() const
 {
     throw Exceptions::NotImplementedException("IDistribution1D cannot be cloned");
 }
 
 std::vector<ParameterSample> IDistribution1D::generateSamples(
-    size_t nbr_samples, double sigma_factor, const RealLimits &limits) const
+    size_t nbr_samples, double sigma_factor, const RealLimits& limits) const
 {
     if (nbr_samples == 0)
         throw Exceptions::OutOfBoundsException("IDistribution1D::generateSamples: number "
@@ -86,7 +84,7 @@ void IDistribution1D::SignalBadInitialization(std::string distribution_name)
 }
 
 void IDistribution1D::adjustMinMaxForLimits(
-    double &xmin, double &xmax, const RealLimits &limits) const
+    double& xmin, double& xmax, const RealLimits& limits) const
 {
     if(limits.hasLowerLimit() && xmin < limits.getLowerLimit()) xmin = limits.getLowerLimit();
     if(limits.hasUpperLimit() && xmax > limits.getUpperLimit()) xmax = limits.getUpperLimit();
@@ -99,7 +97,7 @@ void IDistribution1D::adjustMinMaxForLimits(
 }
 
 std::vector<ParameterSample> IDistribution1D::generateSamplesFromValues(
-    const std::vector<double> &sample_values) const
+    const std::vector<double>& sample_values) const
 {
     std::vector<ParameterSample> result;
     result.resize(sample_values.size());
@@ -123,14 +121,14 @@ std::vector<ParameterSample> IDistribution1D::generateSamplesFromValues(
 
 DistributionGate::DistributionGate() : m_min(0.0), m_max(1.0)
 {
-    setName(DistributionGateType);
+    setName(BornAgain::DistributionGateType);
     checkInitialization();
     init_parameters();
 }
 
 DistributionGate::DistributionGate(double min, double max) : m_min(min), m_max(max)
 {
-    setName(DistributionGateType);
+    setName(BornAgain::DistributionGateType);
     checkInitialization();
     init_parameters();
 }
@@ -143,17 +141,15 @@ double DistributionGate::probabilityDensity(double x) const
 }
 
 std::vector<double> DistributionGate::generateValueList(size_t nbr_samples,
-        double sigma_factor, const RealLimits &limits) const
+        double, const RealLimits&) const
 {
-    (void)sigma_factor;
-    (void)limits;
     return generateValues(nbr_samples, m_min, m_max);
 }
 
 void DistributionGate::init_parameters()
 {
-    registerParameter(Minimum, &m_min);
-    registerParameter(Maximum, &m_max);
+    registerParameter(BornAgain::Minimum, &m_min);
+    registerParameter(BornAgain::Maximum, &m_max);
 }
 
 bool DistributionGate::isDelta() const
@@ -165,7 +161,7 @@ bool DistributionGate::checkInitialization() const
 {
     bool result = true;
     if (m_max < m_min) result = false;
-    if (!result) SignalBadInitialization(DistributionGateType);
+    if (!result) SignalBadInitialization(BornAgain::DistributionGateType);
     return result;
 }
 
@@ -173,14 +169,14 @@ bool DistributionGate::checkInitialization() const
 
 DistributionLorentz::DistributionLorentz() : m_mean(0.0), m_hwhm(1.0)
 {
-    setName(DistributionLorentzType);
+    setName(BornAgain::DistributionLorentzType);
     checkInitialization();
     init_parameters();
 }
 
 DistributionLorentz::DistributionLorentz(double mean, double hwhm) : m_mean(mean), m_hwhm(hwhm)
 {
-    setName(DistributionLorentzType);
+    setName(BornAgain::DistributionLorentzType);
     checkInitialization();
     init_parameters();
 }
@@ -192,7 +188,7 @@ double DistributionLorentz::probabilityDensity(double x) const
 }
 
 std::vector<double> DistributionLorentz::generateValueList(size_t nbr_samples,
-        double sigma_factor, const RealLimits &limits) const
+        double sigma_factor, const RealLimits& limits) const
 {
     if (sigma_factor <= 0.0) sigma_factor = 2.0;
     double xmin = m_mean - sigma_factor*m_hwhm;
@@ -203,8 +199,8 @@ std::vector<double> DistributionLorentz::generateValueList(size_t nbr_samples,
 
 void DistributionLorentz::init_parameters()
 {
-    registerParameter(Mean, &m_mean);
-    registerParameter(HWHM, &m_hwhm);
+    registerParameter(BornAgain::Mean, &m_mean);
+    registerParameter(BornAgain::HWHM, &m_hwhm);
 }
 
 bool DistributionLorentz::isDelta() const
@@ -216,7 +212,7 @@ bool DistributionLorentz::checkInitialization() const
 {
     bool result = true;
     if (m_hwhm < 0.0) result = false;
-    if (!result) SignalBadInitialization(DistributionLorentzType);
+    if (!result) SignalBadInitialization(BornAgain::DistributionLorentzType);
     return result;
 }
 
@@ -226,7 +222,7 @@ DistributionGaussian::DistributionGaussian()
     : m_mean(0.0)
     , m_std_dev(1.0)
 {
-    setName(DistributionGaussianType);
+    setName(BornAgain::DistributionGaussianType);
     checkInitialization();
     init_parameters();
 }
@@ -235,7 +231,7 @@ DistributionGaussian::DistributionGaussian(double mean, double std_dev)
     : m_mean(mean)
     , m_std_dev(std_dev)
 {
-    setName(DistributionGaussianType);
+    setName(BornAgain::DistributionGaussianType);
     checkInitialization();
     init_parameters();
 }
@@ -249,7 +245,7 @@ double DistributionGaussian::probabilityDensity(double x) const
 }
 
 std::vector<double> DistributionGaussian::generateValueList(size_t nbr_samples,
-        double sigma_factor, const RealLimits &limits) const
+        double sigma_factor, const RealLimits& limits) const
 {
     if (sigma_factor <= 0.0) sigma_factor = 2.0;
     double xmin = m_mean - sigma_factor*m_std_dev;
@@ -260,8 +256,8 @@ std::vector<double> DistributionGaussian::generateValueList(size_t nbr_samples,
 
 void DistributionGaussian::init_parameters()
 {
-    registerParameter(Mean, &m_mean);
-    registerParameter(StdDeviation, &m_std_dev);
+    registerParameter(BornAgain::Mean, &m_mean);
+    registerParameter(BornAgain::StdDeviation, &m_std_dev);
 }
 
 bool DistributionGaussian::isDelta() const
@@ -273,7 +269,7 @@ bool DistributionGaussian::checkInitialization() const
 {
     bool result = true;
     if (m_std_dev < 0.0) result = false;
-    if (!result) SignalBadInitialization(DistributionGaussianType);
+    if (!result) SignalBadInitialization(BornAgain::DistributionGaussianType);
     return result;
 }
 
@@ -283,7 +279,7 @@ DistributionLogNormal::DistributionLogNormal(double scale_param)
     : m_median(1.0)
     , m_scale_param(scale_param)
 {
-    setName(DistributionLogNormalType);
+    setName(BornAgain::DistributionLogNormalType);
     checkInitialization();
     init_parameters();
 }
@@ -292,7 +288,7 @@ DistributionLogNormal::DistributionLogNormal(double median, double scale_param)
     : m_median(median)
     , m_scale_param(scale_param)
 {
-    setName(DistributionLogNormalType);
+    setName(BornAgain::DistributionLogNormalType);
     checkInitialization();
     init_parameters();
 }
@@ -311,7 +307,7 @@ double DistributionLogNormal::getMean() const
 }
 
 std::vector<double> DistributionLogNormal::generateValueList(size_t nbr_samples,
-        double sigma_factor, const RealLimits &limits) const
+        double sigma_factor, const RealLimits& limits) const
 {
     if(nbr_samples < 2) {
         std::vector<double> result;
@@ -328,8 +324,8 @@ std::vector<double> DistributionLogNormal::generateValueList(size_t nbr_samples,
 
 void DistributionLogNormal::init_parameters()
 {
-    registerParameter(Median, &m_median);
-    registerParameter(ScaleParameter, &m_scale_param);
+    registerParameter(BornAgain::Median, &m_median);
+    registerParameter(BornAgain::ScaleParameter, &m_scale_param);
 }
 
 bool DistributionLogNormal::isDelta() const
@@ -342,7 +338,7 @@ bool DistributionLogNormal::checkInitialization() const
     bool result = true;
     if (m_scale_param < 0.0) result = false;
     if (m_median <= 0.0) result = false;
-    if (!result) SignalBadInitialization(DistributionLogNormalType);
+    if (!result) SignalBadInitialization(BornAgain::DistributionLogNormalType);
     return result;
 }
 
@@ -352,7 +348,7 @@ DistributionCosine::DistributionCosine()
     : m_mean(0.0)
     , m_sigma(1.0)
 {
-    setName(DistributionCosineType);
+    setName(BornAgain::DistributionCosineType);
     checkInitialization();
     init_parameters();
 }
@@ -361,7 +357,7 @@ DistributionCosine::DistributionCosine(double mean, double sigma)
     : m_mean(mean)
     , m_sigma(sigma)
 {
-    setName(DistributionCosineType);
+    setName(BornAgain::DistributionCosineType);
     checkInitialization();
     init_parameters();
 }
@@ -374,7 +370,7 @@ double DistributionCosine::probabilityDensity(double x) const
 }
 
 std::vector<double> DistributionCosine::generateValueList(size_t nbr_samples,
-        double sigma_factor, const RealLimits &limits) const
+        double sigma_factor, const RealLimits& limits) const
 {
     if (sigma_factor <= 0.0 || sigma_factor > 2.0) sigma_factor = 2.0;
     double xmin = m_mean - sigma_factor*m_sigma*M_PI_2;
@@ -385,8 +381,8 @@ std::vector<double> DistributionCosine::generateValueList(size_t nbr_samples,
 
 void DistributionCosine::init_parameters()
 {
-    registerParameter(Mean, &m_mean);
-    registerParameter(Sigma, &m_sigma);
+    registerParameter(BornAgain::Mean, &m_mean);
+    registerParameter(BornAgain::Sigma, &m_sigma);
 }
 
 bool DistributionCosine::isDelta() const
@@ -398,6 +394,6 @@ bool DistributionCosine::checkInitialization() const
 {
     bool result = true;
     if (m_sigma < 0.0) result = false;
-    if (!result) SignalBadInitialization(DistributionCosineType);
+    if (!result) SignalBadInitialization(BornAgain::DistributionCosineType);
     return result;
 }

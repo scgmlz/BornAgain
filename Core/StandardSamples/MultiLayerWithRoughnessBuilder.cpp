@@ -26,7 +26,7 @@ MultiLayerWithRoughnessBuilder::MultiLayerWithRoughnessBuilder()
     , m_thicknessB(5.0*Units::nanometer)
     , m_sigma(1.0*Units::nanometer)
     , m_hurst(0.3)
-    , m_latteralCorrLength(5.0*Units::nanometer)
+    , m_lateralCorrLength(5.0*Units::nanometer)
     , m_crossCorrLength(1e-4)
 {
     init_parameters();
@@ -39,7 +39,7 @@ void MultiLayerWithRoughnessBuilder::init_parameters()
     registerParameter("thicknessB", &m_thicknessB).setUnit("nm").setNonnegative();
     registerParameter("sigma", &m_sigma).setUnit("nm").setNonnegative();
     registerParameter("hurst", &m_hurst);
-    registerParameter("latteralCorrLength", &m_latteralCorrLength).setUnit("nm").setNonnegative();
+    registerParameter("lateralCorrLength", &m_lateralCorrLength).setUnit("nm").setNonnegative();
     registerParameter("crossCorrLength", &m_crossCorrLength).setUnit("nm").setNonnegative();
 }
 
@@ -57,7 +57,7 @@ MultiLayer* MultiLayerWithRoughnessBuilder::buildSample() const
     Layer partB_layer(part_b_material, m_thicknessB);
     Layer substrate_layer(substrate_material, 0);
 
-    LayerRoughness roughness(m_sigma, m_hurst, m_latteralCorrLength);
+    LayerRoughness roughness(m_sigma, m_hurst, m_lateralCorrLength);
 
     multi_layer->addLayer(air_layer);
     for (int i = 0; i<5; ++i) {

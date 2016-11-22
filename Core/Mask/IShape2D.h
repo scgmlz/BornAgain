@@ -22,30 +22,26 @@
 
 struct Bin1D;
 
-namespace Geometry {
-
 //! Basic class for all shapes in 2D.
 //! @ingroup tools
 
 class BA_CORE_API_ IShape2D : public ICloneable, public INamed {
 public:
     IShape2D(const std::string& name) : INamed(name) {}
-    virtual IShape2D *clone() const = 0;
+    virtual IShape2D* clone() const = 0;
 
     //! Returns true if point with given coordinates is inside or on border of the shape.
     virtual bool contains(double x, double y) const = 0;
 
     //! Returns true if area defined by two bins is inside or on border of polygon
     //! (more precisely, if mid point of two bins satisfy this condition).
-    virtual bool contains(const Bin1D &binx, const Bin1D &biny) const = 0;
+    virtual bool contains(const Bin1D& binx, const Bin1D& biny) const = 0;
 
-    friend std::ostream &operator<<(std::ostream &ostr, const IShape2D &shape) {
+    friend std::ostream& operator<<(std::ostream &ostr, const IShape2D& shape) {
         shape.print(ostr); return ostr; }
 
 protected:
-    virtual void print(std::ostream &ostr) const { ostr << getName(); }
+    virtual void print(std::ostream& ostr) const { ostr << getName(); }
 };
-
-} // namespace Geometry
 
 #endif // ISHAPE2D_H

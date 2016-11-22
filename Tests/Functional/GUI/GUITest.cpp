@@ -24,7 +24,6 @@
 #include "MaterialModel.h"
 #include "MaterialSvc.h"
 #include "SampleModel.h"
-#include "Utils.h"
 
 GUITest::GUITest(const std::string &name, const std::string &description,
                  GISASSimulation *reference_simulation, double threshold)

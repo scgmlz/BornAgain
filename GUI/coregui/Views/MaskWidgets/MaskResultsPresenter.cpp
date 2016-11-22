@@ -104,7 +104,7 @@ OutputData<double> *MaskResultsPresenter::createMaskPresentation() const
                 roi.reset(new RegionOfInterest(*m_intensityDataItem->getOutputData(),
                                                xlow, ylow, xup, yup));
             } else {
-                std::unique_ptr<Geometry::IShape2D > shape(maskItem->createShape());
+                std::unique_ptr<IShape2D > shape(maskItem->createShape());
                 bool mask_value = maskItem->getItemValue(MaskItem::P_MASK_VALUE).toBool();
                 detectorMask.addMask(*shape.get(), mask_value);
             }

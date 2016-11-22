@@ -17,12 +17,15 @@
 #define GSLLEVENBERGMARQUARDTMINIMIZER_H
 
 #include "RootMinimizerAdapter.h"
+
 namespace BA_ROOT { namespace Math { class GSLNLSMinimizer; } }
 
-//! @class GSLLevenbergMarquardtMinimizer
+//! Wrapper for CERN ROOT facade of the GSL Levenberg-Marquardt minimizer.
+//! It's a facade to ROOT::Math::GSLNLSMinimizer which adapts ROOT::Math::GSLMultiFit
+//! minimizers to some CERN ROOT generic minimizer interface. ROOT::Math::GSLMultiFit,
+//! in turn, is a facade to the actual GSL's gsl_multifit_fdfsolver_type
+//! (http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html).
 //! @ingroup fitting_internal
-//! @brief Wrapper for GSL Levenberg-Marquardt minimizer.
-//! http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html
 
 class BA_CORE_API_ GSLLevenbergMarquardtMinimizer : public RootMinimizerAdapter {
 public:
@@ -30,12 +33,10 @@ public:
     ~GSLLevenbergMarquardtMinimizer();
 
     //!< Sets tolerance on the function value at the minimum.
-    //! Default value is 0.01.
     void setTolerance(double value);
     double tolerance() const;
 
     //! Sets minimizer internal print level.
-    //! Default value is 0 (silent).
     void setPrintLevel(int value);
     int printLevel() const;
 

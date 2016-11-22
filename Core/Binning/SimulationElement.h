@@ -71,7 +71,6 @@ public:
     kvector_t getMeanKF() const;
     kvector_t getMeanQ() const;
     kvector_t getQ(double x, double y) const;
-
     kvector_t getK(double x, double y) const;
 
     double getIntegrationFactor(double x, double y) const;
@@ -110,9 +109,5 @@ void addElementsWithWeight(std::vector<SimulationElement>::const_iterator first,
                            std::vector<SimulationElement>::const_iterator last,
                            std::vector<SimulationElement>::iterator result,
                            double weight);
-
-//! Set all element intensities to given value
-void setAllElementIntensities(std::vector<SimulationElement>::iterator first,
-                              std::vector<SimulationElement>::iterator last, double intensity);
 
 #endif // SIMULATIONELEMENT_H

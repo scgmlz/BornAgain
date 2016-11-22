@@ -161,7 +161,7 @@ bool GUITranslationTest::checkMissedTranslations()
     std::vector<std::string> domainNames = pool->getParameterNames();
     std::vector<std::string> missedNames;
     for(auto name : domainNames) {
-        std::string domainName = "*" + Utils::String::removeSubstring(name, "/GISASSimulation");
+        std::string domainName = "*" + StringUtils::removeSubstring(name, "/GISASSimulation");
         bool translationFound(false);
         for(auto pair : m_translations) {
             if(pair.translatedName == domainName) {

@@ -49,4 +49,4 @@ private:
     std::unique_ptr<ObjectiveFunctionPlan> m_plan;
 };
 
-#endif
+#endif // STANDALONEFITPLAN_H

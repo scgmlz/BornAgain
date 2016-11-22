@@ -2,7 +2,7 @@
 #define CUSTOMBINAXISTEST_H
 
 #include "CustomBinAxis.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include "MathConstants.h"
 #include <vector>
 
@@ -28,7 +28,7 @@ TEST_F(CusomBinAxisTest, IOStream)
     std::ostringstream oss;
     oss << m_axis;
 
-    CustomBinAxis *result = dynamic_cast<CustomBinAxis *>(OutputDataIOHelper::createFixedBinAxis(oss.str()));
+    CustomBinAxis *result = dynamic_cast<CustomBinAxis *>(DataFormatUtils::createFixedBinAxis(oss.str()));
     EXPECT_TRUE(m_axis == *result);
     delete result;
 }

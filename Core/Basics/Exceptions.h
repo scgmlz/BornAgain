@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Basics/Exceptions.h
-//! @brief     Defines many exception classes in namespace Exceptions.
+//! @brief     Defines many exception classes in namespace Exceptionss.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -26,6 +26,8 @@
 #pragma warning(disable: 4275)
 #endif
 #endif
+
+//! Different exceptions, all inheriting from std::exception.
 
 namespace Exceptions {
 
@@ -106,7 +108,6 @@ class BA_CORE_API_ FileNotIsOpenException : public std::runtime_error
 public:
     FileNotIsOpenException(const std::string& message);
 };
-
 
 class BA_CORE_API_ FileIsBadException : public std::runtime_error
 {

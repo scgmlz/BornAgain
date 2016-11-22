@@ -18,8 +18,7 @@
 #include <boost/regex.hpp>
 
 //! Returns true if text matches pattern with wildcards '*' and '?'.
-
-bool Utils::String::matchesPattern(const std::string& text, const std::string& wildcardPattern)
+bool StringUtils::matchesPattern(const std::string& text, const std::string& wildcardPattern)
 {
     bool caseSensitive(true);
 
@@ -51,8 +50,7 @@ bool Utils::String::matchesPattern(const std::string& text, const std::string& w
 }
 
 //! Returns string right-padded with blanks.
-
-std::string Utils::String::padRight(const std::string& name, int length)
+std::string StringUtils::padRight(const std::string& name, int length)
 {
     std::string result = name;
     result.resize(length,' ');
@@ -60,22 +58,21 @@ std::string Utils::String::padRight(const std::string& name, int length)
 }
 
 //! Returns token vector obtained by splitting string at delimiters.
-
-std::vector<std::string> Utils::String::split(const std::string& text, const std::string& delimiter)
+std::vector<std::string> StringUtils::split(const std::string& text, const std::string& delimiter)
 {
     std::vector<std::string> tokens;
     boost::split(tokens, text, boost::is_any_of(delimiter));
     return tokens;
 }
 
-void Utils::String::replaceItemsFromString(
+void StringUtils::replaceItemsFromString(
     std::string& text, const std::vector<std::string>& items, const std::string& replacement)
 {
     for(size_t i=0; i<items.size(); ++i)
         boost::replace_all(text, items[i], replacement);
 }
 
-std::string Utils::String::join(const std::vector<std::string>& joinable, const std::string& joint)
+std::string StringUtils::join(const std::vector<std::string>& joinable, const std::string& joint)
 {
     std::string result;
     size_t n = joinable.size();
@@ -85,7 +82,7 @@ std::string Utils::String::join(const std::vector<std::string>& joinable, const 
     return result;
 }
 
-std::string Utils::String::removeSubstring(const std::string &text, const std::string &substr)
+std::string StringUtils::removeSubstring(const std::string &text, const std::string &substr)
 {
     std::string result = text;
     for(std::string::size_type i=result.find(substr); i!=std::string::npos; i=result.find(substr))

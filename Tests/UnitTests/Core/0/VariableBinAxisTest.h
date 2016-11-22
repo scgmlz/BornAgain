@@ -2,7 +2,7 @@
 #define VARIABLEBINAXISTEST_H
 
 #include "VariableBinAxis.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 
 class VariableBinAxisTest: public ::testing::Test
 {
@@ -183,7 +183,7 @@ TEST_F(VariableBinAxisTest, IOStream)
     std::ostringstream oss;
     oss << axis;
 
-    VariableBinAxis *result = dynamic_cast<VariableBinAxis *>(OutputDataIOHelper::createVariableBinAxis(oss.str()));
+    VariableBinAxis *result = dynamic_cast<VariableBinAxis *>(DataFormatUtils::createVariableBinAxis(oss.str()));
     EXPECT_TRUE(axis == *result);
     delete result;
 }

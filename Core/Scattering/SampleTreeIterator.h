@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Scattering/SampleTreeIterator.h
-//! @brief     Defines and classes IteratorState, IteratorMemento and SampleTreeIterator.
+//! @brief     Defines classes IteratorState, IteratorMemento and SampleTreeIterator.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -20,9 +20,8 @@
 #include <ostream>
 #include <stack>
 
-//! @class IteratorState
+//! Holds state of iterator at single level for SampleTreeIterator.
 //! @ingroup samples_internal
-//! @brief Holds state of iterator at single level for SampleTreeIterator
 
 class IteratorState
 {
@@ -37,11 +36,9 @@ public:
     void next() { ++m_position; }
 
     friend std::ostream& operator<<(
-        std::ostream& output_stream, IteratorState const& iterator_state)
-    {
+        std::ostream& output_stream, IteratorState const& iterator_state) {
         return output_stream << "memento state " << iterator_state.m_position << " "
-                             << iterator_state.m_samples.size();
-    }
+                             << iterator_state.m_samples.size(); }
 
 private:
     std::vector<const ISample*> m_samples;
@@ -50,9 +47,8 @@ private:
     IteratorState();
 };
 
-//! @class IteratorMemento
+//! Holds all iterator states encountered for SampleTreeIterator.
 //! @ingroup samples_internal
-//! @brief Holds all iterator states encountered for SampleTreeIterator
 
 class IteratorMemento
 {
@@ -73,9 +69,7 @@ protected:
 };
 
 
-//! @class SampleTreeIterator
-//! @ingroup samples_internal
-//! @brief Iterator through ISample tree of objects inside ISample object.
+//! Iterator through ISample tree of objects inside ISample object.
 //!
 //! Usage example:
 //!    SampleTreeIterator<Strategy> it(&sample);
@@ -84,6 +78,7 @@ protected:
 //!        ISample *p_sample = it.get_current();
 //!        it.next();
 //!     }
+//! @ingroup samples_internal
 
 template <class Strategy>
 class BA_CORE_API_ SampleTreeIterator
@@ -96,7 +91,7 @@ public:
     void next();
     const ISample* getCurrent();
     bool isDone() const;
-    size_t getLevel() const;
+    size_t depth() const;
 protected:
     Strategy m_strategy;
     IteratorMemento m_memento_itor;
@@ -134,7 +129,7 @@ inline bool SampleTreeIterator<Strategy>::isDone() const
 }
 
 template <class Strategy>
-inline size_t SampleTreeIterator<Strategy>::getLevel() const
+inline size_t SampleTreeIterator<Strategy>::depth() const
 {
     return m_memento_itor.size();
 }

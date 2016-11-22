@@ -18,6 +18,8 @@
 
 #include <string>
 
+//! Mostly names of classes and parameters.
+
 namespace BornAgain
 {
 // Axis constants

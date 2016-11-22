@@ -22,7 +22,7 @@ void VisitSampleTreePreorder(const ISample& sample, ISampleVisitor& visitor)
     SampleTreeIterator<SampleIteratorPreorderStrategy> it(&sample);
     it.first();
     while (!it.isDone()) {
-        visitor.setLevel(it.getLevel());
+        visitor.setDepth(it.depth());
         const ISample *child = it.getCurrent();
         child->accept(&visitor);
         it.next();
@@ -34,7 +34,7 @@ void VisitSampleTreePostorder(const ISample& sample, ISampleVisitor& visitor)
     SampleTreeIterator<SampleIteratorPostorderStrategy> it(&sample);
     it.first();
     while (!it.isDone()) {
-        visitor.setLevel(it.getLevel());
+        visitor.setDepth(it.depth());
         const ISample *child = it.getCurrent();
         child->accept(&visitor);
         it.next();
@@ -464,12 +464,12 @@ void ISampleVisitor::visit(const RotationEuler*)
 // -----------------------------------------------------------------------------
 bool ISampleVisitor::visitEnter(const ICompositeSample*)
 {
-    m_level++;
+    m_depth++;
     return false;
 }
 
 bool ISampleVisitor::visitLeave(const ICompositeSample*)
 {
-    m_level--;
+    m_depth--;
     return false;
 }

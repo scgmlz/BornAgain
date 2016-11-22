@@ -48,9 +48,7 @@ SimulationElement::SimulationElement(SimulationElement &&other) noexcept
     , m_analyzer_operator(std::move(other.m_analyzer_operator))
     , mP_pixel_map(std::move(other.mP_pixel_map))
     , m_contains_specular(other.m_contains_specular)
-{
-
-}
+{}
 
 
 SimulationElement::~SimulationElement() {}
@@ -149,11 +147,4 @@ void addElementsWithWeight(std::vector<SimulationElement>::const_iterator first,
 {
     for (std::vector<SimulationElement>::const_iterator it = first; it != last; ++it, ++result)
         result->addIntensity(it->getIntensity() * weight);
-}
-
-void setAllElementIntensities(std::vector<SimulationElement>::iterator first,
-                              std::vector<SimulationElement>::iterator last, double intensity)
-{
-    for (std::vector<SimulationElement>::iterator it = first; it != last; ++it)
-        it->setIntensity(intensity);
 }

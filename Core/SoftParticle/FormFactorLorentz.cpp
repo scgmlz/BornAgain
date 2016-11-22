@@ -19,8 +19,6 @@
 #include "MathConstants.h"
 #include "RealParameter.h"
 
-using namespace BornAgain;
-
 FormFactorLorentz::FormFactorLorentz(double width, double height)
 {
     m_width = width;

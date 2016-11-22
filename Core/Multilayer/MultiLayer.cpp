@@ -19,7 +19,7 @@
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "LayerRoughness.h"
-#include "Materials.h"
+#include "IMaterial.h"
 #include "ParameterPool.h"
 #include "RealParameter.h"
 #include <iomanip>

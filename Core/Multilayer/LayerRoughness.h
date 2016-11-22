@@ -19,22 +19,22 @@
 #include "IRoughness.h"
 #include "Vectors3D.h"
 
-//! @class LayerRoughness
-//! @ingroup samples
-//! @brief A Roughness of interface between two layers.
+//! A Roughness of interface between two layers.
 //!
 //! Based on the article
 //! D.K.G. de Boer, Physical review B, Volume 51, Number 8, 15 February 1995
 //! "X-ray reflection and transmission by rough surfaces"
+//!
+//! @ingroup samples
 
 class BA_CORE_API_ LayerRoughness : public IRoughness
 {
 public:
     LayerRoughness();
-    LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength);
+    LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength);
 
     LayerRoughness* clone() const {
-        return new LayerRoughness(m_sigma, m_hurstParameter, m_latteralCorrLength); }
+        return new LayerRoughness(m_sigma, m_hurstParameter, m_lateralCorrLength); }
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
     //! Returns power spectral density of the surface roughness
@@ -53,10 +53,10 @@ public:
     double getHurstParameter() const { return m_hurstParameter; }
 
     //! Sets lateral correlation length
-    void setLatteralCorrLength(double latteralCorrLength) {
-        m_latteralCorrLength = latteralCorrLength; }
-    //! Returns latteral correlation length
-    double getLatteralCorrLength() const { return m_latteralCorrLength; }
+    void setLatteralCorrLength(double lateralCorrLength) {
+        m_lateralCorrLength = lateralCorrLength; }
+    //! Returns lateral correlation length
+    double getLatteralCorrLength() const { return m_lateralCorrLength; }
 
     //! Prints class
     friend std::ostream& operator<<(std::ostream& ostr, /*const*/ LayerRoughness& m);
@@ -66,7 +66,7 @@ protected:
 
     double m_sigma;                //!< rms of roughness
     double m_hurstParameter;   //!< Hurst parameter which describes how jagged the interface, 0<H<=1
-    double m_latteralCorrLength;   //!< latteral correlation length of the roughness
+    double m_lateralCorrLength;   //!< lateral correlation length of the roughness
 private:
     void initialize();
 };

@@ -21,18 +21,18 @@
 
 template <class T> class OutputData;
 
-//! @class OutputDataWriter
+//! Write OutputData to file using different witing strategies.
 //! @ingroup input_output_internal
-//! @brief Write OutputData to file using different witing strategies
+
 class BA_CORE_API_ OutputDataWriter
 {
 public:
     OutputDataWriter(const std::string& file_name);
 
-    //! write output data to file
+    //! Writes output data to file.
     void writeOutputData(const OutputData<double>& data);
 
-    //! Sets concrete writing strategy
+    //! Sets concrete writing strategy.
     void setStrategy(IOutputDataWriteStrategy* write_strategy);
 
 private:

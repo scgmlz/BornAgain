@@ -2,7 +2,7 @@
 #define CONSTKBINAXISTEST_H
 
 #include "ConstKBinAxis.h"
-#include "OutputDataIOHelper.h"
+#include "DataFormatUtils.h"
 #include "Units.h"
 #include <vector>
 
@@ -73,7 +73,7 @@ TEST_F(ConstKBinAxisTest, IOStream)
     std::ostringstream oss;
     oss << m_axis;
 
-    ConstKBinAxis *result = dynamic_cast<ConstKBinAxis *>(OutputDataIOHelper::createFixedBinAxis(oss.str()));
+    ConstKBinAxis *result = dynamic_cast<ConstKBinAxis *>(DataFormatUtils::createFixedBinAxis(oss.str()));
     EXPECT_TRUE(m_axis == *result);
     delete result;
 }

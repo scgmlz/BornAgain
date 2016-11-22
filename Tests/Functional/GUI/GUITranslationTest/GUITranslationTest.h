@@ -57,4 +57,4 @@ private:
     std::string m_simulationName, m_sampleName;
 };
 
-#endif
+#endif // GUITRANSLATIONTEST_H

@@ -18,13 +18,13 @@
 
 #include "IntegratorReal.h"
 
+
 //! Alias template for member function with signature complex_t f(double)
 template <class T>
 using complex_integrand = complex_t (T::*)(double) const;
 
-//! @class IntegratorComplex
-//! @ingroup tools_internal
-//! @brief Template class to integrate complex class member functions
+
+//! Template class to integrate complex class member functions.
 //!
 //! Wraps an two integrators from the GNU Scientific Library.
 //! Since this class holds a persistent workspace, we need at least one instance per thread.
@@ -32,6 +32,8 @@ using complex_integrand = complex_t (T::*)(double) const;
 //! - Create a handle to an integrator:
 //!      'auto integrator = make_integrator_complex(this, mem_function)'
 //! - Call: 'integrator.integrate(lmin, lmax)'
+//! @ingroup tools_internal
+
 template <class T> class IntegratorComplex
 {
 public:
@@ -51,19 +53,25 @@ private:
     P_integrator_real<IntegratorComplex<T>> mP_imag_integrator;
 };
 
+
 //! Alias template for handle to a real integrator
 template <class T>
 using P_integrator_complex = std::unique_ptr<IntegratorComplex<T>>;
 
-//! @fn make_integrator_complex
+
+//! Template function to create an integrator object.
 //! @ingroup tools_internal
-//! @brief Template function to create an integrator object
+
 template <class T>
 P_integrator_complex<T> make_integrator_complex(const T *object, complex_integrand<T> mem_function)
 {
     P_integrator_complex<T> P_integrator(new IntegratorComplex<T>(object, mem_function));
     return P_integrator;
 }
+
+// ************************************************************************** //
+// Implementation
+// ************************************************************************** //
 
 template<class T> IntegratorComplex<T>::IntegratorComplex(
         const T *p_object, complex_integrand<T> p_member_function)

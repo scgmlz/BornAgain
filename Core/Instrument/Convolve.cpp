@@ -19,7 +19,7 @@
 #include <sstream>
 #include <stdexcept> // need overlooked by g++ 5.4
 
-MathFunctions::Convolve::Convolve() : m_mode(FFTW_UNDEFINED)
+Convolve::Convolve() : m_mode(FFTW_UNDEFINED)
 {
     // storing favorite fftw3 prime factors
     const size_t FFTW_FACTORS[] = {13,11,7,5,3,2};
@@ -27,7 +27,7 @@ MathFunctions::Convolve::Convolve() : m_mode(FFTW_UNDEFINED)
         FFTW_FACTORS, FFTW_FACTORS + sizeof(FFTW_FACTORS)/sizeof(FFTW_FACTORS[0]));
 }
 
-MathFunctions::Convolve::Workspace::Workspace() :
+Convolve::Workspace::Workspace() :
     h_src(0), w_src(0), h_kernel(0), w_kernel(0), w_fftw(0), h_fftw(0),
     in_src(0), out_src(0), in_kernel(0), out_kernel(0), dst_fft(0), h_dst(0), w_dst(0),
     //dst(0),
@@ -36,12 +36,12 @@ MathFunctions::Convolve::Workspace::Workspace() :
 {
 }
 
-MathFunctions::Convolve::Workspace::~Workspace()
+Convolve::Workspace::~Workspace()
 {
     clear();
 }
 
-void MathFunctions::Convolve::Workspace::clear()
+void Convolve::Workspace::clear()
 {
     h_src=0;
     w_src=0;
@@ -80,7 +80,7 @@ void MathFunctions::Convolve::Workspace::clear()
 /* ************************************************************************* */
 // convolution in 2d
 /* ************************************************************************* */
-void MathFunctions::Convolve::fftconvolve(
+void Convolve::fftconvolve(
     const double2d_t& source, const double2d_t& kernel, double2d_t& result)
 {
     // set default convolution mode, if not defined
@@ -120,7 +120,7 @@ void MathFunctions::Convolve::fftconvolve(
 /* ************************************************************************* */
 // convolution in 1d
 /* ************************************************************************* */
-void MathFunctions::Convolve::fftconvolve(
+void Convolve::fftconvolve(
     const double1d_t& source, const double1d_t& kernel, double1d_t& result)
 {
     // we simply create 2d arrays with length of first dimension equal to 1, and call 2d convolution
@@ -132,7 +132,7 @@ void MathFunctions::Convolve::fftconvolve(
     fftconvolve(source2d, kernel2d, result2d);
     if(result2d.size() != 1)
         throw Exceptions::RuntimeErrorException(
-            "MathFunctions::Convolve::fftconvolve -> Panic in 1d");
+            "Convolve::fftconvolve -> Panic in 1d");
     result = result2d[0];
 }
 
@@ -140,11 +140,11 @@ void MathFunctions::Convolve::fftconvolve(
 /* ************************************************************************* */
 // initialise input and output arrays for fast Fourier transformation
 /* ************************************************************************* */
-void MathFunctions::Convolve::init(int h_src, int w_src, int h_kernel, int w_kernel)
+void Convolve::init(int h_src, int w_src, int h_kernel, int w_kernel)
 {
     if(!h_src || !w_src || !h_kernel || !w_kernel) {
         std::ostringstream os;
-        os << "MathFunctions::Convolve::init() -> Panic! Wrong dimensions " <<
+        os << "Convolve::init() -> Panic! Wrong dimensions " <<
             h_src << " " << w_src << " " << h_kernel << " " << w_kernel << std::endl;
         throw Exceptions::RuntimeErrorException(os.str());
     }
@@ -255,20 +255,20 @@ void MathFunctions::Convolve::init(int h_src, int w_src, int h_kernel, int w_ker
                                          (fftw_complex*)ws.out_src, FFTW_ESTIMATE);
     if( ws.p_forw_src == nullptr )
         throw Exceptions::RuntimeErrorException(
-            "MathFunctions::Convolve::init() -> Error! Can't initialise p_forw_src plan.");
+            "Convolve::init() -> Error! Can't initialise p_forw_src plan.");
 
     ws.p_forw_kernel = fftw_plan_dft_r2c_2d(ws.h_fftw, ws.w_fftw, ws.in_kernel,
                                             (fftw_complex*)ws.out_kernel, FFTW_ESTIMATE);
     if( ws.p_forw_kernel == nullptr )
         throw Exceptions::RuntimeErrorException(
-            "MathFunctions::Convolve::init() -> Error! Can't initialise p_forw_kernel plan.");
+            "Convolve::init() -> Error! Can't initialise p_forw_kernel plan.");
 
     // The backward FFT takes ws.out_kernel as input
     ws.p_back = fftw_plan_dft_c2r_2d(
         ws.h_fftw, ws.w_fftw, (fftw_complex*)ws.out_kernel, ws.dst_fft, FFTW_ESTIMATE);
     if( ws.p_back == nullptr )
         throw Exceptions::RuntimeErrorException(
-            "MathFunctions::Convolve::init() -> Error! Can't initialise p_back plan.");
+            "Convolve::init() -> Error! Can't initialise p_back plan.");
 }
 
 
@@ -276,12 +276,12 @@ void MathFunctions::Convolve::init(int h_src, int w_src, int h_kernel, int w_ker
 // initialise input and output arrays for fast Fourier transformation
 /* ************************************************************************* */
 
-void MathFunctions::Convolve::fftw_circular_convolution(
+void Convolve::fftw_circular_convolution(
     const double2d_t& src, const double2d_t& kernel)
 {
     if(ws.h_fftw <= 0 || ws.w_fftw <= 0)
         throw Exceptions::RuntimeErrorException(
-            "MathFunctions::Convolve::fftw_convolve() -> Panic! Initialisation is missed.");
+            "Convolve::fftw_convolve() -> Panic! Initialisation is missed.");
 
     double * ptr, *ptr_end, *ptr2;
 
@@ -336,7 +336,7 @@ void MathFunctions::Convolve::fftw_circular_convolution(
 // to fftw3 favorite factorisation
 /* ************************************************************************* */
 
-int MathFunctions::Convolve::find_closest_factor(int n)
+int Convolve::find_closest_factor(int n)
 {
     if(is_optimal(n) ) {
         return n;
@@ -351,7 +351,7 @@ int MathFunctions::Convolve::find_closest_factor(int n)
 /* ************************************************************************* */
 // if a number can be factorised using only favorite fftw3 factors
 /* ************************************************************************* */
-bool MathFunctions::Convolve::is_optimal(int n)
+bool Convolve::is_optimal(int n)
 {
     if(n==1)
         return false;

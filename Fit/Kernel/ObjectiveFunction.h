@@ -19,9 +19,8 @@
 #include "WinDllMacros.h"
 #include "KernelTypes.h"
 
-//! @class ObjectiveFunction
+//! Information about an objective function, i.e. a function that shall be minimized.
 //! @ingroup fitting_internal
-//! @brief The ObjectiveFunction class represents function to minimize.
 
 class BA_CORE_API_ ObjectiveFunction
 {
@@ -48,4 +47,3 @@ private:
 };
 
 #endif // OBJECTIVEFUNCTION_H
-

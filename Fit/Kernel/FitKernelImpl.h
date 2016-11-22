@@ -26,9 +26,8 @@
 class IMinimizer;
 class FitParameter;
 
-//! @class FitKernelImpl
+//! The implementation of class FitKernel.
 //! @ingroup fitting_internal
-//! @brief The FitKernel implementation.
 
 class BA_CORE_API_ FitKernelImpl
 {
@@ -55,10 +54,11 @@ public:
 
     FitParameterSet* fitParameters();
 
-    IMinimizer *minimizer();
+    IMinimizer* minimizer();
 
     //! Number of objective function calls.
     int functionCalls() const;
+
 private:
     FitParameterSet m_fit_parameters;
     std::unique_ptr<IMinimizer> m_minimizer;

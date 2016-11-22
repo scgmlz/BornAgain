@@ -47,4 +47,4 @@ void StandaloneFitTest::addTest(const std::string &minimizerName, const std::str
     );
 }
 
-#endif
+#endif // STANDALONEFITTEST_H

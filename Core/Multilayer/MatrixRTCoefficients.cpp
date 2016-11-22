@@ -240,3 +240,103 @@ void MatrixRTCoefficients::calculateTRWithoutMagnetization()
     R2m(2,0) = 1.0/(2.0*std::sqrt(m_a));
     R2m(2,2) = 0.5;
 }
+
+Eigen::Vector2cd MatrixRTCoefficients::T1plus() const
+{
+    Eigen::Vector2cd result;
+    result(0) = T1m.row(2).dot(phi_psi_plus);
+    result(1) = T1m.row(3).dot(phi_psi_plus);
+    if (lambda(0)==0.0 && result==Eigen::Vector2cd::Zero()) {
+        result(0) = 0.5;
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::R1plus() const
+{
+    Eigen::Vector2cd result;
+    result(0) = R1m.row(2).dot(phi_psi_plus);
+    result(1) = R1m.row(3).dot(phi_psi_plus);
+    if (lambda(0)==0.0) {
+        if (T1m.row(2).dot(phi_psi_plus)==0.0
+                && T1m.row(3).dot(phi_psi_plus)==0.0) {
+            result(0) = -0.5;
+        }
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::T2plus() const
+{
+    Eigen::Vector2cd result;
+    result(0) = T2m.row(2).dot(phi_psi_plus);
+    result(1) = T2m.row(3).dot(phi_psi_plus);
+    if (lambda(1)==0.0 && result==Eigen::Vector2cd::Zero()) {
+        result(0) = 0.5;
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::R2plus() const
+{
+    Eigen::Vector2cd result;
+    result(0) = R2m.row(2).dot(phi_psi_plus);
+    result(1) = R2m.row(3).dot(phi_psi_plus);
+    if (lambda(1)==0.0) {
+        if (T2m.row(2).dot(phi_psi_plus)==0.0
+                && T2m.row(3).dot(phi_psi_plus)==0.0) {
+            result(0) = -0.5;
+        }
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::T1min() const
+{
+    Eigen::Vector2cd result;
+    result(0) = T1m.row(2).dot(phi_psi_min);
+    result(1) = T1m.row(3).dot(phi_psi_min);
+    if (lambda(0)==0.0 && result==Eigen::Vector2cd::Zero()) {
+        result(1) = 0.5;
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::R1min() const
+{
+    Eigen::Vector2cd result;
+    result(0) = R1m.row(2).dot(phi_psi_min);
+    result(1) = R1m.row(3).dot(phi_psi_min);
+    if (lambda(0)==0.0) {
+        if (T1m.row(2).dot(phi_psi_min)==0.0
+                && T1m.row(3).dot(phi_psi_min)==0.0) {
+            result(1) = -0.5;
+        }
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::T2min() const
+{
+    Eigen::Vector2cd result;
+    result(0) = T2m.row(2).dot(phi_psi_min);
+    result(1) = T2m.row(3).dot(phi_psi_min);
+    if (lambda(1)==0.0 && result==Eigen::Vector2cd::Zero()) {
+        result(1) = 0.5;
+    }
+    return result;
+}
+
+Eigen::Vector2cd MatrixRTCoefficients::R2min() const
+{
+    Eigen::Vector2cd result;
+    result(0) = R2m.row(2).dot(phi_psi_min);
+    result(1) = R2m.row(3).dot(phi_psi_min);
+    if (lambda(1)==0.0) {
+        if (T2m.row(2).dot(phi_psi_min)==0.0
+                && T2m.row(3).dot(phi_psi_min)==0.0) {
+            result(1) = -0.5;
+        }
+    }
+    return result;
+}

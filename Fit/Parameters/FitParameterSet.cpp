@@ -15,13 +15,10 @@
 
 #include "FitParameterSet.h"
 #include "FitParameter.h"
-#include "Logger.h"
-#include "MinimizerResultsHelper.h"
 #include "MinimizerUtils.h"
-#include <algorithm>
 #include <cmath>
 #include <iostream>
-#include <limits>
+#include <sstream>
 #include <stdexcept>
 
 FitParameterSet::~FitParameterSet()
@@ -69,7 +66,7 @@ FitParameterSet::const_iterator FitParameterSet::end() const
 
 //! Adds fit parameter.
 
-void FitParameterSet::addFitParameter(FitParameter *par)
+void FitParameterSet::addFitParameter(FitParameter* par)
 {
     if(isExistingName(par->name()))
         throw std::runtime_error("FitParameterSet::addFitParameter() -> Error. Parameter with "
@@ -95,19 +92,21 @@ const FitParameter* FitParameterSet::fitParameter(const std::string& name) const
 
 FitParameter* FitParameterSet::fitParameter(const std::string& name)
 {
-    return const_cast<FitParameter *>(static_cast<const FitParameterSet *>(this)->fitParameter(name));
+    return const_cast<FitParameter*>(static_cast<const FitParameterSet*>(this)
+                                      ->fitParameter(name));
 }
 
 //! Indexed access to parameters.
 
-const FitParameter* FitParameterSet::operator[](const std::string &name) const
+const FitParameter* FitParameterSet::operator[](const std::string& name) const
 {
     return fitParameter(name);
 }
 
-FitParameter* FitParameterSet::operator[](const std::string &name)
+FitParameter* FitParameterSet::operator[](const std::string& name)
 {
-    return const_cast<FitParameter *>(static_cast<const FitParameterSet *>(this)->operator[](name));
+    return const_cast<FitParameter*>(static_cast<const FitParameterSet*>(this)
+                                      ->operator[](name));
 }
 
 const FitParameter* FitParameterSet::operator[](size_t index) const
@@ -117,7 +116,8 @@ const FitParameter* FitParameterSet::operator[](size_t index) const
 
 FitParameter* FitParameterSet::operator[](size_t index)
 {
-    return const_cast<FitParameter *>(static_cast<const FitParameterSet *>(this)->operator[](index));
+    return const_cast<FitParameter*>(static_cast<const FitParameterSet*>(this)
+                                      ->operator[](index));
 }
 
 //! Returns values of all defined parameters.
@@ -136,7 +136,7 @@ void FitParameterSet::setValues(const std::vector<double>& pars_values)
 {
     check_array_size(pars_values);
 
-    int index(0);
+    int index = 0;
     for (auto par: m_parameters) {
         if (std::isnan(pars_values[index]))
             throw std::runtime_error("FitParameterSet::setValues() -> Error."
@@ -151,7 +151,7 @@ void FitParameterSet::setValues(const std::vector<double>& pars_values)
 
 //! Returns true if parameters already have the given values.
 
-bool FitParameterSet::valuesDifferFrom(const std::vector<double> &pars_values, double tol) const
+bool FitParameterSet::valuesDifferFrom(const std::vector<double>& pars_values, double tol) const
 {
     check_array_size(pars_values);
 
@@ -220,43 +220,34 @@ void FitParameterSet::setFixed(const std::vector<std::string>& pars, bool is_fix
 std::string FitParameterSet::parametersToString() const
 {
     std::ostringstream result;
-
-    int npar(0);
+    int npar = 0;
     for (auto par: m_parameters)
         result << "   # "<< npar++ << " " << par->toString() << "\n";
-
     return result.str();
 }
 
-std::string FitParameterSet::reportResults() const
-{
-    MinimizerResultsHelper helper;
-    return helper.reportResults(this);
-}
-
-void FitParameterSet::setCorrelationMatrix(const FitParameterSet::corr_matrix_t &matrix)
+void FitParameterSet::setCorrelationMatrix(const FitParameterSet::corr_matrix_t& matrix)
 {
     if(matrix.size() != size())
         throw std::runtime_error("FitParameterSet::setCorrelationMatrix() -> Error. Wrong "
                                  "dimension of correlation matrix.");
-
     m_corr_matrix = matrix;
 }
 
 //! Returns true if parameter with such name exists.
 
-bool FitParameterSet::isExistingName(const std::string &name) const
+bool FitParameterSet::isExistingName(const std::string& name) const
 {
     for (auto par: m_parameters)
         if (par->name() == name)
             return true;
-
     return false;
 }
 
 //! Checks if index corresponds with the number of fit parameters.
 
-size_t FitParameterSet::check_index(size_t index) const {
+size_t FitParameterSet::check_index(size_t index) const
+{
     if (index >= m_parameters.size())
         throw std::runtime_error(
             "FitSuiteParameters::check_index() -> Index out of bounds");
@@ -266,7 +257,7 @@ size_t FitParameterSet::check_index(size_t index) const {
 //! Checks if size of input array corresponds to number of fit parameters,
 //! throws an exception if not.
 
-void FitParameterSet::check_array_size(const std::vector<double> &values) const
+void FitParameterSet::check_array_size(const std::vector<double>& values) const
 {
     if (values.size() != m_parameters.size()) {
         std::ostringstream ostr;

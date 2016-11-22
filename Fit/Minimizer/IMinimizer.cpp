@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Material/Materials.h
-//! @brief     Defines namespace Materials
+//! @file      Fit/Minimizer/IMinimizer.cpp
+//! @brief     Implements class IMinimizer.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -13,17 +13,19 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALS_H
-#define MATERIALS_H
+#include "IMinimizer.h"
 
-#include "HomogeneousMagneticMaterial.h"
-
-// TODO: replace this by a member function of IMaterial
-
-namespace Materials {
-
-IMaterial* createInvertedMaterial(const IMaterial *material);
-
+double IMinimizer::minValue() const
+{
+    throw std::runtime_error("IMinimizer::minValue() -> Not implemented.");
 }
 
-#endif // MATERIALS_H
+void IMinimizer::propagateResults(FitParameterSet&)
+{
+    throw std::runtime_error("IMinimizer::propagateResults() -> Not implemented.");
+}
+
+void IMinimizer::setOptions(const std::string&)
+{
+    throw std::runtime_error("IMinimizer::setOptions() -> Not implemented.");
+}

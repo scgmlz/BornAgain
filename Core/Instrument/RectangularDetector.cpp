@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Instrument/RectangularDetector.cpp
-//! @brief     Implements class RectangularDetector.
+//! @brief     Implements classes RectangularDetector and RectPixelMap.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -20,6 +20,10 @@
 #include "SimulationElement.h"
 #include "MathConstants.h"
 #include "Units.h"
+
+// ************************************************************************** //
+// class RectangularDetector
+// ************************************************************************** //
 
 RectangularDetector::RectangularDetector(int nxbins, double width, int nybins, double height)
     : m_u0(0.0)
@@ -53,11 +57,6 @@ RectangularDetector::RectangularDetector(const RectangularDetector& other)
 }
 
 RectangularDetector::~RectangularDetector() {}
-
-RectangularDetector *RectangularDetector::clone() const
-{
-    return new RectangularDetector(*this);
-}
 
 void RectangularDetector::init(const Beam& beam)
 {
@@ -102,7 +101,7 @@ void RectangularDetector::setDirectBeamPosition(double u0, double v0)
     m_dbeam_v0 = v0;
 }
 
-IPixelMap *RectangularDetector::createPixelMap(size_t index) const
+IPixelMap* RectangularDetector::createPixelMap(size_t index) const
 {
     const IAxis& u_axis = getAxis(BornAgain::X_AXIS_INDEX);
     const IAxis& v_axis = getAxis(BornAgain::Y_AXIS_INDEX);
@@ -119,7 +118,7 @@ IPixelMap *RectangularDetector::createPixelMap(size_t index) const
 }
 
 std::string RectangularDetector::addParametersToExternalPool(
-    const std::string& path, ParameterPool *external_pool, int copy_number) const
+    const std::string& path, ParameterPool* external_pool, int copy_number) const
 {
     // add own parameters
     std::string new_path
@@ -153,46 +152,6 @@ size_t RectangularDetector::getNbinsY() const
     return getAxis(BornAgain::Y_AXIS_INDEX).size();
 }
 
-kvector_t RectangularDetector::getNormalVector() const
-{
-    return m_normal_to_detector;
-}
-
-double RectangularDetector::getU0() const
-{
-    return m_u0;
-}
-
-double RectangularDetector::getV0() const
-{
-    return m_v0;
-}
-
-kvector_t RectangularDetector::getDirectionVector() const
-{
-    return m_direction;
-}
-
-double RectangularDetector::getDistance() const
-{
-    return m_distance;
-}
-
-double RectangularDetector::getDirectBeamU0() const
-{
-    return m_dbeam_u0;
-}
-
-double RectangularDetector::getDirectBeamV0() const
-{
-    return m_dbeam_v0;
-}
-
-RectangularDetector::EDetectorArrangement RectangularDetector::getDetectorArrangment() const
-{
-    return m_detector_arrangement;
-}
-
 std::vector<IDetector2D::EAxesUnits> RectangularDetector::getValidAxesUnits() const
 {
     std::vector<IDetector2D::EAxesUnits> result = IDetector2D::getValidAxesUnits();
@@ -214,7 +173,7 @@ void RectangularDetector::print(std::ostream& ostr) const
         ostr << "    IAxis:" << *m_axes[i] << std::endl;
 }
 
-IAxis *RectangularDetector::createAxis(size_t index, size_t n_bins, double min, double max) const
+IAxis* RectangularDetector::createAxis(size_t index, size_t n_bins, double min, double max) const
 {
     if (max <= min)
         throw Exceptions::LogicErrorException(
@@ -361,6 +320,10 @@ void RectangularDetector::initUandV(double alpha_i)
     }
 }
 
+// ************************************************************************** //
+// class RectPixelMap
+// ************************************************************************** //
+
 RectPixelMap::RectPixelMap(kvector_t corner_pos, kvector_t width, kvector_t height)
     : m_corner_pos(corner_pos), m_width(width), m_height(height)
 {
@@ -368,12 +331,12 @@ RectPixelMap::RectPixelMap(kvector_t corner_pos, kvector_t width, kvector_t heig
     m_solid_angle = calculateSolidAngle();
 }
 
-RectPixelMap *RectPixelMap::clone() const
+RectPixelMap* RectPixelMap::clone() const
 {
     return new RectPixelMap(m_corner_pos, m_width, m_height);
 }
 
-RectPixelMap *RectPixelMap::createZeroSizeMap(double x, double y) const
+RectPixelMap* RectPixelMap::createZeroSizeMap(double x, double y) const
 {
     kvector_t position = m_corner_pos + x*m_width + y*m_height;
     kvector_t null_vector;
@@ -383,7 +346,7 @@ RectPixelMap *RectPixelMap::createZeroSizeMap(double x, double y) const
 kvector_t RectPixelMap::getK(double x, double y, double wavelength) const
 {
     kvector_t direction = m_corner_pos + x*m_width + y*m_height;
-    double length = PI2/wavelength;
+    double length = M_TWOPI/wavelength;
     return normalizeLength(direction, length);
 }
 

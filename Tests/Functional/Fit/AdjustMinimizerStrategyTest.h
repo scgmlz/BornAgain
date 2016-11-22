@@ -13,8 +13,8 @@
 //
 // ************************************************************************** //
 
-#ifndef EXPERIMENTALFITTEST_H
-#define EXPERIMENTALFITTEST_H
+#ifndef ADJUSTMINIMIZERSTRATEGYTEST_H
+#define ADJUSTMINIMIZERSTRATEGYTEST_H
 
 #include "IMinimizerTest.h"
 
@@ -32,4 +32,4 @@ protected:
     std::unique_ptr<FitSuite> createFitSuite() override;
 };
 
-#endif
+#endif // ADJUSTMINIMIZERSTRATEGYTEST_H

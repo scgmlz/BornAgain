@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Tools/Utils.h
+//! @file      Core/Tools/SysUtils.h
 //! @brief     Defines various stuff in namespace Utils.
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -13,29 +13,22 @@
 //
 // ************************************************************************** //
 
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef SYSUTILS_H
+#define SYSUTILS_H
 
 #include "WinDllMacros.h"
 #include "StringUtils.h"
 #include <string>
-#include <vector>
 
-namespace Utils {
+//! Utility functions getCurrentDateAndTime, enableFloatingPointExceptions.
 
-class BA_CORE_API_ System
-{
-public:
-    static int getThreadHardwareConcurrency();
-    static std::string getCurrentDateAndTime();
-};
+namespace SysUtils {
 
-//! enables exception throw in the case of NaN, Inf
-BA_CORE_API_ void EnableFloatingPointExceptions();
+    BA_CORE_API_ std::string getCurrentDateAndTime();
 
-//! Returns shape nrows, ncols of 2D array (for numpy)
-BA_CORE_API_ std::pair<size_t, size_t> getShape(const std::vector<std::vector<double>>& data);
+    //! enables exception throw in the case of NaN, Inf
+    BA_CORE_API_ void enableFloatingPointExceptions();
 
-} // namespace Utils
+} // namespace SysUtils
 
-#endif // UTILS_H
+#endif // SYSUTILS_H
