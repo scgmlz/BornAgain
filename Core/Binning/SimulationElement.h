@@ -110,8 +110,4 @@ void addElementsWithWeight(std::vector<SimulationElement>::const_iterator first,
                            std::vector<SimulationElement>::iterator result,
                            double weight);
 
-//! Set all element intensities to given value
-void setAllElementIntensities(std::vector<SimulationElement>::iterator first,
-                              std::vector<SimulationElement>::iterator last, double intensity);
-
 #endif // SIMULATIONELEMENT_H
