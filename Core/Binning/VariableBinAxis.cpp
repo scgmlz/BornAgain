@@ -35,15 +35,7 @@ VariableBinAxis::VariableBinAxis(
 VariableBinAxis::VariableBinAxis(const std::string &name, int nbins)
     : IAxis(name)
     , m_nbins(nbins)
-{
-}
-
-
-VariableBinAxis* VariableBinAxis::clone() const
-{
-    VariableBinAxis* result = new VariableBinAxis(getName(), m_nbins, m_bin_boundaries);
-    return result;
-}
+{}
 
 
 double VariableBinAxis::operator[](size_t index) const
@@ -81,51 +73,50 @@ double VariableBinAxis::getBinCenter(size_t index) const
 
 size_t VariableBinAxis::findClosestIndex(double value) const
 {
-    if(m_bin_boundaries.size()<2)
+    if (m_bin_boundaries.size()<2)
         throw Exceptions::ClassInitializationException(
             "VariableBinAxis::findClosestIndex() -> Error! "
-            "VariableBinAxis not  correctly initialized" );
-    if( value < getMin()) {
+            "VariableBinAxis not  correctly initialized");
+    if (value < getMin())
         return 0;
-    } else if(value >= getMax()) {
+    else if (value >= getMax())
         return m_nbins-1;
-    }
 
     std::vector<double>::const_iterator top_limit =
         std::lower_bound(m_bin_boundaries.begin(), m_bin_boundaries.end(), value);
-    if( *top_limit != value ) --top_limit;
+    if (*top_limit != value)
+        --top_limit;
     size_t nbin = top_limit - m_bin_boundaries.begin();
     return nbin;
 }
 
 std::vector<double> VariableBinAxis::getBinCenters() const
 {
-    std::vector<double> result;
-    result.resize(size(), 0.0);
-    for(size_t i=0; i<size(); ++i) {
+    std::vector<double> result(size(), 0.0);
+    for (size_t i=0; i<size(); ++i)
         result[i] = getBin(i).getMidPoint();
-    }
     return result;
 }
 
 VariableBinAxis* VariableBinAxis::createClippedAxis(double left, double right) const
 {
 
-    if(left >= right)
+    if (left >= right)
         throw Exceptions::LogicErrorException("VariableBinAxis::createClippedAxis() -> Error. "
                                   "'left'' should be smaller than 'right'" );
 
-    if(left < getMin()) left = getBin(0).getMidPoint();
-    if(right >= getMax()) right = getBin(size()-1).getMidPoint();
+    if (left < getMin())
+        left = getBin(0).getMidPoint();
+    if (right >= getMax())
+        right = getBin(size()-1).getMidPoint();
 
     size_t nbin1 = findClosestIndex(left);
     size_t nbin2 = findClosestIndex(right);
 
     size_t new_nbins = nbin2-nbin1+1;
     std::vector<double> new_boundaries;
-    for(size_t i=0; i<new_nbins+1; ++i) {
+    for(size_t i=0; i<new_nbins+1; ++i)
         new_boundaries.push_back(m_bin_boundaries[nbin1 + i]);
-    }
 
     return new VariableBinAxis(getName(), new_nbins, new_boundaries);
 }
@@ -133,7 +124,7 @@ VariableBinAxis* VariableBinAxis::createClippedAxis(double left, double right) c
 
 void VariableBinAxis::print(std::ostream& ostr) const
 {
-    ostr << "VariableBinAxis(\"" << m_name << "\", " << size() << ", [";
+    ostr << "VariableBinAxis(\"" << getName() << "\", " << size() << ", [";
     for(size_t i=0; i<m_bin_boundaries.size(); ++i) {
         ostr << std::setprecision(std::numeric_limits<double>::digits10+2) << m_bin_boundaries[i];
         if(i!=m_bin_boundaries.size()-1) ostr << ", ";
@@ -144,13 +135,14 @@ void VariableBinAxis::print(std::ostream& ostr) const
 
 bool VariableBinAxis::equals(const IAxis& other) const
 {
-    if (!IAxis::equals(other)) return false;
+    if (!IAxis::sameName(other))
+        return false;
     if (const VariableBinAxis* p_other_cast = dynamic_cast<const VariableBinAxis*>(&other)) {
-        if (size() != p_other_cast->size()) return false;
+        if (size() != p_other_cast->size())
+            return false;
         for(size_t i=0; i<m_bin_boundaries.size(); ++i) {
-            if( !Numeric::areAlmostEqual(m_bin_boundaries[i], p_other_cast->m_bin_boundaries[i])) {
+            if (!Numeric::areAlmostEqual(m_bin_boundaries[i], p_other_cast->m_bin_boundaries[i]))
                 return false;
-            }
         }
         return true;
     }

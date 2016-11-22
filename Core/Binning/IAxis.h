@@ -19,7 +19,7 @@
 #include "Bin.h"
 #include <vector>
 
-//! Interface for one-dimensional axes.
+//! Pure virtual interface for one-dimensional axes, inherited by FixedBinAxis and VariableBinAxis.
 //! @ingroup tools_internal
 
 class BA_CORE_API_ IAxis
@@ -63,7 +63,7 @@ public:
     virtual double getBinCenter(size_t index) const =0;
 
     //! find bin index which is best match for given value
-    virtual size_t findClosestIndex(double value) const=0;
+    virtual size_t findClosestIndex(double value) const =0;
 
     //! find index of bin that contains the given value
     //! returns size() when value is not found
@@ -87,8 +87,9 @@ public:
     virtual bool contains(double value) const;
 
 protected:
-    virtual void print(std::ostream& ostr) const=0;
-    virtual bool equals(const IAxis& other) const; // overloaded in child classes
+    virtual void print(std::ostream& ostr) const =0;
+    bool sameName(const IAxis& other) const;
+    virtual bool equals(const IAxis& other) const =0;
     std::string m_name;  //!< axis label
 };
 
