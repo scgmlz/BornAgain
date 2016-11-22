@@ -27,6 +27,7 @@
 #include "SimulationElement.h"
 #include "SpecularMagnetic.h"
 #include "SpecularMatrix.h"
+#include <iterator>
 
 MainComputation::MainComputation(
     const MultiLayer* p_multi_layer,
