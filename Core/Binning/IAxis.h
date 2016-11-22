@@ -25,11 +25,13 @@
 class BA_CORE_API_ IAxis
 {
 public:
-    //! constructors
     IAxis(const std::string& name) : m_name(name) {}
 
+    IAxis(const IAxis&) =delete;
+    IAxis& operator=(const IAxis&) =delete;
+
     //! clone function
-    virtual IAxis* clone() const=0;
+    virtual IAxis* clone() const =0;
 
     //! Creates a new axis with half the number of bins
     virtual IAxis* createDoubleBinSize() const;
@@ -47,10 +49,10 @@ public:
     void setName(std::string name) { m_name = name; }
 
     //! indexed accessor retrieves a sample
-    virtual double operator[](size_t index) const=0;
+    virtual double operator[](size_t index) const =0;
 
     //! retrieve a 1d bin for the given index
-    virtual Bin1D getBin(size_t index) const=0;
+    virtual Bin1D getBin(size_t index) const =0;
 
     //! Returns value of first point of axis
     virtual double getMin() const=0;
@@ -58,7 +60,7 @@ public:
     //! Returns value of last point of axis
     virtual double getMax() const=0;
 
-    virtual double getBinCenter(size_t index) const=0;
+    virtual double getBinCenter(size_t index) const =0;
 
     //! find bin index which is best match for given value
     virtual size_t findClosestIndex(double value) const=0;
@@ -88,10 +90,6 @@ protected:
     virtual void print(std::ostream& ostr) const=0;
     virtual bool equals(const IAxis& other) const; // overloaded in child classes
     std::string m_name;  //!< axis label
-
-private:
-    IAxis(const IAxis&);
-    IAxis& operator=(const IAxis&);
 };
 
 //! global helper function for comparison of axes
