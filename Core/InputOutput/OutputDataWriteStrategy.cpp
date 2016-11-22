@@ -20,7 +20,9 @@
 #include <cmath>
 #include <iomanip>
 
-static const int precision { 12 };
+namespace {
+    const int precision { 12 };
+}
 
 double IgnoreDenormalized(double value)
 {
@@ -36,7 +38,7 @@ void WriteOutputDataDoubles(const OutputData<double>& data, std::ostream& output
     output_stream.imbue(std::locale::classic());
     output_stream << std::scientific << std::setprecision(precision);
     size_t ncol(0);
-    while(it != data.end()) {
+    while (it != data.end()) {
         ncol++;
         double z_value = *it++;
         output_stream << IgnoreDenormalized(z_value) << "    ";
@@ -47,6 +49,10 @@ void WriteOutputDataDoubles(const OutputData<double>& data, std::ostream& output
     }
 }
 
+// ----------------------------------------------------------------------------
+// class OutputDataWriteINTStrategy
+// ----------------------------------------------------------------------------
+
 void OutputDataWriteINTStrategy::writeOutputData(const OutputData<double>& data,
                                                std::ostream& output_stream)
 {
@@ -55,7 +61,7 @@ void OutputDataWriteINTStrategy::writeOutputData(const OutputData<double>& data,
     output_stream << "# reproducibility\n" << data.getVariability() << "\n";
 
     for(size_t i=0; i<data.getRank(); ++i) {
-        const IAxis &axis = data.getAxis(i);
+        const IAxis& axis = data.getAxis(i);
         output_stream << std::endl;
         output_stream << "# axis-" << i << "\n";
         output_stream << (axis) << "\n";
@@ -67,6 +73,8 @@ void OutputDataWriteINTStrategy::writeOutputData(const OutputData<double>& data,
     output_stream << std::endl;
 }
 
+// ----------------------------------------------------------------------------
+// class OutputDataWriteNumpyTXTStrategy
 // ----------------------------------------------------------------------------
 
 void OutputDataWriteNumpyTXTStrategy::writeOutputData(const OutputData<double>& data,
@@ -90,14 +98,14 @@ void OutputDataWriteNumpyTXTStrategy::writeOutputData(const OutputData<double>& 
 }
 
 // ----------------------------------------------------------------------------
-
+// class OutputDataWriteTiffStrategy
+// ----------------------------------------------------------------------------
 
 #ifdef BORNAGAIN_TIFF_SUPPORT
 
 OutputDataWriteTiffStrategy::OutputDataWriteTiffStrategy()
     : m_d(new TiffHandler)
-{
-}
+{}
 
 OutputDataWriteTiffStrategy::~OutputDataWriteTiffStrategy()
 {
