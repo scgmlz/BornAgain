@@ -31,8 +31,6 @@ public:
     LLData<T>& operator=(const LLData<T>& right);
     ~LLData() { clear(); }
 
-    LLData<double> meanValues() const;
-
     // accessors
     T& operator[](size_t i) { return m_data_array[i]; }
     const T& operator[](size_t i) const { return m_data_array[i]; }
