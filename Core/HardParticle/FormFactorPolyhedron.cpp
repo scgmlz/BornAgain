@@ -24,8 +24,10 @@
 #include <iomanip>
 #include <stdexcept> // need overlooked by g++ 5.4
 
-static const complex_t I(0.,1.);
-static const double eps(2e-16);
+namespace {
+    const complex_t I = {0.,1.};
+    const double eps = 2e-16;
+}
 
 double PolyhedralFace::qpa_limit_series = 3e-2;
 int PolyhedralFace::n_limit_series = 20;

@@ -15,6 +15,7 @@
 
 #include "BasicVector3D.h"
 #include "Exceptions.h"
+#include "MathConstants.h"
 
 typedef std::complex<double> complex_t;
 
