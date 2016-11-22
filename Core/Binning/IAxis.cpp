@@ -19,7 +19,7 @@
 IAxis* IAxis::createDoubleBinSize() const
 {
     throw Exceptions::NotImplementedException(
-                "IAxis::createDoubleBinSize() -> Error. Not implemented.");
+        "IAxis::createDoubleBinSize() -> Error. Not implemented.");
 }
 
 size_t IAxis::findIndex(double value) const
@@ -31,7 +31,7 @@ size_t IAxis::findIndex(double value) const
     return size();
 }
 
-bool IAxis::equals(const IAxis& other) const
+bool IAxis::sameName(const IAxis& other) const
 {
     return getName()==other.getName();
 }

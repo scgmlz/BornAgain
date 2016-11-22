@@ -32,7 +32,8 @@ public:
     ConstKBinAxis(const std::string& name, size_t nbins, double start, double end);
     virtual ~ConstKBinAxis() {}
 
-    ConstKBinAxis* clone() const;
+    ConstKBinAxis* clone() const override final {
+        return new ConstKBinAxis(getName(), m_nbins, m_start, m_end); }
 
     ConstKBinAxis* createClippedAxis(double left, double right) const;
 
