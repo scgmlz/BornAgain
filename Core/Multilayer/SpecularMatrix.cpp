@@ -22,13 +22,55 @@
 #include "MathConstants.h"
 
 namespace {
+
     const complex_t imag_unit = complex_t(0.0, 1.0);
-}
 
-void setZeroBelow(SpecularMatrix::MultiLayerCoeff_t& coeff, size_t current_layer);
+    void setZeroBelow(SpecularMatrix::MultiLayerCoeff_t& coeff, size_t current_layer)
+    {
+        size_t N = coeff.size();
+        for (size_t i=current_layer+1; i<N; ++i) {
+            coeff[i].t_r.setZero();
+        }
+    }
 
-bool calculateUpFromLayer(SpecularMatrix::MultiLayerCoeff_t& coeff, const MultiLayer& sample,
-                          const kvector_t k, size_t layer_index);
+    bool calculateUpFromLayer(SpecularMatrix::MultiLayerCoeff_t& coeff, const MultiLayer& sample,
+                              const kvector_t k, size_t layer_index)
+    {
+        for (int i=layer_index; i>=0; --i) {
+            complex_t roughness_factor = 1;
+            if (sample.getLayerInterface(i)->getRoughness()) {
+                double sigma = sample.getLayerBottomInterface(i)->getRoughness()->getSigma();
+                if(sigma > 0.0) {
+                    // since there is a roughness, compute one diagonal matrix element p00;
+                    // the other element is p11 = 1/p00.
+                    double sigeff = std::pow(M_PI_2, 1.5)*sigma*k.mag();
+                    roughness_factor = sqrt(
+                        MathFunctions::tanhc(sigeff*coeff[i+1].lambda) /
+                        MathFunctions::tanhc(sigeff*coeff[i  ].lambda) );
+                }
+            }
+            complex_t lambda = coeff[i].lambda;
+
+            complex_t lambda_rough = coeff[i  ].lambda / roughness_factor;
+            complex_t lambda_below = coeff[i+1].lambda * roughness_factor;
+            complex_t ikd = imag_unit * k.mag() * sample.getLayer(i)->getThickness();
+            coeff[i].t_r(0) = (
+                (lambda_rough+lambda_below)*coeff[i+1].t_r(0) +
+                (lambda_rough-lambda_below)*coeff[i+1].t_r(1) )/2.0/lambda *
+                std::exp(-ikd*lambda);
+            coeff[i].t_r(1) = (
+                (lambda_rough-lambda_below)*coeff[i+1].t_r(0) +
+                (lambda_rough+lambda_below)*coeff[i+1].t_r(1) )/2.0/lambda *
+                std::exp( ikd*lambda);
+            // If T overflowed, return false, so the calculation can restart from a layer higher
+            if (std::isinf(std::abs(coeff[i].getScalarT()))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+} // namespace
 
 //! Computes refraction angles and transmission/reflection coefficients
 //! for given coherent wave propagation in a multilayer.
@@ -91,49 +133,4 @@ void SpecularMatrix::execute(const MultiLayer& sample, const kvector_t k, MultiL
     for (size_t i=0; i<N; ++i) {
         coeff[i].t_r = coeff[i].t_r/T0;
     }
-}
-
-void setZeroBelow(SpecularMatrix::MultiLayerCoeff_t& coeff, size_t current_layer)
-{
-    size_t N = coeff.size();
-    for (size_t i=current_layer+1; i<N; ++i) {
-        coeff[i].t_r.setZero();
-    }
-}
-
-bool calculateUpFromLayer(SpecularMatrix::MultiLayerCoeff_t& coeff, const MultiLayer& sample,
-                          const kvector_t k, size_t layer_index)
-{
-    for (int i=layer_index; i>=0; --i) {
-        complex_t roughness_factor = 1;
-        if (sample.getLayerInterface(i)->getRoughness()) {
-            double sigma = sample.getLayerBottomInterface(i)->getRoughness()->getSigma();
-            if(sigma > 0.0) {
-                // since there is a roughness, compute one diagonal matrix element p00;
-                // the other element is p11 = 1/p00.
-                double sigeff = std::pow(M_PI_2, 1.5)*sigma*k.mag();
-                roughness_factor = sqrt(
-                            MathFunctions::tanhc(sigeff*coeff[i+1].lambda) /
-                            MathFunctions::tanhc(sigeff*coeff[i  ].lambda) );
-            }
-        }
-        complex_t lambda = coeff[i].lambda;
-
-        complex_t lambda_rough = coeff[i  ].lambda / roughness_factor;
-        complex_t lambda_below = coeff[i+1].lambda * roughness_factor;
-        complex_t ikd = imag_unit * k.mag() * sample.getLayer(i)->getThickness();
-        coeff[i].t_r(0) = (
-                    (lambda_rough+lambda_below)*coeff[i+1].t_r(0) +
-                    (lambda_rough-lambda_below)*coeff[i+1].t_r(1) )/2.0/lambda *
-                    std::exp(-ikd*lambda);
-        coeff[i].t_r(1) = (
-                    (lambda_rough-lambda_below)*coeff[i+1].t_r(0) +
-                    (lambda_rough+lambda_below)*coeff[i+1].t_r(1) )/2.0/lambda *
-                    std::exp( ikd*lambda);
-        // If T overflowed, return false, so the calculation can restart from a layer higher
-        if (std::isinf(std::abs(coeff[i].getScalarT()))) {
-            return false;
-        }
-    }
-    return true;
 }
