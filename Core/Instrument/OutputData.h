@@ -86,9 +86,6 @@ public:
     //! fill raw array with data
     void fillRawDataArray(T* destination) const;
 
-    //! Returns sum of all values in the data structure
-    T totalSum() const;
-
     // ---------------------------------
     // external iterators (with their possible masking)
     // ---------------------------------
@@ -519,13 +516,6 @@ template <class T>
 Bin1D OutputData<T>::getAxisBin(size_t global_index, const std::string& axis_name) const
 {
     return getAxisBin(global_index, getAxisIndex(axis_name));
-}
-
-template<class T>
-inline T OutputData<T>::totalSum() const
-{
-    assert(mp_ll_data);
-    return mp_ll_data->getTotalSum();
 }
 
 template <class T>

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "IntensityDataFunctions.h"
 #include "VariableBinAxis.h"
+#include "EigenCore.h"
 #include "FixedBinAxis.h"
 #include "ThreadInfo.h"
 
@@ -113,7 +114,6 @@ TEST_F(OutputDataTest, DataCopying)
 
     data1.setAllTo(10);
     data2.copyFrom(data1);
-    EXPECT_TRUE( data1.totalSum() == data2.totalSum() );
     EXPECT_TRUE( data1.hasSameDimensions(data2));
     EXPECT_TRUE( data1.hasSameShape(data2));
     EXPECT_TRUE( data2.hasSameDimensions(data1));

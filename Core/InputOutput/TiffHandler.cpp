@@ -18,6 +18,7 @@
 #include "TiffHandler.h"
 #include "BornAgainNamespace.h"
 #include "SysUtils.h"
+#include <cstring>
 
 namespace {
 size_t supported_bitPerSample = 32;

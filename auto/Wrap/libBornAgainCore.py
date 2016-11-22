@@ -21542,18 +21542,6 @@ class IntensityData(_object):
         return _libBornAgainCore.IntensityData_fillRawDataArray(self, destination)
 
 
-    def totalSum(self):
-        """
-        totalSum(IntensityData self) -> double
-
-        T OutputData< T >::totalSum() const
-
-        Returns sum of all values in the data structure. 
-
-        """
-        return _libBornAgainCore.IntensityData_totalSum(self)
-
-
     def begin(self, *args):
         """
         begin(IntensityData self) -> OutputData< double >::iterator

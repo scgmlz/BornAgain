@@ -16,7 +16,6 @@
 #ifndef LLDATA_H
 #define LLDATA_H
 
-#include "EigenCore.h"
 #include "Exceptions.h"
 #include <limits>
 
@@ -59,7 +58,6 @@ public:
     size_t getTotalSize() const;
     inline size_t getRank() const { return m_rank; }
     const int* getDimensions() const { return m_dims; }
-    T getTotalSum() const;
 
 private:
     void allocate(size_t rank, const int* dimensions);
@@ -67,7 +65,6 @@ private:
     int checkPositiveDimension(int dimension) const;
     size_t convertCoordinate(int* coordinate) const;
     void swapContents(LLData<T>& other);
-    T getZeroElement() const;
 
     size_t m_rank;
     int* m_dims;
@@ -189,14 +186,6 @@ template<class T> inline size_t LLData<T>::getTotalSize() const
     return result;
 }
 
-template<class T> T LLData<T>::getTotalSum() const
-{
-    T result = getZeroElement();
-    for (size_t i=0; i<getTotalSize(); ++i)
-        result += m_data_array[i];
-    return result;
-}
-
 template<class T> void LLData<T>::allocate(size_t rank, const int* dimensions)
 {
     clear();
@@ -249,13 +238,6 @@ template<class T> void LLData<T>::swapContents(LLData<T>& other)
     std::swap(this->m_dims, other.m_dims);
     std::swap(this->m_data_array, other.m_data_array);
 }
-
-#ifndef SWIG
-template <>
-BA_CORE_API_ Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const;
-#endif
-
-template<class T> T LLData<T>::getZeroElement() const { return 0; }
 
 template<class T> LLData<T> LLData<T>::operator+(const LLData<T>& right)
 {
