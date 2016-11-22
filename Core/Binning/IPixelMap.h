@@ -18,7 +18,10 @@
 
 #include "Vectors3D.h"
 
-//! Interface for a function that maps [0,1]x[0,1] to the kvectors in a pixel.
+//! Pure virtual interface pixel maps. A pixel maps describes the geometry of a single pixel.
+//! Therefore, different child classes are needed to support different detector geometries.
+//! Each pixel has a fixed solid angle. Furthermore, it has functions that map relative
+//! coordinates from [0,1]x[0,1] to the wavevector K and the associated weight (integration factor).
 //! @ingroup simulation
 
 class IPixelMap

@@ -122,17 +122,19 @@ private:
     kvector_t m_v_unit;
 };
 
+//! Specializes IPixelMap to flat detector geometry.
+
 class RectPixelMap : public IPixelMap
 {
 public:
     RectPixelMap(kvector_t corner_pos, kvector_t width, kvector_t height);
     virtual ~RectPixelMap() {}
 
-    RectPixelMap* clone() const override;
-    RectPixelMap* createZeroSizeMap(double x, double y) const override;
-    kvector_t getK(double x, double y, double wavelength) const override;
-    double getIntegrationFactor(double x, double y) const override;
-    double getSolidAngle() const override;
+    RectPixelMap* clone() const final;
+    RectPixelMap* createZeroSizeMap(double x, double y) const final;
+    kvector_t getK(double x, double y, double wavelength) const final;
+    double getIntegrationFactor(double x, double y) const final;
+    double getSolidAngle() const final;
 private:
     kvector_t normalizeLength(const kvector_t direction, double length) const;
     double calculateSolidAngle() const;

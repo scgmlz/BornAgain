@@ -71,7 +71,6 @@ public:
     kvector_t getMeanKF() const;
     kvector_t getMeanQ() const;
     kvector_t getQ(double x, double y) const;
-
     kvector_t getK(double x, double y) const;
 
     double getIntegrationFactor(double x, double y) const;

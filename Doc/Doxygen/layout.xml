@@ -16,6 +16,8 @@
       <tab type="namespacelist" visible="yes" title="" intro=""/>
       <tab type="namespacemembers" visible="no" title="" intro=""/>
     </tab>
+    <tab type="globals" visible="yes" title="Globals" intro=""/>
+    <tab type="filelist" visible="yes" title="Files" intro=""/>
     <tab type="filelist" visible="yes" title="">
     </tab>
   </navindex>

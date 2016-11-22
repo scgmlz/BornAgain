@@ -79,6 +79,8 @@ protected:
     size_t getIndexOfSpecular(const Beam& beam) const override;
 };
 
+//! Specializes IPixelMap to spherical detector geometry.
+
 class AngularPixelMap : public IPixelMap
 {
 public:
@@ -86,10 +88,10 @@ public:
     virtual ~AngularPixelMap() {}
 
     AngularPixelMap* clone() const override;
-    AngularPixelMap* createZeroSizeMap(double x, double y) const override;
-    kvector_t getK(double x, double y, double wavelength) const override;
-    double getIntegrationFactor(double x, double y) const override;
-    double getSolidAngle() const override;
+    AngularPixelMap* createZeroSizeMap(double x, double y) const final;
+    kvector_t getK(double x, double y, double wavelength) const final;
+    double getIntegrationFactor(double x, double y) const final;
+    double getSolidAngle() const final;
 private:
     double m_alpha, m_phi;
     double m_dalpha, m_dphi;

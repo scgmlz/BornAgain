@@ -48,9 +48,7 @@ SimulationElement::SimulationElement(SimulationElement &&other) noexcept
     , m_analyzer_operator(std::move(other.m_analyzer_operator))
     , mP_pixel_map(std::move(other.mP_pixel_map))
     , m_contains_specular(other.m_contains_specular)
-{
-
-}
+{}
 
 
 SimulationElement::~SimulationElement() {}
