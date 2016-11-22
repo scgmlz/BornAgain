@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Instrument/RectangularDetector.h
-//!     Defines class RectangularDetector.
+//! @brief     Defines classes RectangularDetector and RectPixelMap.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -42,7 +42,7 @@ public:
 
     RectangularDetector(const RectangularDetector& other);
 
-    RectangularDetector* clone() const override;
+    RectangularDetector* clone() const override { return new RectangularDetector(*this); }
 
     ~RectangularDetector();
 
@@ -65,14 +65,15 @@ public:
     double getHeight() const;
     size_t getNbinsX() const;
     size_t getNbinsY() const;
-    kvector_t getNormalVector() const;
-    double getU0() const;
-    double getV0() const;
-    kvector_t getDirectionVector() const;
-    double getDistance() const;
-    double getDirectBeamU0() const;
-    double getDirectBeamV0() const;
-    EDetectorArrangement getDetectorArrangment() const;
+
+    kvector_t getNormalVector() const { return m_normal_to_detector; }
+    double getU0() const { return m_u0; }
+    double getV0() const { return m_v0; }
+    kvector_t getDirectionVector() const { return m_direction; }
+    double getDistance() const { return m_distance; }
+    double getDirectBeamU0() const { return m_dbeam_u0; }
+    double getDirectBeamV0() const { return m_dbeam_v0; }
+    EDetectorArrangement getDetectorArrangment() const { return m_detector_arrangement; }
 
     //! returns vector of valid axes units
     std::vector<EAxesUnits> getValidAxesUnits() const override;
@@ -94,7 +95,7 @@ protected:
 
     //! Calculates axis range from original detector axes in given units (mm, rad, etc)
     virtual void calculateAxisRange(size_t axis_index, const Beam& beam, EAxesUnits units,
-                                    double &amin, double &amax) const override;
+                                    double& amin, double& amax) const override;
 
     //! Returns the name for the axis with given index
     std::string getAxisName(size_t index) const override;

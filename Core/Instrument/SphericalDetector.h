@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Instrument/SphericalDetector.h
-//! @brief     Defines class SphericalDetector.
+//! @brief     Defines classes SphericalDetector and AngularPixelMap
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -38,9 +38,9 @@ public:
     SphericalDetector(size_t n_phi, double phi_min, double phi_max,
                       size_t n_alpha, double alpha_min, double alpha_max);
 
-    SphericalDetector(const SphericalDetector &other);
+    SphericalDetector(const SphericalDetector& other);
 
-    SphericalDetector* clone() const override;
+    SphericalDetector* clone() const override { return new SphericalDetector(*this); }
 
     ~SphericalDetector() override {}
 
