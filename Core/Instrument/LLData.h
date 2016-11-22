@@ -20,7 +20,7 @@
 #include "Exceptions.h"
 #include <limits>
 
-//! Template class to store data of any type in multi-dimensional space (low-level).
+//! Low-level template class for data arrays of any type and any rank.
 //! @ingroup tools_internal
 
 template <class T> class LLData
@@ -30,13 +30,13 @@ public:
     LLData(size_t rank, const int* dimensions);
     LLData(const LLData<T>& right);
     LLData<T>& operator=(const LLData<T>& right);
-    ~LLData();
+    ~LLData() { clear(); }
 
     LLData<double> meanValues() const;
 
     // accessors
-    T& operator[](size_t i);
-    const T& operator[](size_t i) const;
+    T& operator[](size_t i) { return m_data_array[i]; }
+    const T& operator[](size_t i) const { return m_data_array[i]; }
     T& atCoordinate(int* coordinate);
     const T& atCoordinate(int* coordinate) const;
 
@@ -74,39 +74,30 @@ private:
     T* m_data_array;
 };
 
-#ifndef SWIG
-template <>
-BA_CORE_API_ Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const;
-#endif
-
 // Global helper functions for comparison
 template <class T> bool HaveSameDimensions(const LLData<T>& left, const LLData<T>& right);
 
+// ************************************************************************** //
+// Implementation
+// ************************************************************************** //
 
-template<class T>
-inline LLData<T>::LLData(size_t rank, const int* dimensions)
+
+template<class T> inline LLData<T>::LLData(size_t rank, const int* dimensions)
     : m_rank(0)
     , m_dims(0)
-    , m_data_array(0)
+    , m_data_array(nullptr)
 {
     allocate(rank, dimensions);
 }
 
-template<class T>
-LLData<T>::LLData(const LLData<T>& right)
+template<class T> LLData<T>::LLData(const LLData<T>& right)
     : m_rank(0)
     , m_dims(0)
-    , m_data_array(0)
+    , m_data_array(nullptr)
 {
     allocate(right.getRank(), right.getDimensions());
     for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] = right[i];
-}
-
-template<class T>
-LLData<T>::~LLData()
-{
-    clear();
 }
 
 template<class T> LLData<T>& LLData<T>::operator=(const LLData<T>& right)
@@ -118,26 +109,12 @@ template<class T> LLData<T>& LLData<T>::operator=(const LLData<T>& right)
     return *this;
 }
 
-template<class T>
-inline T& LLData<T>::operator[](size_t i)
-{
-    return m_data_array[i];
-}
-
-template<class T>
-inline const T& LLData<T>::operator[](size_t i) const
-{
-    return m_data_array[i];
-}
-
-template<class T>
-inline T& LLData<T>::atCoordinate(int* coordinate)
+template<class T> inline T& LLData<T>::atCoordinate(int* coordinate)
 {
     return m_data_array[convertCoordinate(coordinate)];
 }
 
-template<class T>
-inline const T& LLData<T>::atCoordinate(int* coordinate) const
+template<class T> inline const T& LLData<T>::atCoordinate(int* coordinate) const
 {
     return m_data_array[convertCoordinate(coordinate)];
 }
@@ -250,9 +227,8 @@ template<class T> void LLData<T>::clear()
 
 template<class T> inline int LLData<T>::checkPositiveDimension(int dimension) const
 {
-    if (dimension<1) {
+    if (dimension<1)
         throw Exceptions::OutOfBoundsException("Dimension must be bigger than zero.");
-    }
     return dimension;
 }
 
@@ -274,11 +250,12 @@ template<class T> void LLData<T>::swapContents(LLData<T>& other)
     std::swap(this->m_data_array, other.m_data_array);
 }
 
-template<class T> T LLData<T>::getZeroElement() const
-{
-    T result = 0;
-    return result;
-}
+#ifndef SWIG
+template <>
+BA_CORE_API_ Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const;
+#endif
+
+template<class T> T LLData<T>::getZeroElement() const { return 0; }
 
 template<class T> LLData<T> LLData<T>::operator+(const LLData<T>& right)
 {
