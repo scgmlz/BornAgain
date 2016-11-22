@@ -93,10 +93,4 @@ protected:
     std::string m_name;  //!< axis label
 };
 
-//! global helper function for comparison of axes
-inline bool HaveSameNameAndShape(const IAxis& left, const IAxis& right)
-{
-    return left == right;
-}
-
 #endif // IAXIS_H

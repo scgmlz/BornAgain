@@ -3372,17 +3372,6 @@ class IAxis(_object):
 IAxis_swigregister = _libBornAgainCore.IAxis_swigregister
 IAxis_swigregister(IAxis)
 
-
-def HaveSameNameAndShape(left, right):
-    """
-    HaveSameNameAndShape(IAxis left, IAxis right) -> bool
-
-    bool HaveSameNameAndShape(const IAxis &left, const IAxis &right)
-
-    global helper function for comparison of axes 
-
-    """
-    return _libBornAgainCore.HaveSameNameAndShape(left, right)
 class VariableBinAxis(IAxis):
     """
 
