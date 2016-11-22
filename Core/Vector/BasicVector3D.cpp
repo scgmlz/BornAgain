@@ -128,7 +128,7 @@ double BasicVector3D<double>::angle(const BasicVector3D<double>& v) const
 BasicVector3D<double> vecOfLambdaAlphaPhi(
     const double _lambda, const double _alpha, const double _phi)
 {
-    double k = PI2/_lambda;
+    double k = M_TWOPI/_lambda;
     return BasicVector3D<double>(
         k*std::cos(_alpha) * std::cos(_phi),
         -k*std::cos(_alpha) * std::sin(_phi),

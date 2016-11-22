@@ -1549,7 +1549,6 @@ cvar = _libBornAgainCore.cvar
 major_version_number = cvar.major_version_number
 minor_version_number = cvar.minor_version_number
 patch_version_number = cvar.patch_version_number
-PI2 = cvar.PI2
 
 class ICloneable(INoncopyable):
     """
