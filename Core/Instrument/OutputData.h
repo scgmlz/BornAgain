@@ -647,10 +647,11 @@ template<class T>
 template<class U>
 bool OutputData<T>::hasSameShape(const OutputData<U>& right) const
 {
-    if (!hasSameDimensions(right)) return false;
-
+    if (!hasSameDimensions(right))
+        return false;
     for (size_t i=0; i<m_value_axes.size(); ++i)
-        if (!HaveSameNameAndShape(getAxis(i), right.getAxis(i))) return false;
+        if (getAxis(i) != right.getAxis(i))
+            return false;
     return true;
 }
 
