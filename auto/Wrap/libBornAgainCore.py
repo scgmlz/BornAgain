@@ -3025,22 +3025,16 @@ class Bin1D(_object):
         """
         return _libBornAgainCore.Bin1D_getBinSize(self)
 
+
+    def contains(self, value):
+        """contains(Bin1D self, double value) -> bool"""
+        return _libBornAgainCore.Bin1D_contains(self, value)
+
     __swig_destroy__ = _libBornAgainCore.delete_Bin1D
     __del__ = lambda self: None
 Bin1D_swigregister = _libBornAgainCore.Bin1D_swigregister
 Bin1D_swigregister(Bin1D)
 
-
-def BinContains(bin, value):
-    """
-    BinContains(Bin1D bin, double value) -> bool
-
-    bool BinContains(const Bin1D &bin, double value)
-
-    Checks if value is contained in bin: value in [m_lower, m_upper) 
-
-    """
-    return _libBornAgainCore.BinContains(bin, value)
 class Bin1DKVector(_object):
     """
 
