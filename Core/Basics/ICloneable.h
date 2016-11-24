@@ -23,15 +23,15 @@
 //!
 //! The base class INoncopyable disables the copy constructor and the operator=
 //! in all its child classes.
-//! Child classes of ICloneable should provide clone().
+//! Child classes of ICloneable must provide clone().
 
 //! @ingroup tools_internal
 
 class BA_CORE_API_ ICloneable : public INoncopyable
 {
 public:
-    virtual ICloneable* clone() const=0;
-    virtual void transferToCPP() {} //!< Used for Python overriding of clone
+    virtual ICloneable* clone() const =0;
+    virtual void transferToCPP() {} //!< Used for Python overriding of clone (see swig/tweaks.py)
 };
 
 #endif // ICLONEABLE_H
