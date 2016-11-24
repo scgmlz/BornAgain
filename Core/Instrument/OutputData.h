@@ -122,58 +122,48 @@ public:
 
     //! Returns vector of axes indices for given global index
     //! @param global_index The global index of this data structure.
-    //! @return Vector of bin indices for all axes defined
     std::vector<int> getAxesBinIndices(size_t global_index) const;
 
     //! Returns axis bin index for given global index
     //! @param global_index The global index of this data structure.
     //! @param i_selected_axis Serial number of selected axis.
-    //! @return Corresponding bin index for selected axis
     int getAxisBinIndex(size_t global_index, size_t i_selected_axis) const;
 
     //! Returns axis bin index for given global index
     //! @param global_index The global index of this data structure.
     //! @param axis_name The name of selected axis.
-    //! @return Corresponding bin index for selected axis
     int getAxisBinIndex(size_t global_index, const std::string &axis_name) const;
 
     //! Returns global index for specified indices of axes
     //! @param axes_indices Vector of axes indices for all specified axes in this dataset
-    //! @return Corresponding global index
     size_t toGlobalIndex(const std::vector<int> &axes_indices) const;
 
-    //! Returns global index for specified axes values
+    //! Returns closest global index for specified axes values
     //! @param coordinates Vector of axes coordinates for all specified axes in this dataset
-    //! @return Closest global index
     size_t findGlobalIndex(const std::vector<double> &coordinates) const;
 
     //! Returns the value of selected axis for given global_index.
     //! @param global_index The global index of this data structure.
     //! @param i_selected_axis Serial number of selected axis.
-    //! @return corresponding bin center of selected axis
     double getAxisValue(size_t global_index, size_t i_selected_axis) const;
 
     //! Returns the value of selected axis for given global_index.
     //! @param global_index The global index of this data structure.
     //! @param axis_name The name of selected axis.
-    //! @return corresponding bin center of selected axis
     double getAxisValue(size_t global_index, const std::string& axis_name) const;
 
     //! Returns values on all defined axes for given globalbin number
     //! @param global_index The global index of this data structure.
-    //! @return Vector of corresponding bin centers
     std::vector<double > getAxesValues(size_t global_index) const;
 
     //! Returns bin of selected axis for given global_index.
     //! @param global_index The global index of this data structure.
     //! @param i_selected_axis Serial number of selected axis.
-    //! @return Corresponding Bin1D object
     Bin1D getAxisBin(size_t global_index, size_t i_selected_axis) const;
 
     //! Returns bin of selected axis for given global_index.
     //! @param global_index The global index of this data structure.
     //! @param axis_name The name of selected axis.
-    //! @return Corresponding Bin1D object
     Bin1D getAxisBin(size_t global_index, const std::string& axis_name) const;
 
     // ---------
