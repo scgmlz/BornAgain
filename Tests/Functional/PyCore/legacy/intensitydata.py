@@ -17,7 +17,6 @@ class IntensityDataTest(unittest.TestCase):
         data = IntensityData()
         self.assertEqual(1, data.getAllocatedSize())
         self.assertEqual(0, data.getRank())
-        self.assertEqual(0, data.totalSum())
 
     def test_create_1d_object(self):
         axis0 = FixedBinAxis("angle", 20, 0.0, 20.)
@@ -28,7 +27,6 @@ class IntensityDataTest(unittest.TestCase):
         data.addAxis(axis0)
         self.assertEqual(20, data.getAllocatedSize())
         self.assertEqual(1, data.getRank())
-        self.assertEqual(0, data.totalSum())
 
     def test_create_2d_object(self):
         data = IntensityData()
@@ -36,12 +34,7 @@ class IntensityDataTest(unittest.TestCase):
         data.addAxis("axis1", 20, 0.0, 20.0)
         self.assertEqual(200, data.getAllocatedSize())
         self.assertEqual(2, data.getRank())
-        self.assertEqual(0, data.totalSum())
         data.setAllTo(1.0)
-        self.assertEqual(200.0, data.totalSum())
-        for i in range(0, data.getAllocatedSize()):
-            data[i] = data[i]*-1.0
-        self.assertEqual(-200.0, data.totalSum())
 
     def test_access_simulation_intensity(self):
         simulation = GISASSimulation()
@@ -59,7 +52,6 @@ class IntensityDataTest(unittest.TestCase):
         data.addAxis("axis1", 20, 0.0, 20.0)
         data.setAllTo(1)
         self.assertEqual((20, 10), data.getArray().shape)
-        self.assertEqual((data.totalSum()), numpy.sum(data.getArray()))
 
 
 if __name__ == '__main__':
