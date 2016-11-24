@@ -29,19 +29,19 @@ class BA_CORE_API_ ParticleDistribution : public IAbstractParticle
 public:
     ParticleDistribution(const IParticle& prototype, const ParameterDistribution& par_distr);
 
-    virtual ParticleDistribution* clone() const;
-    virtual ParticleDistribution* cloneInvertB() const;
+    ParticleDistribution* clone() const final;
+    ParticleDistribution* cloneInvertB() const final;
 
-    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
+    void accept(ISampleVisitor* visitor) const final { visitor->visit(this); }
 
     //! Returns textual representation of *this and its descendants.
-    virtual std::string to_str(int indent=0) const;
+    std::string to_str(int indent=0) const final;
 
     //! Sets the refractive index of the ambient material.
-    virtual void setAmbientMaterial(const IMaterial& material);
+    void setAmbientMaterial(const IMaterial& material) final;
 
     //! Returns particle's material.
-    virtual const IMaterial* getAmbientMaterial() const;
+    const IMaterial* getAmbientMaterial() const final;
 
     //! Returns list of new particles generated according to a distribution.
     std::vector<const IParticle*> generateParticles() const;
