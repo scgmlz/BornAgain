@@ -52,13 +52,13 @@ public:
     std::vector<double> getBinCenters() const;
     std::vector<double> getBinBoundaries() const { return m_bin_boundaries; }
 
-    VariableBinAxis* createClippedAxis(double left, double right) const;
+    virtual VariableBinAxis* createClippedAxis(double left, double right) const;
 
 protected:
     VariableBinAxis(const std::string& name, int nbins = 0);
     void setBinBoundaries(const std::vector<double> &bin_boundaries);
 
-    void print(std::ostream& ostr) const;
+    virtual void print(std::ostream& ostr) const;
     virtual bool equals(const IAxis& other) const;
     size_t m_nbins;
 
