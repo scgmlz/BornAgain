@@ -22,7 +22,7 @@
 class ParameterSample
 {
 public:
-    ParameterSample(double _value, double _weight=1.) : value(_value), weight(_weight) {}
+    ParameterSample(double _value, double _weight = 1.) : value(_value), weight(_weight) {}
     double value;
     double weight;
 };

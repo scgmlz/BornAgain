@@ -42,19 +42,24 @@ class BA_CORE_API_ Convolve
 {
 public:
     //! definition of 1d vector of double
-    typedef std::vector<double > double1d_t;
+    typedef std::vector<double> double1d_t;
 
     //! definition of 2d vector of double
-    typedef std::vector<double1d_t > double2d_t;
+    typedef std::vector<double1d_t> double2d_t;
 
     Convolve();
 
     //! convolution  modes
     //! use LINEAR_SAME or CIRCULAR_SAME_SHIFTED for maximum performance
-    enum EConvolutionMode { FFTW_LINEAR_FULL, FFTW_LINEAR_SAME_UNPADDED,
-                            FFTW_LINEAR_SAME, FFTW_LINEAR_VALID,
-                            FFTW_CIRCULAR_SAME, FFTW_CIRCULAR_SAME_SHIFTED,
-                            FFTW_UNDEFINED };
+    enum EConvolutionMode {
+        FFTW_LINEAR_FULL,
+        FFTW_LINEAR_SAME_UNPADDED,
+        FFTW_LINEAR_SAME,
+        FFTW_LINEAR_VALID,
+        FFTW_CIRCULAR_SAME,
+        FFTW_CIRCULAR_SAME_SHIFTED,
+        FFTW_UNDEFINED
+    };
 
     //! convolution in 1D
     void fftconvolve(const double1d_t& source, const double1d_t& kernel, double1d_t& result);
@@ -92,23 +97,24 @@ private:
         ~Workspace();
         void clear();
         friend class Convolve;
+
     private:
-        int h_src, w_src;                 // size of original 'source' array in 2 dimensions
-        int h_kernel, w_kernel;           // size of original 'kernel' array in 2 dimensions
+        int h_src, w_src; // size of original 'source' array in 2 dimensions
+        int h_kernel, w_kernel; // size of original 'kernel' array in 2 dimensions
         // size of adjusted source and kernel arrays (in_src, out_src, in_kernel, out_kernel)
         int w_fftw, h_fftw;
         //! adjusted input 'source' array
-        double *in_src;
+        double* in_src;
         //! result of Fourier transformation of source
-        double *out_src;
+        double* out_src;
         //! adjusted input 'kernel' array
-        double *in_kernel;
+        double* in_kernel;
         //! result of Fourier transformation of kernel
-        double *out_kernel;
+        double* out_kernel;
         //! result of product of FFT(source) and FFT(kernel)
-        double *dst_fft;
-        int h_dst, w_dst;                 // size of resulting array
-        int h_offset, w_offset;           // offsets to copy result into output arrays
+        double* dst_fft;
+        int h_dst, w_dst; // size of resulting array
+        int h_offset, w_offset; // offsets to copy result into output arrays
         fftw_plan p_forw_src;
         fftw_plan p_forw_kernel;
         fftw_plan p_back;
@@ -118,9 +124,9 @@ private:
     Workspace ws;
     //! convolution mode
     EConvolutionMode m_mode;
-    std::vector<size_t > m_implemented_factors; // favorite factorization terms of fftw3
+    std::vector<size_t> m_implemented_factors; // favorite factorization terms of fftw3
 };
 
-}  // namespace MathFunctions
+} // namespace MathFunctions
 
 #endif // CONVOLVE_H

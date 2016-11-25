@@ -16,8 +16,8 @@
 #ifndef MESOCRYSTALBUILDER_H
 #define MESOCRYSTALBUILDER_H
 
-#include "IMultiLayerBuilder.h"
 #include "Complex.h"
+#include "IMultiLayerBuilder.h"
 
 class IFormFactor;
 class ISample;
@@ -32,7 +32,7 @@ class BA_CORE_API_ MesoCrystalBuilder : public IMultiLayerBuilder
 public:
     MesoCrystalBuilder();
 
-    virtual ~MesoCrystalBuilder(){}
+    virtual ~MesoCrystalBuilder() {}
     virtual MultiLayer* buildSample() const;
 
 protected:
@@ -40,8 +40,8 @@ protected:
 
 private:
     MesoCrystal* createMesoCrystal(
-        double stacking_radius_a, double stacking_radius_c,
-        complex_t n_particle, const IFormFactor* p_meso_form_factor) const;
+        double stacking_radius_a, double stacking_radius_c, complex_t n_particle,
+        const IFormFactor* p_meso_form_factor) const;
     const Lattice* createLattice(double stacking_radius_a, double stacking_radius_c) const;
     double m_lattice_length_a;
     double m_lattice_length_c;

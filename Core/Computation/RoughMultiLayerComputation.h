@@ -35,9 +35,9 @@ public:
     RoughMultiLayerComputation(const MultiLayer* p_multi_layer);
     ~RoughMultiLayerComputation();
 
-    void eval(ProgressHandler* progress,
-              const std::vector<SimulationElement>::iterator& begin_it,
-              const std::vector<SimulationElement>::iterator& end_it);
+    void eval(
+        ProgressHandler* progress, const std::vector<SimulationElement>::iterator& begin_it,
+        const std::vector<SimulationElement>::iterator& end_it);
 
     //! Sets magnetic reflection/transmission info for specific layer
     void setSpecularInfo(size_t i_layer, const LayerSpecularInfo& specular_info);

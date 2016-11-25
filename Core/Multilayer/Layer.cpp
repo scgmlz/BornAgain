@@ -21,11 +21,7 @@
 #include "ParameterPool.h"
 #include "RealParameter.h"
 
-Layer::Layer()
-    : mp_material(nullptr), m_thickness(0)
-{
-    initialize();
-}
+Layer::Layer() : mp_material(nullptr), m_thickness(0) { initialize(); }
 
 Layer::Layer(const IMaterial& material, double thickness)
     : mp_material(nullptr), m_thickness(thickness)
@@ -40,21 +36,18 @@ Layer::Layer(const Layer& other) : ICompositeSample()
     mp_material = nullptr;
     if (other.mp_material)
         mp_material = other.mp_material->clone();
-    for (size_t i=0; i<other.getNumberOfLayouts();++i)
+    for (size_t i = 0; i < other.getNumberOfLayouts(); ++i)
         addLayoutPtr(other.getLayout(i)->clone());
     setNumberOfLayers(other.getNumberOfLayers());
     initialize();
 }
 
-Layer::~Layer()
-{
-    delete mp_material;
-}
+Layer::~Layer() { delete mp_material; }
 
 Layer* Layer::cloneInvertB() const
 {
     Layer* p_clone = new Layer(*mp_material->cloneInverted(), m_thickness);
-    for (size_t i=0; i<getNumberOfLayouts(); ++i)
+    for (size_t i = 0; i < getNumberOfLayouts(); ++i)
         p_clone->addLayoutPtr(getLayout(i)->cloneInvertB());
     p_clone->setNumberOfLayers(getNumberOfLayers());
     p_clone->init_parameters();
@@ -64,11 +57,11 @@ Layer* Layer::cloneInvertB() const
 std::string Layer::to_str(int indent) const
 {
     std::stringstream ss;
-    ss << std::string(4*indent, '.') << " " << getName() << " "
-       << (getMaterial() ? getMaterial()->getName() : "0_MATERIAL") << " "
-       << getRefractiveIndex() << " " << *getParameterPool() << "\n";
-    for( const ISample* child: getChildren() )
-        ss << child->to_str(indent+1);
+    ss << std::string(4 * indent, '.') << " " << getName() << " "
+       << (getMaterial() ? getMaterial()->getName() : "0_MATERIAL") << " " << getRefractiveIndex()
+       << " " << *getParameterPool() << "\n";
+    for (const ISample* child : getChildren())
+        ss << child->to_str(indent + 1);
     return ss.str();
 }
 
@@ -92,26 +85,20 @@ complex_t Layer::getRefractiveIndex() const
     return mp_material ? mp_material->getRefractiveIndex() : 1.0;
 }
 
-complex_t Layer::getRefractiveIndex2() const
-{
-    return getRefractiveIndex()*getRefractiveIndex();
-}
+complex_t Layer::getRefractiveIndex2() const { return getRefractiveIndex() * getRefractiveIndex(); }
 
-void Layer::addLayout(const ILayout& decoration)
-{
-    addLayoutPtr(decoration.clone());
-}
+void Layer::addLayout(const ILayout& decoration) { addLayoutPtr(decoration.clone()); }
 
 const ILayout* Layer::getLayout(size_t i) const
 {
-    if (i>=m_layouts.size())
+    if (i >= m_layouts.size())
         return nullptr;
     return m_layouts[i];
 }
 
 double Layer::getTotalParticleSurfaceDensity(size_t layout_index) const
 {
-    if (getNumberOfLayouts()==0 || layout_index>=getNumberOfLayouts())
+    if (getNumberOfLayouts() == 0 || layout_index >= getNumberOfLayouts())
         return 0.0;
     return getLayout(layout_index)->getTotalParticleSurfaceDensity();
 }
@@ -119,7 +106,7 @@ double Layer::getTotalParticleSurfaceDensity(size_t layout_index) const
 double Layer::getTotalAbundance() const
 {
     double total_abundance = 0.0;
-    for (size_t i=0; i<getNumberOfLayouts(); ++i)
+    for (size_t i = 0; i < getNumberOfLayouts(); ++i)
         total_abundance += getLayout(i)->getTotalAbundance();
     return total_abundance;
 }
@@ -134,12 +121,12 @@ void Layer::init_parameters()
 void Layer::print(std::ostream& ostr) const
 {
     ICompositeSample::print(ostr);
-    ostr << "-->Layer{" <<  *getMaterial() << "}";
+    ostr << "-->Layer{" << *getMaterial() << "}";
 }
 
 void Layer::addLayoutPtr(ILayout* layout)
 {
-    if( !layout )
+    if (!layout)
         return;
     m_layouts.push_back(layout);
     registerChild(layout);

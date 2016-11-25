@@ -114,7 +114,7 @@ class BA_CORE_API_ ISampleVisitor
 {
 public:
     ISampleVisitor() : m_depth(0) {}
-    virtual ~ISampleVisitor(){}
+    virtual ~ISampleVisitor() {}
 
     // visiting methods (the order according to the hierarchy as reported by IDE)
 

@@ -16,8 +16,8 @@
 #ifndef PRECOMPUTED_H
 #define PRECOMPUTED_H
 
-#include "WinDllMacros.h"
 #include "ISingleton.h"
+#include "WinDllMacros.h"
 #include <vector>
 
 //! This class contains precomputed constants.
@@ -25,6 +25,7 @@
 class BA_CORE_API_ Precomputed : public ISingleton<Precomputed>
 {
     friend class ISingleton<Precomputed>;
+
 public:
     std::vector<double> factorial; //!< factorial[k] = k! for k=0,1,...,170 (for IEEE double).
     std::vector<double> reciprocal_factorial; //!< 1/k!

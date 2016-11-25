@@ -24,27 +24,24 @@ IsGISAXSDetector::IsGISAXSDetector()
     init_parameters();
 }
 
-IsGISAXSDetector::IsGISAXSDetector(size_t n_phi, double phi_min, double phi_max, size_t n_alpha,
-                                   double alpha_min, double alpha_max)
+IsGISAXSDetector::IsGISAXSDetector(
+    size_t n_phi, double phi_min, double phi_max, size_t n_alpha, double alpha_min,
+    double alpha_max)
 {
     setName(BornAgain::IsGISAXSDetectorType);
     init_parameters();
     setDetectorParameters(n_phi, phi_min, phi_max, n_alpha, alpha_min, alpha_max);
 }
 
-IsGISAXSDetector::IsGISAXSDetector(const IsGISAXSDetector &other)
-    : SphericalDetector(other)
+IsGISAXSDetector::IsGISAXSDetector(const IsGISAXSDetector& other) : SphericalDetector(other)
 {
     setName(BornAgain::IsGISAXSDetectorType);
     init_parameters();
 }
 
-IsGISAXSDetector *IsGISAXSDetector::clone() const
-{
-    return new IsGISAXSDetector(*this);
-}
+IsGISAXSDetector* IsGISAXSDetector::clone() const { return new IsGISAXSDetector(*this); }
 
-void IsGISAXSDetector::print(std::ostream &ostr) const
+void IsGISAXSDetector::print(std::ostream& ostr) const
 {
     ostr << "IsGISAXSDetector: '" << getName() << "' " << getParameterPool();
     for (size_t i = 0; i < m_axes.size(); ++i) {
@@ -52,7 +49,7 @@ void IsGISAXSDetector::print(std::ostream &ostr) const
     }
 }
 
-IAxis *IsGISAXSDetector::createAxis(size_t index, size_t n_bins, double min, double max) const
+IAxis* IsGISAXSDetector::createAxis(size_t index, size_t n_bins, double min, double max) const
 {
     if (max <= min) {
         throw Exceptions::LogicErrorException(
@@ -61,10 +58,8 @@ IAxis *IsGISAXSDetector::createAxis(size_t index, size_t n_bins, double min, dou
     if (n_bins == 0) {
         throw Exceptions::LogicErrorException(
             "IsGISAXSDetector::createAxis() -> Error! Number n_bins can't be zero.");
-    }    return new CustomBinAxis(getAxisName(index), n_bins, min, max);
+    }
+    return new CustomBinAxis(getAxisName(index), n_bins, min, max);
 }
 
-size_t IsGISAXSDetector::getIndexOfSpecular(const Beam&) const
-{
-    return getTotalSize();
-}
+size_t IsGISAXSDetector::getIndexOfSpecular(const Beam&) const { return getTotalSize(); }

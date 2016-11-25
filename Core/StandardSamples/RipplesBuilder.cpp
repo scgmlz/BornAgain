@@ -26,11 +26,11 @@
 #include "Units.h"
 
 CosineRippleBuilder::CosineRippleBuilder()
-    : m_w(20.0*Units::nanometer)
-    , m_h(4.0*Units::nanometer)
-    , m_l(100.0*Units::nanometer)
-    , m_interf_distance(20.0*Units::nanometer)
-    , m_interf_width(4.0*Units::nanometer)
+    : m_w(20.0 * Units::nanometer)
+    , m_h(4.0 * Units::nanometer)
+    , m_l(100.0 * Units::nanometer)
+    , m_interf_distance(20.0 * Units::nanometer)
+    , m_interf_width(4.0 * Units::nanometer)
 {
     init_parameters();
 }
@@ -57,9 +57,9 @@ MultiLayer* CosineRippleBuilder::buildSample() const
     Particle ripple(particle_material, ff_ripple1);
 
     ParticleLayout particle_layout;
-    particle_layout.addParticle(ripple,1.0);
-    InterferenceFunctionRadialParaCrystal interference_function(m_interf_distance,
-                                                                1e7 * Units::nanometer);
+    particle_layout.addParticle(ripple, 1.0);
+    InterferenceFunctionRadialParaCrystal interference_function(
+        m_interf_distance, 1e7 * Units::nanometer);
     FTDistribution1DGauss pdf(m_interf_width);
     interference_function.setProbabilityDistribution(pdf);
     particle_layout.addInterferenceFunction(interference_function);
@@ -77,12 +77,12 @@ MultiLayer* CosineRippleBuilder::buildSample() const
 // ----------------------------------------------------------------------------
 
 TriangularRippleBuilder::TriangularRippleBuilder()
-    : m_w(20.0*Units::nanometer)
-    , m_h(4.0*Units::nanometer)
-    , m_l(100.0*Units::nanometer)
-    , m_d(0.0*Units::nanometer)
-    , m_interf_distance(20.0*Units::nanometer)
-    , m_interf_width(4.0*Units::nanometer)
+    : m_w(20.0 * Units::nanometer)
+    , m_h(4.0 * Units::nanometer)
+    , m_l(100.0 * Units::nanometer)
+    , m_d(0.0 * Units::nanometer)
+    , m_interf_distance(20.0 * Units::nanometer)
+    , m_interf_width(4.0 * Units::nanometer)
 {
     init_parameters();
 }
@@ -93,7 +93,7 @@ void TriangularRippleBuilder::init_parameters()
     registerParameter("width", &m_w).setUnit("nm").setNonnegative();
     registerParameter("height", &m_h).setUnit("nm").setNonnegative();
     registerParameter("length", &m_l).setUnit("nm").setNonnegative();
-    registerParameter  ("asymetry", &m_d);
+    registerParameter("asymetry", &m_d);
     registerParameter("interf_distance", &m_interf_distance).setUnit("nm").setNonnegative();
     registerParameter("interf_width", &m_interf_width).setUnit("nm").setNonnegative();
 }
@@ -108,12 +108,12 @@ MultiLayer* TriangularRippleBuilder::buildSample() const
 
     Layer air_layer(air_material);
     FormFactorRipple2 ff_ripple2(m_l, m_w, m_h, m_d);
-    Particle ripple(particle_material, ff_ripple2 );
+    Particle ripple(particle_material, ff_ripple2);
 
     ParticleLayout particle_layout;
-    particle_layout.addParticle(ripple,1.0);
-    InterferenceFunctionRadialParaCrystal interference_function(m_interf_distance,
-                                                                1e7 * Units::nanometer);
+    particle_layout.addParticle(ripple, 1.0);
+    InterferenceFunctionRadialParaCrystal interference_function(
+        m_interf_distance, 1e7 * Units::nanometer);
     FTDistribution1DGauss pdf(m_interf_width);
     interference_function.setProbabilityDistribution(pdf);
     particle_layout.addInterferenceFunction(interference_function);

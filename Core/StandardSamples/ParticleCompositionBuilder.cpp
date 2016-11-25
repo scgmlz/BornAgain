@@ -38,13 +38,13 @@ MultiLayer* ParticleCompositionBuilder::buildSample() const
     Layer air_layer(air_material);
     Layer substrate_layer(substrate_material);
 
-    double radius(10.0*Units::nanometer);
+    double radius(10.0 * Units::nanometer);
     FormFactorFullSphere sphere_ff(radius);
     Particle sphere(particle_material, sphere_ff);
     ParticleLayout particle_layout;
 
     kvector_t pos0(0.0, 0.0, 0.0);
-    kvector_t pos1(radius, radius/std::sqrt(3.0), std::sqrt(8.0/3.0)*radius);
+    kvector_t pos1(radius, radius / std::sqrt(3.0), std::sqrt(8.0 / 3.0) * radius);
     std::vector<kvector_t> positions;
     positions.push_back(pos0);
     positions.push_back(pos1);
@@ -55,8 +55,9 @@ MultiLayer* ParticleCompositionBuilder::buildSample() const
     particle_layout.addParticle(basis);
 
     std::unique_ptr<InterferenceFunction2DLattice> P_interference{
-        InterferenceFunction2DLattice::createHexagonal(radius * 2.0)};
-    FTDecayFunction2DCauchy pdf(10*Units::nanometer, 10*Units::nanometer);
+        InterferenceFunction2DLattice::createHexagonal(radius * 2.0)
+    };
+    FTDecayFunction2DCauchy pdf(10 * Units::nanometer, 10 * Units::nanometer);
     P_interference->setDecayFunction(pdf);
 
     particle_layout.addInterferenceFunction(*P_interference);

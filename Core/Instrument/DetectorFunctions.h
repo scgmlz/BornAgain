@@ -16,11 +16,11 @@
 #ifndef DETECTORFUNCTIONS_H
 #define DETECTORFUNCTIONS_H
 
-#include "WinDllMacros.h"
 #include "IDetector2D.h"
-#include <string>
+#include "WinDllMacros.h"
 #include <memory>
-template<class T> class OutputData;
+#include <string>
+template <class T> class OutputData;
 class IDetector2D;
 class Instrument;
 
@@ -28,7 +28,8 @@ class Instrument;
 //! Contains set of detector-related convenience functions.
 //! @ingroup simulation
 
-namespace DetectorFunctions {
+namespace DetectorFunctions
+{
 
 //! Returns true if the data has same axes size (nx,ny) with the detector.
 BA_CORE_API_ bool hasSameDimensions(const IDetector2D& detector, const OutputData<double>& data);
@@ -49,11 +50,9 @@ BA_CORE_API_ std::string axesToString(const OutputData<double>& data);
 //!     resulting data will be only cropped, masked areas will still contain intensities
 //! TODO: what users will like more (this appears on FitSuitePlotObserver)?
 
-BA_CORE_API_ std::unique_ptr<OutputData<double>> createDataSet(const Instrument& instrument,
-    const OutputData<double> &data, bool put_masked_areas_to_zero=true,
-    IDetector2D::EAxesUnits units=IDetector2D::DEFAULT);
-
+BA_CORE_API_ std::unique_ptr<OutputData<double>> createDataSet(
+    const Instrument& instrument, const OutputData<double>& data,
+    bool put_masked_areas_to_zero = true, IDetector2D::EAxesUnits units = IDetector2D::DEFAULT);
 }
 
 #endif // DETECTORFUNCTIONS_H
-

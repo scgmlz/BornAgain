@@ -21,13 +21,14 @@
 //! A line segment.
 //! @ingroup mask
 
-class  BA_CORE_API_ Line : public IShape2D {
+class BA_CORE_API_ Line : public IShape2D
+{
 public:
     Line(double x1, double y1, double x2, double y2);
     Line* clone() const { return new Line(m_x1, m_y1, m_x2, m_y2); }
 
     bool contains(double x, double y) const;
-    bool contains(const Bin1D &binx, const Bin1D &biny) const;
+    bool contains(const Bin1D& binx, const Bin1D& biny) const;
 
 private:
     double m_x1, m_y1, m_x2, m_y2;
@@ -37,7 +38,8 @@ private:
 //! An infinite vertical line.
 //! @ingroup mask
 
-class BA_CORE_API_ VerticalLine : public IShape2D {
+class BA_CORE_API_ VerticalLine : public IShape2D
+{
 public:
     VerticalLine(double x);
     VerticalLine* clone() const { return new VerticalLine(m_x); }
@@ -55,10 +57,11 @@ private:
 //! An infinite horizontal line.
 //! @ingroup mask
 
-class BA_CORE_API_ HorizontalLine : public IShape2D {
+class BA_CORE_API_ HorizontalLine : public IShape2D
+{
 public:
     HorizontalLine(double y);
-    HorizontalLine *clone() const { return new HorizontalLine(m_y); }
+    HorizontalLine* clone() const { return new HorizontalLine(m_y); }
 
     bool contains(double x, double y) const;
     bool contains(const Bin1D& binx, const Bin1D& biny) const;

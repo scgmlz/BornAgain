@@ -27,17 +27,20 @@ class BA_CORE_API_ IFTDistribution1D : public IParameterized
 public:
     IFTDistribution1D(double omega) : m_omega(omega) {}
 
-    virtual IFTDistribution1D* clone() const=0;
+    virtual IFTDistribution1D* clone() const = 0;
 
     //! Returns Fourier transform of this distribution;
     //! is a decay function starting at evaluate(0)=1.
-    virtual double evaluate(double q) const=0;
+    virtual double evaluate(double q) const = 0;
 
     void setOmega(double omega) { m_omega = omega; }
     double getOmega() const { return m_omega; }
 
-    friend std::ostream& operator<<(std::ostream& ostr, const IFTDistribution1D& m) {
-        m.print(ostr); return ostr; }
+    friend std::ostream& operator<<(std::ostream& ostr, const IFTDistribution1D& m)
+    {
+        m.print(ostr);
+        return ostr;
+    }
 
 protected:
     virtual void print(std::ostream& ostr) const;
@@ -122,10 +125,9 @@ class BA_CORE_API_ FTDistribution1DVoigt : public IFTDistribution1D
 {
 public:
     FTDistribution1DVoigt(double omega, double eta);
-    FTDistribution1DVoigt* clone() const final {
-        return new FTDistribution1DVoigt(m_omega, m_eta); }
+    FTDistribution1DVoigt* clone() const final { return new FTDistribution1DVoigt(m_omega, m_eta); }
     double evaluate(double q) const final;
-    double getEta() const { return m_eta;}
+    double getEta() const { return m_eta; }
 protected:
     virtual void init_parameters();
     double m_eta;

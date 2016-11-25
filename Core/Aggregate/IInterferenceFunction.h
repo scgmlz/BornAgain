@@ -27,12 +27,12 @@ class BA_CORE_API_ IInterferenceFunction : public ISample
 public:
     virtual ~IInterferenceFunction() {}
 
-    virtual IInterferenceFunction* clone() const=0;
-    virtual void accept(ISampleVisitor* visitor) const =0;
+    virtual IInterferenceFunction* clone() const = 0;
+    virtual void accept(ISampleVisitor* visitor) const = 0;
 
     //! Evaluates the interference function for a given wavevector transfer (only the real
     //! x and y components are relevant)
-    virtual double evaluate(const kvector_t q) const=0;
+    virtual double evaluate(const kvector_t q) const = 0;
 
     //! Retrieves the size-distance coupling constant (default 0.0)
     virtual double getKappa() const { return 0.0; }

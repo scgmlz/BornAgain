@@ -26,11 +26,11 @@ class IPixelMap
 public:
     virtual ~IPixelMap() {}
 
-    virtual IPixelMap* clone() const=0;
-    virtual IPixelMap* createZeroSizeMap(double x, double y) const=0;
-    virtual kvector_t getK(double x, double y, double wavelength) const=0;
-    virtual double getIntegrationFactor(double x, double y) const=0;
-    virtual double getSolidAngle() const=0;
+    virtual IPixelMap* clone() const = 0;
+    virtual IPixelMap* createZeroSizeMap(double x, double y) const = 0;
+    virtual kvector_t getK(double x, double y, double wavelength) const = 0;
+    virtual double getIntegrationFactor(double x, double y) const = 0;
+    virtual double getSolidAngle() const = 0;
 };
 
 #endif // IPIXELMAP_H

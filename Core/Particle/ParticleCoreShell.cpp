@@ -21,7 +21,7 @@
 
 ParticleCoreShell::ParticleCoreShell(
     const Particle& shell, const Particle& core, kvector_t relative_core_position)
-    : mp_shell { nullptr }, mp_core { nullptr }
+    : mp_shell{ nullptr }, mp_core{ nullptr }
 {
     setName(BornAgain::ParticleCoreShellType);
     registerPosition();
@@ -39,7 +39,7 @@ ParticleCoreShell* ParticleCoreShell::clone() const
 {
     ParticleCoreShell* p_result = new ParticleCoreShell(*mp_shell, *mp_core);
     p_result->setAbundance(m_abundance);
-    if ( const IMaterial* ambientMaterial = getAmbientMaterial() )
+    if (const IMaterial* ambientMaterial = getAmbientMaterial())
         p_result->setAmbientMaterial(*ambientMaterial);
     if (mP_rotation.get())
         p_result->setRotation(*mP_rotation);
@@ -53,7 +53,7 @@ ParticleCoreShell* ParticleCoreShell::cloneInvertB() const
     p_result->setAbundance(m_abundance);
     p_result->mp_shell = mp_shell->cloneInvertB();
     p_result->mp_core = mp_core->cloneInvertB();
-    if ( const IMaterial* ambientMaterial = getAmbientMaterial() )
+    if (const IMaterial* ambientMaterial = getAmbientMaterial())
         p_result->setAmbientMaterial(*ambientMaterial->cloneInverted());
     if (mP_rotation.get())
         p_result->setRotation(*mP_rotation);
@@ -79,7 +79,7 @@ IFormFactor* ParticleCoreShell::createTransformedFormFactor(
     if (!mp_core || !mp_shell)
         return nullptr;
     std::unique_ptr<FormFactorWeighted> P_result{ new FormFactorWeighted() };
-    std::unique_ptr<IRotation> P_total_rotation { createComposedRotation(p_rotation) };
+    std::unique_ptr<IRotation> P_total_rotation{ createComposedRotation(p_rotation) };
     kvector_t total_position = getComposedTranslation(p_rotation, translation);
 
     // shell form factor
@@ -90,7 +90,7 @@ IFormFactor* ParticleCoreShell::createTransformedFormFactor(
     P_result->addFormFactor(*P_ff_shell, 1.0);
 
     // core form factor
-    std::unique_ptr<Particle> P_core_clone { mp_core->clone() };
+    std::unique_ptr<Particle> P_core_clone{ mp_core->clone() };
     P_core_clone->setAmbientMaterial(*mp_shell->getMaterial());
     std::unique_ptr<IFormFactor> P_ff_core{ P_core_clone->createTransformedFormFactor(
         P_total_rotation.get(), total_position) };
@@ -103,7 +103,7 @@ IFormFactor* ParticleCoreShell::createTransformedFormFactor(
 
 void ParticleCoreShell::addAndRegisterCore(const Particle& core, kvector_t relative_core_position)
 {
-    if(mp_core) {
+    if (mp_core) {
         deregisterChild(mp_core);
         delete mp_core;
     }
@@ -115,7 +115,7 @@ void ParticleCoreShell::addAndRegisterCore(const Particle& core, kvector_t relat
 
 void ParticleCoreShell::addAndRegisterShell(const Particle& shell)
 {
-    if(mp_shell) {
+    if (mp_shell) {
         deregisterChild(mp_shell);
         delete mp_shell;
     }
@@ -123,8 +123,7 @@ void ParticleCoreShell::addAndRegisterShell(const Particle& shell)
     registerChild(mp_shell);
 }
 
-ParticleCoreShell::ParticleCoreShell()
-    : mp_shell { nullptr }, mp_core { nullptr }
+ParticleCoreShell::ParticleCoreShell() : mp_shell{ nullptr }, mp_core{ nullptr }
 {
     setName(BornAgain::ParticleCoreShellType);
 }

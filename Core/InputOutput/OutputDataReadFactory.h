@@ -29,7 +29,7 @@ public:
     static OutputDataReader* getReader(const std::string& file_name);
 
 private:
-    static IOutputDataReadStrategy *getReadStrategy(const std::string& file_name);
+    static IOutputDataReadStrategy* getReadStrategy(const std::string& file_name);
 };
 
 #endif // OUTPUTDATAREADFACTORY_H

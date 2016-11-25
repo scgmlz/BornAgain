@@ -21,15 +21,14 @@
 #include "WavevectorInfo.h"
 
 FormFactorDecoratorMaterial::FormFactorDecoratorMaterial(const IFormFactor& form_factor)
-    : FormFactorDecoratorFactor(form_factor, 1.0),
-      mP_material{nullptr},
-      mP_ambient_material{nullptr}
+    : FormFactorDecoratorFactor(form_factor, 1.0)
+    , mP_material{ nullptr }
+    , mP_ambient_material{ nullptr }
 {
     setName(BornAgain::FormFactorDecoratorMaterialType);
 }
 
-FormFactorDecoratorMaterial::~FormFactorDecoratorMaterial()
-{}
+FormFactorDecoratorMaterial::~FormFactorDecoratorMaterial() {}
 
 FormFactorDecoratorMaterial* FormFactorDecoratorMaterial::clone() const
 {
@@ -68,9 +67,9 @@ Eigen::Matrix2cd FormFactorDecoratorMaterial::evaluatePol(const WavevectorInfo& 
     // the interaction and time reversal taken together:
     double wavelength = wavevectors.getWavelength();
     double k_mag2 = 4.0 * M_PI * M_PI / wavelength / wavelength;
-    Eigen::Matrix2cd V_eff = time_reverse_conj
-                             * (mP_material->getScatteringMatrix(k_mag2)
-                                - mP_ambient_material->getScatteringMatrix(k_mag2));
+    Eigen::Matrix2cd V_eff =
+        time_reverse_conj * (mP_material->getScatteringMatrix(k_mag2)
+                             - mP_ambient_material->getScatteringMatrix(k_mag2));
     return mp_form_factor->evaluate(wavevectors) * V_eff;
 }
 

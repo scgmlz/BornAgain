@@ -16,9 +16,9 @@
 #ifndef INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
 #define INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
 
-#include "IInterferenceFunction.h"
 #include "Complex.h"
 #include "FTDistributions1D.h"
+#include "IInterferenceFunction.h"
 #include <memory>
 
 //! Interference function of radial paracrystal.
@@ -27,12 +27,12 @@
 class BA_CORE_API_ InterferenceFunctionRadialParaCrystal : public IInterferenceFunction
 {
 public:
-    InterferenceFunctionRadialParaCrystal(double peak_distance, double damping_length=0.0);
+    InterferenceFunctionRadialParaCrystal(double peak_distance, double damping_length = 0.0);
     InterferenceFunctionRadialParaCrystal* clone() const final;
 
     void accept(ISampleVisitor* visitor) const final { visitor->visit(this); }
 
-    std::string to_str(int indent=0) const final;
+    std::string to_str(int indent = 0) const final;
 
     void setKappa(double kappa) { m_kappa = kappa; }
     double getKappa() const final { return m_kappa; }
@@ -41,7 +41,7 @@ public:
     double getDomainSize() const { return m_domain_size; }
 
     double evaluate(const kvector_t q) const final;
-    //TODO: replace these with strategy pattern for different algorithms
+    // TODO: replace these with strategy pattern for different algorithms
     complex_t FTPDF(double qpar) const;
 
     void setProbabilityDistribution(const IFTDistribution1D& pdf);

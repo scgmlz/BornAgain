@@ -26,19 +26,21 @@ class IObservable;
 //! @ingroup tools_internal
 //! @brief Observer interface from %Observer pattern, for 1:n object dependencies.
 
-class BA_CORE_API_ IObserver {
+class BA_CORE_API_ IObserver
+{
 public:
     virtual ~IObserver() {}
 
     //! method which is used by observable subject to notify change in status
-    virtual void notify (IObservable* subject) = 0;
+    virtual void notify(IObservable* subject) = 0;
 };
 
 //! @class IObservable
 //! @ingroup tools_internal
 //! @brief Observable interface from %Observer pattern, for 1:n object dependencies.
 
-class BA_CORE_API_ IObservable {
+class BA_CORE_API_ IObservable
+{
 public:
     // Shared pointer is used when passing these objects from python to c++
     typedef std::shared_ptr<IObserver> observer_t;

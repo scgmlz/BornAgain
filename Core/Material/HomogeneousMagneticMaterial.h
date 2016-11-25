@@ -29,13 +29,14 @@ public:
 #endif
     //! Constructs a material with _name_, _refractive_index_ and
     //! _magnetic_field_
-    HomogeneousMagneticMaterial(const std::string &name, const complex_t refractive_index,
-                                const kvector_t magnetic_field);
+    HomogeneousMagneticMaterial(
+        const std::string& name, const complex_t refractive_index, const kvector_t magnetic_field);
 
     //! Constructs a material with _name_, refractive_index parameters and
     //! _magnetic_field_
-    HomogeneousMagneticMaterial(const std::string &name, double refractive_index_delta,
-                                double refractive_index_beta, const kvector_t magnetic_field);
+    HomogeneousMagneticMaterial(
+        const std::string& name, double refractive_index_delta, double refractive_index_beta,
+        const kvector_t magnetic_field);
 
     HomogeneousMagneticMaterial* clone() const final override;
     HomogeneousMagneticMaterial* cloneInverted() const final override;
@@ -57,13 +58,14 @@ public:
 #endif
 
     //! Create a new material that is transformed with respect to this one
-    virtual const IMaterial* createTransformedMaterial(
-        const Transform3D& transform) const;
+    virtual const IMaterial* createTransformedMaterial(const Transform3D& transform) const;
 
 protected:
-    virtual void print(std::ostream &ostr) const {
+    virtual void print(std::ostream& ostr) const
+    {
         ostr << "HomMagMat:" << getName() << "<" << this << ">{ "
-             << "R=" << m_refractive_index << ", B=" << m_magnetic_field << "}";  }
+             << "R=" << m_refractive_index << ", B=" << m_magnetic_field << "}";
+    }
 
     kvector_t m_magnetic_field; //!< magnetic field in Tesla
 private:
@@ -76,7 +78,7 @@ private:
 //! The unit matrix
 #ifndef SWIG
     Eigen::Matrix2cd m_unit_matrix;
-    std::vector<Eigen::Matrix2cd, Eigen::aligned_allocator<Eigen::Matrix2cd> > m_pauli_operator;
+    std::vector<Eigen::Matrix2cd, Eigen::aligned_allocator<Eigen::Matrix2cd>> m_pauli_operator;
 #endif
 };
 

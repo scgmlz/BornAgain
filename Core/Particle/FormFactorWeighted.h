@@ -34,11 +34,11 @@ public:
 
     FormFactorWeighted* clone() const override final;
 
-    void accept(ISampleVisitor* visitor) const override  final { visitor->visit(this); }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getRadialExtension() const override final;
 
-    void addFormFactor(const IFormFactor& form_factor, double weight=1.0);
+    void addFormFactor(const IFormFactor& form_factor, double weight = 1.0);
 
     void setAmbientMaterial(const IMaterial& material) override final;
 

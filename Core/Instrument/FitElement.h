@@ -29,10 +29,10 @@ class BA_CORE_API_ FitElement
 public:
     FitElement();
     FitElement(size_t index, double simul_value, double real_value, double weight = 1.0);
-    FitElement(const FitElement &other);
-    FitElement &operator=(const FitElement &other);
+    FitElement(const FitElement& other);
+    FitElement& operator=(const FitElement& other);
 
-    size_t getIndex() const {  return m_index; }
+    size_t getIndex() const { return m_index; }
     double getSimulValue() const { return m_simul_value; }
     double getRealValue() const { return m_real_value; }
     double getWeight() const { return m_weight; }
@@ -42,7 +42,7 @@ public:
     void setResidual(double value) { m_residual = value; }
 
 private:
-    void swapContent(FitElement &other);
+    void swapContent(FitElement& other);
     size_t m_index;
     double m_simul_value;
     double m_real_value;

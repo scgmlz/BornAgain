@@ -16,13 +16,12 @@
 #include "FormFactorDecoratorDebyeWaller.h"
 #include "BornAgainNamespace.h"
 #include "ISampleVisitor.h"
-#include "WavevectorInfo.h"
 #include "RealParameter.h"
+#include "WavevectorInfo.h"
 
 FormFactorDecoratorDebyeWaller::FormFactorDecoratorDebyeWaller(
     const IFormFactor& form_factor, double dw_h_factor, double dw_r_factor)
-    : IFormFactorDecorator(form_factor),
-      m_h_dw_factor(dw_h_factor), m_r_dw_factor(dw_r_factor)
+    : IFormFactorDecorator(form_factor), m_h_dw_factor(dw_h_factor), m_r_dw_factor(dw_r_factor)
 {
     setName(BornAgain::FormFactorDecoratorDebyeWallerType);
     registerParameter(BornAgain::HeightDWFactor, &m_h_dw_factor).setPositive();
@@ -30,9 +29,8 @@ FormFactorDecoratorDebyeWaller::FormFactorDecoratorDebyeWaller(
 }
 
 FormFactorDecoratorDebyeWaller::FormFactorDecoratorDebyeWaller(
-    const IFormFactor & form_factor, double dw_factor)
-    : IFormFactorDecorator(form_factor),
-    m_h_dw_factor(dw_factor), m_r_dw_factor(dw_factor)
+    const IFormFactor& form_factor, double dw_factor)
+    : IFormFactorDecorator(form_factor), m_h_dw_factor(dw_factor), m_r_dw_factor(dw_factor)
 {
     setName(BornAgain::FormFactorDecoratorDebyeWallerType);
     registerParameter(BornAgain::HeightDWFactor, &m_h_dw_factor).setPositive();
@@ -45,8 +43,8 @@ complex_t FormFactorDecoratorDebyeWaller::evaluate(const WavevectorInfo& wavevec
     return dw * mp_form_factor->evaluate(wavevectors);
 }
 
-Eigen::Matrix2cd FormFactorDecoratorDebyeWaller::evaluatePol(
-        const WavevectorInfo &wavevectors) const
+Eigen::Matrix2cd
+FormFactorDecoratorDebyeWaller::evaluatePol(const WavevectorInfo& wavevectors) const
 {
     double dw = getDWFactor(wavevectors);
     return dw * mp_form_factor->evaluatePol(wavevectors);

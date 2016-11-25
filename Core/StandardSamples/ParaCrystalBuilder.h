@@ -54,6 +54,7 @@ public:
     Basic2DParaCrystalBuilder();
     virtual ~Basic2DParaCrystalBuilder();
     virtual MultiLayer* buildSample() const;
+
 private:
     std::unique_ptr<IFTDistribution2D> m_pdf1;
     std::unique_ptr<IFTDistribution2D> m_pdf2;
@@ -88,7 +89,7 @@ private:
 class BA_CORE_API_ RectParaCrystalBuilder : public IMultiLayerBuilder
 {
 public:
-    RectParaCrystalBuilder(){}
+    RectParaCrystalBuilder() {}
     virtual MultiLayer* buildSample() const;
 };
 
@@ -100,7 +101,7 @@ public:
 class BA_CORE_API_ IsGISAXS08BBuilder : public IMultiLayerBuilder
 {
 public:
-    IsGISAXS08BBuilder(){}
+    IsGISAXS08BBuilder() {}
     virtual MultiLayer* buildSample() const;
 };
 

@@ -43,8 +43,9 @@ public:
     void addParticle(const IAbstractParticle& particle);
     void addParticle(const IAbstractParticle& particle, double abundance); // TODO delete this
     void addParticle(const IParticle& particle, double abundance, const kvector_t position);
-    void addParticle(const IParticle& particle, double abundance,
-                     const kvector_t position, const IRotation& rotation);
+    void addParticle(
+        const IParticle& particle, double abundance, const kvector_t position,
+        const IRotation& rotation);
 
     size_t getNumberOfParticles() const final { return m_particles.size(); }
 
@@ -54,15 +55,19 @@ public:
 
     double getAbundanceOfParticle(size_t index) const;
 
-    const IInterferenceFunction* getInterferenceFunction() const final {
-        return mP_interference_function.get(); }
+    const IInterferenceFunction* getInterferenceFunction() const final
+    {
+        return mP_interference_function.get();
+    }
     IInterferenceFunction* cloneInterferenceFunction() const final;
     void addInterferenceFunction(const IInterferenceFunction& interference_function);
     // TODO add -> set (there can be at most 1 interference function)
 
     double getTotalParticleSurfaceDensity() const final;
-    void setTotalParticleSurfaceDensity(double particle_density) final {
-        m_total_particle_density = particle_density; }
+    void setTotalParticleSurfaceDensity(double particle_density) final
+    {
+        m_total_particle_density = particle_density;
+    }
 
 private:
     void addAndRegisterAbstractParticle(IAbstractParticle* child);

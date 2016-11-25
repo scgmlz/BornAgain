@@ -17,15 +17,9 @@
 #include "FitSuiteImpl.h"
 #include <stdexcept>
 
-FitSuiteStrategies::FitSuiteStrategies()
-    : m_kernel(nullptr), m_current_strategy_index(0)
-{
-}
+FitSuiteStrategies::FitSuiteStrategies() : m_kernel(nullptr), m_current_strategy_index(0) {}
 
-FitSuiteStrategies::~FitSuiteStrategies()
-{
-    clear();
-}
+FitSuiteStrategies::~FitSuiteStrategies() { clear(); }
 
 void FitSuiteStrategies::clear()
 {
@@ -33,17 +27,17 @@ void FitSuiteStrategies::clear()
     m_current_strategy_index = 0;
 }
 
-IFitStrategy *FitSuiteStrategies::currentStrategy()
+IFitStrategy* FitSuiteStrategies::currentStrategy()
 {
-    if(m_current_strategy_index >= m_strategies.size())
+    if (m_current_strategy_index >= m_strategies.size())
         throw std::runtime_error("FitSuiteStrategies::currentStrategy() -> Error in index.");
 
     return m_strategies[m_current_strategy_index];
 }
 
-void FitSuiteStrategies::addStrategy(const IFitStrategy &strategy)
+void FitSuiteStrategies::addStrategy(const IFitStrategy& strategy)
 {
-    IFitStrategy *clone = strategy.clone();
+    IFitStrategy* clone = strategy.clone();
     clone->init(m_kernel);
     m_strategies.push_back(clone);
 }
@@ -51,11 +45,11 @@ void FitSuiteStrategies::addStrategy(const IFitStrategy &strategy)
 void FitSuiteStrategies::minimize()
 {
     m_current_strategy_index = 0;
-    if( m_strategies.empty() ) {
-         m_kernel->minimize();
+    if (m_strategies.empty()) {
+        m_kernel->minimize();
     } else {
-        for(auto it=m_strategies.begin(); it!=m_strategies.end(); ++it) {
-            //msglog(Logging::INFO) << "FitSuiteStrategies::minimize() -> Running strategy #"
+        for (auto it = m_strategies.begin(); it != m_strategies.end(); ++it) {
+            // msglog(Logging::INFO) << "FitSuiteStrategies::minimize() -> Running strategy #"
             // << m_current_strategy_index << " '" << (*it)->getName() << "'";
             (*it)->execute();
             ++m_current_strategy_index;

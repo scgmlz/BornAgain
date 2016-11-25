@@ -28,17 +28,19 @@ public:
     //! @param length of Box's base
     //! @param width of Box's base
     //! @param height of Box
-    FormFactorLongBoxLorentz( double length, double width, double height);
+    FormFactorLongBoxLorentz(double length, double width, double height);
 
-    FormFactorLongBoxLorentz* clone() const override final {
-        return new FormFactorLongBoxLorentz(m_length, m_width, m_height); }
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    FormFactorLongBoxLorentz* clone() const override final
+    {
+        return new FormFactorLongBoxLorentz(m_length, m_width, m_height);
+    }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getLength() const { return m_length; }
     double getHeight() const { return m_height; }
     double getWidth() const { return m_width; }
 
-    double getRadialExtension() const override final { return m_length/2.0; }
+    double getRadialExtension() const override final { return m_length / 2.0; }
 
     complex_t evaluate_for_q(const cvector_t q) const override final;
 

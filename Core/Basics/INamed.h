@@ -16,8 +16,8 @@
 #ifndef INAMED_H
 #define INAMED_H
 
-#include <string>
 #include "WinDllMacros.h"
+#include <string>
 
 //! @class INamed
 //! @ingroup tools_internal

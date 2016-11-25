@@ -25,14 +25,13 @@ class BA_CORE_API_ ChiSquaredModule : public IChiSquaredModule
 {
 public:
     ChiSquaredModule() {}
-    ChiSquaredModule(const ChiSquaredModule& other)
-        : IChiSquaredModule(other) {}
+    ChiSquaredModule(const ChiSquaredModule& other) : IChiSquaredModule(other) {}
     virtual ~ChiSquaredModule() {}
 
-    virtual ChiSquaredModule *clone() const { return new ChiSquaredModule(*this); }
+    virtual ChiSquaredModule* clone() const { return new ChiSquaredModule(*this); }
 
-    virtual void processFitElements(std::vector<FitElement>::iterator first,
-                                    std::vector<FitElement>::iterator last);
+    virtual void processFitElements(
+        std::vector<FitElement>::iterator first, std::vector<FitElement>::iterator last);
 };
 
 #endif // CHISQUAREDMODULE_H

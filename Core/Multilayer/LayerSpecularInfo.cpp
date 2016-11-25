@@ -23,7 +23,7 @@ LayerSpecularInfo::~LayerSpecularInfo() {}
 
 LayerSpecularInfo* LayerSpecularInfo::clone() const
 {
-    LayerSpecularInfo *p_result = new LayerSpecularInfo;
+    LayerSpecularInfo* p_result = new LayerSpecularInfo;
     p_result->mP_coeff_map.reset(this->mP_coeff_map->clone());
     return p_result;
 }
@@ -34,14 +34,14 @@ void LayerSpecularInfo::addRTCoefficients(ISpecularInfoMap* rt_coefficient_map)
         mP_coeff_map.reset(rt_coefficient_map);
 }
 
-const ILayerRTCoefficients* LayerSpecularInfo::getOutCoefficients(
-    const SimulationElement& sim_element) const
+const ILayerRTCoefficients*
+LayerSpecularInfo::getOutCoefficients(const SimulationElement& sim_element) const
 {
     return mP_coeff_map->getOutCoefficients(sim_element);
 }
 
-const ILayerRTCoefficients* LayerSpecularInfo::getInCoefficients(
-    const SimulationElement& sim_element) const
+const ILayerRTCoefficients*
+LayerSpecularInfo::getInCoefficients(const SimulationElement& sim_element) const
 {
     return mP_coeff_map->getInCoefficients(sim_element);
 }

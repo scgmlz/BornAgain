@@ -16,8 +16,8 @@
 #ifndef INTERFERENCEFUNCTION2DLATTICE_H
 #define INTERFERENCEFUNCTION2DLATTICE_H
 
-#include "IInterferenceFunction.h"
 #include "FTDecayFunctions.h"
+#include "IInterferenceFunction.h"
 #include "Lattice2DParameters.h"
 
 //! Interference function of 2D lattice.
@@ -26,7 +26,7 @@
 class BA_CORE_API_ InterferenceFunction2DLattice : public IInterferenceFunction
 {
 public:
-    InterferenceFunction2DLattice(double length_1, double length_2, double angle, double xi=0.0);
+    InterferenceFunction2DLattice(double length_1, double length_2, double angle, double xi = 0.0);
     ~InterferenceFunction2DLattice() final;
 
     InterferenceFunction2DLattice* clone() const final;
@@ -59,13 +59,13 @@ private:
     double interferenceAtOneRecLatticePoint(double qx, double qy) const;
 
     //! Returns reciprocal coordinates in the principal axis system
-    void transformToPrincipalAxes(double qx, double qy, double gamma,
-                                  double delta, double& q_pa_1, double& q_pa_2) const;
+    void transformToPrincipalAxes(
+        double qx, double qy, double gamma, double delta, double& q_pa_1, double& q_pa_2) const;
 
     //! Returns qx,qy coordinates of q - qint, where qint is a reciprocal lattice vector
     //! bounding the reciprocal unit cell to which q belongs
-    void calculateReciprocalVectorFraction(double qx, double qy,
-                                           double& qx_frac, double& qy_frac) const;
+    void
+    calculateReciprocalVectorFraction(double qx, double qy, double& qx_frac, double& qy_frac) const;
 
     Lattice2DParameters m_lattice_params;
     IFTDecayFunction2D* mp_pdf;

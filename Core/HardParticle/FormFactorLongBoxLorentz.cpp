@@ -29,10 +29,10 @@ FormFactorLongBoxLorentz::FormFactorLongBoxLorentz(double length, double width, 
 
 complex_t FormFactorLongBoxLorentz::evaluate_for_q(const cvector_t q) const
 {
-    complex_t qxL2 = 2.5*std::pow(m_length * q.x(), 2);
+    complex_t qxL2 = 2.5 * std::pow(m_length * q.x(), 2);
     complex_t qyWdiv2 = m_width * q.y() / 2.0;
     complex_t qzHdiv2 = m_height * q.z() / 2.0;
 
     return m_height * m_length * m_width * std::exp(complex_t(0., 1.) * qzHdiv2) / (1.0 + qxL2)
-           * MathFunctions::sinc(qyWdiv2) * MathFunctions::sinc(qzHdiv2);
+        * MathFunctions::sinc(qyWdiv2) * MathFunctions::sinc(qzHdiv2);
 }

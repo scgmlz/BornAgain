@@ -14,13 +14,13 @@
 // ************************************************************************** //
 
 #include "ParameterDistribution.h"
-#include "ParameterSample.h"
 #include "Distributions.h"
 #include "Exceptions.h"
+#include "ParameterSample.h"
 
 ParameterDistribution::ParameterDistribution(
     const std::string& par_name, const IDistribution1D& distribution, size_t nbr_samples,
-    double sigma_factor, const RealLimits &limits)
+    double sigma_factor, const RealLimits& limits)
     : IParameterized("ParameterDistribution")
     , m_name(par_name)
     , m_nbr_samples(nbr_samples)
@@ -32,9 +32,9 @@ ParameterDistribution::ParameterDistribution(
     mP_distribution.reset(distribution.clone());
     if (m_sigma_factor < 0.0)
         throw Exceptions::RuntimeErrorException(
-                "ParameterDistribution::ParameterDistribution() -> Error."
-                "sigma factor cannot be negative");
-    if(nbr_samples == 0)
+            "ParameterDistribution::ParameterDistribution() -> Error."
+            "sigma factor cannot be negative");
+    if (nbr_samples == 0)
         throw Exceptions::RuntimeErrorException(
             "ParameterDistribution::ParameterDistribution() -> Error."
             "Number of samples can't be zero.");
@@ -53,24 +53,24 @@ ParameterDistribution::ParameterDistribution(
     mP_distribution.reset(distribution.clone());
     if (m_sigma_factor < 0.0) {
         throw Exceptions::RuntimeErrorException(
-                "ParameterDistribution::ParameterDistribution() -> Error."
-                "sigma factor cannot be negative");
+            "ParameterDistribution::ParameterDistribution() -> Error."
+            "sigma factor cannot be negative");
     }
-    if(nbr_samples == 0) {
+    if (nbr_samples == 0) {
         throw Exceptions::RuntimeErrorException(
-                    "ParameterDistribution::ParameterDistribution() -> Error."
-                    "Number of samples can't be zero.");
+            "ParameterDistribution::ParameterDistribution() -> Error."
+            "Number of samples can't be zero.");
     }
-    if(xmin >=xmax) {
+    if (xmin >= xmax) {
         throw Exceptions::RuntimeErrorException(
-                    "ParameterDistribution::ParameterDistribution() -> Error."
-                    "xmin>=xmax");
+            "ParameterDistribution::ParameterDistribution() -> Error."
+            "xmin>=xmax");
     }
 }
 
 
 ParameterDistribution::ParameterDistribution(const ParameterDistribution& other)
-: IParameterized("ParameterDistribution")
+    : IParameterized("ParameterDistribution")
     , m_name(other.m_name)
     , m_nbr_samples(other.m_nbr_samples)
     , m_sigma_factor(other.m_sigma_factor)
@@ -82,9 +82,7 @@ ParameterDistribution::ParameterDistribution(const ParameterDistribution& other)
     mP_distribution.reset(other.mP_distribution->clone());
 }
 
-ParameterDistribution::~ParameterDistribution()
-{
-}
+ParameterDistribution::~ParameterDistribution() {}
 
 ParameterDistribution& ParameterDistribution::operator=(const ParameterDistribution& other)
 {
@@ -116,7 +114,7 @@ size_t ParameterDistribution::getNbrSamples() const
 
 std::vector<ParameterSample> ParameterDistribution::generateSamples() const
 {
-    if(m_xmin < m_xmax)
+    if (m_xmin < m_xmax)
         return mP_distribution->equidistantSamplesInRange(m_nbr_samples, m_xmin, m_xmax);
     else
         return mP_distribution->equidistantSamples(m_nbr_samples, m_sigma_factor, m_limits);

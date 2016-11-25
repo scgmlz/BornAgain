@@ -34,16 +34,11 @@ class Histogram1D;
 class BA_CORE_API_ IHistogram
 {
 public:
-    enum DataType {
-        INTEGRAL,
-        AVERAGE,
-        STANDARD_ERROR,
-        NENTRIES
-    };
+    enum DataType { INTEGRAL, AVERAGE, STANDARD_ERROR, NENTRIES };
 
     IHistogram();
     IHistogram(const IHistogram& other);
-    virtual ~IHistogram(){}
+    virtual ~IHistogram() {}
 
     IHistogram(const IAxis& axis_x);
     IHistogram(const IAxis& axis_x, const IAxis& axis_y);

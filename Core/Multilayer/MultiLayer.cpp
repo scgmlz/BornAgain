@@ -16,10 +16,10 @@
 #include "MultiLayer.h"
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
+#include "IMaterial.h"
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "LayerRoughness.h"
-#include "IMaterial.h"
 #include "ParameterPool.h"
 #include "RealParameter.h"
 #include <iomanip>
@@ -30,10 +30,7 @@ MultiLayer::MultiLayer() : m_crossCorrLength(0)
     init_parameters();
 }
 
-MultiLayer::~MultiLayer()
-{
-    clear();
-}
+MultiLayer::~MultiLayer() { clear(); }
 
 std::string MultiLayer::to_str(int indent) const
 {
@@ -43,17 +40,18 @@ std::string MultiLayer::to_str(int indent) const
 void MultiLayer::init_parameters()
 {
     getParameterPool()->clear(); // non-trivially needed
-    registerParameter(BornAgain::CrossCorrelationLength, &m_crossCorrLength).
-        setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::CrossCorrelationLength, &m_crossCorrLength)
+        .setUnit("nm")
+        .setNonnegative();
 }
 
 void MultiLayer::clear() // TODO: understand need
 {
-    for (size_t i=0; i<m_layers.size(); i++)
+    for (size_t i = 0; i < m_layers.size(); i++)
         delete m_layers[i];
     m_layers.clear();
 
-    for (size_t i=0; i<m_interfaces.size(); i++)
+    for (size_t i = 0; i < m_interfaces.size(); i++)
         delete m_interfaces[i];
     m_interfaces.clear();
 
@@ -69,25 +67,25 @@ MultiLayer* MultiLayer::clone() const
     newMultiLayer->m_layers_z = m_layers_z;
 
     std::vector<Layer*> layer_buffer;
-    for (size_t i=0; i<m_layers.size(); i++)
-        layer_buffer.push_back(m_layers[i]->clone() );
+    for (size_t i = 0; i < m_layers.size(); i++)
+        layer_buffer.push_back(m_layers[i]->clone());
 
-    for (size_t i=0; i<m_interfaces.size(); i++) {
+    for (size_t i = 0; i < m_interfaces.size(); i++) {
         const Layer* topLayer = layer_buffer[i];
-        const Layer* bottomLayer = layer_buffer[i+1];
+        const Layer* bottomLayer = layer_buffer[i + 1];
 
         LayerInterface* newInterface(0);
         if (m_interfaces[i]->getRoughness())
-            newInterface = LayerInterface::createRoughInterface(topLayer,
-                    bottomLayer, *m_interfaces[i]->getRoughness() );
+            newInterface = LayerInterface::createRoughInterface(
+                topLayer, bottomLayer, *m_interfaces[i]->getRoughness());
         else
-            newInterface = LayerInterface::createSmoothInterface(topLayer, bottomLayer );
-        newMultiLayer->addAndRegisterLayer( layer_buffer[i] );
-        newMultiLayer->addAndRegisterInterface( newInterface );
+            newInterface = LayerInterface::createSmoothInterface(topLayer, bottomLayer);
+        newMultiLayer->addAndRegisterLayer(layer_buffer[i]);
+        newMultiLayer->addAndRegisterInterface(newInterface);
     }
 
     if (layer_buffer.size())
-        newMultiLayer->addAndRegisterLayer( layer_buffer.back() );
+        newMultiLayer->addAndRegisterLayer(layer_buffer.back());
 
     newMultiLayer->m_crossCorrLength = m_crossCorrLength;
 
@@ -103,24 +101,24 @@ MultiLayer* MultiLayer::cloneInvertB() const
     newMultiLayer->m_layers_z = m_layers_z;
 
     std::vector<Layer*> layer_buffer;
-    for (size_t i=0; i<m_layers.size(); i++)
+    for (size_t i = 0; i < m_layers.size(); i++)
         layer_buffer.push_back(m_layers[i]->cloneInvertB());
 
-    for (size_t i=0; i<m_interfaces.size(); i++) {
+    for (size_t i = 0; i < m_interfaces.size(); i++) {
         const Layer* topLayer = layer_buffer[i];
-        const Layer* bottomLayer = layer_buffer[i+1];
+        const Layer* bottomLayer = layer_buffer[i + 1];
 
         LayerInterface* newInterface(0);
         if (m_interfaces[i]->getRoughness())
             newInterface = LayerInterface::createRoughInterface(
                 topLayer, bottomLayer, *m_interfaces[i]->getRoughness());
         else
-            newInterface = LayerInterface::createSmoothInterface(topLayer, bottomLayer );
-        newMultiLayer->addAndRegisterLayer( layer_buffer[i] );
-        newMultiLayer->addAndRegisterInterface( newInterface );
+            newInterface = LayerInterface::createSmoothInterface(topLayer, bottomLayer);
+        newMultiLayer->addAndRegisterLayer(layer_buffer[i]);
+        newMultiLayer->addAndRegisterInterface(newInterface);
     }
     if (layer_buffer.size())
-        newMultiLayer->addAndRegisterLayer( layer_buffer.back() );
+        newMultiLayer->addAndRegisterLayer(layer_buffer.back());
 
     newMultiLayer->m_crossCorrLength = m_crossCorrLength;
 
@@ -133,13 +131,13 @@ MultiLayer* MultiLayer::cloneInvertB() const
 //! nInterfaces = nLayers-1, first layer in multilayer doesn't have interface.
 const LayerInterface* MultiLayer::getLayerTopInterface(size_t i_layer) const
 {
-    return i_layer>0 ? m_interfaces[ check_interface_index(i_layer-1) ] : 0;
+    return i_layer > 0 ? m_interfaces[check_interface_index(i_layer - 1)] : 0;
 }
 
 //! Returns pointer to the bottom interface of the layer.
 const LayerInterface* MultiLayer::getLayerBottomInterface(size_t i_layer) const
 {
-    return i_layer<m_interfaces.size() ? m_interfaces[ check_interface_index(i_layer) ] : 0;
+    return i_layer < m_interfaces.size() ? m_interfaces[check_interface_index(i_layer)] : 0;
 }
 
 //! Adds layer with top roughness
@@ -156,7 +154,7 @@ void MultiLayer::addLayerWithTopRoughness(const Layer& layer, const LayerRoughne
         else
             interface = LayerInterface::createSmoothInterface(p_last_layer, p_new_layer);
         addAndRegisterInterface(interface);
-        m_layers_z.push_back(m_layers_z.back() - layer.getThickness() );
+        m_layers_z.push_back(m_layers_z.back() - layer.getThickness());
     } else {
         // the top layer
         if (p_new_layer->getThickness() != 0.0)
@@ -193,9 +191,9 @@ double MultiLayer::getCrossCorrSpectralFun(const kvector_t kvec, size_t j, size_
     double sigma_k = rough_k->getSigma();
     if (sigma_j == 0 || sigma_k == 0)
         return 0.0;
-    double corr = 0.5*( (sigma_k/sigma_j)*rough_j->getSpectralFun(kvec) +
-                        (sigma_j/sigma_k)*rough_k->getSpectralFun(kvec) ) *
-        std::exp( -1*std::abs(z_j-z_k)/m_crossCorrLength );
+    double corr = 0.5 * ((sigma_k / sigma_j) * rough_j->getSpectralFun(kvec)
+                         + (sigma_j / sigma_k) * rough_k->getSpectralFun(kvec))
+        * std::exp(-1 * std::abs(z_j - z_k) / m_crossCorrLength);
     return corr;
 }
 
@@ -207,19 +205,17 @@ void MultiLayer::setLayerThickness(size_t i_layer, double thickness)
     if (thickness < 0.)
         throw Exceptions::DomainErrorException("Layer thickness cannot be negative");
 
-    m_layers[ check_layer_index(i_layer) ]->setThickness(thickness);
+    m_layers[check_layer_index(i_layer)]->setThickness(thickness);
     // recalculating z-coordinates of layers
     m_layers_z.clear();
     m_layers_z.push_back(0.0);
-    for (size_t il=1; il<getNumberOfLayers(); il++)
-        m_layers_z.push_back(
-            m_layers_z.back() -
-            m_layers[ check_layer_index(il) ]->getThickness() );
+    for (size_t il = 1; il < getNumberOfLayers(); il++)
+        m_layers_z.push_back(m_layers_z.back() - m_layers[check_layer_index(il)]->getThickness());
 }
 
 int MultiLayer::getIndexOfLayer(const Layer* layer) const
 {
-    for (size_t i=0; i<getNumberOfLayers(); ++i)
+    for (size_t i = 0; i < getNumberOfLayers(); ++i)
         if (layer == m_layers[i])
             return i;
     return -1;
@@ -227,7 +223,7 @@ int MultiLayer::getIndexOfLayer(const Layer* layer) const
 
 bool MultiLayer::containsMagneticMaterial() const
 {
-    for (const IMaterial* mat: containedMaterials())
+    for (const IMaterial* mat : containedMaterials())
         if (mat->isMagneticMaterial())
             return true;
     return false;
@@ -235,7 +231,7 @@ bool MultiLayer::containsMagneticMaterial() const
 
 bool MultiLayer::hasRoughness() const
 {
-    for (const LayerInterface* face: m_interfaces)
+    for (const LayerInterface* face : m_interfaces)
         if (face->getRoughness())
             return true;
     return false;
@@ -244,7 +240,7 @@ bool MultiLayer::hasRoughness() const
 size_t MultiLayer::totalNofLayouts() const
 {
     size_t ret = 0;
-    for (const Layer* layer: m_layers)
+    for (const Layer* layer : m_layers)
         ret += layer->getNumberOfLayouts();
     return ret;
 }
@@ -252,14 +248,14 @@ size_t MultiLayer::totalNofLayouts() const
 void MultiLayer::print(std::ostream& ostr) const
 {
     ostr << "MultiLayer:" << getName() << "<" << this << "> : {\n";
-    for (size_t i=0; i<getNumberOfLayers(); i++) {
-        ostr << " layer " << std::left << std::setw(2) << i << " { "
-             << *getLayer(i) << " }\n";
+    for (size_t i = 0; i < getNumberOfLayers(); i++) {
+        ostr << " layer " << std::left << std::setw(2) << i << " { " << *getLayer(i) << " }\n";
         const LayerInterface* interface = getLayerBottomInterface(i);
         if (interface)
             ostr << " int.face {" << *interface << " }\n";
         else
-            ostr << " int.face: NONE" << "\n";
+            ostr << " int.face: NONE"
+                 << "\n";
     }
     ostr << "}";
 }
@@ -280,7 +276,7 @@ void MultiLayer::addAndRegisterInterface(LayerInterface* child)
 void MultiLayer::setNLayersInLayers() const
 {
     size_t n_layers = getNumberOfLayers();
-    for (size_t i=0; i<getNumberOfLayers(); ++i)
+    for (size_t i = 0; i < getNumberOfLayers(); ++i)
         m_layers[i]->setNumberOfLayers(n_layers);
 }
 
@@ -300,7 +296,7 @@ size_t MultiLayer::check_interface_index(size_t i_interface) const
 
 bool MultiLayer::requiresMatrixRTCoefficients() const
 {
-    for (auto layer: m_layers)
+    for (auto layer : m_layers)
         if (!(layer->getMaterial()->isScalarMaterial()))
             return true;
     return false;
@@ -308,7 +304,8 @@ bool MultiLayer::requiresMatrixRTCoefficients() const
 
 size_t MultiLayer::zToLayerIndex(double z_value)
 {
-    if (z_value < m_layers_z.back()) return m_layers_z.size()-1;
+    if (z_value < m_layers_z.back())
+        return m_layers_z.size() - 1;
     std::vector<double>::reverse_iterator top_limit =
         std::upper_bound(m_layers_z.rbegin(), m_layers_z.rend(), z_value);
     size_t nbin = m_layers_z.rend() - top_limit;
@@ -317,17 +314,17 @@ size_t MultiLayer::zToLayerIndex(double z_value)
 
 double MultiLayer::getLayerBottomZ(size_t i_layer) const
 {
-    return m_layers_z[ check_layer_index(i_layer) ];
+    return m_layers_z[check_layer_index(i_layer)];
 }
 
 double MultiLayer::getLayerThickness(size_t i_layer) const
 {
-    return m_layers[ check_layer_index(i_layer) ]->getThickness();
+    return m_layers[check_layer_index(i_layer)]->getThickness();
 }
 
 void MultiLayer::setCrossCorrLength(double crossCorrLength)
 {
-    if (crossCorrLength<0.0)
+    if (crossCorrLength < 0.0)
         throw Exceptions::LogicErrorException("Attempt to set crossCorrLength to negative value");
     m_crossCorrLength = crossCorrLength;
 }

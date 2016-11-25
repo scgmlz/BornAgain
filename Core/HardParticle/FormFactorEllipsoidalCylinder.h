@@ -26,8 +26,10 @@ class BA_CORE_API_ FormFactorEllipsoidalCylinder : public IFormFactorBorn
 public:
     FormFactorEllipsoidalCylinder(double radius_x, double radius_y, double height);
 
-    FormFactorEllipsoidalCylinder* clone() const override final {
-        return new FormFactorEllipsoidalCylinder(m_radius_x, m_radius_y, m_height); }
+    FormFactorEllipsoidalCylinder* clone() const override final
+    {
+        return new FormFactorEllipsoidalCylinder(m_radius_x, m_radius_y, m_height);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getRadiusX() const { return m_radius_x; }

@@ -33,16 +33,16 @@ public:
     //! @param nbins number of bins
     //! @param start center of first bin (IsGisaxs convention)
     //! @param end center of last bin (IsGisaxs convention)
-    CustomBinAxis(const std::string &name, size_t nbins, double start, double end);
+    CustomBinAxis(const std::string& name, size_t nbins, double start, double end);
     virtual ~CustomBinAxis() {}
 
-    CustomBinAxis *clone() const;
+    CustomBinAxis* clone() const;
 
     Bin1D getBin(size_t index) const;
 
-    std::vector<double > getBinCenters() const;
+    std::vector<double> getBinCenters() const;
 
-    CustomBinAxis *createClippedAxis(double left, double right) const;
+    CustomBinAxis* createClippedAxis(double left, double right) const;
 
 protected:
     void print(std::ostream& ostr) const;

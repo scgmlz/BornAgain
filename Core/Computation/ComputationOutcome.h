@@ -32,9 +32,9 @@ public:
     bool isCompleted() const { return m_status == COMPLETED; }
     std::string getRunMessage() const { return m_run_message; }
 
-    void setRunning()   { m_status = RUNNING; }
+    void setRunning() { m_status = RUNNING; }
     void setCompleted() { m_status = COMPLETED; }
-    void setFailed()    { m_status = FAILED; }
+    void setFailed() { m_status = FAILED; }
     void setRunMessage(const std::string& message) { m_run_message = message; }
 
 private:

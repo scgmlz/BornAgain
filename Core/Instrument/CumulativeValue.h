@@ -29,7 +29,7 @@ public:
 
     void clear();
     void setContent(double value) { m_sum = value; }
-    void add(double value, double weight=1.0);
+    void add(double value, double weight = 1.0);
 
     int getNumberOfEntries() const { return m_n_entries; }
     double getContent() const { return m_sum; }
@@ -40,12 +40,12 @@ private:
     int m_n_entries;
     double m_sum;
     double m_average;
-    double m_rms2; //sum[ (x-x_aver)^2]/nentries
+    double m_rms2; // sum[ (x-x_aver)^2]/nentries
     double m_sum_of_weights;
 };
 
-BA_CORE_API_ bool operator< (const CumulativeValue& lhs, const CumulativeValue& rhs);
-BA_CORE_API_ bool operator> (const CumulativeValue& lhs, const CumulativeValue& rhs);
+BA_CORE_API_ bool operator<(const CumulativeValue& lhs, const CumulativeValue& rhs);
+BA_CORE_API_ bool operator>(const CumulativeValue& lhs, const CumulativeValue& rhs);
 
 
 #endif // CUMULATIVEVALUE_H

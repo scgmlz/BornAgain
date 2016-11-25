@@ -17,29 +17,26 @@
 #include "BornAgainNamespace.h"
 
 
-FormFactorWeighted::FormFactorWeighted()
-{
-    setName(BornAgain::FormFactorWeightedType);
-}
+FormFactorWeighted::FormFactorWeighted() { setName(BornAgain::FormFactorWeightedType); }
 
 FormFactorWeighted::~FormFactorWeighted()
 {
-    for (size_t index=0; index<m_form_factors.size(); ++index)
+    for (size_t index = 0; index < m_form_factors.size(); ++index)
         delete m_form_factors[index];
 }
 
 FormFactorWeighted* FormFactorWeighted::clone() const
 {
-    FormFactorWeighted *result = new FormFactorWeighted();
-    for (size_t index=0; index<m_form_factors.size(); ++index)
+    FormFactorWeighted* result = new FormFactorWeighted();
+    for (size_t index = 0; index < m_form_factors.size(); ++index)
         result->addFormFactor(*m_form_factors[index], m_weights[index]);
     return result;
 }
 
 double FormFactorWeighted::getRadialExtension() const
 {
-    double result { 0.0 };
-    for (size_t index=0; index<m_form_factors.size(); ++index)
+    double result{ 0.0 };
+    for (size_t index = 0; index < m_form_factors.size(); ++index)
         result += m_weights[index] * m_form_factors[index]->getRadialExtension();
     return result;
 }
@@ -52,14 +49,14 @@ void FormFactorWeighted::addFormFactor(const IFormFactor& form_factor, double we
 
 void FormFactorWeighted::setAmbientMaterial(const IMaterial& material)
 {
-    for (size_t index=0; index<m_form_factors.size(); ++index)
+    for (size_t index = 0; index < m_form_factors.size(); ++index)
         m_form_factors[index]->setAmbientMaterial(material);
 }
 
 complex_t FormFactorWeighted::evaluate(const WavevectorInfo& wavevectors) const
 {
     complex_t result(0.0, 0.0);
-    for (size_t index=0; index<m_form_factors.size(); ++index)
+    for (size_t index = 0; index < m_form_factors.size(); ++index)
         result += m_weights[index] * m_form_factors[index]->evaluate(wavevectors);
     return result;
 }
@@ -67,7 +64,7 @@ complex_t FormFactorWeighted::evaluate(const WavevectorInfo& wavevectors) const
 Eigen::Matrix2cd FormFactorWeighted::evaluatePol(const WavevectorInfo& wavevectors) const
 {
     Eigen::Matrix2cd result = Eigen::Matrix2cd::Zero();
-    for (size_t index=0; index<m_form_factors.size(); ++index)
+    for (size_t index = 0; index < m_form_factors.size(); ++index)
         result += m_weights[index] * m_form_factors[index]->evaluatePol(wavevectors);
     return result;
 }

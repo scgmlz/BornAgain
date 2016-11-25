@@ -32,9 +32,9 @@ protected:
     void init_parameters();
 
 private:
-    double m_w; //width
-    double m_h; //heigth
-    double m_l; //length
+    double m_w; // width
+    double m_h; // heigth
+    double m_l; // length
 
     double m_interf_distance;
     double m_interf_width;
@@ -56,10 +56,10 @@ protected:
     void init_parameters();
 
 private:
-    double m_w; //width
-    double m_h; //heigth
-    double m_l; //length
-    double m_d; //asymetry
+    double m_w; // width
+    double m_h; // heigth
+    double m_l; // length
+    double m_d; // asymetry
     double m_interf_distance;
     double m_interf_width;
 };

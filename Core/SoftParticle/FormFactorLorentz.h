@@ -27,8 +27,10 @@ public:
     FormFactorLorentz(double length);
     FormFactorLorentz(double width, double height);
 
-    FormFactorLorentz* clone() const override final {
-        return new FormFactorLorentz(m_width, m_height); }
+    FormFactorLorentz* clone() const override final
+    {
+        return new FormFactorLorentz(m_width, m_height);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getWidth() const { return m_width; }

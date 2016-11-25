@@ -18,7 +18,4 @@
 #include "RealParameter.h"
 
 
-FormFactorTrivial::FormFactorTrivial()
-{
-    setName(BornAgain::FormFactorTrivialType);
-}
+FormFactorTrivial::FormFactorTrivial() { setName(BornAgain::FormFactorTrivialType); }

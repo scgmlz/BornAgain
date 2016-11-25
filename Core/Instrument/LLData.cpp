@@ -15,10 +15,8 @@
 
 #include "LLData.h"
 
-template <>
-Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const
+template <> Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const
 {
     Eigen::Matrix2d result = Eigen::Matrix2d::Zero();
     return result;
 }
-

@@ -20,34 +20,47 @@
 #include <memory>
 
 SpecularSimulation::SpecularSimulation()
-    : IParameterized("SpecularSimulation"), mP_sample { nullptr }, m_alpha_i_axis(0), m_z_axis(0),
-      m_lambda(0.0)
+    : IParameterized("SpecularSimulation")
+    , mP_sample{ nullptr }
+    , m_alpha_i_axis(0)
+    , m_z_axis(0)
+    , m_lambda(0.0)
 {
     init_parameters();
 }
 
-SpecularSimulation::SpecularSimulation(const ISample &sample)
-    : IParameterized("SpecularSimulation"), mP_sample(sample.clone()), m_alpha_i_axis(0),
-      m_z_axis(0), m_lambda(0.0)
+SpecularSimulation::SpecularSimulation(const ISample& sample)
+    : IParameterized("SpecularSimulation")
+    , mP_sample(sample.clone())
+    , m_alpha_i_axis(0)
+    , m_z_axis(0)
+    , m_lambda(0.0)
 {
     init_parameters();
 }
 
 SpecularSimulation::SpecularSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder)
-    : IParameterized("SpecularSimulation"), mP_sample { nullptr },
-      mP_sample_builder(sample_builder),
-      m_alpha_i_axis(0), m_z_axis(0), m_lambda(0.0)
+    : IParameterized("SpecularSimulation")
+    , mP_sample{ nullptr }
+    , mP_sample_builder(sample_builder)
+    , m_alpha_i_axis(0)
+    , m_z_axis(0)
+    , m_lambda(0.0)
 {
     init_parameters();
 }
 
-SpecularSimulation::SpecularSimulation(const SpecularSimulation &other)
-    : ICloneable(), IParameterized(other), mP_sample { nullptr },
-      mP_sample_builder(other.mP_sample_builder),
-      m_alpha_i_axis(0), m_z_axis(0), m_lambda(other.m_lambda)
+SpecularSimulation::SpecularSimulation(const SpecularSimulation& other)
+    : ICloneable()
+    , IParameterized(other)
+    , mP_sample{ nullptr }
+    , mP_sample_builder(other.mP_sample_builder)
+    , m_alpha_i_axis(0)
+    , m_z_axis(0)
+    , m_lambda(other.m_lambda)
 {
     if (other.mP_sample.get())
-        mP_sample.reset( other.mP_sample->clone() );
+        mP_sample.reset(other.mP_sample->clone());
     if (other.m_alpha_i_axis)
         m_alpha_i_axis = other.m_alpha_i_axis->clone();
     if (other.m_z_axis)
@@ -63,21 +76,15 @@ SpecularSimulation::~SpecularSimulation()
     delete m_z_axis;
 }
 
-SpecularSimulation *SpecularSimulation::clone() const
-{
-    return new SpecularSimulation(*this);
-}
+SpecularSimulation* SpecularSimulation::clone() const { return new SpecularSimulation(*this); }
 
-void SpecularSimulation::setSample(const ISample &sample)
-{
-    mP_sample.reset( sample.clone() );
-}
+void SpecularSimulation::setSample(const ISample& sample) { mP_sample.reset(sample.clone()); }
 
 void SpecularSimulation::setSampleBuilder(std::shared_ptr<IMultiLayerBuilder> sample_builder)
 {
     if (!sample_builder)
         throw Exceptions::NullPointerException("SpecularSimulation::setSampleBuilder() -> "
-                                   "Error! Attempt to set null sample builder.");
+                                               "Error! Attempt to set null sample builder.");
 
     mP_sample_builder = sample_builder;
     mP_sample.reset(nullptr);
@@ -88,11 +95,12 @@ void SpecularSimulation::prepareSimulation()
     updateSample();
 
     if (!m_alpha_i_axis || m_alpha_i_axis->size() < 1)
-        throw Exceptions::ClassInitializationException("SpecularSimulation::checkSimulation() "
-                                           "-> Error. Incoming alpha range not configured.");
+        throw Exceptions::ClassInitializationException(
+            "SpecularSimulation::checkSimulation() "
+            "-> Error. Incoming alpha range not configured.");
     if (m_lambda <= 0.0)
         throw Exceptions::ClassInitializationException("SpecularSimulation::checkSimulation() "
-                                           "-> Error. Incoming wavelength <= 0.");
+                                                       "-> Error. Incoming wavelength <= 0.");
     if (!mP_sample)
         throw Exceptions::ClassInitializationException(
             "SpecularSimulation::checkSimulation() -> Error. No sample set");
@@ -104,7 +112,7 @@ void SpecularSimulation::runSimulation()
 {
     prepareSimulation();
 
-    MultiLayer *multilayer = dynamic_cast<MultiLayer*>(mP_sample.get());
+    MultiLayer* multilayer = dynamic_cast<MultiLayer*>(mP_sample.get());
     if (!multilayer)
         throw Exceptions::NullPointerException(
             "SpecularSimulation::runSimulation() -> Error. Not a MultiLayer");
@@ -117,21 +125,21 @@ void SpecularSimulation::runSimulation()
     }
 }
 
-void SpecularSimulation::setBeamParameters(double lambda, const IAxis &alpha_axis)
+void SpecularSimulation::setBeamParameters(double lambda, const IAxis& alpha_axis)
 {
     delete m_alpha_i_axis;
     m_alpha_i_axis = alpha_axis.clone();
     m_lambda = lambda;
 }
 
-void SpecularSimulation::setBeamParameters(double lambda, int nbins, double alpha_i_min,
-                                           double alpha_i_max)
+void SpecularSimulation::setBeamParameters(
+    double lambda, int nbins, double alpha_i_min, double alpha_i_max)
 {
     FixedBinAxis axis("alpha_i", nbins, alpha_i_min, alpha_i_max);
     setBeamParameters(lambda, axis);
 }
 
-void SpecularSimulation::setEvanescentWaveAxis(const IAxis &z_axis)
+void SpecularSimulation::setEvanescentWaveAxis(const IAxis& z_axis)
 {
     delete m_z_axis;
     m_z_axis = z_axis.clone();
@@ -143,10 +151,7 @@ void SpecularSimulation::setEvanescentWaveAxis(int nbins, double z_min, double z
     setEvanescentWaveAxis(axis);
 }
 
-const IAxis *SpecularSimulation::getAlphaAxis() const
-{
-    return m_alpha_i_axis;
-}
+const IAxis* SpecularSimulation::getAlphaAxis() const { return m_alpha_i_axis; }
 
 std::vector<complex_t> SpecularSimulation::getScalarR(size_t i_layer) const
 {
@@ -200,13 +205,13 @@ void SpecularSimulation::updateSample()
     if (!mP_sample_builder)
         return;
     if (mP_sample_builder->isPythonBuilder()) {
-        mP_sample.reset( mP_sample_builder->buildSample()->clone() );
+        mP_sample.reset(mP_sample_builder->buildSample()->clone());
     } else {
-        mP_sample.reset( mP_sample_builder->buildSample() );
+        mP_sample.reset(mP_sample_builder->buildSample());
     }
 }
 
-void SpecularSimulation::collectRTCoefficientsScalar(const MultiLayer *multilayer)
+void SpecularSimulation::collectRTCoefficientsScalar(const MultiLayer* multilayer)
 {
     OutputData<MultiLayerRTCoefficients_t>::iterator it = m_data.begin();
     while (it != m_data.end()) {
@@ -228,7 +233,7 @@ void SpecularSimulation::collectRTCoefficientsScalar(const MultiLayer *multilaye
     } // alpha_i
 }
 
-void SpecularSimulation::collectRTCoefficientsMatrix(const MultiLayer * /*multilayer*/)
+void SpecularSimulation::collectRTCoefficientsMatrix(const MultiLayer* /*multilayer*/)
 {
     throw Exceptions::NotImplementedException(
         "SpecularSimulation::collectRTCoefficientsMatrix() -> Error. Not implemented.");

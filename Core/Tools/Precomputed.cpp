@@ -22,12 +22,12 @@ Precomputed::Precomputed()
 {
     // Precompute the factorial: factorial[k] = k!
     double fac = 1;
-    for( int k=1; std::isfinite(fac); ++k ){
-        factorial.push_back( fac );
+    for (int k = 1; std::isfinite(fac); ++k) {
+        factorial.push_back(fac);
         fac *= k;
     }
     // Precompute the reciprocal factorial: reciprocal_factorial[k] = 1/k!
-    for( size_t k=0; k<factorial.size(); ++k ){
-        reciprocal_factorial.push_back( 1/factorial[k] );
+    for (size_t k = 0; k < factorial.size(); ++k) {
+        reciprocal_factorial.push_back(1 / factorial[k]);
     }
 }

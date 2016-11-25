@@ -16,8 +16,8 @@
 #ifndef REALPARAMETER_H
 #define REALPARAMETER_H
 
-#include "IParameter.h"
 #include "Attributes.h"
+#include "IParameter.h"
 #include "RealLimits.h"
 #include "Unit.h"
 #include <string>
@@ -29,15 +29,15 @@ class ParameterPool;
 //! this class holds Limits, Attributes (currently only fixed or not), and a Unit.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ RealParameter : public IParameter<double> {
+class BA_CORE_API_ RealParameter : public IParameter<double>
+{
 public:
     RealParameter(
-        const std::string& name, volatile double* par,
-        const std::string& parent_name, const std::function<void()>& onChange,
-        const RealLimits& limits=RealLimits::limitless(),
-        const Attributes& attr=Attributes::free());
+        const std::string& name, volatile double* par, const std::string& parent_name,
+        const std::function<void()>& onChange, const RealLimits& limits = RealLimits::limitless(),
+        const Attributes& attr = Attributes::free());
 
-    RealParameter* clone( const std::string& new_name="" ) const;
+    RealParameter* clone(const std::string& new_name = "") const;
 
     //! Sets value of wrapped parameter and emit signal
     void setValue(double value);
@@ -45,19 +45,28 @@ public:
     //! Returns value of wrapped parameter
     double getValue() const { return *m_data; }
 
-    RealParameter& setLimits(const RealLimits& limits) { m_limits = limits; return *this; }
+    RealParameter& setLimits(const RealLimits& limits)
+    {
+        m_limits = limits;
+        return *this;
+    }
     RealLimits getLimits() const { return m_limits; }
 
     RealParameter& setLimited(double lower, double upper);
     RealParameter& setPositive();
     RealParameter& setNonnegative();
 
-    bool operator==(const RealParameter& other) const {
-        return m_limits == other.m_limits &&
-        m_attr == other.m_attr &&
-        *static_cast<const IParameter*>(this)==*static_cast<const IParameter*>(&other); }
+    bool operator==(const RealParameter& other) const
+    {
+        return m_limits == other.m_limits && m_attr == other.m_attr
+            && *static_cast<const IParameter*>(this) == *static_cast<const IParameter*>(&other);
+    }
 
-    RealParameter& setUnit(const std::string& name) { m_unit.setUnit(name); return *this; }
+    RealParameter& setUnit(const std::string& name)
+    {
+        m_unit.setUnit(name);
+        return *this;
+    }
     std::string unit() const { return m_unit.getName(); }
 
 protected:

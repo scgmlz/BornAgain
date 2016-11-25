@@ -31,17 +31,17 @@ public:
     static IRotation* createRotation(const Transform3D& transform);
     virtual ~IRotation() {}
 
-    virtual IRotation* clone() const=0;
+    virtual IRotation* clone() const = 0;
     IRotation* cloneInvertB() const final { return clone(); }
 
     //! Returns a new IRotation object that is the current object's inverse
-    virtual IRotation* createInverse() const=0;
+    virtual IRotation* createInverse() const = 0;
 
     //! Calls the ISampleVisitor's visit method
     void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
     //! Returns transformation.
-    virtual Transform3D getTransform3D() const=0;
+    virtual Transform3D getTransform3D() const = 0;
 
     //! Returns true if roation matrix is identity matrix (no rotations)
     virtual bool isIdentity() const;

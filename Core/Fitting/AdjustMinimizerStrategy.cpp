@@ -18,14 +18,11 @@
 #include "IMinimizer.h"
 #include "MinimizerFactory.h"
 
-AdjustMinimizerStrategy::AdjustMinimizerStrategy()
-    : IFitStrategy("FitStrategy/AdjustMinimizer")
-{
-}
+AdjustMinimizerStrategy::AdjustMinimizerStrategy() : IFitStrategy("FitStrategy/AdjustMinimizer") {}
 
-AdjustMinimizerStrategy::AdjustMinimizerStrategy(const std::string &minimizerName,
-                                                       const std::string &algorithmName,
-                                                       const std::string &optionString)
+AdjustMinimizerStrategy::AdjustMinimizerStrategy(
+    const std::string& minimizerName, const std::string& algorithmName,
+    const std::string& optionString)
     : IFitStrategy("FitStrategy/AdjustMinimizer")
     , m_minimizerName(minimizerName)
     , m_algorithmName(algorithmName)
@@ -41,9 +38,9 @@ AdjustMinimizerStrategy* AdjustMinimizerStrategy::clone() const
     return result;
 }
 
-void AdjustMinimizerStrategy::setMinimizer(const std::string &minimizerName,
-                                              const std::string &algorithmName,
-                                              const std::string &optionString)
+void AdjustMinimizerStrategy::setMinimizer(
+    const std::string& minimizerName, const std::string& algorithmName,
+    const std::string& optionString)
 {
     m_minimizerName = minimizerName;
     m_algorithmName = algorithmName;
@@ -60,14 +57,12 @@ void AdjustMinimizerStrategy::execute()
 std::string AdjustMinimizerStrategy::toString() const
 {
     std::ostringstream ostr;
-    ostr << "FitStrategy/AdjustMinimizer ("
-         << m_minimizerName << ", "
-         << m_algorithmName << ", "
+    ostr << "FitStrategy/AdjustMinimizer (" << m_minimizerName << ", " << m_algorithmName << ", "
          << m_optionString << ")";
     return ostr.str();
 }
 
-AdjustMinimizerStrategy::AdjustMinimizerStrategy(const AdjustMinimizerStrategy &other)
+AdjustMinimizerStrategy::AdjustMinimizerStrategy(const AdjustMinimizerStrategy& other)
     : IFitStrategy(other)
 {
     m_minimizerName = other.m_minimizerName;

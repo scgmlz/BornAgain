@@ -17,16 +17,15 @@
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
 #include "IInterferenceFunction.h"
-#include "InterferenceFunctionNone.h"
 #include "ISampleVisitor.h"
+#include "InterferenceFunctionNone.h"
 #include "Particle.h"
 #include "ParticleDistribution.h"
 #include "RealParameter.h"
 #include <iomanip>
 
 ParticleLayout::ParticleLayout()
-    : mP_interference_function {nullptr}
-    , m_total_particle_density {1.0}
+    : mP_interference_function{ nullptr }, m_total_particle_density{ 1.0 }
 {
     setName(BornAgain::ParticleLayoutType);
 }
@@ -34,16 +33,14 @@ ParticleLayout::ParticleLayout()
 ParticleLayout::~ParticleLayout() {} // needs member class definitions => don't move to .h
 
 ParticleLayout::ParticleLayout(const IAbstractParticle& particle)
-    : mP_interference_function {nullptr}
-    , m_total_particle_density {1.0}
+    : mP_interference_function{ nullptr }, m_total_particle_density{ 1.0 }
 {
     setName(BornAgain::ParticleLayoutType);
     addParticle(particle);
 }
 
 ParticleLayout::ParticleLayout(const IAbstractParticle& particle, double abundance)
-    : mP_interference_function {nullptr}
-    , m_total_particle_density {1.0}
+    : mP_interference_function{ nullptr }, m_total_particle_density{ 1.0 }
 {
     setName(BornAgain::ParticleLayoutType);
     addParticle(particle, abundance);
@@ -93,7 +90,7 @@ void ParticleLayout::addParticle(const IAbstractParticle& particle)
 //! @param abundance Particle abundance
 void ParticleLayout::addParticle(const IAbstractParticle& particle, double abundance)
 {
-    std::unique_ptr<IAbstractParticle> P_particle_clone { particle.clone() };
+    std::unique_ptr<IAbstractParticle> P_particle_clone{ particle.clone() };
     P_particle_clone->setAbundance(abundance);
     addAndRegisterAbstractParticle(P_particle_clone.release());
 }
@@ -102,12 +99,12 @@ void ParticleLayout::addParticle(const IAbstractParticle& particle, double abund
 //! @param particle to be added
 //! @param abundance Particle abundance
 //! @param position Particle position
-void ParticleLayout::addParticle(const IParticle& particle, double abundance,
-                                 const kvector_t position)
+void ParticleLayout::addParticle(
+    const IParticle& particle, double abundance, const kvector_t position)
 {
-    std::unique_ptr<IParticle> P_particle_clone { particle.clone() };
+    std::unique_ptr<IParticle> P_particle_clone{ particle.clone() };
     P_particle_clone->setAbundance(abundance);
-    if (position != kvector_t(0,0,0))
+    if (position != kvector_t(0, 0, 0))
         P_particle_clone->applyTranslation(position);
     addAndRegisterAbstractParticle(P_particle_clone.release());
 }
@@ -117,14 +114,15 @@ void ParticleLayout::addParticle(const IParticle& particle, double abundance,
 //! @param abundance Particle abundance
 //! @param position Particle position
 //! @param rotation Particle rotation
-void ParticleLayout::addParticle(const IParticle& particle, double abundance,
-                                 const kvector_t position, const IRotation& rotation)
+void ParticleLayout::addParticle(
+    const IParticle& particle, double abundance, const kvector_t position,
+    const IRotation& rotation)
 {
-    std::unique_ptr<IParticle> P_particle_clone { particle.clone() };
+    std::unique_ptr<IParticle> P_particle_clone{ particle.clone() };
     P_particle_clone->setAbundance(abundance);
     if (!rotation.isIdentity())
         P_particle_clone->applyRotation(rotation);
-    if(position != kvector_t(0,0,0))
+    if (position != kvector_t(0, 0, 0))
         P_particle_clone->applyTranslation(position);
     addAndRegisterAbstractParticle(P_particle_clone.release());
 }
@@ -132,7 +130,7 @@ void ParticleLayout::addParticle(const IParticle& particle, double abundance,
 //! Returns particle info
 const IAbstractParticle* ParticleLayout::getParticle(size_t index) const
 {
-    if (index>=m_particles.size())
+    if (index >= m_particles.size())
         throw Exceptions::OutOfBoundsException(
             "ParticleLayout::getParticle() -> Error! Not so many particles in this decoration.");
     return m_particles[index];
@@ -143,11 +141,10 @@ const IAbstractParticle* ParticleLayout::getParticle(size_t index) const
 SafePointerVector<const IParticle> ParticleLayout::getParticles() const
 {
     SafePointerVector<const IParticle> particle_vector;
-    for (auto particle: m_particles) {
+    for (auto particle : m_particles) {
         if (const auto* p_part_distr = dynamic_cast<const ParticleDistribution*>(particle)) {
-            std::vector<const IParticle*> generated_particles =
-                p_part_distr->generateParticles();
-            for (const IParticle* particle: generated_particles)
+            std::vector<const IParticle*> generated_particles = p_part_distr->generateParticles();
+            for (const IParticle* particle : generated_particles)
                 particle_vector.push_back(particle);
         } else if (const auto* p_iparticle = dynamic_cast<const IParticle*>(particle)) {
             particle_vector.push_back(p_iparticle->clone());
@@ -165,7 +162,7 @@ double ParticleLayout::getAbundanceOfParticle(size_t index) const
 //! Returns a clone, or an InterferenceFunctionNone.
 IInterferenceFunction* ParticleLayout::cloneInterferenceFunction() const
 {
-    if( const IInterferenceFunction* p_iff = mP_interference_function.get() )
+    if (const IInterferenceFunction* p_iff = mP_interference_function.get())
         return p_iff->clone();
     else
         return new InterferenceFunctionNone();
@@ -204,8 +201,8 @@ void ParticleLayout::print(std::ostream& ostr) const
 {
     ILayout::print(ostr);
     ostr << "-->ParticleLayout<" << this << ">{\n";
-    for( size_t i=0; i<m_particles.size(); ++i )
-        ostr << "      - particle " << std::left << std::setw(2) << i << " { "
-             << *(m_particles[i]) << "}\n";
+    for (size_t i = 0; i < m_particles.size(); ++i)
+        ostr << "      - particle " << std::left << std::setw(2) << i << " { " << *(m_particles[i])
+             << "}\n";
     ostr << "}";
 }

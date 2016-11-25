@@ -44,8 +44,8 @@ public:
     double getRadialExtension() const override { return mp_form_factor->getRadialExtension(); }
 
     //! Sets reflection/transmission info for scalar DWBA simulation
-    void setSpecularInfo (const ILayerRTCoefficients* p_in_coeffs,
-                          const ILayerRTCoefficients* p_out_coeffs) override;
+    void setSpecularInfo(
+        const ILayerRTCoefficients* p_in_coeffs, const ILayerRTCoefficients* p_out_coeffs) override;
 
     friend class TestPolarizedDWBATerms;
 
@@ -53,7 +53,7 @@ private:
     //! The form factor for BA
     IFormFactor* mp_form_factor;
 
-    const ILayerRTCoefficients* mp_in_coeffs;  //!< not owned by this
+    const ILayerRTCoefficients* mp_in_coeffs; //!< not owned by this
     const ILayerRTCoefficients* mp_out_coeffs; //!< not owned by this
 };
 

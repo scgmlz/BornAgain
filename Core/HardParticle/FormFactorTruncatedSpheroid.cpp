@@ -16,8 +16,8 @@
 #include "FormFactorTruncatedSpheroid.h"
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
-#include "MathFunctions.h"
 #include "MathConstants.h"
+#include "MathFunctions.h"
 #include "RealParameter.h"
 #include <limits>
 
@@ -36,7 +36,7 @@ FormFactorTruncatedSpheroid::FormFactorTruncatedSpheroid(
 bool FormFactorTruncatedSpheroid::check_initialization() const
 {
     bool result(true);
-    if(m_height > 2.*m_radius*m_height_flattening) {
+    if (m_height > 2. * m_radius * m_height_flattening) {
         std::ostringstream ostr;
         ostr << "::FormFactorTruncatedSphere() -> Error in class initialization with parameters ";
         ostr << " radius:" << m_radius;
@@ -54,11 +54,11 @@ complex_t FormFactorTruncatedSpheroid::Integrand(double Z) const
     double R = m_radius;
     double fp = m_height_flattening;
 
-    double Rz  = std::sqrt(R*R-Z*Z/(fp*fp));
-    complex_t qrRz = std::sqrt(m_q.x()*m_q.x()+m_q.y()*m_q.y())*Rz;
+    double Rz = std::sqrt(R * R - Z * Z / (fp * fp));
+    complex_t qrRz = std::sqrt(m_q.x() * m_q.x() + m_q.y() * m_q.y()) * Rz;
     complex_t J1_qrRz_div_qrRz = MathFunctions::Bessel_J1c(qrRz);
 
-    return Rz * Rz * J1_qrRz_div_qrRz * std::exp(complex_t(0.0,1.0)*m_q.z()*Z);
+    return Rz * Rz * J1_qrRz_div_qrRz * std::exp(complex_t(0.0, 1.0) * m_q.z() * Z);
 }
 
 complex_t FormFactorTruncatedSpheroid::evaluate_for_q(const cvector_t q) const
@@ -69,7 +69,7 @@ complex_t FormFactorTruncatedSpheroid::evaluate_for_q(const cvector_t q) const
     m_q = q;
 
     if (std::abs(m_q.mag()) <= std::numeric_limits<double>::epsilon())
-        return M_PI*R*H*H/fp*(1.-H/(3.*fp*R));
-    complex_t z_part    =  std::exp(complex_t(0.0, 1.0)*m_q.z()*(H-fp*R));
-    return M_TWOPI * z_part *mP_integrator->integrate(fp*R-H,fp*R );
+        return M_PI * R * H * H / fp * (1. - H / (3. * fp * R));
+    complex_t z_part = std::exp(complex_t(0.0, 1.0) * m_q.z() * (H - fp * R));
+    return M_TWOPI * z_part * mP_integrator->integrate(fp * R - H, fp * R);
 }

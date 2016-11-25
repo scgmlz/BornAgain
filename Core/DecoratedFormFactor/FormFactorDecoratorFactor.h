@@ -26,8 +26,10 @@ class BA_CORE_API_ FormFactorDecoratorFactor : public IFormFactorDecorator
 {
 public:
     FormFactorDecoratorFactor(const IFormFactor& form_factor, const complex_t factor);
-    FormFactorDecoratorFactor* clone() const override {
-        return new FormFactorDecoratorFactor(*mp_form_factor, m_factor); }
+    FormFactorDecoratorFactor* clone() const override
+    {
+        return new FormFactorDecoratorFactor(*mp_form_factor, m_factor);
+    }
 
     void accept(ISampleVisitor* visitor) const override { visitor->visit(this); }
 

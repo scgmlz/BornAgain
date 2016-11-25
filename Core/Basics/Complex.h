@@ -21,9 +21,9 @@
 typedef std::complex<double> complex_t;
 
 //! Returns product I*z, where I is the imaginary unit.
-inline complex_t mul_I( complex_t z ) { return complex_t( -z.imag(), z.real() ); }
+inline complex_t mul_I(complex_t z) { return complex_t(-z.imag(), z.real()); }
 
 //! Returns exp(I*z), where I is the imaginary unit.
-inline complex_t exp_I( complex_t z ) { return std::exp( complex_t( -z.imag(), z.real() ) ); }
+inline complex_t exp_I(complex_t z) { return std::exp(complex_t(-z.imag(), z.real())); }
 
 #endif // COMPLEX_H

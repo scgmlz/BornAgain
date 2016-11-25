@@ -42,8 +42,8 @@ public:
     const IMaterial* getAmbientMaterial() const final;
 
     virtual IFormFactor* createTotalFormFactor(
-        const IFormFactor& meso_crystal_form_factor,
-        const IRotation* p_rotation, const kvector_t& translation) const;
+        const IFormFactor& meso_crystal_form_factor, const IRotation* p_rotation,
+        const kvector_t& translation) const;
 
     Lattice getTransformedLattice(const IRotation* p_rotation) const;
 

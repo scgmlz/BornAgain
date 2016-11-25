@@ -26,9 +26,11 @@ class BA_CORE_API_ FormFactorIcosahedron : public FormFactorPolyhedron
 public:
     FormFactorIcosahedron(double edge);
 
-    FormFactorIcosahedron *clone() const override final {
-        return new FormFactorIcosahedron(m_edge); }
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    FormFactorIcosahedron* clone() const override final
+    {
+        return new FormFactorIcosahedron(m_edge);
+    }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getEdge() const { return m_edge; }
 

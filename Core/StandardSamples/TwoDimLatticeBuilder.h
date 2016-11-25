@@ -24,7 +24,7 @@
 class BA_CORE_API_ Basic2DLatticeBuilder : public IMultiLayerBuilder
 {
 public:
-    Basic2DLatticeBuilder(){}
+    Basic2DLatticeBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -35,7 +35,7 @@ public:
 class BA_CORE_API_ SquareLatticeBuilder : public IMultiLayerBuilder
 {
 public:
-    SquareLatticeBuilder(){}
+    SquareLatticeBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -46,7 +46,7 @@ public:
 class BA_CORE_API_ CenteredSquareLatticeBuilder : public IMultiLayerBuilder
 {
 public:
-    CenteredSquareLatticeBuilder(){}
+    CenteredSquareLatticeBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -57,7 +57,7 @@ public:
 class BA_CORE_API_ RotatedSquareLatticeBuilder : public IMultiLayerBuilder
 {
 public:
-    RotatedSquareLatticeBuilder(){}
+    RotatedSquareLatticeBuilder() {}
     MultiLayer* buildSample() const;
 };
 

@@ -28,18 +28,18 @@ public:
     typedef std::map<std::string, int> nstringmap_t;
     typedef nstringmap_t::iterator iterator_t;
 
-    StringUsageMap(){}
-    ~StringUsageMap(){}
+    StringUsageMap() {}
+    ~StringUsageMap() {}
 
     //! Adds string to the map, or increments usage counter
     void add(const std::string& name)
     {
         m_current_string = name;
         iterator_t it = m_nstringmap.find(name);
-        if (it != m_nstringmap.end() )
+        if (it != m_nstringmap.end())
             it->second++;
         else
-            m_nstringmap.insert(make_pair(name,1));
+            m_nstringmap.insert(make_pair(name, 1));
     }
 
     //! access to the map of strings

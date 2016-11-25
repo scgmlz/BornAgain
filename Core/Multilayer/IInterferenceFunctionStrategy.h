@@ -55,18 +55,19 @@ public:
     IInterferenceFunctionStrategy(const SimulationOptions& sim_params);
     virtual ~IInterferenceFunctionStrategy();
 
-    void init(const SafePointerVector<FormFactorWrapper>& weighted_formfactors,
-              const IInterferenceFunction& iff, const LayerSpecularInfo& specular_info);
+    void init(
+        const SafePointerVector<FormFactorWrapper>& weighted_formfactors,
+        const IInterferenceFunction& iff, const LayerSpecularInfo& specular_info);
 
     //! Calculates the intensity for scalar particles/interactions
     double evaluate(const SimulationElement& sim_element) const;
 
 protected:
     virtual void strategy_specific_post_init() {}
-    virtual void precomputeParticleFormfactors(const SimulationElement& sim_element) const =0;
+    virtual void precomputeParticleFormfactors(const SimulationElement& sim_element) const = 0;
 
     //! Evaluates the intensity for given list of evaluated form factors
-    virtual double evaluateForList(const SimulationElement& sim_element) const =0;
+    virtual double evaluateForList(const SimulationElement& sim_element) const = 0;
 
     double m_total_abundance; //!< cached sum of particle abundances, computed by init()
     SafePointerVector<FormFactorWrapper> m_formfactor_wrappers;

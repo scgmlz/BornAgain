@@ -24,10 +24,10 @@
 #include "Units.h"
 
 RotatedPyramidsBuilder::RotatedPyramidsBuilder()
-    : m_length(10*Units::nanometer)
-    , m_height(5*Units::nanometer)
-    , m_alpha(Units::deg2rad(54.73 ))
-    , m_zangle(45.*Units::degree)
+    : m_length(10 * Units::nanometer)
+    , m_height(5 * Units::nanometer)
+    , m_alpha(Units::deg2rad(54.73))
+    , m_zangle(45. * Units::degree)
 {
     init_parameters();
 }
@@ -36,7 +36,7 @@ void RotatedPyramidsBuilder::init_parameters()
 {
     registerParameter("length", &m_length).setUnit("nm").setNonnegative();
     registerParameter("height", &m_height).setUnit("nm").setNonnegative();
-    registerParameter("alpha", &m_alpha  ).setUnit("rad");
+    registerParameter("alpha", &m_alpha).setUnit("rad");
     registerParameter("zangle", &m_zangle).setUnit("rad");
 }
 
@@ -58,7 +58,7 @@ MultiLayer* RotatedPyramidsBuilder::buildSample() const
     RotationZ z_rotation(m_zangle);
 
     ParticleLayout particle_layout;
-    particle_layout.addParticle(pyramid, 1.0, kvector_t(0,0,0), z_rotation);
+    particle_layout.addParticle(pyramid, 1.0, kvector_t(0, 0, 0), z_rotation);
 
     air_layer.addLayout(particle_layout);
 

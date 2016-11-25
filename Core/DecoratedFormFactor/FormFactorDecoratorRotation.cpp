@@ -38,22 +38,22 @@ complex_t FormFactorDecoratorRotation::evaluate(const WavevectorInfo& wavevector
     return mp_form_factor->evaluate(rotated_wavevectors);
 }
 
-Eigen::Matrix2cd FormFactorDecoratorRotation::evaluatePol(const WavevectorInfo &wavevectors) const
+Eigen::Matrix2cd FormFactorDecoratorRotation::evaluatePol(const WavevectorInfo& wavevectors) const
 {
     WavevectorInfo rotated_wavevectors = rotate_wavevectors(wavevectors);
     return mp_form_factor->evaluatePol(rotated_wavevectors);
 }
 
-FormFactorDecoratorRotation::FormFactorDecoratorRotation(const IFormFactor &form_factor,
-                                                         const Transform3D &transform)
+FormFactorDecoratorRotation::FormFactorDecoratorRotation(
+    const IFormFactor& form_factor, const Transform3D& transform)
     : IFormFactorDecorator(form_factor)
 {
     setName(BornAgain::FormFactorDecoratorRotationType);
     m_transform = transform;
 }
 
-WavevectorInfo FormFactorDecoratorRotation::rotate_wavevectors(
-        const WavevectorInfo& wavevectors) const
+WavevectorInfo
+FormFactorDecoratorRotation::rotate_wavevectors(const WavevectorInfo& wavevectors) const
 {
     cvector_t rotated_ki = m_transform.transformedInverse(wavevectors.getKi());
     cvector_t rotated_kf = m_transform.transformedInverse(wavevectors.getKf());

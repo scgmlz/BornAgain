@@ -16,23 +16,21 @@
 #include "FormFactorCuboctahedron.h"
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
-#include "MathFunctions.h"
 #include "MathConstants.h"
+#include "MathFunctions.h"
 #include "RealParameter.h"
 
-const PolyhedralTopology FormFactorCuboctahedron::topology = {
-    {
-        { {  3,  2,  1,  0 }, true  },
-        { {  0,  1,  5,  4 }, false },
-        { {  1,  2,  6,  5 }, false },
-        { {  2,  3,  7,  6 }, false },
-        { {  3,  0,  4,  7 }, false },
-        { {  4,  5,  9,  8 }, false },
-        { {  5,  6, 10,  9 }, false },
-        { {  6,  7, 11, 10 }, false },
-        { {  7,  4,  8, 11 }, false },
-        { {  8,  9, 10, 11 }, true  }
-    }, false };
+const PolyhedralTopology FormFactorCuboctahedron::topology = { { { { 3, 2, 1, 0 }, true },
+                                                                 { { 0, 1, 5, 4 }, false },
+                                                                 { { 1, 2, 6, 5 }, false },
+                                                                 { { 2, 3, 7, 6 }, false },
+                                                                 { { 3, 0, 4, 7 }, false },
+                                                                 { { 4, 5, 9, 8 }, false },
+                                                                 { { 5, 6, 10, 9 }, false },
+                                                                 { { 6, 7, 11, 10 }, false },
+                                                                 { { 7, 4, 8, 11 }, false },
+                                                                 { { 8, 9, 10, 11 }, true } },
+                                                               false };
 
 //! @param length        of one side of the square base
 //! @param height        of bottom frustum
@@ -50,18 +48,18 @@ FormFactorCuboctahedron::FormFactorCuboctahedron(
     registerParameter(BornAgain::Length, &m_length).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::Height, &m_height).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::HeightRatio, &m_height_ratio).setUnit("nm").setNonnegative();
-    registerParameter(BornAgain::Alpha, & m_alpha).setUnit("rad").setLimited(0., M_PI_2);
+    registerParameter(BornAgain::Alpha, &m_alpha).setUnit("rad").setLimited(0., M_PI_2);
     onChange();
 }
 
 void FormFactorCuboctahedron::onChange()
 {
     double cot_alpha = MathFunctions::cot(m_alpha);
-    if( !std::isfinite(cot_alpha) || cot_alpha<0 )
+    if (!std::isfinite(cot_alpha) || cot_alpha < 0)
         throw Exceptions::OutOfBoundsException("pyramid angle alpha out of bounds");
     double x = m_height_ratio;
-    double r = cot_alpha*2 * m_height / m_length;
-    if ( std::max(1.,x)*r > 1 ) {
+    double r = cot_alpha * 2 * m_height / m_length;
+    if (std::max(1., x) * r > 1) {
         std::ostringstream ostr;
         ostr << "FormFactorCuboctahedron() -> Error in class initialization with parameters";
         ostr << " height:" << m_height;
@@ -71,31 +69,31 @@ void FormFactorCuboctahedron::onChange()
         ostr << "Check for '2.*height <= length*tan(alpha)*min(1.,1.0/height_ratio)' failed.";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    double a = m_length/2 * (1-r);
-    double b = m_length/2;
-    double c = m_length/2 * (1-r*x);
+    double a = m_length / 2 * (1 - r);
+    double b = m_length / 2;
+    double c = m_length / 2 * (1 - r * x);
 
-    double dzcom = m_height *
-        ( (x*x-1)/2 - 2*r*(x*x*x-1)/3 + r*r*(x*x*x*x-1)/4 ) /
-        ( (x  +1)   -   r*(x*x  +1)   + r*r*(x*x*x  +1)/3 );
-    double za = -dzcom-m_height;
+    double dzcom = m_height
+        * ((x * x - 1) / 2 - 2 * r * (x * x * x - 1) / 3 + r * r * (x * x * x * x - 1) / 4)
+        / ((x + 1) - r * (x * x + 1) + r * r * (x * x * x + 1) / 3);
+    double za = -dzcom - m_height;
     double zb = -dzcom;
-    double zc = -dzcom+x*m_height;
+    double zc = -dzcom + x * m_height;
 
-    setPolyhedron( topology, za, {
-            // base:
-            { -a, -a, za },
-            {  a, -a, za },
-            {  a,  a, za },
-            { -a,  a, za },
-            // middle
-            { -b, -b, zb },
-            {  b, -b, zb },
-            {  b,  b, zb },
-            { -b,  b, zb },
-            // top
-            { -c, -c, zc },
-            {  c, -c, zc },
-            {  c,  c, zc },
-            { -c,  c, zc } } );
+    setPolyhedron(
+        topology, za, { // base:
+                        { -a, -a, za },
+                        { a, -a, za },
+                        { a, a, za },
+                        { -a, a, za },
+                        // middle
+                        { -b, -b, zb },
+                        { b, -b, zb },
+                        { b, b, zb },
+                        { -b, b, zb },
+                        // top
+                        { -c, -c, zc },
+                        { c, -c, zc },
+                        { c, c, zc },
+                        { -c, c, zc } });
 }

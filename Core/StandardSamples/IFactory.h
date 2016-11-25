@@ -24,8 +24,7 @@
 //! Base class for all factories.
 //! @ingroup tools_internal
 
-template<class Key, class AbstractProduct >
-class IFactory
+template <class Key, class AbstractProduct> class IFactory
 {
 public:
     //! function which will be used to create object of AbstractProduct base type
@@ -42,27 +41,28 @@ public:
     IFactory() {}
 
     //! Creates object by calling creation function corresponded to given identifier
-    AbstractProduct* createItem(const Key& item_key) {
+    AbstractProduct* createItem(const Key& item_key)
+    {
         auto it = m_callbacks.find(item_key);
-        if( it == m_callbacks.end() ) {
+        if (it == m_callbacks.end()) {
             std::ostringstream message;
-            message << "IFactory::createItem() -> Error. Unknown item key '"
-                    << item_key << "'";
+            message << "IFactory::createItem() -> Error. Unknown item key '" << item_key << "'";
             throw Exceptions::RuntimeErrorException(message.str());
         }
         return (it->second)();
     }
 
     //! Registers object's creation function and store object description
-    bool registerItem(const Key& item_key, CreateItemCallback CreateFn,
-                      const std::string& itemDescription="") {
+    bool registerItem(
+        const Key& item_key, CreateItemCallback CreateFn, const std::string& itemDescription = "")
+    {
         if (m_callbacks.find(item_key) != m_callbacks.end()) {
             std::ostringstream message;
-            message << "IFactory::createItem() -> Error. Already registered item key '"
-                    << item_key << "'";
+            message << "IFactory::createItem() -> Error. Already registered item key '" << item_key
+                    << "'";
             throw Exceptions::RuntimeErrorException(message.str());
         }
-        if (itemDescription!="")
+        if (itemDescription != "")
             m_descriptions.insert(make_pair(item_key, itemDescription));
         return m_callbacks.insert(make_pair(item_key, CreateFn)).second;
     }
@@ -76,10 +76,10 @@ public:
     const_iterator end() const { return m_descriptions.end(); }
 
 protected:
-    CallbackMap_t m_callbacks;     //!< map of correspondence of objectsId and creation functions
-    DescriptionMap_t m_descriptions;     //!< map of correspondence of objectsId and description
+    CallbackMap_t m_callbacks; //!< map of correspondence of objectsId and creation functions
+    DescriptionMap_t m_descriptions; //!< map of correspondence of objectsId and description
 };
 
-template<class T> T* create_new() { return new T(); }
+template <class T> T* create_new() { return new T(); }
 
 #endif // IFACTORY_H

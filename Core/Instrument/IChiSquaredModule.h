@@ -17,10 +17,10 @@
 #define ICHISQUAREDMODULE_H
 
 #include "FitElement.h"
+#include "ICloneable.h"
 #include "IIntensityFunction.h"
 #include "IIntensityNormalizer.h"
 #include "ISquaredFunction.h"
-#include "ICloneable.h"
 
 //! Interface for ChiSquaredModule for chi2 calculations.
 //! @ingroup fitting_internal
@@ -43,11 +43,13 @@ public:
     void setChiSquaredFunction(const ISquaredFunction& squared_function);
 
     //! Returns data normalizer.
-    virtual const IIntensityNormalizer* getIntensityNormalizer() const {
-        return mp_data_normalizer; }
+    virtual const IIntensityNormalizer* getIntensityNormalizer() const
+    {
+        return mp_data_normalizer;
+    }
 
     //! Returns data normalizer, non-const version needed to set internals.
-    virtual IIntensityNormalizer* getIntensityNormalizer() {  return mp_data_normalizer; }
+    virtual IIntensityNormalizer* getIntensityNormalizer() { return mp_data_normalizer; }
 
     //! Sets data normalizer
     virtual void setIntensityNormalizer(const IIntensityNormalizer& data_normalizer);
@@ -58,8 +60,10 @@ public:
     //! Sets data rescaler.
     virtual void setIntensityFunction(const IIntensityFunction& intensity_function);
 
-    virtual void processFitElements(std::vector<FitElement>::iterator,
-                                    std::vector<FitElement>::iterator){}
+    virtual void
+        processFitElements(std::vector<FitElement>::iterator, std::vector<FitElement>::iterator)
+    {
+    }
 
 protected:
     IChiSquaredModule(const IChiSquaredModule& other);

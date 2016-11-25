@@ -16,11 +16,11 @@
 #ifndef SOFTPARTICLES_H
 #define SOFTPARTICLES_H
 
-#include "SoftParticles.h"
 #include "FormFactorGauss.h"
 #include "FormFactorLorentz.h"
 #include "FormFactorSphereGaussianRadius.h"
 #include "FormFactorSphereLogNormalRadius.h"
 #include "FormFactorSphereUniformRadius.h"
+#include "SoftParticles.h"
 
 #endif // SOFTPARTICLES_H

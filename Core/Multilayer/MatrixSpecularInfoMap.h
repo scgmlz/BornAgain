@@ -35,12 +35,11 @@ public:
     MatrixSpecularInfoMap* clone() const final;
 
     //! Retrieves the amplitude coefficients for the given angles
-    const ILayerRTCoefficients* getOutCoefficients(
-        const SimulationElement& sim_element) const final;
+    const ILayerRTCoefficients*
+    getOutCoefficients(const SimulationElement& sim_element) const final;
 
     //! Retrieves the amplitude coefficients for the given angles
-    const ILayerRTCoefficients* getInCoefficients(
-        const SimulationElement& sim_element) const final;
+    const ILayerRTCoefficients* getInCoefficients(const SimulationElement& sim_element) const final;
 
 private:
     std::unique_ptr<MultiLayer> mP_multilayer;

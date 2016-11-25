@@ -27,7 +27,7 @@ class ISample;
 class BA_CORE_API_ CoreShellParticleBuilder : public IMultiLayerBuilder
 {
 public:
-    CoreShellParticleBuilder(){}
+    CoreShellParticleBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -39,7 +39,7 @@ public:
 class BA_CORE_API_ CoreShellBoxRotateZandYBuilder : public IMultiLayerBuilder
 {
 public:
-    CoreShellBoxRotateZandYBuilder(){}
+    CoreShellBoxRotateZandYBuilder() {}
     MultiLayer* buildSample() const;
 };
 

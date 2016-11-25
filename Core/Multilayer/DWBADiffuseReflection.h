@@ -28,10 +28,9 @@ class BA_CORE_API_ DWBADiffuseReflection
 public:
     DWBADiffuseReflection();
 
-    void execute(const MultiLayer& sample,
-                 const kvector_t ki, const kvector_t kf);
+    void execute(const MultiLayer& sample, const kvector_t ki, const kvector_t kf);
 
-    void setSample(const MultiLayer& sample) {m_sample =& sample; }
+    void setSample(const MultiLayer& sample) { m_sample = &sample; }
 
     double getDiffuseAutocorr() const { return m_diffuse_autocorr; }
 

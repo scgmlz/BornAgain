@@ -25,9 +25,9 @@
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "LayerRoughness.h"
+#include "MainComputation.h"
 #include "MesoCrystal.h"
 #include "MultiLayer.h"
-#include "MainComputation.h"
 #include "Particle.h"
 #include "ParticleComposition.h"
 #include "ParticleCoreShell.h"
@@ -35,101 +35,91 @@
 #include "ParticleLayout.h"
 #include "PythonFormatting.h"
 #include "RectangularDetector.h"
+#include "RegionOfInterest.h"
 #include "ResolutionFunction2DGaussian.h"
 #include "SampleLabelHandler.h"
 #include "SphericalDetector.h"
 #include "StringUtils.h"
-#include "RegionOfInterest.h"
+#include <functional>
 #include <iomanip>
 #include <set>
-#include <functional>
 
 class IFormFactor;
 class LayerRoughness;
 
 using namespace PythonFormatting;
 
-namespace {
+namespace
+{
 
-    const std::string preamble =
-        "import numpy\n"
-        "import bornagain as ba\n"
-        "from bornagain import deg, angstrom, nm, kvector_t\n\n";
+const std::string preamble = "import numpy\n"
+                             "import bornagain as ba\n"
+                             "from bornagain import deg, angstrom, nm, kvector_t\n\n";
 
-    const std::string defineSimulate =
-        "def simulate():\n"
-        "    # Run Simulation\n"
-        "    sample = getSample()\n"
-        "    simulation = getSimulation()\n"
-        "    simulation.setSample(sample)\n"
-        "    simulation.runSimulation()\n"
-        "    return simulation.getIntensityData()\n"
-        "\n\n";
+const std::string defineSimulate = "def simulate():\n"
+                                   "    # Run Simulation\n"
+                                   "    sample = getSample()\n"
+                                   "    simulation = getSimulation()\n"
+                                   "    simulation.setSample(sample)\n"
+                                   "    simulation.runSimulation()\n"
+                                   "    return simulation.getIntensityData()\n"
+                                   "\n\n";
 
-    const std::string mainProgram =
-        "if __name__ == '__main__': \n"
-        "    ba.simulateThenPlotOrSave(simulate, plot)\n";
+const std::string mainProgram = "if __name__ == '__main__': \n"
+                                "    ba.simulateThenPlotOrSave(simulate, plot)\n";
 
-    //! Returns a function that converts a coordinate to a Python code snippet with appropiate unit
-    std::function<std::string(double)> printFunc(const IDetector2D* detector)
-    {
-        if (detector->getDefaultAxesUnits() == IDetector2D::MM)
-            return PythonFormatting::printDouble;
-        if (detector->getDefaultAxesUnits() == IDetector2D::RADIANS)
-            return PythonFormatting::printDegrees;
-        throw Exceptions::RuntimeErrorException(
-            "ExportToPython::defineMasks() -> Error. Unknown detector units.");
-    }
+//! Returns a function that converts a coordinate to a Python code snippet with appropiate unit
+std::function<std::string(double)> printFunc(const IDetector2D* detector)
+{
+    if (detector->getDefaultAxesUnits() == IDetector2D::MM)
+        return PythonFormatting::printDouble;
+    if (detector->getDefaultAxesUnits() == IDetector2D::RADIANS)
+        return PythonFormatting::printDegrees;
+    throw Exceptions::RuntimeErrorException(
+        "ExportToPython::defineMasks() -> Error. Unknown detector units.");
+}
 
 } // namespace
 
-ExportToPython::ExportToPython(const MultiLayer& multilayer)
-    : m_label(new SampleLabelHandler())
+ExportToPython::ExportToPython(const MultiLayer& multilayer) : m_label(new SampleLabelHandler())
 {
-    for( auto x: multilayer.containedMaterials() )
+    for (auto x : multilayer.containedMaterials())
         m_label->insertMaterial(x);
-    for( auto x: multilayer.containedSubclass<Layer>() )
+    for (auto x : multilayer.containedSubclass<Layer>())
         m_label->insertLayer(x);
-    for( auto x: multilayer.containedSubclass<LayerRoughness>() )
+    for (auto x : multilayer.containedSubclass<LayerRoughness>())
         m_label->insertRoughness(x);
-    for( auto x: multilayer.containedSubclass<MultiLayer>() )
+    for (auto x : multilayer.containedSubclass<MultiLayer>())
         m_label->insertMultiLayer(x);
-    for( auto x: multilayer.containedSubclass<IFormFactor>() )
+    for (auto x : multilayer.containedSubclass<IFormFactor>())
         m_label->insertFormFactor(x);
-    for( auto x: multilayer.containedSubclass<IInterferenceFunction>() )
+    for (auto x : multilayer.containedSubclass<IInterferenceFunction>())
         m_label->insertInterferenceFunction(x);
-    for( auto x: multilayer.containedSubclass<Particle>() )
+    for (auto x : multilayer.containedSubclass<Particle>())
         m_label->insertParticle(x);
-    for( auto x: multilayer.containedSubclass<ParticleCoreShell>() )
+    for (auto x : multilayer.containedSubclass<ParticleCoreShell>())
         m_label->insertParticleCoreShell(x);
-    for( auto x: multilayer.containedSubclass<ParticleComposition>() )
+    for (auto x : multilayer.containedSubclass<ParticleComposition>())
         m_label->insertParticleComposition(x);
-    for( auto x: multilayer.containedSubclass<ParticleDistribution>() )
+    for (auto x : multilayer.containedSubclass<ParticleDistribution>())
         m_label->insertParticleDistribution(x);
-    for( auto x: multilayer.containedSubclass<ILayout>() )
+    for (auto x : multilayer.containedSubclass<ILayout>())
         m_label->insertLayout(x);
-    for( auto x: multilayer.containedSubclass<IRotation>() )
+    for (auto x : multilayer.containedSubclass<IRotation>())
         m_label->insertRotation(x);
-    if( multilayer.containedSubclass<MesoCrystal>().size() )
+    if (multilayer.containedSubclass<MesoCrystal>().size())
         throw Exceptions::NotImplementedException(
             "ExportToPython: class MesoCrystal not yet supported!");
 }
 
-ExportToPython::~ExportToPython()
-{
-    delete m_label;
-}
+ExportToPython::~ExportToPython() { delete m_label; }
 
 //! Returns a Python script that sets up a simulation and runs it if invoked as main program.
 
 std::string ExportToPython::simulationToPythonLowlevel(const GISASSimulation* simulation)
 {
-    return preamble
-        + defineGetSample()
-        + defineGetSimulation(simulation)
-        + definePlot(simulation)
-        + defineSimulate
-        + mainProgram;
+    return preamble + defineGetSample() + defineGetSimulation(simulation) + definePlot(simulation)
+        + defineSimulate + mainProgram;
 }
 
 std::string ExportToPython::defineGetSimulation(const GISASSimulation* simulation) const
@@ -150,20 +140,10 @@ std::string ExportToPython::defineGetSimulation(const GISASSimulation* simulatio
 
 std::string ExportToPython::defineGetSample() const
 {
-    return "def getSample():\n"
-        + defineMaterials()
-        + defineLayers()
-        + defineFormFactors()
-        + defineParticles()
-        + defineCoreShellParticles()
-        + defineParticleCompositions()
-        + defineParticleDistributions()
-        + defineInterferenceFunctions()
-        + defineParticleLayouts()
-        + defineRoughnesses()
-        + addLayoutsToLayers()
-        + defineMultiLayers()
-        + "\n";
+    return "def getSample():\n" + defineMaterials() + defineLayers() + defineFormFactors()
+        + defineParticles() + defineCoreShellParticles() + defineParticleCompositions()
+        + defineParticleDistributions() + defineInterferenceFunctions() + defineParticleLayouts()
+        + defineRoughnesses() + addLayoutsToLayers() + defineMultiLayers() + "\n";
 }
 
 std::string ExportToPython::defineMaterials() const
@@ -175,7 +155,7 @@ std::string ExportToPython::defineMaterials() const
     result << std::setprecision(12);
     result << indent() << "# Defining Materials\n";
     std::set<std::string> visitedMaterials;
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         if (visitedMaterials.find(it->second) != visitedMaterials.end())
             continue;
         visitedMaterials.insert(it->second);
@@ -185,12 +165,11 @@ std::string ExportToPython::defineMaterials() const
         double beta = std::imag(ri);
         if (p_material->isScalarMaterial()) {
             result << indent() << m_label->getLabelMaterial(p_material)
-                   << " = ba.HomogeneousMaterial(\"" << p_material->getName()
-                   << "\", " << printDouble(delta) << ", "
-                   << printDouble(beta) << ")\n";
+                   << " = ba.HomogeneousMaterial(\"" << p_material->getName() << "\", "
+                   << printDouble(delta) << ", " << printDouble(beta) << ")\n";
         } else {
-            const HomogeneousMagneticMaterial* p_mag_material
-                = dynamic_cast<const HomogeneousMagneticMaterial*>(p_material);
+            const HomogeneousMagneticMaterial* p_mag_material =
+                dynamic_cast<const HomogeneousMagneticMaterial*>(p_material);
             if (p_mag_material == 0)
                 throw Exceptions::RuntimeErrorException(
                     "ExportToPython::defineMaterials: "
@@ -201,8 +180,7 @@ std::string ExportToPython::defineMaterials() const
                    << ")\n";
             result << indent() << m_label->getLabelMaterial(p_material)
                    << " = ba.HomogeneousMagneticMaterial(\"" << p_material->getName();
-            result << "\", " << printDouble(delta) << ", "
-                   << printDouble(beta) << ", "
+            result << "\", " << printDouble(delta) << ", " << printDouble(beta) << ", "
                    << "magnetic_field)\n";
         }
     }
@@ -217,10 +195,10 @@ std::string ExportToPython::defineLayers() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Layers\n";
-    for (auto it=themap->begin(); it != themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const Layer* layer = it->first;
-        result << indent() << it->second << " = ba.Layer(" <<
-            m_label->getLabelMaterial(layer->getMaterial());
+        result << indent() << it->second << " = ba.Layer("
+               << m_label->getLabelMaterial(layer->getMaterial());
         if (layer->getThickness() != 0)
             result << ", " << layer->getThickness();
         result << ")\n";
@@ -236,7 +214,7 @@ std::string ExportToPython::defineFormFactors() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Form Factors\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const IFormFactor* p_ff = it->first;
         result << indent() << it->second << " = ba.FormFactor" << p_ff->getName() << "("
                << argumentList(p_ff) << ")\n";
@@ -252,7 +230,7 @@ std::string ExportToPython::defineParticles() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Particles\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const Particle* p_particle = it->first;
         std::string particle_name = it->second;
         result << indent() << particle_name << " = ba.Particle("
@@ -272,9 +250,10 @@ std::string ExportToPython::defineCoreShellParticles() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Core Shell Particles\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const ParticleCoreShell* p_coreshell = it->first;
-        result << "\n" << indent() << it->second << " = ba.ParticleCoreShell("
+        result << "\n"
+               << indent() << it->second << " = ba.ParticleCoreShell("
                << m_label->getLabelParticle(p_coreshell->getShellParticle()) << ", "
                << m_label->getLabelParticle(p_coreshell->getCoreParticle()) << ")\n";
         std::string core_shell_name = it->second;
@@ -295,16 +274,15 @@ std::string ExportToPython::defineParticleDistributions() const
     result << "\n" << indent() << "# Defining particles with parameter following a distribution\n";
 
     int index(1);
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         ParameterDistribution par_distr = it->first->getParameterDistribution();
 
         // building distribution functions
         std::stringstream s_distr;
         s_distr << "distr_" << index;
 
-        result << indent() << s_distr.str()
-               << " = ba." << par_distr.getDistribution()->getName() << "("
-               << argumentList(par_distr.getDistribution()) << ")\n";
+        result << indent() << s_distr.str() << " = ba." << par_distr.getDistribution()->getName()
+               << "(" << argumentList(par_distr.getDistribution()) << ")\n";
 
         // building parameter distribution
         std::stringstream s_par_distr;
@@ -317,16 +295,16 @@ std::string ExportToPython::defineParticleDistributions() const
 
         // linked parameters
         std::vector<std::string> linked_pars = par_distr.getLinkedParameterNames();
-        if(linked_pars.size()) {
+        if (linked_pars.size()) {
             result << indent() << s_par_distr.str();
-            for(size_t i=0; i<linked_pars.size(); ++i)
+            for (size_t i = 0; i < linked_pars.size(); ++i)
                 result << ".linkParameter(\"" << linked_pars[i] << "\")";
             result << "\n";
         }
 
         result << indent() << it->second << " = ba.ParticleDistribution("
-               << m_label->getLabelParticle(it->first->getParticle())
-               << ", " << s_par_distr.str() << ")\n";
+               << m_label->getLabelParticle(it->first->getParticle()) << ", " << s_par_distr.str()
+               << ")\n";
         index++;
     }
     return result.str();
@@ -340,14 +318,13 @@ std::string ExportToPython::defineParticleCompositions() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining composition of particles at specific positions\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const ParticleComposition* p_particle_composition = it->first;
         std::string particle_composition_name = it->second;
         result << indent() << particle_composition_name << " = ba.ParticleComposition()\n";
         for (size_t i = 0; i < p_particle_composition->getNbrParticles(); ++i) {
             result << indent() << particle_composition_name << ".addParticle("
-                   << m_label->getLabelParticle(p_particle_composition->getParticle(i))
-            << ")\n";
+                   << m_label->getLabelParticle(p_particle_composition->getParticle(i)) << ")\n";
         }
         setRotationInformation(p_particle_composition, particle_composition_name, result);
         setPositionInformation(p_particle_composition, particle_composition_name, result);
@@ -363,14 +340,15 @@ std::string ExportToPython::defineInterferenceFunctions() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Interference Functions\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const IInterferenceFunction* interference = it->first;
 
         if (dynamic_cast<const InterferenceFunctionNone*>(interference))
             result << indent() << it->second << " = ba.InterferenceFunctionNone()\n";
 
-        else if (const auto* oneDLattice
-                 = dynamic_cast<const InterferenceFunction1DLattice*>(interference)) {
+        else if (
+            const auto* oneDLattice =
+                dynamic_cast<const InterferenceFunction1DLattice*>(interference)) {
             const Lattice1DParameters latticeParameters = oneDLattice->getLatticeParameters();
             result << indent() << it->second << " = ba.InterferenceFunction1DLattice("
                    << printNm(latticeParameters.m_length) << ", "
@@ -379,13 +357,14 @@ std::string ExportToPython::defineInterferenceFunctions() const
             const IFTDecayFunction1D* pdf = oneDLattice->getDecayFunction();
 
             if (pdf->getOmega() != 0.0)
-                result << indent() << it->second << "_pdf  = ba." << pdf->getName()
-                       << "(" << argumentList(pdf) << ")\n"
+                result << indent() << it->second << "_pdf  = ba." << pdf->getName() << "("
+                       << argumentList(pdf) << ")\n"
                        << indent() << it->second << ".setDecayFunction(" << it->second << "_pdf)\n";
         }
 
-        else if (const auto* oneDParaCrystal
-                 = dynamic_cast<const InterferenceFunctionRadialParaCrystal*>(interference)) {
+        else if (
+            const auto* oneDParaCrystal =
+                dynamic_cast<const InterferenceFunctionRadialParaCrystal*>(interference)) {
             result << indent() << it->second << " = ba.InterferenceFunctionRadialParaCrystal("
                    << printNm(oneDParaCrystal->getPeakDistance()) << ", "
                    << printNm(oneDParaCrystal->getDampingLength()) << ")\n";
@@ -401,14 +380,15 @@ std::string ExportToPython::defineInterferenceFunctions() const
             const IFTDistribution1D* pdf = oneDParaCrystal->getProbabilityDistribution();
 
             if (pdf->getOmega() != 0.0)
-                result << indent() << it->second << "_pdf  = ba." << pdf->getName()
-                       << "(" << argumentList(pdf) << ")\n"
+                result << indent() << it->second << "_pdf  = ba." << pdf->getName() << "("
+                       << argumentList(pdf) << ")\n"
                        << indent() << it->second << ".setProbabilityDistribution(" << it->second
                        << "_pdf)\n";
         }
 
-        else if (const auto* twoDLattice
-                 = dynamic_cast<const InterferenceFunction2DLattice*>(interference)) {
+        else if (
+            const auto* twoDLattice =
+                dynamic_cast<const InterferenceFunction2DLattice*>(interference)) {
             const Lattice2DParameters latticeParameters = twoDLattice->getLatticeParameters();
             result << indent() << it->second << " = ba.InterferenceFunction2DLattice("
                    << printNm(latticeParameters.m_length_1) << ", "
@@ -418,70 +398,64 @@ std::string ExportToPython::defineInterferenceFunctions() const
 
             const IFTDecayFunction2D* pdf = twoDLattice->getDecayFunction();
 
-            result << indent() << it->second << "_pdf  = ba." << pdf->getName()
-                   << "(" << argumentList(pdf) << ")\n"
+            result << indent() << it->second << "_pdf  = ba." << pdf->getName() << "("
+                   << argumentList(pdf) << ")\n"
                    << indent() << it->second << ".setDecayFunction(" << it->second << "_pdf)\n";
         }
 
-        else if (const auto* twoDParaCrystal
-                 = dynamic_cast<const InterferenceFunction2DParaCrystal*>(interference)) {
+        else if (
+            const auto* twoDParaCrystal =
+                dynamic_cast<const InterferenceFunction2DParaCrystal*>(interference)) {
             std::vector<double> domainSize = twoDParaCrystal->getDomainSizes();
-            if (isSquare(twoDParaCrystal->getLatticeParameters().m_length_1,
-                                     twoDParaCrystal->getLatticeParameters().m_length_2,
-                                     twoDParaCrystal->getLatticeParameters().m_angle)) {
+            if (isSquare(
+                    twoDParaCrystal->getLatticeParameters().m_length_1,
+                    twoDParaCrystal->getLatticeParameters().m_length_2,
+                    twoDParaCrystal->getLatticeParameters().m_angle)) {
                 result << indent() << it->second
                        << " = ba.InterferenceFunction2DParaCrystal.createSquare("
-                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_1)
-                       << ", "
+                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_1) << ", "
                        << printNm(twoDParaCrystal->getDampingLength()) << ", "
-                       << printNm(domainSize[0]) << ", "
-                       << printNm(domainSize[1]) << ")\n";
+                       << printNm(domainSize[0]) << ", " << printNm(domainSize[1]) << ")\n";
             }
 
-            else if (isHexagonal(twoDParaCrystal->getLatticeParameters().m_length_1,
-                                             twoDParaCrystal->getLatticeParameters().m_length_2,
-                                             twoDParaCrystal->getLatticeParameters().m_angle)) {
+            else if (isHexagonal(
+                         twoDParaCrystal->getLatticeParameters().m_length_1,
+                         twoDParaCrystal->getLatticeParameters().m_length_2,
+                         twoDParaCrystal->getLatticeParameters().m_angle)) {
                 result << indent() << it->second
                        << " = ba.InterferenceFunction2DParaCrystal.createHexagonal("
-                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_1)
-                       << ", "
+                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_1) << ", "
                        << printNm(twoDParaCrystal->getDampingLength()) << ", "
-                       << printNm(domainSize[0]) << ", "
-                       << printNm(domainSize[1]) << ")\n";
+                       << printNm(domainSize[0]) << ", " << printNm(domainSize[1]) << ")\n";
             }
 
             else {
                 result << indent() << it->second << " = ba.InterferenceFunction2DParaCrystal("
-                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_1)
-                       << ", "
-                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_2)
-                       << ", "
-                       << printDegrees(twoDParaCrystal->getLatticeParameters().m_angle)
-                       << ", "
-                       << printDegrees(twoDParaCrystal->getLatticeParameters().m_xi)
-                       << ", "
+                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_1) << ", "
+                       << printNm(twoDParaCrystal->getLatticeParameters().m_length_2) << ", "
+                       << printDegrees(twoDParaCrystal->getLatticeParameters().m_angle) << ", "
+                       << printDegrees(twoDParaCrystal->getLatticeParameters().m_xi) << ", "
                        << printNm(twoDParaCrystal->getDampingLength()) << ")\n";
 
                 if (domainSize[0] != 0 || domainSize[1] != 0)
-                    result << indent() << it->second << ".setDomainSizes("
-                           << printNm(domainSize[0]) << ", "
-                           << printNm(domainSize[1]) << ")\n";
+                    result << indent() << it->second << ".setDomainSizes(" << printNm(domainSize[0])
+                           << ", " << printNm(domainSize[1]) << ")\n";
 
                 if (twoDParaCrystal->getIntegrationOverXi() == true)
                     result << indent() << it->second << ".setIntegrationOverXi(True)\n";
             }
 
-            std::vector<const IFTDistribution2D*> pdf_vector
-                = twoDParaCrystal->getProbabilityDistributions();
+            std::vector<const IFTDistribution2D*> pdf_vector =
+                twoDParaCrystal->getProbabilityDistributions();
             const IFTDistribution2D* pdf = pdf_vector[0];
 
-            result << indent() << it->second << "_pdf_1  = ba." << pdf->getName()
-                   << "(" << argumentList(pdf) << ")\n";
+            result << indent() << it->second << "_pdf_1  = ba." << pdf->getName() << "("
+                   << argumentList(pdf) << ")\n";
 
             pdf = pdf_vector[1];
 
-            result << indent() << it->second << "_pdf_2  = ba." << pdf->getName()
-                   << "(" << argumentList(pdf) << ")\n";
+            result << indent() << it->second << "_pdf_2  = ba." << pdf->getName() << "("
+                   << argumentList(pdf) << ")\n";
 
             result << indent() << it->second << ".setProbabilityDistributions(" << it->second
                    << "_pdf_1, " << it->second << "_pdf_2)\n";
@@ -490,7 +464,8 @@ std::string ExportToPython::defineInterferenceFunctions() const
         else
             throw Exceptions::NotImplementedException(
                 "Bug: ExportToPython::defineInterferenceFunctions() called with unexpected "
-                "IInterferenceFunction " + interference->getName());
+                "IInterferenceFunction "
+                + interference->getName());
     }
     return result.str();
 }
@@ -503,7 +478,7 @@ std::string ExportToPython::defineParticleLayouts() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Particle Layouts and adding Particles\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         const ILayout* iLayout = it->first;
         if (const ParticleLayout* particleLayout = dynamic_cast<const ParticleLayout*>(iLayout)) {
             result << indent() << it->second << " = ba.ParticleLayout()\n";
@@ -514,12 +489,12 @@ std::string ExportToPython::defineParticleLayouts() const
                 const IAbstractParticle* p_particle = particleLayout->getParticle(particleIndex);
                 double abundance = particleLayout->getAbundanceOfParticle(particleIndex);
                 result << indent() << it->second << ".addParticle("
-                       << m_label->getLabelParticle(p_particle) << ", "
-                       << printDouble(abundance) << ")\n";
+                       << m_label->getLabelParticle(p_particle) << ", " << printDouble(abundance)
+                       << ")\n";
                 particleIndex++;
             }
 
-            if( const IInterferenceFunction* p_iff = particleLayout->getInterferenceFunction() )
+            if (const IInterferenceFunction* p_iff = particleLayout->getInterferenceFunction())
                 result << indent() << it->second << ".addInterferenceFunction("
                        << m_label->getLabelInterferenceFunction(p_iff) << ")\n";
 
@@ -545,9 +520,9 @@ std::string ExportToPython::defineRoughnesses() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Roughness Parameters\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it)
-        result << indent() << it->second << " = ba.LayerRoughness("
-               <<  argumentList(it->first) << ")\n";
+    for (auto it = themap->begin(); it != themap->end(); ++it)
+        result << indent() << it->second << " = ba.LayerRoughness(" << argumentList(it->first)
+               << ")\n";
     return result.str();
 }
 
@@ -559,11 +534,12 @@ std::string ExportToPython::addLayoutsToLayers() const
     result << std::setprecision(12);
     result << "\n" << indent() << "# Adding layouts to layers";
     const auto layermap = m_label->getLayerMap();
-    for (auto it=layermap->begin(); it!=layermap->end(); ++it) {
+    for (auto it = layermap->begin(); it != layermap->end(); ++it) {
         const Layer* layer = it->first;
         size_t numberOfLayouts = layer->getNumberOfLayouts();
-        for(size_t i = 0; i < numberOfLayouts; ++i)
-            result << "\n" << indent() << it->second << ".addLayout("
+        for (size_t i = 0; i < numberOfLayouts; ++i)
+            result << "\n"
+                   << indent() << it->second << ".addLayout("
                    << m_label->getLabelLayout(layer->getLayout(i)) << ")\n";
     }
     return result.str();
@@ -577,7 +553,7 @@ std::string ExportToPython::defineMultiLayers() const
     std::ostringstream result;
     result << std::setprecision(12);
     result << "\n" << indent() << "# Defining Multilayers\n";
-    for (auto it=themap->begin(); it!=themap->end(); ++it) {
+    for (auto it = themap->begin(); it != themap->end(); ++it) {
         result << indent() << it->second << " = ba.MultiLayer()\n";
 
         size_t numberOfLayers = it->first->getNumberOfLayers();
@@ -616,56 +592,54 @@ std::string ExportToPython::defineDetector(const GISASSimulation* simulation) co
     std::ostringstream result;
     result << std::setprecision(12);
 
-    if(auto detector = dynamic_cast<const SphericalDetector*>(iDetector)) {
+    if (auto detector = dynamic_cast<const SphericalDetector*>(iDetector)) {
         result << indent() << "simulation.setDetectorParameters(";
-        for(size_t index=0; index<detector->getDimension(); ++index) {
-            if (index != 0) result << ", ";
+        for (size_t index = 0; index < detector->getDimension(); ++index) {
+            if (index != 0)
+                result << ", ";
             result << detector->getAxis(index).size() << ", "
                    << printDegrees(detector->getAxis(index).getMin()) << ", "
                    << printDegrees(detector->getAxis(index).getMax());
         }
         result << ")\n";
 
-    } else if(auto detector = dynamic_cast<const RectangularDetector*>(iDetector)) {
+    } else if (auto detector = dynamic_cast<const RectangularDetector*>(iDetector)) {
         result << indent() << "\n";
-        result << indent() << "detector = ba.RectangularDetector("
-               << detector->getNbinsX() << ", "
-               << printDouble(detector->getWidth()) << ", "
-               << detector->getNbinsY() << ", "
+        result << indent() << "detector = ba.RectangularDetector(" << detector->getNbinsX() << ", "
+               << printDouble(detector->getWidth()) << ", " << detector->getNbinsY() << ", "
                << printDouble(detector->getHeight()) << ")\n";
-        if(detector->getDetectorArrangment() == RectangularDetector::GENERIC) {
+        if (detector->getDetectorArrangment() == RectangularDetector::GENERIC) {
             result << indent() << "detector.setPosition("
                    << printKvector(detector->getNormalVector()) << ", "
-                   << printDouble(detector->getU0()) << ", "
-                   << printDouble(detector->getV0());
-            if(!isDefaultDirection(detector->getDirectionVector()))
+                   << printDouble(detector->getU0()) << ", " << printDouble(detector->getV0());
+            if (!isDefaultDirection(detector->getDirectionVector()))
                 result << ", " << printKvector(detector->getDirectionVector());
             result << ")\n";
 
-        } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
+        } else if (
+            detector->getDetectorArrangment() == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
             result << indent() << "detector.setPerpendicularToSampleX("
-                   << printDouble(detector->getDistance()) << ", "
-                   << printDouble(detector->getU0()) << ", "
-                   << printDouble(detector->getV0()) << ")\n";
+                   << printDouble(detector->getDistance()) << ", " << printDouble(detector->getU0())
+                   << ", " << printDouble(detector->getV0()) << ")\n";
 
-        } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
+        } else if (
+            detector->getDetectorArrangment()
+            == RectangularDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
             result << indent() << "detector.setPerpendicularToDirectBeam("
-                   << printDouble(detector->getDistance()) << ", "
-                   << printDouble(detector->getU0()) << ", "
-                   << printDouble(detector->getV0()) << ")\n";
+                   << printDouble(detector->getDistance()) << ", " << printDouble(detector->getU0())
+                   << ", " << printDouble(detector->getV0()) << ")\n";
 
-        } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
+        } else if (
+            detector->getDetectorArrangment()
+            == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
             result << indent() << "detector.setPerpendicularToReflectedBeam("
-                   << printDouble(detector->getDistance()) << ", "
-                   << printDouble(detector->getU0()) << ", "
-                   << printDouble(detector->getV0()) << ")\n";
+                   << printDouble(detector->getDistance()) << ", " << printDouble(detector->getU0())
+                   << ", " << printDouble(detector->getV0()) << ")\n";
 
 
-        } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
+        } else if (
+            detector->getDetectorArrangment()
+            == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
             result << indent() << "detector.setPerpendicularToReflectedBeam("
                    << printDouble(detector->getDistance()) << ")\n";
             result << indent() << "detector.setDirectBeamPosition("
@@ -681,7 +655,7 @@ std::string ExportToPython::defineDetector(const GISASSimulation* simulation) co
     } else
         throw Exceptions::RuntimeErrorException("ExportToPython::defineDetector: unknown detector");
 
-    if(iDetector->regionOfInterest()) {
+    if (iDetector->regionOfInterest()) {
         result << indent() << "simulation.setRegionOfInterest("
                << printFunc(iDetector)(iDetector->regionOfInterest()->getXlow()) << ", "
                << printFunc(iDetector)(iDetector->regionOfInterest()->getYlow()) << ", "
@@ -693,14 +667,14 @@ std::string ExportToPython::defineDetector(const GISASSimulation* simulation) co
     return result.str();
 }
 
-std::string ExportToPython::defineDetectorResolutionFunction(
-    const GISASSimulation* simulation) const
+std::string
+ExportToPython::defineDetectorResolutionFunction(const GISASSimulation* simulation) const
 {
     std::ostringstream result;
     const IDetector2D* detector = simulation->getInstrument().getDetector();
 
     if (const IDetectorResolution* p_resfunc = detector->getDetectorResolutionFunction()) {
-        if ( auto* p_convfunc = dynamic_cast<const ConvolutionDetectorResolution*>(p_resfunc)) {
+        if (auto* p_convfunc = dynamic_cast<const ConvolutionDetectorResolution*>(p_resfunc)) {
             if (auto* resfunc = dynamic_cast<const ResolutionFunction2DGaussian*>(
                     p_convfunc->getResolutionFunction2D())) {
                 result << indent() << "simulation.setDetectorResolutionFunction(";
@@ -726,12 +700,10 @@ std::string ExportToPython::defineBeam(const GISASSimulation* simulation) const
     result << std::setprecision(12);
     // result << indent() << "# Defining Beam Parameters\n";
     const Beam& beam = simulation->getInstrument().getBeam();
-    result << indent() << "simulation.setBeamParameters("
-           << printNm(beam.getWavelength()) << ", "
-           << printDegrees(beam.getAlpha()) << ", "
-           << printDegrees(beam.getPhi()) << ")\n";
+    result << indent() << "simulation.setBeamParameters(" << printNm(beam.getWavelength()) << ", "
+           << printDegrees(beam.getAlpha()) << ", " << printDegrees(beam.getPhi()) << ")\n";
     double beam_intensity = beam.getIntensity();
-    if(beam_intensity > 0.0)
+    if (beam_intensity > 0.0)
         result << indent() << "simulation.setBeamIntensity("
                << printScientificDouble(beam_intensity) << ")\n";
     return result.str();
@@ -741,18 +713,18 @@ std::string ExportToPython::defineParameterDistributions(const GISASSimulation* 
 {
     std::ostringstream result;
     const std::vector<ParameterDistribution>& distributions =
-            simulation->getDistributionHandler().getDistributions();
-    if (distributions.size()==0) return "";
-    for (size_t i=0; i<distributions.size(); ++i) {
+        simulation->getDistributionHandler().getDistributions();
+    if (distributions.size() == 0)
+        return "";
+    for (size_t i = 0; i < distributions.size(); ++i) {
         std::string main_par_name = distributions[i].getMainParameterName();
         size_t nbr_samples = distributions[i].getNbrSamples();
         double sigma_factor = distributions[i].getSigmaFactor();
         const IDistribution1D* p_distr = distributions[i].getDistribution();
-        result << indent() << "distribution_" << i+1 << " = ba."
-               << std::setprecision(12) << p_distr->getName() << "("
-               << argumentList(p_distr) << ")\n"
+        result << indent() << "distribution_" << i + 1 << " = ba." << std::setprecision(12)
+               << p_distr->getName() << "(" << argumentList(p_distr) << ")\n"
                << indent() << "simulation.addParameterDistribution(\"" << main_par_name << "\", "
-               << "distribution_" << i+1 << ", " << nbr_samples << ", "
+               << "distribution_" << i + 1 << ", " << nbr_samples << ", "
                << printDouble(sigma_factor) << ")\n";
     }
     return result.str();
@@ -765,9 +737,9 @@ std::string ExportToPython::defineMasks(const GISASSimulation* simulation) const
 
     const IDetector2D* detector = simulation->getInstrument().getDetector();
     const DetectorMask* detectorMask = detector->getDetectorMask();
-    if(detectorMask && detectorMask->numberOfMasks()) {
+    if (detectorMask && detectorMask->numberOfMasks()) {
         result << "\n";
-        for(size_t i_mask=0; i_mask<detectorMask->numberOfMasks(); ++i_mask) {
+        for (size_t i_mask = 0; i_mask < detectorMask->numberOfMasks(); ++i_mask) {
             bool mask_value(false);
             const IShape2D* shape = detectorMask->getMaskShape(i_mask, mask_value);
             result << representShape2D(indent(), shape, mask_value, printFunc(detector));
@@ -784,10 +756,10 @@ std::string ExportToPython::defineSimulationOptions(const GISASSimulation* simul
     result << std::setprecision(12);
 
     const SimulationOptions& options = simulation->getOptions();
-    if(options.getHardwareConcurrency() != options.getNumberOfThreads())
+    if (options.getHardwareConcurrency() != options.getNumberOfThreads())
         result << indent() << "simulation.getOptions().setNumberOfThreads("
                << options.getNumberOfThreads() << ")\n";
-    if(options.isIntegrate())
+    if (options.isIntegrate())
         result << indent() << "simulation.getOptions().setMonteCarloIntegration(True, "
                << options.getMcPoints() << ")\n";
     return result.str();
@@ -796,28 +768,25 @@ std::string ExportToPython::defineSimulationOptions(const GISASSimulation* simul
 std::string ExportToPython::definePlot(const GISASSimulation* simulation) const
 {
     std::ostringstream result;
-    result << std::setprecision(12) <<
-        "def plot(intensities):\n"
-        "    import matplotlib.colors\n"
-        "    from matplotlib import pyplot as plt\n"
-        "    im = plt.imshow(intensities.getArray(), "
-        "norm=matplotlib.colors.LogNorm(1, intensities.getMaximum()), extent=[";
+    result << std::setprecision(12)
+           << "def plot(intensities):\n"
+              "    import matplotlib.colors\n"
+              "    from matplotlib import pyplot as plt\n"
+              "    im = plt.imshow(intensities.getArray(), "
+              "norm=matplotlib.colors.LogNorm(1, intensities.getMaximum()), extent=[";
     const Instrument& instrument = simulation->getInstrument();
     std::vector<std::string> entries;
-    for (size_t i=0; i<instrument.getDetectorDimension(); ++ i)
-        entries.push_back( printDegrees(instrument.getDetectorAxis(i).getMin()) + ", " +
-                           printDegrees(instrument.getDetectorAxis(i).getMax()) );
-    result << StringUtils::join( entries, ", " ) << "]) \n";
-    result <<
-        "    plt.colorbar(im)\n"
-        "    plt.show()\n\n\n";
+    for (size_t i = 0; i < instrument.getDetectorDimension(); ++i)
+        entries.push_back(
+            printDegrees(instrument.getDetectorAxis(i).getMin()) + ", "
+            + printDegrees(instrument.getDetectorAxis(i).getMax()));
+    result << StringUtils::join(entries, ", ") << "]) \n";
+    result << "    plt.colorbar(im)\n"
+              "    plt.show()\n\n\n";
     return result.str();
 }
 
-std::string ExportToPython::indent() const
-{
-    return "    ";
-}
+std::string ExportToPython::indent() const { return "    "; }
 
 void ExportToPython::setRotationInformation(
     const IParticle* p_particle, std::string name, std::ostringstream& result) const
@@ -827,21 +796,20 @@ void ExportToPython::setRotationInformation(
         p_particle->getRotation()->getTransform3D().calculateEulerAngles(&alpha, &beta, &gamma);
         switch (p_particle->getRotation()->getTransform3D().getRotationType()) {
         case Transform3D::EULER:
-            result << indent() << name << "_rotation = ba.RotationEuler("
-                   << printDegrees(alpha) << ", " << printDegrees(beta)
-                   << ", " << printDegrees(gamma) << ")\n";
+            result << indent() << name << "_rotation = ba.RotationEuler(" << printDegrees(alpha)
+                   << ", " << printDegrees(beta) << ", " << printDegrees(gamma) << ")\n";
             break;
         case Transform3D::XAXIS:
-            result << indent() << name << "_rotation = ba.RotationX("
-                   << printDegrees(beta) << ")\n";
+            result << indent() << name << "_rotation = ba.RotationX(" << printDegrees(beta)
+                   << ")\n";
             break;
         case Transform3D::YAXIS:
-            result << indent() << name << "_rotation = ba.RotationY("
-                   << printDegrees(gamma) << ")\n";
+            result << indent() << name << "_rotation = ba.RotationY(" << printDegrees(gamma)
+                   << ")\n";
             break;
         case Transform3D::ZAXIS:
-            result << indent() << name << "_rotation = ba.RotationZ("
-                   << printDegrees(alpha) << ")\n";
+            result << indent() << name << "_rotation = ba.RotationZ(" << printDegrees(alpha)
+                   << ")\n";
             break;
         default:
             break;
@@ -857,14 +825,9 @@ void ExportToPython::setPositionInformation(
     bool has_position_info = (pos != kvector_t());
 
     if (has_position_info) {
-        result << indent() << name
-               << "_position = kvector_t("
-               << printNm(pos.x()) << ", "
-               << printNm(pos.y()) << ", "
-               << printNm(pos.z()) << ")\n";
+        result << indent() << name << "_position = kvector_t(" << printNm(pos.x()) << ", "
+               << printNm(pos.y()) << ", " << printNm(pos.z()) << ")\n";
 
-        result << indent()
-               << name << ".setPosition("
-               << name << "_position)\n";
+        result << indent() << name << ".setPosition(" << name << "_position)\n";
     }
 }

@@ -27,9 +27,11 @@ class BA_CORE_API_ FormFactorTruncatedSphere : public IFormFactorBorn
 public:
     FormFactorTruncatedSphere(double radius, double height);
 
-    FormFactorTruncatedSphere *clone() const override final {
-        return new FormFactorTruncatedSphere(m_radius, m_height); }
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    FormFactorTruncatedSphere* clone() const override final
+    {
+        return new FormFactorTruncatedSphere(m_radius, m_height);
+    }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getHeight() const { return m_height; }
     double getRadius() const { return m_radius; }

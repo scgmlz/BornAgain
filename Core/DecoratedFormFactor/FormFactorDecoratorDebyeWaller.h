@@ -25,14 +25,16 @@ class BA_CORE_API_ FormFactorDecoratorDebyeWaller : public IFormFactorDecorator
 {
 public:
     //! Anisotropic Debye-Waller factor.
-    FormFactorDecoratorDebyeWaller(const IFormFactor& form_factor, double dw_h_factor,
-                                   double dw_r_factor);
+    FormFactorDecoratorDebyeWaller(
+        const IFormFactor& form_factor, double dw_h_factor, double dw_r_factor);
 
     //! Isotropic Debye-Waller factor.
     FormFactorDecoratorDebyeWaller(const IFormFactor& form_factor, double dw_factor);
 
-    FormFactorDecoratorDebyeWaller* clone() const override final {
-        return new FormFactorDecoratorDebyeWaller(*mp_form_factor, m_h_dw_factor, m_r_dw_factor); }
+    FormFactorDecoratorDebyeWaller* clone() const override final
+    {
+        return new FormFactorDecoratorDebyeWaller(*mp_form_factor, m_h_dw_factor, m_r_dw_factor);
+    }
 
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 

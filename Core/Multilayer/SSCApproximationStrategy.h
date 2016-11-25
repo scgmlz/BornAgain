@@ -48,13 +48,14 @@ private:
 //! in size-spacing correlation approximation.
 //! @ingroup algorithms_internal
 
-class SSCApproximationStrategy1 final
-    : public IInterferenceFunctionStrategy1
-    , public SSCApproximationStrategy
+class SSCApproximationStrategy1 final : public IInterferenceFunctionStrategy1,
+                                        public SSCApproximationStrategy
 {
 public:
     SSCApproximationStrategy1(SimulationOptions sim_params, double kappa)
-        : IInterferenceFunctionStrategy(sim_params), SSCApproximationStrategy(kappa) {}
+        : IInterferenceFunctionStrategy(sim_params), SSCApproximationStrategy(kappa)
+    {
+    }
 
 private:
     double evaluateForList(const SimulationElement& sim_element) const final;
@@ -66,13 +67,14 @@ private:
 //! in size-spacing correlation approximation.
 //! @ingroup algorithms_internal
 
-class SSCApproximationStrategy2 final
-    : public IInterferenceFunctionStrategy2
-    , public SSCApproximationStrategy
+class SSCApproximationStrategy2 final : public IInterferenceFunctionStrategy2,
+                                        public SSCApproximationStrategy
 {
 public:
     SSCApproximationStrategy2(SimulationOptions sim_params, double kappa)
-        : IInterferenceFunctionStrategy(sim_params), SSCApproximationStrategy(kappa) {}
+        : IInterferenceFunctionStrategy(sim_params), SSCApproximationStrategy(kappa)
+    {
+    }
 
 private:
     double evaluateForList(const SimulationElement& sim_element) const final;

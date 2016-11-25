@@ -27,5 +27,3 @@ private:
 };
 
 #endif // ISHAREABLE_H
-
-

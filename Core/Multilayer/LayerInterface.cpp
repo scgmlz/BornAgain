@@ -19,26 +19,20 @@
 #include "LayerRoughness.h"
 #include "Logger.h"
 
-LayerInterface::LayerInterface()
-    : m_roughness(0)
-    , m_LayerTop(0)
-    , m_LayerBottom(0)
+LayerInterface::LayerInterface() : m_roughness(0), m_LayerTop(0), m_LayerBottom(0)
 {
     setName(BornAgain::LayerInterfaceType);
 }
 
-LayerInterface::~LayerInterface()
-{
-    delete m_roughness;
-}
+LayerInterface::~LayerInterface() { delete m_roughness; }
 
 LayerInterface* LayerInterface::clone() const
 {
     throw Exceptions::NotImplementedException("LayerInterface::clone() -> Not allowed to clone.");
 }
 
-LayerInterface* LayerInterface::createSmoothInterface(
-    const Layer* p_layer_top, const Layer* p_layer_bottom)
+LayerInterface*
+LayerInterface::createSmoothInterface(const Layer* p_layer_top, const Layer* p_layer_bottom)
 {
     LayerInterface* lr = new LayerInterface();
     lr->setLayerTop(p_layer_top);
@@ -58,13 +52,14 @@ LayerInterface* LayerInterface::createRoughInterface(
 
 void LayerInterface::setRoughness(const LayerRoughness& roughness)
 {
-    if(m_roughness) {
-        msglog(Logging::WARNING) << "LayerInterface::setRoughness() -> "
-            "Info. Roughness already assigned to given interface, removing it ";
+    if (m_roughness) {
+        msglog(Logging::WARNING)
+            << "LayerInterface::setRoughness() -> "
+               "Info. Roughness already assigned to given interface, removing it ";
         deregisterChild(m_roughness);
         delete m_roughness;
     }
-    //m_roughness = new LayerRoughness(roughness);
+    // m_roughness = new LayerRoughness(roughness);
     m_roughness = roughness.clone();
     registerChild(m_roughness);
 }

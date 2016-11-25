@@ -15,8 +15,8 @@
 
 #include "MatrixSpecularInfoMap.h"
 #include "ILayerRTCoefficients.h"
-#include "MatrixRTCoefficients.h"
 #include "ISpecularInfoMap.h"
+#include "MatrixRTCoefficients.h"
 #include "MultiLayer.h"
 #include "SimulationElement.h"
 #include "SpecularMagnetic.h"
@@ -33,7 +33,7 @@ MatrixSpecularInfoMap::MatrixSpecularInfoMap(const MultiLayer* multilayer, int l
 MatrixSpecularInfoMap* MatrixSpecularInfoMap::clone() const
 {
     MatrixSpecularInfoMap* result = new MatrixSpecularInfoMap(nullptr, m_layer);
-    if (mP_multilayer)  {
+    if (mP_multilayer) {
         result->mP_multilayer.reset(mP_multilayer->clone());
         result->mP_inverted_multilayer.reset(mP_inverted_multilayer->clone());
     }
@@ -42,16 +42,16 @@ MatrixSpecularInfoMap* MatrixSpecularInfoMap::clone() const
 
 // TODO factor out common private function as done in the Scalar.. case ?
 
-const ILayerRTCoefficients* MatrixSpecularInfoMap::getOutCoefficients(
-        const SimulationElement& sim_element) const
+const ILayerRTCoefficients*
+MatrixSpecularInfoMap::getOutCoefficients(const SimulationElement& sim_element) const
 {
     SpecularMagnetic::MultiLayerCoeff_t coeffs;
     SpecularMagnetic::execute(*mP_inverted_multilayer, -sim_element.getMeanKF(), coeffs);
     return new MatrixRTCoefficients(coeffs[m_layer]);
 }
 
-const ILayerRTCoefficients* MatrixSpecularInfoMap::getInCoefficients(
-        const SimulationElement& sim_element) const
+const ILayerRTCoefficients*
+MatrixSpecularInfoMap::getInCoefficients(const SimulationElement& sim_element) const
 {
     SpecularMagnetic::MultiLayerCoeff_t coeffs;
     SpecularMagnetic::execute(*mP_multilayer, sim_element.getKI(), coeffs);

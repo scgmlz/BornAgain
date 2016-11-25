@@ -73,8 +73,11 @@ public:
 
     std::vector<std::string> getParameterNames() const;
 
-    friend std::ostream& operator<<(std::ostream& ostr, const ParameterPool& obj) {
-        obj.print(ostr); return ostr; }
+    friend std::ostream& operator<<(std::ostream& ostr, const ParameterPool& obj)
+    {
+        obj.print(ostr);
+        return ostr;
+    }
 
 protected:
     //! Called from RealParameter, calls back to owning IParameterized.
@@ -87,7 +90,7 @@ private:
     void report_set_value_error(const std::string& parname, double value) const;
 
     std::string m_name; //!< The name of this pool, should be that of the owning IParameterized.
-    std::vector<RealParameter*> m_params;     //!< The parameters in this pool.
+    std::vector<RealParameter*> m_params; //!< The parameters in this pool.
     std::function<void()> m_onChange; //!< To be called whenever a parameter has changed.
 
     friend RealParameter; //!< allow call of onChange().

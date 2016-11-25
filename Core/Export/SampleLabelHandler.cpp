@@ -39,10 +39,7 @@ std::string SampleLabelHandler::getLabelMaterial(const IMaterial* mat)
     return m_MaterialLabel[mat];
 }
 
-std::string SampleLabelHandler::getLabelLayer(const Layer* layer)
-{
-    return m_LayerLabel[layer];
-}
+std::string SampleLabelHandler::getLabelLayer(const Layer* layer) { return m_LayerLabel[layer]; }
 
 std::string SampleLabelHandler::getLabelRoughness(const LayerRoughness* roughness)
 {
@@ -95,53 +92,52 @@ std::string SampleLabelHandler::getLabelRotation(const IRotation* rot)
 
 void SampleLabelHandler::insertMaterial(const IMaterial* mat)
 {
-    for (auto it=m_MaterialLabel.begin(); it!=m_MaterialLabel.end(); ++it) {
-        if( *(it->first) == *mat ) {
+    for (auto it = m_MaterialLabel.begin(); it != m_MaterialLabel.end(); ++it) {
+        if (*(it->first) == *mat) {
             m_MaterialLabel.insert(std::make_pair(mat, it->second));
             return;
         }
     }
     // material not found => create new label
     std::ostringstream label_stream;
-    label_stream << "material_" << m_MaterialLabel.size()+1;
+    label_stream << "material_" << m_MaterialLabel.size() + 1;
     m_MaterialLabel.insert(std::make_pair(mat, label_stream.str()));
 }
 
 void SampleLabelHandler::insertFormFactor(const IFormFactor* sample)
 {
     std::ostringstream inter;
-    inter << "formFactor_" << m_FormFactorLabel.size()+1;
+    inter << "formFactor_" << m_FormFactorLabel.size() + 1;
     m_FormFactorLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertInterferenceFunction(const IInterferenceFunction* sample)
 {
     std::ostringstream inter;
-    inter << "interference_" << m_InterferenceFunctionLabel.size()+1;
+    inter << "interference_" << m_InterferenceFunctionLabel.size() + 1;
     m_InterferenceFunctionLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertLayout(const ILayout* sample)
 {
     std::ostringstream inter;
-    inter << "layout_" << m_ILayoutLabel.size()+1;
+    inter << "layout_" << m_ILayoutLabel.size() + 1;
     m_ILayoutLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertLayer(const Layer* sample)
 {
     std::ostringstream inter;
-    inter << "layer_" << m_LayerLabel.size()+1;
+    inter << "layer_" << m_LayerLabel.size() + 1;
     m_LayerLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertRoughness(const LayerRoughness* sample)
 {
-    if(sample->getSigma() != 0 &&
-       sample->getHurstParameter() != 0 &&
-       sample->getLatteralCorrLength() != 0) {
+    if (sample->getSigma() != 0 && sample->getHurstParameter() != 0
+        && sample->getLatteralCorrLength() != 0) {
         std::ostringstream inter;
-        inter << "layerRoughness_" << m_LayerRoughnessLabel.size()+1;
+        inter << "layerRoughness_" << m_LayerRoughnessLabel.size() + 1;
         m_LayerRoughnessLabel.insert(sample, inter.str());
     }
 }
@@ -149,41 +145,41 @@ void SampleLabelHandler::insertRoughness(const LayerRoughness* sample)
 void SampleLabelHandler::insertMultiLayer(const MultiLayer* sample)
 {
     std::ostringstream inter;
-    inter << "multiLayer_" << m_MultiLayerLabel.size()+1;
+    inter << "multiLayer_" << m_MultiLayerLabel.size() + 1;
     m_MultiLayerLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertParticle(const Particle* sample)
 {
     std::ostringstream inter;
-    inter << "particle_" << m_ParticleLabel.size()+1;
+    inter << "particle_" << m_ParticleLabel.size() + 1;
     m_ParticleLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertParticleCoreShell(const ParticleCoreShell* sample)
 {
     std::ostringstream inter;
-    inter << "particleCoreShell_" << m_ParticleCoreShellLabel.size()+1;
+    inter << "particleCoreShell_" << m_ParticleCoreShellLabel.size() + 1;
     m_ParticleCoreShellLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertParticleDistribution(const ParticleDistribution* sample)
 {
     std::ostringstream inter;
-    inter << "particleDistribution_" << m_ParticleDistributionLabel.size()+1;
+    inter << "particleDistribution_" << m_ParticleDistributionLabel.size() + 1;
     m_ParticleDistributionLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertParticleComposition(const ParticleComposition* sample)
 {
     std::ostringstream inter;
-    inter << "particleComposition_" << m_ParticleCompositionLabel.size()+1;
+    inter << "particleComposition_" << m_ParticleCompositionLabel.size() + 1;
     m_ParticleCompositionLabel.insert(sample, inter.str());
 }
 
 void SampleLabelHandler::insertRotation(const IRotation* sample)
 {
     std::ostringstream inter;
-    inter << "rotation_" << m_RotationsLabel.size()+1;
+    inter << "rotation_" << m_RotationsLabel.size() + 1;
     m_RotationsLabel.insert(sample, inter.str());
 }

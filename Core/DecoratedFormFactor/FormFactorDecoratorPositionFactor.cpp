@@ -25,21 +25,20 @@ FormFactorDecoratorPositionFactor::FormFactorDecoratorPositionFactor(
     setName(BornAgain::FormFactorDecoratorPositionFactorType);
 }
 
-complex_t FormFactorDecoratorPositionFactor::evaluate(
-    const WavevectorInfo& wavevectors) const
+complex_t FormFactorDecoratorPositionFactor::evaluate(const WavevectorInfo& wavevectors) const
 {
     return getPositionFactor(wavevectors) * mp_form_factor->evaluate(wavevectors);
 }
 
-Eigen::Matrix2cd FormFactorDecoratorPositionFactor::evaluatePol(
-        const WavevectorInfo& wavevectors) const
+Eigen::Matrix2cd
+FormFactorDecoratorPositionFactor::evaluatePol(const WavevectorInfo& wavevectors) const
 {
     return getPositionFactor(wavevectors) * mp_form_factor->evaluatePol(wavevectors);
 }
 
-complex_t FormFactorDecoratorPositionFactor::getPositionFactor(
-    const WavevectorInfo& wavevectors) const
+complex_t
+FormFactorDecoratorPositionFactor::getPositionFactor(const WavevectorInfo& wavevectors) const
 {
     cvector_t q = wavevectors.getQ();
-    return exp_I( m_position.dot(q) );
+    return exp_I(m_position.dot(q));
 }

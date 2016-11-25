@@ -17,9 +17,9 @@
 #define FITSUITEIMPL_H
 
 #include "FitOptions.h"
+#include "FitParameterSet.h"
 #include "FitSuiteFunctions.h"
 #include "FitSuiteObjects.h"
-#include "FitParameterSet.h"
 #include "FitSuiteStrategies.h"
 #include <functional>
 #ifndef SWIG
@@ -37,7 +37,7 @@ class FitParameterLinked;
 
 class BA_CORE_API_ FitSuiteImpl
 {
- public:
+public:
     FitSuiteImpl(const std::function<void()>& notifyObservers);
     FitSuiteImpl& operator=(const FitSuiteImpl&) = delete;
     FitSuiteImpl(const FitSuiteImpl&) = delete;
@@ -47,13 +47,12 @@ class BA_CORE_API_ FitSuiteImpl
     void clear();
 
     //! Adds pair of (simulation, real data) for consecutive simulation
-    void addSimulationAndRealData(const GISASSimulation& simulation,
-                                  const OutputData<double>& real_data,
-                                  double weight);
+    void addSimulationAndRealData(
+        const GISASSimulation& simulation, const OutputData<double>& real_data, double weight);
 
     //! Adds fit parameter
-    FitParameterLinked* addFitParameter(const std::string& name, double value,
-                                        const AttLimits& limits, double step = 0.0);
+    FitParameterLinked* addFitParameter(
+        const std::string& name, double value, const AttLimits& limits, double step = 0.0);
 
     //! Adds fit strategy
     void addFitStrategy(const IFitStrategy& strategy);

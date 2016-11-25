@@ -31,9 +31,11 @@ public:
     //! @param asymmetry length of triangular cross section
     FormFactorRipple2(double length, double width, double height, double asymmetry);
 
-    FormFactorRipple2 *clone() const override final {
-        return new FormFactorRipple2(m_length, m_width, m_height, m_d); }
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    FormFactorRipple2* clone() const override final
+    {
+        return new FormFactorRipple2(m_length, m_width, m_height, m_d);
+    }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getHeight() const { return m_height; }
     double getWidth() const { return m_width; }

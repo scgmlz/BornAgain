@@ -27,8 +27,9 @@ class Particle;
 class BA_CORE_API_ ParticleCoreShell : public IParticle
 {
 public:
-    ParticleCoreShell(const Particle& shell, const Particle& core,
-                      kvector_t relative_core_position=kvector_t(0.0, 0.0, 0.0));
+    ParticleCoreShell(
+        const Particle& shell, const Particle& core,
+        kvector_t relative_core_position = kvector_t(0.0, 0.0, 0.0));
     virtual ~ParticleCoreShell();
 
     ParticleCoreShell* clone() const final;
@@ -42,8 +43,8 @@ public:
     const IMaterial* getAmbientMaterial() const final;
 
     //! Create a form factor for this particle with an extra scattering factor
-    IFormFactor* createTransformedFormFactor(
-        const IRotation* p_rotation, kvector_t translation) const final;
+    IFormFactor*
+    createTransformedFormFactor(const IRotation* p_rotation, kvector_t translation) const final;
 
     //! Returns the core particle
     const Particle* getCoreParticle() const { return mp_core; }

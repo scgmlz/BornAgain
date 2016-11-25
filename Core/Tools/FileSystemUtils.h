@@ -22,26 +22,26 @@
 
 //! Utility functions to deal with file system.
 
-namespace FileSystemUtils {
+namespace FileSystemUtils
+{
 
-    //! Returns extension of given filename.
-    BA_CORE_API_ std::string extension(const std::string& fname);
+//! Returns extension of given filename.
+BA_CORE_API_ std::string extension(const std::string& fname);
 
-    //! Creates directory in current directory
-    BA_CORE_API_ bool createDirectory(const std::string& dir_name);
+//! Creates directory in current directory
+BA_CORE_API_ bool createDirectory(const std::string& dir_name);
 
-    //! Returns filenames of files in directory
-    BA_CORE_API_ std::vector<std::string> filesInDirectory(const std::string& dir_name);
+//! Returns filenames of files in directory
+BA_CORE_API_ std::vector<std::string> filesInDirectory(const std::string& dir_name);
 
-    //! Returns joint path name.
-    BA_CORE_API_ std::string jointPath(const std::string& spath1, const std::string& spath2);
+//! Returns joint path name.
+BA_CORE_API_ std::string jointPath(const std::string& spath1, const std::string& spath2);
 
-    //! Returns path without directory part ("Foo/Bar/Doz.int.gz" -> "Doz.int.gz")
-    BA_CORE_API_ std::string filename(const std::string& path);
+//! Returns path without directory part ("Foo/Bar/Doz.int.gz" -> "Doz.int.gz")
+BA_CORE_API_ std::string filename(const std::string& path);
 
-    //! Returns file names that agree with a regex glob pattern.
-    BA_CORE_API_ std::vector<std::string> glob(
-        const std::string& dir, const std::string& pattern);
+//! Returns file names that agree with a regex glob pattern.
+BA_CORE_API_ std::vector<std::string> glob(const std::string& dir, const std::string& pattern);
 
 } // namespace FileSystemUtils
 

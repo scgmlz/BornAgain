@@ -26,11 +26,13 @@ class BA_CORE_API_ WavevectorInfo
 public:
     WavevectorInfo() {} // TODO: stop abuse for q=0, then =delete
     WavevectorInfo(cvector_t ki, cvector_t kf, double wavelength)
-        : m_ki(ki), m_kf(kf), m_wavelength(wavelength) {}
+        : m_ki(ki), m_kf(kf), m_wavelength(wavelength)
+    {
+    }
     WavevectorInfo(kvector_t ki, kvector_t kf, double wavelength)
-        : m_ki(ki.complex())
-        , m_kf(kf.complex())
-        , m_wavelength(wavelength) {}
+        : m_ki(ki.complex()), m_kf(kf.complex()), m_wavelength(wavelength)
+    {
+    }
 
     cvector_t getKi() const { return m_ki; }
     cvector_t getKf() const { return m_kf; }

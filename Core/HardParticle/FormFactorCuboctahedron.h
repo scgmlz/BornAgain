@@ -26,9 +26,11 @@ class BA_CORE_API_ FormFactorCuboctahedron : public FormFactorPolyhedron
 public:
     FormFactorCuboctahedron(double length, double height, double height_ratio, double alpha);
 
-    FormFactorCuboctahedron *clone() const override final {
-        return new FormFactorCuboctahedron(m_length, m_height, m_height_ratio, m_alpha); }
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    FormFactorCuboctahedron* clone() const override final
+    {
+        return new FormFactorCuboctahedron(m_length, m_height, m_height_ratio, m_alpha);
+    }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getLength() const { return m_length; }
     double getHeight() const { return m_height; }

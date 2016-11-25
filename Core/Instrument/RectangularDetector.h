@@ -49,8 +49,9 @@ public:
 
     void init(const Beam& beam) override;
 
-    void setPosition(const kvector_t normal_to_detector, double u0, double v0,
-                     const kvector_t direction = kvector_t(0.0, -1.0, 0.0));
+    void setPosition(
+        const kvector_t normal_to_detector, double u0, double v0,
+        const kvector_t direction = kvector_t(0.0, -1.0, 0.0));
 
     void setPerpendicularToSampleX(double distance, double u0, double v0);
 
@@ -94,8 +95,9 @@ protected:
     IAxis* createAxis(size_t index, size_t n_bins, double min, double max) const override;
 
     //! Calculates axis range from original detector axes in given units (mm, rad, etc)
-    virtual void calculateAxisRange(size_t axis_index, const Beam& beam, EAxesUnits units,
-                                    double &amin, double &amax) const override;
+    virtual void calculateAxisRange(
+        size_t axis_index, const Beam& beam, EAxesUnits units, double& amin,
+        double& amax) const override;
 
     //! Returns the name for the axis with given index
     std::string getAxisName(size_t index) const override;
@@ -107,6 +109,7 @@ protected:
 
     //! swap function
     void swapContent(RectangularDetector& other);
+
 private:
     void setDistanceAndOffset(double distance, double u0, double v0);
     void initNormalVector(const kvector_t central_k);
@@ -133,6 +136,7 @@ public:
     kvector_t getK(double x, double y, double wavelength) const override;
     double getIntegrationFactor(double x, double y) const override;
     double getSolidAngle() const override;
+
 private:
     kvector_t normalizeLength(const kvector_t direction, double length) const;
     double calculateSolidAngle() const;

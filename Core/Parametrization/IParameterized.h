@@ -28,7 +28,7 @@ class RealParameter;
 class BA_CORE_API_ IParameterized : public INamed
 {
 public:
-    IParameterized(const std::string& name="");
+    IParameterized(const std::string& name = "");
     IParameterized(const IParameterized& other);
     ~IParameterized() override;
 
@@ -48,12 +48,15 @@ public:
 
     RealParameter* getParameter(const std::string& name) const;
 
-    friend std::ostream& operator<<(std::ostream& ostr, const IParameterized& m) {
-        m.print(ostr); return ostr; }
+    friend std::ostream& operator<<(std::ostream& ostr, const IParameterized& m)
+    {
+        m.print(ostr);
+        return ostr;
+    }
 
     //! Adds parameters from local pool to external pool and recursively calls its direct children.
     virtual std::string addParametersToExternalPool(
-        const std::string& path, ParameterPool* external_pool, int copy_number=-1) const;
+        const std::string& path, ParameterPool* external_pool, int copy_number = -1) const;
 
 protected:
     //! Action to be taken in inherited class when a parameter has changed.

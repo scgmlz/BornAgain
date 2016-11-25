@@ -16,14 +16,14 @@
 #include "InterferenceFunction2DLattice.h"
 #include "BornAgainNamespace.h"
 #include "Exceptions.h"
-#include "Macros.h"
 #include "ISampleVisitor.h"
+#include "Macros.h"
 #include "MathConstants.h"
 #include "RealParameter.h"
 
-GCC_DIAG_OFF(unused-parameter)
+GCC_DIAG_OFF(unused - parameter)
 #include <boost/math/special_functions/round.hpp>
-GCC_DIAG_ON(unused-parameter)
+GCC_DIAG_ON(unused - parameter)
 
 using namespace BornAgain;
 
@@ -44,10 +44,7 @@ InterferenceFunction2DLattice::InterferenceFunction2DLattice(
     initialize_rec_vectors();
 }
 
-InterferenceFunction2DLattice::~InterferenceFunction2DLattice()
-{
-    delete mp_pdf;
-}
+InterferenceFunction2DLattice::~InterferenceFunction2DLattice() { delete mp_pdf; }
 
 InterferenceFunction2DLattice* InterferenceFunction2DLattice::clone() const
 {
@@ -57,8 +54,8 @@ InterferenceFunction2DLattice* InterferenceFunction2DLattice::clone() const
     return result;
 }
 
-InterferenceFunction2DLattice* InterferenceFunction2DLattice::createSquare(
-    double lattice_length, double xi)
+InterferenceFunction2DLattice*
+InterferenceFunction2DLattice::createSquare(double lattice_length, double xi)
 {
     Lattice2DParameters lattice_params;
     lattice_params.m_length_1 = lattice_length;
@@ -68,8 +65,8 @@ InterferenceFunction2DLattice* InterferenceFunction2DLattice::createSquare(
     return new InterferenceFunction2DLattice(lattice_params);
 }
 
-InterferenceFunction2DLattice* InterferenceFunction2DLattice::createHexagonal(
-    double lattice_length, double xi)
+InterferenceFunction2DLattice*
+InterferenceFunction2DLattice::createHexagonal(double lattice_length, double xi)
 {
     Lattice2DParameters lattice_params;
     lattice_params.m_length_1 = lattice_length;
@@ -79,7 +76,7 @@ InterferenceFunction2DLattice* InterferenceFunction2DLattice::createHexagonal(
     return new InterferenceFunction2DLattice(lattice_params);
 }
 
-void InterferenceFunction2DLattice::setDecayFunction(const IFTDecayFunction2D &pdf)
+void InterferenceFunction2DLattice::setDecayFunction(const IFTDecayFunction2D& pdf)
 {
     if (mp_pdf != &pdf)
         delete mp_pdf;
@@ -90,8 +87,9 @@ void InterferenceFunction2DLattice::setDecayFunction(const IFTDecayFunction2D &p
 double InterferenceFunction2DLattice::evaluate(const kvector_t q) const
 {
     if (!mp_pdf)
-        throw Exceptions::NullPointerException("InterferenceFunction2DLattice::evaluate"
-                                   " -> Error! No probability distribution function defined.");
+        throw Exceptions::NullPointerException(
+            "InterferenceFunction2DLattice::evaluate"
+            " -> Error! No probability distribution function defined.");
     double result = 0.0;
     double qxr = q.x();
     double qyr = q.y();
@@ -112,8 +110,8 @@ std::string InterferenceFunction2DLattice::addParametersToExternalPool(
     const std::string& path, ParameterPool* external_pool, int copy_number) const
 {
     // add own parameters
-    std::string  new_path = IParameterized::addParametersToExternalPool(
-            path, external_pool, copy_number);
+    std::string new_path =
+        IParameterized::addParametersToExternalPool(path, external_pool, copy_number);
 
     // add parameters of the probability density function
     if (mp_pdf)
@@ -126,7 +124,7 @@ double InterferenceFunction2DLattice::getParticleDensity() const
     double area = m_lattice_params.getUnitCellArea();
     if (area == 0.0)
         return 0.0;
-    return 1.0/area;
+    return 1.0 / area;
 }
 
 void InterferenceFunction2DLattice::onChange()
@@ -149,28 +147,28 @@ double InterferenceFunction2DLattice::interferenceAtOneRecLatticePoint(double qx
 }
 
 void InterferenceFunction2DLattice::transformToPrincipalAxes(
-    double qx, double qy, double gamma, double delta, double &q_pa_1, double &q_pa_2) const
+    double qx, double qy, double gamma, double delta, double& q_pa_1, double& q_pa_2) const
 {
     q_pa_1 = qx * std::cos(gamma) + qy * std::sin(gamma);
     q_pa_2 = qx * std::cos(gamma + delta) + qy * std::sin(gamma + delta);
 }
 
 void InterferenceFunction2DLattice::calculateReciprocalVectorFraction(
-    double qx, double qy, double &qx_frac, double &qy_frac) const
+    double qx, double qy, double& qx_frac, double& qy_frac) const
 {
     double a = m_lattice_params.m_length_1;
     double b = m_lattice_params.m_length_2;
     double xi = m_lattice_params.m_xi;
     double xialpha = xi + m_lattice_params.m_angle;
     int qa_int = boost::math::iround(a * (qx * std::cos(xi) + qy * std::sin(xi)) / M_TWOPI);
-    int qb_int
-        = boost::math::iround(b * (qx * std::cos(xialpha) + qy * std::sin(xialpha)) / M_TWOPI);
+    int qb_int =
+        boost::math::iround(b * (qx * std::cos(xialpha) + qy * std::sin(xialpha)) / M_TWOPI);
     qx_frac = qx - qa_int * m_asx - qb_int * m_bsx;
     qy_frac = qy - qa_int * m_asy - qb_int * m_bsy;
 }
 
 InterferenceFunction2DLattice::InterferenceFunction2DLattice(
-    const Lattice2DParameters &lattice_params)
+    const Lattice2DParameters& lattice_params)
     : m_lattice_params(lattice_params), mp_pdf(0), m_na(0), m_nb(0)
 {
     setName(InterferenceFunction2DLatticeType);
@@ -183,7 +181,7 @@ void InterferenceFunction2DLattice::init_parameters()
     registerParameter(LatticeLength1, &m_lattice_params.m_length_1).setUnit("nm").setPositive();
     registerParameter(LatticeLength2, &m_lattice_params.m_length_2).setUnit("nm").setPositive();
     registerParameter(Alpha, &m_lattice_params.m_angle).setUnit("rad");
-    registerParameter(Xi,    &m_lattice_params.m_xi   ).setUnit("rad");
+    registerParameter(Xi, &m_lattice_params.m_xi).setUnit("rad");
 }
 
 void InterferenceFunction2DLattice::initialize_rec_vectors()
@@ -216,9 +214,9 @@ void InterferenceFunction2DLattice::initialize_calc_factors()
 
     // number of reciprocal lattice points to use
     double qa_max(0.0), qb_max(0.0);
-    mp_pdf->transformToStarBasis(nmax / coherence_length_x, nmax / coherence_length_y,
-                                 m_lattice_params.m_angle, m_lattice_params.m_length_1,
-                                 m_lattice_params.m_length_2, qa_max, qb_max);
+    mp_pdf->transformToStarBasis(
+        nmax / coherence_length_x, nmax / coherence_length_y, m_lattice_params.m_angle,
+        m_lattice_params.m_length_1, m_lattice_params.m_length_2, qa_max, qb_max);
     m_na = boost::math::iround(std::abs(qa_max));
     m_nb = boost::math::iround(std::abs(qb_max));
 }

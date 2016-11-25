@@ -14,16 +14,13 @@
 // ************************************************************************** //
 
 #include "DetectionProperties.h"
-#include "Exceptions.h"
 #include "Complex.h"
+#include "Exceptions.h"
 
-DetectionProperties::DetectionProperties()
-{
-    initPolarizationOperator();
-}
+DetectionProperties::DetectionProperties() { initPolarizationOperator(); }
 
-void DetectionProperties::setAnalyzerProperties(const kvector_t direction, double efficiency,
-                                               double total_transmission)
+void DetectionProperties::setAnalyzerProperties(
+    const kvector_t direction, double efficiency, double total_transmission)
 {
     if (!checkAnalyzerProperties(direction, efficiency, total_transmission))
         throw Exceptions::ClassInitializationException("IDetector2D::setAnalyzerProperties: the "
@@ -32,10 +29,7 @@ void DetectionProperties::setAnalyzerProperties(const kvector_t direction, doubl
     m_analyzer_operator = calculateAnalyzerOperator(direction, efficiency, total_transmission);
 }
 
-Eigen::Matrix2cd DetectionProperties::analyzerOperator() const
-{
-    return m_analyzer_operator;
-}
+Eigen::Matrix2cd DetectionProperties::analyzerOperator() const { return m_analyzer_operator; }
 
 void DetectionProperties::initPolarizationOperator()
 {
@@ -60,15 +54,15 @@ Eigen::Matrix2cd DetectionProperties::calculateAnalyzerOperator(
     const kvector_t direction, double efficiency, double total_transmission) const
 {
     Eigen::Matrix2cd result;
-    double x = direction.x()/direction.mag();
-    double y = direction.y()/direction.mag();
-    double z = direction.z()/direction.mag();
+    double x = direction.x() / direction.mag();
+    double y = direction.y() / direction.mag();
+    double z = direction.z() / direction.mag();
     double sum = total_transmission * 2.0;
     double diff = total_transmission * efficiency * 2.0;
     complex_t im(0.0, 1.0);
-    result(0, 0) = (sum + diff*z) / 2.0;
-    result(0, 1) = diff*(x - im * y) / 2.0;
-    result(1, 0) = diff*(x + im * y) / 2.0;
-    result(1, 1) = (sum - diff*z) / 2.0;
+    result(0, 0) = (sum + diff * z) / 2.0;
+    result(0, 1) = diff * (x - im * y) / 2.0;
+    result(1, 0) = diff * (x + im * y) / 2.0;
+    result(1, 1) = (sum - diff * z) / 2.0;
     return result;
 }

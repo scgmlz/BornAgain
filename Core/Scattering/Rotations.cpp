@@ -25,10 +25,12 @@ IRotation* IRotation::createRotation(const Transform3D& transform)
     Transform3D::ERotationType rot_type = transform.getRotationType();
     switch (rot_type) {
     case Transform3D::XAXIS:
-        if (alpha>0.0) beta = -beta;
+        if (alpha > 0.0)
+            beta = -beta;
         return new RotationX(beta);
     case Transform3D::YAXIS:
-        if (alpha>0.0 && alpha<3.14) beta = -beta;
+        if (alpha > 0.0 && alpha < 3.14)
+            beta = -beta;
         return new RotationY(beta);
     case Transform3D::ZAXIS:
         return new RotationZ(alpha);
@@ -37,10 +39,7 @@ IRotation* IRotation::createRotation(const Transform3D& transform)
     }
 }
 
-bool IRotation::isIdentity() const
-{
-    return getTransform3D().isIdentity();
-}
+bool IRotation::isIdentity() const { return getTransform3D().isIdentity(); }
 
 //! Returns concatenated rotation (first right, then left).
 
@@ -48,51 +47,39 @@ IRotation* CreateProduct(const IRotation& left, const IRotation& right)
 {
     Transform3D tr_left = left.getTransform3D();
     Transform3D tr_right = right.getTransform3D();
-    IRotation *p_result = IRotation::createRotation(tr_left*tr_right);
+    IRotation* p_result = IRotation::createRotation(tr_left * tr_right);
     return p_result;
 }
 
 // --- RotationX --------------------------------------------------------------
 
-RotationX::RotationX(double angle)
-    : m_angle(angle)
+RotationX::RotationX(double angle) : m_angle(angle)
 {
     setName(BornAgain::XRotationType);
     registerParameter(BornAgain::Angle, &m_angle).setUnit("rad");
 }
 
-Transform3D RotationX::getTransform3D() const
-{
-    return Transform3D::createRotateX(m_angle);
-}
+Transform3D RotationX::getTransform3D() const { return Transform3D::createRotateX(m_angle); }
 
 // --- RotationY --------------------------------------------------------------
 
-RotationY::RotationY(double angle)
-    : m_angle(angle)
+RotationY::RotationY(double angle) : m_angle(angle)
 {
     setName(BornAgain::YRotationType);
     registerParameter(BornAgain::Angle, &m_angle).setUnit("rad");
 }
 
-Transform3D RotationY::getTransform3D() const
-{
-    return Transform3D::createRotateY(m_angle);
-}
+Transform3D RotationY::getTransform3D() const { return Transform3D::createRotateY(m_angle); }
 
 // --- RotationZ --------------------------------------------------------------
 
-RotationZ::RotationZ(double angle)
-    : m_angle(angle)
+RotationZ::RotationZ(double angle) : m_angle(angle)
 {
     setName(BornAgain::ZRotationType);
     registerParameter(BornAgain::Angle, &m_angle).setUnit("rad");
 }
 
-Transform3D RotationZ::getTransform3D() const
-{
-    return Transform3D::createRotateZ(m_angle);
-}
+Transform3D RotationZ::getTransform3D() const { return Transform3D::createRotateZ(m_angle); }
 
 // --- RotationEuler ----------------------------------------------------------
 
@@ -101,7 +88,7 @@ RotationEuler::RotationEuler(double alpha, double beta, double gamma)
 {
     setName(BornAgain::EulerRotationType);
     registerParameter(BornAgain::Alpha, &m_alpha).setUnit("rad");
-    registerParameter(BornAgain::Beta, &m_beta  ).setUnit("rad");
+    registerParameter(BornAgain::Beta, &m_beta).setUnit("rad");
     registerParameter(BornAgain::Gamma, &m_gamma).setUnit("rad");
 }
 

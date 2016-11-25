@@ -36,8 +36,8 @@ public:
     //! @param real_data The real data
     //! @param weight Weight of dataset in chi2 calculations
     //! @param adjust_detector_to_data Detector axes will be adjusted to real data axes, if true
-    FitObject(const GISASSimulation& simulation, const OutputData<double>& real_data,
-              double weight = 1);
+    FitObject(
+        const GISASSimulation& simulation, const OutputData<double>& real_data, double weight = 1);
 
     virtual ~FitObject();
 
@@ -60,11 +60,12 @@ public:
     //! which will participate in chi2 calculations.
     size_t numberOfFitElements() const;
 
-    void prepareFitElements(std::vector<FitElement>& fit_elements, double weight,
-                            IIntensityNormalizer* normalizer=0);
+    void prepareFitElements(
+        std::vector<FitElement>& fit_elements, double weight, IIntensityNormalizer* normalizer = 0);
 
-    void transferToChi2Map(std::vector<FitElement>::const_iterator first,
-                           std::vector<FitElement>::const_iterator last) const;
+    void transferToChi2Map(
+        std::vector<FitElement>::const_iterator first,
+        std::vector<FitElement>::const_iterator last) const;
 
     //! Adds parameters from local pool to external pool and recursively calls its direct children.
     virtual std::string addParametersToExternalPool(

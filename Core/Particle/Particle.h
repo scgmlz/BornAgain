@@ -16,10 +16,10 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include "IParticle.h"
-#include "IMaterial.h"
 #include "FormFactorDecoratorMaterial.h"
 #include "FormFactorDecoratorRotation.h"
+#include "IMaterial.h"
+#include "IParticle.h"
 
 //! @class Particle
 //! @ingroup samples
@@ -31,8 +31,8 @@ public:
     Particle();
     Particle(const IMaterial& p_material);
     Particle(const IMaterial& p_material, const IFormFactor& form_factor);
-    Particle(const IMaterial& p_material, const IFormFactor& form_factor,
-             const IRotation& rotation);
+    Particle(
+        const IMaterial& p_material, const IFormFactor& form_factor, const IRotation& rotation);
 
     virtual Particle* clone() const;
 
@@ -41,14 +41,14 @@ public:
 
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
-    virtual std::string to_str(int indent=0) const;
+    virtual std::string to_str(int indent = 0) const;
 
     void setAmbientMaterial(const IMaterial& material) final;
     const IMaterial* getAmbientMaterial() const final { return mP_ambient_material.get(); }
 
     //! Create a form factor for this particle with an extra scattering factor
-    virtual IFormFactor* createTransformedFormFactor(
-        const IRotation* p_rotation, kvector_t translation) const;
+    virtual IFormFactor*
+    createTransformedFormFactor(const IRotation* p_rotation, kvector_t translation) const;
 
     void setMaterial(const IMaterial& material);
     const IMaterial* getMaterial() const { return mP_material.get(); }
@@ -62,6 +62,7 @@ protected:
     std::unique_ptr<IMaterial> mP_material;
     std::unique_ptr<IMaterial> mP_ambient_material;
     std::unique_ptr<IFormFactor> mP_form_factor;
+
 private:
     void initialize();
 };

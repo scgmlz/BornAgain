@@ -25,10 +25,10 @@
 #include "Units.h"
 
 CylindersAndPrismsBuilder::CylindersAndPrismsBuilder()
-    : m_cylinder_height(5*Units::nanometer)
-    , m_cylinder_radius(5*Units::nanometer)
-    , m_prism_height(5*Units::nanometer)
-    , m_prism_length(10*Units::nanometer)
+    : m_cylinder_height(5 * Units::nanometer)
+    , m_cylinder_radius(5 * Units::nanometer)
+    , m_prism_height(5 * Units::nanometer)
+    , m_prism_length(10 * Units::nanometer)
     , m_cylinder_weight(0.5)
 {
     init_parameters();
@@ -64,7 +64,7 @@ MultiLayer* CylindersAndPrismsBuilder::buildSample() const
     Particle prism3(particle_material, ff_prism3);
 
     particle_layout.addParticle(cylinder, m_cylinder_weight);
-    particle_layout.addParticle(prism3, 1.0-m_cylinder_weight);
+    particle_layout.addParticle(prism3, 1.0 - m_cylinder_weight);
 
     air_layer.addLayout(particle_layout);
 

@@ -45,7 +45,7 @@ public:
 
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
-    virtual std::string to_str(int indent=0) const;
+    virtual std::string to_str(int indent = 0) const;
 
     size_t getNumberOfLayers() const { return m_layers.size(); }
     size_t getNumberOfInterfaces() const { return m_interfaces.size(); }
@@ -60,8 +60,10 @@ public:
     const Layer* getLayer(size_t i_layer) const { return m_layers[check_layer_index(i_layer)]; }
 
     //! Returns layer with given index
-    const LayerInterface* getLayerInterface(size_t i_interface) const {
-        return m_interfaces[check_interface_index(i_interface)]; }
+    const LayerInterface* getLayerInterface(size_t i_interface) const
+    {
+        return m_interfaces[check_interface_index(i_interface)];
+    }
 
     //! Returns z-coordinate of the layer's bottom
     double getLayerBottomZ(size_t i_layer) const;
@@ -92,7 +94,7 @@ public:
     double getCrossCorrLength() const { return m_crossCorrLength; }
 
     ///! correlation function of roughnesses between the interfaces
-    //double getCrossCorrFun(const kvector_t k, int j, int k) const;
+    // double getCrossCorrFun(const kvector_t k, int j, int k) const;
 
     //! Fourier transform of the correlation function of roughnesses between
     //! the interfaces
@@ -102,8 +104,11 @@ public:
     void setLayerThickness(size_t i_layer, double thickness); // TODO: remove this function!
 
     //! Prints class
-    friend std::ostream& operator << (std::ostream& ostr, const MultiLayer& m) {
-        m.print(ostr); return ostr; }
+    friend std::ostream& operator<<(std::ostream& ostr, const MultiLayer& m)
+    {
+        m.print(ostr);
+        return ostr;
+    }
 
     //! returns layer index
     int getIndexOfLayer(const Layer* layer) const;

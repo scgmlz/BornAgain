@@ -25,7 +25,8 @@
 //! @param xi: rotation of lattice with respect to x-axis
 InterferenceFunction1DLattice::InterferenceFunction1DLattice(double length, double xi)
     : InterferenceFunction1DLattice(Lattice1DParameters(length, xi))
-{}
+{
+}
 
 InterferenceFunction1DLattice::InterferenceFunction1DLattice(
     const Lattice1DParameters& lattice_params)
@@ -35,10 +36,7 @@ InterferenceFunction1DLattice::InterferenceFunction1DLattice(
     init_parameters();
 }
 
-InterferenceFunction1DLattice::~InterferenceFunction1DLattice()
-{
-    delete mp_pdf;
-}
+InterferenceFunction1DLattice::~InterferenceFunction1DLattice() { delete mp_pdf; }
 
 InterferenceFunction1DLattice* InterferenceFunction1DLattice::clone() const
 {
@@ -62,8 +60,9 @@ void InterferenceFunction1DLattice::setDecayFunction(const IFTDecayFunction1D& p
 double InterferenceFunction1DLattice::evaluate(const kvector_t q) const
 {
     if (!mp_pdf)
-        throw Exceptions::NullPointerException("InterferenceFunction1DLattice::evaluate"
-                                   " -> Error! No probability distribution function defined.");
+        throw Exceptions::NullPointerException(
+            "InterferenceFunction1DLattice::evaluate"
+            " -> Error! No probability distribution function defined.");
     double result = 0.0;
     double qxr = q.x();
     double qyr = q.y();
@@ -84,7 +83,7 @@ double InterferenceFunction1DLattice::evaluate(const kvector_t q) const
         double qx = qx_frac + i * a_rec;
         result += mp_pdf->evaluate(qx);
     }
-    return result/a;
+    return result / a;
 }
 
 void InterferenceFunction1DLattice::init_parameters()

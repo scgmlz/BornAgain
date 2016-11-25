@@ -17,8 +17,8 @@
 #include "BornAgainNamespace.h"
 #include "Complex.h"
 #include "Exceptions.h"
-#include "RealParameter.h"
 #include "MathConstants.h"
+#include "RealParameter.h"
 
 Beam::Beam() : m_wavelength(1.0), m_alpha(0.0), m_phi(0.0), m_intensity(0.0)
 {
@@ -28,8 +28,12 @@ Beam::Beam() : m_wavelength(1.0), m_alpha(0.0), m_phi(0.0), m_intensity(0.0)
 }
 
 Beam::Beam(const Beam& other)
-    : IParameterized(), m_wavelength(other.m_wavelength), m_alpha(other.m_alpha),
-      m_phi(other.m_phi), m_intensity(other.m_intensity), m_polarization(other.m_polarization)
+    : IParameterized()
+    , m_wavelength(other.m_wavelength)
+    , m_alpha(other.m_alpha)
+    , m_phi(other.m_phi)
+    , m_intensity(other.m_intensity)
+    , m_polarization(other.m_polarization)
 {
     setName(other.getName());
     init_parameters();
@@ -40,10 +44,10 @@ void Beam::init_parameters()
     registerParameter(BornAgain::Intensity, &m_intensity).setNonnegative();
     registerParameter(BornAgain::Wavelength, &m_wavelength).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::Inclination, &m_alpha).setUnit("rad").setLimited(0, M_PI_2);
-    registerParameter(BornAgain::Azimuth,   &m_phi  ).setUnit("rad").setLimited(-M_PI_2, M_PI_2);
+    registerParameter(BornAgain::Azimuth, &m_phi).setUnit("rad").setLimited(-M_PI_2, M_PI_2);
 }
 
-Beam &Beam::operator=(const Beam &other)
+Beam& Beam::operator=(const Beam& other)
 {
     if (this != &other) {
         Beam tmp(other);
@@ -52,10 +56,7 @@ Beam &Beam::operator=(const Beam &other)
     return *this;
 }
 
-kvector_t Beam::getCentralK() const
-{
-    return vecOfLambdaAlphaPhi(m_wavelength, -m_alpha, m_phi);
-}
+kvector_t Beam::getCentralK() const { return vecOfLambdaAlphaPhi(m_wavelength, -m_alpha, m_phi); }
 
 void Beam::setCentralK(double wavelength, double alpha_i, double phi_i)
 {
@@ -87,7 +88,7 @@ Eigen::Matrix2cd Beam::calculatePolarization(const kvector_t bloch_vector) const
     double z = bloch_vector.z();
     result(0, 0) = (1.0 + z) / 2.0;
     result(0, 1) = complex_t(x, -y) / 2.0;
-    result(1, 0) = complex_t(x,  y) / 2.0;
+    result(1, 0) = complex_t(x, y) / 2.0;
     result(1, 1) = (1.0 - z) / 2.0;
     return result;
 }

@@ -16,8 +16,8 @@
 #ifndef MAINCOMPUTATION_H
 #define MAINCOMPUTATION_H
 
-#include "ComputationOutcome.h"
 #include "Complex.h"
+#include "ComputationOutcome.h"
 #include "INoncopyable.h"
 #include "SimulationOptions.h"
 #include <vector>
@@ -40,10 +40,8 @@ class MainComputation final : public INoncopyable
 {
 public:
     MainComputation(
-        const MultiLayer* p_multi_layer,
-        const SimulationOptions& options,
-        ProgressHandler& progress,
-        const std::vector<SimulationElement>::iterator& begin_it,
+        const MultiLayer* p_multi_layer, const SimulationOptions& options,
+        ProgressHandler& progress, const std::vector<SimulationElement>::iterator& begin_it,
         const std::vector<SimulationElement>::iterator& end_it);
     ~MainComputation();
 
@@ -66,7 +64,7 @@ private:
     std::vector<SimulationElement>::iterator m_begin_it, m_end_it;
 
     RoughMultiLayerComputation* mp_roughness_computation;
-    SpecularComputation *mp_specular_computation;
+    SpecularComputation* mp_specular_computation;
     std::vector<std::vector<DecoratedLayerComputation*>> m_layer_computation;
 
     ComputationOutcome m_outcome;

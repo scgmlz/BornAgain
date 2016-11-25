@@ -26,7 +26,8 @@
 
 DecoratedLayerComputation::DecoratedLayerComputation(const Layer* p_layer, size_t layout_index)
     : mp_layer(p_layer), m_layout_index(layout_index)
-{}
+{
+}
 
 void DecoratedLayerComputation::setSpecularInfo(const LayerSpecularInfo& specular_info)
 {
@@ -36,15 +37,14 @@ void DecoratedLayerComputation::setSpecularInfo(const LayerSpecularInfo& specula
 
 //! Computes scattering intensity for given range of simulation elements.
 void DecoratedLayerComputation::eval(
-    const SimulationOptions& options,
-    ProgressHandler* progress,
-    bool polarized,
+    const SimulationOptions& options, ProgressHandler* progress, bool polarized,
     const std::vector<SimulationElement>::iterator& begin_it,
     const std::vector<SimulationElement>::iterator& end_it) const
 {
-    const std::unique_ptr<const IInterferenceFunctionStrategy> p_strategy {
-        LayerStrategyBuilder(*mp_layer, polarized, options, m_layout_index, mP_specular_info.get()).
-            createStrategy() };
+    const std::unique_ptr<const IInterferenceFunctionStrategy> p_strategy{
+        LayerStrategyBuilder(*mp_layer, polarized, options, m_layout_index, mP_specular_info.get())
+            .createStrategy()
+    };
     double total_surface_density = mp_layer->getTotalParticleSurfaceDensity(m_layout_index);
 
     InnerCounter counter;

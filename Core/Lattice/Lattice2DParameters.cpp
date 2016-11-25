@@ -17,5 +17,5 @@
 
 double Lattice2DParameters::getUnitCellArea() const
 {
-    return std::abs(m_length_1*m_length_2*std::sin(m_angle));
+    return std::abs(m_length_1 * m_length_2 * std::sin(m_angle));
 }
