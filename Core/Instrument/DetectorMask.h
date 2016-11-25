@@ -54,7 +54,7 @@ public:
     void removeMasks();
 
     //! returns true if has masks
-    bool hasMasks() const { return numberOfMasks()>0; }
+    bool hasMasks() const { return numberOfMasks() > 0; }
 
     int numberOfMaskedChannels() const { return m_number_of_masked_channels; }
 

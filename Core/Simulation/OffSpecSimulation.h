@@ -40,9 +40,12 @@ public:
     int numberOfSimulationElements() const final;
 
     //! Returns clone of the detector intensity map
-    OutputData<double>* getDetectorIntensity(
-        IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const {
-        (void) units_type; return m_intensity_map.clone(); }
+    OutputData<double>*
+    getDetectorIntensity(IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const
+    {
+        (void)units_type;
+        return m_intensity_map.clone();
+    }
 
     //! Returns clone of the detector intensity map in the form of 2D histogram.
     Histogram2D* getIntensityData() const;
@@ -51,8 +54,8 @@ public:
     void setBeamParameters(double lambda, const IAxis& alpha_axis, double phi_i);
 
     //! Sets detector parameters using angle ranges
-    void setDetectorParameters(size_t n_x, double x_min, double x_max,
-                               size_t n_y, double y_min, double y_max);
+    void setDetectorParameters(
+        size_t n_x, double x_min, double x_max, size_t n_y, double y_min, double y_max);
 
     //! Adds parameters from local pool to external pool and recursively calls its direct children.
     std::string addParametersToExternalPool(

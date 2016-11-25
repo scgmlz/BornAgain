@@ -31,10 +31,10 @@ class BA_CORE_API_ IParticle : public IAbstractParticle
 {
 public:
     virtual ~IParticle() {}
-    virtual IParticle* clone() const =0;
+    virtual IParticle* clone() const = 0;
 
     //! Returns a clone with inverted magnetic fields
-    virtual IParticle* cloneInvertB() const =0;
+    virtual IParticle* cloneInvertB() const = 0;
 
     //! calls the ISampleVisitor's visit method
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
@@ -43,8 +43,8 @@ public:
     IFormFactor* createFormFactor() const;
 
     //! Create a form factor for this particle with an extra transformation
-    virtual IFormFactor* createTransformedFormFactor(
-        const IRotation* p_rotation, kvector_t translation) const =0;
+    virtual IFormFactor*
+    createTransformedFormFactor(const IRotation* p_rotation, kvector_t translation) const = 0;
 
     //! Returns particle position.
     kvector_t getPosition() const { return m_position; }

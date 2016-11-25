@@ -37,17 +37,17 @@ Eigen::Matrix2cd IMaterial::getSpecularScatteringMatrix(const kvector_t k) const
 //! Returns true if *this agrees with other in all parameters.
 bool IMaterial::operator==(const IMaterial& other) const
 {
-    if( getName()!=other.getName() )
+    if (getName() != other.getName())
         return false;
-    if( getRefractiveIndex().real() != other.getRefractiveIndex().real() )
+    if (getRefractiveIndex().real() != other.getRefractiveIndex().real())
         return false;
-    if( getRefractiveIndex().imag() != other.getRefractiveIndex().imag() )
+    if (getRefractiveIndex().imag() != other.getRefractiveIndex().imag())
         return false;
-    if( isScalarMaterial() != other.isScalarMaterial() )
+    if (isScalarMaterial() != other.isScalarMaterial())
         return false;
-    auto p_this  = dynamic_cast<const HomogeneousMagneticMaterial*>(this);
+    auto p_this = dynamic_cast<const HomogeneousMagneticMaterial*>(this);
     auto p_other = dynamic_cast<const HomogeneousMagneticMaterial*>(&other);
-    if (p_this && p_other && p_this->getMagneticField() != p_other->getMagneticField() )
+    if (p_this && p_other && p_this->getMagneticField() != p_other->getMagneticField())
         return false;
     return true;
 }

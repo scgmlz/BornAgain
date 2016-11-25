@@ -19,7 +19,7 @@
 #include <iostream>
 
 FormFactorPrism3::FormFactorPrism3(const double base_edge, const double height)
-    : FormFactorPolygonalPrism( height ), m_base_edge( base_edge )
+    : FormFactorPolygonalPrism(height), m_base_edge(base_edge)
 {
     setName(BornAgain::FFPrism3Type);
     registerParameter(BornAgain::BaseEdge, &m_base_edge).setUnit("nm").setNonnegative();
@@ -30,12 +30,9 @@ FormFactorPrism3::FormFactorPrism3(const double base_edge, const double height)
 void FormFactorPrism3::onChange()
 {
     double a = m_base_edge;
-    double as = a/2;
-    double ac = a/sqrt(3)/2;
-    double ah = a/sqrt(3);
-    std::vector<kvector_t> V {
-        { -ac,  as, 0. },
-        { -ac, -as, 0. },
-        {  ah,  0., 0. } };
-    setPrism( false, V );
+    double as = a / 2;
+    double ac = a / sqrt(3) / 2;
+    double ah = a / sqrt(3);
+    std::vector<kvector_t> V{ { -ac, as, 0. }, { -ac, -as, 0. }, { ah, 0., 0. } };
+    setPrism(false, V);
 }

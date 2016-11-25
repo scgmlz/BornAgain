@@ -26,14 +26,16 @@ class BA_CORE_API_ FormFactorAnisoPyramid : public FormFactorPolyhedron
 public:
     FormFactorAnisoPyramid(double length, double width, double height, double alpha);
 
-    FormFactorAnisoPyramid* clone() const override final {
-        return new FormFactorAnisoPyramid(m_length, m_width, m_height, m_alpha); }
+    FormFactorAnisoPyramid* clone() const override final
+    {
+        return new FormFactorAnisoPyramid(m_length, m_width, m_height, m_alpha);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getLength() const { return m_length; }
-    double getWidth()  const { return m_width; }
+    double getWidth() const { return m_width; }
     double getHeight() const { return m_height; }
-    double getAlpha()  const { return m_alpha; }
+    double getAlpha() const { return m_alpha; }
 
 protected:
     void onChange() override final;

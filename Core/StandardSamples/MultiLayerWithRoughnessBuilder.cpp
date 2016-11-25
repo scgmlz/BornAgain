@@ -22,11 +22,11 @@
 #include "Units.h"
 
 MultiLayerWithRoughnessBuilder::MultiLayerWithRoughnessBuilder()
-    : m_thicknessA(2.5*Units::nanometer)
-    , m_thicknessB(5.0*Units::nanometer)
-    , m_sigma(1.0*Units::nanometer)
+    : m_thicknessA(2.5 * Units::nanometer)
+    , m_thicknessB(5.0 * Units::nanometer)
+    , m_sigma(1.0 * Units::nanometer)
     , m_hurst(0.3)
-    , m_latteralCorrLength(5.0*Units::nanometer)
+    , m_latteralCorrLength(5.0 * Units::nanometer)
     , m_crossCorrLength(1e-4)
 {
     init_parameters();
@@ -60,7 +60,7 @@ MultiLayer* MultiLayerWithRoughnessBuilder::buildSample() const
     LayerRoughness roughness(m_sigma, m_hurst, m_latteralCorrLength);
 
     multi_layer->addLayer(air_layer);
-    for (int i = 0; i<5; ++i) {
+    for (int i = 0; i < 5; ++i) {
         multi_layer->addLayerWithTopRoughness(partA_layer, roughness);
         multi_layer->addLayerWithTopRoughness(partB_layer, roughness);
     }

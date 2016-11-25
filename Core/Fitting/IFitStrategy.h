@@ -30,7 +30,7 @@ class BA_CORE_API_ IFitStrategy : public INamed
 {
 public:
     explicit IFitStrategy(const std::string& name);
-    IFitStrategy& operator=(const IFitStrategy &other) = delete;
+    IFitStrategy& operator=(const IFitStrategy& other) = delete;
     virtual ~IFitStrategy() {}
 
     virtual IFitStrategy* clone() const = 0;
@@ -38,13 +38,14 @@ public:
     virtual void init(FitSuiteImpl* fit_suite);
     virtual void execute() = 0;
 
-    friend std::ostream &operator<<(std::ostream &ostr, const IFitStrategy &m)
+    friend std::ostream& operator<<(std::ostream& ostr, const IFitStrategy& m)
     {
-        ostr << m.toString(); return ostr;
+        ostr << m.toString();
+        return ostr;
     }
 
 protected:
-    IFitStrategy(const IFitStrategy &other);
+    IFitStrategy(const IFitStrategy& other);
 
     virtual std::string toString() const;
     FitSuiteImpl* m_kernel;
@@ -63,7 +64,7 @@ public:
     virtual void execute();
 
 protected:
-    FitStrategyDefault(const FitStrategyDefault &other);
+    FitStrategyDefault(const FitStrategyDefault& other);
 };
 
 #endif // IFITSTRATEGY_H

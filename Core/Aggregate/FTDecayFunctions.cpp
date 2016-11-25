@@ -15,26 +15,22 @@
 
 #include "FTDecayFunctions.h"
 #include "BornAgainNamespace.h"
+#include "MathConstants.h"
 #include "MathFunctions.h"
 #include "ParameterPool.h"
-#include "MathConstants.h"
 #include "RealParameter.h"
 
 //===============1D======================
 
 
-void IFTDecayFunction1D::print(std::ostream &ostr) const
+void IFTDecayFunction1D::print(std::ostream& ostr) const
 {
     ostr << getName() << " " << *getParameterPool();
 }
 
-void IFTDecayFunction1D::init_parameters()
-{
-    registerParameter(BornAgain::Omega, &m_omega);
-}
+void IFTDecayFunction1D::init_parameters() { registerParameter(BornAgain::Omega, &m_omega); }
 
-FTDecayFunction1DCauchy::FTDecayFunction1DCauchy(double omega)
-: IFTDecayFunction1D(omega)
+FTDecayFunction1DCauchy::FTDecayFunction1DCauchy(double omega) : IFTDecayFunction1D(omega)
 {
     setName(BornAgain::FTDecayFunction1DCauchyType);
     init_parameters();
@@ -42,12 +38,11 @@ FTDecayFunction1DCauchy::FTDecayFunction1DCauchy(double omega)
 
 double FTDecayFunction1DCauchy::evaluate(double q) const
 {
-    double sum_sq = q*q*m_omega*m_omega;
-    return m_omega*2.0/(1.0 + sum_sq);
+    double sum_sq = q * q * m_omega * m_omega;
+    return m_omega * 2.0 / (1.0 + sum_sq);
 }
 
-FTDecayFunction1DGauss::FTDecayFunction1DGauss(double omega)
-: IFTDecayFunction1D(omega)
+FTDecayFunction1DGauss::FTDecayFunction1DGauss(double omega) : IFTDecayFunction1D(omega)
 {
     setName(BornAgain::FTDecayFunction1DGaussType);
     init_parameters();
@@ -55,12 +50,11 @@ FTDecayFunction1DGauss::FTDecayFunction1DGauss(double omega)
 
 double FTDecayFunction1DGauss::evaluate(double q) const
 {
-    double sum_sq = q*q*m_omega*m_omega;
-    return m_omega*std::sqrt(M_TWOPI)*std::exp(-sum_sq/2.0);
+    double sum_sq = q * q * m_omega * m_omega;
+    return m_omega * std::sqrt(M_TWOPI) * std::exp(-sum_sq / 2.0);
 }
 
-FTDecayFunction1DTriangle::FTDecayFunction1DTriangle(double omega)
-    : IFTDecayFunction1D(omega)
+FTDecayFunction1DTriangle::FTDecayFunction1DTriangle(double omega) : IFTDecayFunction1D(omega)
 {
     setName(BornAgain::FTDecayFunction1DTriangleType);
     init_parameters();
@@ -68,13 +62,12 @@ FTDecayFunction1DTriangle::FTDecayFunction1DTriangle(double omega)
 
 double FTDecayFunction1DTriangle::evaluate(double q) const
 {
-    double sincqw2 = MathFunctions::sinc(q*m_omega/2.0);
-    return m_omega*sincqw2*sincqw2;
+    double sincqw2 = MathFunctions::sinc(q * m_omega / 2.0);
+    return m_omega * sincqw2 * sincqw2;
 }
 
 FTDecayFunction1DVoigt::FTDecayFunction1DVoigt(double omega, double eta)
-: IFTDecayFunction1D(omega)
-, m_eta(eta)
+    : IFTDecayFunction1D(omega), m_eta(eta)
 {
     setName(BornAgain::FTDecayFunction1DVoigtType);
     init_parameters();
@@ -82,9 +75,9 @@ FTDecayFunction1DVoigt::FTDecayFunction1DVoigt(double omega, double eta)
 
 double FTDecayFunction1DVoigt::evaluate(double q) const
 {
-    double sum_sq = q*q*m_omega*m_omega;
-    return m_eta*m_omega*std::sqrt(M_TWOPI)*std::exp(-sum_sq/2.0)
-            + (1.0 - m_eta)*m_omega*2.0/(1.0 + sum_sq);
+    double sum_sq = q * q * m_omega * m_omega;
+    return m_eta * m_omega * std::sqrt(M_TWOPI) * std::exp(-sum_sq / 2.0)
+        + (1.0 - m_eta) * m_omega * 2.0 / (1.0 + sum_sq);
 }
 
 void FTDecayFunction1DVoigt::init_parameters()
@@ -129,22 +122,21 @@ double FTDecayFunction1DCosine::evaluate(double q) const
 
 IFTDecayFunction2D::IFTDecayFunction2D(
     double decay_length_x, double decay_length_y, double gamma, double delta)
-    : m_omega_x(decay_length_x)
-    , m_omega_y(decay_length_y)
-    , m_gamma(gamma)
-    , m_delta(delta)
-{}
-
-void IFTDecayFunction2D::transformToStarBasis(double qX, double qY, double alpha,
-                                              double a, double b, double &qa, double &qb) const
+    : m_omega_x(decay_length_x), m_omega_y(decay_length_y), m_gamma(gamma), m_delta(delta)
 {
-    double prefactor = 1.0/M_TWOPI; // divide by sin(m_delta)
-                                     // for unnormalized X*,Y* basis
-    qa = a*prefactor*( std::sin(m_gamma+m_delta)*qX - std::sin(m_gamma)*qY );
-    qb = b*prefactor*( -std::sin(alpha-m_gamma-m_delta)*qX + std::sin(alpha-m_gamma)*qY );
 }
 
-void IFTDecayFunction2D::print(std::ostream &ostr) const
+void IFTDecayFunction2D::transformToStarBasis(
+    double qX, double qY, double alpha, double a, double b, double& qa, double& qb) const
+{
+    double prefactor = 1.0 / M_TWOPI; // divide by sin(m_delta)
+    // for unnormalized X*,Y* basis
+    qa = a * prefactor * (std::sin(m_gamma + m_delta) * qX - std::sin(m_gamma) * qY);
+    qb = b * prefactor
+        * (-std::sin(alpha - m_gamma - m_delta) * qX + std::sin(alpha - m_gamma) * qY);
+}
+
+void IFTDecayFunction2D::print(std::ostream& ostr) const
 {
     ostr << getName() << " " << *getParameterPool();
 }
@@ -167,8 +159,8 @@ FTDecayFunction2DCauchy::FTDecayFunction2DCauchy(
 
 double FTDecayFunction2DCauchy::evaluate(double qx, double qy) const
 {
-    double sum_sq = qx*qx*m_omega_x*m_omega_x + qy*qy*m_omega_y*m_omega_y;
-    return M_TWOPI*m_omega_x*m_omega_y*std::pow(1.0 + sum_sq, -1.5);
+    double sum_sq = qx * qx * m_omega_x * m_omega_x + qy * qy * m_omega_y * m_omega_y;
+    return M_TWOPI * m_omega_x * m_omega_y * std::pow(1.0 + sum_sq, -1.5);
 }
 
 FTDecayFunction2DGauss::FTDecayFunction2DGauss(
@@ -181,8 +173,8 @@ FTDecayFunction2DGauss::FTDecayFunction2DGauss(
 
 double FTDecayFunction2DGauss::evaluate(double qx, double qy) const
 {
-    double sum_sq = qx*qx*m_omega_x*m_omega_x + qy*qy*m_omega_y*m_omega_y;
-    return M_TWOPI*m_omega_x*m_omega_y*std::exp(-sum_sq/2.0);
+    double sum_sq = qx * qx * m_omega_x * m_omega_x + qy * qy * m_omega_y * m_omega_y;
+    return M_TWOPI * m_omega_x * m_omega_y * std::exp(-sum_sq / 2.0);
 }
 
 FTDecayFunction2DVoigt::FTDecayFunction2DVoigt(
@@ -195,9 +187,9 @@ FTDecayFunction2DVoigt::FTDecayFunction2DVoigt(
 
 double FTDecayFunction2DVoigt::evaluate(double qx, double qy) const
 {
-    double sum_sq = qx*qx*m_omega_x*m_omega_x + qy*qy*m_omega_y*m_omega_y;
-    return M_TWOPI*m_omega_x*m_omega_y*(m_eta*std::exp(-sum_sq/2.0)
-                                           + (1.0-m_eta)*std::pow(1.0 + sum_sq, -1.5));
+    double sum_sq = qx * qx * m_omega_x * m_omega_x + qy * qy * m_omega_y * m_omega_y;
+    return M_TWOPI * m_omega_x * m_omega_y
+        * (m_eta * std::exp(-sum_sq / 2.0) + (1.0 - m_eta) * std::pow(1.0 + sum_sq, -1.5));
 }
 
 void FTDecayFunction2DVoigt::init_parameters()

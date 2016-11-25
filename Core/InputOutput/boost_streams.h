@@ -17,19 +17,18 @@
 #define BOOST_STREAMS_H
 
 #include "Macros.h"
-GCC_DIAG_OFF(unused-parameter)
-#include <boost/iostreams/filtering_stream.hpp>
+GCC_DIAG_OFF(unused - parameter)
 #include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable: 4244)
+#pragma warning(disable : 4244)
 #endif
-#include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filter/bzip2.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-GCC_DIAG_ON(unused-parameter)
+GCC_DIAG_ON(unused - parameter)
 
 #endif // BOOST_STREAMS_H
-

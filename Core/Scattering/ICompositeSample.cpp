@@ -24,7 +24,7 @@ ICompositeSample::~ICompositeSample() {}
 
 void ICompositeSample::registerChild(ISample* sample)
 {
-    if(!sample)
+    if (!sample)
         throw Exceptions::NullPointerException(
             "ICompositeSample::registerChild -> Error. Null pointer.");
     m_samples.push_back(sample);
@@ -56,7 +56,7 @@ const ISample* ICompositeSample::operator[](size_t index) const
 std::vector<const ISample*> ICompositeSample::getChildren() const
 {
     std::vector<const ISample*> result;
-    for (size_t i=0; i<m_samples.size(); ++i)
+    for (size_t i = 0; i < m_samples.size(); ++i)
         result.push_back(m_samples[i]);
     return result;
 }
@@ -64,8 +64,8 @@ std::vector<const ISample*> ICompositeSample::getChildren() const
 std::string ICompositeSample::addParametersToExternalPool(
     const std::string& path, ParameterPool* external_pool, int copy_number) const
 {
-    std::string new_path
-        = IParameterized::addParametersToExternalPool(path, external_pool, copy_number);
+    std::string new_path =
+        IParameterized::addParametersToExternalPool(path, external_pool, copy_number);
 
     // We need a mechanism to handle cases with multiple children with the same name.
     // First run through all direct children and save their names

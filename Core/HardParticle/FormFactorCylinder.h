@@ -26,8 +26,10 @@ class BA_CORE_API_ FormFactorCylinder : public IFormFactorBorn
 public:
     FormFactorCylinder(double radius, double height);
 
-    FormFactorCylinder* clone() const override final {
-        return new FormFactorCylinder(m_radius, m_height); }
+    FormFactorCylinder* clone() const override final
+    {
+        return new FormFactorCylinder(m_radius, m_height);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getHeight() const { return m_height; }

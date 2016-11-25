@@ -57,7 +57,7 @@ public:
     static void writeOutputData(const OutputData<double>& data, const std::string& file_name);
 
     //! Writes histogram in file
-    static void writeIntensityData(const IHistogram &histogram, const std::string& file_name);
+    static void writeIntensityData(const IHistogram& histogram, const std::string& file_name);
 };
 
 #endif // INTENSITYDATAIOFACTORY_H

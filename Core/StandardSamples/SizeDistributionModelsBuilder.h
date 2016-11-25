@@ -25,7 +25,7 @@
 class BA_CORE_API_ SizeDistributionDAModelBuilder : public IMultiLayerBuilder
 {
 public:
-    SizeDistributionDAModelBuilder(){}
+    SizeDistributionDAModelBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -36,7 +36,7 @@ public:
 class BA_CORE_API_ SizeDistributionLMAModelBuilder : public IMultiLayerBuilder
 {
 public:
-    SizeDistributionLMAModelBuilder(){}
+    SizeDistributionLMAModelBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -47,7 +47,7 @@ public:
 class BA_CORE_API_ SizeDistributionSSCAModelBuilder : public IMultiLayerBuilder
 {
 public:
-    SizeDistributionSSCAModelBuilder(){}
+    SizeDistributionSSCAModelBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -57,7 +57,7 @@ public:
 class BA_CORE_API_ CylindersInSSCABuilder : public IMultiLayerBuilder
 {
 public:
-    CylindersInSSCABuilder(){}
+    CylindersInSSCABuilder() {}
     MultiLayer* buildSample() const;
 };
 

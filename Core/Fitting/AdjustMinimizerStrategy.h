@@ -27,21 +27,21 @@ class BA_CORE_API_ AdjustMinimizerStrategy : public IFitStrategy
 public:
     AdjustMinimizerStrategy();
 
-    AdjustMinimizerStrategy(const std::string& minimizerName,
-                               const std::string& algorithmName = std::string(),
-                               const std::string& optionString=std::string());
+    AdjustMinimizerStrategy(
+        const std::string& minimizerName, const std::string& algorithmName = std::string(),
+        const std::string& optionString = std::string());
 
     virtual AdjustMinimizerStrategy* clone() const;
 
-    void setMinimizer(const std::string& minimizerName,
-                      const std::string& algorithmName = std::string(),
-                      const std::string& optionString=std::string());
+    void setMinimizer(
+        const std::string& minimizerName, const std::string& algorithmName = std::string(),
+        const std::string& optionString = std::string());
 
     virtual void execute();
 
 protected:
     virtual std::string toString() const;
-    AdjustMinimizerStrategy(const AdjustMinimizerStrategy &other);
+    AdjustMinimizerStrategy(const AdjustMinimizerStrategy& other);
 
 private:
     std::string m_minimizerName;

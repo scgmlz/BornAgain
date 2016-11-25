@@ -21,14 +21,13 @@
 #include "SimulationElement.h"
 #include "SphericalDetector.h"
 
-Instrument::Instrument()
-    : IParameterized("Instrument")
+Instrument::Instrument() : IParameterized("Instrument")
 {
     mP_detector.reset(new SphericalDetector());
     init_parameters();
 }
 
-Instrument::Instrument(const Instrument &other) : IParameterized(), m_beam(other.m_beam)
+Instrument::Instrument(const Instrument& other) : IParameterized(), m_beam(other.m_beam)
 {
     mP_detector.reset(other.mP_detector->clone());
     setName(other.getName());
@@ -37,7 +36,7 @@ Instrument::Instrument(const Instrument &other) : IParameterized(), m_beam(other
 
 Instrument::~Instrument() {}
 
-Instrument &Instrument::operator=(const Instrument &other)
+Instrument& Instrument::operator=(const Instrument& other)
 {
     if (this != &other) {
         m_beam = other.m_beam;
@@ -53,13 +52,13 @@ void Instrument::setDetector(const IDetector2D& detector)
     initDetector();
 }
 
-void Instrument::setDetectorParameters(size_t n_x, double x_min, double x_max,
-                                       size_t n_y, double y_min, double y_max)
+void Instrument::setDetectorParameters(
+    size_t n_x, double x_min, double x_max, size_t n_y, double y_min, double y_max)
 {
     mP_detector->setDetectorParameters(n_x, x_min, x_max, n_y, y_min, y_max);
 }
 
-void Instrument::setDetectorAxes(const IAxis &axis0, const IAxis &axis1)
+void Instrument::setDetectorAxes(const IAxis& axis0, const IAxis& axis1)
 {
     mP_detector->setDetectorAxes(axis0, axis1);
 }
@@ -68,8 +67,8 @@ std::string Instrument::addParametersToExternalPool(
     const std::string& path, ParameterPool* external_pool, int copy_number) const
 {
     // add own parameters
-    std::string new_path = IParameterized::addParametersToExternalPool(
-        path, external_pool, copy_number);
+    std::string new_path =
+        IParameterized::addParametersToExternalPool(path, external_pool, copy_number);
 
     // add parameters of the beam
     m_beam.addParametersToExternalPool(new_path, external_pool, -1);
@@ -82,7 +81,7 @@ std::string Instrument::addParametersToExternalPool(
 
 void Instrument::initDetector()
 {
-    if(!mP_detector)
+    if (!mP_detector)
         throw Exceptions::RuntimeErrorException(
             "Instrument::initDetector() -> Error. Detector is not initialized.");
     getDetector()->init(getBeam());
@@ -114,13 +113,13 @@ void Instrument::applyDetectorResolution(OutputData<double>* p_intensity_map) co
     mP_detector->applyDetectorResolution(p_intensity_map);
 }
 
-OutputData<double> *Instrument::createDetectorIntensity(
-        const std::vector<SimulationElement> &elements, IDetector2D::EAxesUnits units) const
+OutputData<double>* Instrument::createDetectorIntensity(
+    const std::vector<SimulationElement>& elements, IDetector2D::EAxesUnits units) const
 {
     return mP_detector->createDetectorIntensity(elements, m_beam, units);
 }
 
-OutputData<double> *Instrument::createDetectorMap(IDetector2D::EAxesUnits units) const
+OutputData<double>* Instrument::createDetectorMap(IDetector2D::EAxesUnits units) const
 {
     return mP_detector->createDetectorMap(m_beam, units);
 }
@@ -135,57 +134,38 @@ void Instrument::print(std::ostream& ostr) const
 void Instrument::setBeamParameters(double wavelength, double alpha_i, double phi_i)
 {
     m_beam.setCentralK(wavelength, alpha_i, phi_i);
-    if(mP_detector) initDetector();
+    if (mP_detector)
+        initDetector();
 }
 
-const DetectorMask *Instrument::getDetectorMask() const
-{
-    return getDetector()->getDetectorMask();
-}
+const DetectorMask* Instrument::getDetectorMask() const { return getDetector()->getDetectorMask(); }
 
-void Instrument::setBeam(const Beam &beam)
+void Instrument::setBeam(const Beam& beam)
 {
     m_beam = beam;
-    if(mP_detector) initDetector();
+    if (mP_detector)
+        initDetector();
 }
 
-void Instrument::setBeamIntensity(double intensity)
-{
-    m_beam.setIntensity(intensity);
-}
+void Instrument::setBeamIntensity(double intensity) { m_beam.setIntensity(intensity); }
 
 void Instrument::setBeamPolarization(const kvector_t bloch_vector)
 {
     m_beam.setPolarization(bloch_vector);
 }
 
-double Instrument::getBeamIntensity() const
-{
-    return m_beam.getIntensity();
-}
+double Instrument::getBeamIntensity() const { return m_beam.getIntensity(); }
 
-const IDetector2D* Instrument::getDetector() const
-{
-    return mP_detector.get();
-}
+const IDetector2D* Instrument::getDetector() const { return mP_detector.get(); }
 
-IDetector2D* Instrument::getDetector()
-{
-    return mP_detector.get();
-}
+IDetector2D* Instrument::getDetector() { return mP_detector.get(); }
 
-const IAxis& Instrument::getDetectorAxis(size_t index) const
-{
-    return mP_detector->getAxis(index);
-}
+const IAxis& Instrument::getDetectorAxis(size_t index) const { return mP_detector->getAxis(index); }
 
-size_t Instrument::getDetectorDimension() const
-{
-    return mP_detector->getDimension();
-}
+size_t Instrument::getDetectorDimension() const { return mP_detector->getDimension(); }
 
-void Instrument::setAnalyzerProperties(const kvector_t direction, double efficiency,
-                                       double total_transmission)
+void Instrument::setAnalyzerProperties(
+    const kvector_t direction, double efficiency, double total_transmission)
 {
     mP_detector->setAnalyzerProperties(direction, efficiency, total_transmission);
 }

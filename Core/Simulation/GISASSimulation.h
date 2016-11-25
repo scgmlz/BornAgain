@@ -44,8 +44,8 @@ public:
     int numberOfSimulationElements() const final;
 
     //! Returns clone of the detector intensity map with detector resolution applied
-    OutputData<double>* getDetectorIntensity(
-            IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const;
+    OutputData<double>*
+    getDetectorIntensity(IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const;
 
     //! Returns histogram representing intensity map in requested axes units
     Histogram2D* getIntensityData(IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const;
@@ -63,8 +63,9 @@ public:
     //! @param n_alpha number of alpha-axis bins
     //! @param alpha_min low edge of first alpha-bin
     //! @param alpha_max upper edge of last alpha-bin
-    void setDetectorParameters(size_t n_phi, double phi_min, double phi_max,
-                               size_t n_alpha, double alpha_min, double alpha_max);
+    void setDetectorParameters(
+        size_t n_phi, double phi_min, double phi_max, size_t n_alpha, double alpha_min,
+        double alpha_max);
 
     //! removes all masks from the detector
     void removeMasks();

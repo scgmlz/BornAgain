@@ -33,7 +33,7 @@ public:
     IFormFactorBorn() {}
     ~IFormFactorBorn() override {}
 
-    IFormFactorBorn* clone() const override=0;
+    IFormFactorBorn* clone() const override = 0;
 
     complex_t evaluate(const WavevectorInfo& wavevectors) const override;
 
@@ -43,30 +43,34 @@ public:
 
     //! Returns scattering amplitude for complex scattering wavevector q=k_i-k_f.
     //! This method is public only for convenience of plotting form factors in Python.
-    virtual complex_t evaluate_for_q(const cvector_t q) const=0;
+    virtual complex_t evaluate_for_q(const cvector_t q) const = 0;
 
 protected:
 #ifndef SWIG
     //! Returns scattering amplitude for complex scattering wavevector q=k_i-k_f in case
     //! of matrix interactions. Default implementation calls evaluate_for_q(q) and
     //! multiplies with the unit matrix.
-    virtual Eigen::Matrix2cd  evaluate_for_q_pol(const cvector_t q) const;
+    virtual Eigen::Matrix2cd evaluate_for_q_pol(const cvector_t q) const;
 #endif
 };
 
 #ifdef POLYHEDRAL_DIAGNOSTIC
 //! Information about the latest form factor evaluation. Not thread-safe.
 //! Used only by external test program.
-class Diagnosis {
+class Diagnosis
+{
 public:
     int maxOrder;
     int nExpandedFaces;
     int debmsg;
     bool request_convergence;
-    bool operator!=( const Diagnosis& other ) const {
-        return maxOrder!=other.maxOrder || nExpandedFaces!=other.nExpandedFaces; }
-    friend std::ostream& operator<< (std::ostream& stream, const Diagnosis& diag) {
-        return stream<<" ["<<diag.nExpandedFaces<<":"<<diag.maxOrder<<"]";
+    bool operator!=(const Diagnosis& other) const
+    {
+        return maxOrder != other.maxOrder || nExpandedFaces != other.nExpandedFaces;
+    }
+    friend std::ostream& operator<<(std::ostream& stream, const Diagnosis& diag)
+    {
+        return stream << " [" << diag.nExpandedFaces << ":" << diag.maxOrder << "]";
     }
 };
 #endif

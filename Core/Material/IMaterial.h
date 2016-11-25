@@ -16,10 +16,10 @@
 #ifndef IMATERIAL_H
 #define IMATERIAL_H
 
-#include "INamed.h"
 #include "Complex.h"
-#include "Vectors3D.h"
 #include "EigenCore.h"
+#include "INamed.h"
+#include "Vectors3D.h"
 
 class Transform3D;
 
@@ -31,8 +31,8 @@ class BA_CORE_API_ IMaterial : public INamed
 public:
     explicit IMaterial(const std::string& name) : INamed(name) {}
     virtual ~IMaterial() {}
-    virtual IMaterial* clone() const =0;
-    virtual IMaterial* cloneInverted() const =0;
+    virtual IMaterial* clone() const = 0;
+    virtual IMaterial* cloneInverted() const = 0;
 
     //! Indicates whether the interaction with the material is scalar.
     //! This means that different polarization states will be diffracted equally
@@ -60,14 +60,15 @@ public:
 #endif
 
     //! Create a new material that is transformed with respect to this one
-    virtual const IMaterial* createTransformedMaterial(
-        const Transform3D& transform) const =0;
+    virtual const IMaterial* createTransformedMaterial(const Transform3D& transform) const = 0;
 
     bool operator==(const IMaterial& other) const;
 
 protected:
-    virtual void print(std::ostream& ostr) const {
-        ostr << "IMat:" << getName() << "<" << this << ">"; }
+    virtual void print(std::ostream& ostr) const
+    {
+        ostr << "IMat:" << getName() << "<" << this << ">";
+    }
 };
 
 #endif // IMATERIAL_H

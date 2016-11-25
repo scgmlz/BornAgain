@@ -16,8 +16,8 @@
 #ifndef IPARAMETER_H
 #define IPARAMETER_H
 
-#include "INoncopyable.h"
 #include "INamed.h"
+#include "INoncopyable.h"
 #include <functional>
 #include <stdexcept>
 #include <string>
@@ -29,31 +29,41 @@
 //! @class IParameter
 //! @ingroup tools_internal
 
-template<class T>
-class BA_CORE_API_ IParameter : public INamed, public INoncopyable {
+template <class T> class BA_CORE_API_ IParameter : public INamed, public INoncopyable
+{
 public:
-    IParameter() =delete;
-    IParameter(const std::string& name, volatile T* data, const std::string& parent_name,
-               const std::function<void()>& onChange)
-        : INamed(name), m_data(data), m_parent_name(parent_name), m_onChange(onChange) {
-            if(!m_data)
-                throw std::runtime_error(
-                    "Bug: attempt to construct an IParameter with null data pointer"); }
+    IParameter() = delete;
+    IParameter(
+        const std::string& name, volatile T* data, const std::string& parent_name,
+        const std::function<void()>& onChange)
+        : INamed(name), m_data(data), m_parent_name(parent_name), m_onChange(onChange)
+    {
+        if (!m_data)
+            throw std::runtime_error(
+                "Bug: attempt to construct an IParameter with null data pointer");
+    }
 
-    virtual IParameter* clone( const std::string& new_name="" ) const =0;
+    virtual IParameter* clone(const std::string& new_name = "") const = 0;
 
     //! Returns true if wrapped parameter was not initialized with proper real value
     virtual bool isNull() const { return m_data ? false : true; }
 
     volatile T& getData() const { return *m_data; }
-    void setData(volatile T& data) { m_data = &data; m_onChange(); }
+    void setData(volatile T& data)
+    {
+        m_data = &data;
+        m_onChange();
+    }
 
     //! Prints the parameter's address to an output stream
-    friend std::ostream& operator<<(std::ostream& ostr, const IParameter& p) {
-        ostr << p.m_data; return ostr; }
+    friend std::ostream& operator<<(std::ostream& ostr, const IParameter& p)
+    {
+        ostr << p.m_data;
+        return ostr;
+    }
 
-    bool operator==(const IParameter &other) const { return m_data == other.m_data; }
-    bool operator!=(const IParameter &other) const { return !(*this == other); }
+    bool operator==(const IParameter& other) const { return m_data == other.m_data; }
+    bool operator!=(const IParameter& other) const { return !(*this == other); }
 
 protected:
     volatile T* m_data;

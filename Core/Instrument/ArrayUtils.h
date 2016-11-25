@@ -28,13 +28,12 @@
 namespace ArrayUtils
 {
 
-    //! Returns shape nrows, ncols of 2D array.
-    BA_CORE_API_ std::pair<size_t, size_t> getShape(const std::vector<std::vector<double>>& data);
+//! Returns shape nrows, ncols of 2D array.
+BA_CORE_API_ std::pair<size_t, size_t> getShape(const std::vector<std::vector<double>>& data);
 
 #ifdef BORNAGAIN_PYTHON
-    PyObject* createNumpyArray(const std::vector<double>& data);
+PyObject* createNumpyArray(const std::vector<double>& data);
 #endif // BORNAGAIN_PYTHON
-
 }
 
 #endif // ARRAYUTILS_H

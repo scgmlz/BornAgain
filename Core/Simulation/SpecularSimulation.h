@@ -83,7 +83,7 @@ public:
     //! Put into a clean state for running a simulation
     void prepareSimulation();
 
-//    OutputData<double>* getEvanescentWaveIntensity() const;
+    //    OutputData<double>* getEvanescentWaveIntensity() const;
 
 protected:
     SpecularSimulation(const SpecularSimulation& other);
@@ -101,7 +101,7 @@ protected:
     void collectRTCoefficientsMatrix(const MultiLayer* multilayer);
 
     //! calculates the intensity of evanescent wave
-//    void calculateEvanescentWaveIntensity();
+    //    void calculateEvanescentWaveIntensity();
 
     //! check if simulation was run already and has valid coefficients
     void checkCoefficients(size_t i_layer) const;

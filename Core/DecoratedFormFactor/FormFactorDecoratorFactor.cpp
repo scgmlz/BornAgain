@@ -16,8 +16,8 @@
 #include "FormFactorDecoratorFactor.h"
 #include "BornAgainNamespace.h"
 
-FormFactorDecoratorFactor::FormFactorDecoratorFactor(const IFormFactor& form_factor,
-                                                     const complex_t factor)
+FormFactorDecoratorFactor::FormFactorDecoratorFactor(
+    const IFormFactor& form_factor, const complex_t factor)
     : IFormFactorDecorator(form_factor), m_factor(factor)
 {
     setName(BornAgain::FormFactorDecoratorFactorType);
@@ -28,7 +28,7 @@ complex_t FormFactorDecoratorFactor::evaluate(const WavevectorInfo& wavevectors)
     return m_factor * mp_form_factor->evaluate(wavevectors);
 }
 
-Eigen::Matrix2cd FormFactorDecoratorFactor::evaluatePol(const WavevectorInfo &wavevectors) const
+Eigen::Matrix2cd FormFactorDecoratorFactor::evaluatePol(const WavevectorInfo& wavevectors) const
 {
     return m_factor * mp_form_factor->evaluatePol(wavevectors);
 }

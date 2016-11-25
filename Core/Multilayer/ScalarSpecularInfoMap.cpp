@@ -21,18 +21,18 @@
 #include "SpecularMatrix.h"
 
 ScalarSpecularInfoMap::ScalarSpecularInfoMap(const MultiLayer* multilayer, int layer)
-    : mp_multilayer(multilayer)
-    , m_layer(layer)
-{}
+    : mp_multilayer(multilayer), m_layer(layer)
+{
+}
 
-const ILayerRTCoefficients* ScalarSpecularInfoMap::getOutCoefficients(
-        const SimulationElement& sim_element) const
+const ILayerRTCoefficients*
+ScalarSpecularInfoMap::getOutCoefficients(const SimulationElement& sim_element) const
 {
     return getCoefficients(-sim_element.getMeanKF());
 }
 
-const ILayerRTCoefficients* ScalarSpecularInfoMap::getInCoefficients(
-        const SimulationElement& sim_element) const
+const ILayerRTCoefficients*
+ScalarSpecularInfoMap::getInCoefficients(const SimulationElement& sim_element) const
 {
     return getCoefficients(sim_element.getKI());
 }

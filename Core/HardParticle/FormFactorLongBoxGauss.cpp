@@ -34,5 +34,5 @@ complex_t FormFactorLongBoxGauss::evaluate_for_q(const cvector_t q) const
     complex_t qzHdiv2 = m_height * q.z() / 2.0;
 
     return m_height * m_length * m_width * exp_I(qzHdiv2) * std::exp(-qxL2)
-           * MathFunctions::sinc(qyWdiv2) * MathFunctions::sinc(qzHdiv2);
+        * MathFunctions::sinc(qyWdiv2) * MathFunctions::sinc(qzHdiv2);
 }

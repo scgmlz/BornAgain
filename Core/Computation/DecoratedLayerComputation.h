@@ -17,8 +17,8 @@
 #define DECORATEDLAYERCOMPUTATION_H
 
 #include "InnerCounter.h"
-#include <vector>
 #include <memory>
+#include <vector>
 
 using std::size_t;
 
@@ -36,15 +36,14 @@ class SimulationOptions;
 class DecoratedLayerComputation
 {
 public:
-    DecoratedLayerComputation(const Layer* p_layer, size_t layout_index=0);
+    DecoratedLayerComputation(const Layer* p_layer, size_t layout_index = 0);
 
     void setSpecularInfo(const LayerSpecularInfo& specular_info);
 
-    void eval(const SimulationOptions& options,
-              ProgressHandler* progress,
-              bool polarized,
-              const std::vector<SimulationElement>::iterator& begin_it,
-              const std::vector<SimulationElement>::iterator& end_it) const;
+    void eval(
+        const SimulationOptions& options, ProgressHandler* progress, bool polarized,
+        const std::vector<SimulationElement>::iterator& begin_it,
+        const std::vector<SimulationElement>::iterator& end_it) const;
 
 private:
     const Layer* mp_layer;

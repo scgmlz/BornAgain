@@ -14,8 +14,8 @@
 // ************************************************************************** //
 
 #include "OutputDataReadStrategy.h"
-#include "OutputData.h"
 #include "DataFormatUtils.h"
+#include "OutputData.h"
 #include "TiffHandler.h"
 #include <stdexcept> // need overlooked by g++ 5.4
 
@@ -24,11 +24,11 @@ OutputData<double>* OutputDataReadINTStrategy::readOutputData(std::istream& inpu
     OutputData<double>* result = new OutputData<double>;
     std::string line;
 
-    while( std::getline(input_stream, line) ) {
+    while (std::getline(input_stream, line)) {
         if (line.find("reproducibility") != std::string::npos) {
             std::string line;
             std::getline(input_stream, line);
-            result->setVariability( std::stod( line ) );
+            result->setVariability(std::stod(line));
         }
 
         if (line.find("axis") != std::string::npos) {
@@ -50,8 +50,8 @@ OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream&
     std::string line;
     std::vector<std::vector<double>> data;
 
-    while( std::getline(input_stream, line) ) {
-        if(line.empty() || line[0] == '#')
+    while (std::getline(input_stream, line)) {
+        if (line.empty() || line[0] == '#')
             continue;
         std::vector<double> data_in_row = DataFormatUtils::parse_doubles(line);
         data.push_back(data_in_row);
@@ -59,9 +59,10 @@ OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream&
     // validating
     size_t nrows = data.size();
     size_t ncols(0);
-    if(nrows) ncols = data[0].size();
-    for(size_t row=0; row<nrows; row++) {
-        if(data[row].size() != ncols)
+    if (nrows)
+        ncols = data[0].size();
+    for (size_t row = 0; row < nrows; row++) {
+        if (data[row].size() != ncols)
             throw std::runtime_error("OutputDataReadNumpyTXTStrategy::readOutputData() -> Error. "
                                      "Number of elements is different from row to row.");
     }
@@ -69,8 +70,8 @@ OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream&
     result->addAxis("x", ncols, 0.0, double(ncols));
     result->addAxis("y", nrows, 0.0, double(nrows));
     std::vector<int> axes_indices(2);
-    for(size_t row=0; row<nrows; row++) {
-        for(size_t col=0; col<ncols; col++) {
+    for (size_t row = 0; row < nrows; row++) {
+        for (size_t col = 0; col < ncols; col++) {
             axes_indices[0] = col;
             axes_indices[1] = nrows - 1 - row;
             size_t global_index = result->toGlobalIndex(axes_indices);
@@ -83,14 +84,9 @@ OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream&
 
 #ifdef BORNAGAIN_TIFF_SUPPORT
 
-OutputDataReadTiffStrategy::OutputDataReadTiffStrategy()
-    : m_d(new TiffHandler)
-{}
+OutputDataReadTiffStrategy::OutputDataReadTiffStrategy() : m_d(new TiffHandler) {}
 
-OutputDataReadTiffStrategy::~OutputDataReadTiffStrategy()
-{
-    delete m_d;
-}
+OutputDataReadTiffStrategy::~OutputDataReadTiffStrategy() { delete m_d; }
 
 OutputData<double>* OutputDataReadTiffStrategy::readOutputData(std::istream& input_stream)
 {

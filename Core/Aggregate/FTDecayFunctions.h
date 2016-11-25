@@ -28,12 +28,15 @@ class BA_CORE_API_ IFTDecayFunction1D : public IParameterized
 {
 public:
     IFTDecayFunction1D(double omega) : m_omega(omega) {}
-    virtual IFTDecayFunction1D* clone() const=0;
-    virtual double evaluate(double q) const=0;
+    virtual IFTDecayFunction1D* clone() const = 0;
+    virtual double evaluate(double q) const = 0;
     void setOmega(double omega) { m_omega = omega; }
     double getOmega() const { return m_omega; }
-    friend std::ostream& operator<<(std::ostream& ostr, const IFTDecayFunction1D& m) {
-        m.print(ostr); return ostr; }
+    friend std::ostream& operator<<(std::ostream& ostr, const IFTDecayFunction1D& m)
+    {
+        m.print(ostr);
+        return ostr;
+    }
 
 protected:
     virtual void print(std::ostream& ostr) const;
@@ -49,8 +52,7 @@ class BA_CORE_API_ FTDecayFunction1DCauchy : public IFTDecayFunction1D
 {
 public:
     FTDecayFunction1DCauchy(double omega);
-    virtual FTDecayFunction1DCauchy* clone() const {
-        return new FTDecayFunction1DCauchy(m_omega); }
+    virtual FTDecayFunction1DCauchy* clone() const { return new FTDecayFunction1DCauchy(m_omega); }
     double evaluate(double q) const final;
 };
 
@@ -62,8 +64,7 @@ class BA_CORE_API_ FTDecayFunction1DGauss : public IFTDecayFunction1D
 {
 public:
     FTDecayFunction1DGauss(double omega);
-    virtual FTDecayFunction1DGauss* clone() const {
-        return new FTDecayFunction1DGauss(m_omega); }
+    virtual FTDecayFunction1DGauss* clone() const { return new FTDecayFunction1DGauss(m_omega); }
     double evaluate(double q) const final;
 };
 
@@ -75,8 +76,10 @@ class BA_CORE_API_ FTDecayFunction1DTriangle : public IFTDecayFunction1D
 {
 public:
     FTDecayFunction1DTriangle(double omega);
-    virtual FTDecayFunction1DTriangle* clone() const {
-        return new FTDecayFunction1DTriangle(m_omega); }
+    virtual FTDecayFunction1DTriangle* clone() const
+    {
+        return new FTDecayFunction1DTriangle(m_omega);
+    }
     double evaluate(double q) const final;
 };
 
@@ -88,10 +91,12 @@ class BA_CORE_API_ FTDecayFunction1DVoigt : public IFTDecayFunction1D
 {
 public:
     FTDecayFunction1DVoigt(double omega, double eta);
-    virtual FTDecayFunction1DVoigt* clone() const {
-        return new FTDecayFunction1DVoigt(m_omega, m_eta); }
+    virtual FTDecayFunction1DVoigt* clone() const
+    {
+        return new FTDecayFunction1DVoigt(m_omega, m_eta);
+    }
     double evaluate(double q) const final;
-    double getEta() const { return m_eta;}
+    double getEta() const { return m_eta; }
 protected:
     virtual void init_parameters();
     double m_eta;
@@ -103,9 +108,9 @@ protected:
 class BA_CORE_API_ IFTDecayFunction2D : public IParameterized
 {
 public:
-    IFTDecayFunction2D(double decay_length_x, double decay_length_y,
-                       double gamma=0, double delta=M_PI_2);
-    virtual IFTDecayFunction2D* clone() const=0;
+    IFTDecayFunction2D(
+        double decay_length_x, double decay_length_y, double gamma = 0, double delta = M_PI_2);
+    virtual IFTDecayFunction2D* clone() const = 0;
 
     //! set angle between first lattice vector and X-axis of distribution (both in direct space)
     void setGamma(double gamma) { m_gamma = gamma; }
@@ -123,14 +128,17 @@ public:
     double getDecayLengthY() const { return m_omega_y; }
 
     //! evaluate Fourier transformed decay function for q in X,Y coordinates
-    virtual double evaluate(double qx, double qy) const=0;
+    virtual double evaluate(double qx, double qy) const = 0;
 
     //! transform back to a*, b* basis:
-    void transformToStarBasis(double qX, double qY,
-            double alpha, double a, double b, double& qa, double& qb) const;
+    void transformToStarBasis(
+        double qX, double qY, double alpha, double a, double b, double& qa, double& qb) const;
 
     friend std::ostream& operator<<(std::ostream& ostr, const IFTDecayFunction2D& m)
-    { m.print(ostr); return ostr; }
+    {
+        m.print(ostr);
+        return ostr;
+    }
 
 protected:
     virtual void print(std::ostream& ostr) const;
@@ -149,10 +157,12 @@ protected:
 class BA_CORE_API_ FTDecayFunction2DCauchy : public IFTDecayFunction2D
 {
 public:
-    FTDecayFunction2DCauchy(double decay_length_x, double decay_length_y,
-                            double gamma=0, double delta=M_PI_2);
-    virtual FTDecayFunction2DCauchy* clone() const {
-        return new FTDecayFunction2DCauchy(m_omega_x, m_omega_y, m_gamma, m_delta); }
+    FTDecayFunction2DCauchy(
+        double decay_length_x, double decay_length_y, double gamma = 0, double delta = M_PI_2);
+    virtual FTDecayFunction2DCauchy* clone() const
+    {
+        return new FTDecayFunction2DCauchy(m_omega_x, m_omega_y, m_gamma, m_delta);
+    }
 
     double evaluate(double qx, double qy) const final;
 };
@@ -165,10 +175,12 @@ public:
 class BA_CORE_API_ FTDecayFunction2DGauss : public IFTDecayFunction2D
 {
 public:
-    FTDecayFunction2DGauss(double decay_length_x, double decay_length_y,
-                           double gamma=0, double delta=M_PI_2);
-    virtual FTDecayFunction2DGauss* clone() const {
-        return new FTDecayFunction2DGauss(m_omega_x, m_omega_y, m_gamma, m_delta); }
+    FTDecayFunction2DGauss(
+        double decay_length_x, double decay_length_y, double gamma = 0, double delta = M_PI_2);
+    virtual FTDecayFunction2DGauss* clone() const
+    {
+        return new FTDecayFunction2DGauss(m_omega_x, m_omega_y, m_gamma, m_delta);
+    }
 
     double evaluate(double qx, double qy) const final;
 };
@@ -179,10 +191,13 @@ public:
 class BA_CORE_API_ FTDecayFunction2DVoigt : public IFTDecayFunction2D
 {
 public:
-    FTDecayFunction2DVoigt(double decay_length_x, double decay_length_y, double eta,
-                           double gamma=0, double delta=M_PI_2);
-    virtual FTDecayFunction2DVoigt* clone() const {
-        return new FTDecayFunction2DVoigt(m_omega_x, m_omega_y, m_eta, m_gamma, m_delta); }
+    FTDecayFunction2DVoigt(
+        double decay_length_x, double decay_length_y, double eta, double gamma = 0,
+        double delta = M_PI_2);
+    virtual FTDecayFunction2DVoigt* clone() const
+    {
+        return new FTDecayFunction2DVoigt(m_omega_x, m_omega_y, m_eta, m_gamma, m_delta);
+    }
 
     double evaluate(double qx, double qy) const final;
 

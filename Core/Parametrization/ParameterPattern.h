@@ -27,7 +27,7 @@ class BA_CORE_API_ ParameterPattern
 {
 public:
     ParameterPattern() {}
-    ParameterPattern(std::string root_object) : m_pattern ( "/" + root_object ) {}
+    ParameterPattern(std::string root_object) : m_pattern("/" + root_object) {}
 
     ParameterPattern& beginsWith(std::string start_type);
     ParameterPattern& add(std::string object_type);

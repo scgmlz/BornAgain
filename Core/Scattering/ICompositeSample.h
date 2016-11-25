@@ -30,9 +30,9 @@ public:
     ICompositeSample() {}
     virtual ~ICompositeSample();
 
-    virtual ICompositeSample* clone() const =0;
+    virtual ICompositeSample* clone() const = 0;
 
-    virtual void accept(ISampleVisitor* visitor) const =0;
+    virtual void accept(ISampleVisitor* visitor) const = 0;
 
     //! Registers child in the container.
     void registerChild(ISample* sample);
@@ -58,7 +58,7 @@ public:
 
 private:
     //! Check child index
-    bool childIndexInRange(size_t index) const { return index<m_samples.size(); }
+    bool childIndexInRange(size_t index) const { return index < m_samples.size(); }
 
     //! List of registered children.
     std::vector<ISample*> m_samples;

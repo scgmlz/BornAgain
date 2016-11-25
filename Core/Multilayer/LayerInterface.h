@@ -27,18 +27,17 @@ class BA_CORE_API_ LayerInterface : public ICompositeSample
 public:
     virtual ~LayerInterface();
 
-    LayerInterface *clone() const;
+    LayerInterface* clone() const;
 
-    virtual void accept(ISampleVisitor *visitor) const { visitor->visit(this); }
+    virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
     //! Creates smooth interface between two layers
-    static LayerInterface* createSmoothInterface(const Layer *p_layer_top,
-                                                 const Layer *p_layer_bottom);
+    static LayerInterface*
+    createSmoothInterface(const Layer* p_layer_top, const Layer* p_layer_bottom);
 
     //! Creates rough interface between two layers
-    static LayerInterface* createRoughInterface(const Layer *p_layer_top,
-                                                const Layer *p_layer_bottom,
-                                                const LayerRoughness& roughness);
+    static LayerInterface* createRoughInterface(
+        const Layer* p_layer_top, const Layer* p_layer_bottom, const LayerRoughness& roughness);
 
     //! Sets link to the layer above the interface.
     void setLayerTop(const Layer* p_layer_top) { m_LayerTop = p_layer_top; }
@@ -47,21 +46,23 @@ public:
     void setLayerBottom(const Layer* p_layer_bottom) { m_LayerBottom = p_layer_bottom; }
 
     //! Sets links to the layers above and below the interface.
-    void setLayersTopBottom(
-        const Layer* p_layer_top, const Layer* p_layer_bottom)
-    { setLayerTop(p_layer_top); setLayerBottom(p_layer_bottom); }
+    void setLayersTopBottom(const Layer* p_layer_top, const Layer* p_layer_bottom)
+    {
+        setLayerTop(p_layer_top);
+        setLayerBottom(p_layer_bottom);
+    }
 
     //! Sets roughness of the interface.
     void setRoughness(const LayerRoughness& roughness);
 
     //! Returns roughness of the interface.
-    const LayerRoughness *getRoughness() const { return m_roughness; }
+    const LayerRoughness* getRoughness() const { return m_roughness; }
 
     //! Returns top layer.
-    const Layer *getLayerTop() const { return m_LayerTop; }
+    const Layer* getLayerTop() const { return m_LayerTop; }
 
     //! Returns bottom layer.
-    const Layer *getLayerBottom() const { return m_LayerBottom; }
+    const Layer* getLayerBottom() const { return m_LayerBottom; }
 
 protected:
     void print(std::ostream& ostr) const;
@@ -69,9 +70,9 @@ protected:
 private:
     LayerInterface();
 
-    LayerRoughness *m_roughness;   //!< roughness of the interface
-    const Layer *m_LayerTop;       //!< pointer to the layer above interface
-    const Layer *m_LayerBottom;    //!< pointer to the layer below interface
+    LayerRoughness* m_roughness; //!< roughness of the interface
+    const Layer* m_LayerTop; //!< pointer to the layer above interface
+    const Layer* m_LayerBottom; //!< pointer to the layer below interface
 };
 
 #endif // LAYERINTERFACE_H

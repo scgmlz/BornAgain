@@ -30,7 +30,7 @@
 class BA_CORE_API_ ICloneable : public INoncopyable
 {
 public:
-    virtual ICloneable* clone() const=0;
+    virtual ICloneable* clone() const = 0;
     virtual void transferToCPP() {} //!< Used for Python overriding of clone
 };
 

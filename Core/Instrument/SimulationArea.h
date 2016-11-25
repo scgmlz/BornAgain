@@ -16,8 +16,8 @@
 #ifndef SIMULATIONAREA_H
 #define SIMULATIONAREA_H
 
-#include "WinDllMacros.h"
 #include "SimulationAreaIterator.h"
+#include "WinDllMacros.h"
 class IDetector2D;
 
 //! Holds iteration logic over active detector channels in the presence of masked areas
@@ -28,8 +28,8 @@ class BA_CORE_API_ SimulationArea
 {
 public:
     using iterator = SimulationAreaIterator;
-    explicit SimulationArea(const IDetector2D *detector);
-    virtual ~SimulationArea(){}
+    explicit SimulationArea(const IDetector2D* detector);
+    virtual ~SimulationArea() {}
 
     SimulationAreaIterator begin();
     SimulationAreaIterator end();
@@ -46,14 +46,11 @@ public:
     size_t detectorIndex(size_t index) const;
 
 protected:
-    const IDetector2D *m_detector;
+    const IDetector2D* m_detector;
     size_t m_max_index;
 };
 
-inline size_t SimulationArea::totalSize() const
-{
-    return m_max_index;
-}
+inline size_t SimulationArea::totalSize() const { return m_max_index; }
 
 
 //! Holds iteration logic over active detector channels in the presence of ROI. On the contrary
@@ -63,10 +60,9 @@ inline size_t SimulationArea::totalSize() const
 class BA_CORE_API_ SimulationRoiArea : public SimulationArea
 {
 public:
-    explicit SimulationRoiArea(const IDetector2D *detector);
+    explicit SimulationRoiArea(const IDetector2D* detector);
 
     virtual bool isMasked(size_t) const;
-
 };
 
 #endif // SIMULATIONAREA_H

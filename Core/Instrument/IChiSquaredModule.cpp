@@ -16,22 +16,20 @@
 #include "IChiSquaredModule.h"
 
 IChiSquaredModule::IChiSquaredModule()
-    : mp_squared_function(0)
-    , mp_data_normalizer(0)
-    , mp_intensity_function(0)
+    : mp_squared_function(0), mp_data_normalizer(0), mp_intensity_function(0)
 {
     mp_squared_function = new SquaredFunctionDefault();
 }
 
 IChiSquaredModule::IChiSquaredModule(const IChiSquaredModule& other)
-    : ICloneable()
-    , mp_squared_function(0)
-    , mp_data_normalizer(0)
-    , mp_intensity_function(0)
+    : ICloneable(), mp_squared_function(0), mp_data_normalizer(0), mp_intensity_function(0)
 {
-    if(other.mp_squared_function) mp_squared_function = other.mp_squared_function->clone();
-    if(other.mp_data_normalizer) mp_data_normalizer = other.mp_data_normalizer->clone();
-    if(other.mp_intensity_function) mp_intensity_function = other.mp_intensity_function->clone();
+    if (other.mp_squared_function)
+        mp_squared_function = other.mp_squared_function->clone();
+    if (other.mp_data_normalizer)
+        mp_data_normalizer = other.mp_data_normalizer->clone();
+    if (other.mp_intensity_function)
+        mp_intensity_function = other.mp_intensity_function->clone();
 }
 
 IChiSquaredModule::~IChiSquaredModule()
@@ -41,7 +39,7 @@ IChiSquaredModule::~IChiSquaredModule()
     delete mp_intensity_function;
 }
 
-void IChiSquaredModule::setChiSquaredFunction(ISquaredFunction *squared_function)
+void IChiSquaredModule::setChiSquaredFunction(ISquaredFunction* squared_function)
 {
     delete mp_squared_function;
     mp_squared_function = squared_function;

@@ -16,12 +16,12 @@
 #ifndef INSTRUMENT_H
 #define INSTRUMENT_H
 
-#include "IParameterized.h"
 #include "Beam.h"
 #include "IDetector2D.h"
+#include "IParameterized.h"
 #include <memory>
 
-template<class T> class OutputData;
+template <class T> class OutputData;
 class IAxis;
 class IResolutionFunction2D;
 class SimulationElement;
@@ -59,7 +59,7 @@ public:
     const IDetector2D* getDetector() const;
     IDetector2D* getDetector();
 
-    const DetectorMask *getDetectorMask() const;
+    const DetectorMask* getDetectorMask() const;
 
     //! Returns a detector axis
     const IAxis& getDetectorAxis(size_t index) const;
@@ -71,8 +71,8 @@ public:
     void setDetector(const IDetector2D& detector);
 
     //! Sets detector parameters using angle ranges
-    void setDetectorParameters(size_t n_x, double x_min, double x_max,
-                               size_t n_y, double y_min, double y_max);
+    void setDetectorParameters(
+        size_t n_x, double x_min, double x_max, size_t n_y, double y_min, double y_max);
 
     //! Sets detector parameters using axes
     void setDetectorAxes(const IAxis& axis0, const IAxis& axis1);
@@ -82,19 +82,20 @@ public:
     void setDetectorResolutionFunction(const IResolutionFunction2D& p_resolution_function);
 
     //! Sets the polarization analyzer characteristics of the detector
-    void setAnalyzerProperties(const kvector_t direction, double efficiency,
-                               double total_transmission);
+    void
+    setAnalyzerProperties(const kvector_t direction, double efficiency, double total_transmission);
 
     //! apply the detector resolution to the given intensity map
     void applyDetectorResolution(OutputData<double>* p_intensity_map) const;
 
     //! Returns new intensity map with detector resolution applied and axes in requested units
-    OutputData<double>* createDetectorIntensity(const std::vector<SimulationElement> &elements,
-            IDetector2D::EAxesUnits units=IDetector2D::DEFAULT) const;
+    OutputData<double>* createDetectorIntensity(
+        const std::vector<SimulationElement>& elements,
+        IDetector2D::EAxesUnits units = IDetector2D::DEFAULT) const;
 
     //! Returns empty detector map in given axes units.
-    virtual OutputData<double>* createDetectorMap(
-            IDetector2D::EAxesUnits units=IDetector2D::DEFAULT) const;
+    virtual OutputData<double>*
+    createDetectorMap(IDetector2D::EAxesUnits units = IDetector2D::DEFAULT) const;
 
 #ifndef SWIG
     //! Create a vector of SimulationElement objects according to the beam, detector and its mask

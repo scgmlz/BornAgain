@@ -16,9 +16,9 @@
 #ifndef FITSUITE_H
 #define FITSUITE_H
 
+#include "AttLimits.h"
 #include "IObserver.h"
 #include "OutputData.h"
-#include "AttLimits.h"
 #include <vector>
 
 class GISASSimulation;
@@ -50,35 +50,36 @@ public:
     // ------------------------------------------------------------------------
 
     //! Assigns pair of (simulation, real data) for fitting. More than one pair can be added.
-    void addSimulationAndRealData(const GISASSimulation& simulation,
-                                  const OutputData<double>& real_data, double weight=1);
+    void addSimulationAndRealData(
+        const GISASSimulation& simulation, const OutputData<double>& real_data, double weight = 1);
 
     //! Assigns pair of (simulation, real data) for fitting. More than one pair can be added.
-    void addSimulationAndRealData(const GISASSimulation& simulation,
-                                  const IHistogram& real_data, double weight=1);
+    void addSimulationAndRealData(
+        const GISASSimulation& simulation, const IHistogram& real_data, double weight = 1);
 
     //! Assigns pair of (simulation, real data) for fitting. Numpy array is used to provide
     //! intensities. Shape of array (nrows, ncols) should coinside with detector's axes
     //! (n_alpha, n_phi).
-    void addSimulationAndRealData(const GISASSimulation& simulation,
-                                  const std::vector<std::vector<double>>& real_data,
-                                  double weight=1);
+    void addSimulationAndRealData(
+        const GISASSimulation& simulation, const std::vector<std::vector<double>>& real_data,
+        double weight = 1);
 
     //! Adds fit parameter
     //! @param name The name of fit parameter
     //! @param value Parameter's starting value
     //! @param limits Limits attribute
     //! @param step Initial parameter's step (some minimizers don't use it)
-    FitParameterLinked* addFitParameter(const std::string& name, double value,
-                         const AttLimits& limits=AttLimits::limitless(), double step = 0.0);
+    FitParameterLinked* addFitParameter(
+        const std::string& name, double value, const AttLimits& limits = AttLimits::limitless(),
+        double step = 0.0);
 
     //! Sets minimizer with given name and algorithm type
     //! @param minimizer_name The name of the minimizer
     //! @param algorithm_name Optional name of the minimizer's algorithm
     //! @param minimizer_options Optional string with additional minimizer settings
-    void setMinimizer(const std::string& minimizer_name,
-                      const std::string& algorithm_name = std::string(),
-                      const std::string& minimizer_options=std::string());
+    void setMinimizer(
+        const std::string& minimizer_name, const std::string& algorithm_name = std::string(),
+        const std::string& minimizer_options = std::string());
 
     //! Replaces default ChiSquaredModule with new one
     void setChiSquaredModule(const IChiSquaredModule& chi2_module);
@@ -90,7 +91,7 @@ public:
     void setMinimizer(IMinimizer* minimizer);
 
     //! Returns minimizer.
-    const IMinimizer *minimizer() const;
+    const IMinimizer* minimizer() const;
 
     //! Initializes printing to standard output during the fitting.
     //! Prints also the summary when completed.

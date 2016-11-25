@@ -14,18 +14,16 @@
 // ************************************************************************** //
 
 #include "OutputDataReader.h"
-#include "OutputData.h"
 #include "DataFormatUtils.h"
+#include "OutputData.h"
 #include "boost_streams.h"
 #include <fstream>
 
-OutputDataReader::OutputDataReader(const std::string& file_name)
-    : m_file_name(file_name)
-{}
+OutputDataReader::OutputDataReader(const std::string& file_name) : m_file_name(file_name) {}
 
 OutputData<double>* OutputDataReader::getOutputData()
 {
-    if(!m_read_strategy)
+    if (!m_read_strategy)
         throw Exceptions::NullPointerException(
             "OutputDataReader::getOutputData() -> Error! No read strategy defined");
 
@@ -34,15 +32,14 @@ OutputData<double>* OutputDataReader::getOutputData()
     if (DataFormatUtils::isBinaryFile(m_file_name))
         openmode = std::ios::in | std::ios_base::binary;
 
-    fin.open(m_file_name.c_str(), openmode );
-    if(!fin.is_open())
+    fin.open(m_file_name.c_str(), openmode);
+    if (!fin.is_open())
         throw Exceptions::FileNotIsOpenException(
-            "OutputDataReader::getOutputData() -> Error. Can't open file '"
-            + m_file_name + "' for reading.");
+            "OutputDataReader::getOutputData() -> Error. Can't open file '" + m_file_name
+            + "' for reading.");
     if (!fin.good())
-        throw Exceptions::FileIsBadException(
-            "OutputDataReader::getOutputData() -> Error! "
-            "File is not good, probably it is a directory.");
+        throw Exceptions::FileIsBadException("OutputDataReader::getOutputData() -> Error! "
+                                             "File is not good, probably it is a directory.");
     OutputData<double>* result = getFromFilteredStream(fin);
     fin.close();
     return result;

@@ -50,7 +50,7 @@ protected:
 class BA_CORE_API_ BoxCompositionRotateXBuilder : public BoxCompositionBuilder
 {
 public:
-    BoxCompositionRotateXBuilder(){}
+    BoxCompositionRotateXBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -61,7 +61,7 @@ public:
 class BA_CORE_API_ BoxCompositionRotateYBuilder : public BoxCompositionBuilder
 {
 public:
-    BoxCompositionRotateYBuilder(){}
+    BoxCompositionRotateYBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -72,7 +72,7 @@ public:
 class BA_CORE_API_ BoxCompositionRotateZBuilder : public BoxCompositionBuilder
 {
 public:
-    BoxCompositionRotateZBuilder(){}
+    BoxCompositionRotateZBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -83,7 +83,7 @@ public:
 class BA_CORE_API_ BoxCompositionRotateZandYBuilder : public BoxCompositionBuilder
 {
 public:
-    BoxCompositionRotateZandYBuilder(){}
+    BoxCompositionRotateZandYBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -94,7 +94,7 @@ public:
 class BA_CORE_API_ BoxStackCompositionBuilder : public BoxCompositionBuilder
 {
 public:
-    BoxStackCompositionBuilder(){}
+    BoxStackCompositionBuilder() {}
     MultiLayer* buildSample() const;
 };
 

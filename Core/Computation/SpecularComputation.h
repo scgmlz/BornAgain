@@ -17,8 +17,8 @@
 #define SPECULARCOMPUTATION_H
 
 #include "INoncopyable.h"
-#include <vector>
 #include <memory>
+#include <vector>
 
 class MultiLayer;
 class LayerSpecularInfo;
@@ -35,10 +35,10 @@ class SpecularComputation final : public INoncopyable
 public:
     SpecularComputation();
 
-    void eval(ProgressHandler* progress,
-              bool polarized,
-              const std::vector<SimulationElement>::iterator& begin_it,
-              const std::vector<SimulationElement>::iterator& end_it);
+    void eval(
+        ProgressHandler* progress, bool polarized,
+        const std::vector<SimulationElement>::iterator& begin_it,
+        const std::vector<SimulationElement>::iterator& end_it);
     void setSpecularInfo(const LayerSpecularInfo& specular_info);
 
 private:

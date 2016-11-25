@@ -25,18 +25,23 @@
 class BA_CORE_API_ FormFactorCrystal : public IFormFactor
 {
 public:
-    FormFactorCrystal(const Lattice& lattice, const IFormFactor& basis_form_factor,
-                      const IFormFactor& meso_form_factor);
+    FormFactorCrystal(
+        const Lattice& lattice, const IFormFactor& basis_form_factor,
+        const IFormFactor& meso_form_factor);
     ~FormFactorCrystal() override final;
 
-    FormFactorCrystal* clone() const override final {
-        return new FormFactorCrystal(m_lattice, *mp_basis_form_factor, *mp_meso_form_factor); }
+    FormFactorCrystal* clone() const override final
+    {
+        return new FormFactorCrystal(m_lattice, *mp_basis_form_factor, *mp_meso_form_factor);
+    }
 
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getVolume() const override final { return mp_meso_form_factor->getVolume(); }
-    double getRadialExtension() const override final {
-        return mp_meso_form_factor->getRadialExtension(); }
+    double getRadialExtension() const override final
+    {
+        return mp_meso_form_factor->getRadialExtension();
+    }
 
     complex_t evaluate(const WavevectorInfo& wavevectors) const override final;
 #ifndef SWIG

@@ -27,21 +27,21 @@ ISample* ISample::cloneInvertB() const
 std::string ISample::to_str(int indent) const
 {
     std::stringstream ss;
-    ss << std::string(4*indent, '.') << " " << getName() << " " << *getParameterPool() << "\n";
-    for( const ISample* child: getChildren() )
-        ss << child->to_str(indent+1);
+    ss << std::string(4 * indent, '.') << " " << getName() << " " << *getParameterPool() << "\n";
+    for (const ISample* child : getChildren())
+        ss << child->to_str(indent + 1);
     return ss.str();
 }
 
 std::vector<const IMaterial*> ISample::containedMaterials() const
 {
     std::vector<const IMaterial*> result;
-    if( const IMaterial* material = getMaterial() )
-        result.push_back( material );
-    if( const IMaterial* material = getAmbientMaterial() )
-        result.push_back( material );
-    for( const ISample* child: getChildren() )
-        for( const IMaterial* material: child->containedMaterials() )
-            result.push_back( material );
+    if (const IMaterial* material = getMaterial())
+        result.push_back(material);
+    if (const IMaterial* material = getAmbientMaterial())
+        result.push_back(material);
+    for (const ISample* child : getChildren())
+        for (const IMaterial* material : child->containedMaterials())
+            result.push_back(material);
     return result;
 }

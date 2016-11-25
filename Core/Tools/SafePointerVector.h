@@ -24,8 +24,7 @@
 
 //! The objects pointed to must support the ICloneable interface.
 
-template <class T>
-class SafePointerVector
+template <class T> class SafePointerVector
 {
 public:
     typedef typename std::vector<T*>::iterator iterator;
@@ -39,7 +38,7 @@ public:
     bool empty() const { return m_pointers.empty(); }
     void push_back(T* pointer) { m_pointers.push_back(pointer); }
     T* operator[](size_t index) { return m_pointers[index]; }
-    const T *operator[](size_t index) const { return m_pointers[index]; }
+    const T* operator[](size_t index) const { return m_pointers[index]; }
     iterator begin() { return m_pointers.begin(); }
     const_iterator begin() const { return m_pointers.begin(); }
     iterator end() { return m_pointers.end(); }
@@ -50,29 +49,29 @@ public:
     T* back() { return m_pointers.back(); }
     const T* back() const { return m_pointers.back(); }
     void clear();
+
 private:
     std::vector<T*> m_pointers;
 };
 
-template<class T>
-SafePointerVector<T>::SafePointerVector(const SafePointerVector<T>& other)
+template <class T> SafePointerVector<T>::SafePointerVector(const SafePointerVector<T>& other)
 {
     for (const_iterator it = other.begin(); it != other.end(); ++it)
         m_pointers.push_back((*it)->clone());
 }
 
-template<class T>
+template <class T>
 SafePointerVector<T>& SafePointerVector<T>::operator=(const SafePointerVector<T>& right)
 {
-    if (this ==& right) return *this;
+    if (this == &right)
+        return *this;
     clear();
     for (const_iterator it = right.begin(); it != right.end(); ++it)
         m_pointers.push_back((*it)->clone());
     return *this;
 }
 
-template<class T>
-inline bool SafePointerVector<T>::deleteElement(T *pointer)
+template <class T> inline bool SafePointerVector<T>::deleteElement(T* pointer)
 {
     iterator it = std::find(m_pointers.begin(), m_pointers.end(), pointer);
     if (it == m_pointers.end())
@@ -82,7 +81,7 @@ inline bool SafePointerVector<T>::deleteElement(T *pointer)
     return true;
 }
 
-template<class T> void SafePointerVector<T>::clear()
+template <class T> void SafePointerVector<T>::clear()
 {
     for (iterator it = begin(); it != end(); ++it)
         delete (*it);

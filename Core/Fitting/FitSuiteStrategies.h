@@ -28,8 +28,8 @@ class BA_CORE_API_ FitSuiteStrategies
 public:
     FitSuiteStrategies();
     virtual ~FitSuiteStrategies();
-    FitSuiteStrategies(const FitSuiteStrategies &other) = delete;
-    FitSuiteStrategies& operator=(const FitSuiteStrategies &other) = delete;
+    FitSuiteStrategies(const FitSuiteStrategies& other) = delete;
+    FitSuiteStrategies& operator=(const FitSuiteStrategies& other) = delete;
 
     void init(FitSuiteImpl* fit_suite) { m_kernel = fit_suite; }
 

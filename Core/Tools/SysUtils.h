@@ -16,18 +16,19 @@
 #ifndef SYSUTILS_H
 #define SYSUTILS_H
 
-#include "WinDllMacros.h"
 #include "StringUtils.h"
+#include "WinDllMacros.h"
 #include <string>
 
 //! Utility functions getCurrentDateAndTime, enableFloatingPointExceptions.
 
-namespace SysUtils {
+namespace SysUtils
+{
 
-    BA_CORE_API_ std::string getCurrentDateAndTime();
+BA_CORE_API_ std::string getCurrentDateAndTime();
 
-    //! enables exception throw in the case of NaN, Inf
-    BA_CORE_API_ void enableFloatingPointExceptions();
+//! enables exception throw in the case of NaN, Inf
+BA_CORE_API_ void enableFloatingPointExceptions();
 
 } // namespace SysUtils
 

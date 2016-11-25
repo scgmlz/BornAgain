@@ -19,27 +19,21 @@
 #include "BornAgainNamespace.h"
 #include "SysUtils.h"
 
-namespace {
+namespace
+{
 size_t supported_bitPerSample = 32;
 size_t supported_samplesPerPixel = 1;
 size_t size_of_int = 4;
 }
 
-TiffHandler::TiffHandler()
-    : m_tiff(0)
-    , m_width(0)
-    , m_height(0)
-{}
+TiffHandler::TiffHandler() : m_tiff(0), m_width(0), m_height(0) {}
 
-TiffHandler::~TiffHandler()
-{
-    close();
-}
+TiffHandler::~TiffHandler() { close(); }
 
-void TiffHandler::read(std::istream &input_stream)
+void TiffHandler::read(std::istream& input_stream)
 {
     m_tiff = TIFFStreamOpen("MemTIFF", &input_stream);
-    if(!m_tiff) {
+    if (!m_tiff) {
         throw Exceptions::FormatErrorException("TiffHandler::read() -> Can't open the file.");
     }
     read_header();
@@ -47,12 +41,9 @@ void TiffHandler::read(std::istream &input_stream)
     close();
 }
 
-const OutputData<double> *TiffHandler::getOutputData() const
-{
-    return m_data.get();
-}
+const OutputData<double>* TiffHandler::getOutputData() const { return m_data.get(); }
 
-void TiffHandler::write(const OutputData<double> &data, std::ostream &output_stream)
+void TiffHandler::write(const OutputData<double>& data, std::ostream& output_stream)
 {
     m_tiff = TIFFStreamOpen("MemTIFF", &output_stream);
     m_data.reset(data.clone());
@@ -76,8 +67,8 @@ void TiffHandler::read_header()
                                                "Can't read width/height/photometric info.");
     }
 
-    m_width = (size_t) width;
-    m_height = (size_t) height;
+    m_width = (size_t)width;
+    m_height = (size_t)height;
 
     uint16 orientationTag(0);
     TIFFGetField(m_tiff, TIFFTAG_ORIENTATION, &orientationTag);
@@ -90,8 +81,7 @@ void TiffHandler::read_header()
     if (!TIFFGetField(m_tiff, TIFFTAG_SAMPLESPERPIXEL, &samplesPerPixel))
         samplesPerPixel = 1;
 
-    if(bitPerSample!= supported_bitPerSample ||
-            samplesPerPixel != supported_samplesPerPixel) {
+    if (bitPerSample != supported_bitPerSample || samplesPerPixel != supported_samplesPerPixel) {
         std::ostringstream message;
         message << "TiffHandler::read_header() -> Error. "
                 << "Can't read tiff image with following parameters:" << std::endl
@@ -100,7 +90,6 @@ void TiffHandler::read_header()
                 << "    TIFFTAG_SAMPLESPERPIXEL: " << samplesPerPixel << std::endl;
         throw Exceptions::FormatErrorException(message.str());
     }
-
 }
 
 void TiffHandler::read_data()
@@ -108,12 +97,12 @@ void TiffHandler::read_data()
     assert(m_tiff);
 
     tmsize_t buf_size = TIFFScanlineSize(m_tiff);
-    tmsize_t expected_size = size_of_int*m_width;
-    if(buf_size != expected_size)
+    tmsize_t expected_size = size_of_int * m_width;
+    if (buf_size != expected_size)
         throw Exceptions::FormatErrorException(
             "TiffHandler::read_data() -> Error. Wrong scanline size.");
     tdata_t buf = _TIFFmalloc(buf_size);
-    if(!buf)
+    if (!buf)
         throw Exceptions::FormatErrorException(
             "TiffHandler::read_data() -> Error. Can't allocate buffer.");
 
@@ -122,13 +111,14 @@ void TiffHandler::read_data()
     std::vector<int> line_buf;
     line_buf.resize(m_width, 0);
     std::vector<int> axes_indices(2);
-    for (uint32 row = 0; row < (uint32) m_height; row++) {
-        if(TIFFReadScanline(m_tiff, buf, row) < 0)
+    for (uint32 row = 0; row < (uint32)m_height; row++) {
+        if (TIFFReadScanline(m_tiff, buf, row) < 0)
             throw Exceptions::FormatErrorException(
                 "TiffHandler::read_data() -> Error. Error in scanline.");
         memcpy(&line_buf[0], buf, buf_size);
-        for(size_t col=0; col<line_buf.size(); ++col) {
-//            std::cout << "row:" << row << " col:" << col << " " << line_buf[col] << std::endl;
+        for (size_t col = 0; col < line_buf.size(); ++col) {
+            //            std::cout << "row:" << row << " col:" << col << " " << line_buf[col] <<
+            //            std::endl;
             axes_indices[0] = col;
             axes_indices[1] = m_height - 1 - row;
             size_t global_index = m_data->toGlobalIndex(axes_indices);
@@ -143,8 +133,8 @@ void TiffHandler::write_header()
     assert(m_tiff);
     TIFFSetField(m_tiff, TIFFTAG_ARTIST, "BornAgain.IOFactory");
     TIFFSetField(m_tiff, TIFFTAG_DATETIME, SysUtils::getCurrentDateAndTime().c_str());
-    TIFFSetField(m_tiff, TIFFTAG_IMAGEDESCRIPTION,
-           "Image converted from BornAgain intensity file.");
+    TIFFSetField(
+        m_tiff, TIFFTAG_IMAGEDESCRIPTION, "Image converted from BornAgain intensity file.");
     TIFFSetField(m_tiff, TIFFTAG_SOFTWARE, "BornAgain");
 
     uint32 width = m_width;
@@ -162,17 +152,18 @@ void TiffHandler::write_header()
 
 void TiffHandler::write_data()
 {
-    tmsize_t buf_size = size_of_int*m_width;;
+    tmsize_t buf_size = size_of_int * m_width;
+    ;
     tdata_t buf = _TIFFmalloc(buf_size);
-    if(!buf)
+    if (!buf)
         throw Exceptions::FormatErrorException(
             "TiffHandler::write_data() -> Error. Can't allocate buffer.");
 
     std::vector<int> line_buf;
     line_buf.resize(m_width, 0);
     std::vector<int> axes_indices(2);
-    for (uint32 row = 0; row < (uint32) m_height; row++) {
-        for(size_t col=0; col<line_buf.size(); ++col) {
+    for (uint32 row = 0; row < (uint32)m_height; row++) {
+        for (size_t col = 0; col < line_buf.size(); ++col) {
             axes_indices[0] = col;
             axes_indices[1] = m_height - 1 - row;
             size_t global_index = m_data->toGlobalIndex(axes_indices);
@@ -180,7 +171,7 @@ void TiffHandler::write_data()
         }
         memcpy(buf, &line_buf[0], buf_size);
 
-        if(TIFFWriteScanline(m_tiff, buf, row) < 0)
+        if (TIFFWriteScanline(m_tiff, buf, row) < 0)
             throw Exceptions::FormatErrorException(
                 "TiffHandler::write_data() -> Error. Error in TIFFWriteScanline.");
     }
@@ -190,7 +181,7 @@ void TiffHandler::write_data()
 
 void TiffHandler::close()
 {
-    if(m_tiff) {
+    if (m_tiff) {
         TIFFClose(m_tiff);
         m_tiff = 0;
         m_width = 0;

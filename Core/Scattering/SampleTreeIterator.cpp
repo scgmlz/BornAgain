@@ -16,18 +16,12 @@
 #include "SampleTreeIterator.h"
 
 
-
-IteratorState::IteratorState(const ISample *single_element)
-    : m_position(0)
+IteratorState::IteratorState(const ISample* single_element) : m_position(0)
 {
     m_samples.push_back(single_element);
 }
 
-IteratorState::IteratorState(std::vector<const ISample *> samples)
-    : m_samples(samples)
-    , m_position(0)
+IteratorState::IteratorState(std::vector<const ISample*> samples)
+    : m_samples(samples), m_position(0)
 {
 }
-
-
-

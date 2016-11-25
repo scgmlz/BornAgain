@@ -13,14 +13,14 @@
 //
 // ************************************************************************** //
 
-#include "ProgressHandler.h"
 #include "InnerCounter.h"
+#include "ProgressHandler.h"
 
 //! Increments progress count; at regular intervals updates main progress handler.
 void InnerCounter::stepProgress(ProgressHandler* progress)
 {
     ++m_count;
-    if( m_count==bundle ) {
+    if (m_count == bundle) {
         progress->incrementDone(bundle);
         m_count = 0;
     }

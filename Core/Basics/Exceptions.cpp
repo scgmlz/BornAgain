@@ -16,47 +16,43 @@
 #include "Exceptions.h"
 #include <iostream>
 
-namespace Exceptions {
-
-void LogExceptionMessage(const std::string& message)
+namespace Exceptions
 {
-    std::cerr << message << std::endl;
-}
+
+void LogExceptionMessage(const std::string& message) { std::cerr << message << std::endl; }
 
 NotImplementedException::NotImplementedException(const std::string& message)
     : std::logic_error(message)
 {
-     LogExceptionMessage(message);
+    LogExceptionMessage(message);
 }
 
-NullPointerException::NullPointerException(const std::string& message)
-    : std::logic_error(message)
+NullPointerException::NullPointerException(const std::string& message) : std::logic_error(message)
 {
-     LogExceptionMessage(message);
+    LogExceptionMessage(message);
 }
 
-OutOfBoundsException::OutOfBoundsException(const std::string& message)
-    : std::logic_error(message)
+OutOfBoundsException::OutOfBoundsException(const std::string& message) : std::logic_error(message)
 {
-     LogExceptionMessage(message);
+    LogExceptionMessage(message);
 }
 
 ClassInitializationException::ClassInitializationException(const std::string& message)
     : std::runtime_error(message)
 {
-     LogExceptionMessage(message);
+    LogExceptionMessage(message);
 }
 
 SelfReferenceException::SelfReferenceException(const std::string& message)
     : std::logic_error(message)
 {
-     LogExceptionMessage(message);
+    LogExceptionMessage(message);
 }
 
 DeadReferenceException::DeadReferenceException(const std::string& message)
     : std::runtime_error(message)
 {
-     LogExceptionMessage(message);
+    LogExceptionMessage(message);
 }
 
 UnknownClassRegistrationException::UnknownClassRegistrationException(const std::string& message)
@@ -71,8 +67,7 @@ ExistingClassRegistrationException::ExistingClassRegistrationException(const std
     LogExceptionMessage(message);
 }
 
-LogicErrorException::LogicErrorException(const std::string& message)
-    : std::logic_error(message)
+LogicErrorException::LogicErrorException(const std::string& message) : std::logic_error(message)
 {
     LogExceptionMessage(message);
 }
@@ -89,8 +84,7 @@ DivisionByZeroException::DivisionByZeroException(const std::string& message)
     LogExceptionMessage(message);
 }
 
-DomainErrorException::DomainErrorException(const std::string& message)
-    : std::domain_error(message)
+DomainErrorException::DomainErrorException(const std::string& message) : std::domain_error(message)
 {
     LogExceptionMessage(message);
 }
@@ -101,14 +95,12 @@ FileNotIsOpenException::FileNotIsOpenException(const std::string& message)
     LogExceptionMessage(message);
 }
 
-FileIsBadException::FileIsBadException(const std::string& message)
-    : std::runtime_error(message)
+FileIsBadException::FileIsBadException(const std::string& message) : std::runtime_error(message)
 {
     LogExceptionMessage(message);
 }
 
-FormatErrorException::FormatErrorException(const std::string& message)
-    : std::runtime_error(message)
+FormatErrorException::FormatErrorException(const std::string& message) : std::runtime_error(message)
 {
     LogExceptionMessage(message);
 }

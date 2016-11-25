@@ -26,14 +26,15 @@ class BA_CORE_API_ IsGISAXSDetector : public SphericalDetector
 {
 public:
     IsGISAXSDetector();
-    IsGISAXSDetector(size_t n_phi, double phi_min, double phi_max,
-                     size_t n_alpha, double alpha_min, double alpha_max);
-    IsGISAXSDetector(const IsGISAXSDetector &other);
+    IsGISAXSDetector(
+        size_t n_phi, double phi_min, double phi_max, size_t n_alpha, double alpha_min,
+        double alpha_max);
+    IsGISAXSDetector(const IsGISAXSDetector& other);
 
     IsGISAXSDetector* clone() const override;
 
 protected:
-    void print(std::ostream &ostr) const override;
+    void print(std::ostream& ostr) const override;
 
     //! Generates an axis with correct name and default binning for given index
     IAxis* createAxis(size_t index, size_t n_bins, double min, double max) const override;

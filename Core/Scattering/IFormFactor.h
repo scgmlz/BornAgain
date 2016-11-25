@@ -16,9 +16,9 @@
 #ifndef IFORMFACTOR_H
 #define IFORMFACTOR_H
 
-#include "ISample.h"
 #include "Complex.h"
 #include "EigenCore.h"
+#include "ISample.h"
 
 class IMaterial;
 class ILayerRTCoefficients;
@@ -40,14 +40,14 @@ class BA_CORE_API_ IFormFactor : public ISample
 public:
     IFormFactor() {}
     ~IFormFactor() override;
-    IFormFactor* clone() const override=0;
-    void accept(ISampleVisitor* visitor) const override=0;
+    IFormFactor* clone() const override = 0;
+    void accept(ISampleVisitor* visitor) const override = 0;
 
     //! Passes the refractive index of the ambient material in which this particle is embedded.
     virtual void setAmbientMaterial(const IMaterial&) {}
 
     //! Returns scattering amplitude for complex wavevectors ki, kf.
-    virtual complex_t evaluate(const WavevectorInfo& wavevectors) const=0;
+    virtual complex_t evaluate(const WavevectorInfo& wavevectors) const = 0;
 
 #ifndef SWIG
     //! Returns scattering amplitude for matrix interactions
@@ -59,7 +59,7 @@ public:
 
     //! Returns the (approximate in some cases) radial size of the particle of this
     //! form factor's shape. This is used for SSCA calculations
-    virtual double getRadialExtension() const=0;
+    virtual double getRadialExtension() const = 0;
 
     //! Sets reflection/transmission info
     virtual void setSpecularInfo(const ILayerRTCoefficients*, const ILayerRTCoefficients*) {}

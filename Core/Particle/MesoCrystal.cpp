@@ -39,8 +39,8 @@ MesoCrystal::~MesoCrystal()
 
 MesoCrystal* MesoCrystal::clone() const
 {
-    MesoCrystal* p_result
-        = new MesoCrystal(mp_particle_structure->clone(), mp_meso_form_factor->clone());
+    MesoCrystal* p_result =
+        new MesoCrystal(mp_particle_structure->clone(), mp_meso_form_factor->clone());
     p_result->setAbundance(m_abundance);
     if (mP_rotation)
         p_result->setRotation(*mP_rotation);
@@ -50,8 +50,8 @@ MesoCrystal* MesoCrystal::clone() const
 
 MesoCrystal* MesoCrystal::cloneInvertB() const
 {
-    MesoCrystal* p_result
-        = new MesoCrystal(mp_particle_structure->cloneInvertB(), mp_meso_form_factor->clone());
+    MesoCrystal* p_result =
+        new MesoCrystal(mp_particle_structure->cloneInvertB(), mp_meso_form_factor->clone());
     p_result->setAbundance(m_abundance);
     if (mP_rotation)
         p_result->setRotation(*mP_rotation);
@@ -59,10 +59,7 @@ MesoCrystal* MesoCrystal::cloneInvertB() const
     return p_result;
 }
 
-void MesoCrystal::accept(ISampleVisitor* visitor) const
-{
-    visitor->visit(this);
-}
+void MesoCrystal::accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
 void MesoCrystal::setAmbientMaterial(const IMaterial& material)
 {
@@ -74,8 +71,8 @@ const IMaterial* MesoCrystal::getAmbientMaterial() const
     return mp_particle_structure ? mp_particle_structure->getAmbientMaterial() : nullptr;
 }
 
-IFormFactor* MesoCrystal::createTransformedFormFactor(
-    const IRotation* p_rotation, kvector_t translation) const
+IFormFactor*
+MesoCrystal::createTransformedFormFactor(const IRotation* p_rotation, kvector_t translation) const
 {
     if (!mp_particle_structure || !mp_meso_form_factor)
         return 0;

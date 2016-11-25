@@ -33,8 +33,10 @@ public:
     LayerRoughness();
     LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength);
 
-    LayerRoughness* clone() const {
-        return new LayerRoughness(m_sigma, m_hurstParameter, m_latteralCorrLength); }
+    LayerRoughness* clone() const
+    {
+        return new LayerRoughness(m_sigma, m_hurstParameter, m_latteralCorrLength);
+    }
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
     //! Returns power spectral density of the surface roughness
@@ -53,8 +55,10 @@ public:
     double getHurstParameter() const { return m_hurstParameter; }
 
     //! Sets lateral correlation length
-    void setLatteralCorrLength(double latteralCorrLength) {
-        m_latteralCorrLength = latteralCorrLength; }
+    void setLatteralCorrLength(double latteralCorrLength)
+    {
+        m_latteralCorrLength = latteralCorrLength;
+    }
     //! Returns latteral correlation length
     double getLatteralCorrLength() const { return m_latteralCorrLength; }
 
@@ -64,9 +68,9 @@ public:
 protected:
     void print(std::ostream& ostr) const;
 
-    double m_sigma;                //!< rms of roughness
-    double m_hurstParameter;   //!< Hurst parameter which describes how jagged the interface, 0<H<=1
-    double m_latteralCorrLength;   //!< latteral correlation length of the roughness
+    double m_sigma; //!< rms of roughness
+    double m_hurstParameter; //!< Hurst parameter which describes how jagged the interface, 0<H<=1
+    double m_latteralCorrLength; //!< latteral correlation length of the roughness
 private:
     void initialize();
 };

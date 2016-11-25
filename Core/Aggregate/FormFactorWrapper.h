@@ -25,8 +25,7 @@ class IFormFactor;
 class BA_CORE_API_ FormFactorWrapper : public ICloneable
 {
 public:
-    FormFactorWrapper(IFormFactor* ff, double abundance)
-        : mp_ff(ff), m_abundance(abundance) {}
+    FormFactorWrapper(IFormFactor* ff, double abundance) : mp_ff(ff), m_abundance(abundance) {}
     virtual ~FormFactorWrapper();
     virtual FormFactorWrapper* clone() const;
     IFormFactor* mp_ff;

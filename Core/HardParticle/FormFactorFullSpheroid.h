@@ -27,8 +27,10 @@ class BA_CORE_API_ FormFactorFullSpheroid : public IFormFactorBorn
 public:
     FormFactorFullSpheroid(double radius, double height);
 
-    FormFactorFullSpheroid* clone() const override final {
-        return new FormFactorFullSpheroid(m_radius, m_height); }
+    FormFactorFullSpheroid* clone() const override final
+    {
+        return new FormFactorFullSpheroid(m_radius, m_height);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getHeight() const { return m_height; }

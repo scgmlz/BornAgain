@@ -47,8 +47,8 @@ public:
     //! @param nbinsy number of bins on Y-axis
     //! @param ybins Array of size nbins+1 containing low-edges for each
     //! bin and upper edge of last bin.
-    Histogram2D(int nbinsx, const std::vector<double>& xbins,
-                int nbinsy, const std::vector<double>& ybins);
+    Histogram2D(
+        int nbinsx, const std::vector<double>& xbins, int nbinsy, const std::vector<double>& ybins);
 
     //! Constructor for 2D histogram with custom axes
     Histogram2D(const IAxis& axis_x, const IAxis& axis_y);
@@ -63,7 +63,7 @@ public:
     Histogram2D* clone() const;
 
     //! Returns the number of histogram dimensions
-    size_t getRank() const { return 2;}
+    size_t getRank() const { return 2; }
 
     //! Increment bin with abscissa x and ordinate y with a weight.
     int fill(double x, double y, double weight = 1.0);

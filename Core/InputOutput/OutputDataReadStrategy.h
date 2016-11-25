@@ -27,7 +27,7 @@ template <class T> class OutputData;
 class BA_CORE_API_ IOutputDataReadStrategy
 {
 public:
-    virtual ~IOutputDataReadStrategy(){}
+    virtual ~IOutputDataReadStrategy() {}
     virtual OutputData<double>* readOutputData(std::istream& input_stream) = 0;
 };
 
@@ -65,8 +65,9 @@ public:
     OutputDataReadTiffStrategy();
     virtual ~OutputDataReadTiffStrategy();
     virtual OutputData<double>* readOutputData(std::istream& input_stream);
+
 private:
-    TiffHandler *m_d;
+    TiffHandler* m_d;
 };
 #endif // BORNAGAIN_TIFF_SUPPORT
 

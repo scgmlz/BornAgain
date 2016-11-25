@@ -19,21 +19,19 @@
 IAxis* IAxis::createDoubleBinSize() const
 {
     throw Exceptions::NotImplementedException(
-                "IAxis::createDoubleBinSize() -> Error. Not implemented.");
+        "IAxis::createDoubleBinSize() -> Error. Not implemented.");
 }
 
 size_t IAxis::findIndex(double value) const
 {
-    for (size_t index=0; index<size(); ++index) {
-        if (BinContains(getBin(index), value)) return index;
+    for (size_t index = 0; index < size(); ++index) {
+        if (BinContains(getBin(index), value))
+            return index;
     }
     return size();
 }
 
-bool IAxis::equals(const IAxis& other) const
-{
-    return getName()==other.getName();
-}
+bool IAxis::equals(const IAxis& other) const { return getName() == other.getName(); }
 
 std::vector<double> IAxis::getBinCenters() const
 {
@@ -52,7 +50,4 @@ IAxis* IAxis::createClippedAxis(double /* left */, double /* right */) const
         "IAxis::createClippedAxis() -> Error. Not implemented.");
 }
 
-bool IAxis::contains(double value) const
-{
-    return value >= getMin() && value < getMax();
-}
+bool IAxis::contains(double value) const { return value >= getMin() && value < getMax(); }

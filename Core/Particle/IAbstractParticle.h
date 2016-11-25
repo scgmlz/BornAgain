@@ -34,18 +34,18 @@ public:
     IAbstractParticle() : m_abundance(1.0) {}
     virtual ~IAbstractParticle() {}
 
-    virtual IAbstractParticle* clone() const =0;
-    virtual IAbstractParticle* cloneInvertB() const =0;
+    virtual IAbstractParticle* clone() const = 0;
+    virtual IAbstractParticle* cloneInvertB() const = 0;
 
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
     //! Sets the refractive index of the ambient material (which influences its scattering power)
-    virtual void setAmbientMaterial(const IMaterial&) =0;
+    virtual void setAmbientMaterial(const IMaterial&) = 0;
 
     double getAbundance() const { return m_abundance; }
     void setAbundance(double abundance) { m_abundance = abundance; }
 
-    virtual const IMaterial* getAmbientMaterial() const =0;
+    virtual const IMaterial* getAmbientMaterial() const = 0;
 
 protected:
     double m_abundance;

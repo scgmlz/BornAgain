@@ -39,16 +39,16 @@ class BA_CORE_API_ ISample : public ICloneable, public IParameterized
 {
 public:
     //! Returns a clone of this ISample object.
-    ISample* clone() const override=0;
+    ISample* clone() const override = 0;
 
     //! Returns a clone with inverted magnetic fields.
     virtual ISample* cloneInvertB() const;
 
     //! Calls the ISampleVisitor's visit method.
-    virtual void accept(ISampleVisitor* p_visitor) const=0;
+    virtual void accept(ISampleVisitor* p_visitor) const = 0;
 
     //! Returns textual representation of this and its descendants.
-    virtual std::string to_str(int indent=0) const;
+    virtual std::string to_str(int indent = 0) const;
 
     //! Returns nullptr, unless overwritten to return a specific material.
     virtual const IMaterial* getMaterial() const { return nullptr; }
@@ -65,19 +65,18 @@ public:
     //! Returns number of children.
     virtual size_t size() const { return 0; }
 
-    template<class T> std::vector<const T*> containedSubclass() const;
+    template <class T> std::vector<const T*> containedSubclass() const;
 };
 
 //! Returns vector of children of type T.
-template<class T>
-std::vector<const T*> ISample::containedSubclass() const
+template <class T> std::vector<const T*> ISample::containedSubclass() const
 {
     std::vector<const T*> result;
-    if( const T* t = dynamic_cast<const T*>(this) )
-        result.push_back( t );
-    for( const ISample* child: getChildren() )
-        for( const T* t: child->containedSubclass<T>() )
-            result.push_back( t );
+    if (const T* t = dynamic_cast<const T*>(this))
+        result.push_back(t);
+    for (const ISample* child : getChildren())
+        for (const T* t : child->containedSubclass<T>())
+            result.push_back(t);
     return result;
 }
 

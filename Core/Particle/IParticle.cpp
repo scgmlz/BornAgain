@@ -43,10 +43,7 @@ void IParticle::applyRotation(const IRotation& rotation)
     registerChild(mP_rotation.get());
 }
 
-void IParticle::applyTranslation(kvector_t displacement)
-{
-    m_position += displacement;
-}
+void IParticle::applyTranslation(kvector_t displacement) { m_position += displacement; }
 
 IRotation* IParticle::createComposedRotation(const IRotation* p_rotation) const
 {
@@ -63,8 +60,8 @@ IRotation* IParticle::createComposedRotation(const IRotation* p_rotation) const
     }
 }
 
-kvector_t IParticle::getComposedTranslation(
-    const IRotation* p_rotation, kvector_t translation) const
+kvector_t
+IParticle::getComposedTranslation(const IRotation* p_rotation, kvector_t translation) const
 {
     if (p_rotation) {
         Transform3D transform = p_rotation->getTransform3D();
@@ -81,7 +78,4 @@ void IParticle::registerPosition()
     registerParameter(BornAgain::PositionZ, &m_position[2]).setUnit("nm");
 }
 
-const IRotation* IParticle::getRotation() const
-{
-    return mP_rotation.get();
-}
+const IRotation* IParticle::getRotation() const { return mP_rotation.get(); }

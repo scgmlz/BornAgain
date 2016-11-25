@@ -26,14 +26,13 @@ FormFactorBox::FormFactorBox(double length, double width, double height)
 {
     setName(BornAgain::FFBoxType);
     registerParameter(BornAgain::Length, &m_length).setUnit("nm").setNonnegative();
-    registerParameter(BornAgain::Width,  &m_width).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::Width, &m_width).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::Height, &m_height).setUnit("nm").setNonnegative();
 }
 
 complex_t FormFactorBox::evaluate_for_q(const cvector_t q) const
 {
-    complex_t qzHdiv2 = m_height/2*q.z();
-    return m_height*m_length*m_width *
-        MathFunctions::sinc(m_length/2*q.x()) *  MathFunctions::sinc(m_width/2*q.y()) *
-        MathFunctions::sinc(qzHdiv2) * exp_I(qzHdiv2);
+    complex_t qzHdiv2 = m_height / 2 * q.z();
+    return m_height * m_length * m_width * MathFunctions::sinc(m_length / 2 * q.x())
+        * MathFunctions::sinc(m_width / 2 * q.y()) * MathFunctions::sinc(qzHdiv2) * exp_I(qzHdiv2);
 }

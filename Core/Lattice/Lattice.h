@@ -28,7 +28,7 @@ class Transform3D;
 class BA_CORE_API_ Lattice
 {
 public:
-    Lattice() =delete;
+    Lattice() = delete;
     Lattice(const kvector_t a1, const kvector_t a2, const kvector_t a3);
     Lattice(const Lattice& lattice);
     ~Lattice();
@@ -61,8 +61,8 @@ public:
     ivector_t getNearestReciprocalLatticeVectorCoordinates(const kvector_t vector_in) const;
 
     //! Computes a list of reciprocal lattice vectors within a specified distance of a given vector
-    std::vector<kvector_t> reciprocalLatticeVectorsWithinRadius(
-        const kvector_t input_vector, double radius) const;
+    std::vector<kvector_t>
+    reciprocalLatticeVectorsWithinRadius(const kvector_t input_vector, double radius) const;
 
     //! Sets a selection rule for the reciprocal vectors
     void setSelectionRule(const ISelectionRule& p_selection_rule);
@@ -76,14 +76,14 @@ private:
 
     std::vector<kvector_t> vectorsWithinRadius(
         const kvector_t input_vector, const ivector_t& nearest_coords, double radius,
-        const kvector_t v1, const kvector_t v2, const kvector_t v3,
-        const kvector_t rec1, const kvector_t rec2, const kvector_t rec3) const;
+        const kvector_t v1, const kvector_t v2, const kvector_t v3, const kvector_t rec1,
+        const kvector_t rec2, const kvector_t rec3) const;
 
     void computeReciprocalVectors() const;
     static void computeInverseVectors(
-        const kvector_t v1, const kvector_t v2, const kvector_t v3,
-        kvector_t o1, kvector_t o2, kvector_t o3);
-    ISelectionRule *mp_selection_rule;
+        const kvector_t v1, const kvector_t v2, const kvector_t v3, kvector_t o1, kvector_t o2,
+        kvector_t o3);
+    ISelectionRule* mp_selection_rule;
     kvector_t m_a1, m_a2, m_a3; //!< Basis vectors in real space
     mutable kvector_t m_b1, m_b2, m_b3; //!< Cache of basis vectors in reciprocal space
     //! Boolean indicating if the reciprocal vectors are already initialized in the cache

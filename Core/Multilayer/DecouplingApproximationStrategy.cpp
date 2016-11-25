@@ -25,8 +25,7 @@
 //! Returns the total incoherent and coherent scattering intensity for given kf and
 //! for one layer (implied by the given particle form factors).
 //! For each IParticle in the layer layout, the precomputed form factor must be provided.
-double DecouplingApproximationStrategy1::evaluateForList(
-    const SimulationElement& sim_element) const
+double DecouplingApproximationStrategy1::evaluateForList(const SimulationElement& sim_element) const
 {
     double intensity = 0.0;
     complex_t amplitude = complex_t(0.0, 0.0);
@@ -51,8 +50,7 @@ double DecouplingApproximationStrategy1::evaluateForList(
 //! For each IParticle in the layer layout, the precomputed form factor must be provided.
 //! This is the polarized variant of evaluateForList. Each form factor must be
 //! precomputed for polarized beam and detector.
-double DecouplingApproximationStrategy2::evaluateForList(
-    const SimulationElement& sim_element) const
+double DecouplingApproximationStrategy2::evaluateForList(const SimulationElement& sim_element) const
 {
     Eigen::Matrix2cd mean_intensity = Eigen::Matrix2cd::Zero();
     Eigen::Matrix2cd mean_amplitude = Eigen::Matrix2cd::Zero();
@@ -70,7 +68,7 @@ double DecouplingApproximationStrategy2::evaluateForList(
         mean_intensity += fraction * (ff * sim_element.getPolarization() * ff.adjoint());
     }
     Eigen::Matrix2cd amplitude_matrix = sim_element.getAnalyzerOperator() * mean_amplitude
-            * sim_element.getPolarization() * mean_amplitude.adjoint();
+        * sim_element.getPolarization() * mean_amplitude.adjoint();
     Eigen::Matrix2cd intensity_matrix = sim_element.getAnalyzerOperator() * mean_intensity;
     double amplitude_trace = std::abs(amplitude_matrix.trace());
     double intensity_trace = std::abs(intensity_matrix.trace());

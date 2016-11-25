@@ -27,9 +27,9 @@ FormFactorLongRipple2Lorentz::FormFactorLongRipple2Lorentz(
     : m_length(length), m_width(width), m_height(height), m_d(asymetry)
 {
     setName(BornAgain::FFLongRipple2LorentzType);
-    registerParameter(BornAgain::Width, &m_width      ).setUnit("nm").setNonnegative();
-    registerParameter(BornAgain::Height, &m_height    ).setUnit("nm").setNonnegative();
-    registerParameter(BornAgain::Length, &m_length    ).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::Width, &m_width).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::Height, &m_height).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::Length, &m_length).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::AsymmetryLength, &m_d).setUnit("nm");
 }
 
@@ -37,20 +37,20 @@ void FormFactorLongRipple2Lorentz::check_parameters() const
 {
     bool ok = true;
     std::string message;
-    if(-1*m_width > 2.*m_d) {
+    if (-1 * m_width > 2. * m_d) {
         ok = false;
         message = std::string("Check for '-1*width <= 2.*asymmetry' failed.");
     }
-    if(m_width < 2.*m_d) {
+    if (m_width < 2. * m_d) {
         ok = false;
         message = std::string("Check for 'width >= 2.*asymmetry' failed.");
     }
-    if(m_height <=0) {
+    if (m_height <= 0) {
         ok = false;
         message = std::string("Check for 'height > 0' failed.");
     }
 
-    if(ok)
+    if (ok)
         return;
 
     std::ostringstream ostr;
@@ -65,7 +65,7 @@ void FormFactorLongRipple2Lorentz::check_parameters() const
 
 double FormFactorLongRipple2Lorentz::getRadialExtension() const
 {
-    return ( m_width + m_length ) / 4.0;
+    return (m_width + m_length) / 4.0;
 }
 
 //! Complex formfactor.
@@ -75,12 +75,12 @@ complex_t FormFactorLongRipple2Lorentz::evaluate_for_q(const cvector_t q) const
 
     m_q = q;
 
-    complex_t qxL2 = 2.5*std::pow(m_length * q.x(), 2);
+    complex_t qxL2 = 2.5 * std::pow(m_length * q.x(), 2);
     complex_t factor = m_length / (1.0 + qxL2) * m_width;
 
     complex_t result = 0;
-    complex_t iqzH = mul_I( q.z() * m_height );
-    complex_t iqyW = mul_I( q.y() * m_width );
+    complex_t iqzH = mul_I(q.z() * m_height);
+    complex_t iqyW = mul_I(q.y() * m_width);
     complex_t aaa = 2.0 * (m_d * q.y() + m_height * q.z());
 
     if (0.0 == q.y() && 0.0 == q.z())
@@ -89,18 +89,18 @@ complex_t FormFactorLongRipple2Lorentz::evaluate_for_q(const cvector_t q) const
         result = (1.0 - std::exp(iqzH) + iqzH) / (m_height * q.z() * q.z());
     else if (1.0 == aaa / (q.y() * m_width))
         result = m_height * std::exp(iqzH) * (1.0 - std::exp(-1.0 * iqyW) - iqyW)
-                 / (q.y() * q.y() * m_width * m_width);
+            / (q.y() * q.y() * m_width * m_width);
     else if (-1.0 == aaa / (q.y() * m_width))
         result = m_height * std::exp(iqzH) * (1.0 - std::exp(-1.0 * iqyW) + iqyW)
-                 / (q.y() * q.y() * m_width * m_width);
+            / (q.y() * q.y() * m_width * m_width);
     else {
         complex_t iHqzdqy = complex_t(0.0, 1.0) * (q.z() * m_height + q.y() * m_d);
         complex_t Hqzdqy = q.z() * m_height + q.y() * m_d;
         result = std::cos(q.y() * m_width * 0.5)
-                 + 2.0 * iHqzdqy * std::sin(q.y() * m_width * 0.5) / (m_width * q.y());
+            + 2.0 * iHqzdqy * std::sin(q.y() * m_width * 0.5) / (m_width * q.y());
         result = result * std::exp(-1.0 * iHqzdqy) - 1.0;
         result = result * 4.0 * m_height * std::exp(iqzH)
-                 / (4.0 * Hqzdqy * Hqzdqy - q.y() * q.y() * m_width * m_width);
+            / (4.0 * Hqzdqy * Hqzdqy - q.y() * q.y() * m_width * m_width);
     }
     return factor * result;
 }

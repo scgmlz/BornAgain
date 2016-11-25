@@ -29,7 +29,7 @@ public:
     ParticleComposition();
     explicit ParticleComposition(const IParticle& particle);
     ParticleComposition(const IParticle& particle, kvector_t position);
-    ParticleComposition(const IParticle& particle, std::vector<kvector_t > positions);
+    ParticleComposition(const IParticle& particle, std::vector<kvector_t> positions);
 
     virtual ~ParticleComposition();
     virtual ParticleComposition* clone() const;
@@ -40,15 +40,15 @@ public:
     virtual void accept(ISampleVisitor* visitor) const { visitor->visit(this); }
 
     void addParticle(const IParticle& particle);
-    void addParticle(const IParticle& particle, kvector_t  position);
-    void addParticles(const IParticle& particle, std::vector<kvector_t > positions);
+    void addParticle(const IParticle& particle, kvector_t position);
+    void addParticles(const IParticle& particle, std::vector<kvector_t> positions);
 
     virtual void setAmbientMaterial(const IMaterial& material);
     virtual const IMaterial* getAmbientMaterial() const;
 
     //! Create a form factor for this particle with an extra scattering factor
-    virtual IFormFactor* createTransformedFormFactor(const IRotation* p_rotation,
-                                                     kvector_t translation) const;
+    virtual IFormFactor*
+    createTransformedFormFactor(const IRotation* p_rotation, kvector_t translation) const;
 
     //! Returns number of different particles
     size_t getNbrParticles() const { return m_particles.size(); }

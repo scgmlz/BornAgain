@@ -26,47 +26,50 @@
 class BA_CORE_API_ FitStrategyAdjustParameters : public IFitStrategy
 {
 public:
-    FitStrategyAdjustParameters(const std::string& name)
-        : IFitStrategy(name)
+    FitStrategyAdjustParameters(const std::string& name) : IFitStrategy(name) { clear(); }
+
+    FitStrategyAdjustParameters() : IFitStrategy("FitSuiteStrategyAdjustParameters") { clear(); }
+
+    virtual ~FitStrategyAdjustParameters() {}
+
+    virtual FitStrategyAdjustParameters* clone() const
     {
-        clear();
+        return new FitStrategyAdjustParameters(*this);
     }
-
-    FitStrategyAdjustParameters()
-        : IFitStrategy("FitSuiteStrategyAdjustParameters")
-    {
-        clear();
-    }
-
-    virtual ~FitStrategyAdjustParameters(){}
-
-    virtual FitStrategyAdjustParameters* clone() const {
-        return new FitStrategyAdjustParameters(*this); }
 
     virtual void execute();
 
-    virtual FitStrategyAdjustParameters& fix_all() {
-        m_fix_all = true; return *this;
+    virtual FitStrategyAdjustParameters& fix_all()
+    {
+        m_fix_all = true;
+        return *this;
     }
 
-    virtual FitStrategyAdjustParameters& release_all() {
-        m_release_all = true; return *this;
+    virtual FitStrategyAdjustParameters& release_all()
+    {
+        m_release_all = true;
+        return *this;
     }
 
-    virtual FitStrategyAdjustParameters& fix(std::string parname ) {
+    virtual FitStrategyAdjustParameters& fix(std::string parname)
+    {
         m_pars_to_fix.push_back(parname);
         return *this;
     }
 
-    virtual FitStrategyAdjustParameters& release(std::string parname ) {
+    virtual FitStrategyAdjustParameters& release(std::string parname)
+    {
         m_pars_to_release.push_back(parname);
         return *this;
     }
 
-    virtual void setPreserveOriginalValues(bool preserve_values) {
-        m_preserve_original_values = preserve_values; }
+    virtual void setPreserveOriginalValues(bool preserve_values)
+    {
+        m_preserve_original_values = preserve_values;
+    }
 
-    virtual void clear() {
+    virtual void clear()
+    {
         m_fix_all = false;
         m_release_all = false;
         m_preserve_original_values = false;
@@ -75,7 +78,7 @@ public:
     }
 
 protected:
-    FitStrategyAdjustParameters(const FitStrategyAdjustParameters &other);
+    FitStrategyAdjustParameters(const FitStrategyAdjustParameters& other);
 
     bool m_fix_all;
     bool m_release_all;
@@ -94,14 +97,13 @@ protected:
 class BA_CORE_API_ FitStrategyFixParameters : public FitStrategyAdjustParameters
 {
 public:
-    FitStrategyFixParameters()
-        : FitStrategyAdjustParameters("FixStrategyFixParameters")
+    FitStrategyFixParameters() : FitStrategyAdjustParameters("FixStrategyFixParameters")
     {
         m_fix_all = false;
         m_release_all = true;
     }
 
-    FitStrategyFixParameters(const std::vector<std::string> &pars)
+    FitStrategyFixParameters(const std::vector<std::string>& pars)
         : FitStrategyAdjustParameters("FixStrategyFixParameters")
     {
         m_fix_all = false;
@@ -109,16 +111,16 @@ public:
         setFixed(pars);
     }
 
-    virtual ~FitStrategyFixParameters(){}
-    virtual FitStrategyFixParameters *clone() const { return new FitStrategyFixParameters(*this); }
+    virtual ~FitStrategyFixParameters() {}
+    virtual FitStrategyFixParameters* clone() const { return new FitStrategyFixParameters(*this); }
 
-    virtual void clear() {
+    virtual void clear()
+    {
         FitStrategyAdjustParameters::clear();
         m_release_all = true;
     }
 
-    virtual void setFixed(const std::vector<std::string> &pars) { m_pars_to_fix = pars; }
-
+    virtual void setFixed(const std::vector<std::string>& pars) { m_pars_to_fix = pars; }
 };
 
 
@@ -129,14 +131,13 @@ public:
 class BA_CORE_API_ FitStrategyReleaseParameters : public FitStrategyAdjustParameters
 {
 public:
-    FitStrategyReleaseParameters()
-        : FitStrategyAdjustParameters("FixStrategyReleaseParameters")
+    FitStrategyReleaseParameters() : FitStrategyAdjustParameters("FixStrategyReleaseParameters")
     {
         m_fix_all = true;
         m_release_all = false;
     }
 
-    FitStrategyReleaseParameters(const std::vector<std::string> &pars)
+    FitStrategyReleaseParameters(const std::vector<std::string>& pars)
         : FitStrategyAdjustParameters("FixStrategyReleaseParameters")
     {
         m_fix_all = true;
@@ -145,16 +146,19 @@ public:
     }
 
 
-    virtual ~FitStrategyReleaseParameters(){}
-    virtual FitStrategyReleaseParameters *clone() const {
-        return new FitStrategyReleaseParameters(*this); }
+    virtual ~FitStrategyReleaseParameters() {}
+    virtual FitStrategyReleaseParameters* clone() const
+    {
+        return new FitStrategyReleaseParameters(*this);
+    }
 
-    virtual void clear() {
+    virtual void clear()
+    {
         FitStrategyAdjustParameters::clear();
         m_fix_all = true;
     }
 
-    virtual void setReleased(const std::vector<std::string> &pars) { m_pars_to_release = pars; }
+    virtual void setReleased(const std::vector<std::string>& pars) { m_pars_to_release = pars; }
 };
 
 #endif // FITSTRATEGYADJUSTPARAMETERS_H

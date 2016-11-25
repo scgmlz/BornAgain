@@ -16,20 +16,21 @@
 #ifndef DETECTIONPROPERTIES_H
 #define DETECTIONPROPERTIES_H
 
-#include "WinDllMacros.h"
 #include "EigenCore.h"
 #include "Vectors3D.h"
+#include "WinDllMacros.h"
 
 //! Detector properties (efficiency, transmission).
 //! @ingroup simulation
 
-class BA_CORE_API_ DetectionProperties {
+class BA_CORE_API_ DetectionProperties
+{
 public:
     DetectionProperties();
 
     //! Sets the polarization analyzer characteristics of the detector
-    void setAnalyzerProperties(const kvector_t direction, double efficiency,
-                               double total_transmission);
+    void
+    setAnalyzerProperties(const kvector_t direction, double efficiency, double total_transmission);
 
     //! Gets the polarization density matrix (in spin basis along z-axis)
     Eigen::Matrix2cd analyzerOperator() const;
@@ -42,8 +43,8 @@ private:
         const kvector_t direction, double efficiency, double total_transmission = 1.0) const;
 
     //! Verify if the given analyzer properties are physical
-    bool checkAnalyzerProperties(const kvector_t direction, double efficiency,
-                                 double total_transmission) const;
+    bool checkAnalyzerProperties(
+        const kvector_t direction, double efficiency, double total_transmission) const;
 
     Eigen::Matrix2cd m_analyzer_operator; //!< polarization analyzer operator
 };

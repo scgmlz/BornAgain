@@ -26,11 +26,11 @@
 #include "Units.h"
 
 Lattice1DBuilder::Lattice1DBuilder()
-    : m_length(20.0*Units::nanometer)
-    , m_xi(10.0*Units::deg)
-    , m_corr_length(1000.0*Units::nanometer)
-    , m_cylinder_height(5*Units::nanometer)
-    , m_cylinder_radius(5*Units::nanometer)
+    : m_length(20.0 * Units::nanometer)
+    , m_xi(10.0 * Units::deg)
+    , m_corr_length(1000.0 * Units::nanometer)
+    , m_cylinder_height(5 * Units::nanometer)
+    , m_cylinder_radius(5 * Units::nanometer)
 {
     init_parameters();
 }
@@ -47,7 +47,7 @@ MultiLayer* Lattice1DBuilder::buildSample() const
     Layer substrate_layer(substrate_material);
 
     InterferenceFunction1DLattice interference_function(m_length, m_xi);
-    FTDecayFunction1DCauchy pdf(1000.0*Units::nanometer);
+    FTDecayFunction1DCauchy pdf(1000.0 * Units::nanometer);
     interference_function.setDecayFunction(pdf);
 
     FormFactorCylinder ff_cylinder(m_cylinder_radius, m_cylinder_height);

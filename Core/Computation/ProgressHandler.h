@@ -37,13 +37,20 @@ public:
 
     ProgressHandler()
         : m_inform(nullptr), m_expected_nticks(0), m_completed_nticks(0), m_continuation_flag(true)
-    {}
+    {
+    }
     ProgressHandler(const ProgressHandler& other)
         : m_inform(other.m_inform) // not clear whether we want multiple copies of this
         , m_expected_nticks(other.m_expected_nticks)
-        , m_completed_nticks(other.m_completed_nticks) {}
+        , m_completed_nticks(other.m_completed_nticks)
+    {
+    }
     void subscribe(ProgressHandler::Callback_t callback);
-    void reset() { m_completed_nticks = 0; m_continuation_flag = true; }
+    void reset()
+    {
+        m_completed_nticks = 0;
+        m_continuation_flag = true;
+    }
     void setExpectedNTicks(size_t n) { m_expected_nticks = n; }
     void incrementDone(size_t ticks_done);
     bool alive() { return m_continuation_flag; }

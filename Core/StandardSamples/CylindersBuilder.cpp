@@ -29,8 +29,7 @@
 // Cylinders in DWBA
 // -----------------------------------------------------------------------------
 CylindersInDWBABuilder::CylindersInDWBABuilder()
-    : m_height(5*Units::nanometer)
-    , m_radius(5*Units::nanometer)
+    : m_height(5 * Units::nanometer), m_radius(5 * Units::nanometer)
 {
     init_parameters();
 }
@@ -69,8 +68,7 @@ MultiLayer* CylindersInDWBABuilder::buildSample() const
 // Cylinders in BA
 // -----------------------------------------------------------------------------
 CylindersInBABuilder::CylindersInBABuilder()
-    : m_height(5*Units::nanometer)
-    , m_radius(5*Units::nanometer)
+    : m_height(5 * Units::nanometer), m_radius(5 * Units::nanometer)
 {
     init_parameters();
 }
@@ -91,7 +89,7 @@ MultiLayer* CylindersInBABuilder::buildSample() const
     Layer air_layer(air_material);
 
     FormFactorCylinder ff_cylinder(m_radius, m_height);
-    Particle cylinder(particle_material,ff_cylinder);
+    Particle cylinder(particle_material, ff_cylinder);
 
     ParticleLayout particle_layout(cylinder);
 
@@ -105,8 +103,7 @@ MultiLayer* CylindersInBABuilder::buildSample() const
 // Large cylinders in DWBA
 // -----------------------------------------------------------------------------
 LargeCylindersInDWBABuilder::LargeCylindersInDWBABuilder()
-    : m_height(1000*Units::nanometer)
-    , m_radius(500*Units::nanometer)
+    : m_height(1000 * Units::nanometer), m_radius(500 * Units::nanometer)
 {
     init_parameters();
 }

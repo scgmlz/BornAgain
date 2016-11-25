@@ -14,13 +14,13 @@
 // ************************************************************************** //
 
 #include "FitStrategyAdjustParameters.h"
-#include "FitSuiteImpl.h"
+#include "Exceptions.h"
 #include "FitParameter.h"
 #include "FitParameterSet.h"
+#include "FitSuiteImpl.h"
 #include "Logger.h"
-#include "Exceptions.h"
 
-FitStrategyAdjustParameters::FitStrategyAdjustParameters(const FitStrategyAdjustParameters &other)
+FitStrategyAdjustParameters::FitStrategyAdjustParameters(const FitStrategyAdjustParameters& other)
     : IFitStrategy(other)
     , m_fix_all(other.m_fix_all)
     , m_release_all(other.m_release_all)
@@ -33,34 +33,34 @@ FitStrategyAdjustParameters::FitStrategyAdjustParameters(const FitStrategyAdjust
 //! strategy which fixes/releases fit parameters and then call minimizer
 void FitStrategyAdjustParameters::execute()
 {
-    if( !m_kernel )
+    if (!m_kernel)
         throw Exceptions::NullPointerException(
             "FitSuiteStrategyAdjustParameters::execute() -> FitSuite doesn't exists");
     FitParameterSet* fitParameters = m_kernel->fitParameters();
 
     // fixing all parameters at they current values
-    if( m_fix_all ) {
-        for(auto par: *fitParameters)
+    if (m_fix_all) {
+        for (auto par : *fitParameters)
             par->limits().setFixed(true);
     }
 
     // releasing all parameters
-    if( m_release_all ) {
-        for(auto par: *fitParameters) {
+    if (m_release_all) {
+        for (auto par : *fitParameters) {
             msglog(Logging::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> releasing "
-                                << par->name();
+                                    << par->name();
             par->limits().setFixed(false);
         }
     }
 
     // fixing dedicated list of fit parameters
-    for(auto name: m_pars_to_fix) {
+    for (auto name : m_pars_to_fix) {
         msglog(Logging::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> fixing " << name;
         fitParameters->fitParameter(name)->limits().setFixed(true);
     }
 
     // releasing dedicated list of fit parameters
-    for(auto name: m_pars_to_release) {
+    for (auto name : m_pars_to_release) {
         msglog(Logging::DEBUG2) << "FitSuiteStrategyAdjustParameters::execute() -> releasing "
                                 << name;
         fitParameters->fitParameter(name)->limits().setFixed(false);
@@ -73,6 +73,6 @@ void FitStrategyAdjustParameters::execute()
     m_kernel->minimize();
 
     // returning parameters to original values as they were before minimization
-    if(m_preserve_original_values)
+    if (m_preserve_original_values)
         fitParameters->setValues(original_param_values);
 }

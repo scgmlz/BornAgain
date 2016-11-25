@@ -32,8 +32,8 @@ public:
 
     //! Computes refraction angle reflection/transmission coefficients
     //! for given multilayer and wavevector k
-    static void execute(
-        const class MultiLayer& sample, const kvector_t k, MultiLayerCoeff_t& coeff);
+    static void
+    execute(const class MultiLayer& sample, const kvector_t k, MultiLayerCoeff_t& coeff);
 
 private:
     static void calculateEigenvalues(

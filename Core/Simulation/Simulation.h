@@ -22,7 +22,7 @@
 #include "ProgressHandler.h"
 #include "SimulationOptions.h"
 
-template<class T> class OutputData;
+template <class T> class OutputData;
 class Computation;
 class MultiLayer;
 class IMultiLayerBuilder;
@@ -39,7 +39,7 @@ public:
     Simulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder);
     virtual ~Simulation();
 
-    virtual Simulation* clone() const =0;
+    virtual Simulation* clone() const = 0;
 
     //! Put into a clean state for running a simulation
     virtual void prepareSimulation();
@@ -59,8 +59,8 @@ public:
     void setDetectorResolutionFunction(const IResolutionFunction2D& resolution_function);
     void removeDetectorResolutionFunction();
 
-    void setAnalyzerProperties(const kvector_t direction, double efficiency,
-                               double total_transmission);
+    void
+    setAnalyzerProperties(const kvector_t direction, double efficiency, double total_transmission);
 
     void setSample(const MultiLayer& sample);
     MultiLayer* getSample() const { return mP_sample.get(); }
@@ -68,11 +68,11 @@ public:
     void setSampleBuilder(const std::shared_ptr<IMultiLayerBuilder> sample_builder);
     std::shared_ptr<IMultiLayerBuilder> getSampleBuilder() const { return mP_sample_builder; }
 
-    virtual int numberOfSimulationElements() const=0;
+    virtual int numberOfSimulationElements() const = 0;
 
     //! Clone simulated intensity map
-    virtual OutputData<double>* getDetectorIntensity(
-        IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const=0;
+    virtual OutputData<double>*
+    getDetectorIntensity(IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const = 0;
 
     //! Adds parameters defined in this class the to external pool.
     std::string addSimulationParametersToExternalPool(
@@ -80,7 +80,7 @@ public:
 
     void addParameterDistribution(
         const std::string& param_name, const IDistribution1D& distribution, size_t nbr_samples,
-        double sigma_factor=0.0, const RealLimits& limits = RealLimits());
+        double sigma_factor = 0.0, const RealLimits& limits = RealLimits());
     void addParameterDistribution(const ParameterDistribution& par_distr);
     const DistributionHandler& getDistributionHandler() const { return m_distribution_handler; }
 
@@ -94,22 +94,23 @@ public:
 protected:
     Simulation(const Simulation& other);
 
-    virtual void initSimulationElementVector() =0;
+    virtual void initSimulationElementVector() = 0;
 
     //! Creates the appropriate data structure (e.g. 2D intensity map) from the calculated
     //! SimulationElement objects
-    virtual void transferResultsToIntensityMap() =0;
+    virtual void transferResultsToIntensityMap() = 0;
 
     //! Update the sample by calling the sample builder, if present
     void updateSample();
 
     void runSingleSimulation();
 
-    virtual void updateIntensityMap() =0;
+    virtual void updateIntensityMap() = 0;
 
 #ifndef SWIG
-    void normalize(std::vector<SimulationElement>::iterator begin_it,
-                   std::vector<SimulationElement>::iterator end_it) const;
+    void normalize(
+        std::vector<SimulationElement>::iterator begin_it,
+        std::vector<SimulationElement>::iterator end_it) const;
 #endif
 
     //! Returns the start iterator of simulation elements for the current batch

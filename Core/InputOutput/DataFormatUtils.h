@@ -25,7 +25,8 @@ template <class T> class OutputData;
 
 //! Utility functions for data input and output.
 
-namespace DataFormatUtils {
+namespace DataFormatUtils
+{
 
 const std::string FixedBinAxisType = "FixedBinAxis";
 const std::string VariableBinAxisType = "VariableBinAxis";
@@ -64,9 +65,9 @@ BA_CORE_API_ bool isTiffFile(const std::string& file_name);
 BA_CORE_API_ bool isSimilarToFixedBinAxisType(const std::string& line);
 BA_CORE_API_ bool isVariableBinAxisType(const std::string& line);
 
-BA_CORE_API_ IAxis *createAxis(std::istream& input_stream);
-BA_CORE_API_ IAxis *createFixedBinAxis(std::string line);
-BA_CORE_API_ IAxis *createVariableBinAxis(std::string line);
+BA_CORE_API_ IAxis* createAxis(std::istream& input_stream);
+BA_CORE_API_ IAxis* createFixedBinAxis(std::string line);
+BA_CORE_API_ IAxis* createVariableBinAxis(std::string line);
 
 BA_CORE_API_ void fillOutputData(OutputData<double>* data, std::istream& input_stream);
 

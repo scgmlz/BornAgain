@@ -27,17 +27,15 @@
 class BA_CORE_API_ ISquaredFunction
 {
 public:
-    ISquaredFunction(){}
+    ISquaredFunction() {}
     virtual ~ISquaredFunction() {}
-    virtual ISquaredFunction* clone() const=0;
-    virtual double calculateSquaredDifference(
-                double real_value, double simulated_value) const=0;
-    virtual double calculateSquaredError(
-                double real_value, double simulated_value = 0.0) const = 0;
+    virtual ISquaredFunction* clone() const = 0;
+    virtual double calculateSquaredDifference(double real_value, double simulated_value) const = 0;
+    virtual double calculateSquaredError(double real_value, double simulated_value = 0.0) const = 0;
 
 private:
-    ISquaredFunction(const ISquaredFunction& );
-    ISquaredFunction& operator=(const ISquaredFunction& );
+    ISquaredFunction(const ISquaredFunction&);
+    ISquaredFunction& operator=(const ISquaredFunction&);
 };
 
 
@@ -60,15 +58,15 @@ public:
     {
         if (Numeric::areAlmostEqual(real_value, simulated_value))
             return 0.;
-        double diff_squared = (simulated_value-real_value)*(simulated_value-real_value);
+        double diff_squared = (simulated_value - real_value) * (simulated_value - real_value);
         double normalization = calculateSquaredError(real_value);
-        return diff_squared/normalization;
+        return diff_squared / normalization;
     }
 
     virtual double calculateSquaredError(double real_value, double simulated_value = 0) const
     {
-        (void) simulated_value;
-        return std::max(real_value,1.0);
+        (void)simulated_value;
+        return std::max(real_value, 1.0);
     }
 };
 
@@ -86,16 +84,18 @@ class BA_CORE_API_ SquaredFunctionSimError : public ISquaredFunction
 public:
     SquaredFunctionSimError() {}
     virtual ~SquaredFunctionSimError() {}
-    virtual SquaredFunctionSimError *clone() const { return new SquaredFunctionSimError(); }
-    virtual double calculateSquaredDifference(double real_value, double simulated_value) const {
+    virtual SquaredFunctionSimError* clone() const { return new SquaredFunctionSimError(); }
+    virtual double calculateSquaredDifference(double real_value, double simulated_value) const
+    {
         if (Numeric::areAlmostEqual(real_value, simulated_value))
             return 0.0;
-        double diff_squared = (simulated_value-real_value)*(simulated_value-real_value);
+        double diff_squared = (simulated_value - real_value) * (simulated_value - real_value);
         double normalization = calculateSquaredError(real_value, simulated_value);
-        return diff_squared/normalization;
+        return diff_squared / normalization;
     }
-    virtual double calculateSquaredError(double /* real_value */, double simulated_value) const {
-        return std::max(simulated_value,1.0);
+    virtual double calculateSquaredError(double /* real_value */, double simulated_value) const
+    {
+        return std::max(simulated_value, 1.0);
     }
 };
 
@@ -112,19 +112,24 @@ class BA_CORE_API_ SquaredFunctionMeanSquaredError : public ISquaredFunction
 public:
     SquaredFunctionMeanSquaredError() {}
     virtual ~SquaredFunctionMeanSquaredError() {}
-    virtual SquaredFunctionMeanSquaredError *clone() const {
-        return new SquaredFunctionMeanSquaredError(); }
-    virtual double calculateSquaredDifference(double real_value, double simulated_value) const {
-        if (Numeric::areAlmostEqual(real_value, simulated_value)) return 0.0;
-        double diff_squared = (simulated_value-real_value)*(simulated_value-real_value);
-        double normalization = calculateSquaredError(real_value, simulated_value);
-        return diff_squared/normalization;
+    virtual SquaredFunctionMeanSquaredError* clone() const
+    {
+        return new SquaredFunctionMeanSquaredError();
     }
-    virtual double calculateSquaredError(double real_value, double simulated_value) const {
-        (void) simulated_value;
-        double sigma1 = std::max(real_value,1.0);
-        double sigma2 = std::max(simulated_value,1.0);
-        return std::sqrt(sigma1*sigma1 + sigma2*sigma2);
+    virtual double calculateSquaredDifference(double real_value, double simulated_value) const
+    {
+        if (Numeric::areAlmostEqual(real_value, simulated_value))
+            return 0.0;
+        double diff_squared = (simulated_value - real_value) * (simulated_value - real_value);
+        double normalization = calculateSquaredError(real_value, simulated_value);
+        return diff_squared / normalization;
+    }
+    virtual double calculateSquaredError(double real_value, double simulated_value) const
+    {
+        (void)simulated_value;
+        double sigma1 = std::max(real_value, 1.0);
+        double sigma2 = std::max(simulated_value, 1.0);
+        return std::sqrt(sigma1 * sigma1 + sigma2 * sigma2);
     }
 };
 
@@ -139,18 +144,24 @@ public:
 class BA_CORE_API_ SquaredFunctionSystematicError : public ISquaredFunction
 {
 public:
-    SquaredFunctionSystematicError(double epsilon = 0.08) : m_epsilon(epsilon){}
+    SquaredFunctionSystematicError(double epsilon = 0.08) : m_epsilon(epsilon) {}
     virtual ~SquaredFunctionSystematicError() {}
-    virtual SquaredFunctionSystematicError *clone() const {
-        return new SquaredFunctionSystematicError(m_epsilon); }
-    virtual double calculateSquaredDifference(double real_value, double simulated_value) const {
-        double diff_squared = (simulated_value-real_value)*(simulated_value-real_value);
+    virtual SquaredFunctionSystematicError* clone() const
+    {
+        return new SquaredFunctionSystematicError(m_epsilon);
+    }
+    virtual double calculateSquaredDifference(double real_value, double simulated_value) const
+    {
+        double diff_squared = (simulated_value - real_value) * (simulated_value - real_value);
         double normalization = calculateSquaredError(real_value, simulated_value);
-        return diff_squared/normalization;
+        return diff_squared / normalization;
     }
-    virtual double calculateSquaredError(double real_value, double /* simulated_value */) const {
-        return std::max(std::abs(real_value) + (m_epsilon*real_value)*(m_epsilon*real_value),1.0);
+    virtual double calculateSquaredError(double real_value, double /* simulated_value */) const
+    {
+        return std::max(
+            std::abs(real_value) + (m_epsilon * real_value) * (m_epsilon * real_value), 1.0);
     }
+
 private:
     double m_epsilon;
 };
@@ -166,18 +177,19 @@ private:
 class BA_CORE_API_ SquaredFunctionGaussianError : public ISquaredFunction
 {
 public:
-    SquaredFunctionGaussianError(double sigma = 0.01) : m_sigma(sigma){}
+    SquaredFunctionGaussianError(double sigma = 0.01) : m_sigma(sigma) {}
     virtual ~SquaredFunctionGaussianError() {}
-    virtual SquaredFunctionGaussianError *clone() const {
-        return new SquaredFunctionGaussianError(m_sigma); }
-    virtual double calculateSquaredDifference(double real_value, double simulated_value) const {
-        double diff_squared = (simulated_value-real_value)*(simulated_value-real_value);
-        double sigma_squared = m_sigma*m_sigma;
-        return diff_squared/sigma_squared;
+    virtual SquaredFunctionGaussianError* clone() const
+    {
+        return new SquaredFunctionGaussianError(m_sigma);
     }
-    virtual double calculateSquaredError(double, double) const {
-        return m_sigma*m_sigma;
+    virtual double calculateSquaredDifference(double real_value, double simulated_value) const
+    {
+        double diff_squared = (simulated_value - real_value) * (simulated_value - real_value);
+        double sigma_squared = m_sigma * m_sigma;
+        return diff_squared / sigma_squared;
     }
+    virtual double calculateSquaredError(double, double) const { return m_sigma * m_sigma; }
 private:
     double m_sigma;
 };

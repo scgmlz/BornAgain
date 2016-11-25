@@ -16,14 +16,14 @@
 #ifndef IDETECTOR2D_H
 #define IDETECTOR2D_H
 
-#include "IParameterized.h"
 #include "Beam.h"
-#include "DetectorMask.h"
-#include "SafePointerVector.h"
 #include "DetectionProperties.h"
+#include "DetectorMask.h"
+#include "IParameterized.h"
+#include "SafePointerVector.h"
 #include <memory>
 
-template<class T> class OutputData;
+template <class T> class OutputData;
 class Beam;
 class DetectionProperties;
 class IAxis;
@@ -40,11 +40,11 @@ class SimulationElement;
 class BA_CORE_API_ IDetector2D : public ICloneable, public IParameterized
 {
 public:
-    enum EAxesUnits {DEFAULT, NBINS, RADIANS, DEGREES, MM, QYQZ};
+    enum EAxesUnits { DEFAULT, NBINS, RADIANS, DEGREES, MM, QYQZ };
 
     IDetector2D();
 
-    virtual IDetector2D* clone() const=0;
+    virtual IDetector2D* clone() const = 0;
 
     virtual ~IDetector2D();
 
@@ -60,8 +60,8 @@ public:
     void clear();
 
     //! Sets detector parameters using angle ranges
-    void setDetectorParameters(size_t n_x, double x_min, double x_max,
-                               size_t n_y, double y_min, double y_max);
+    void setDetectorParameters(
+        size_t n_x, double x_min, double x_max, size_t n_y, double y_min, double y_max);
 
     //! Sets detector parameters using axes
     void setDetectorAxes(const IAxis& axis0, const IAxis& axis1);
@@ -75,8 +75,8 @@ public:
     const IDetectorResolution* getDetectorResolutionFunction() const;
 
     //! Sets the polarization analyzer characteristics of the detector
-    void setAnalyzerProperties(const kvector_t direction, double efficiency,
-                               double total_transmission);
+    void
+    setAnalyzerProperties(const kvector_t direction, double efficiency, double total_transmission);
 
     //! removes all masks from the detector
     void removeMasks();
@@ -113,14 +113,15 @@ public:
         const std::string& path, ParameterPool* external_pool, int copy_number = -1) const;
 
     //! Returns new intensity map with detector resolution applied and axes in requested units
-    OutputData<double>* createDetectorIntensity(const std::vector<SimulationElement> &elements,
-            const Beam& beam, IDetector2D::EAxesUnits units_type=IDetector2D::DEFAULT) const;
+    OutputData<double>* createDetectorIntensity(
+        const std::vector<SimulationElement>& elements, const Beam& beam,
+        IDetector2D::EAxesUnits units_type = IDetector2D::DEFAULT) const;
 
     //! Returns empty detector map in given axes units.
     virtual OutputData<double>* createDetectorMap(const Beam& beam, EAxesUnits units) const;
 
     //! Inits axes of OutputData to match the detector and sets values to zero.
-    virtual void initOutputData(OutputData<double> &data) const;
+    virtual void initOutputData(OutputData<double>& data) const;
 
     //! returns vector of valid axes units
     virtual std::vector<EAxesUnits> getValidAxesUnits() const;
@@ -150,24 +151,24 @@ protected:
     IDetector2D(const IDetector2D& other);
 
     //! Create an IPixelMap for the given OutputData object and index
-    virtual IPixelMap* createPixelMap(size_t index) const=0;
+    virtual IPixelMap* createPixelMap(size_t index) const = 0;
 
     //! Registers some class members for later access via parameter pool.
     virtual void init_parameters() {}
 
     //! Generates an axis with correct name and default binning for given index
-    virtual IAxis* createAxis(size_t index, size_t n_bins, double min, double max) const=0;
+    virtual IAxis* createAxis(size_t index, size_t n_bins, double min, double max) const = 0;
 
     //! Constructs axis with min,max corresponding to selected units
-    std::unique_ptr<IAxis> constructAxis(size_t axis_index, const Beam& beam,
-                                         EAxesUnits units) const;
+    std::unique_ptr<IAxis>
+    constructAxis(size_t axis_index, const Beam& beam, EAxesUnits units) const;
 
     //! Calculates axis range from original detector axes in given units (mm, rad, etc)
-    virtual void calculateAxisRange(size_t axis_index, const Beam& beam, EAxesUnits units,
-                                    double &amin, double &amax) const;
+    virtual void calculateAxisRange(
+        size_t axis_index, const Beam& beam, EAxesUnits units, double& amin, double& amax) const;
 
     //! Returns the name for the axis with given index
-    virtual std::string getAxisName(size_t index) const=0;
+    virtual std::string getAxisName(size_t index) const = 0;
 
     bool isCorrectAxisIndex(size_t index) const;
 
@@ -177,15 +178,15 @@ protected:
     //! Returns index of pixel that contains the specular wavevector.
     //! If no pixel contains this specular wavevector, the number of pixels is
     //! returned. This corresponds to an overflow index.
-    virtual size_t getIndexOfSpecular(const Beam& beam) const=0;
+    virtual size_t getIndexOfSpecular(const Beam& beam) const = 0;
 
     SafePointerVector<IAxis> m_axes;
     std::unique_ptr<IDetectorResolution> mP_detector_resolution;
     DetectorMask m_detector_mask;
 
 private:
-    void setDataToDetectorMap(OutputData<double> &detectorMap,
-                              const std::vector<SimulationElement> &elements) const;
+    void setDataToDetectorMap(
+        OutputData<double>& detectorMap, const std::vector<SimulationElement>& elements) const;
     std::unique_ptr<RegionOfInterest> m_region_of_interest;
     DetectionProperties m_detection_properties;
 };

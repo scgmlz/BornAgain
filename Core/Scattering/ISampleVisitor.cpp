@@ -13,8 +13,8 @@
 //
 // ************************************************************************** //
 
-#include "ISampleIteratorStrategy.h"
 #include "Exceptions.h"
+#include "ISampleIteratorStrategy.h"
 #include "SampleTreeIterator.h"
 
 void VisitSampleTreePreorder(const ISample& sample, ISampleVisitor& visitor)
@@ -23,7 +23,7 @@ void VisitSampleTreePreorder(const ISample& sample, ISampleVisitor& visitor)
     it.first();
     while (!it.isDone()) {
         visitor.setDepth(it.depth());
-        const ISample *child = it.getCurrent();
+        const ISample* child = it.getCurrent();
         child->accept(&visitor);
         it.next();
     }
@@ -35,7 +35,7 @@ void VisitSampleTreePostorder(const ISample& sample, ISampleVisitor& visitor)
     it.first();
     while (!it.isDone()) {
         visitor.setDepth(it.depth());
-        const ISample *child = it.getCurrent();
+        const ISample* child = it.getCurrent();
         child->accept(&visitor);
         it.next();
     }
@@ -92,7 +92,7 @@ void ISampleVisitor::visit(const LayerInterface*)
 void ISampleVisitor::visit(const MultiLayer*)
 {
     throw Exceptions::NotImplementedException(
-                "ISampleVisitor::visit(const MultiLayer*) -> Error. Not implemented.");
+        "ISampleVisitor::visit(const MultiLayer*) -> Error. Not implemented.");
 }
 
 void ISampleVisitor::visit(const IAbstractParticle*)
@@ -393,9 +393,10 @@ void ISampleVisitor::visit(const InterferenceFunction1DLattice*)
 
 void ISampleVisitor::visit(const InterferenceFunctionRadialParaCrystal*)
 {
-    throw Exceptions::NotImplementedException("ISampleVisitor::visit(const "
-                                  "InterferenceFunctionRadialParaCrystal*) -> Error. Not "
-                                  "implemented.");
+    throw Exceptions::NotImplementedException(
+        "ISampleVisitor::visit(const "
+        "InterferenceFunctionRadialParaCrystal*) -> Error. Not "
+        "implemented.");
 }
 
 void ISampleVisitor::visit(const InterferenceFunction2DLattice*)

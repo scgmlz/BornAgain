@@ -15,8 +15,8 @@
 
 #include "FormFactorEllipsoidalCylinder.h"
 #include "BornAgainNamespace.h"
-#include "MathFunctions.h"
 #include "MathConstants.h"
+#include "MathFunctions.h"
 #include "RealParameter.h"
 
 //! @param radius_x half length of one horizontal main axes
@@ -28,24 +28,24 @@ FormFactorEllipsoidalCylinder::FormFactorEllipsoidalCylinder(
 {
     setName(BornAgain::FFEllipsoidalCylinderType);
     registerParameter(BornAgain::RadiusX, &m_radius_x).setUnit("nm").setNonnegative();
-    registerParameter(BornAgain::RadiusY, & m_radius_y).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::RadiusY, &m_radius_y).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::Height, &m_height).setUnit("nm").setNonnegative();
 }
 
 double FormFactorEllipsoidalCylinder::getRadialExtension() const
 {
-    return ( m_radius_x + m_radius_y ) / 2.0;
+    return (m_radius_x + m_radius_y) / 2.0;
 }
 
 complex_t FormFactorEllipsoidalCylinder::evaluate_for_q(const cvector_t q) const
 {
-    complex_t qxRa = q.x()*m_radius_x;
-    complex_t qyRb = q.y()*m_radius_y;
-    complex_t qzHdiv2 = m_height/2*q.z();
+    complex_t qxRa = q.x() * m_radius_x;
+    complex_t qyRb = q.y() * m_radius_y;
+    complex_t qzHdiv2 = m_height / 2 * q.z();
 
     complex_t Fz = exp_I(qzHdiv2) * MathFunctions::sinc(qzHdiv2);
-    complex_t gamma  = std::sqrt((qxRa)*(qxRa) + (qyRb)*(qyRb));
+    complex_t gamma = std::sqrt((qxRa) * (qxRa) + (qyRb) * (qyRb));
     complex_t J1_gamma_div_gamma = MathFunctions::Bessel_J1c(gamma);
 
-    return M_TWOPI *m_radius_x*m_radius_y*m_height * Fz*J1_gamma_div_gamma;
+    return M_TWOPI * m_radius_x * m_radius_y * m_height * Fz * J1_gamma_div_gamma;
 }

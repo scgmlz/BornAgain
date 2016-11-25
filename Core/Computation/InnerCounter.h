@@ -22,11 +22,12 @@ class ProgressHandler;
 
 //! Base class for threaded computation; keeps count of progress.
 
-class InnerCounter: public INoncopyable
+class InnerCounter : public INoncopyable
 {
 public:
     InnerCounter() : m_count(0) {}
     void stepProgress(ProgressHandler* progress);
+
 private:
     const int bundle = 100;
     int m_count;

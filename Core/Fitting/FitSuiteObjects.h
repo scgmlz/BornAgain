@@ -25,15 +25,16 @@ class IChiSquaredModule;
 
 class BA_CORE_API_ FitSuiteObjects : public IParameterized, public INoncopyable
 {
- public:
+public:
     typedef SafePointerVector<FitObject> FitObjects_t;
 
     FitSuiteObjects();
     virtual ~FitSuiteObjects();
 
     //! Adds to kit pair of (simulation, real data) for consecutive simulation
-    void add(const GISASSimulation& simulation, const OutputData<double>& real_data,
-             double weight = 1.0);
+    void
+    add(const GISASSimulation& simulation, const OutputData<double>& real_data,
+        double weight = 1.0);
 
     //! Returns number of fit objects (simulation/real data pairs)
     size_t getNumberOfFitObjects() const { return m_fit_objects.size(); }
@@ -42,7 +43,7 @@ class BA_CORE_API_ FitSuiteObjects : public IParameterized, public INoncopyable
     size_t getSizeOfDataSet() const;
 
     //! Replaces default ChiSquaredModule with new one
-    void setChiSquaredModule(const IChiSquaredModule &chi2_module);
+    void setChiSquaredModule(const IChiSquaredModule& chi2_module);
 
     //! Returns real data from corresponding FitObject
     //! @param i_item Index of FitObject
@@ -68,20 +69,20 @@ class BA_CORE_API_ FitSuiteObjects : public IParameterized, public INoncopyable
 
     //! Adds parameters from local pool to external pool and call recursion over direct children
     virtual std::string addParametersToExternalPool(
-        const std::string& path, ParameterPool* external_pool, int copy_number=-1) const;
+        const std::string& path, ParameterPool* external_pool, int copy_number = -1) const;
 
     void setNfreeParameters(int nfree_parameters) { m_nfree_parameters = nfree_parameters; }
 
     //! clear all data
     void clear();
 
- protected:
+protected:
     //! Registers some class members for later access via parameter pool
     void init_parameters() {}
 
     double calculateChiSquaredValue();
 
- private:
+private:
     inline size_t check_index(size_t index) const;
 
     FitObjects_t m_fit_objects;

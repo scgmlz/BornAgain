@@ -26,8 +26,10 @@ class BA_CORE_API_ FormFactorFullSphere : public IFormFactorBorn
 public:
     FormFactorFullSphere(double radius);
 
-    FormFactorFullSphere* clone() const override final {
-        return new FormFactorFullSphere(m_radius); }
+    FormFactorFullSphere* clone() const override final
+    {
+        return new FormFactorFullSphere(m_radius);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getRadius() const { return m_radius; }

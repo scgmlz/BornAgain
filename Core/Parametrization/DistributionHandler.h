@@ -30,12 +30,11 @@ public:
     virtual ~DistributionHandler();
 
     //! add a sampled parameter distribution
-    void addParameterDistribution(const std::string &param_name,
-            const IDistribution1D &distribution, size_t nbr_samples,
-            double sigma_factor=0.0,
-            const RealLimits &limits=RealLimits());
+    void addParameterDistribution(
+        const std::string& param_name, const IDistribution1D& distribution, size_t nbr_samples,
+        double sigma_factor = 0.0, const RealLimits& limits = RealLimits());
 
-    void addParameterDistribution(const ParameterDistribution &par_distr);
+    void addParameterDistribution(const ParameterDistribution& par_distr);
 
     //! get the total number of parameter value combinations (product
     //! of the individual sizes of each parameter distribution
@@ -45,13 +44,14 @@ public:
     //! combination of values, determined by the index (which must be smaller
     //! than the total number of combinations) and returns the weight
     //! associated with this combination of parameter values
-    double setParameterValues(ParameterPool *p_parameter_pool, size_t index);
+    double setParameterValues(ParameterPool* p_parameter_pool, size_t index);
 
     const Distributions_t& getDistributions() const;
+
 private:
     size_t m_nbr_combinations;
     Distributions_t m_distributions;
-    std::vector<std::vector<ParameterSample> > m_cached_samples;
+    std::vector<std::vector<ParameterSample>> m_cached_samples;
 };
 
 #endif // DISTRIBUTIONHANDLER_H

@@ -28,9 +28,11 @@ public:
     //! @param edge length
     FormFactorDodecahedron(double edge);
 
-    FormFactorDodecahedron *clone() const override final {
-        return new FormFactorDodecahedron(m_edge); }
-    void accept(ISampleVisitor *visitor) const override final { visitor->visit(this); }
+    FormFactorDodecahedron* clone() const override final
+    {
+        return new FormFactorDodecahedron(m_edge);
+    }
+    void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getEdge() const { return m_edge; }
 

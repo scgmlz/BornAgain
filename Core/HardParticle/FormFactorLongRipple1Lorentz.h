@@ -31,8 +31,10 @@ public:
     //! @param height of cosine cross section
     FormFactorLongRipple1Lorentz(double length, double width, double height);
 
-    FormFactorLongRipple1Lorentz* clone() const override final {
-        return new FormFactorLongRipple1Lorentz(m_length, m_width, m_height); }
+    FormFactorLongRipple1Lorentz* clone() const override final
+    {
+        return new FormFactorLongRipple1Lorentz(m_length, m_width, m_height);
+    }
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     double getRadialExtension() const override final;

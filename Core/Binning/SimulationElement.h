@@ -18,8 +18,8 @@
 
 #include "Complex.h"
 #include "EigenCore.h"
-#include "Vectors3D.h"
 #include "IPixelMap.h"
+#include "Vectors3D.h"
 #include <memory>
 #include <vector>
 
@@ -31,16 +31,16 @@ class IPixelMap;
 class BA_CORE_API_ SimulationElement
 {
 public:
-    SimulationElement(double wavelength, double alpha_i, double phi_i,
-                      std::unique_ptr<IPixelMap> pixelmap);
-    SimulationElement(const SimulationElement &other);
-    SimulationElement &operator=(const SimulationElement &other);
+    SimulationElement(
+        double wavelength, double alpha_i, double phi_i, std::unique_ptr<IPixelMap> pixelmap);
+    SimulationElement(const SimulationElement& other);
+    SimulationElement& operator=(const SimulationElement& other);
 
     //! Construct SimulationElement from other element and restrict k_f to specific value in
     //! the original detector pixel
-    SimulationElement(const SimulationElement &other, double x, double y);
+    SimulationElement(const SimulationElement& other, double x, double y);
 
-    SimulationElement(SimulationElement &&other) noexcept;
+    SimulationElement(SimulationElement&& other) noexcept;
 
     ~SimulationElement();
 
@@ -52,8 +52,10 @@ public:
     Eigen::Matrix2cd getPolarization() const { return m_polarization; }
 
     //! Sets the polarization analyzer operator (in spin basis along z-axis)
-    void setAnalyzerOperator(const Eigen::Matrix2cd& polarization_operator) {
-        m_analyzer_operator = polarization_operator; }
+    void setAnalyzerOperator(const Eigen::Matrix2cd& polarization_operator)
+    {
+        m_analyzer_operator = polarization_operator;
+    }
 
     //! Gets the polarization analyzer operator (in spin basis along z-axis)
     Eigen::Matrix2cd getAnalyzerOperator() const { return m_analyzer_operator; }
@@ -89,15 +91,15 @@ public:
 
 private:
     //! swap function
-    void swapContent(SimulationElement &other);
+    void swapContent(SimulationElement& other);
 
     //! initialize polarization matrices
     void initPolarization();
 
-    double m_wavelength, m_alpha_i, m_phi_i;             //!< wavelength and angles of beam
-    double m_intensity;  //!< simulated intensity for detector cell
+    double m_wavelength, m_alpha_i, m_phi_i; //!< wavelength and angles of beam
+    double m_intensity; //!< simulated intensity for detector cell
 #ifndef SWIG
-    Eigen::Matrix2cd m_polarization;      //!< polarization density matrix
+    Eigen::Matrix2cd m_polarization; //!< polarization density matrix
     Eigen::Matrix2cd m_analyzer_operator; //!< polarization analyzer operator
 #endif
     std::unique_ptr<IPixelMap> mP_pixel_map;
@@ -106,13 +108,14 @@ private:
 
 
 //! Add element vector to element vector with weight
-void addElementsWithWeight(std::vector<SimulationElement>::const_iterator first,
-                           std::vector<SimulationElement>::const_iterator last,
-                           std::vector<SimulationElement>::iterator result,
-                           double weight);
+void addElementsWithWeight(
+    std::vector<SimulationElement>::const_iterator first,
+    std::vector<SimulationElement>::const_iterator last,
+    std::vector<SimulationElement>::iterator result, double weight);
 
 //! Set all element intensities to given value
-void setAllElementIntensities(std::vector<SimulationElement>::iterator first,
-                              std::vector<SimulationElement>::iterator last, double intensity);
+void setAllElementIntensities(
+    std::vector<SimulationElement>::iterator first, std::vector<SimulationElement>::iterator last,
+    double intensity);
 
 #endif // SIMULATIONELEMENT_H

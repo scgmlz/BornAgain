@@ -24,7 +24,7 @@
 class BA_CORE_API_ TransformBoxBuilder : public IMultiLayerBuilder
 {
 public:
-    TransformBoxBuilder(){}
+    TransformBoxBuilder() {}
     MultiLayer* buildSample() const;
 };
 

@@ -35,7 +35,7 @@ public:
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
     //! Returns textual representation of *this and its descendants.
-    virtual std::string to_str(int indent=0) const;
+    virtual std::string to_str(int indent = 0) const;
 
     //! Sets the refractive index of the ambient material.
     virtual void setAmbientMaterial(const IMaterial& material);

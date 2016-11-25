@@ -37,7 +37,7 @@ public:
     //! @brief Enables/disables MonetCarlo integration
     //! @param flag If true, MonteCarlo integration will be used, otherwise analytical calculations
     //! @param mc_points Number of points for MonteCarlo integrator
-    void setMonteCarloIntegration(bool flag = true, size_t mc_points=50);
+    void setMonteCarloIntegration(bool flag = true, size_t mc_points = 50);
 
     //! @brief Sets number of threads to use during the simulation (0 - take the default value from
     //! the hardware)

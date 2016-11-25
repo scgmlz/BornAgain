@@ -22,8 +22,7 @@
 //! @ingroup simulation
 //! @brief Information to run simulation with dedicated number of threads
 
-struct BA_CORE_API_ ThreadInfo
-{
+struct BA_CORE_API_ ThreadInfo {
     ThreadInfo();
     int n_threads;
     int current_thread;
@@ -31,12 +30,6 @@ struct BA_CORE_API_ ThreadInfo
     int current_batch;
 };
 
-inline ThreadInfo::ThreadInfo()
-    : n_threads(0)
-    , current_thread(0)
-    , n_batches(1)
-    , current_batch(0)
-{
-}
+inline ThreadInfo::ThreadInfo() : n_threads(0), current_thread(0), n_batches(1), current_batch(0) {}
 
 #endif // THREADINFO_H

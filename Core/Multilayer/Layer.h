@@ -16,8 +16,8 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#include "ICompositeSample.h"
 #include "Complex.h"
+#include "ICompositeSample.h"
 #include "SafePointerVector.h"
 
 class ILayout;
@@ -39,7 +39,7 @@ public:
 
     void accept(ISampleVisitor* visitor) const final { visitor->visit(this); }
 
-    std::string to_str(int indent=0) const final;
+    std::string to_str(int indent = 0) const final;
 
     void setThickness(double thickness);
     double getThickness() const { return m_thickness; }
@@ -55,7 +55,7 @@ public:
     const ILayout* getLayout(size_t i) const;
 
     //! Returns true if decoration is present
-    bool hasComputation() const { return m_layouts.size()>0; }
+    bool hasComputation() const { return m_layouts.size() > 0; }
 
     double getTotalParticleSurfaceDensity(size_t layout_index) const;
 
@@ -74,8 +74,8 @@ private:
     //! adds particle layout (separate pointer version due to python-bindings)
     void addLayoutPtr(ILayout* layout);
 
-    IMaterial* mp_material;   //!< pointer to the material
-    double m_thickness;       //!< layer thickness in nanometers
+    IMaterial* mp_material; //!< pointer to the material
+    double m_thickness; //!< layer thickness in nanometers
     SafePointerVector<class ILayout> m_layouts; //!< independent layouts in this layer
     size_t mn_layers;
 

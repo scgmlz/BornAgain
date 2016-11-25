@@ -24,7 +24,7 @@
 class Unit : public INamed
 {
 public:
-    Unit(const std::string& name="") { setUnit(name); }
+    Unit(const std::string& name = "") { setUnit(name); }
     void setUnit(const std::string& name);
 };
 

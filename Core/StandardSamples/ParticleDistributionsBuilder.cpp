@@ -30,8 +30,7 @@
 using namespace BornAgain;
 
 CylindersWithSizeDistributionBuilder::CylindersWithSizeDistributionBuilder()
-    : m_height(5*Units::nanometer)
-    , m_radius(5*Units::nanometer)
+    : m_height(5 * Units::nanometer), m_radius(5 * Units::nanometer)
 {
     init_parameters();
 }
@@ -55,13 +54,13 @@ MultiLayer* CylindersWithSizeDistributionBuilder::buildSample() const
 
     ParticleLayout particle_layout;
     // preparing prototype of nano particle
-    double sigma = 0.2*m_radius;
-    FormFactorCylinder p_ff_cylinder( m_radius, m_height);
+    double sigma = 0.2 * m_radius;
+    FormFactorCylinder p_ff_cylinder(m_radius, m_height);
     Particle nano_particle(particle_material, p_ff_cylinder);
     // radius of nanoparticles will be sampled with gaussian probability
     int n_samples(100);
     // to get radius_min = average - 2.0*FWHM:
-    double n_sigma = 2.0*2.0*std::sqrt(2.0*std::log(2.0));
+    double n_sigma = 2.0 * 2.0 * std::sqrt(2.0 * std::log(2.0));
     DistributionGaussian gauss(m_radius, sigma);
     ParameterPattern pattern;
     pattern.add(ParticleType).add(FFCylinderType).add(Radius);
@@ -81,10 +80,10 @@ MultiLayer* CylindersWithSizeDistributionBuilder::buildSample() const
 // ----------------------------------------------------------------------------
 
 TwoTypesCylindersDistributionBuilder::TwoTypesCylindersDistributionBuilder()
-    : m_radius1(5*Units::nanometer)
-    , m_radius2(10*Units::nanometer)
-    , m_height1(5*Units::nanometer)
-    , m_height2(10*Units::nanometer)
+    : m_radius1(5 * Units::nanometer)
+    , m_radius2(10 * Units::nanometer)
+    , m_height1(5 * Units::nanometer)
+    , m_height2(10 * Units::nanometer)
     , m_sigma1_ratio(0.2)
     , m_sigma2_ratio(0.02)
 {
@@ -116,15 +115,15 @@ MultiLayer* TwoTypesCylindersDistributionBuilder::buildSample() const
 
     // preparing nano particles prototypes for seeding layer's particle_layout
     FormFactorCylinder p_ff_cylinder1(m_radius1, m_height1);
-    Particle cylinder1(particle_material, p_ff_cylinder1 );
+    Particle cylinder1(particle_material, p_ff_cylinder1);
 
     FormFactorCylinder p_ff_cylinder2(m_radius2, m_height2);
-    Particle cylinder2(particle_material, p_ff_cylinder2 );
+    Particle cylinder2(particle_material, p_ff_cylinder2);
 
     // radius of nanoparticles will be sampled with gaussian probability
-    int nbins=150;
-    double sigma1 = m_radius1*m_sigma1_ratio;
-    double sigma2 = m_radius2*m_sigma2_ratio;
+    int nbins = 150;
+    double sigma1 = m_radius1 * m_sigma1_ratio;
+    double sigma2 = m_radius2 * m_sigma2_ratio;
     // to have xmin=average-3*sigma
     double n_sigma = 3.0;
     DistributionGaussian gauss1(m_radius1, sigma1);

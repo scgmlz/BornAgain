@@ -29,7 +29,7 @@ public:
     static OutputDataWriter* getWriter(const std::string& file_name);
 
 private:
-    static IOutputDataWriteStrategy *getWriteStrategy(const std::string& file_name);
+    static IOutputDataWriteStrategy* getWriteStrategy(const std::string& file_name);
 };
 
 #endif // OUTPUTDATAWRITEFACTORY_H

@@ -17,17 +17,12 @@
 #include <thread>
 
 SimulationOptions::SimulationOptions()
-    : m_mc_integration(false)
-    , m_include_specular(false)
-    , m_mc_points(1)
+    : m_mc_integration(false), m_include_specular(false), m_mc_points(1)
 {
     m_thread_info.n_threads = getHardwareConcurrency();
 }
 
-bool SimulationOptions::isIntegrate() const
-{
-    return m_mc_integration && m_mc_points>1;
-}
+bool SimulationOptions::isIntegrate() const { return m_mc_integration && m_mc_points > 1; }
 
 void SimulationOptions::setMonteCarloIntegration(bool flag, size_t mc_points)
 {
@@ -37,40 +32,25 @@ void SimulationOptions::setMonteCarloIntegration(bool flag, size_t mc_points)
 
 void SimulationOptions::setNumberOfThreads(int nthreads)
 {
-    if(nthreads == 0)
+    if (nthreads == 0)
         m_thread_info.n_threads = (int)std::thread::hardware_concurrency();
-    else if(nthreads > 0)
+    else if (nthreads > 0)
         m_thread_info.n_threads = nthreads;
     else
         m_thread_info.n_threads = 1;
 }
 
-int SimulationOptions::getNumberOfThreads() const
-{
-    return m_thread_info.n_threads;
-}
+int SimulationOptions::getNumberOfThreads() const { return m_thread_info.n_threads; }
 
-void SimulationOptions::setNumberOfBatches(int nbatches)
-{
-    m_thread_info.n_batches = nbatches;
-}
+void SimulationOptions::setNumberOfBatches(int nbatches) { m_thread_info.n_batches = nbatches; }
 
-int SimulationOptions::getNumberOfBatches() const
-{
-    return m_thread_info.n_batches;
-}
+int SimulationOptions::getNumberOfBatches() const { return m_thread_info.n_batches; }
 
-int SimulationOptions::getCurrentBatch() const
-{
-    return m_thread_info.current_batch;
-}
+int SimulationOptions::getCurrentBatch() const { return m_thread_info.current_batch; }
 
 int SimulationOptions::getHardwareConcurrency() const
 {
     return (int)std::thread::hardware_concurrency();
 }
 
-double SimulationOptions::getDefaultVariability() const
-{
-    return isIntegrate() ? 0.5 : 2e-10;
-}
+double SimulationOptions::getDefaultVariability() const { return isIntegrate() ? 0.5 : 2e-10; }

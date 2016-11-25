@@ -16,8 +16,8 @@
 #ifndef BEAM_H
 #define BEAM_H
 
-#include "IParameterized.h"
 #include "EigenCore.h"
+#include "IParameterized.h"
 #include "Vectors3D.h"
 
 //! Ideal collimated beam defined by wavelength, direction and intensity.
@@ -49,7 +49,7 @@ public:
 
 #ifndef SWIG
     //! Returns the polarization density matrix (in spin basis along z-axis)
-    Eigen::Matrix2cd getPolarization() const  { return m_polarization; }
+    Eigen::Matrix2cd getPolarization() const { return m_polarization; }
 #endif
 
     double getWavelength() const { return m_wavelength; }
@@ -72,9 +72,9 @@ private:
 #endif
 
     double m_wavelength, m_alpha, m_phi; //!< wavelength and angles of beam
-    double m_intensity;                  //!< beam intensity (neutrons/sec)
+    double m_intensity; //!< beam intensity (neutrons/sec)
 #ifndef SWIG
-    Eigen::Matrix2cd m_polarization;     //!< polarization density matrix
+    Eigen::Matrix2cd m_polarization; //!< polarization density matrix
 #endif
 };
 

@@ -23,27 +23,23 @@
 #include "Logger.h"
 #include "MatrixSpecularInfoMap.h"
 #include "MultiLayer.h"
-#include "RoughMultiLayerComputation.h"
-#include "SpecularComputation.h"
-#include "ScalarSpecularInfoMap.h"
 #include "ProgressHandler.h"
+#include "RoughMultiLayerComputation.h"
+#include "ScalarSpecularInfoMap.h"
 #include "SimulationElement.h"
+#include "SpecularComputation.h"
 #include "SpecularMagnetic.h"
 #include "SpecularMatrix.h"
 
 #include <algorithm>
-#include <iterator>
 #include <iostream>
+#include <iterator>
 
 MainComputation::MainComputation(
-    const MultiLayer* p_multi_layer,
-    const SimulationOptions& options,
-    ProgressHandler& progress,
+    const MultiLayer* p_multi_layer, const SimulationOptions& options, ProgressHandler& progress,
     const std::vector<SimulationElement>::iterator& begin_it,
     const std::vector<SimulationElement>::iterator& end_it)
-    : m_sim_options(options)
-    , m_progress(&progress)
-    , mp_roughness_computation(nullptr)
+    : m_sim_options(options), m_progress(&progress), mp_roughness_computation(nullptr)
 {
     mp_multi_layer = p_multi_layer->clone();
 
@@ -52,11 +48,11 @@ MainComputation::MainComputation(
     m_end_it = end_it;
 
     size_t nLayers = mp_multi_layer->getNumberOfLayers();
-    m_layer_computation.resize( nLayers );
-    for (size_t i=0; i<nLayers; ++i) {
+    m_layer_computation.resize(nLayers);
+    for (size_t i = 0; i < nLayers; ++i) {
         const Layer* layer = mp_multi_layer->getLayer(i);
-        for (size_t j=0; j<layer->getNumberOfLayouts(); ++j)
-            m_layer_computation[i].push_back( new DecoratedLayerComputation(layer, j) );
+        for (size_t j = 0; j < layer->getNumberOfLayouts(); ++j)
+            m_layer_computation[i].push_back(new DecoratedLayerComputation(layer, j));
     }
     // scattering from rough surfaces in DWBA
     if (mp_multi_layer->hasRoughness())
@@ -69,8 +65,8 @@ MainComputation::~MainComputation()
     delete mp_multi_layer;
     delete mp_roughness_computation;
     delete mp_specular_computation;
-    for (auto& layer_comp: m_layer_computation)
-        for (DecoratedLayerComputation* comp: layer_comp)
+    for (auto& layer_comp : m_layer_computation)
+        for (DecoratedLayerComputation* comp : layer_comp)
             delete comp;
 }
 
@@ -80,7 +76,7 @@ void MainComputation::run()
     try {
         runProtected();
         m_outcome.setCompleted();
-    } catch(const std::exception &ex) {
+    } catch (const std::exception& ex) {
         m_outcome.setRunMessage(std::string(ex.what()));
         m_outcome.setFailed();
     }
@@ -104,12 +100,12 @@ void MainComputation::runProtected()
     std::vector<SimulationElement> layer_elements;
     std::copy(m_begin_it, m_end_it, std::back_inserter(layer_elements));
     bool polarized = mp_multi_layer->containsMagneticMaterial();
-    for (auto& layer_comp: m_layer_computation) {
-        for (const DecoratedLayerComputation* comp: layer_comp) {
+    for (auto& layer_comp : m_layer_computation) {
+        for (const DecoratedLayerComputation* comp : layer_comp) {
             if (!m_progress->alive())
                 return;
-            comp->eval(m_sim_options, m_progress, polarized,
-                       layer_elements.begin(), layer_elements.end());
+            comp->eval(
+                m_sim_options, m_progress, polarized, layer_elements.begin(), layer_elements.end());
             addElementsWithWeight(layer_elements.begin(), layer_elements.end(), m_begin_it, 1.0);
         }
     }
@@ -118,8 +114,7 @@ void MainComputation::runProtected()
         msglog(Logging::DEBUG2) << "MainComputation::run() -> roughness";
         if (!m_progress->alive())
             return;
-        mp_roughness_computation->eval(
-            m_progress, layer_elements.begin(), layer_elements.end());
+        mp_roughness_computation->eval(m_progress, layer_elements.begin(), layer_elements.end());
         addElementsWithWeight(layer_elements.begin(), layer_elements.end(), m_begin_it, 1.0);
     }
 
@@ -130,20 +125,20 @@ void MainComputation::runProtected()
 void MainComputation::collectRTCoefficientsScalar()
 {
     // run through layers and construct T,R functions
-    for(size_t i=0; i<mp_multi_layer->getNumberOfLayers(); ++i) {
+    for (size_t i = 0; i < mp_multi_layer->getNumberOfLayers(); ++i) {
         msglog(Logging::DEBUG2) << "MainComputation::run() -> Layer " << i;
         LayerSpecularInfo layer_coeff_map;
         layer_coeff_map.addRTCoefficients(new ScalarSpecularInfoMap(mp_multi_layer, i));
 
         // layer DWBA simulation
-        for(DecoratedLayerComputation* comp: m_layer_computation[i])
+        for (DecoratedLayerComputation* comp : m_layer_computation[i])
             comp->setSpecularInfo(layer_coeff_map);
 
         // layer roughness DWBA
         if (mp_roughness_computation)
             mp_roughness_computation->setSpecularInfo(i, layer_coeff_map);
 
-        if (i==0)
+        if (i == 0)
             mp_specular_computation->setSpecularInfo(layer_coeff_map);
     }
 }
@@ -151,13 +146,13 @@ void MainComputation::collectRTCoefficientsScalar()
 void MainComputation::collectRTCoefficientsMatrix()
 {
     // run through layers and construct T,R functions
-    for(size_t i=0; i<mp_multi_layer->getNumberOfLayers(); ++i) {
+    for (size_t i = 0; i < mp_multi_layer->getNumberOfLayers(); ++i) {
         msglog(Logging::DEBUG2) << "MainComputation::runMagnetic() -> Layer " << i;
         LayerSpecularInfo layer_coeff_map;
         layer_coeff_map.addRTCoefficients(new MatrixSpecularInfoMap(mp_multi_layer, i));
 
         // layer DWBA simulation
-        for(DecoratedLayerComputation* comp: m_layer_computation[i])
+        for (DecoratedLayerComputation* comp : m_layer_computation[i])
             comp->setSpecularInfo(layer_coeff_map);
     }
 }

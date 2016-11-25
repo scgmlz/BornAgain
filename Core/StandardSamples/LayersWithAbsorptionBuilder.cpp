@@ -28,7 +28,7 @@
 MultiLayer* LayersWithAbsorptionBuilder::buildSample() const
 {
     const IFormFactor* form_factor = getFormFactor();
-    if(!form_factor)
+    if (!form_factor)
         throw Exceptions::NullPointerException(
             "LayersWithAbsorptionBuilder::buildSample() -> Error. Form factor is not initialized.");
 
@@ -37,13 +37,13 @@ MultiLayer* LayersWithAbsorptionBuilder::buildSample() const
     HomogeneousMaterial mSubstrate("Substrate", 3.212e-6, 3.244e-8);
     HomogeneousMaterial mParticle("Ag", 1.245e-5, 5.419e-7);
 
-    const double middle_layer_thickness(60.0*Units::nanometer);
+    const double middle_layer_thickness(60.0 * Units::nanometer);
 
     Particle particle(mParticle, *form_factor);
-    particle.setRotation(RotationZ(10.0*Units::degree));
-    particle.applyRotation(RotationY(10.0*Units::degree));
-    particle.applyRotation(RotationX(10.0*Units::degree));
-    particle.setPosition(kvector_t(0.0, 0.0, -middle_layer_thickness/2.0 ));
+    particle.setRotation(RotationZ(10.0 * Units::degree));
+    particle.applyRotation(RotationY(10.0 * Units::degree));
+    particle.applyRotation(RotationX(10.0 * Units::degree));
+    particle.setPosition(kvector_t(0.0, 0.0, -middle_layer_thickness / 2.0));
 
     ParticleLayout layout;
     layout.addParticle(particle);

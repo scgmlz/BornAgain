@@ -37,7 +37,7 @@ FitElement::FitElement(size_t index, double simul_value, double real_value, doub
 }
 
 
-FitElement::FitElement(const FitElement &other)
+FitElement::FitElement(const FitElement& other)
     : m_index(other.m_index)
     , m_simul_value(other.m_simul_value)
     , m_real_value(other.m_real_value)
@@ -45,10 +45,9 @@ FitElement::FitElement(const FitElement &other)
     , m_squared_difference(other.m_squared_difference)
     , m_residual(other.m_residual)
 {
-
 }
 
-FitElement &FitElement::operator=(const FitElement &other)
+FitElement& FitElement::operator=(const FitElement& other)
 {
     if (this != &other) {
         FitElement tmp(other);
@@ -58,7 +57,7 @@ FitElement &FitElement::operator=(const FitElement &other)
 }
 
 
-void FitElement::swapContent(FitElement &other)
+void FitElement::swapContent(FitElement& other)
 {
     std::swap(this->m_index, other.m_index);
     std::swap(this->m_simul_value, other.m_simul_value);
@@ -67,4 +66,3 @@ void FitElement::swapContent(FitElement &other)
     std::swap(this->m_squared_difference, other.m_squared_difference);
     std::swap(this->m_residual, other.m_residual);
 }
-

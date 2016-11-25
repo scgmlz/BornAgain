@@ -18,8 +18,7 @@
 #include "RealParameter.h"
 
 FormFactorPrism6::FormFactorPrism6(const double base_edge, const double height)
-    : FormFactorPolygonalPrism( height )
-    , m_base_edge(base_edge)
+    : FormFactorPolygonalPrism(height), m_base_edge(base_edge)
 {
     setName(BornAgain::FFPrism6Type);
     registerParameter(BornAgain::BaseEdge, &m_base_edge).setUnit("nm").setNonnegative();
@@ -30,14 +29,9 @@ FormFactorPrism6::FormFactorPrism6(const double base_edge, const double height)
 void FormFactorPrism6::onChange()
 {
     double a = m_base_edge;
-    double as = a*sqrt(3)/2;
-    double ac = a/2;
-    std::vector<kvector_t> V {
-        {  a,   0., 0. },
-        {  ac,  as, 0. },
-        { -ac,  as, 0. },
-        { -a,   0., 0. },
-        { -ac, -as, 0. },
-        {  ac, -as, 0. } };
-    setPrism( true, V );
+    double as = a * sqrt(3) / 2;
+    double ac = a / 2;
+    std::vector<kvector_t> V{ { a, 0., 0. },  { ac, as, 0. },   { -ac, as, 0. },
+                              { -a, 0., 0. }, { -ac, -as, 0. }, { ac, -as, 0. } };
+    setPrism(true, V);
 }

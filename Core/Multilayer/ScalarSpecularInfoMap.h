@@ -33,16 +33,17 @@ public:
     ScalarSpecularInfoMap(const MultiLayer* multilayer, int layer);
     ~ScalarSpecularInfoMap() final {}
 
-    ScalarSpecularInfoMap* clone() const final {
-        return new ScalarSpecularInfoMap(mp_multilayer, m_layer); }
+    ScalarSpecularInfoMap* clone() const final
+    {
+        return new ScalarSpecularInfoMap(mp_multilayer, m_layer);
+    }
 
     //! Retrieves the amplitude coefficients for the given angles
-    const ILayerRTCoefficients* getOutCoefficients (
-        const SimulationElement& sim_element) const final;
+    const ILayerRTCoefficients*
+    getOutCoefficients(const SimulationElement& sim_element) const final;
 
     //! Retrieves the amplitude coefficients for the given angles
-    const ILayerRTCoefficients* getInCoefficients(
-        const SimulationElement& sim_element) const final;
+    const ILayerRTCoefficients* getInCoefficients(const SimulationElement& sim_element) const final;
 
 private:
     const MultiLayer* mp_multilayer;

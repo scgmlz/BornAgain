@@ -15,14 +15,14 @@
 
 #include "FormFactorFullSpheroid.h"
 #include "BornAgainNamespace.h"
-#include "MathFunctions.h"
 #include "MathConstants.h"
+#include "MathFunctions.h"
 #include "RealParameter.h"
 #include <limits>
 
 //! @param radius of the two equal axes
 //! @param height total height of the spheroid, i.e. twice the radius of the third axis
-FormFactorFullSpheroid::FormFactorFullSpheroid(double radius, double height )
+FormFactorFullSpheroid::FormFactorFullSpheroid(double radius, double height)
     : m_radius(radius), m_height(height)
 {
     setName(BornAgain::FFFullSpheroidType);
@@ -37,12 +37,12 @@ complex_t FormFactorFullSpheroid::Integrand(double Z) const
     double R = m_radius;
     double H = m_height;
 
-    double Rz  = R*std::sqrt(1-4.0*Z*Z/(H*H));
-    complex_t qxy = std::sqrt(m_q.x()*m_q.x()+m_q.y()*m_q.y());
-    complex_t qrRz = qxy*Rz;
+    double Rz = R * std::sqrt(1 - 4.0 * Z * Z / (H * H));
+    complex_t qxy = std::sqrt(m_q.x() * m_q.x() + m_q.y() * m_q.y());
+    complex_t qrRz = qxy * Rz;
     complex_t J1_qrRz_div_qrRz = MathFunctions::Bessel_J1c(qrRz);
 
-    return Rz*Rz* J1_qrRz_div_qrRz *std::cos(m_q.z()*Z);
+    return Rz * Rz * J1_qrRz_div_qrRz * std::cos(m_q.z() * Z);
 }
 
 complex_t FormFactorFullSpheroid::evaluate_for_q(const cvector_t q) const
@@ -52,7 +52,7 @@ complex_t FormFactorFullSpheroid::evaluate_for_q(const cvector_t q) const
     m_q = q;
 
     if (std::abs(m_q.mag()) <= std::numeric_limits<double>::epsilon())
-        return M_TWOPI*R*R*H/3.;
-    complex_t qzH_half = H/2*q.z();
-    return 4 * M_PI * mP_integrator->integrate(0.0, H/2.0) * exp_I(qzH_half);
+        return M_TWOPI * R * R * H / 3.;
+    complex_t qzH_half = H / 2 * q.z();
+    return 4 * M_PI * mP_integrator->integrate(0.0, H / 2.0) * exp_I(qzH_half);
 }

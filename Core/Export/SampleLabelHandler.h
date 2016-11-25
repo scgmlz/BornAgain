@@ -37,8 +37,7 @@ class ParticleComposition;
 class ParticleCoreShell;
 class ParticleDistribution;
 
-template<class Key>
-class LabelMap
+template <class Key> class LabelMap
 {
 public:
     typedef std::pair<Key, std::string> entry_t;
@@ -48,9 +47,10 @@ public:
     typedef std::map<Key, iterator> map_t;
 
     LabelMap() {}
-    virtual ~LabelMap(){}
+    virtual ~LabelMap() {}
 
-    void clear() {
+    void clear()
+    {
         m_map.clear();
         m_list.clear();
     }
@@ -60,41 +60,47 @@ public:
     iterator begin() { return m_list.begin(); }
     iterator end() { return m_list.end(); }
 
-    size_t size() {
+    size_t size()
+    {
         assert(m_list.size() == m_map.size());
         return m_list.size();
     }
 
     // if such key exists, pair will be deleted, and new pair appended to the end
-    void insert(const Key& key, const std::string& object) {
+    void insert(const Key& key, const std::string& object)
+    {
         erase(key);
         iterator it = m_list.insert(m_list.end(), std::make_pair(key, object));
         m_map[key] = it;
     }
 
-    const iterator find(const Key& key) const {
-        if(m_map.find(key) == m_map.end())
+    const iterator find(const Key& key) const
+    {
+        if (m_map.find(key) == m_map.end())
             return m_list.end();
         return m_map[key];
     }
 
-    iterator find(const Key& key) {
-        if(m_map.find(key) == m_map.end())
+    iterator find(const Key& key)
+    {
+        if (m_map.find(key) == m_map.end())
             return m_list.end();
         return m_map[key];
     }
 
-    void erase(const Key& key) {
-        if(m_map.find(key) == m_map.end())
+    void erase(const Key& key)
+    {
+        if (m_map.find(key) == m_map.end())
             return;
         iterator it = m_map[key];
         m_list.erase(it);
         m_map.erase(key);
     }
 
-    const std::string& value(const Key& key) {
+    const std::string& value(const Key& key)
+    {
         typename map_t::const_iterator mit = m_map.find(key);
-        if(mit == m_map.end())
+        if (mit == m_map.end())
             throw Exceptions::RuntimeErrorException("LabelMap::value() -> No such key");
         const_iterator it = mit->second;
         return it->second;

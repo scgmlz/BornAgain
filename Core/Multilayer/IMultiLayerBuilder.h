@@ -28,10 +28,10 @@ class IFTDistribution2D;
 class BA_CORE_API_ IMultiLayerBuilder : public IParameterized
 {
 public:
-    IMultiLayerBuilder() : IParameterized("SampleBuilder") , m_subtest_item(0) {}
+    IMultiLayerBuilder() : IParameterized("SampleBuilder"), m_subtest_item(0) {}
     virtual ~IMultiLayerBuilder() {}
 
-    virtual MultiLayer* buildSample() const =0;
+    virtual MultiLayer* buildSample() const = 0;
 
     void set_subtest(const IParameterized* subtest_item) { m_subtest_item = subtest_item; }
     const IParameterized* m_subtest_item;

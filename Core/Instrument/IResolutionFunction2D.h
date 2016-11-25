@@ -27,8 +27,8 @@ class BA_CORE_API_ IResolutionFunction2D : public IParameterized
 public:
     virtual ~IResolutionFunction2D() {}
 
-    virtual double evaluateCDF(double x, double y) const=0;
-    virtual IResolutionFunction2D *clone() const = 0;
+    virtual double evaluateCDF(double x, double y) const = 0;
+    virtual IResolutionFunction2D* clone() const = 0;
 };
 
 #endif // IRESOLUTIONFUNCTION2D_H

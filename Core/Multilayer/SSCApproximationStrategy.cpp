@@ -28,13 +28,14 @@
 
 SSCApproximationStrategy::SSCApproximationStrategy(double kappa)
     : m_mean_radius(0.0), m_kappa(kappa)
-{}
+{
+}
 
 void SSCApproximationStrategy::strategy_specific_post_init()
 {
     // Set m_mean_radius to the weighted arithmetic average of the particle radii.
     m_mean_radius = 0.0;
-    for (const auto ffw: m_formfactor_wrappers)
+    for (const auto ffw : m_formfactor_wrappers)
         m_mean_radius += ffw->m_abundance * ffw->mp_ff->getRadialExtension();
     if (m_total_abundance > 0.0)
         m_mean_radius /= m_total_abundance;
@@ -42,8 +43,8 @@ void SSCApproximationStrategy::strategy_specific_post_init()
 
 complex_t SSCApproximationStrategy::getCharacteristicDistribution(double qp) const
 {
-    const InterferenceFunctionRadialParaCrystal *p_iff
-        = dynamic_cast<const InterferenceFunctionRadialParaCrystal*>(mP_iff.get());
+    const InterferenceFunctionRadialParaCrystal* p_iff =
+        dynamic_cast<const InterferenceFunctionRadialParaCrystal*>(mP_iff.get());
     if (p_iff == 0)
         throw Exceptions::ClassInitializationException("Wrong interference function for SSCA");
     return p_iff->FTPDF(qp);
@@ -54,16 +55,16 @@ complex_t SSCApproximationStrategy::getCharacteristicSizeCoupling(double qp, dou
     size_t n_frs = m_formfactor_wrappers.size();
     complex_t result = complex_t(0.0, 0.0);
     for (size_t i = 0; i < n_frs; ++i)
-        result += m_formfactor_wrappers[i]->m_abundance *
-            calculatePositionOffsetPhase(qp, kappa, i);
+        result +=
+            m_formfactor_wrappers[i]->m_abundance * calculatePositionOffsetPhase(qp, kappa, i);
     return result / m_total_abundance;
 }
 
-complex_t SSCApproximationStrategy::calculatePositionOffsetPhase(
-    double qp, double kappa, size_t index) const
+complex_t
+SSCApproximationStrategy::calculatePositionOffsetPhase(double qp, double kappa, size_t index) const
 {
-    return exp_I(kappa * qp *
-                 (m_formfactor_wrappers[index]->mp_ff->getRadialExtension() - m_mean_radius));
+    return exp_I(
+        kappa * qp * (m_formfactor_wrappers[index]->mp_ff->getRadialExtension() - m_mean_radius));
 }
 
 // ************************************************************************** //
@@ -84,7 +85,7 @@ double SSCApproximationStrategy1::evaluateForList(const SimulationElement& sim_e
         double fraction = m_formfactor_wrappers[i]->m_abundance / m_total_abundance;
         diffuse_intensity += fraction * std::norm(ff);
     }
-    complex_t mean_ff_norm  = getMeanFormfactorNorm(qp);
+    complex_t mean_ff_norm = getMeanFormfactorNorm(qp);
     complex_t p2kappa = getCharacteristicSizeCoupling(qp, 2.0 * m_kappa);
     complex_t omega = getCharacteristicDistribution(qp);
     double interference_intensity = 2.0 * (mean_ff_norm * omega / (1.0 - p2kappa * omega)).real();
@@ -93,10 +94,10 @@ double SSCApproximationStrategy1::evaluateForList(const SimulationElement& sim_e
 
 complex_t SSCApproximationStrategy1::getMeanFormfactorNorm(double qp) const
 {
-    complex_t ff_orig=0., ff_conj=0.; // original and conjugated mean formfactor
+    complex_t ff_orig = 0., ff_conj = 0.; // original and conjugated mean formfactor
     for (size_t i = 0; i < m_formfactor_wrappers.size(); ++i) {
-        complex_t prefac = m_formfactor_wrappers[i]->m_abundance
-            * calculatePositionOffsetPhase(qp, m_kappa, i);
+        complex_t prefac =
+            m_formfactor_wrappers[i]->m_abundance * calculatePositionOffsetPhase(qp, m_kappa, i);
         ff_orig += prefac * m_precomputed_ff1[i];
         ff_conj += prefac * std::conj(m_precomputed_ff1[i]);
     }
@@ -127,10 +128,8 @@ double SSCApproximationStrategy2::evaluateForList(const SimulationElement& sim_e
     getMeanFormfactors(qp, mff_orig, mff_conj);
     complex_t p2kappa = getCharacteristicSizeCoupling(qp, 2.0 * m_kappa);
     complex_t omega = getCharacteristicDistribution(qp);
-    Eigen::Matrix2cd interference_matrix
-        = (2.0 * omega / (1.0 - p2kappa * omega))
-        * sim_element.getAnalyzerOperator() * mff_orig
-        * sim_element.getPolarization() * mff_conj;
+    Eigen::Matrix2cd interference_matrix = (2.0 * omega / (1.0 - p2kappa * omega))
+        * sim_element.getAnalyzerOperator() * mff_orig * sim_element.getPolarization() * mff_conj;
     Eigen::Matrix2cd diffuse_matrix2 = sim_element.getAnalyzerOperator() * diffuse_matrix;
     double interference_trace = std::abs(interference_matrix.trace());
     double diffuse_trace = std::abs(diffuse_matrix2.trace());
@@ -141,11 +140,11 @@ double SSCApproximationStrategy2::evaluateForList(const SimulationElement& sim_e
 void SSCApproximationStrategy2::getMeanFormfactors(
     double qp, Eigen::Matrix2cd& ff_orig, Eigen::Matrix2cd& ff_conj) const
 {
-    ff_orig=Eigen::Matrix2cd::Zero();
-    ff_conj=Eigen::Matrix2cd::Zero();
+    ff_orig = Eigen::Matrix2cd::Zero();
+    ff_conj = Eigen::Matrix2cd::Zero();
     for (size_t i = 0; i < m_formfactor_wrappers.size(); ++i) {
-        complex_t prefac = m_formfactor_wrappers[i]->m_abundance
-            * calculatePositionOffsetPhase(qp, m_kappa, i);
+        complex_t prefac =
+            m_formfactor_wrappers[i]->m_abundance * calculatePositionOffsetPhase(qp, m_kappa, i);
         ff_orig += prefac * m_precomputed_ff2[i];
         ff_conj += prefac * m_precomputed_ff2[i].adjoint();
     }

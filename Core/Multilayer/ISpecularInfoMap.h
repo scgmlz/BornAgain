@@ -30,17 +30,17 @@ public:
     ISpecularInfoMap() {}
     ISpecularInfoMap(const ISpecularInfoMap& other) = delete;
     virtual ~ISpecularInfoMap() {}
-    ISpecularInfoMap& operator=(const ISpecularInfoMap &other) = delete;
+    ISpecularInfoMap& operator=(const ISpecularInfoMap& other) = delete;
 
-    virtual ISpecularInfoMap* clone() const =0;
-
-    //! Retrieves the amplitude coefficients for the given angles
-    virtual const ILayerRTCoefficients* getOutCoefficients(
-        const SimulationElement& sim_element) const =0;
+    virtual ISpecularInfoMap* clone() const = 0;
 
     //! Retrieves the amplitude coefficients for the given angles
-    virtual const ILayerRTCoefficients* getInCoefficients(
-        const SimulationElement& sim_element) const =0;
+    virtual const ILayerRTCoefficients*
+    getOutCoefficients(const SimulationElement& sim_element) const = 0;
+
+    //! Retrieves the amplitude coefficients for the given angles
+    virtual const ILayerRTCoefficients*
+    getInCoefficients(const SimulationElement& sim_element) const = 0;
 };
 
 #endif // ISPECULARINFOMAP_H

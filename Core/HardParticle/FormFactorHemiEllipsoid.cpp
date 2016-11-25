@@ -15,8 +15,8 @@
 
 #include "FormFactorHemiEllipsoid.h"
 #include "BornAgainNamespace.h"
-#include "MathFunctions.h"
 #include "MathConstants.h"
+#include "MathFunctions.h"
 #include "RealParameter.h"
 #include <limits>
 
@@ -28,14 +28,14 @@ FormFactorHemiEllipsoid::FormFactorHemiEllipsoid(double radius_x, double radius_
 {
     setName(BornAgain::FFHemiEllipsoidType);
     registerParameter(BornAgain::RadiusX, &m_radius_x).setUnit("nm").setNonnegative();
-    registerParameter(BornAgain::RadiusY, & m_radius_y).setUnit("nm").setNonnegative();
+    registerParameter(BornAgain::RadiusY, &m_radius_y).setUnit("nm").setNonnegative();
     registerParameter(BornAgain::Height, &m_height).setUnit("nm").setNonnegative();
     mP_integrator = make_integrator_complex(this, &FormFactorHemiEllipsoid::Integrand);
 }
 
 double FormFactorHemiEllipsoid::getRadialExtension() const
 {
-    return ( m_radius_x + m_radius_y ) / 2.0;
+    return (m_radius_x + m_radius_y) / 2.0;
 }
 
 //! Integrand for complex formfactor.
@@ -45,26 +45,26 @@ complex_t FormFactorHemiEllipsoid::Integrand(double Z) const
     double W = m_radius_y;
     double H = m_height;
 
-    double Rz = R * std::sqrt(1.0 - Z*Z/(H*H));
-    double Wz = W * std::sqrt(1.0 - Z*Z/(H*H));
+    double Rz = R * std::sqrt(1.0 - Z * Z / (H * H));
+    double Wz = W * std::sqrt(1.0 - Z * Z / (H * H));
 
-    complex_t qxRz = m_q.x()*Rz;
-    complex_t qyWz = m_q.y()*Wz;
+    complex_t qxRz = m_q.x() * Rz;
+    complex_t qyWz = m_q.y() * Wz;
 
-    complex_t gamma = std::sqrt(qxRz*qxRz + qyWz*qyWz);
+    complex_t gamma = std::sqrt(qxRz * qxRz + qyWz * qyWz);
     complex_t J1_gamma_div_gamma = MathFunctions::Bessel_J1c(gamma);
 
-    return Rz * Wz * J1_gamma_div_gamma * exp_I(m_q.z()*Z);
+    return Rz * Wz * J1_gamma_div_gamma * exp_I(m_q.z() * Z);
 }
 
 complex_t FormFactorHemiEllipsoid::evaluate_for_q(const cvector_t q) const
 {
-     m_q = q;
-     double R = m_radius_x;
-     double W = m_radius_y;
-     double H = m_height;
+    m_q = q;
+    double R = m_radius_x;
+    double W = m_radius_y;
+    double H = m_height;
 
-     if (std::abs(m_q.mag()) <= std::numeric_limits<double>::epsilon())
-         return M_TWOPI*R*W*H/3.;
-     return M_TWOPI*mP_integrator->integrate(0.,H );
+    if (std::abs(m_q.mag()) <= std::numeric_limits<double>::epsilon())
+        return M_TWOPI * R * W * H / 3.;
+    return M_TWOPI * mP_integrator->integrate(0., H);
 }

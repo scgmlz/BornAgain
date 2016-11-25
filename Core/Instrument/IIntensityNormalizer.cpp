@@ -29,10 +29,9 @@ IntensityNormalizer* IntensityNormalizer::clone() const
     return result;
 }
 
-OutputData<double>* IntensityNormalizer::createNormalizedData(
-        const OutputData<double>& data) const
+OutputData<double>* IntensityNormalizer::createNormalizedData(const OutputData<double>& data) const
 {
-    OutputData<double >* normalized_data = data.clone();
+    OutputData<double>* normalized_data = data.clone();
     apply(*normalized_data);
     return normalized_data;
 }
@@ -40,17 +39,16 @@ OutputData<double>* IntensityNormalizer::createNormalizedData(
 void IntensityNormalizer::apply(OutputData<double>& data) const
 {
     double factor = m_max_intensity;
-    if(factor == 0) {
+    if (factor == 0) {
         // using self maximum amplitude for normalization
         OutputData<double>::const_iterator it = std::max_element(data.begin(), data.end());
         factor = *it;
     }
-    if(factor == 0)
-        throw Exceptions::DivisionByZeroException(
-                "IntensityNormalizer::apply() -> "
-                "Error! Maximum intensity is 0.");
+    if (factor == 0)
+        throw Exceptions::DivisionByZeroException("IntensityNormalizer::apply() -> "
+                                                  "Error! Maximum intensity is 0.");
 
-    for(auto& value : data) {
-        value = m_scale*(value/factor) + m_shift;
+    for (auto& value : data) {
+        value = m_scale * (value / factor) + m_shift;
     }
 }

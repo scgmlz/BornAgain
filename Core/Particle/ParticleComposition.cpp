@@ -20,25 +20,22 @@
 #include "IMaterial.h"
 #include "ParticleDistribution.h"
 
-ParticleComposition::ParticleComposition()
-{
-    initialize();
-}
+ParticleComposition::ParticleComposition() { initialize(); }
 
 ParticleComposition::ParticleComposition(const IParticle& particle)
 {
     initialize();
-    addParticle( particle, kvector_t(0.0, 0.0, 0.0) );
+    addParticle(particle, kvector_t(0.0, 0.0, 0.0));
 }
 
-ParticleComposition::ParticleComposition(const IParticle &particle, kvector_t position)
+ParticleComposition::ParticleComposition(const IParticle& particle, kvector_t position)
 {
     initialize();
     addParticle(particle, position);
 }
 
-ParticleComposition::ParticleComposition(const IParticle& particle,
-        std::vector<kvector_t> positions)
+ParticleComposition::ParticleComposition(
+    const IParticle& particle, std::vector<kvector_t> positions)
 {
     initialize();
     addParticles(particle, positions);
@@ -46,7 +43,7 @@ ParticleComposition::ParticleComposition(const IParticle& particle,
 
 ParticleComposition::~ParticleComposition()
 {
-    for (size_t index=0; index<m_particles.size(); ++index)
+    for (size_t index = 0; index < m_particles.size(); ++index)
         delete m_particles[index];
 }
 
@@ -54,7 +51,7 @@ ParticleComposition* ParticleComposition::clone() const
 {
     ParticleComposition* p_result = new ParticleComposition();
     p_result->setAbundance(m_abundance);
-    for (size_t index=0; index<m_particles.size(); ++index)
+    for (size_t index = 0; index < m_particles.size(); ++index)
         p_result->addParticle(*m_particles[index]);
     p_result->setAmbientMaterial(*getAmbientMaterial());
     if (mP_rotation)
@@ -67,7 +64,7 @@ ParticleComposition* ParticleComposition::cloneInvertB() const
 {
     ParticleComposition* p_result = new ParticleComposition();
     p_result->setAbundance(m_abundance);
-    for (size_t index=0; index<m_particles.size(); ++index)
+    for (size_t index = 0; index < m_particles.size(); ++index)
         p_result->addParticlePointer(m_particles[index]->cloneInvertB());
 
     if (getAmbientMaterial())
@@ -78,7 +75,7 @@ ParticleComposition* ParticleComposition::cloneInvertB() const
     return p_result;
 }
 
-void ParticleComposition::addParticle(const IParticle &particle)
+void ParticleComposition::addParticle(const IParticle& particle)
 {
     checkParticleType(particle);
     IParticle* np = particle.clone();
@@ -97,28 +94,27 @@ void ParticleComposition::addParticle(const IParticle& particle, kvector_t posit
 
 // Please note, that positions is not const reference here. This is intentionally to
 // python lists to std::vector
-void ParticleComposition::addParticles(const IParticle& particle,
-        std::vector<kvector_t > positions)
+void ParticleComposition::addParticles(const IParticle& particle, std::vector<kvector_t> positions)
 {
-    for (size_t i=0; i<positions.size(); ++i)
+    for (size_t i = 0; i < positions.size(); ++i)
         addParticle(particle, positions[i]);
 }
 
 void ParticleComposition::setAmbientMaterial(const IMaterial& material)
 {
-    for (size_t index=0; index<m_particles.size(); ++index)
+    for (size_t index = 0; index < m_particles.size(); ++index)
         m_particles[index]->setAmbientMaterial(material);
 }
 
 const IMaterial* ParticleComposition::getAmbientMaterial() const
 {
-    if (m_particles.size()==0) return 0;
+    if (m_particles.size() == 0)
+        return 0;
     return m_particles[0]->getAmbientMaterial();
 }
 
-IFormFactor*
-ParticleComposition::createTransformedFormFactor(const IRotation* p_rotation,
-                                                 kvector_t translation) const
+IFormFactor* ParticleComposition::createTransformedFormFactor(
+    const IRotation* p_rotation, kvector_t translation) const
 {
     if (m_particles.size() == 0)
         return 0;
@@ -127,8 +123,8 @@ ParticleComposition::createTransformedFormFactor(const IRotation* p_rotation,
     FormFactorWeighted* p_result = new FormFactorWeighted();
     for (size_t index = 0; index < m_particles.size(); ++index) {
         const std::unique_ptr<IFormFactor> P_particle_ff(
-            m_particles[index]->createTransformedFormFactor(P_total_rotation.get(),
-                                                            total_position));
+            m_particles[index]->createTransformedFormFactor(
+                P_total_rotation.get(), total_position));
         p_result->addFormFactor(*P_particle_ff);
     }
     return p_result;
@@ -146,11 +142,13 @@ kvector_t ParticleComposition::getParticlePosition(size_t index) const
 
 size_t ParticleComposition::check_index(size_t index) const
 {
-    return index < m_particles.size() ? index : throw Exceptions::OutOfBoundsException(
-        "ParticleComposition::check_index() -> Index is out of bounds");
+    return index < m_particles.size()
+        ? index
+        : throw Exceptions::OutOfBoundsException(
+              "ParticleComposition::check_index() -> Index is out of bounds");
 }
 
-void ParticleComposition::checkParticleType(const IParticle &p_particle)
+void ParticleComposition::checkParticleType(const IParticle& p_particle)
 {
     const ParticleDistribution* p_distr = dynamic_cast<const ParticleDistribution*>(&p_particle);
     if (p_distr)

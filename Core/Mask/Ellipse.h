@@ -21,7 +21,8 @@
 //! Ellipse shape.
 //! @ingroup tools
 
-class  BA_CORE_API_ Ellipse : public IShape2D {
+class BA_CORE_API_ Ellipse : public IShape2D
+{
 public:
     Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta = 0.0);
     Ellipse* clone() const { return new Ellipse(m_xc, m_yc, m_xr, m_yr, m_theta); }
@@ -33,7 +34,7 @@ public:
     double getCenterY() const { return m_yc; }
     double getRadiusX() const { return m_xr; }
     double getRadiusY() const { return m_yr; }
-    double getTheta()   const { return m_theta; }
+    double getTheta() const { return m_theta; }
 
 private:
     double m_xc, m_yc, m_xr, m_yr, m_theta;

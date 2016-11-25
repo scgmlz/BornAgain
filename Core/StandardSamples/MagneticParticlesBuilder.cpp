@@ -15,10 +15,10 @@
 
 #include "MagneticParticlesBuilder.h"
 #include "FormFactorCylinder.h"
+#include "HomogeneousMagneticMaterial.h"
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "LayerRoughness.h"
-#include "HomogeneousMagneticMaterial.h"
 #include "MultiLayer.h"
 #include "Particle.h"
 #include "ParticleLayout.h"
@@ -30,8 +30,7 @@
 // ----------------------------------------------------------------------------
 
 MagneticParticleZeroFieldBuilder::MagneticParticleZeroFieldBuilder()
-    :  m_cylinder_radius(5*Units::nanometer)
-    ,  m_cylinder_height(5*Units::nanometer)
+    : m_cylinder_radius(5 * Units::nanometer), m_cylinder_height(5 * Units::nanometer)
 {
     init_parameters();
 }
@@ -70,8 +69,7 @@ MultiLayer* MagneticParticleZeroFieldBuilder::buildSample() const
 // Magnetic cylinders and non-zero magnetic field
 // ----------------------------------------------------------------------------
 MagneticCylindersBuilder::MagneticCylindersBuilder()
-    :  m_cylinder_radius(5*Units::nanometer)
-    ,  m_cylinder_height(5*Units::nanometer)
+    : m_cylinder_radius(5 * Units::nanometer), m_cylinder_height(5 * Units::nanometer)
 {
     init_parameters();
 }

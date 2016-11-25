@@ -27,9 +27,9 @@ class BA_CORE_API_ IIntensityFunction
 {
 public:
     virtual ~IIntensityFunction() {}
-    virtual IIntensityFunction *clone() const=0;
+    virtual IIntensityFunction* clone() const = 0;
 
-    virtual double evaluate(double value) const=0;
+    virtual double evaluate(double value) const = 0;
 };
 
 
@@ -41,7 +41,7 @@ class BA_CORE_API_ IntensityFunctionLog : public IIntensityFunction
 {
 public:
     virtual ~IntensityFunctionLog() {}
-    virtual IntensityFunctionLog *clone() const { return new IntensityFunctionLog(); }
+    virtual IntensityFunctionLog* clone() const { return new IntensityFunctionLog(); }
     virtual double evaluate(double value) const;
 };
 
@@ -54,7 +54,7 @@ class BA_CORE_API_ IntensityFunctionSqrt : public IIntensityFunction
 {
 public:
     virtual ~IntensityFunctionSqrt() {}
-    virtual IntensityFunctionSqrt *clone() const { return new IntensityFunctionSqrt(); }
+    virtual IntensityFunctionSqrt* clone() const { return new IntensityFunctionSqrt(); }
     virtual double evaluate(double value) const;
 };
 

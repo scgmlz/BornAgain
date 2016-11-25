@@ -24,20 +24,21 @@ class IResolutionFunction2D;
 //! Functions to work with intensity data.
 //! @ingroup tools
 
-namespace IntensityDataFunctions {
+namespace IntensityDataFunctions
+{
 
 //! Returns relative difference between two data sets sum(dat[i] - ref[i])/ref[i]).
-BA_CORE_API_ double getRelativeDifference(
-    const OutputData<double>& dat, const OutputData<double>& ref);
+BA_CORE_API_ double
+getRelativeDifference(const OutputData<double>& dat, const OutputData<double>& ref);
 
 BA_CORE_API_ double getRelativeDifference(const IHistogram& dat, const IHistogram& ref);
 
-BA_CORE_API_ OutputData<double>* createRelativeDifferenceData(
-    const OutputData<double>& data, const OutputData<double>& reference);
+BA_CORE_API_ OutputData<double>*
+createRelativeDifferenceData(const OutputData<double>& data, const OutputData<double>& reference);
 
 //! Returns new IntensityData objects which axes clipped to represent the specified rectangle.
-BA_CORE_API_ OutputData<double>* createClippedDataSet(
-    const OutputData<double>& origin, double x1, double y1, double x2, double y2);
+BA_CORE_API_ OutputData<double>*
+createClippedDataSet(const OutputData<double>& origin, double x1, double y1, double x2, double y2);
 
 //! Applies detector resolution function and returns new IntensityData object.
 BA_CORE_API_ OutputData<double>* applyDetectorResolution(

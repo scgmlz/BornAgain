@@ -21,9 +21,7 @@
 using namespace BornAgain;
 
 FormFactorSphereGaussianRadius::FormFactorSphereGaussianRadius(double mean, double sigma)
-: m_mean(mean)
-, m_sigma(sigma)
-, m_mean_r3(0.0)
+    : m_mean(mean), m_sigma(sigma), m_mean_r3(0.0)
 {
     setName(FormFactorSphereGaussianRadiusType);
     m_mean_r3 = calculateMeanR3();
@@ -35,11 +33,11 @@ FormFactorSphereGaussianRadius::FormFactorSphereGaussianRadius(double mean, doub
 complex_t FormFactorSphereGaussianRadius::evaluate_for_q(const cvector_t q) const
 {
     double q2 = std::norm(q.x()) + std::norm(q.y()) + std::norm(q.z());
-    double dw = std::exp(-q2*m_sigma*m_sigma/2.0);
-    return dw*P_ff_sphere->evaluate_for_q(q);
+    double dw = std::exp(-q2 * m_sigma * m_sigma / 2.0);
+    return dw * P_ff_sphere->evaluate_for_q(q);
 }
 
 double FormFactorSphereGaussianRadius::calculateMeanR3() const
 {
-    return std::pow(m_mean*(m_mean*m_mean+3.0*m_sigma*m_sigma),1.0/3.0);
+    return std::pow(m_mean * (m_mean * m_mean + 3.0 * m_sigma * m_sigma), 1.0 / 3.0);
 }

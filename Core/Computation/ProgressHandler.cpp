@@ -17,9 +17,9 @@
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "MultiLayer.h"
+#include <iostream> // DEBUG
 #include <mutex>
 #include <stdexcept>
-#include <iostream> // DEBUG
 
 void ProgressHandler::subscribe(ProgressHandler::Callback_t inform)
 {
@@ -36,15 +36,15 @@ void ProgressHandler::subscribe(ProgressHandler::Callback_t inform)
 void ProgressHandler::incrementDone(size_t ticks_done)
 {
     static std::mutex single_mutex;
-    std::unique_lock<std::mutex> single_lock( single_mutex );
+    std::unique_lock<std::mutex> single_lock(single_mutex);
 
     m_completed_nticks += ticks_done;
     if (m_completed_nticks > m_expected_nticks)
-        m_expected_nticks = m_completed_nticks+1;
+        m_expected_nticks = m_completed_nticks + 1;
 
-    int percentage_done = (int) (100.*m_completed_nticks/m_expected_nticks);
+    int percentage_done = (int)(100. * m_completed_nticks / m_expected_nticks);
     // fractional part is discarded, which is fine here:
     // the value 100 is only returned if everything is done
 
-    m_continuation_flag = ( !m_inform || m_inform(percentage_done) ) && m_continuation_flag;
+    m_continuation_flag = (!m_inform || m_inform(percentage_done)) && m_continuation_flag;
 }

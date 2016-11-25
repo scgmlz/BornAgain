@@ -26,15 +26,15 @@ class SimulationArea;
 class BA_CORE_API_ SimulationAreaIterator
 {
 public:
-    explicit SimulationAreaIterator(const SimulationArea *area, size_t start_at_index);
+    explicit SimulationAreaIterator(const SimulationArea* area, size_t start_at_index);
 
     size_t index() const { return m_index; }
-    size_t elementIndex() const { return m_element_index;}
+    size_t elementIndex() const { return m_element_index; }
     int roiIndex() const;
     int detectorIndex() const;
 
-    bool operator==(const SimulationAreaIterator &other) const;
-    bool operator!=(const SimulationAreaIterator &other) const;
+    bool operator==(const SimulationAreaIterator& other) const;
+    bool operator!=(const SimulationAreaIterator& other) const;
 
     //! prefix increment
     SimulationAreaIterator& operator++();
@@ -44,17 +44,17 @@ public:
 
 private:
     size_t nextIndex(size_t currentIndex);
-    const SimulationArea *m_area;
-    size_t m_index;  //!< global index in detector plane defined by its axes
+    const SimulationArea* m_area;
+    size_t m_index; //!< global index in detector plane defined by its axes
     size_t m_element_index; //!< sequential number for SimulationElementVector
 };
 
-inline bool SimulationAreaIterator::operator==(const SimulationAreaIterator &other) const
+inline bool SimulationAreaIterator::operator==(const SimulationAreaIterator& other) const
 {
-  return m_area == other.m_area && m_index == other.m_index;
+    return m_area == other.m_area && m_index == other.m_index;
 }
 
-inline bool SimulationAreaIterator::operator!=(const SimulationAreaIterator &right) const
+inline bool SimulationAreaIterator::operator!=(const SimulationAreaIterator& right) const
 {
     return !(*this == right);
 }
