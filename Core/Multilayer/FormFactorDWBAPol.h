@@ -54,8 +54,7 @@ public:
     friend class TestPolarizedDWBATerms;
 
 private:
-    //! The form factor for BA
-    IFormFactor* mp_form_factor;
+    IFormFactor* mp_form_factor; //!< The form factor for BA
 
     const ILayerRTCoefficients* mp_in_coeffs;  //!< not owned by this
     const ILayerRTCoefficients* mp_out_coeffs; //!< not owned by this

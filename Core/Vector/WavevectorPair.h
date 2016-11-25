@@ -16,6 +16,7 @@
 #ifndef WAVEVECTORINFO_H
 #define WAVEVECTORINFO_H
 
+#include "Complex.h"
 #include "Vectors3D.h"
 
 class Transform3D;
@@ -30,8 +31,8 @@ public:
     WavevectorPair(cvector_t ki, cvector_t kf) : m_ki(ki), m_kf(kf) {}
     WavevectorPair(kvector_t ki, kvector_t kf) : m_ki(ki.complex()), m_kf(kf.complex()) {}
 
+    WavevectorPair newZZ(complex_t kiz, complex_t kfz) const;
     WavevectorPair transformed(const Transform3D& transform) const;
-    cvector_t getKi() const { return m_ki; }
     cvector_t getKf() const { return m_kf; }
     cvector_t getQ() const { return m_ki - m_kf; }
     double K2() const { return m_ki.mag2(); }

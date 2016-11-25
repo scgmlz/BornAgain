@@ -2778,14 +2778,14 @@ class WavevectorPair(_object):
         except Exception:
             self.this = this
 
+    def newZZ(self, kiz, kfz):
+        """newZZ(WavevectorPair self, complex_t kiz, complex_t kfz) -> WavevectorPair"""
+        return _libBornAgainCore.WavevectorPair_newZZ(self, kiz, kfz)
+
+
     def transformed(self, transform):
         """transformed(WavevectorPair self, Transform3D const & transform) -> WavevectorPair"""
         return _libBornAgainCore.WavevectorPair_transformed(self, transform)
-
-
-    def getKi(self):
-        """getKi(WavevectorPair self) -> cvector_t"""
-        return _libBornAgainCore.WavevectorPair_getKi(self)
 
 
     def getKf(self):
