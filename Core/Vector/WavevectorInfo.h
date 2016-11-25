@@ -38,7 +38,7 @@ public:
     cvector_t getKi() const { return m_ki; }
     cvector_t getKf() const { return m_kf; }
     cvector_t getQ() const { return m_ki - m_kf; }
-    double getWavelength() const { return m_wavelength; }
+    double K2() const { return m_ki.mag2(); }
 
 private:
     cvector_t m_ki;

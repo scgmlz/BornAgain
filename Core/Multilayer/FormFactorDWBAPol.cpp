@@ -80,7 +80,7 @@ Eigen::Matrix2cd FormFactorDWBAPol::evaluatePol(const WavevectorInfo& wavevector
     // since both eigenvalues are identical, this does not influence the result.
     Eigen::Matrix2cd ff_BA;
 
-    double wavelength = wavevectors.getWavelength();
+    double wavelength = 0; // TMP wavevectors.getWavelength();
 
     // The following matrices each contain the four polarization conditions
     // (p->p, p->m, m->p, m->m)

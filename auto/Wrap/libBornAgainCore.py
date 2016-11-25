@@ -2823,14 +2823,9 @@ class WavevectorInfo(_object):
         return _libBornAgainCore.WavevectorInfo_getQ(self)
 
 
-    def getWavelength(self):
-        """
-        getWavelength(WavevectorInfo self) -> double
-
-        double WavevectorInfo::getWavelength() const
-
-        """
-        return _libBornAgainCore.WavevectorInfo_getWavelength(self)
+    def K2(self):
+        """K2(WavevectorInfo self) -> double"""
+        return _libBornAgainCore.WavevectorInfo_K2(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_WavevectorInfo
     __del__ = lambda self: None
