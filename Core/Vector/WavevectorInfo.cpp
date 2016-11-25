@@ -18,5 +18,5 @@
 
 WavevectorInfo WavevectorInfo::transformed(const Transform3D& transform) const
 {
-    return WavevectorInfo(transform.transformed(m_ki), transform.transformed(m_kf), m_wavelength);
+    return WavevectorInfo(transform.transformed(m_ki), transform.transformed(m_kf));
 }

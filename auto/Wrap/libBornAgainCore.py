@@ -2776,8 +2776,8 @@ class WavevectorInfo(_object):
     def __init__(self, *args):
         """
         __init__(WavevectorInfo self) -> WavevectorInfo
-        __init__(WavevectorInfo self, cvector_t ki, cvector_t kf, double wavelength) -> WavevectorInfo
-        __init__(WavevectorInfo self, kvector_t ki, kvector_t kf, double wavelength) -> WavevectorInfo
+        __init__(WavevectorInfo self, cvector_t ki, cvector_t kf) -> WavevectorInfo
+        __init__(WavevectorInfo self, kvector_t ki, kvector_t kf) -> WavevectorInfo
 
         WavevectorInfo::WavevectorInfo(kvector_t ki, kvector_t kf, double wavelength)
 

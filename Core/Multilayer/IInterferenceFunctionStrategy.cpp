@@ -98,9 +98,8 @@ void IInterferenceFunctionStrategy1::precomputeParticleFormfactors(
 {
     m_precomputed_ff1.clear();
 
-    double wavelength = sim_element.getWavelength();
-    double wavevector_scattering_factor = M_PI/wavelength/wavelength;
-    WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf(), wavelength);
+    double wavevector_scattering_factor = sim_element.getKi().mag2() / 4 / M_PI;
+    WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf());
 
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
@@ -119,9 +118,8 @@ void IInterferenceFunctionStrategy2::precomputeParticleFormfactors(
 {
     m_precomputed_ff2.clear();
 
-    double wavelength = sim_element.getWavelength();
-    double wavevector_scattering_factor = M_PI/wavelength/wavelength;
-    WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf(), wavelength);
+    double wavevector_scattering_factor = sim_element.getKi().mag2() / 4 / M_PI;
+    WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf());
 
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
