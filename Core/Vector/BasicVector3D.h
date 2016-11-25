@@ -23,8 +23,6 @@
 #include "WinDllMacros.h"
 #include <complex>
 
-static const double PI2 = 6.28318530717958647692528676655900577;
-
 //! Three-dimensional vector template, for use with integer, double, or complex components.
 //! @ingroup tools_internal
 

@@ -33,11 +33,12 @@ public:
     CustomBinAxis(const std::string& name, size_t nbins, double start, double end);
     virtual ~CustomBinAxis() {}
 
-    CustomBinAxis* clone() const;
+    CustomBinAxis* clone() const override final {
+        return new CustomBinAxis(getName(), m_nbins, m_start, m_end); }
 
     Bin1D getBin(size_t index) const;
 
-    std::vector<double > getBinCenters() const;
+    std::vector<double> getBinCenters() const;
 
     CustomBinAxis* createClippedAxis(double left, double right) const;
 

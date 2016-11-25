@@ -18,6 +18,8 @@
 
 #include "Vectors3D.h"
 
+//! An interval [m_lower, m_upper)  on the real line.
+
 struct BA_CORE_API_ Bin1D
 {
     Bin1D() : m_lower(0), m_upper(0) {}
@@ -26,11 +28,8 @@ struct BA_CORE_API_ Bin1D
     double m_upper;  //!< upper bound of the bin
     double getMidPoint() const { return (m_lower + m_upper)/2.0; }
     double getBinSize() const { return m_upper - m_lower; }
+    bool contains(double value) { return m_lower <= value && value < m_upper; }
 };
-
-//! Checks if value is contained in bin:
-//! value in [m_lower, m_upper)
-bool BinContains(const Bin1D& bin, double value);
 
 //! An one-dimensional range of kvector_t's.
 //! @ingroup tools_internal

@@ -16,11 +16,10 @@
 #ifndef LLDATA_H
 #define LLDATA_H
 
-#include "EigenCore.h"
 #include "Exceptions.h"
 #include <limits>
 
-//! Template class to store data of any type in multi-dimensional space (low-level).
+//! Low-level template class for data arrays of any type and any rank.
 //! @ingroup tools_internal
 
 template <class T> class LLData
@@ -30,17 +29,20 @@ public:
     LLData(size_t rank, const int* dimensions);
     LLData(const LLData<T>& right);
     LLData<T>& operator=(const LLData<T>& right);
-    ~LLData();
-
-    LLData<double> meanValues() const;
+    ~LLData() { clear(); }
 
     // accessors
-    T& operator[](size_t i);
-    const T& operator[](size_t i) const;
+    T& operator[](size_t i) { return m_data_array[i]; }
+    const T& operator[](size_t i) const { return m_data_array[i]; }
     T& atCoordinate(int* coordinate);
     const T& atCoordinate(int* coordinate) const;
 
     // arithmetic operations
+    LLData<T> operator+(const LLData<T>& right);
+    LLData<T> operator-(const LLData<T>& right);
+    LLData<T> operator*(const LLData<T>& right);
+    LLData<T> operator/(const LLData<T>& right);
+
     LLData<T>& operator+=(const LLData<T>& right);
     LLData<T>& operator-=(const LLData<T>& right);
     LLData<T>& operator*=(const LLData<T>& right);
@@ -54,7 +56,6 @@ public:
     size_t getTotalSize() const;
     inline size_t getRank() const { return m_rank; }
     const int* getDimensions() const { return m_dims; }
-    T getTotalSum() const;
 
 private:
     void allocate(size_t rank, const int* dimensions);
@@ -62,53 +63,48 @@ private:
     int checkPositiveDimension(int dimension) const;
     size_t convertCoordinate(int* coordinate) const;
     void swapContents(LLData<T>& other);
-    T getZeroElement() const;
 
     size_t m_rank;
     int* m_dims;
     T* m_data_array;
 };
 
-#ifndef SWIG
-template <>
-BA_CORE_API_ Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const;
-#endif
+namespace { // helper function
+    template<class T> bool haveSameDimensions(const LLData<T>& left, const LLData<T>& right)
+    {
+        if (left.getRank() != right.getRank())
+            return false;
+        const int* ldims = left.getDimensions();
+        const int* rdims = right.getDimensions();
+        for (size_t i=0; i<left.getRank(); ++i) {
+            if (ldims[i] != rdims[i])
+                return false;
+        }
+        return true;
+    }
+}
 
-// Global helper functions for arithmetic
-template <class T> LLData<T> operator+(const LLData<T>& left, const LLData<T>& right);
-template <class T> LLData<T> operator-(const LLData<T>& left, const LLData<T>& right);
-template <class T> LLData<T> operator*(const LLData<T>& left, const LLData<T>& right);
-template <class T> LLData<T> operator/(const LLData<T>& left, const LLData<T>& right);
-
-// Global helper functions for comparison
-template <class T> bool HaveSameDimensions(const LLData<T>& left, const LLData<T>& right);
+// ************************************************************************** //
+// Implementation
+// ************************************************************************** //
 
 
-template<class T>
-inline LLData<T>::LLData(size_t rank, const int* dimensions)
+template<class T> inline LLData<T>::LLData(size_t rank, const int* dimensions)
     : m_rank(0)
     , m_dims(0)
-    , m_data_array(0)
+    , m_data_array(nullptr)
 {
     allocate(rank, dimensions);
 }
 
-template<class T>
-LLData<T>::LLData(const LLData<T>& right)
+template<class T> LLData<T>::LLData(const LLData<T>& right)
     : m_rank(0)
     , m_dims(0)
-    , m_data_array(0)
+    , m_data_array(nullptr)
 {
     allocate(right.getRank(), right.getDimensions());
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] = right[i];
-    }
-}
-
-template<class T>
-LLData<T>::~LLData()
-{
-    clear();
 }
 
 template<class T> LLData<T>& LLData<T>::operator=(const LLData<T>& right)
@@ -120,66 +116,49 @@ template<class T> LLData<T>& LLData<T>::operator=(const LLData<T>& right)
     return *this;
 }
 
-template<class T>
-inline T& LLData<T>::operator[](size_t i)
-{
-    return m_data_array[i];
-}
-
-template<class T>
-inline const T& LLData<T>::operator[](size_t i) const
-{
-    return m_data_array[i];
-}
-
-template<class T>
-inline T& LLData<T>::atCoordinate(int* coordinate)
+template<class T> inline T& LLData<T>::atCoordinate(int* coordinate)
 {
     return m_data_array[convertCoordinate(coordinate)];
 }
 
-template<class T>
-inline const T& LLData<T>::atCoordinate(int* coordinate) const
+template<class T> inline const T& LLData<T>::atCoordinate(int* coordinate) const
 {
     return m_data_array[convertCoordinate(coordinate)];
 }
 
 template<class T> LLData<T>& LLData<T>::operator+=(const LLData<T>& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation += on LLData requires both operands to have the same dimensions");
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] += right[i];
-    }
     return *this;
 }
 
 template<class T> LLData<T>& LLData<T>::operator-=(const LLData& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation -= on LLData requires both operands to have the same dimensions");
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] -= right[i];
-    }
     return *this;
 }
 
 template<class T> LLData<T>& LLData<T>::operator*=(const LLData& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation *= on LLData requires both operands to have the same dimensions");
-    for (size_t i=0; i<getTotalSize(); ++i) {
+    for (size_t i=0; i<getTotalSize(); ++i)
         m_data_array[i] *= right[i];
-    }
     return *this;
 }
 
 template<class T> LLData<T>& LLData<T>::operator/=(const LLData& right)
 {
-    if (!HaveSameDimensions(*this, right))
+    if (!haveSameDimensions(*this, right))
         throw Exceptions::RuntimeErrorException(
             "Operation /= on LLData requires both operands to have the same dimensions");
     for (size_t i=0; i<getTotalSize(); ++i) {
@@ -217,14 +196,6 @@ template<class T> inline size_t LLData<T>::getTotalSize() const
     return result;
 }
 
-template<class T> T LLData<T>::getTotalSum() const
-{
-    T result = getZeroElement();
-    for (size_t i=0; i<getTotalSize(); ++i)
-        result += m_data_array[i];
-    return result;
-}
-
 template<class T> void LLData<T>::allocate(size_t rank, const int* dimensions)
 {
     clear();
@@ -255,9 +226,8 @@ template<class T> void LLData<T>::clear()
 
 template<class T> inline int LLData<T>::checkPositiveDimension(int dimension) const
 {
-    if (dimension<1) {
+    if (dimension<1)
         throw Exceptions::OutOfBoundsException("Dimension must be bigger than zero.");
-    }
     return dimension;
 }
 
@@ -279,51 +249,32 @@ template<class T> void LLData<T>::swapContents(LLData<T>& other)
     std::swap(this->m_data_array, other.m_data_array);
 }
 
-template<class T> T LLData<T>::getZeroElement() const
+template<class T> LLData<T> LLData<T>::operator+(const LLData<T>& right)
 {
-    T result = 0;
+    LLData<T> result(*this);
+    result += right;
     return result;
 }
 
-template<class T> LLData<T> operator+(const LLData<T>& left, const LLData<T>& right)
+template<class T> LLData<T> LLData<T>::operator-(const LLData<T>& right)
 {
-    LLData<T> *p_result = new LLData<T>(left);
-    (*p_result) += right;
-    return *p_result;
+    LLData<T> result(*this);
+    result -= right;
+    return result;
 }
 
-template<class T> LLData<T> operator-(const LLData<T>& left, const LLData<T>& right)
+template<class T> LLData<T> LLData<T>::operator*(const LLData<T>& right)
 {
-    LLData<T> *p_result = new LLData<T>(left);
-    (*p_result) -= right;
-    return *p_result;
+    LLData<T> result(*this);
+    result *= right;
+    return result;
 }
 
-template<class T> LLData<T> operator*(const LLData<T>& left, const LLData<T>& right)
+template<class T> LLData<T> LLData<T>::operator/(const LLData<T>& right)
 {
-    LLData<T> *p_result = new LLData<T>(left);
-    (*p_result) *= right;
-    return *p_result;
-}
-
-template<class T> LLData<T> operator/(const LLData<T>& left, const LLData<T>& right)
-{
-    LLData<T> *p_result = new LLData<T>(left);
-    *p_result /= right;
-    return *p_result;
-}
-
-template<class T> bool HaveSameDimensions(const LLData<T>& left, const LLData<T>& right)
-{
-    if (left.getRank() != right.getRank())
-        return false;
-    const int* ldims = left.getDimensions();
-    const int* rdims = right.getDimensions();
-    for (size_t i=0; i<left.getRank(); ++i) {
-        if (ldims[i] != rdims[i])
-            return false;
-    }
-    return true;
+    LLData<T> result(*this);
+    result /= right;
+    return result;
 }
 
 #endif // LLDATA_H

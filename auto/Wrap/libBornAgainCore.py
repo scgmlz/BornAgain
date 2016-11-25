@@ -1549,7 +1549,6 @@ cvar = _libBornAgainCore.cvar
 major_version_number = cvar.major_version_number
 minor_version_number = cvar.minor_version_number
 patch_version_number = cvar.patch_version_number
-PI2 = cvar.PI2
 
 class ICloneable(INoncopyable):
     """
@@ -3026,22 +3025,16 @@ class Bin1D(_object):
         """
         return _libBornAgainCore.Bin1D_getBinSize(self)
 
+
+    def contains(self, value):
+        """contains(Bin1D self, double value) -> bool"""
+        return _libBornAgainCore.Bin1D_contains(self, value)
+
     __swig_destroy__ = _libBornAgainCore.delete_Bin1D
     __del__ = lambda self: None
 Bin1D_swigregister = _libBornAgainCore.Bin1D_swigregister
 Bin1D_swigregister(Bin1D)
 
-
-def BinContains(bin, value):
-    """
-    BinContains(Bin1D bin, double value) -> bool
-
-    bool BinContains(const Bin1D &bin, double value)
-
-    Checks if value is contained in bin: value in [m_lower, m_upper) 
-
-    """
-    return _libBornAgainCore.BinContains(bin, value)
 class Bin1DKVector(_object):
     """
 
@@ -3379,17 +3372,6 @@ class IAxis(_object):
 IAxis_swigregister = _libBornAgainCore.IAxis_swigregister
 IAxis_swigregister(IAxis)
 
-
-def HaveSameNameAndShape(left, right):
-    """
-    HaveSameNameAndShape(IAxis left, IAxis right) -> bool
-
-    bool HaveSameNameAndShape(const IAxis &left, const IAxis &right)
-
-    global helper function for comparison of axes 
-
-    """
-    return _libBornAgainCore.HaveSameNameAndShape(left, right)
 class VariableBinAxis(IAxis):
     """
 
@@ -21558,18 +21540,6 @@ class IntensityData(_object):
 
         """
         return _libBornAgainCore.IntensityData_fillRawDataArray(self, destination)
-
-
-    def totalSum(self):
-        """
-        totalSum(IntensityData self) -> double
-
-        T OutputData< T >::totalSum() const
-
-        Returns sum of all values in the data structure. 
-
-        """
-        return _libBornAgainCore.IntensityData_totalSum(self)
 
 
     def begin(self, *args):

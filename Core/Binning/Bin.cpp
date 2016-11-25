@@ -15,15 +15,6 @@
 
 #include "Bin.h"
 
-bool BinContains(const Bin1D &bin, double value)
-{
-    if (bin.getBinSize()==0.0) return false;
-    double coordinate = (value - bin.m_lower)/bin.getBinSize();
-    if (coordinate < 0.0) return false;
-    if (coordinate >= 1.0) return false;
-    return true;
-}
-
 //! creation on Bin1DKVector from alpha and phi bins
 Bin1DKVector::Bin1DKVector(double wavelength, const Bin1D& alpha_bin, const Bin1D& phi_bin)
     : m_q_lower(), m_q_upper()
