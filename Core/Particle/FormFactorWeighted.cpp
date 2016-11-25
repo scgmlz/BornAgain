@@ -56,7 +56,7 @@ void FormFactorWeighted::setAmbientMaterial(const IMaterial& material)
         m_form_factors[index]->setAmbientMaterial(material);
 }
 
-complex_t FormFactorWeighted::evaluate(const WavevectorInfo& wavevectors) const
+complex_t FormFactorWeighted::evaluate(const WavevectorPair& wavevectors) const
 {
     complex_t result(0.0, 0.0);
     for (size_t index=0; index<m_form_factors.size(); ++index)
@@ -64,7 +64,7 @@ complex_t FormFactorWeighted::evaluate(const WavevectorInfo& wavevectors) const
     return result;
 }
 
-Eigen::Matrix2cd FormFactorWeighted::evaluatePol(const WavevectorInfo& wavevectors) const
+Eigen::Matrix2cd FormFactorWeighted::evaluatePol(const WavevectorPair& wavevectors) const
 {
     Eigen::Matrix2cd result = Eigen::Matrix2cd::Zero();
     for (size_t index=0; index<m_form_factors.size(); ++index)

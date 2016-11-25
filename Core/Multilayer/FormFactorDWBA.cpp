@@ -16,7 +16,7 @@
 #include "FormFactorDWBA.h"
 #include "BornAgainNamespace.h"
 #include "ILayerRTCoefficients.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 FormFactorDWBA::FormFactorDWBA(const IFormFactor& form_factor)
     : mp_form_factor(form_factor.clone())
@@ -36,7 +36,7 @@ FormFactorDWBA* FormFactorDWBA::clone() const
     return result;
 }
 
-complex_t FormFactorDWBA::evaluate(const WavevectorInfo& wavevectors) const
+complex_t FormFactorDWBA::evaluate(const WavevectorPair& wavevectors) const
 {
     // Retrieve the two different incoming wavevectors in the layer
     cvector_t k_i_T = wavevectors.getKi();
@@ -51,10 +51,10 @@ complex_t FormFactorDWBA::evaluate(const WavevectorInfo& wavevectors) const
     k_f_R.setZ(-k_f_T.z());
 
     // Construct the four different scattering contributions wavevector infos
-    WavevectorInfo k_TT(k_i_T, k_f_T);
-    WavevectorInfo k_RT(k_i_R, k_f_T);
-    WavevectorInfo k_TR(k_i_T, k_f_R);
-    WavevectorInfo k_RR(k_i_R, k_f_R);
+    WavevectorPair k_TT(k_i_T, k_f_T);
+    WavevectorPair k_RT(k_i_R, k_f_T);
+    WavevectorPair k_TR(k_i_T, k_f_R);
+    WavevectorPair k_RR(k_i_R, k_f_R);
 
     // Get the four R,T coefficients
     complex_t T_in = mp_in_coeffs->getScalarT();

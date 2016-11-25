@@ -18,7 +18,7 @@
 #include "IMaterial.h"
 #include "ISampleVisitor.h"
 #include "MathConstants.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 FormFactorDecoratorMaterial::FormFactorDecoratorMaterial(const IFormFactor& form_factor)
     : FormFactorDecoratorFactor(form_factor, 1.0),
@@ -58,7 +58,7 @@ complex_t FormFactorDecoratorMaterial::getAmbientRefractiveIndex() const
     return mP_ambient_material ? mP_ambient_material->getRefractiveIndex() : 1.0;
 }
 
-Eigen::Matrix2cd FormFactorDecoratorMaterial::evaluatePol(const WavevectorInfo& wavevectors) const
+Eigen::Matrix2cd FormFactorDecoratorMaterial::evaluatePol(const WavevectorPair& wavevectors) const
 {
     // the conjugated linear part of time reversal operator T
     // (T=UK with K complex conjugate operator and U is linear)

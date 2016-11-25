@@ -42,11 +42,11 @@ public:
 
     void setAmbientMaterial(const IMaterial& material) override final;
 
-    complex_t evaluate(const WavevectorInfo& wavevectors) const override final;
+    complex_t evaluate(const WavevectorPair& wavevectors) const override final;
 
 #ifndef SWIG
     //! Calculates and returns a polarized form factor calculation in DWBA
-    Eigen::Matrix2cd evaluatePol(const WavevectorInfo& wavevectors) const override final;
+    Eigen::Matrix2cd evaluatePol(const WavevectorPair& wavevectors) const override final;
 #endif
 
 protected:

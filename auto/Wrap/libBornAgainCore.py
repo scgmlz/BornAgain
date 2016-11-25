@@ -2757,80 +2757,55 @@ def deg2rad(angle):
 
     """
     return _libBornAgainCore.deg2rad(angle)
-class WavevectorInfo(_object):
-    """
-
-
-    Holds all wavevector information relevant for calculating form factors.
-
-    C++ includes: WavevectorInfo.h
-
-    """
+class WavevectorPair(_object):
+    """Proxy of C++ WavevectorPair class."""
 
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, WavevectorInfo, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, WavevectorPair, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, WavevectorInfo, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, WavevectorPair, name)
     __repr__ = _swig_repr
 
     def __init__(self, *args):
         """
-        __init__(WavevectorInfo self) -> WavevectorInfo
-        __init__(WavevectorInfo self, cvector_t ki, cvector_t kf) -> WavevectorInfo
-        __init__(WavevectorInfo self, kvector_t ki, kvector_t kf) -> WavevectorInfo
-
-        WavevectorInfo::WavevectorInfo(kvector_t ki, kvector_t kf, double wavelength)
-
+        __init__(WavevectorPair self) -> WavevectorPair
+        __init__(WavevectorPair self, cvector_t ki, cvector_t kf) -> WavevectorPair
+        __init__(WavevectorPair self, kvector_t ki, kvector_t kf) -> WavevectorPair
         """
-        this = _libBornAgainCore.new_WavevectorInfo(*args)
+        this = _libBornAgainCore.new_WavevectorPair(*args)
         try:
             self.this.append(this)
         except Exception:
             self.this = this
 
     def transformed(self, transform):
-        """transformed(WavevectorInfo self, Transform3D const & transform) -> WavevectorInfo"""
-        return _libBornAgainCore.WavevectorInfo_transformed(self, transform)
+        """transformed(WavevectorPair self, Transform3D const & transform) -> WavevectorPair"""
+        return _libBornAgainCore.WavevectorPair_transformed(self, transform)
 
 
     def getKi(self):
-        """
-        getKi(WavevectorInfo self) -> cvector_t
-
-        cvector_t WavevectorInfo::getKi() const
-
-        """
-        return _libBornAgainCore.WavevectorInfo_getKi(self)
+        """getKi(WavevectorPair self) -> cvector_t"""
+        return _libBornAgainCore.WavevectorPair_getKi(self)
 
 
     def getKf(self):
-        """
-        getKf(WavevectorInfo self) -> cvector_t
-
-        cvector_t WavevectorInfo::getKf() const
-
-        """
-        return _libBornAgainCore.WavevectorInfo_getKf(self)
+        """getKf(WavevectorPair self) -> cvector_t"""
+        return _libBornAgainCore.WavevectorPair_getKf(self)
 
 
     def getQ(self):
-        """
-        getQ(WavevectorInfo self) -> cvector_t
-
-        cvector_t WavevectorInfo::getQ() const
-
-        """
-        return _libBornAgainCore.WavevectorInfo_getQ(self)
+        """getQ(WavevectorPair self) -> cvector_t"""
+        return _libBornAgainCore.WavevectorPair_getQ(self)
 
 
     def K2(self):
-        """K2(WavevectorInfo self) -> double"""
-        return _libBornAgainCore.WavevectorInfo_K2(self)
+        """K2(WavevectorPair self) -> double"""
+        return _libBornAgainCore.WavevectorPair_K2(self)
 
-    __swig_destroy__ = _libBornAgainCore.delete_WavevectorInfo
+    __swig_destroy__ = _libBornAgainCore.delete_WavevectorPair
     __del__ = lambda self: None
-WavevectorInfo_swigregister = _libBornAgainCore.WavevectorInfo_swigregister
-WavevectorInfo_swigregister(WavevectorInfo)
+WavevectorPair_swigregister = _libBornAgainCore.WavevectorPair_swigregister
+WavevectorPair_swigregister(WavevectorPair)
 nanometer = cvar.nanometer
 angstrom = cvar.angstrom
 micrometer = cvar.micrometer
@@ -9920,7 +9895,7 @@ class IFormFactor(ISample):
 
     def evaluate(self, wavevectors):
         """
-        evaluate(IFormFactor self, WavevectorInfo wavevectors) -> complex_t
+        evaluate(IFormFactor self, WavevectorPair wavevectors) -> complex_t
 
         virtual complex_t IFormFactor::evaluate(const WavevectorInfo &wavevectors) const =0
 
@@ -10249,7 +10224,7 @@ class IFormFactorBorn(IFormFactor):
 
     def evaluate(self, wavevectors):
         """
-        evaluate(IFormFactorBorn self, WavevectorInfo wavevectors) -> complex_t
+        evaluate(IFormFactorBorn self, WavevectorPair wavevectors) -> complex_t
 
         complex_t IFormFactorBorn::evaluate(const WavevectorInfo &wavevectors) const override
 
@@ -11490,7 +11465,7 @@ class FormFactorCrystal(IFormFactor):
 
     def evaluate(self, wavevectors):
         """
-        evaluate(FormFactorCrystal self, WavevectorInfo wavevectors) -> complex_t
+        evaluate(FormFactorCrystal self, WavevectorPair wavevectors) -> complex_t
 
         complex_t FormFactorCrystal::evaluate(const WavevectorInfo &wavevectors) const override final
 
@@ -11785,7 +11760,7 @@ class FormFactorDecoratorDebyeWaller(IFormFactorDecorator):
 
     def evaluate(self, wavevectors):
         """
-        evaluate(FormFactorDecoratorDebyeWaller self, WavevectorInfo wavevectors) -> complex_t
+        evaluate(FormFactorDecoratorDebyeWaller self, WavevectorPair wavevectors) -> complex_t
 
         complex_t FormFactorDecoratorDebyeWaller::evaluate(const WavevectorInfo &wavevectors) const override final
 
@@ -14788,7 +14763,7 @@ class FormFactorWeighted(IFormFactor):
 
     def evaluate(self, wavevectors):
         """
-        evaluate(FormFactorWeighted self, WavevectorInfo wavevectors) -> complex_t
+        evaluate(FormFactorWeighted self, WavevectorPair wavevectors) -> complex_t
 
         complex_t FormFactorWeighted::evaluate(const WavevectorInfo &wavevectors) const override final
 

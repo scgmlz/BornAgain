@@ -38,9 +38,9 @@ public:
     double getRadialExtension() const override final {
         return mp_meso_form_factor->getRadialExtension(); }
 
-    complex_t evaluate(const WavevectorInfo& wavevectors) const override final;
+    complex_t evaluate(const WavevectorPair& wavevectors) const override final;
 #ifndef SWIG
-    Eigen::Matrix2cd evaluatePol(const WavevectorInfo& wavevectors) const override final;
+    Eigen::Matrix2cd evaluatePol(const WavevectorPair& wavevectors) const override final;
 #endif
 
 private:

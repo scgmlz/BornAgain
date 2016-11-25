@@ -16,14 +16,14 @@
 #include "IFormFactorBorn.h"
 #include "Exceptions.h"
 #include "ISampleVisitor.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
-complex_t IFormFactorBorn::evaluate(const WavevectorInfo& wavevectors) const
+complex_t IFormFactorBorn::evaluate(const WavevectorPair& wavevectors) const
 {
     return evaluate_for_q(wavevectors.getQ());
 }
 
-Eigen::Matrix2cd IFormFactorBorn::evaluatePol(const WavevectorInfo &wavevectors) const
+Eigen::Matrix2cd IFormFactorBorn::evaluatePol(const WavevectorPair &wavevectors) const
 {
     return evaluate_for_q_pol(wavevectors.getQ());
 }

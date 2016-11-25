@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Vector/WavevectorInfo.h
-//! @brief     Defines WavevectorInfo.
+//! @file      Core/Vector/WavevectorPair.h
+//! @brief     Defines WavevectorPair.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -23,14 +23,14 @@ class Transform3D;
 //! Holds all wavevector information relevant for calculating form factors.
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ WavevectorInfo
+class BA_CORE_API_ WavevectorPair
 {
 public:
-    WavevectorInfo() {} // TODO: stop abuse for q=0, then =delete
-    WavevectorInfo(cvector_t ki, cvector_t kf) : m_ki(ki), m_kf(kf) {}
-    WavevectorInfo(kvector_t ki, kvector_t kf) : m_ki(ki.complex()), m_kf(kf.complex()) {}
+    WavevectorPair() {} // TODO: stop abuse for q=0, then =delete
+    WavevectorPair(cvector_t ki, cvector_t kf) : m_ki(ki), m_kf(kf) {}
+    WavevectorPair(kvector_t ki, kvector_t kf) : m_ki(ki.complex()), m_kf(kf.complex()) {}
 
-    WavevectorInfo transformed(const Transform3D& transform) const;
+    WavevectorPair transformed(const Transform3D& transform) const;
     cvector_t getKi() const { return m_ki; }
     cvector_t getKf() const { return m_kf; }
     cvector_t getQ() const { return m_ki - m_kf; }

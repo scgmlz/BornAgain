@@ -32,9 +32,9 @@ public:
 
     void accept(ISampleVisitor* visitor) const override final { visitor->visit(this); }
 
-    complex_t evaluate(const WavevectorInfo& wavevectors) const override final;
+    complex_t evaluate(const WavevectorPair& wavevectors) const override final;
 #ifndef SWIG
-    Eigen::Matrix2cd evaluatePol(const WavevectorInfo& wavevectors) const override final;
+    Eigen::Matrix2cd evaluatePol(const WavevectorPair& wavevectors) const override final;
 #endif
 
 private:

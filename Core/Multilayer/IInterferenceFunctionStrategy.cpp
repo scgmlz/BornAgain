@@ -24,7 +24,7 @@
 #include "RealParameter.h"
 #include "ScalarRTCoefficients.h"
 #include "SimulationElement.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 IInterferenceFunctionStrategy::IInterferenceFunctionStrategy()
 {}
@@ -99,7 +99,7 @@ void IInterferenceFunctionStrategy1::precomputeParticleFormfactors(
     m_precomputed_ff1.clear();
 
     double wavevector_scattering_factor = sim_element.getKi().mag2() / 4 / M_PI;
-    WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf());
+    WavevectorPair wavevectors(sim_element.getKi(), sim_element.getMeanKf());
 
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
@@ -119,7 +119,7 @@ void IInterferenceFunctionStrategy2::precomputeParticleFormfactors(
     m_precomputed_ff2.clear();
 
     double wavevector_scattering_factor = sim_element.getKi().mag2() / 4 / M_PI;
-    WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf());
+    WavevectorPair wavevectors(sim_element.getKi(), sim_element.getMeanKf());
 
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));

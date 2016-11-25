@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Vector/WavevectorInfo.cpp
-//! @brief     Implements WavevectorInfo.
+//! @file      Core/Vector/WavevectorPair.cpp
+//! @brief     Implements WavevectorPair.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -13,10 +13,10 @@
 //
 // ************************************************************************** //
 
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 #include "Transform3D.h"
 
-WavevectorInfo WavevectorInfo::transformed(const Transform3D& transform) const
+WavevectorPair WavevectorPair::transformed(const Transform3D& transform) const
 {
-    return WavevectorInfo(transform.transformed(m_ki), transform.transformed(m_kf));
+    return WavevectorPair(transform.transformed(m_ki), transform.transformed(m_kf));
 }

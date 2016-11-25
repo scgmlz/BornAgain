@@ -16,7 +16,7 @@
 #include "FormFactorDecoratorDebyeWaller.h"
 #include "BornAgainNamespace.h"
 #include "ISampleVisitor.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 #include "RealParameter.h"
 
 FormFactorDecoratorDebyeWaller::FormFactorDecoratorDebyeWaller(
@@ -39,20 +39,20 @@ FormFactorDecoratorDebyeWaller::FormFactorDecoratorDebyeWaller(
     registerParameter(BornAgain::RadiusDWFactor, &m_r_dw_factor).setPositive();
 }
 
-complex_t FormFactorDecoratorDebyeWaller::evaluate(const WavevectorInfo& wavevectors) const
+complex_t FormFactorDecoratorDebyeWaller::evaluate(const WavevectorPair& wavevectors) const
 {
     double dw = getDWFactor(wavevectors);
     return dw * mp_form_factor->evaluate(wavevectors);
 }
 
 Eigen::Matrix2cd FormFactorDecoratorDebyeWaller::evaluatePol(
-        const WavevectorInfo &wavevectors) const
+        const WavevectorPair &wavevectors) const
 {
     double dw = getDWFactor(wavevectors);
     return dw * mp_form_factor->evaluatePol(wavevectors);
 }
 
-double FormFactorDecoratorDebyeWaller::getDWFactor(const WavevectorInfo& wavevectors) const
+double FormFactorDecoratorDebyeWaller::getDWFactor(const WavevectorPair& wavevectors) const
 {
     cvector_t q = wavevectors.getQ();
     double qr2 = std::norm(q.x()) + std::norm(q.y());

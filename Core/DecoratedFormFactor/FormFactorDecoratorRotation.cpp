@@ -16,7 +16,7 @@
 #include "FormFactorDecoratorRotation.h"
 #include "BornAgainNamespace.h"
 #include "ISampleVisitor.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 #include <memory>
 
 FormFactorDecoratorRotation::FormFactorDecoratorRotation(
@@ -32,12 +32,12 @@ FormFactorDecoratorRotation* FormFactorDecoratorRotation::clone() const
     return new FormFactorDecoratorRotation(*mp_form_factor, m_transform);
 }
 
-complex_t FormFactorDecoratorRotation::evaluate(const WavevectorInfo& wavevectors) const
+complex_t FormFactorDecoratorRotation::evaluate(const WavevectorPair& wavevectors) const
 {
     return mp_form_factor->evaluate(wavevectors.transformed(m_transform.getInverse()));
 }
 
-Eigen::Matrix2cd FormFactorDecoratorRotation::evaluatePol(const WavevectorInfo& wavevectors) const
+Eigen::Matrix2cd FormFactorDecoratorRotation::evaluatePol(const WavevectorPair& wavevectors) const
 {
     return mp_form_factor->evaluatePol(wavevectors.transformed(m_transform.getInverse()));
 }
