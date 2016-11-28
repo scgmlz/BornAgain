@@ -25,15 +25,18 @@ namespace YAML {
     class Node;
 }
 
-//! @class PyPersistenceTest
-//! @ingroup standard_samples
-//! @brief A functional test that runs a Python script and compares its output with a reference.
+//! A functional test that runs a Python script and compares its output with a reference.
 //!   Invoked from RunPyPersistenceTest.
+//!   Output and reference directories will be determined from environment variables
+//!     PYPERSIST_OUT_DIR and PYPERSIST_REF_DIR set by CMake.
+//!   Output and reference file names are obtained by globbing the directories;
+//!     the stem must be the script name; the extension is arbitrary.
+//!   One script may generate several output files, which must have different extensions.
 
 class PyPersistenceTest : public IReferencedTest
 {
 public:
-    PyPersistenceTest(const std::string& directory, const std::string& name);
+    PyPersistenceTest(const std::string& directory, const std::string& name, double threshold);
     ~PyPersistenceTest() final {}
 
     bool runTest() final;
@@ -47,10 +50,10 @@ private:
     bool compareFileMaps(
         const std::map<const std::string, const std::string>& dat,
         const std::map<const std::string, const std::string>& ref);
-    static bool compareFilePair(
-        const std::string& dat_fname, const std::string& ref_fname);
-    static bool compareIntensityPair(
-        const std::string& dat_fname, const std::string& ref_fname);
+    bool compareFilePair(
+        const std::string& dat_fname, const std::string& ref_fname) const;
+    bool compareIntensityPair(
+        const std::string& dat_fname, const std::string& ref_fname) const;
     static bool compareYamlPair(
         const std::string& dat_fname, const std::string& ref_fname);
     static bool compareYamlNode(

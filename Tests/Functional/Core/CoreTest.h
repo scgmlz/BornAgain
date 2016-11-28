@@ -21,9 +21,7 @@
 template <class T> class OutputData;
 class GISASSimulation;
 
-//! @class CoreTest
-//! @ingroup standard_samples
-//! @brief A functional test of BornAgain/Core.
+//! A functional test of BornAgain/Core.
 //!   Performs a given standard simulation, and compares results with reference data.
 //!   Invoked from CoreStandardTest.
 

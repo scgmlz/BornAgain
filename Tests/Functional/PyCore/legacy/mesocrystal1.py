@@ -1,37 +1,31 @@
 # Functional test: functional test: mesocrystal simulation
 #
+
 from __future__ import print_function
-import sys
-import os
-import numpy
-import time
-import ctypes
-import math
-from utils import get_reference_data
+import ctypes, math, numpy, os, sys, time
 
+import utils
 from libBornAgainCore import *
-
 
 # ----------------------------------------------------------------------------
 # Sample builder to build mixture of cylinders and prisms on top of substrate
-# 5 parameters
-2# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 class MySampleBuilder(IMultiLayerBuilder):
     def __init__(self):
         IMultiLayerBuilder.__init__(self)
         self.sample = None
         # parameters describing the sample
-        self.lattice_length_a = ctypes.c_double(6.2091e+00*nanometer)
-        self.lattice_length_c = ctypes.c_double(6.5677e+00*nanometer)
-        self.nanoparticle_radius = ctypes.c_double(4.6976e+00*nanometer)
-        self.sigma_nanoparticle_radius = ctypes.c_double(3.6720e-01*nanometer)
-        self.meso_height = ctypes.c_double(1.1221e+02*nanometer)
-        self.meso_radius = ctypes.c_double(9.4567e+02*nanometer)
-        self.sigma_meso_height = ctypes.c_double(1.3310e+00*nanometer)
-        self.sigma_meso_radius = ctypes.c_double(1.3863e+00*nanometer)
-        self.sigma_lattice_length_a = ctypes.c_double(1.1601e+00*nanometer)
+        self.lattice_length_a = ctypes.c_double(6.2091e+00*nm)
+        self.lattice_length_c = ctypes.c_double(6.5677e+00*nm)
+        self.nanoparticle_radius = ctypes.c_double(4.6976e+00*nm)
+        self.sigma_nanoparticle_radius = ctypes.c_double(3.6720e-01*nm)
+        self.meso_height = ctypes.c_double(1.1221e+02*nm)
+        self.meso_radius = ctypes.c_double(9.4567e+02*nm)
+        self.sigma_meso_height = ctypes.c_double(1.3310e+00*nm)
+        self.sigma_meso_radius = ctypes.c_double(1.3863e+00*nm)
+        self.sigma_lattice_length_a = ctypes.c_double(1.1601e+00*nm)
         self.surface_filling_ratio = ctypes.c_double(1.7286e-01)
-        self.roughness = ctypes.c_double(2.8746e+01*nanometer)
+        self.roughness = ctypes.c_double(2.8746e+01*nm)
         # register parameters
         self.registerParameter("lattice_length_a", ctypes.addressof(self.lattice_length_a)).setUnit("nm").setNonnegative()
         self.registerParameter("lattice_length_c", ctypes.addressof(self.lattice_length_c)).setUnit("nm").setNonnegative()
@@ -73,7 +67,7 @@ class MySampleBuilder(IMultiLayerBuilder):
 
         n_max_phi_rotation_steps = 2
         n_alpha_rotation_steps = 1
-        alpha_step = 5.0*degree/n_alpha_rotation_steps
+        alpha_step = 5.0*deg/n_alpha_rotation_steps
         alpha_start = - (n_alpha_rotation_steps/2.0)*alpha_step
 
         phi_step = 2*numpy.pi/3.0/n_max_phi_rotation_steps
@@ -91,7 +85,7 @@ class MySampleBuilder(IMultiLayerBuilder):
 
         avg_layer.addLayout(particle_layout)
 
-        roughness = LayerRoughness(self.roughness.value, 0.3, 500.0*nanometer)
+        roughness = LayerRoughness(self.roughness.value, 0.3, 500.0*nm)
 
         p_multi_layer.addLayer(air_layer)
         p_multi_layer.addLayer(avg_layer)
@@ -145,14 +139,10 @@ def runTest():
     simulation = createSimulation()
     simulation.setSampleBuilder( sample_builder )
 
-    # loading reference data
-    reference = get_reference_data("mesocrystal01_reference.int.gz")
+    reference = utils.get_reference_data("mesocrystal01_reference.int.gz")
 
-    # running simulation
     simulation.runSimulation()
     result = simulation.getIntensityData()
-
-    #IntensityDataIOFactory.writeIntensityData(result, "mesocrystal01_reference.int.gz")
 
     diff = getRelativeDifference(result, reference)
 
@@ -165,10 +155,9 @@ def runTest():
 # create simulation
 def createSimulation():
     simulation = GISASSimulation()
-    simulation.setBeamParameters(1.77*angstrom, 0.4*degree, 0.0*degree)
+    simulation.setBeamParameters(1.77*angstrom, 0.4*deg, 0.0*deg)
     simulation.setBeamIntensity(5.0090e+12)
     simulation.setDetectorParameters(50, 0.2*deg, 2.5*deg, 50, 0.0*deg, 2.5*deg)
-    # simulation.setDetectorResolutionFunction(ResolutionFunction2DGaussian(0.0002, 0.0002))
     return simulation
 
 

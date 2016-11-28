@@ -1,14 +1,9 @@
 # Functional test: tests of IO operations with the IntensityData object
 
-import sys
-import os
-import unittest
-import numpy
-import math
-import time
+import math, numpy, os, sys, time, unittest
 
 sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
-from libBornAgainCore import *
+import libBornAgainCore as ba
 
 
 def fill_data(data):
@@ -33,30 +28,29 @@ def is_the_same_data(data1, data2):
     for i in range(0, data1.getAllocatedSize()):
         if data1[i] != data2[i]:
             return False
-
     return True
 
 
 class OutputDataIOTiffTest(unittest.TestCase):
     """
-    Test serialization of IntensityData into TIFF format
+    Test serialization of ba.IntensityData into TIFF format
     """
     def test_SaveToTiff(self):
-        data = IntensityData()
-        data.addAxis(FixedBinAxis("x", 10, 0.0, 10.0))
-        data.addAxis(FixedBinAxis("y", 5, 0.0, 5.0))
+        data = ba.IntensityData()
+        data.addAxis(ba.FixedBinAxis("x", 10, 0.0, 10.0))
+        data.addAxis(ba.FixedBinAxis("y", 5, 0.0, 5.0))
         fill_data(data)
 
-        IntensityDataIOFactory.writeOutputData(data, "tmp.tif")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.tif")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.tif")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.tif")
         self.assertTrue(is_the_same_data(data, newdata))
 
-        IntensityDataIOFactory.writeOutputData(data, "tmp.tif.gz")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.tif.gz")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.tif.gz")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.tif.gz")
         self.assertTrue(is_the_same_data(data, newdata))
 
-        IntensityDataIOFactory.writeOutputData(data, "tmp.tif.bz2")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.tif.bz2")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.tif.bz2")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.tif.bz2")
         self.assertTrue(is_the_same_data(data, newdata))
 
 

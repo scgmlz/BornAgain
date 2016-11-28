@@ -19,9 +19,7 @@
 #include "IReferencedTest.h"
 #include "OutputData.h"
 
-//! @class PyExportTest
-//! @ingroup standard_samples
-//! @brief A functional test of PyCore (the Python wrapper of BornAgain/Core).
+//! A functional test of PyCore (the Python wrapper of BornAgain/Core).
 //!   Performs a given standard simulation, both directly and from a Python dump.
 //!   Invoked from PyExportStandardTest.
 

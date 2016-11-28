@@ -1,15 +1,10 @@
 # Functional test: tests of IO operations with the IntensityData object
 
-import sys
-import os
-import unittest
-import numpy
-import math
-import time
+import math, numpy, os, sys, time, unittest
 
 sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
-from libBornAgainCore import *
-
+import libBornAgainCore as ba
+from libBornAgainCore import degree, deg2rad, rad2deg
 
 def fill_data(data):
     """
@@ -17,7 +12,6 @@ def fill_data(data):
     """
     for i in range(0, data.getAllocatedSize()):
         data[i] = i
-
 
 def is_the_same_data(data1, data2):
     """
@@ -33,9 +27,7 @@ def is_the_same_data(data1, data2):
     for i in range(0, data1.getAllocatedSize()):
         if data1[i] != data2[i]:
             return False
-
     return True
-
 
 def get_boundaries_flat_in_sin(nbins, start, end):
     """
@@ -50,99 +42,97 @@ def get_boundaries_flat_in_sin(nbins, start, end):
     return result
 
 
-
-
 class OutputDataIOTest(unittest.TestCase):
     """
     Test serialization of IntensityData
     """
     def test_01_FixedBinAxis_1D(self):
-        data = IntensityData()
-        data.addAxis(FixedBinAxis("axis0", 10, -1.00000001, 1.0))
+        data = ba.IntensityData()
+        data.addAxis(ba.FixedBinAxis("axis0", 10, -1.00000001, 1.0))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_02_FixedBinAxis_2D(self):
-        data = IntensityData()
-        data.addAxis(FixedBinAxis("axis0", 9, -1.00000001, 1.0))
-        data.addAxis(FixedBinAxis("axis1", 3, -4.0, 5.0))
+        data = ba.IntensityData()
+        data.addAxis(ba.FixedBinAxis("axis0", 9, -1.00000001, 1.0))
+        data.addAxis(ba.FixedBinAxis("axis1", 3, -4.0, 5.0))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_03_FixedBinAxis_3D(self):
-        data = IntensityData()
-        data.addAxis(FixedBinAxis("axis0", 9, -1.00000001, 1.0))
-        data.addAxis(FixedBinAxis("axis1", 1, -4.0, 5.0))
-        data.addAxis(FixedBinAxis("axis2", 3, 0.0, 1.0))
+        data = ba.IntensityData()
+        data.addAxis(ba.FixedBinAxis("axis0", 9, -1.00000001, 1.0))
+        data.addAxis(ba.FixedBinAxis("axis1", 1, -4.0, 5.0))
+        data.addAxis(ba.FixedBinAxis("axis2", 3, 0.0, 1.0))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_04_VariableBinAxis_1D(self):
-        data = IntensityData()
-        data.addAxis(VariableBinAxis("axis0", 10, get_boundaries_flat_in_sin(10, -5.0, 5.0)))
+        data = ba.IntensityData()
+        data.addAxis(ba.VariableBinAxis("axis0", 10, get_boundaries_flat_in_sin(10, -5.0, 5.0)))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_05_VariableBinAxis_2D(self):
-        data = IntensityData()
-        data.addAxis(VariableBinAxis("axis0", 10, get_boundaries_flat_in_sin(10, -5.0, 5.0)))
-        data.addAxis(VariableBinAxis("axis1", 3, get_boundaries_flat_in_sin(3, 0.0, 2.0)))
+        data = ba.IntensityData()
+        data.addAxis(ba.VariableBinAxis("axis0", 10, get_boundaries_flat_in_sin(10, -5.0, 5.0)))
+        data.addAxis(ba.VariableBinAxis("axis1", 3, get_boundaries_flat_in_sin(3, 0.0, 2.0)))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_06_VariableAndFixedMix(self):
-        data = IntensityData()
-        data.addAxis(FixedBinAxis("axis0", 10, -5.0, 5.0))
-        data.addAxis(VariableBinAxis("axis1", 3, get_boundaries_flat_in_sin(3, 0.0, 2.0)))
+        data = ba.IntensityData()
+        data.addAxis(ba.FixedBinAxis("axis0", 10, -5.0, 5.0))
+        data.addAxis(ba.VariableBinAxis("axis1", 3, get_boundaries_flat_in_sin(3, 0.0, 2.0)))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_07_ConstKBinAxis_2D(self):
-        data = IntensityData()
-        data.addAxis(ConstKBinAxis("axis0", 9, -1.00000001*degree, 1.0*degree))
-        data.addAxis(ConstKBinAxis("axis1", 3, -4.0*degree, 5.0*degree))
+        data = ba.IntensityData()
+        data.addAxis(ba.ConstKBinAxis("axis0", 9, -1.00000001*degree, 1.0*degree))
+        data.addAxis(ba.ConstKBinAxis("axis1", 3, -4.0*degree, 5.0*degree))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_08_CustomBinAxis_2D(self):
-        data = IntensityData()
-        data.addAxis(CustomBinAxis("axis0", 9, -1.00000001*degree, 1.0*degree))
-        data.addAxis(CustomBinAxis("axis1", 3, -4.0*degree, 5.0*degree))
+        data = ba.IntensityData()
+        data.addAxis(ba.CustomBinAxis("axis0", 9, -1.00000001*degree, 1.0*degree))
+        data.addAxis(ba.CustomBinAxis("axis1", 3, -4.0*degree, 5.0*degree))
         fill_data(data)
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_SaveToINT(self):
-        data = IntensityData()
-        data.addAxis(FixedBinAxis("x", 10, 0.0, 10.0))
-        data.addAxis(FixedBinAxis("y", 5, 0.0, 5.0))
+        data = ba.IntensityData()
+        data.addAxis(ba.FixedBinAxis("x", 10, 0.0, 10.0))
+        data.addAxis(ba.FixedBinAxis("y", 5, 0.0, 5.0))
         fill_data(data)
 
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
         self.assertTrue(is_the_same_data(data, newdata))
 
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int.gz")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int.gz")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int.gz")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int.gz")
         self.assertTrue(is_the_same_data(data, newdata))
 
-        IntensityDataIOFactory.writeOutputData(data, "tmp.int.bz2")
-        newdata = IntensityDataIOFactory.readOutputData("tmp.int.bz2")
+        ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int.bz2")
+        newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int.bz2")
         self.assertTrue(is_the_same_data(data, newdata))
 
 if __name__ == '__main__':

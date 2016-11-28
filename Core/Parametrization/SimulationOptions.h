@@ -56,8 +56,6 @@ public:
 
     int getHardwareConcurrency() const;
 
-    double getDefaultVariability() const;
-
     void setIncludeSpecular(bool include_specular) { m_include_specular = include_specular; }
 
     bool includeSpecular() const { return m_include_specular; }
