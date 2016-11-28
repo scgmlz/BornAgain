@@ -21,8 +21,6 @@
 #include "MathConstants.h"
 #include "RealParameter.h"
 
-static complex_t I(0.,1.);
-
 FormFactorRipple1::FormFactorRipple1(double length, double width, double height)
     : m_length(length), m_width(width), m_height(height)
 {
@@ -78,7 +76,7 @@ complex_t FormFactorRipple1::evaluate_for_q(const cvector_t q) const
 
     // numerical integration otherwise
     m_ay = q.y() * m_width / M_TWOPI;
-    m_az = I * q.z() * (m_height/2);
+    m_az = complex_t(0,1) * q.z() * (m_height/2);
     complex_t integral = mP_integrator->integrate(0, M_PI);
     return factor * integral * exp(m_az) * (m_height/2);
 }

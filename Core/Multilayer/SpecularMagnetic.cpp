@@ -20,7 +20,9 @@
 #include "MultiLayer.h"
 #include <Eigen/LU>
 
-static complex_t I(0.,1.);
+namespace {
+    const complex_t I(0,1);
+}
 
 void SpecularMagnetic::execute(
     const MultiLayer& sample, const kvector_t k, MultiLayerCoeff_t& coeff)
