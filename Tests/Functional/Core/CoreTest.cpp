@@ -47,7 +47,6 @@ bool CoreTest::runTest()
     assert(m_simulation);
     m_simulation->runSimulation();
     const std::unique_ptr<OutputData<double>> result_data(m_simulation->getDetectorIntensity());
-    result_data->setVariability(m_threshold);
 
     // Compare with reference if available.
     bool success = false;

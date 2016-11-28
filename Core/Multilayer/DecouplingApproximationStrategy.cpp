@@ -37,7 +37,7 @@ double DecouplingApproximationStrategy1::evaluateForList(
         if (std::isnan(ff.real()))
             throw Exceptions::RuntimeErrorException(
                 "DecouplingApproximationStrategy::evaluateForList() -> Error! Amplitude is NaN");
-        double fraction = m_formfactor_wrappers[i]->m_abundance / m_total_abundance;
+        double fraction = m_formfactor_wrappers[i]->relativeAbundance() / m_total_abundance;
         amplitude += fraction * ff;
         intensity += fraction * std::norm(ff);
     }
@@ -65,7 +65,7 @@ double DecouplingApproximationStrategy2::evaluateForList(
             throw Exceptions::RuntimeErrorException(
                 "DecouplingApproximationStrategy::evaluateForList() -> "
                 "Error! Form factor contains NaN or infinite");
-        double fraction = m_formfactor_wrappers[i]->m_abundance / m_total_abundance;
+        double fraction = m_formfactor_wrappers[i]->relativeAbundance() / m_total_abundance;
         mean_amplitude += fraction * ff;
         mean_intensity += fraction * (ff * sim_element.getPolarization() * ff.adjoint());
     }

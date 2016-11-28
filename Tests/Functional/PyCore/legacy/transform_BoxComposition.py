@@ -1,16 +1,16 @@
 """
 BornAgain functional test.
-Test of rotation/position of particle composition. The composition consists of two boxes made of the same
-material. It is compared against reference single box made of the same material. Composition might be rotated to
-get reference shape. Both, reference box and composition are placed in the center of middle layer of 3 layers system.
+Test of rotation/position of particle composition.
+The composition consists of two boxes made of the same material.
+It is compared against reference single box made of the same material.
+Composition might be rotated to get reference shape.
+Both, reference box and composition are placed in the center of middle layer of 3 layers system.
 """
+
 from __future__ import print_function
-import unittest
+import os, sys, unittest
+
 import utils
-
-import sys
-import os
-
 from libBornAgainCore import *
 
 layer_thickness = 100.0
@@ -96,7 +96,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         composition = ParticleComposition()
         composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
         composition.addParticle(box, kvector_t(comp_length/2.0, 0.0, 0.0))
-        composition.setRotation(RotationX(90*degree))
+        composition.setRotation(RotationX(90*deg))
         composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.))
 
         data = self.get_intensity_data(composition)
@@ -125,7 +125,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         composition = ParticleComposition()
         composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
         composition.addParticle(box, kvector_t(comp_length/2.0, 0.0, 0.0))
-        composition.setRotation(RotationY(90*degree))
+        composition.setRotation(RotationY(90*deg))
         composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2. + comp_length/4.))
 
         data = self.get_intensity_data(composition)
@@ -154,7 +154,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         composition = ParticleComposition()
         composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
         composition.addParticle(box, kvector_t(comp_length/2.0, 0.0, 0.0))
-        composition.setRotation(RotationZ(90.0*degree))
+        composition.setRotation(RotationZ(90*deg))
         composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.0 - comp_height/2.0))
 
         data = self.get_intensity_data(composition)
@@ -183,8 +183,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         composition = ParticleComposition()
         composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
         composition.addParticle(box, kvector_t(comp_length/2.0, 0.0, 0.0))
-        composition.setRotation(RotationZ(90*degree))
-        composition.applyRotation(RotationY(90*degree))
+        composition.setRotation(RotationZ(90*deg))
+        composition.applyRotation(RotationY(90*deg))
         composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.))
 
         data = self.get_intensity_data(composition)
@@ -215,19 +215,19 @@ class TransformBoxCompositionTest(unittest.TestCase):
         box1_width = 50.0
         box1_height = 5.0
         box1 = Particle(particle_material, FormFactorBox(box1_length, box1_width, box1_height))
-        box1.setRotation(RotationZ(90.*degree))
+        box1.setRotation(RotationZ(90*deg))
 
         # box2 (5,20,50), rotatedY
         box2_length = 5.0
         box2_width = 20.0
         box2_height = 50.0
         box2 = Particle(particle_material, FormFactorBox(box2_length, box2_width, box2_height))
-        box2.setRotation(RotationY(90.*degree))
+        box2.setRotation(RotationY(90*deg))
         box2.setPosition(kvector_t(-box2_height/2.0, 0.0, box2_length/2.0))
 
         composition.addParticle(box1, kvector_t(0.0, 0.0, 0.0))
         composition.addParticle(box2, kvector_t(0.0, 0.0, box1_height))
-        composition.setRotation(RotationY(90.0*degree))
+        composition.setRotation(RotationY(90*deg))
         composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.))
 
         data = self.get_intensity_data(composition)

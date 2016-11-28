@@ -1,10 +1,9 @@
 # Functional test: triangular ripple formfactor within the 1D-paracrystal model
-from __future__ import print_function
-import sys
-import os
-import numpy
-from utils import get_reference_data
 
+from __future__ import print_function
+import numpy, os, sys
+
+import utils
 from libBornAgainCore import *
 
 
@@ -43,7 +42,7 @@ def RunSimulation():
     simulation.setBeamParameters(1.6 * angstrom, 0.3 * degree, 0.0 * degree)
     simulation.setSample(multi_layer)
     simulation.runSimulation()
-    # # intensity data
+
     return simulation.getIntensityData()
 
 
@@ -53,7 +52,7 @@ def RunSimulation():
 def runTest():
     result = RunSimulation()
 
-    reference = get_reference_data("ripple2_sym_reference.int.gz")
+    reference = utils.get_reference_data("ripple2_sym_reference.int.gz")
 
     diff = getRelativeDifference(result, reference)
 

@@ -116,9 +116,6 @@ public:
         return const_iterator(this, getAllocatedSize());
     }
 
-    void setVariability(double variability) { m_variability = variability; }
-    double getVariability() const { return m_variability; }
-
     // ---------------------------------
     // coordinate and index functions
     // ---------------------------------
@@ -258,7 +255,6 @@ private:
 
     SafePointerVector<IAxis> m_value_axes;
     LLData<T>* mp_ll_data;
-    double m_variability;
 };
 
 /* ***************************************************************************/
@@ -269,7 +265,6 @@ template <class T>
 OutputData<T>::OutputData()
     : m_value_axes()
     , mp_ll_data(nullptr)
-    , m_variability(2e-10)
 {
     allocate();
 }
@@ -285,7 +280,6 @@ OutputData<T>* OutputData<T>::clone() const
     OutputData<T>* ret = new OutputData<T>();
     ret->m_value_axes = m_value_axes;
     (*ret->mp_ll_data) = *mp_ll_data;
-    ret->setVariability(m_variability);
     return ret;
 }
 
@@ -298,7 +292,6 @@ void OutputData<T>::copyFrom(const OutputData<T>& other)
     mp_ll_data = 0;
     if(other.mp_ll_data)
         mp_ll_data = new LLData<T>(*other.mp_ll_data);
-    m_variability = other.getVariability();
 }
 
 template <class T>
@@ -309,7 +302,6 @@ void OutputData<T>::copyShapeFrom(const OutputData<U>& other)
     size_t rank = other.getRank();
     for (size_t i=0; i<rank; ++i)
         addAxis(other.getAxis(i));
-    m_variability = other.getVariability();
 }
 
 template <class T>
@@ -318,10 +310,8 @@ OutputData<double>* OutputData<T>::meanValues() const
     auto ret = new OutputData<double>();
     ret->copyShapeFrom(*this);
     ret->allocate();
-    ret->setVariability(m_variability);
     for (size_t i=0; i<mp_ll_data->getTotalSize(); ++i)
         (*ret)[i] = getValue(i);
-    ret->setVariability(m_variability);
     return ret;
 }
 

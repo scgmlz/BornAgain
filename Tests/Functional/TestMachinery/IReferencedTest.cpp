@@ -18,25 +18,18 @@
 #include <iostream>
 #include <cstdlib>
 
-//! Compares two intensity maps, and returns true unless they disagree beyond thier variability.
+//! Compares two intensity maps, and returns true unless they disagree beyond their variability.
 bool IReferencedTest::compareIntensityMaps(
-    const OutputData<double>& dat, const OutputData<double>& ref)
+    const OutputData<double>& dat, const OutputData<double>& ref) const
 {
-    if( dat.getVariability() != ref.getVariability() ) {
-        std::cerr << "Failed: reproducibility threshold has changed from "
-                  << ref.getVariability()
-                  << " to " << dat.getVariability() << "\n";
-        return false;
-    }
-    double threshold = ref.getVariability();
     double diff = IntensityDataFunctions::getRelativeDifference(dat, ref);
-    if ( diff > threshold ) {
+    if ( diff > m_threshold ) {
         std::cerr << "Failed: Relative difference between dat and ref = " << diff
-                  << " is above reproducibility threshold = " << threshold << "\n";
+                  << " is above given threshold = " << m_threshold << "\n";
         return false;
     }
     std::cout << "Relative difference between dat and ref = " << diff
-              << " is within reproducibility threshold = " << threshold << "\n";
+              << " is within given threshold = " << m_threshold << "\n";
     return true;
 }
 
@@ -51,9 +44,6 @@ bool IReferencedTest::runPython(const std::string& py_command)
     std::string sys_command = std::string("set PYTHONPATH=") + BUILD_LIB_DIR + " & " +
         PYTHON_EXECUTABLE + " " + py_command;
 #endif
-
-
-
     std::cout << sys_command << std::endl/*sic*/; // flush output before calling std::system
     int ret = std::system(sys_command.c_str());
     if (ret!=0) {

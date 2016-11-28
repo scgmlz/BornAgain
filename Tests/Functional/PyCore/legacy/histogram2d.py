@@ -1,7 +1,4 @@
-import sys
-import os
-import numpy
-import unittest
+import numpy, os, sys, unittest
 
 sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 import bornagain as ba
@@ -49,13 +46,11 @@ class Histogram2DTest(unittest.TestCase):
         for (x, y), element in numpy.ndenumerate(arr):
             self.assertEqual(element*2.0, arr_from_hist[x][y])
 
-
     def create_histogram(self, arr):
         """
         Returns newly created object
         """
         return ba.IHistogram.createFrom(arr)
-
 
     def test_createFrom(self):
         """
@@ -69,7 +64,6 @@ class Histogram2DTest(unittest.TestCase):
 
         for (x, y), element in numpy.ndenumerate(arr):
             self.assertEqual(element, arr_from_hist[x][y])
-
 
 
 if __name__ == '__main__':

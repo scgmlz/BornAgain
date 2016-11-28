@@ -42,8 +42,7 @@ IInterferenceFunctionStrategy::~IInterferenceFunctionStrategy()
 //! Initializes the object with form factors and interference functions
 void IInterferenceFunctionStrategy::init(
     const SafePointerVector<FormFactorWrapper>& weighted_formfactors,
-    const IInterferenceFunction& iff,
-    const LayerSpecularInfo& specular_info)
+    const IInterferenceFunction& iff)
 {
     if (weighted_formfactors.size()==0)
         throw Exceptions::ClassInitializationException("Bug: Decorated layer has no formfactors.");
@@ -52,10 +51,7 @@ void IInterferenceFunctionStrategy::init(
 
     m_total_abundance = 0;
     for (const auto ffw: m_formfactor_wrappers)
-        m_total_abundance += ffw->m_abundance;
-
-    if (&specular_info != mP_specular_info.get())
-        mP_specular_info.reset(specular_info.clone());
+        m_total_abundance += ffw->relativeAbundance();
 
     strategy_specific_post_init();
 }
@@ -97,19 +93,8 @@ void IInterferenceFunctionStrategy1::precomputeParticleFormfactors(
     const SimulationElement& sim_element) const
 {
     m_precomputed_ff1.clear();
-
-    double wavevector_scattering_factor = sim_element.getKi().mag2() / 4 / M_PI;
-    WavevectorPair wavevectors(sim_element.getKi(), sim_element.getMeanKf());
-
-    const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
-        mP_specular_info->getInCoefficients(sim_element));
-    const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
-        mP_specular_info->getOutCoefficients(sim_element));
-    for (auto ffw: m_formfactor_wrappers) {
-        ffw->mp_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
-        complex_t ff_mat = ffw->mp_ff->evaluate(wavevectors);
-        m_precomputed_ff1.push_back(wavevector_scattering_factor*ff_mat);
-    }
+    for (auto ffw: m_formfactor_wrappers)
+        m_precomputed_ff1.push_back(ffw->evaluate(sim_element));
 }
 
 //! Precomputes matrix form factors.
@@ -117,17 +102,6 @@ void IInterferenceFunctionStrategy2::precomputeParticleFormfactors(
     const SimulationElement& sim_element) const
 {
     m_precomputed_ff2.clear();
-
-    double wavevector_scattering_factor = sim_element.getKi().mag2() / 4 / M_PI;
-    WavevectorPair wavevectors(sim_element.getKi(), sim_element.getMeanKf());
-
-    const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
-        mP_specular_info->getInCoefficients(sim_element));
-    const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
-        mP_specular_info->getOutCoefficients(sim_element));
-    for (auto ffw: m_formfactor_wrappers) {
-        ffw->mp_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
-        Eigen::Matrix2cd ff_mat = ffw->mp_ff->evaluatePol(wavevectors);
-        m_precomputed_ff2.push_back(wavevector_scattering_factor*ff_mat);
-    }
+    for (auto ffw: m_formfactor_wrappers)
+        m_precomputed_ff2.push_back(ffw->evaluatePol(sim_element));
 }

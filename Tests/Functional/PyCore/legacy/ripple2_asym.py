@@ -1,46 +1,45 @@
 # Functional test: triangular asymetric ripple formfactor within the 1D-paracrystal model
+
 from __future__ import print_function
-import sys
-import os
-import numpy
-from utils import get_reference_data
+import numpy, os, sys
 
-from libBornAgainCore import *
-
+import utils
+import libBornAgainCore as ba
+from libBornAgainCore import deg, angstrom, nm
 
 # ----------------------------------
 # describe sample and run simulation
 # ----------------------------------
-def RunSimulation():
+def runSimulation():
     # defining materials
-    mAmbience = HomogeneousMaterial("Air", 0.0, 0.0)
-    mSubstrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    mParticle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
+    mAmbience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    mSubstrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
+    mParticle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
-    ripple2_ff = FormFactorRipple2(100 * nanometer, 20 * nanometer, 4 * nanometer, -3 * nanometer)
-    ripple = Particle(mParticle, ripple2_ff)
+    ripple2_ff = ba.FormFactorRipple2(100*nm, 20*nm, 4*nm, -3*nm)
+    ripple = ba.Particle(mParticle, ripple2_ff)
 
-    particle_layout = ParticleLayout()
+    particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(ripple, 1.0)
 
-    interference = InterferenceFunctionRadialParaCrystal(20 * nanometer, 1e7 * nanometer)
-    pdf = FTDistribution1DGauss(4 * nanometer)
+    interference = ba.InterferenceFunctionRadialParaCrystal(20*nm, 1e7*nm)
+    pdf = ba.FTDistribution1DGauss(4*nm)
     interference.setProbabilityDistribution(pdf)
     particle_layout.addInterferenceFunction(interference)
 
     # air layer with particles and substrate form multi layer
-    air_layer = Layer(mAmbience)
+    air_layer = ba.Layer(mAmbience)
     air_layer.addLayout(particle_layout)
-    substrate_layer = Layer(mSubstrate, 0)
-    multi_layer = MultiLayer()
+    substrate_layer = ba.Layer(mSubstrate, 0)
+    multi_layer = ba.MultiLayer()
     multi_layer.addLayer(air_layer)
     multi_layer.addLayer(substrate_layer)
 
     # build and run experiment
-    simulation = GISASSimulation()
-    simulation.setDetectorParameters(100, -1.5 * degree, 1.5 * degree, 100, 0.0 * degree, 2.0 * degree)
-    simulation.setBeamParameters(1.6 * angstrom, 0.3 * degree, 0.0 * degree)
+    simulation = ba.GISASSimulation()
+    simulation.setDetectorParameters(100, -1.5*deg, 1.5*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setBeamParameters(1.6*angstrom, 0.3*deg, 0.0*deg)
     simulation.setSample(multi_layer)
     simulation.runSimulation()
     # # intensity data
@@ -51,12 +50,9 @@ def RunSimulation():
 # run test and analyse test results
 # --------------------------------------------------------------
 def runTest():
-    result = RunSimulation()
-
-    reference = get_reference_data("ripple2_asym_reference.int.gz")
-
-    diff = getRelativeDifference(result, reference)
-
+    result = runSimulation()
+    reference = utils.get_reference_data("ripple2_asym_reference.int.gz")
+    diff = ba.getRelativeDifference(result, reference)
     status = "OK"
     if (diff > 1e-10 or numpy.isnan(diff)):
         status = "FAILED"

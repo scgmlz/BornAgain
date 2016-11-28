@@ -29,8 +29,8 @@ double IgnoreDenormalized(double value)
     return value;
 }
 
-void WriteOutputDataDoubles(const OutputData<double>& data, std::ostream& output_stream,
-                            size_t n_columns)
+void WriteOutputDataDoubles(
+    const OutputData<double>& data, std::ostream& output_stream, size_t n_columns)
 {
     OutputData<double>::const_iterator it = data.begin();
     output_stream.imbue(std::locale::classic());
@@ -47,12 +47,10 @@ void WriteOutputDataDoubles(const OutputData<double>& data, std::ostream& output
     }
 }
 
-void OutputDataWriteINTStrategy::writeOutputData(const OutputData<double>& data,
-                                               std::ostream& output_stream)
+void OutputDataWriteINTStrategy::writeOutputData(
+    const OutputData<double>& data, std::ostream& output_stream)
 {
     output_stream << "# BornAgain Intensity Data\n\n";
-
-    output_stream << "# reproducibility\n" << data.getVariability() << "\n";
 
     for(size_t i=0; i<data.getRank(); ++i) {
         const IAxis &axis = data.getAxis(i);
@@ -69,8 +67,8 @@ void OutputDataWriteINTStrategy::writeOutputData(const OutputData<double>& data,
 
 // ----------------------------------------------------------------------------
 
-void OutputDataWriteNumpyTXTStrategy::writeOutputData(const OutputData<double>& data,
-                                                      std::ostream& output_stream)
+void OutputDataWriteNumpyTXTStrategy::writeOutputData(
+    const OutputData<double>& data, std::ostream& output_stream)
 {
     if(data.getRank() != 2)
         throw Exceptions::LogicErrorException(
@@ -104,8 +102,8 @@ OutputDataWriteTiffStrategy::~OutputDataWriteTiffStrategy()
     delete m_d;
 }
 
-void OutputDataWriteTiffStrategy::writeOutputData(const OutputData<double>& data,
-                                                  std::ostream& output_stream)
+void OutputDataWriteTiffStrategy::writeOutputData(
+    const OutputData<double>& data, std::ostream& output_stream)
 {
     m_d->write(data, output_stream);
 }

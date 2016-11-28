@@ -28,8 +28,8 @@
 #include <iomanip>
 
 PyPersistenceTest::PyPersistenceTest(
-    const std::string& directory, const std::string& name)
-    : IReferencedTest(name, "persistence test on script "+name, 2e-10)
+    const std::string& directory, const std::string& name, double threshold)
+    : IReferencedTest(name, "persistence test on script "+name, threshold)
     , m_directory(directory)
 {}
 
@@ -69,7 +69,7 @@ bool PyPersistenceTest::runTest()
     return true;
 }
 
-//! Globs for files of form *.<key1>.<key2>[.*], and returns a map with keys of the form
+//! Globs for files of form <stem>.<key1>.<key2>[.*], and returns a map with keys of the form
 //! <key1>.<key2>, and values containing full file paths.
 std::map<const std::string, const std::string>
 PyPersistenceTest::glob2map(const std::string& dir, const std::string& stem)
@@ -110,7 +110,7 @@ bool PyPersistenceTest::compareFileMaps(
 
 //! Returns true if test output and reference file agree.
 bool PyPersistenceTest::compareFilePair(
-    const std::string& dat_fpath, const std::string& ref_fpath)
+    const std::string& dat_fpath, const std::string& ref_fpath) const
 {
     std::cout << "Comparing dat='" << dat_fpath << "' with ref='" << ref_fpath << "':\n";
     const std::string extension = StringUtils::split(FileSystemUtils::filename(dat_fpath), ".")[2];
@@ -124,7 +124,7 @@ bool PyPersistenceTest::compareFilePair(
 
 //! Returns true if intensity maps from test output and reference file agree reasonably.
 bool PyPersistenceTest::compareIntensityPair(
-    const std::string& dat_fpath, const std::string& ref_fpath)
+    const std::string& dat_fpath, const std::string& ref_fpath) const
 {
     const OutputData<double>* dat = IntensityDataIOFactory::readOutputData( dat_fpath );
     const OutputData<double>* ref = IntensityDataIOFactory::readOutputData( ref_fpath );

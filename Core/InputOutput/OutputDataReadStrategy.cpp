@@ -25,12 +25,6 @@ OutputData<double>* OutputDataReadINTStrategy::readOutputData(std::istream& inpu
     std::string line;
 
     while( std::getline(input_stream, line) ) {
-        if (line.find("reproducibility") != std::string::npos) {
-            std::string line;
-            std::getline(input_stream, line);
-            result->setVariability( std::stod( line ) );
-        }
-
         if (line.find("axis") != std::string::npos) {
             IAxis* axis = DataFormatUtils::createAxis(input_stream);
             result->addAxis(*axis);

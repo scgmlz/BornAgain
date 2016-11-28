@@ -1,15 +1,15 @@
 """
 BornAgain functional test.
-Test of rotation/position of core shell particle. Reference CoreShell particle is compared against the test CoreShell
+Test of rotation/position of core shell particle.
+Reference CoreShell particle is compared against the test CoreShell,
 which has different dimensions but rotated/translated to be like the reference one.
 Particles are placed in the center of middle layer.
 """
-from __future__ import print_function
-import unittest
-import utils
-import sys
-import os
 
+from __future__ import print_function
+import os, sys, unittest
+
+import utils
 from libBornAgainCore import *
 
 layer_thickness = 100.0
@@ -114,7 +114,6 @@ class TransformCoreShellBoxTest(unittest.TestCase):
         print("test_CoreShellBoxRotateZ:", diff)
         self.assertLess(diff, 1e-10)
 
-
     def test_CoreShellBoxRotateY(self):
         """
         Two CoreShell particles are compared against each other. Reference CoreShell particle has dimensions (10,20,50)
@@ -160,7 +159,6 @@ class TransformCoreShellBoxTest(unittest.TestCase):
         diff = getRelativeDifference(data, reference_data)
         print("test_CoreShellBoxRotateY:", diff)
         self.assertLess(diff, 1e-10)
-
 
     def test_CoreShellBoxRotateZandY(self):
         """

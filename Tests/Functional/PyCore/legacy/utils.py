@@ -1,12 +1,12 @@
 """
 Collection of utils for testing
 """
+
 import gzip, numpy, sys, os
 
 sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
-
-from libBornAgainCore import *
-
+import libBornAgainCore as ba
+from libBornAgainCore import deg, angstrom
 
 def get_difference(data, reference):
     """
@@ -27,37 +27,33 @@ def get_difference(data, reference):
             diff += abs(v1/v2)
     diff = diff/data.size
     if numpy.isnan(diff):
-        raise Exception("get_difference", "isnan")
-
+        raise ba.Exception("get_difference", "isnan")
     return diff
-
 
 def get_reference_data(filename):
     """
     read and return reference data from file
     """
-    return IntensityDataIOFactory.readIntensityData("@REFERENCE_DIR@/legacy/"+filename)
-
+    return ba.IntensityDataIOFactory.readIntensityData("@REFERENCE_DIR@/legacy/"+filename)
 
 def get_simulation_MiniGISAS(sample = None):
-    simulation = GISASSimulation()
-    simulation.setDetectorParameters(25, -2.0*degree, 2.0*degree, 25, 0.0*degree, 2.0*degree)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*degree, 0.0*degree)
+    simulation = ba.GISASSimulation()
+    simulation.setDetectorParameters(25, -2.0*deg, 2.0*deg, 25, 0.0*deg, 2.0*deg)
+    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     if sample:
         simulation.setSample(sample)
     return simulation
 
 def get_simulation_BasicGISAS(sample = None):
-    simulation = GISASSimulation()
-    simulation.setDetectorParameters(100, 0.0*degree, 2.0*degree, 100, 0.0*degree, 2.0*degree)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*degree, 0.0*degree)
+    simulation = ba.GISASSimulation()
+    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     if sample:
         simulation.setSample(sample)
     return simulation
 
 def plot_intensity_data(intensity):
-    import matplotlib
-    import pylab
+    import matplotlib, pylab
     data = intensity.getArray() + 1
     # data = numpy.abs(intensity.getArray())
     phi_min = rad2deg(intensity.getAxis(0).getMin())

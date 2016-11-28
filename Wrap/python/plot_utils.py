@@ -146,12 +146,12 @@ def simulateThenPlotOrSave(
 def plot_intensity_data(intensity_data, plot=standardIntensityPlot, save=standardIntensitySave):
     """
     Plots intensity data (if no command line arguments are provided).
-    If there is an additional command line arguments, silently saves the data into the file for testing purposes.
+    If there is an additional command line arguments, it must be a file name, and
+    the data are silently saved to that file. This is used in our persistence tests.
     """
     import sys
     if len(sys.argv) <= 1:
         plot(intensity_data)
-
     else:
         filename = sys.argv[1]
         # save result

@@ -61,7 +61,6 @@ OutputData<double>* GISASSimulation::getDetectorIntensity(IDetector2D::EAxesUnit
 {
     std::unique_ptr<OutputData<double>> result(
         m_instrument.createDetectorIntensity(m_sim_elements, units_type));
-    result->setVariability( m_options.getDefaultVariability() );
     return result.release();
 }
 

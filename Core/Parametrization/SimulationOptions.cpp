@@ -69,8 +69,3 @@ int SimulationOptions::getHardwareConcurrency() const
 {
     return (int)std::thread::hardware_concurrency();
 }
-
-double SimulationOptions::getDefaultVariability() const
-{
-    return isIntegrate() ? 0.5 : 2e-10;
-}

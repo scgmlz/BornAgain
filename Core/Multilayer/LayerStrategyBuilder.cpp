@@ -82,7 +82,7 @@ IInterferenceFunctionStrategy* LayerStrategyBuilder::createStrategy() const
     if (!p_result)
         throw Exceptions::ClassInitializationException(
             "Could not create appropriate strategy");
-    p_result->init(ff_wrappers, *P_interference_function, *mP_specular_info);
+    p_result->init(ff_wrappers, *P_interference_function);
     return p_result;
 }
 
@@ -99,7 +99,8 @@ SafePointerVector<class FormFactorWrapper> LayerStrategyBuilder::collectFormFact
     for (const IParticle* particle: p_layout->getParticles()) {
         FormFactorWrapper* p_weighted_ff;
         p_weighted_ff = createFormFactorWrapper(particle, p_layer_material);
-        p_weighted_ff->m_abundance /= total_abundance;
+        p_weighted_ff->scaleRelativeAbundance(total_abundance);
+        p_weighted_ff->setSpecularInfo(*mP_specular_info);
         result.push_back(p_weighted_ff);
     }
     return result;

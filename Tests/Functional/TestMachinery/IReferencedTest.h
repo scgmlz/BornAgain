@@ -37,8 +37,7 @@ public:
 protected:
     double m_threshold;
 
-    static bool compareIntensityMaps(const OutputData<double>& dat, const OutputData<double>& ref);
-
+    bool compareIntensityMaps(const OutputData<double>& dat, const OutputData<double>& ref) const;
     static bool runPython(const std::string& py_command);
 };
 
