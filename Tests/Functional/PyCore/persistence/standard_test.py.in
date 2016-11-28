@@ -1,0 +1,24 @@
+"""
+Turns a Python example into a functional persistence test.
+The example name is given by the environment variable WRAPPED_MODULE.
+CMakeLists.txt turns this template into an example-specific script.
+"""
+
+import bornagain as ba
+from bornagain.@WRAPPED_MODULE@ import *
+
+def test_simulation():
+    """
+    Returns a GISAXS simulation.
+    """
+    simulation = ba.GISASSimulation()
+    simulation.setSample(get_sample())
+    simulation.setDetectorParameters(5, -1*deg, +1*deg, 6, 0*deg, +2*deg)
+    simulation.setBeamParameters(1.5*angstrom, 0.15*deg, 0.0*deg)
+    return simulation
+
+if __name__ == '__main__':
+    simulation = test_simulation()
+    simulation.runSimulation()
+    result = simulation.getIntensityData()
+    ba.plot_intensity_data(result)
