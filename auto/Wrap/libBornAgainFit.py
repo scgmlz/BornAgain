@@ -1441,7 +1441,7 @@ class AttLimits(_object):
     """
 
 
-    The  AttLimits class defines limited/free attribute of fit parameter and provides coupling between them.
+    Attributes and limits of a fit parameter, and coupling between these properties.
 
     C++ includes: AttLimits.h
 
@@ -1703,7 +1703,7 @@ class IMinimizer(_object):
         """
         minimize(IMinimizer self)
 
-        void IMinimizer::minimize()
+        virtual void IMinimizer::minimize()=0
 
         run minimization 
 
@@ -1715,7 +1715,7 @@ class IMinimizer(_object):
         """
         clear(IMinimizer self)
 
-        void IMinimizer::clear()
+        virtual void IMinimizer::clear()
 
         clear resources (parameters) for consecutives minimizations 
 
@@ -1727,7 +1727,7 @@ class IMinimizer(_object):
         """
         setParameters(IMinimizer self, FitParameterSet parameters)
 
-        void IMinimizer::setParameters(const FitParameterSet &parameters)
+        virtual void IMinimizer::setParameters(const FitParameterSet &parameters)=0
 
         Sets internal minimizer parameters using external parameter list. 
 
@@ -1768,7 +1768,12 @@ class IMinimizer(_object):
 
 
     def reportOutcome(self):
-        """reportOutcome(IMinimizer self) -> std::string"""
+        """
+        reportOutcome(IMinimizer self) -> std::string
+
+        virtual std::string IMinimizer::reportOutcome() const =0
+
+        """
         return _libBornAgainFit.IMinimizer_reportOutcome(self)
 
 
@@ -1802,7 +1807,7 @@ class IFitParameter(_object):
     """
 
 
-    The  IFitParameter is a base class for fit parameters.
+    Pure virtual base class for fit parameters.
 
     C++ includes: IFitParameter.h
 
@@ -1835,7 +1840,7 @@ class FitParameter(IFitParameter):
     """
 
 
-    The  FitParameter represents fittable parameter with value, error, step, and limits.
+    A fittable parameter with value, error, step, and limits.
 
     C++ includes: FitParameter.h
 
@@ -2056,7 +2061,7 @@ class FitParameterSet(_object):
     """
 
 
-    The  FitParameterSet represents collection of fit parameters for the minimizer.
+    The set of fit parameters.
 
     C++ includes: FitParameterSet.h
 
@@ -2088,8 +2093,6 @@ class FitParameterSet(_object):
         clear(FitParameterSet self)
 
         void FitParameterSet::clear()
-
-        container specific
 
         Clears all defined parameters. 
 
@@ -2137,8 +2140,6 @@ class FitParameterSet(_object):
 
         void FitParameterSet::addFitParameter(FitParameter *par)
 
-        adding fit parameters
-
         Adds fit parameter. 
 
         """
@@ -2161,8 +2162,6 @@ class FitParameterSet(_object):
         values(FitParameterSet self) -> vdouble1d_t
 
         std::vector< double > FitParameterSet::values() const
-
-        fit parameter's values and errors
 
         Returns values of all defined parameters. 
 
@@ -2225,8 +2224,6 @@ class FitParameterSet(_object):
 
         size_t FitParameterSet::freeFitParameterCount() const
 
-        Make parameters fixed and free.
-
         Returns number of free parameters. 
 
         """
@@ -2274,8 +2271,6 @@ class FitParameterSet(_object):
         parametersToString(FitParameterSet self) -> std::string
 
         std::string FitParameterSet::parametersToString() const
-
-        Printing and reporting. 
 
         """
         return _libBornAgainFit.FitParameterSet_parametersToString(self)
@@ -2331,7 +2326,7 @@ class MinimizerCatalogue(_object):
     """
 
 
-    The  MinimizerCatalogue class contains information over all minimizers available.
+    Hard-coded information about all minimizers available.
 
     C++ includes: MinimizerCatalogue.h
 
@@ -2402,10 +2397,6 @@ class MinimizerFactory(_object):
 
     Factory to create minimizers.
 
-    Minimizer | Algorithms
-
-    Minuit2 | Migrad Simplex Combined Scan Fumili GSLMultiMin | SteepestDescent ConjugateFR ConjugatePR BFGS BFGS2 GSLLMA | Default GSLSimAn | Default Genetic | Default
-
     C++ includes: MinimizerFactory.h
 
     """
@@ -2459,10 +2450,6 @@ class MinimizerFactory(_object):
 
 
         Factory to create minimizers.
-
-        Minimizer | Algorithms
-
-        Minuit2 | Migrad Simplex Combined Scan Fumili GSLMultiMin | SteepestDescent ConjugateFR ConjugatePR BFGS BFGS2 GSLLMA | Default GSLSimAn | Default Genetic | Default
 
         C++ includes: MinimizerFactory.h
 

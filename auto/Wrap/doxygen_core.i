@@ -12,13 +12,13 @@ C++ includes: AdjustMinimizerStrategy.h
 %feature("docstring")  AdjustMinimizerStrategy::AdjustMinimizerStrategy "AdjustMinimizerStrategy::AdjustMinimizerStrategy()
 ";
 
-%feature("docstring")  AdjustMinimizerStrategy::AdjustMinimizerStrategy "AdjustMinimizerStrategy::AdjustMinimizerStrategy(const std::string &minimizerName, const std::string &algorithmName=std::string(), const std::string &optionString=std::string())
+%feature("docstring")  AdjustMinimizerStrategy::AdjustMinimizerStrategy "AdjustMinimizerStrategy::AdjustMinimizerStrategy(const std::string &minimizerName, const std::string &algorithmName=\"\", const std::string &optionString=\"\")
 ";
 
 %feature("docstring")  AdjustMinimizerStrategy::clone "AdjustMinimizerStrategy * AdjustMinimizerStrategy::clone() const
 ";
 
-%feature("docstring")  AdjustMinimizerStrategy::setMinimizer "void AdjustMinimizerStrategy::setMinimizer(const std::string &minimizerName, const std::string &algorithmName=std::string(), const std::string &optionString=std::string())
+%feature("docstring")  AdjustMinimizerStrategy::setMinimizer "void AdjustMinimizerStrategy::setMinimizer(const std::string &minimizerName, const std::string &algorithmName=\"\", const std::string &optionString=\"\")
 ";
 
 %feature("docstring")  AdjustMinimizerStrategy::execute "void AdjustMinimizerStrategy::execute()
@@ -307,7 +307,12 @@ Returns the polarization density matrix (in spin basis along z-axis)
 
 
 // File: structBin1D.xml
-%feature("docstring") Bin1D "";
+%feature("docstring") Bin1D "
+
+An interval [m_lower, m_upper) on the real line.
+
+C++ includes: Bin.h
+";
 
 %feature("docstring")  Bin1D::Bin1D "Bin1D::Bin1D()
 ";
@@ -319,6 +324,9 @@ Returns the polarization density matrix (in spin basis along z-axis)
 ";
 
 %feature("docstring")  Bin1D::getBinSize "double Bin1D::getBinSize() const
+";
+
+%feature("docstring")  Bin1D::contains "bool Bin1D::contains(double value)
 ";
 
 
@@ -377,7 +385,7 @@ creation on  Bin1DKVector from alpha and phi bins
 // File: classBoxCompositionBuilder.xml
 %feature("docstring") BoxCompositionBuilder "
 
-Parent class to test all kind of compositions made out of boxes. Reproduces Python functional test transform_BoxComposition.py.
+Parent class to test all kind of compositions made out of boxes. Reproduces Python functional test transform_BoxComposition.py
 
 C++ includes: BoxCompositionBuilder.h
 ";
@@ -523,10 +531,10 @@ clone method
 ";
 
 
-// File: classException_1_1ClassInitializationException.xml
-%feature("docstring") Exception::ClassInitializationException "";
+// File: classExceptions_1_1ClassInitializationException.xml
+%feature("docstring") Exceptions::ClassInitializationException "";
 
-%feature("docstring")  Exception::ClassInitializationException::ClassInitializationException "Exception::ClassInitializationException::ClassInitializationException(const std::string &message)
+%feature("docstring")  Exceptions::ClassInitializationException::ClassInitializationException "Exceptions::ClassInitializationException::ClassInitializationException(const std::string &message)
 ";
 
 
@@ -588,15 +596,15 @@ end:
 upper edge of last bin 
 ";
 
-%feature("docstring")  ConstKBinAxis::~ConstKBinAxis "virtual ConstKBinAxis::~ConstKBinAxis()
+%feature("docstring")  ConstKBinAxis::~ConstKBinAxis "ConstKBinAxis::~ConstKBinAxis() final
 ";
 
-%feature("docstring")  ConstKBinAxis::clone "ConstKBinAxis * ConstKBinAxis::clone() const
+%feature("docstring")  ConstKBinAxis::clone "ConstKBinAxis* ConstKBinAxis::clone() const final
 
 clone function 
 ";
 
-%feature("docstring")  ConstKBinAxis::createClippedAxis "ConstKBinAxis * ConstKBinAxis::createClippedAxis(double left, double right) const
+%feature("docstring")  ConstKBinAxis::createClippedAxis "ConstKBinAxis * ConstKBinAxis::createClippedAxis(double left, double right) const final
 
 Creates a new clipped axis. 
 ";
@@ -639,45 +647,43 @@ Adds parameters from local pool to external pool and recursively call children.
 ";
 
 %feature("docstring")  ConvolutionDetectorResolution::clone "ConvolutionDetectorResolution * ConvolutionDetectorResolution::clone() const
-
-clone object 
 ";
 
 %feature("docstring")  ConvolutionDetectorResolution::getResolutionFunction2D "const IResolutionFunction2D * ConvolutionDetectorResolution::getResolutionFunction2D() const
 ";
 
 
-// File: classMathFunctions_1_1Convolve.xml
-%feature("docstring") MathFunctions::Convolve "
+// File: classConvolve.xml
+%feature("docstring") Convolve "
 
 Convolution of two real vectors (in 1D or 2D) using Fast Fourier Transform.
 
 Usage: std::vector<double> signal, kernel, result;  Convolve cv; cv.fftconvolve(signal, kernel, result)
 
-Given code rely on code from Jeremy Fix page http://jeremy.fix.free.fr/spip.php?article15 see also \"Efficient convolution using the Fast Fourier Transform, Application in C++\" by Jeremy Fix, May 30, 2011
+Given code rely on code from Jeremy Fix page, http://jeremy.fix.free.fr/spip.php?article15, see also \"Efficient convolution using the Fast Fourier Transform, Application in C++\" by Jeremy Fix, May 30, 2011
 
 C++ includes: Convolve.h
 ";
 
-%feature("docstring")  MathFunctions::Convolve::Convolve "MathFunctions::Convolve::Convolve()
+%feature("docstring")  Convolve::Convolve "Convolve::Convolve()
 ";
 
-%feature("docstring")  MathFunctions::Convolve::fftconvolve "void MathFunctions::Convolve::fftconvolve(const double1d_t &source, const double1d_t &kernel, double1d_t &result)
+%feature("docstring")  Convolve::fftconvolve "void Convolve::fftconvolve(const double1d_t &source, const double1d_t &kernel, double1d_t &result)
 
 convolution in 1D 
 ";
 
-%feature("docstring")  MathFunctions::Convolve::fftconvolve "void MathFunctions::Convolve::fftconvolve(const double2d_t &source, const double2d_t &kernel, double2d_t &result)
+%feature("docstring")  Convolve::fftconvolve "void Convolve::fftconvolve(const double2d_t &source, const double2d_t &kernel, double2d_t &result)
 
 convolution in 2D 
 ";
 
-%feature("docstring")  MathFunctions::Convolve::init "void MathFunctions::Convolve::init(int h_src, int w_src, int h_kernel, int w_kernel)
+%feature("docstring")  Convolve::init "void Convolve::init(int h_src, int w_src, int h_kernel, int w_kernel)
 
 prepare arrays for 2D convolution of given vectors 
 ";
 
-%feature("docstring")  MathFunctions::Convolve::setMode "void MathFunctions::Convolve::setMode(EConvolutionMode mode)
+%feature("docstring")  Convolve::setMode "void Convolve::setMode(EConvolutionMode mode)
 
 Sets convolution mode. 
 ";
@@ -844,7 +850,7 @@ center of last bin (IsGisaxs convention)
 %feature("docstring")  CustomBinAxis::~CustomBinAxis "virtual CustomBinAxis::~CustomBinAxis()
 ";
 
-%feature("docstring")  CustomBinAxis::clone "CustomBinAxis * CustomBinAxis::clone() const
+%feature("docstring")  CustomBinAxis::clone "CustomBinAxis* CustomBinAxis::clone() const override final
 
 clone function 
 ";
@@ -866,7 +872,7 @@ Creates a new clipped axis.
 // File: classCustomMorphologyBuilder.xml
 %feature("docstring") CustomMorphologyBuilder "
 
-Builds sample: mixture of different particles (IsGISAXS example #7)
+Builds sample: mixture of different particles (IsGISAXS example #7).
 
 C++ includes: CustomMorphologyBuilder.h
 ";
@@ -881,7 +887,7 @@ C++ includes: CustomMorphologyBuilder.h
 // File: classCylindersAndPrismsBuilder.xml
 %feature("docstring") CylindersAndPrismsBuilder "
 
-Builds sample: mixture of cylinders and prisms without interference (IsGISAXS example #1)
+Builds sample: mixture of cylinders and prisms without interference (IsGISAXS example #1).
 
 C++ includes: CylindersAndPrismsBuilder.h
 ";
@@ -896,7 +902,7 @@ C++ includes: CylindersAndPrismsBuilder.h
 // File: classCylindersInBABuilder.xml
 %feature("docstring") CylindersInBABuilder "
 
-Builds sample: cylinder formfactor in BA (IsGISAXS example #3, part II)
+Builds sample: cylinder formfactor in BA (IsGISAXS example #3, part II).
 
 C++ includes: CylindersBuilder.h
 ";
@@ -911,7 +917,7 @@ C++ includes: CylindersBuilder.h
 // File: classCylindersInDWBABuilder.xml
 %feature("docstring") CylindersInDWBABuilder "
 
-Builds sample: cylinder formfactor in DWBA (IsGISAXS example #3, part I)
+Builds sample: cylinder formfactor in DWBA (IsGISAXS example #3, part I).
 
 C++ includes: CylindersBuilder.h
 ";
@@ -953,10 +959,10 @@ C++ includes: ParticleDistributionsBuilder.h
 ";
 
 
-// File: classException_1_1DeadReferenceException.xml
-%feature("docstring") Exception::DeadReferenceException "";
+// File: classExceptions_1_1DeadReferenceException.xml
+%feature("docstring") Exceptions::DeadReferenceException "";
 
-%feature("docstring")  Exception::DeadReferenceException::DeadReferenceException "Exception::DeadReferenceException::DeadReferenceException(const std::string &message)
+%feature("docstring")  Exceptions::DeadReferenceException::DeadReferenceException "Exceptions::DeadReferenceException::DeadReferenceException(const std::string &message)
 ";
 
 
@@ -1040,7 +1046,7 @@ C++ includes: DetectorMask.h
 %feature("docstring")  DetectorMask::DetectorMask "DetectorMask::DetectorMask(const DetectorMask &other)
 ";
 
-%feature("docstring")  DetectorMask::addMask "void DetectorMask::addMask(const Geometry::IShape2D &shape, bool mask_value)
+%feature("docstring")  DetectorMask::addMask "void DetectorMask::addMask(const IShape2D &shape, bool mask_value)
 
 Add mask to the stack of detector masks. The value \"true\" means that the area will be excluded from the analysis.
 
@@ -1087,7 +1093,7 @@ returns true if has masks
 %feature("docstring")  DetectorMask::numberOfMasks "size_t DetectorMask::numberOfMasks() const
 ";
 
-%feature("docstring")  DetectorMask::getMaskShape "const Geometry::IShape2D * DetectorMask::getMaskShape(size_t mask_index, bool &mask_value) const
+%feature("docstring")  DetectorMask::getMaskShape "const IShape2D * DetectorMask::getMaskShape(size_t mask_index, bool &mask_value) const
 ";
 
 
@@ -1108,34 +1114,30 @@ C++ includes: Distributions.h
 %feature("docstring")  DistributionCosine::~DistributionCosine "virtual DistributionCosine::~DistributionCosine()
 ";
 
-%feature("docstring")  DistributionCosine::clone "virtual DistributionCosine* DistributionCosine::clone() const
-
-clone method 
+%feature("docstring")  DistributionCosine::clone "DistributionCosine* DistributionCosine::clone() const final
 ";
 
-%feature("docstring")  DistributionCosine::probabilityDensity "double DistributionCosine::probabilityDensity(double x) const
+%feature("docstring")  DistributionCosine::probabilityDensity "double DistributionCosine::probabilityDensity(double x) const final
 
-get the probability density for value x 
+Returns the distribution-specific probability density for value x. 
 ";
 
-%feature("docstring")  DistributionCosine::getMean "virtual double DistributionCosine::getMean() const
+%feature("docstring")  DistributionCosine::getMean "double DistributionCosine::getMean() const final
 
-Returns the mean of the distribution. 
+Returns the distribution-specific mean. 
 ";
 
 %feature("docstring")  DistributionCosine::getSigma "double DistributionCosine::getSigma() const
-
-Returns the sigma parameter of the distribution. 
 ";
 
-%feature("docstring")  DistributionCosine::generateValueList "std::vector< double > DistributionCosine::generateValueList(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+%feature("docstring")  DistributionCosine::equidistantPoints "std::vector< double > DistributionCosine::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
 
 generate list of sample values 
 ";
 
-%feature("docstring")  DistributionCosine::isDelta "bool DistributionCosine::isDelta() const
+%feature("docstring")  DistributionCosine::isDelta "bool DistributionCosine::isDelta() const final
 
-signals that the distribution is in the limit case of a delta distribution 
+Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 ";
 
 
@@ -1156,39 +1158,33 @@ C++ includes: Distributions.h
 %feature("docstring")  DistributionGate::~DistributionGate "virtual DistributionGate::~DistributionGate()
 ";
 
-%feature("docstring")  DistributionGate::clone "virtual DistributionGate* DistributionGate::clone() const
-
-clone method 
+%feature("docstring")  DistributionGate::clone "DistributionGate* DistributionGate::clone() const final
 ";
 
-%feature("docstring")  DistributionGate::probabilityDensity "double DistributionGate::probabilityDensity(double x) const
+%feature("docstring")  DistributionGate::probabilityDensity "double DistributionGate::probabilityDensity(double x) const final
 
-get the probability density for value x 
+Returns the distribution-specific probability density for value x. 
 ";
 
-%feature("docstring")  DistributionGate::getMean "virtual double DistributionGate::getMean() const
+%feature("docstring")  DistributionGate::getMean "double DistributionGate::getMean() const final
 
-get the mean of the distribution 
+Returns the distribution-specific mean. 
 ";
 
 %feature("docstring")  DistributionGate::getMin "double DistributionGate::getMin() const
-
-Returns the minimum value of the distribution. 
 ";
 
 %feature("docstring")  DistributionGate::getMax "double DistributionGate::getMax() const
-
-Returns the maximum value of the distribution. 
 ";
 
-%feature("docstring")  DistributionGate::generateValueList "std::vector< double > DistributionGate::generateValueList(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+%feature("docstring")  DistributionGate::equidistantPoints "std::vector< double > DistributionGate::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
 
 Returns list of sample values. 
 ";
 
-%feature("docstring")  DistributionGate::isDelta "bool DistributionGate::isDelta() const
+%feature("docstring")  DistributionGate::isDelta "bool DistributionGate::isDelta() const final
 
-signals that the distribution is in the limit case of a delta distribution 
+Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 ";
 
 
@@ -1209,34 +1205,30 @@ C++ includes: Distributions.h
 %feature("docstring")  DistributionGaussian::~DistributionGaussian "virtual DistributionGaussian::~DistributionGaussian()
 ";
 
-%feature("docstring")  DistributionGaussian::clone "virtual DistributionGaussian* DistributionGaussian::clone() const
-
-clone method 
+%feature("docstring")  DistributionGaussian::clone "DistributionGaussian* DistributionGaussian::clone() const final
 ";
 
-%feature("docstring")  DistributionGaussian::probabilityDensity "double DistributionGaussian::probabilityDensity(double x) const
+%feature("docstring")  DistributionGaussian::probabilityDensity "double DistributionGaussian::probabilityDensity(double x) const final
 
-get the probability density for value x 
+Returns the distribution-specific probability density for value x. 
 ";
 
-%feature("docstring")  DistributionGaussian::getMean "virtual double DistributionGaussian::getMean() const
+%feature("docstring")  DistributionGaussian::getMean "double DistributionGaussian::getMean() const final
 
-Returns the mean of the distribution. 
+Returns the distribution-specific mean. 
 ";
 
 %feature("docstring")  DistributionGaussian::getStdDev "double DistributionGaussian::getStdDev() const
-
-Returns the standard deviation. 
 ";
 
-%feature("docstring")  DistributionGaussian::generateValueList "std::vector< double > DistributionGaussian::generateValueList(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+%feature("docstring")  DistributionGaussian::equidistantPoints "std::vector< double > DistributionGaussian::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
 
 generate list of sample values 
 ";
 
-%feature("docstring")  DistributionGaussian::isDelta "bool DistributionGaussian::isDelta() const
+%feature("docstring")  DistributionGaussian::isDelta "bool DistributionGaussian::isDelta() const final
 
-signals that the distribution is in the limit case of a delta distribution 
+Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 ";
 
 
@@ -1293,39 +1285,33 @@ C++ includes: Distributions.h
 %feature("docstring")  DistributionLogNormal::~DistributionLogNormal "virtual DistributionLogNormal::~DistributionLogNormal()
 ";
 
-%feature("docstring")  DistributionLogNormal::clone "virtual DistributionLogNormal* DistributionLogNormal::clone() const
-
-clone method 
+%feature("docstring")  DistributionLogNormal::clone "DistributionLogNormal* DistributionLogNormal::clone() const final
 ";
 
-%feature("docstring")  DistributionLogNormal::probabilityDensity "double DistributionLogNormal::probabilityDensity(double x) const
+%feature("docstring")  DistributionLogNormal::probabilityDensity "double DistributionLogNormal::probabilityDensity(double x) const final
 
-get the probability density for value x 
+Returns the distribution-specific probability density for value x. 
 ";
 
-%feature("docstring")  DistributionLogNormal::getMean "double DistributionLogNormal::getMean() const
+%feature("docstring")  DistributionLogNormal::getMean "double DistributionLogNormal::getMean() const final
 
-get the mean of the distribution 
+Returns the distribution-specific mean. 
 ";
 
 %feature("docstring")  DistributionLogNormal::getMedian "double DistributionLogNormal::getMedian() const
-
-Returns the median of the distribution. 
 ";
 
 %feature("docstring")  DistributionLogNormal::getScalePar "double DistributionLogNormal::getScalePar() const
-
-Returns the scale parameter of the distribution. 
 ";
 
-%feature("docstring")  DistributionLogNormal::generateValueList "std::vector< double > DistributionLogNormal::generateValueList(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+%feature("docstring")  DistributionLogNormal::equidistantPoints "std::vector< double > DistributionLogNormal::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
 
 generate list of sample values 
 ";
 
-%feature("docstring")  DistributionLogNormal::isDelta "bool DistributionLogNormal::isDelta() const
+%feature("docstring")  DistributionLogNormal::isDelta "bool DistributionLogNormal::isDelta() const final
 
-signals that the distribution is in the limit case of a delta distribution 
+Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 ";
 
 
@@ -1346,46 +1332,44 @@ C++ includes: Distributions.h
 %feature("docstring")  DistributionLorentz::~DistributionLorentz "virtual DistributionLorentz::~DistributionLorentz()
 ";
 
-%feature("docstring")  DistributionLorentz::clone "virtual DistributionLorentz* DistributionLorentz::clone() const
+%feature("docstring")  DistributionLorentz::clone "DistributionLorentz* DistributionLorentz::clone() const final
 ";
 
-%feature("docstring")  DistributionLorentz::probabilityDensity "double DistributionLorentz::probabilityDensity(double x) const
+%feature("docstring")  DistributionLorentz::probabilityDensity "double DistributionLorentz::probabilityDensity(double x) const final
 
-get the probability density for value x 
+Returns the distribution-specific probability density for value x. 
 ";
 
-%feature("docstring")  DistributionLorentz::getMean "virtual double DistributionLorentz::getMean() const
+%feature("docstring")  DistributionLorentz::getMean "double DistributionLorentz::getMean() const final
 
-Returns the mean of the distribution. 
+Returns the distribution-specific mean. 
 ";
 
 %feature("docstring")  DistributionLorentz::getHWHM "double DistributionLorentz::getHWHM() const
-
-Returns the half width at half maximum. 
 ";
 
-%feature("docstring")  DistributionLorentz::generateValueList "std::vector< double > DistributionLorentz::generateValueList(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+%feature("docstring")  DistributionLorentz::equidistantPoints "std::vector< double > DistributionLorentz::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
 
 generate list of sample values 
 ";
 
-%feature("docstring")  DistributionLorentz::isDelta "bool DistributionLorentz::isDelta() const
+%feature("docstring")  DistributionLorentz::isDelta "bool DistributionLorentz::isDelta() const final
 
-signals that the distribution is in the limit case of a delta distribution 
+Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 ";
 
 
-// File: classException_1_1DivisionByZeroException.xml
-%feature("docstring") Exception::DivisionByZeroException "";
+// File: classExceptions_1_1DivisionByZeroException.xml
+%feature("docstring") Exceptions::DivisionByZeroException "";
 
-%feature("docstring")  Exception::DivisionByZeroException::DivisionByZeroException "Exception::DivisionByZeroException::DivisionByZeroException(const std::string &message)
+%feature("docstring")  Exceptions::DivisionByZeroException::DivisionByZeroException "Exceptions::DivisionByZeroException::DivisionByZeroException(const std::string &message)
 ";
 
 
-// File: classException_1_1DomainErrorException.xml
-%feature("docstring") Exception::DomainErrorException "";
+// File: classExceptions_1_1DomainErrorException.xml
+%feature("docstring") Exceptions::DomainErrorException "";
 
-%feature("docstring")  Exception::DomainErrorException::DomainErrorException "Exception::DomainErrorException::DomainErrorException(const std::string &message)
+%feature("docstring")  Exceptions::DomainErrorException::DomainErrorException "Exceptions::DomainErrorException::DomainErrorException(const std::string &message)
 ";
 
 
@@ -1416,15 +1400,15 @@ C++ includes: DWBADiffuseReflection.h
 ";
 
 
-// File: classGeometry_1_1Ellipse.xml
-%feature("docstring") Geometry::Ellipse "
+// File: classEllipse.xml
+%feature("docstring") Ellipse "
 
 Ellipse shape.
 
 C++ includes: Ellipse.h
 ";
 
-%feature("docstring")  Geometry::Ellipse::Ellipse "Geometry::Ellipse::Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta=0.0)
+%feature("docstring")  Ellipse::Ellipse "Ellipse::Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta=0.0)
 
 Parameters:
 -----------
@@ -1445,39 +1429,39 @@ theta:
 Angle of  Ellipse rotation in radians 
 ";
 
-%feature("docstring")  Geometry::Ellipse::clone "Ellipse* Geometry::Ellipse::clone() const
+%feature("docstring")  Ellipse::clone "Ellipse* Ellipse::clone() const
 ";
 
-%feature("docstring")  Geometry::Ellipse::contains "bool Geometry::Ellipse::contains(double x, double y) const
+%feature("docstring")  Ellipse::contains "bool Ellipse::contains(double x, double y) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::Ellipse::contains "bool Geometry::Ellipse::contains(const Bin1D &binx, const Bin1D &biny) const
+%feature("docstring")  Ellipse::contains "bool Ellipse::contains(const Bin1D &binx, const Bin1D &biny) const
 
 Returns true if area defined by two bins is inside or on border of ellipse; more precisely, if mid point of two bins satisfy this condition. 
 ";
 
-%feature("docstring")  Geometry::Ellipse::getCenterX "double Geometry::Ellipse::getCenterX() const
+%feature("docstring")  Ellipse::getCenterX "double Ellipse::getCenterX() const
 ";
 
-%feature("docstring")  Geometry::Ellipse::getCenterY "double Geometry::Ellipse::getCenterY() const
+%feature("docstring")  Ellipse::getCenterY "double Ellipse::getCenterY() const
 ";
 
-%feature("docstring")  Geometry::Ellipse::getRadiusX "double Geometry::Ellipse::getRadiusX() const
+%feature("docstring")  Ellipse::getRadiusX "double Ellipse::getRadiusX() const
 ";
 
-%feature("docstring")  Geometry::Ellipse::getRadiusY "double Geometry::Ellipse::getRadiusY() const
+%feature("docstring")  Ellipse::getRadiusY "double Ellipse::getRadiusY() const
 ";
 
-%feature("docstring")  Geometry::Ellipse::getTheta "double Geometry::Ellipse::getTheta() const
+%feature("docstring")  Ellipse::getTheta "double Ellipse::getTheta() const
 ";
 
 
-// File: classException_1_1ExistingClassRegistrationException.xml
-%feature("docstring") Exception::ExistingClassRegistrationException "";
+// File: classExceptions_1_1ExistingClassRegistrationException.xml
+%feature("docstring") Exceptions::ExistingClassRegistrationException "";
 
-%feature("docstring")  Exception::ExistingClassRegistrationException::ExistingClassRegistrationException "Exception::ExistingClassRegistrationException::ExistingClassRegistrationException(const std::string &message)
+%feature("docstring")  Exceptions::ExistingClassRegistrationException::ExistingClassRegistrationException "Exceptions::ExistingClassRegistrationException::ExistingClassRegistrationException(const std::string &message)
 ";
 
 
@@ -1504,17 +1488,17 @@ Returns a Python script that sets up a simulation and runs it if invoked as main
 ";
 
 
-// File: classException_1_1FileIsBadException.xml
-%feature("docstring") Exception::FileIsBadException "";
+// File: classExceptions_1_1FileIsBadException.xml
+%feature("docstring") Exceptions::FileIsBadException "";
 
-%feature("docstring")  Exception::FileIsBadException::FileIsBadException "Exception::FileIsBadException::FileIsBadException(const std::string &message)
+%feature("docstring")  Exceptions::FileIsBadException::FileIsBadException "Exceptions::FileIsBadException::FileIsBadException(const std::string &message)
 ";
 
 
-// File: classException_1_1FileNotIsOpenException.xml
-%feature("docstring") Exception::FileNotIsOpenException "";
+// File: classExceptions_1_1FileNotIsOpenException.xml
+%feature("docstring") Exceptions::FileNotIsOpenException "";
 
-%feature("docstring")  Exception::FileNotIsOpenException::FileNotIsOpenException "Exception::FileNotIsOpenException::FileNotIsOpenException(const std::string &message)
+%feature("docstring")  Exceptions::FileNotIsOpenException::FileNotIsOpenException "Exceptions::FileNotIsOpenException::FileNotIsOpenException(const std::string &message)
 ";
 
 
@@ -2338,7 +2322,7 @@ C++ includes: FitSuiteStrategies.h
 // File: classFixedBinAxis.xml
 %feature("docstring") FixedBinAxis "
 
-Axis with fixed bin size.
+Axis with bins of uniform size.
 
 C++ includes: FixedBinAxis.h
 ";
@@ -2366,7 +2350,7 @@ upper edge of last bin
 %feature("docstring")  FixedBinAxis::~FixedBinAxis "virtual FixedBinAxis::~FixedBinAxis()
 ";
 
-%feature("docstring")  FixedBinAxis::clone "FixedBinAxis * FixedBinAxis::clone() const
+%feature("docstring")  FixedBinAxis::clone "FixedBinAxis* FixedBinAxis::clone() const final
 
 clone function 
 ";
@@ -2411,10 +2395,10 @@ Creates a new clipped axis.
 ";
 
 
-// File: classException_1_1FormatErrorException.xml
-%feature("docstring") Exception::FormatErrorException "";
+// File: classExceptions_1_1FormatErrorException.xml
+%feature("docstring") Exceptions::FormatErrorException "";
 
-%feature("docstring")  Exception::FormatErrorException::FormatErrorException "Exception::FormatErrorException::FormatErrorException(const std::string &message)
+%feature("docstring")  Exceptions::FormatErrorException::FormatErrorException "Exceptions::FormatErrorException::FormatErrorException(const std::string &message)
 ";
 
 
@@ -4827,7 +4811,7 @@ upper edge of last alpha-bin
 removes all masks from the detector 
 ";
 
-%feature("docstring")  GISASSimulation::addMask "void GISASSimulation::addMask(const Geometry::IShape2D &shape, bool mask_value=true)
+%feature("docstring")  GISASSimulation::addMask "void GISASSimulation::addMask(const IShape2D &shape, bool mask_value=true)
 
 Adds mask of given shape to the stack of detector masks. The mask value 'true' means that the channel will be excluded from the simulation. The mask which is added last has priority.
 
@@ -4835,7 +4819,7 @@ Parameters:
 -----------
 
 shape: 
-The shape of mask (Rectangle, Polygon, Line, Ellipse)
+The shape of mask ( Rectangle,  Polygon,  Line,  Ellipse)
 
 mask_value: 
 The value of mask 
@@ -4865,7 +4849,7 @@ Resets region of interest making whole detector plane available for the simulati
 // File: classHexParaCrystalBuilder.xml
 %feature("docstring") HexParaCrystalBuilder "
 
-Builds sample: cylinders with 2DDL structure factor (IsGISAXS example #4)
+Builds sample: cylinders with 2DDL structure factor (IsGISAXS example #4).
 
 C++ includes: ParaCrystalBuilder.h
 ";
@@ -4878,7 +4862,12 @@ C++ includes: ParaCrystalBuilder.h
 
 
 // File: classHistogram1D.xml
-%feature("docstring") Histogram1D "";
+%feature("docstring") Histogram1D "
+
+One dimensional histogram.
+
+C++ includes: Histogram1D.h
+";
 
 %feature("docstring")  Histogram1D::Histogram1D "Histogram1D::Histogram1D(int nbinsx, double xlow, double xup)
 
@@ -5135,9 +5124,10 @@ Constructs a material with  name,  refractive_index and  magnetic_field
 Constructs a material with  name, refractive_index parameters and  magnetic_field
 ";
 
-%feature("docstring")  HomogeneousMagneticMaterial::clone "HomogeneousMagneticMaterial * HomogeneousMagneticMaterial::clone() const
+%feature("docstring")  HomogeneousMagneticMaterial::clone "HomogeneousMagneticMaterial * HomogeneousMagneticMaterial::clone() const final
+";
 
-Clone. 
+%feature("docstring")  HomogeneousMagneticMaterial::cloneInverted "HomogeneousMagneticMaterial * HomogeneousMagneticMaterial::cloneInverted() const final
 ";
 
 %feature("docstring")  HomogeneousMagneticMaterial::getMagneticField "kvector_t HomogeneousMagneticMaterial::getMagneticField() const
@@ -5150,7 +5140,7 @@ Get the magnetic field (in Tesla)
 Set the magnetic field (in Tesla) 
 ";
 
-%feature("docstring")  HomogeneousMagneticMaterial::isScalarMaterial "virtual bool HomogeneousMagneticMaterial::isScalarMaterial() const
+%feature("docstring")  HomogeneousMagneticMaterial::isScalarMaterial "bool HomogeneousMagneticMaterial::isScalarMaterial() const final
 
 Indicates that the material is not scalar. This means that different polarization states will be diffracted differently 
 ";
@@ -5160,7 +5150,7 @@ Indicates that the material is not scalar. This means that different polarizatio
 Get the scattering matrix (~potential V) from the material. This matrix appears in the full three-dimensional Schroedinger equation. 
 ";
 
-%feature("docstring")  HomogeneousMagneticMaterial::createTransformedMaterial "const IMaterial * HomogeneousMagneticMaterial::createTransformedMaterial(const Transform3D &transform) const
+%feature("docstring")  HomogeneousMagneticMaterial::createTransformedMaterial "const IMaterial * HomogeneousMagneticMaterial::createTransformedMaterial(const Transform3D &transform) const final
 
 Create a new material that is transformed with respect to this one. 
 ";
@@ -5190,6 +5180,9 @@ Constructs a material with  name and refractive_index parameters delta and beta 
 %feature("docstring")  HomogeneousMaterial::clone "virtual HomogeneousMaterial* HomogeneousMaterial::clone() const
 ";
 
+%feature("docstring")  HomogeneousMaterial::cloneInverted "virtual HomogeneousMaterial* HomogeneousMaterial::cloneInverted() const
+";
+
 %feature("docstring")  HomogeneousMaterial::getRefractiveIndex "virtual complex_t HomogeneousMaterial::getRefractiveIndex() const
 ";
 
@@ -5207,15 +5200,15 @@ Create a new material that is transformed with respect to this one.
 ";
 
 
-// File: classGeometry_1_1HorizontalLine.xml
-%feature("docstring") Geometry::HorizontalLine "
+// File: classHorizontalLine.xml
+%feature("docstring") HorizontalLine "
 
 An infinite horizontal line.
 
 C++ includes: Line.h
 ";
 
-%feature("docstring")  Geometry::HorizontalLine::HorizontalLine "Geometry::HorizontalLine::HorizontalLine(double y)
+%feature("docstring")  HorizontalLine::HorizontalLine "HorizontalLine::HorizontalLine(double y)
 
 Parameters:
 -----------
@@ -5224,20 +5217,20 @@ y:
 The value at which it crosses y-axes 
 ";
 
-%feature("docstring")  Geometry::HorizontalLine::clone "HorizontalLine* Geometry::HorizontalLine::clone() const
+%feature("docstring")  HorizontalLine::clone "HorizontalLine* HorizontalLine::clone() const
 ";
 
-%feature("docstring")  Geometry::HorizontalLine::contains "bool Geometry::HorizontalLine::contains(double x, double y) const
+%feature("docstring")  HorizontalLine::contains "bool HorizontalLine::contains(double x, double y) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::HorizontalLine::contains "bool Geometry::HorizontalLine::contains(const Bin1D &binx, const Bin1D &biny) const
+%feature("docstring")  HorizontalLine::contains "bool HorizontalLine::contains(const Bin1D &binx, const Bin1D &biny) const
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
 ";
 
-%feature("docstring")  Geometry::HorizontalLine::getYpos "double Geometry::HorizontalLine::getYpos() const
+%feature("docstring")  HorizontalLine::getYpos "double HorizontalLine::getYpos() const
 ";
 
 
@@ -5292,14 +5285,15 @@ Returns nullptr, unless overwritten to return a specific material.
 // File: classIAxis.xml
 %feature("docstring") IAxis "
 
-Interface for one-dimensional axes.
+Pure virtual interface for one-dimensional axes, inherited by  FixedBinAxis and  VariableBinAxis.
 
 C++ includes: IAxis.h
 ";
 
 %feature("docstring")  IAxis::IAxis "IAxis::IAxis(const std::string &name)
+";
 
-constructors 
+%feature("docstring")  IAxis::IAxis "IAxis::IAxis(const IAxis &)=delete
 ";
 
 %feature("docstring")  IAxis::clone "virtual IAxis* IAxis::clone() const =0
@@ -5445,7 +5439,7 @@ Sets data rescaler.
 
 Mix-in for objects that must not be copied, except by cloning.
 
-The base class  INoncopyable disables the copy constructor and the operator= in all its child classes. Child classes of  ICloneable should provide clone().
+The base class  INoncopyable disables the copy constructor and the operator= in all its child classes. Child classes of  ICloneable must provide clone().
 
 C++ includes: ICloneable.h
 ";
@@ -5455,7 +5449,7 @@ C++ includes: ICloneable.h
 
 %feature("docstring")  ICloneable::transferToCPP "virtual void ICloneable::transferToCPP()
 
-Used for Python overriding of clone. 
+Used for Python overriding of clone (see swig/tweaks.py) 
 ";
 
 
@@ -5558,17 +5552,13 @@ Adds parameters from local pool to external pool and recursively calls its direc
 ";
 
 
-// File: classIDetector.xml
-%feature("docstring") IDetector "
+// File: classIDetector2D.xml
+%feature("docstring") IDetector2D "
 
-The detector interface.
+Pure virtual detector interface.
 
 C++ includes: IDetector2D.h
 ";
-
-
-// File: classIDetector2D.xml
-%feature("docstring") IDetector2D "";
 
 %feature("docstring")  IDetector2D::IDetector2D "IDetector2D::IDetector2D()
 ";
@@ -5626,10 +5616,10 @@ Sets the polarization analyzer characteristics of the detector.
 
 %feature("docstring")  IDetector2D::removeMasks "void IDetector2D::removeMasks()
 
-removes all masks from the detector 
+Removes all masks from the detector. 
 ";
 
-%feature("docstring")  IDetector2D::addMask "void IDetector2D::addMask(const Geometry::IShape2D &shape, bool mask_value=true)
+%feature("docstring")  IDetector2D::addMask "void IDetector2D::addMask(const IShape2D &shape, bool mask_value=true)
 
 Adds mask of given shape to the stack of detector masks. The mask value 'true' means that the channel will be excluded from the simulation. The mask which is added last has priority.
 
@@ -5637,7 +5627,7 @@ Parameters:
 -----------
 
 shape: 
-The shape of mask (Rectangle, Polygon, Line, Ellipse)
+The shape of mask ( Rectangle,  Polygon,  Line,  Ellipse)
 
 mask_value: 
 The value of mask 
@@ -5694,12 +5684,12 @@ Inits axes of  OutputData to match the detector and sets values to zero.
 
 %feature("docstring")  IDetector2D::getValidAxesUnits "std::vector< IDetector2D::EAxesUnits > IDetector2D::getValidAxesUnits() const
 
-returns vector of valid axes units 
+Returns vector of valid axes units. 
 ";
 
 %feature("docstring")  IDetector2D::getDefaultAxesUnits "virtual EAxesUnits IDetector2D::getDefaultAxesUnits() const
 
-return default axes units 
+Return default axes units. 
 ";
 
 %feature("docstring")  IDetector2D::regionOfInterest "const RegionOfInterest * IDetector2D::regionOfInterest() const
@@ -5736,7 +5726,7 @@ Returns number of simulation elements.
 // File: classIDetectorResolution.xml
 %feature("docstring") IDetectorResolution "
 
-Interface for detector resolution algorithms.
+Interface for detector resolution algorithms
 
 C++ includes: IDetectorResolution.h
 ";
@@ -5761,7 +5751,7 @@ Applies the detector resolution to the matrix-valued intensity data.
 // File: classIDistribution1D.xml
 %feature("docstring") IDistribution1D "
 
-Interface for 1 dimensional distributions.
+Interface for one-dimensional distributions.
 
 C++ includes: Distributions.h
 ";
@@ -5772,74 +5762,42 @@ C++ includes: Distributions.h
 %feature("docstring")  IDistribution1D::~IDistribution1D "virtual IDistribution1D::~IDistribution1D()
 ";
 
-%feature("docstring")  IDistribution1D::clone "IDistribution1D * IDistribution1D::clone() const
+%feature("docstring")  IDistribution1D::clone "virtual IDistribution1D* IDistribution1D::clone() const =0
 ";
 
 %feature("docstring")  IDistribution1D::probabilityDensity "virtual double IDistribution1D::probabilityDensity(double x) const =0
 
-get the probability density for value x 
+Returns the distribution-specific probability density for value x. 
 ";
 
 %feature("docstring")  IDistribution1D::getMean "virtual double IDistribution1D::getMean() const =0
 
-get the mean of the distribution 
+Returns the distribution-specific mean. 
 ";
 
-%feature("docstring")  IDistribution1D::generateSamples "std::vector< ParameterSample > IDistribution1D::generateSamples(size_t nbr_samples, double sigma_factor=0.0, const RealLimits &limits=RealLimits()) const
+%feature("docstring")  IDistribution1D::equidistantSamples "std::vector< ParameterSample > IDistribution1D::equidistantSamples(size_t nbr_samples, double sigma_factor=0., const RealLimits &limits=RealLimits()) const
 
-generate list of sampled values with their weight xmin, xmax for sample generations are deduced from sigma_factor and possible limits 
+Returns equidistant samples, using intrinsic parameters, weighted with  probabilityDensity(). 
 ";
 
-%feature("docstring")  IDistribution1D::generateSamples "std::vector< ParameterSample > IDistribution1D::generateSamples(size_t nbr_samples, double xmin, double xmax) const
+%feature("docstring")  IDistribution1D::equidistantSamplesInRange "std::vector< ParameterSample > IDistribution1D::equidistantSamplesInRange(size_t nbr_samples, double xmin, double xmax) const
 
-generate list of sampled values with their weight within given xmin, xmax 
+Returns equidistant samples from xmin to xmax, weighted with  probabilityDensity(). 
 ";
 
-%feature("docstring")  IDistribution1D::generateValueList "virtual std::vector<double> IDistribution1D::generateValueList(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const =0
+%feature("docstring")  IDistribution1D::equidistantPoints "virtual std::vector<double> IDistribution1D::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const =0
 
-generate list of sample values
-
-Parameters:
------------
-
-nbr_samples: 
-number of values to generate
-
-sigma_factor: 
-parameter to derive min,max range for sample values
-
-limits:
-
-vector of generated values 
+Returns equidistant interpolation points, with range computed in distribution-specific way from mean and width parameter, taking into account limits and sigma_factor. 
 ";
 
-%feature("docstring")  IDistribution1D::generateValues "std::vector< double > IDistribution1D::generateValues(size_t nbr_samples, double xmin, double xmax) const
+%feature("docstring")  IDistribution1D::equidistantPointsInRange "std::vector< double > IDistribution1D::equidistantPointsInRange(size_t nbr_samples, double xmin, double xmax) const
 
-Interface.
-
-generate list of sample values
-
-Parameters:
------------
-
-nbr_samples: 
-number of values to generate
-
-xmin: 
-xmax: 
-start and end value of the generated samples
-
-vector of generated values 
-";
-
-%feature("docstring")  IDistribution1D::getMeanSample "ParameterSample IDistribution1D::getMeanSample() const
-
-generate a single sample containing the mean value and weight 1 
+Returns equidistant interpolation points from xmin to xmax. 
 ";
 
 %feature("docstring")  IDistribution1D::isDelta "virtual bool IDistribution1D::isDelta() const =0
 
-signals that the distribution is in the limit case of a delta distribution 
+Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 ";
 
 
@@ -5904,9 +5862,7 @@ Here Onserver will do actuall job when he thinks that it is a right moment.
 // File: classIFitStrategy.xml
 %feature("docstring") IFitStrategy "
 
-Interface to concrete fit strategy.
-
-Concrete implementation should manipulate with fit parameters/data and then call minimizer.
+Interface to concrete fit strategy. Concrete implementation should manipulate with fit parameters/data and then call minimizer.
 
 C++ includes: IFitStrategy.h
 ";
@@ -6308,14 +6264,12 @@ binx:
 x-axis bin index
 
 biny: 
-y-axis bin index (for 2D histograms)
-
-The global bin index 
+y-axis bin index (for 2D histograms) 
 ";
 
 %feature("docstring")  IHistogram::findGlobalBin "size_t IHistogram::findGlobalBin(double x, double y) const
 
-Returns closest global bin index for given axes coordinates. For 1D.
+Returns closest global bin index for given axes coordinates. For 1D
 
 Parameters:
 -----------
@@ -6324,9 +6278,7 @@ x:
 Value on x-axis
 
 y: 
-Value on y-axis (for 2D histograms)
-
-Closest global bin index 
+Value on y-axis (for 2D histograms) 
 ";
 
 %feature("docstring")  IHistogram::getXaxisIndex "int IHistogram::getXaxisIndex(size_t i) const
@@ -6341,28 +6293,24 @@ Returns y-axis bin index for given globalbin (for 2D histograms).
 
 %feature("docstring")  IHistogram::getXaxisValue "double IHistogram::getXaxisValue(size_t i)
 
-Returns the value on x-axis corresponding to the global bin index.
+Returns the center of the x-axis bin at the given global bin index.
 
 Parameters:
 -----------
 
 globalbin: 
-The global bin index
-
-The center of corresponding bin of the axis 
+The global bin index 
 ";
 
 %feature("docstring")  IHistogram::getYaxisValue "double IHistogram::getYaxisValue(size_t i)
 
-Returns the value on y-axis corresponding to the 2D histogram global bin index.
+Returns the center of the y-axis bin at the given global bin index.
 
 Parameters:
 -----------
 
 globalbin: 
-The global bin index
-
-The center of corresponding bin of the axis 
+The global bin index 
 ";
 
 %feature("docstring")  IHistogram::getBinContent "double IHistogram::getBinContent(size_t i) const
@@ -6373,9 +6321,7 @@ Parameters:
 -----------
 
 globalbin: 
-The global bin index
-
-The value accumulated by the bin (integral) 
+The global bin index 
 ";
 
 %feature("docstring")  IHistogram::getData "const OutputData<CumulativeValue>& IHistogram::getData() const
@@ -6395,9 +6341,7 @@ binx:
 x-axis bin index
 
 biny: 
-y-axis bin index
-
-The value accumulated by the bin (integral) 
+y-axis bin index 
 ";
 
 %feature("docstring")  IHistogram::setBinContent "void IHistogram::setBinContent(size_t i, double value)
@@ -6789,7 +6733,10 @@ C++ includes: IMaterial.h
 %feature("docstring")  IMaterial::~IMaterial "virtual IMaterial::~IMaterial()
 ";
 
-%feature("docstring")  IMaterial::clone "IMaterial * IMaterial::clone() const
+%feature("docstring")  IMaterial::clone "virtual IMaterial* IMaterial::clone() const =0
+";
+
+%feature("docstring")  IMaterial::cloneInverted "virtual IMaterial* IMaterial::cloneInverted() const =0
 ";
 
 %feature("docstring")  IMaterial::isScalarMaterial "virtual bool IMaterial::isScalarMaterial() const
@@ -6867,26 +6814,26 @@ C++ includes: INamed.h
 ";
 
 
-// File: classGeometry_1_1InfinitePlane.xml
-%feature("docstring") Geometry::InfinitePlane "
+// File: classInfinitePlane.xml
+%feature("docstring") InfinitePlane "
 
 The infinite plane is used for masking everything once and forever.
 
 C++ includes: InfinitePlane.h
 ";
 
-%feature("docstring")  Geometry::InfinitePlane::InfinitePlane "Geometry::InfinitePlane::InfinitePlane()
+%feature("docstring")  InfinitePlane::InfinitePlane "InfinitePlane::InfinitePlane()
 ";
 
-%feature("docstring")  Geometry::InfinitePlane::clone "InfinitePlane* Geometry::InfinitePlane::clone() const
+%feature("docstring")  InfinitePlane::clone "InfinitePlane* InfinitePlane::clone() const
 ";
 
-%feature("docstring")  Geometry::InfinitePlane::contains "bool Geometry::InfinitePlane::contains(double, double) const
+%feature("docstring")  InfinitePlane::contains "bool InfinitePlane::contains(double, double) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::InfinitePlane::contains "bool Geometry::InfinitePlane::contains(const Bin1D &, const Bin1D &) const
+%feature("docstring")  InfinitePlane::contains "bool InfinitePlane::contains(const Bin1D &, const Bin1D &) const
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
 ";
@@ -7083,7 +7030,17 @@ perform the actual integration over the range [lmin, lmax]
 
 
 // File: classIntegratorMCMiser.xml
-%feature("docstring") IntegratorMCMiser "";
+%feature("docstring") IntegratorMCMiser "
+
+Template class to use Monte Carlo MISER integration of class member functions.
+
+Wraps an integrator from GNU Scientific Library. Since this class holds a persistent workspace, we need at least one instance per thread. Standard usage for integration inside a class T:
+Create a handle to an integrator: 'auto integrator = make_integrator_miser(this, mem_function, dimension)'
+
+Call: 'integrator.integrate(lmin, lmax, data, nbr_points)'
+
+C++ includes: IntegratorMCMiser.h
+";
 
 %feature("docstring")  IntegratorMCMiser::IntegratorMCMiser "IntegratorMCMiser< T >::IntegratorMCMiser(const T *p_object, miser_integrand< T > p_member_function, size_t dim)
 
@@ -7126,21 +7083,10 @@ perform the actual integration over the range [lmin, lmax]
 ";
 
 
-// File: classIntensityDataFunctions.xml
-%feature("docstring") IntensityDataFunctions "
-
-Class holding collection of static methods to work with intensity data.
-
-C++ includes: IntensityDataFunctions.h
-";
-
-
 // File: classIntensityDataIOFactory.xml
 %feature("docstring") IntensityDataIOFactory "
 
-Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int - BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth \"*.gz\" or \"*.bz2\" the file will be zipped on the fly using appropriate algorithm.
-
-Usage:
+Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int -  BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth \"*.gz\" or \"*.bz2\" the file will be zipped on the fly using appropriate algorithm. Usage:
 
 C++ includes: IntensityDataIOFactory.h
 ";
@@ -7598,7 +7544,7 @@ C++ includes: OutputDataReadStrategy.h
 // File: classIOutputDataWriteStrategy.xml
 %feature("docstring") IOutputDataWriteStrategy "
 
-Strategy interface to write OututData in file.
+Strategy interface to write OututData in file
 
 C++ includes: OutputDataWriteStrategy.h
 ";
@@ -7811,9 +7757,7 @@ C++ includes: IResolutionFunction2D.h
 // File: classIRotation.xml
 %feature("docstring") IRotation "
 
-must be subclass of sample, because it can be registered as a child in  ICompositeSample
-
-An interface for classes representing a rotation.
+Pure virtual interface for rotations. Must be subclass of sample, because it can be registered as a child in  ICompositeSample.
 
 C++ includes: Rotations.h
 ";
@@ -8183,14 +8127,14 @@ C++ includes: ISampleVisitor.h
 %feature("docstring")  ISampleVisitor::visitLeave "bool ISampleVisitor::visitLeave(const ICompositeSample *)
 ";
 
-%feature("docstring")  ISampleVisitor::getLevel "int ISampleVisitor::getLevel() const
+%feature("docstring")  ISampleVisitor::depth "int ISampleVisitor::depth() const
 
-return current level of the visitor in the composite hierarchy 
+Returns depth of the visitor in the composite hierarchy. 
 ";
 
-%feature("docstring")  ISampleVisitor::setLevel "void ISampleVisitor::setLevel(int level)
+%feature("docstring")  ISampleVisitor::setDepth "void ISampleVisitor::setDepth(int depth)
 
-set current level of the visitor in the composite hierarchy 
+Sets depth of the visitor in the composite hierarchy. 
 ";
 
 
@@ -8215,7 +8159,7 @@ C++ includes: ISelectionRule.h
 // File: classIsGISAXS08BBuilder.xml
 %feature("docstring") IsGISAXS08BBuilder "
 
-Builds sample: 2D paracrystal lattice with isotropic pdfs (IsGISAXS example #8)
+Builds sample: 2D paracrystal lattice with isotropic pdfs (IsGISAXS example #8).
 
 C++ includes: ParaCrystalBuilder.h
 ";
@@ -8248,37 +8192,28 @@ C++ includes: IsGISAXSDetector.h
 ";
 
 
-// File: classGeometry_1_1IShape2D.xml
-%feature("docstring") Geometry::IShape2D "
+// File: classIShape2D.xml
+%feature("docstring") IShape2D "
 
 Basic class for all shapes in 2D.
 
 C++ includes: IShape2D.h
 ";
 
-%feature("docstring")  Geometry::IShape2D::IShape2D "Geometry::IShape2D::IShape2D(const std::string &name)
+%feature("docstring")  IShape2D::IShape2D "IShape2D::IShape2D(const std::string &name)
 ";
 
-%feature("docstring")  Geometry::IShape2D::clone "virtual IShape2D* Geometry::IShape2D::clone() const =0
+%feature("docstring")  IShape2D::clone "virtual IShape2D* IShape2D::clone() const =0
 ";
 
-%feature("docstring")  Geometry::IShape2D::contains "virtual bool Geometry::IShape2D::contains(double x, double y) const =0
+%feature("docstring")  IShape2D::contains "virtual bool IShape2D::contains(double x, double y) const =0
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::IShape2D::contains "virtual bool Geometry::IShape2D::contains(const Bin1D &binx, const Bin1D &biny) const =0
+%feature("docstring")  IShape2D::contains "virtual bool IShape2D::contains(const Bin1D &binx, const Bin1D &biny) const =0
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
-";
-
-
-// File: classIShareable.xml
-%feature("docstring") IShareable "
-
-Dummy interface used to construct INamedShared and IParameterizedShared.
-
-C++ includes: IShareable.h
 ";
 
 
@@ -8325,9 +8260,7 @@ Retrieves the amplitude coefficients for the given angles.
 // File: classISquaredFunction.xml
 %feature("docstring") ISquaredFunction "
 
-Interface providing measures for deviation between two values.
-
-Used By  ChiSquaredModule for chi2 calculations
+Interface providing measures for deviation between two values. Used By  ChiSquaredModule for chi2 calculations.
 
 C++ includes: ISquaredFunction.h
 ";
@@ -8762,7 +8695,7 @@ C++ includes: LayerRoughness.h
 %feature("docstring")  LayerRoughness::LayerRoughness "LayerRoughness::LayerRoughness()
 ";
 
-%feature("docstring")  LayerRoughness::LayerRoughness "LayerRoughness::LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength)
+%feature("docstring")  LayerRoughness::LayerRoughness "LayerRoughness::LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength)
 ";
 
 %feature("docstring")  LayerRoughness::clone "LayerRoughness* LayerRoughness::clone() const
@@ -8809,14 +8742,14 @@ Sets hurst parameter. It describes how jagged the surface is.
 Returns hurst parameter. 
 ";
 
-%feature("docstring")  LayerRoughness::setLatteralCorrLength "void LayerRoughness::setLatteralCorrLength(double latteralCorrLength)
+%feature("docstring")  LayerRoughness::setLatteralCorrLength "void LayerRoughness::setLatteralCorrLength(double lateralCorrLength)
 
 Sets lateral correlation length. 
 ";
 
 %feature("docstring")  LayerRoughness::getLatteralCorrLength "double LayerRoughness::getLatteralCorrLength() const
 
-Returns latteral correlation length. 
+Returns lateral correlation length. 
 ";
 
 
@@ -8891,26 +8824,26 @@ C++ includes: LayersWithAbsorptionBuilder.h
 ";
 
 
-// File: classGeometry_1_1Line.xml
-%feature("docstring") Geometry::Line "
+// File: classLine.xml
+%feature("docstring") Line "
 
 A line segment.
 
 C++ includes: Line.h
 ";
 
-%feature("docstring")  Geometry::Line::Line "Geometry::Line::Line(double x1, double y1, double x2, double y2)
+%feature("docstring")  Line::Line "Line::Line(double x1, double y1, double x2, double y2)
 ";
 
-%feature("docstring")  Geometry::Line::clone "Line* Geometry::Line::clone() const
+%feature("docstring")  Line::clone "Line* Line::clone() const
 ";
 
-%feature("docstring")  Geometry::Line::contains "bool Geometry::Line::contains(double x, double y) const
+%feature("docstring")  Line::contains "bool Line::contains(double x, double y) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::Line::contains "bool Geometry::Line::contains(const Bin1D &binx, const Bin1D &biny) const
+%feature("docstring")  Line::contains "bool Line::contains(const Bin1D &binx, const Bin1D &biny) const
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
 ";
@@ -8919,7 +8852,7 @@ Returns true if area defined by two bins is inside or on border of polygon (more
 // File: classLLData.xml
 %feature("docstring") LLData "
 
-Template class to store data of any type in multi-dimensional space (low-level)
+Template class to store data of any type in multi-dimensional space (low-level).
 
 C++ includes: LLData.h
 ";
@@ -8961,10 +8894,10 @@ C++ includes: LLData.h
 ";
 
 
-// File: classException_1_1LogicErrorException.xml
-%feature("docstring") Exception::LogicErrorException "";
+// File: classExceptions_1_1LogicErrorException.xml
+%feature("docstring") Exceptions::LogicErrorException "";
 
-%feature("docstring")  Exception::LogicErrorException::LogicErrorException "Exception::LogicErrorException::LogicErrorException(const std::string &message)
+%feature("docstring")  Exceptions::LogicErrorException::LogicErrorException "Exceptions::LogicErrorException::LogicErrorException(const std::string &message)
 ";
 
 
@@ -9067,7 +9000,7 @@ The following functions return the transmitted and reflected amplitudes for diff
 %feature("docstring")  MatrixRTCoefficients::R2min "Eigen::Vector2cd MatrixRTCoefficients::R2min() const
 ";
 
-%feature("docstring")  MatrixRTCoefficients::getKz "Eigen::Vector2cd MatrixRTCoefficients::getKz() const
+%feature("docstring")  MatrixRTCoefficients::getKz "virtual Eigen::Vector2cd MatrixRTCoefficients::getKz() const
 
 Returns z-part of the two wavevector eigenmodes. 
 ";
@@ -9098,20 +9031,6 @@ Retrieves the amplitude coefficients for the given angles.
 %feature("docstring")  MatrixSpecularInfoMap::getInCoefficients "const ILayerRTCoefficients * MatrixSpecularInfoMap::getInCoefficients(const SimulationElement &sim_element) const final
 
 Retrieves the amplitude coefficients for the given angles. 
-";
-
-
-// File: classMCMiserIntegrator.xml
-%feature("docstring") MCMiserIntegrator "
-
-Template class to use Monte Carlo MISER integration of class member functions.
-
-Wraps an integrator from GNU Scientific Library. Since this class holds a persistent workspace, we need at least one instance per thread. Standard usage for integration inside a class T:
-Create a handle to an integrator: 'auto integrator = make_integrator_miser(this, mem_function, dimension)'
-
-Call: 'integrator.integrate(lmin, lmax, data, nbr_points)'
-
-C++ includes: IntegratorMCMiser.h
 ";
 
 
@@ -9346,7 +9265,7 @@ C++ includes: MultiLayerWithRoughnessBuilder.h
 // File: classMultipleLayoutBuilder.xml
 %feature("docstring") MultipleLayoutBuilder "
 
-Builds sample: mixture of cylinders and prisms without interference using multiple particle layouts.
+Builds sample: mixture of cylinders and prisms without interference, using multiple particle layouts
 
 C++ includes: MultipleLayoutBuilder.h
 ";
@@ -9358,17 +9277,17 @@ C++ includes: MultipleLayoutBuilder.h
 ";
 
 
-// File: classException_1_1NotImplementedException.xml
-%feature("docstring") Exception::NotImplementedException "";
+// File: classExceptions_1_1NotImplementedException.xml
+%feature("docstring") Exceptions::NotImplementedException "";
 
-%feature("docstring")  Exception::NotImplementedException::NotImplementedException "Exception::NotImplementedException::NotImplementedException(const std::string &message)
+%feature("docstring")  Exceptions::NotImplementedException::NotImplementedException "Exceptions::NotImplementedException::NotImplementedException(const std::string &message)
 ";
 
 
-// File: classException_1_1NullPointerException.xml
-%feature("docstring") Exception::NullPointerException "";
+// File: classExceptions_1_1NullPointerException.xml
+%feature("docstring") Exceptions::NullPointerException "";
 
-%feature("docstring")  Exception::NullPointerException::NullPointerException "Exception::NullPointerException::NullPointerException(const std::string &message)
+%feature("docstring")  Exceptions::NullPointerException::NullPointerException "Exceptions::NullPointerException::NullPointerException(const std::string &message)
 ";
 
 
@@ -9431,10 +9350,10 @@ Adds parameters from local pool to external pool and recursively calls its direc
 ";
 
 
-// File: classException_1_1OutOfBoundsException.xml
-%feature("docstring") Exception::OutOfBoundsException "";
+// File: classExceptions_1_1OutOfBoundsException.xml
+%feature("docstring") Exceptions::OutOfBoundsException "";
 
-%feature("docstring")  Exception::OutOfBoundsException::OutOfBoundsException "Exception::OutOfBoundsException::OutOfBoundsException(const std::string &message)
+%feature("docstring")  Exceptions::OutOfBoundsException::OutOfBoundsException "Exceptions::OutOfBoundsException::OutOfBoundsException(const std::string &message)
 ";
 
 
@@ -9547,9 +9466,7 @@ Parameters:
 -----------
 
 global_index: 
-The global index of this data structure.
-
-Vector of bin indices for all axes defined 
+The global index of this data structure. 
 ";
 
 %feature("docstring")  OutputData::getAxisBinIndex "int OutputData< T >::getAxisBinIndex(size_t global_index, size_t i_selected_axis) const
@@ -9563,9 +9480,7 @@ global_index:
 The global index of this data structure.
 
 i_selected_axis: 
-Serial number of selected axis.
-
-Corresponding bin index for selected axis 
+Serial number of selected axis. 
 ";
 
 %feature("docstring")  OutputData::getAxisBinIndex "int OutputData< T >::getAxisBinIndex(size_t global_index, const std::string &axis_name) const
@@ -9579,9 +9494,7 @@ global_index:
 The global index of this data structure.
 
 axis_name: 
-The name of selected axis.
-
-Corresponding bin index for selected axis 
+The name of selected axis. 
 ";
 
 %feature("docstring")  OutputData::toGlobalIndex "size_t OutputData< T >::toGlobalIndex(const std::vector< int > &axes_indices) const
@@ -9592,22 +9505,18 @@ Parameters:
 -----------
 
 axes_indices: 
-Vector of axes indices for all specified axes in this dataset
-
-Corresponding global index 
+Vector of axes indices for all specified axes in this dataset 
 ";
 
 %feature("docstring")  OutputData::findGlobalIndex "size_t OutputData< T >::findGlobalIndex(const std::vector< double > &coordinates) const
 
-Returns global index for specified axes values
+Returns closest global index for specified axes values
 
 Parameters:
 -----------
 
 coordinates: 
-Vector of axes coordinates for all specified axes in this dataset
-
-Closest global index 
+Vector of axes coordinates for all specified axes in this dataset 
 ";
 
 %feature("docstring")  OutputData::getAxisValue "double OutputData< T >::getAxisValue(size_t global_index, size_t i_selected_axis) const
@@ -9621,9 +9530,7 @@ global_index:
 The global index of this data structure.
 
 i_selected_axis: 
-Serial number of selected axis.
-
-corresponding bin center of selected axis 
+Serial number of selected axis. 
 ";
 
 %feature("docstring")  OutputData::getAxisValue "double OutputData< T >::getAxisValue(size_t global_index, const std::string &axis_name) const
@@ -9637,9 +9544,7 @@ global_index:
 The global index of this data structure.
 
 axis_name: 
-The name of selected axis.
-
-corresponding bin center of selected axis 
+The name of selected axis. 
 ";
 
 %feature("docstring")  OutputData::getAxesValues "std::vector< double > OutputData< T >::getAxesValues(size_t global_index) const
@@ -9650,9 +9555,7 @@ Parameters:
 -----------
 
 global_index: 
-The global index of this data structure.
-
-Vector of corresponding bin centers 
+The global index of this data structure. 
 ";
 
 %feature("docstring")  OutputData::getAxisBin "Bin1D OutputData< T >::getAxisBin(size_t global_index, size_t i_selected_axis) const
@@ -9666,9 +9569,7 @@ global_index:
 The global index of this data structure.
 
 i_selected_axis: 
-Serial number of selected axis.
-
-Corresponding  Bin1D object 
+Serial number of selected axis. 
 ";
 
 %feature("docstring")  OutputData::getAxisBin "Bin1D OutputData< T >::getAxisBin(size_t global_index, const std::string &axis_name) const
@@ -9682,9 +9583,7 @@ global_index:
 The global index of this data structure.
 
 axis_name: 
-The name of selected axis.
-
-Corresponding  Bin1D object 
+The name of selected axis. 
 ";
 
 %feature("docstring")  OutputData::clear "void OutputData< T >::clear()
@@ -9830,7 +9729,7 @@ C++ includes: OutputDataReadFactory.h
 // File: classOutputDataReadINTStrategy.xml
 %feature("docstring") OutputDataReadINTStrategy "
 
-Strategy to read BornAgain native IntensityData from ASCII file.
+Strategy to read  BornAgain native IntensityData from ASCII file.
 
 C++ includes: OutputDataReadStrategy.h
 ";
@@ -9863,7 +9762,7 @@ C++ includes: OutputDataWriteFactory.h
 // File: classOutputDataWriteINTStrategy.xml
 %feature("docstring") OutputDataWriteINTStrategy "
 
-Strategy to write  OutputData to special BornAgain ASCII format.
+Strategy to write  OutputData to special  BornAgain ASCII format
 
 C++ includes: OutputDataWriteStrategy.h
 ";
@@ -9875,7 +9774,7 @@ C++ includes: OutputDataWriteStrategy.h
 // File: classOutputDataWriteNumpyTXTStrategy.xml
 %feature("docstring") OutputDataWriteNumpyTXTStrategy "
 
-Strategy to write  OutputData to simple ASCII file with the layout as in numpy.savetxt.
+Strategy to write  OutputData to simple ASCII file with the layout as in numpy.savetxt
 
 C++ includes: OutputDataWriteStrategy.h
 ";
@@ -9897,7 +9796,7 @@ C++ includes: OutputDataWriter.h
 
 %feature("docstring")  OutputDataWriter::writeOutputData "void OutputDataWriter::writeOutputData(const OutputData< double > &data)
 
-write output data to file 
+Writes output data to file. 
 ";
 
 %feature("docstring")  OutputDataWriter::setStrategy "void OutputDataWriter::setStrategy(IOutputDataWriteStrategy *write_strategy)
@@ -10059,7 +9958,12 @@ Returns full vector of parameters.
 
 %feature("docstring")  ParameterPool::getMatchedParameters "std::vector< RealParameter * > ParameterPool::getMatchedParameters(const std::string &wildcards) const
 
-Returns vector of parameters that match the  pattern (wildcards '*' allowed). 
+Returns nonempty vector of parameters that match the  pattern ('*' allowed), or throws. 
+";
+
+%feature("docstring")  ParameterPool::getUniqueMatch "RealParameter * ParameterPool::getUniqueMatch(const std::string &pattern) const
+
+Returns the one parameter that matches the  pattern (wildcards '*' allowed), or throws. 
 ";
 
 %feature("docstring")  ParameterPool::setParameterValue "void ParameterPool::setParameterValue(const std::string &name, double value)
@@ -10069,7 +9973,12 @@ Sets parameter value.
 
 %feature("docstring")  ParameterPool::setMatchedParametersValue "int ParameterPool::setMatchedParametersValue(const std::string &wildcards, double value)
 
-Sets parameter value. 
+Sets value of the nonzero parameters that match  pattern ('*' allowed), or throws. 
+";
+
+%feature("docstring")  ParameterPool::setUniqueMatchValue "void ParameterPool::setUniqueMatchValue(const std::string &pattern, double value)
+
+Sets value of the one parameter that matches  pattern ('*' allowed), or throws. 
 ";
 
 %feature("docstring")  ParameterPool::getParameterNames "std::vector< std::string > ParameterPool::getParameterNames() const
@@ -10079,9 +9988,12 @@ Sets parameter value.
 // File: classParameterSample.xml
 %feature("docstring") ParameterSample "
 
-Represents a sampled parameter value with its weight.
+A parameter value with a weight, as obtained when sampling from a distribution.
 
 C++ includes: ParameterSample.h
+";
+
+%feature("docstring")  ParameterSample::ParameterSample "ParameterSample::ParameterSample(double _value, double _weight=1.)
 ";
 
 
@@ -10263,32 +10175,32 @@ C++ includes: ParticleCoreShell.h
 %feature("docstring")  ParticleCoreShell::~ParticleCoreShell "ParticleCoreShell::~ParticleCoreShell()
 ";
 
-%feature("docstring")  ParticleCoreShell::clone "ParticleCoreShell * ParticleCoreShell::clone() const
+%feature("docstring")  ParticleCoreShell::clone "ParticleCoreShell * ParticleCoreShell::clone() const final
 
 Returns a clone of this  ISample object. 
 ";
 
-%feature("docstring")  ParticleCoreShell::cloneInvertB "ParticleCoreShell * ParticleCoreShell::cloneInvertB() const
+%feature("docstring")  ParticleCoreShell::cloneInvertB "ParticleCoreShell * ParticleCoreShell::cloneInvertB() const final
 
 Returns a clone with inverted magnetic fields. 
 ";
 
-%feature("docstring")  ParticleCoreShell::accept "virtual void ParticleCoreShell::accept(ISampleVisitor *visitor) const
+%feature("docstring")  ParticleCoreShell::accept "void ParticleCoreShell::accept(ISampleVisitor *visitor) const final
 
 Calls the  ISampleVisitor's visit method. 
 ";
 
-%feature("docstring")  ParticleCoreShell::setAmbientMaterial "void ParticleCoreShell::setAmbientMaterial(const IMaterial &material)
+%feature("docstring")  ParticleCoreShell::setAmbientMaterial "void ParticleCoreShell::setAmbientMaterial(const IMaterial &material) final
 
 Sets the refractive index of the ambient material (which influences its scattering power) 
 ";
 
-%feature("docstring")  ParticleCoreShell::getAmbientMaterial "const IMaterial * ParticleCoreShell::getAmbientMaterial() const
+%feature("docstring")  ParticleCoreShell::getAmbientMaterial "const IMaterial * ParticleCoreShell::getAmbientMaterial() const final
 
 Returns nullptr, unless overwritten to return a specific material. 
 ";
 
-%feature("docstring")  ParticleCoreShell::createTransformedFormFactor "IFormFactor * ParticleCoreShell::createTransformedFormFactor(const IRotation *p_rotation, kvector_t translation) const
+%feature("docstring")  ParticleCoreShell::createTransformedFormFactor "IFormFactor * ParticleCoreShell::createTransformedFormFactor(const IRotation *p_rotation, kvector_t translation) const final
 
 Create a form factor for this particle with an extra scattering factor. 
 ";
@@ -10315,39 +10227,41 @@ C++ includes: ParticleDistribution.h
 %feature("docstring")  ParticleDistribution::ParticleDistribution "ParticleDistribution::ParticleDistribution(const IParticle &prototype, const ParameterDistribution &par_distr)
 ";
 
-%feature("docstring")  ParticleDistribution::clone "ParticleDistribution * ParticleDistribution::clone() const
+%feature("docstring")  ParticleDistribution::clone "ParticleDistribution * ParticleDistribution::clone() const final
 
 Returns a clone of this  ISample object. 
 ";
 
-%feature("docstring")  ParticleDistribution::cloneInvertB "ParticleDistribution * ParticleDistribution::cloneInvertB() const
+%feature("docstring")  ParticleDistribution::cloneInvertB "ParticleDistribution * ParticleDistribution::cloneInvertB() const final
 
 Returns a clone with inverted magnetic fields. 
 ";
 
-%feature("docstring")  ParticleDistribution::accept "void ParticleDistribution::accept(ISampleVisitor *visitor) const
+%feature("docstring")  ParticleDistribution::accept "void ParticleDistribution::accept(ISampleVisitor *visitor) const final
 
-calls the  ISampleVisitor's visit method 
+Calls the  ISampleVisitor's visit method. 
 ";
 
-%feature("docstring")  ParticleDistribution::to_str "std::string ParticleDistribution::to_str(int indent=0) const
+%feature("docstring")  ParticleDistribution::to_str "std::string ParticleDistribution::to_str(int indent=0) const final
 
-Returns textual representation of* this and its descendants. 
+Returns textual representation of *this and its descendants. 
 ";
 
-%feature("docstring")  ParticleDistribution::setAmbientMaterial "void ParticleDistribution::setAmbientMaterial(const IMaterial &material)
+%feature("docstring")  ParticleDistribution::setAmbientMaterial "void ParticleDistribution::setAmbientMaterial(const IMaterial &material) final
 
-Sets the refractive index of the ambient material (which influences its scattering power) 
+Sets the refractive index of the ambient material. 
 ";
 
-%feature("docstring")  ParticleDistribution::getAmbientMaterial "const IMaterial * ParticleDistribution::getAmbientMaterial() const
+%feature("docstring")  ParticleDistribution::getAmbientMaterial "const IMaterial * ParticleDistribution::getAmbientMaterial() const final
 
 Returns particle's material. 
 ";
 
-%feature("docstring")  ParticleDistribution::generateParticles "void ParticleDistribution::generateParticles(std::vector< const IParticle * > &particle_vector) const
+%feature("docstring")  ParticleDistribution::generateParticles "std::vector< const IParticle * > ParticleDistribution::generateParticles() const
 
-Initializes list of new particles generated according to a distribution. 
+Returns list of new particles generated according to a distribution.
+
+Returns particle clones with parameter values drawn from distribution. 
 ";
 
 %feature("docstring")  ParticleDistribution::getParameterDistribution "ParameterDistribution ParticleDistribution::getParameterDistribution() const
@@ -10355,12 +10269,7 @@ Initializes list of new particles generated according to a distribution.
 Returns the distributed parameter data. 
 ";
 
-%feature("docstring")  ParticleDistribution::createDistributedParameterPool "ParameterPool * ParticleDistribution::createDistributedParameterPool() const
-
-Returns the parameter pool that can be used for parameter distributions. 
-";
-
-%feature("docstring")  ParticleDistribution::getParticle "const IParticle * ParticleDistribution::getParticle() const
+%feature("docstring")  ParticleDistribution::getParticle "const IParticle* ParticleDistribution::getParticle() const
 
 Returns particle. 
 ";
@@ -10521,15 +10430,15 @@ Sets surface density of all particles.
 ";
 
 
-// File: classGeometry_1_1Polygon.xml
-%feature("docstring") Geometry::Polygon "
+// File: classPolygon.xml
+%feature("docstring") Polygon "
 
 A polygon in 2D space.Polygon defined by two arrays with x and y coordinates of points. Sizes of arrays should coincide. If polygon is unclosed (the last point doesn't repeat the first one), it will be closed automatically.
 
 C++ includes: Polygon.h
 ";
 
-%feature("docstring")  Geometry::Polygon::Polygon "Geometry::Polygon::Polygon(const std::vector< double > &x, const std::vector< double > &y)
+%feature("docstring")  Polygon::Polygon "Polygon::Polygon(const std::vector< double > &x, const std::vector< double > &y)
 
 Parameters:
 -----------
@@ -10541,7 +10450,7 @@ y:
 Vector of y-coordinates of polygon points. 
 ";
 
-%feature("docstring")  Geometry::Polygon::Polygon "Geometry::Polygon::Polygon(const std::vector< std::vector< double >> &points)
+%feature("docstring")  Polygon::Polygon "Polygon::Polygon(const std::vector< std::vector< double >> &points)
 
 Polygon defined by two dimensional array with (x,y) coordinates of polygon points. The size of second dimension should be 2. If polygon is unclosed (the last point doesn't repeat the first one), it will be closed automatically.
 
@@ -10552,29 +10461,29 @@ points:
 Two dimensional vector of (x,y) coordinates of polygon points. 
 ";
 
-%feature("docstring")  Geometry::Polygon::Polygon "Geometry::Polygon::Polygon(const PolygonPrivate *d)
+%feature("docstring")  Polygon::Polygon "Polygon::Polygon(const PolygonPrivate *d)
 ";
 
-%feature("docstring")  Geometry::Polygon::~Polygon "Geometry::Polygon::~Polygon()
+%feature("docstring")  Polygon::~Polygon "Polygon::~Polygon()
 ";
 
-%feature("docstring")  Geometry::Polygon::clone "virtual Polygon* Geometry::Polygon::clone() const
+%feature("docstring")  Polygon::clone "virtual Polygon* Polygon::clone() const
 ";
 
-%feature("docstring")  Geometry::Polygon::contains "bool Geometry::Polygon::contains(double x, double y) const
+%feature("docstring")  Polygon::contains "bool Polygon::contains(double x, double y) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::Polygon::contains "bool Geometry::Polygon::contains(const Bin1D &binx, const Bin1D &biny) const
+%feature("docstring")  Polygon::contains "bool Polygon::contains(const Bin1D &binx, const Bin1D &biny) const
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
 ";
 
-%feature("docstring")  Geometry::Polygon::getArea "double Geometry::Polygon::getArea() const
+%feature("docstring")  Polygon::getArea "double Polygon::getArea() const
 ";
 
-%feature("docstring")  Geometry::Polygon::getPoints "void Geometry::Polygon::getPoints(std::vector< double > &xpos, std::vector< double > &ypos) const
+%feature("docstring")  Polygon::getPoints "void Polygon::getPoints(std::vector< double > &xpos, std::vector< double > &ypos) const
 ";
 
 
@@ -10587,16 +10496,16 @@ C++ includes: FormFactorPolyhedron.h
 ";
 
 
-// File: classGeometry_1_1PolygonPrivate.xml
-%feature("docstring") Geometry::PolygonPrivate "
+// File: classPolygonPrivate.xml
+%feature("docstring") PolygonPrivate "
 
 The private data for polygons to hide boost dependency from the header. 
 ";
 
-%feature("docstring")  Geometry::PolygonPrivate::init_from "void Geometry::PolygonPrivate::init_from(const std::vector< double > &x, const std::vector< double > &y)
+%feature("docstring")  PolygonPrivate::init_from "void PolygonPrivate::init_from(const std::vector< double > &x, const std::vector< double > &y)
 ";
 
-%feature("docstring")  Geometry::PolygonPrivate::get_points "void Geometry::PolygonPrivate::get_points(std::vector< double > &xpos, std::vector< double > &ypos)
+%feature("docstring")  PolygonPrivate::get_points "void PolygonPrivate::get_points(std::vector< double > &xpos, std::vector< double > &ypos)
 ";
 
 
@@ -10742,7 +10651,7 @@ Increments number of completed computation steps (ticks). Performs callback (met
 // File: classRadialParaCrystalBuilder.xml
 %feature("docstring") RadialParaCrystalBuilder "
 
-Builds sample: cylinders with 1DDL structure factor (IsGISAXS example #4)
+Builds sample: cylinders with 1DDL structure factor (IsGISAXS example #4).
 
 C++ includes: ParaCrystalBuilder.h
 ";
@@ -10800,15 +10709,15 @@ Returns value of wrapped parameter.
 ";
 
 
-// File: classGeometry_1_1Rectangle.xml
-%feature("docstring") Geometry::Rectangle "
+// File: classRectangle.xml
+%feature("docstring") Rectangle "
 
 The rectangle shape having its axis aligned to the (non-rotated) coordinate system.
 
 C++ includes: Rectangle.h
 ";
 
-%feature("docstring")  Geometry::Rectangle::Rectangle "Geometry::Rectangle::Rectangle(double xlow, double ylow, double xup, double yup)
+%feature("docstring")  Rectangle::Rectangle "Rectangle::Rectangle(double xlow, double ylow, double xup, double yup)
 
 Parameters:
 -----------
@@ -10826,39 +10735,39 @@ yup:
 y-coordinate of upper right corner 
 ";
 
-%feature("docstring")  Geometry::Rectangle::clone "Rectangle* Geometry::Rectangle::clone() const
+%feature("docstring")  Rectangle::clone "Rectangle* Rectangle::clone() const
 ";
 
-%feature("docstring")  Geometry::Rectangle::contains "bool Geometry::Rectangle::contains(double x, double y) const
+%feature("docstring")  Rectangle::contains "bool Rectangle::contains(double x, double y) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::Rectangle::contains "bool Geometry::Rectangle::contains(const Bin1D &binx, const Bin1D &biny) const
+%feature("docstring")  Rectangle::contains "bool Rectangle::contains(const Bin1D &binx, const Bin1D &biny) const
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
 ";
 
-%feature("docstring")  Geometry::Rectangle::getArea "double Geometry::Rectangle::getArea() const
+%feature("docstring")  Rectangle::getArea "double Rectangle::getArea() const
 ";
 
-%feature("docstring")  Geometry::Rectangle::getXlow "double Geometry::Rectangle::getXlow() const
+%feature("docstring")  Rectangle::getXlow "double Rectangle::getXlow() const
 ";
 
-%feature("docstring")  Geometry::Rectangle::getYlow "double Geometry::Rectangle::getYlow() const
+%feature("docstring")  Rectangle::getYlow "double Rectangle::getYlow() const
 ";
 
-%feature("docstring")  Geometry::Rectangle::getXup "double Geometry::Rectangle::getXup() const
+%feature("docstring")  Rectangle::getXup "double Rectangle::getXup() const
 ";
 
-%feature("docstring")  Geometry::Rectangle::getYup "double Geometry::Rectangle::getYup() const
+%feature("docstring")  Rectangle::getYup "double Rectangle::getYup() const
 ";
 
 
 // File: classRectangularDetector.xml
 %feature("docstring") RectangularDetector "
 
-A rectangular plane detector with axes and resolution function.
+A flat rectangular detector with axes and resolution function.
 
 C++ includes: RectangularDetector.h
 ";
@@ -10967,7 +10876,7 @@ return default axes units
 // File: classRectParaCrystalBuilder.xml
 %feature("docstring") RectParaCrystalBuilder "
 
-Builds sample: 2D paracrystal lattice (IsGISAXS example #8)
+Builds sample: 2D paracrystal lattice (IsGISAXS example #8).
 
 C++ includes: ParaCrystalBuilder.h
 ";
@@ -11271,10 +11180,10 @@ Sets magnetic reflection/transmission info for specific layer.
 ";
 
 
-// File: classException_1_1RuntimeErrorException.xml
-%feature("docstring") Exception::RuntimeErrorException "";
+// File: classExceptions_1_1RuntimeErrorException.xml
+%feature("docstring") Exceptions::RuntimeErrorException "";
 
-%feature("docstring")  Exception::RuntimeErrorException::RuntimeErrorException "Exception::RuntimeErrorException::RuntimeErrorException(const std::string &message)
+%feature("docstring")  Exceptions::RuntimeErrorException::RuntimeErrorException "Exceptions::RuntimeErrorException::RuntimeErrorException(const std::string &message)
 ";
 
 
@@ -11334,7 +11243,7 @@ C++ includes: SafePointerVector.h
 // File: classSampleBuilderFactory.xml
 %feature("docstring") SampleBuilderFactory "
 
-Factory to create standard pre-defined samples.
+Factory to create standard pre-defined samples
 
 C++ includes: SampleBuilderFactory.h
 ";
@@ -11540,7 +11449,7 @@ C++ includes: SampleTreeIterator.h
 %feature("docstring")  SampleTreeIterator::isDone "bool SampleTreeIterator< Strategy >::isDone() const
 ";
 
-%feature("docstring")  SampleTreeIterator::getLevel "size_t SampleTreeIterator< Strategy >::getLevel() const
+%feature("docstring")  SampleTreeIterator::depth "size_t SampleTreeIterator< Strategy >::depth() const
 ";
 
 
@@ -11632,10 +11541,10 @@ Retrieves the amplitude coefficients for the given angles.
 ";
 
 
-// File: classException_1_1SelfReferenceException.xml
-%feature("docstring") Exception::SelfReferenceException "";
+// File: classExceptions_1_1SelfReferenceException.xml
+%feature("docstring") Exceptions::SelfReferenceException "";
 
-%feature("docstring")  Exception::SelfReferenceException::SelfReferenceException "Exception::SelfReferenceException::SelfReferenceException(const std::string &message)
+%feature("docstring")  Exceptions::SelfReferenceException::SelfReferenceException "Exceptions::SelfReferenceException::SelfReferenceException(const std::string &message)
 ";
 
 
@@ -11965,7 +11874,9 @@ C++ includes: SimulationFactory.h
 // File: classSimulationOptions.xml
 %feature("docstring") SimulationOptions "
 
-Collect the different options for simulation  SimulationOptions.
+Collect the different options for simulation.
+
+SimulationOptions
 
 C++ includes: SimulationOptions.h
 ";
@@ -12286,9 +12197,7 @@ return default axes units
 // File: classSquaredFunctionDefault.xml
 %feature("docstring") SquaredFunctionDefault "
 
-Squared difference between two values.
-
-value = (a-b)*(a-b)/norm, where norm = max(b, 1.0) a - simulated values, b - real_values
+Squared difference between two values. value = (a-b)*(a-b)/norm, where norm = max(b, 1.0), a = simulated values, b = real_values.
 
 C++ includes: ISquaredFunction.h
 ";
@@ -12312,9 +12221,7 @@ C++ includes: ISquaredFunction.h
 // File: classSquaredFunctionGaussianError.xml
 %feature("docstring") SquaredFunctionGaussianError "
 
-Squared difference between two values with gaussian error.
-
-value = (a-b)*(a-b)/norm, where norm = sigma*sigma, sigma - is set by user
+Squared difference between two values with gaussian error. value = (a-b)*(a-b)/norm, where norm = sigma*sigma; sigma is set by user.
 
 C++ includes: ISquaredFunction.h
 ";
@@ -12338,9 +12245,7 @@ C++ includes: ISquaredFunction.h
 // File: classSquaredFunctionMeanSquaredError.xml
 %feature("docstring") SquaredFunctionMeanSquaredError "
 
-Squared difference between two values normalized by mean squared error.
-
-value = (a-b)*(a-b)/norm, where norm = sqrt(sigma1*sigma1 + sigma2*sigma2), sigma1=max(a, 1.0), sigma2=max(b,1.0)
+Squared difference between two values normalized by mean squared error. value = (a-b)*(a-b)/norm, where norm = sqrt(sigma1*sigma1 + sigma2*sigma2), sigma1=max(a, 1.0), sigma2=max(b,1.0)
 
 C++ includes: ISquaredFunction.h
 ";
@@ -12364,9 +12269,7 @@ C++ includes: ISquaredFunction.h
 // File: classSquaredFunctionSimError.xml
 %feature("docstring") SquaredFunctionSimError "
 
-Squared difference between two values.
-
-value = (a-b)*(a-b)/norm, where norm = max(a, 1.0) a - simulated values, b - real_values
+Squared difference between two values. value = (a-b)*(a-b)/norm, where norm = max(a, 1.0), a = simulated values, b = real_values.
 
 C++ includes: ISquaredFunction.h
 ";
@@ -12390,9 +12293,7 @@ C++ includes: ISquaredFunction.h
 // File: classSquaredFunctionSystematicError.xml
 %feature("docstring") SquaredFunctionSystematicError "
 
-Squared difference between two values normalized by systematic error.
-
-value = (a-b)*(a-b)/norm, where norm = max(error, 1.0), error = b + (epsilon*b)**2
+Squared difference between two values normalized by systematic error. value = (a-b)*(a-b)/norm, where norm = max(error, 1.0), error = b + (epsilon*b)**2.
 
 C++ includes: ISquaredFunction.h
 ";
@@ -12626,7 +12527,7 @@ C++ includes: TransformationsBuilder.h
 // File: classTriangularRippleBuilder.xml
 %feature("docstring") TriangularRippleBuilder "
 
-Builds sample: triangular ripple within the 1D-paracrystal model (from PRB 85, 235415, 2012)
+Builds sample: triangular ripple within the 1D-paracrystal model (from PRB 85, 235415, 2012).
 
 C++ includes: RipplesBuilder.h
 ";
@@ -12683,17 +12584,17 @@ C++ includes: Unit.h
 ";
 
 
-// File: classException_1_1UnknownClassRegistrationException.xml
-%feature("docstring") Exception::UnknownClassRegistrationException "";
+// File: classExceptions_1_1UnknownClassRegistrationException.xml
+%feature("docstring") Exceptions::UnknownClassRegistrationException "";
 
-%feature("docstring")  Exception::UnknownClassRegistrationException::UnknownClassRegistrationException "Exception::UnknownClassRegistrationException::UnknownClassRegistrationException(const std::string &message)
+%feature("docstring")  Exceptions::UnknownClassRegistrationException::UnknownClassRegistrationException "Exceptions::UnknownClassRegistrationException::UnknownClassRegistrationException(const std::string &message)
 ";
 
 
 // File: classVariableBinAxis.xml
 %feature("docstring") VariableBinAxis "
 
-Axis with variable bin size.
+Axis with bins of non-uniform size. Inherited by  ConstKBinAxis and  CustomBinAxis
 
 C++ includes: VariableBinAxis.h
 ";
@@ -12718,7 +12619,7 @@ Array of size nbins+1 containing low-edges for each bin and upper edge of last b
 %feature("docstring")  VariableBinAxis::~VariableBinAxis "virtual VariableBinAxis::~VariableBinAxis()
 ";
 
-%feature("docstring")  VariableBinAxis::clone "VariableBinAxis * VariableBinAxis::clone() const
+%feature("docstring")  VariableBinAxis::clone "virtual VariableBinAxis* VariableBinAxis::clone() const
 
 clone function 
 ";
@@ -12763,15 +12664,15 @@ Creates a new clipped axis.
 ";
 
 
-// File: classGeometry_1_1VerticalLine.xml
-%feature("docstring") Geometry::VerticalLine "
+// File: classVerticalLine.xml
+%feature("docstring") VerticalLine "
 
 An infinite vertical line.
 
 C++ includes: Line.h
 ";
 
-%feature("docstring")  Geometry::VerticalLine::VerticalLine "Geometry::VerticalLine::VerticalLine(double x)
+%feature("docstring")  VerticalLine::VerticalLine "VerticalLine::VerticalLine(double x)
 
 Parameters:
 -----------
@@ -12780,20 +12681,20 @@ x:
 The value at which it crosses x-axes 
 ";
 
-%feature("docstring")  Geometry::VerticalLine::clone "VerticalLine* Geometry::VerticalLine::clone() const
+%feature("docstring")  VerticalLine::clone "VerticalLine* VerticalLine::clone() const
 ";
 
-%feature("docstring")  Geometry::VerticalLine::contains "bool Geometry::VerticalLine::contains(double x, double y) const
+%feature("docstring")  VerticalLine::contains "bool VerticalLine::contains(double x, double y) const
 
 Returns true if point with given coordinates is inside or on border of the shape. 
 ";
 
-%feature("docstring")  Geometry::VerticalLine::contains "bool Geometry::VerticalLine::contains(const Bin1D &binx, const Bin1D &biny) const
+%feature("docstring")  VerticalLine::contains "bool VerticalLine::contains(const Bin1D &binx, const Bin1D &biny) const
 
 Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
 ";
 
-%feature("docstring")  Geometry::VerticalLine::getXpos "double Geometry::VerticalLine::getXpos() const
+%feature("docstring")  VerticalLine::getXpos "double VerticalLine::getXpos() const
 ";
 
 
@@ -12827,28 +12728,123 @@ C++ includes: WavevectorInfo.h
 ";
 
 
-// File: classMathFunctions_1_1Convolve_1_1Workspace.xml
+// File: classConvolve_1_1Workspace.xml
 
 
-// File: namespace_0D276.xml
+// File: namespace_0D139.xml
 
 
-// File: namespace_0D306.xml
+// File: namespace_0D182.xml
 
 
-// File: namespace_0D429.xml
+// File: namespace_0D273.xml
 
 
-// File: namespace_0D57.xml
+// File: namespace_0D303.xml
 
 
-// File: namespace_0D72.xml
+// File: namespace_0D426.xml
+
+
+// File: namespace_0D56.xml
+
+
+// File: namespace_0D71.xml
+
+
+// File: namespaceArrayUtils.xml
+%feature("docstring")  ArrayUtils::getShape "std::pair< size_t, size_t > ArrayUtils::getShape(const std::vector< std::vector< double >> &data)
+
+Returns shape nrows, ncols of 2D array. 
+";
 
 
 // File: namespaceboost_1_1geometry.xml
 
 
 // File: namespaceBornAgain.xml
+
+
+// File: namespaceDataFormatUtils.xml
+%feature("docstring")  DataFormatUtils::isCompressed "bool DataFormatUtils::isCompressed(const std::string &name)
+
+Returns true if name contains *.gz extension. 
+";
+
+%feature("docstring")  DataFormatUtils::isGZipped "bool DataFormatUtils::isGZipped(const std::string &name)
+
+Returns true if name contains *.gz extension.
+
+Does name contain *.gz extension? 
+";
+
+%feature("docstring")  DataFormatUtils::isBZipped "bool DataFormatUtils::isBZipped(const std::string &name)
+
+Returns true if name contains *.bz2 extension. 
+";
+
+%feature("docstring")  DataFormatUtils::GetFileMainExtension "std::string DataFormatUtils::GetFileMainExtension(const std::string &name)
+
+Returns file extension after stripping '.gz' if any.
+
+Returns file main extension (without .gz). 
+";
+
+%feature("docstring")  DataFormatUtils::isBinaryFile "bool DataFormatUtils::isBinaryFile(const std::string &file_name)
+
+returns true if file name corresponds to a binary file 
+";
+
+%feature("docstring")  DataFormatUtils::isIntFile "bool DataFormatUtils::isIntFile(const std::string &file_name)
+
+returns true if file name corresponds to  BornAgain native format (compressed or not) 
+";
+
+%feature("docstring")  DataFormatUtils::isTxtFile "bool DataFormatUtils::isTxtFile(const std::string &file_name)
+
+returns true if file name corresponds to simple numpy-style ASCII file 
+";
+
+%feature("docstring")  DataFormatUtils::isTiffFile "bool DataFormatUtils::isTiffFile(const std::string &file_name)
+
+returns true if file name corresponds to tiff file (can be also compressed) 
+";
+
+%feature("docstring")  DataFormatUtils::isSimilarToFixedBinAxisType "bool DataFormatUtils::isSimilarToFixedBinAxisType(const std::string &line)
+
+Returns true if string representation of the axis contains one of  FixedBinAxis,  ConstKBinAxis or  CustomBinAxis to parse it later in similar way. 
+";
+
+%feature("docstring")  DataFormatUtils::isVariableBinAxisType "bool DataFormatUtils::isVariableBinAxisType(const std::string &line)
+";
+
+%feature("docstring")  DataFormatUtils::createAxis "IAxis * DataFormatUtils::createAxis(std::istream &input_stream)
+
+Creates axis of certain type from input stream. 
+";
+
+%feature("docstring")  DataFormatUtils::createFixedBinAxis "IAxis * DataFormatUtils::createFixedBinAxis(std::string line)
+
+Create one of  FixedBinAxis from string representation  FixedBinAxis(\"axis0\", 10, -1, 1)  ConstKBinAxis(\"axis0\", 10, -1, 1)  CustomBinAxis(\"axis0\", 10, -1, 1) 
+";
+
+%feature("docstring")  DataFormatUtils::createVariableBinAxis "IAxis * DataFormatUtils::createVariableBinAxis(std::string line)
+
+Create  VariableBinAxis from string representation  VariableBinAxis(\"axis0\", 4, [-1, -0.5, 0.5, 1, 2]) 
+";
+
+%feature("docstring")  DataFormatUtils::fillOutputData "void DataFormatUtils::fillOutputData(OutputData< double > *data, std::istream &input_stream)
+
+Fills output data raw buffer from input stream. 
+";
+
+%feature("docstring")  DataFormatUtils::parse_doubles "std::vector< double > DataFormatUtils::parse_doubles(const std::string &str)
+
+Parse double values from string to vector of double. 
+";
+
+%feature("docstring")  DataFormatUtils::readLineOfDoubles "void DataFormatUtils::readLineOfDoubles(std::vector< double > &buffer, std::istringstream &iss)
+";
 
 
 // File: namespaceDetectorFunctions.xml
@@ -12873,89 +12869,83 @@ Creates real data containing original user data clipped to the ROI area of the d
 ";
 
 
-// File: namespaceException.xml
-%feature("docstring")  Exception::LogExceptionMessage "void Exception::LogExceptionMessage(const std::string &message)
+// File: namespaceExceptions.xml
+%feature("docstring")  Exceptions::LogExceptionMessage "void Exceptions::LogExceptionMessage(const std::string &message)
 ";
 
 
-// File: namespaceFileSystem.xml
-%feature("docstring")  FileSystem::extension "std::string FileSystem::extension(const std::string &fname)
+// File: namespaceFileSystemUtils.xml
+%feature("docstring")  FileSystemUtils::extension "std::string FileSystemUtils::extension(const std::string &fname)
 
 Returns extension of given filename. 
 ";
 
-%feature("docstring")  FileSystem::createDirectory "bool FileSystem::createDirectory(const std::string &dir_name)
+%feature("docstring")  FileSystemUtils::createDirectory "bool FileSystemUtils::createDirectory(const std::string &dir_name)
 
 Creates directory in current directory. 
 ";
 
-%feature("docstring")  FileSystem::filesInDirectory "std::vector< std::string > FileSystem::filesInDirectory(const std::string &dir_name)
+%feature("docstring")  FileSystemUtils::filesInDirectory "std::vector< std::string > FileSystemUtils::filesInDirectory(const std::string &dir_name)
 
 Returns filenames of files in directory. 
 ";
 
-%feature("docstring")  FileSystem::jointPath "std::string FileSystem::jointPath(const std::string &spath1, const std::string &spath2)
+%feature("docstring")  FileSystemUtils::jointPath "std::string FileSystemUtils::jointPath(const std::string &spath1, const std::string &spath2)
 
 Returns joint path name. 
 ";
 
-%feature("docstring")  FileSystem::filename "std::string FileSystem::filename(const std::string &path)
+%feature("docstring")  FileSystemUtils::filename "std::string FileSystemUtils::filename(const std::string &path)
 
 Returns path without directory part (\"Foo/Bar/Doz.int.gz\" -> \"Doz.int.gz\") 
 ";
 
-%feature("docstring")  FileSystem::glob "std::vector< std::string > FileSystem::glob(const std::string &dir, const std::string &pattern)
+%feature("docstring")  FileSystemUtils::glob "std::vector< std::string > FileSystemUtils::glob(const std::string &dir, const std::string &pattern)
 
 Returns file names that agree with a regex glob pattern. 
 ";
 
 
-// File: namespaceGeometry.xml
-
-
 // File: namespaceIntensityDataFunctions.xml
-%feature("docstring")  IntensityDataFunctions::getRelativeDifference "BA_CORE_API_ double IntensityDataFunctions::getRelativeDifference(const OutputData< double > &dat, const OutputData< double > &ref)
+%feature("docstring")  IntensityDataFunctions::getRelativeDifference "double IntensityDataFunctions::getRelativeDifference(const OutputData< double > &dat, const OutputData< double > &ref)
+
+Returns relative difference between two data sets sum(dat[i] - ref[i])/ref[i]). 
 ";
 
-%feature("docstring")  IntensityDataFunctions::getRelativeDifference "BA_CORE_API_ double IntensityDataFunctions::getRelativeDifference(const IHistogram &dat, const IHistogram &ref)
+%feature("docstring")  IntensityDataFunctions::getRelativeDifference "double IntensityDataFunctions::getRelativeDifference(const IHistogram &dat, const IHistogram &ref)
 ";
 
-%feature("docstring")  IntensityDataFunctions::createRelativeDifferenceData "BA_CORE_API_ OutputData<double>* IntensityDataFunctions::createRelativeDifferenceData(const OutputData< double > &data, const OutputData< double > &reference)
+%feature("docstring")  IntensityDataFunctions::createRelativeDifferenceData "OutputData< double > * IntensityDataFunctions::createRelativeDifferenceData(const OutputData< double > &data, const OutputData< double > &reference)
 ";
 
-%feature("docstring")  IntensityDataFunctions::createClippedDataSet "BA_CORE_API_ OutputData<double>* IntensityDataFunctions::createClippedDataSet(const OutputData< double > &origin, double x1, double y1, double x2, double y2)
+%feature("docstring")  IntensityDataFunctions::createClippedDataSet "OutputData< double > * IntensityDataFunctions::createClippedDataSet(const OutputData< double > &origin, double x1, double y1, double x2, double y2)
 
-Returns new IntensityData objects which axes clipped to represent the specified rectangle 
+Returns new IntensityData objects which axes clipped to represent the specified rectangle. 
 ";
 
-%feature("docstring")  IntensityDataFunctions::applyDetectorResolution "BA_CORE_API_ OutputData<double>* IntensityDataFunctions::applyDetectorResolution(const OutputData< double > &origin, const IResolutionFunction2D &resolution_function)
+%feature("docstring")  IntensityDataFunctions::applyDetectorResolution "OutputData< double > * IntensityDataFunctions::applyDetectorResolution(const OutputData< double > &origin, const IResolutionFunction2D &resolution_function)
 
 Applies detector resolution function and returns new IntensityData object. 
 ";
 
-%feature("docstring")  IntensityDataFunctions::coordinateToBinf "BA_CORE_API_ double IntensityDataFunctions::coordinateToBinf(double coordinate, const IAxis &axis)
+%feature("docstring")  IntensityDataFunctions::coordinateToBinf "double IntensityDataFunctions::coordinateToBinf(double coordinate, const IAxis &axis)
 
 Transforms coordinate on axis into the bin-fraction-coordinate. 
 ";
 
-%feature("docstring")  IntensityDataFunctions::coordinateFromBinf "BA_CORE_API_ double IntensityDataFunctions::coordinateFromBinf(double value, const IAxis &axis)
+%feature("docstring")  IntensityDataFunctions::coordinateFromBinf "double IntensityDataFunctions::coordinateFromBinf(double value, const IAxis &axis)
 
 Transforms bin-fraction-coordinate into axis coordinate. 
 ";
 
-%feature("docstring")  IntensityDataFunctions::coordinateToBinf "BA_CORE_API_ void IntensityDataFunctions::coordinateToBinf(double &x, double &y, const OutputData< double > &data)
+%feature("docstring")  IntensityDataFunctions::coordinateToBinf "void IntensityDataFunctions::coordinateToBinf(double &x, double &y, const OutputData< double > &data)
 
-Transform x,y coordinate from  OutputData axes coordinates to bin-fraction-coordinates 
+Transforms x,y coordinate from  OutputData axes coordinates to bin-fraction-coordinates. 
 ";
 
-%feature("docstring")  IntensityDataFunctions::coordinateFromBinf "BA_CORE_API_ void IntensityDataFunctions::coordinateFromBinf(double &x, double &y, const OutputData< double > &data)
+%feature("docstring")  IntensityDataFunctions::coordinateFromBinf "void IntensityDataFunctions::coordinateFromBinf(double &x, double &y, const OutputData< double > &data)
 
-Transform x,y coordinate from bin-fraction-coordinates to  OutputData's axes coordinates 
-";
-
-
-// File: namespaceMaterials.xml
-%feature("docstring")  Materials::createInvertedMaterial "IMaterial * Materials::createInvertedMaterial(const IMaterial *material)
+Transforms x,y coordinate from bin-fraction-coordinates to  OutputData's axes coordinates. 
 ";
 
 
@@ -13082,90 +13072,8 @@ Returns the safe relative difference, which is |(a-b)/b| except in special cases
 ";
 
 
-// File: namespaceOutputDataIOHelper.xml
-%feature("docstring")  OutputDataIOHelper::isCompressed "bool OutputDataIOHelper::isCompressed(const std::string &name)
-
-Returns true if name contains *.gz extension. 
-";
-
-%feature("docstring")  OutputDataIOHelper::isGZipped "bool OutputDataIOHelper::isGZipped(const std::string &name)
-
-Returns true if name contains *.gz extension.
-
-Does name contain *.gz extension? 
-";
-
-%feature("docstring")  OutputDataIOHelper::isBZipped "bool OutputDataIOHelper::isBZipped(const std::string &name)
-
-Returns true if name contains *.bz2 extension. 
-";
-
-%feature("docstring")  OutputDataIOHelper::GetFileMainExtension "std::string OutputDataIOHelper::GetFileMainExtension(const std::string &name)
-
-Returns file extension after stripping '.gz' if any.
-
-Returns file main extension (without .gz). 
-";
-
-%feature("docstring")  OutputDataIOHelper::isBinaryFile "bool OutputDataIOHelper::isBinaryFile(const std::string &file_name)
-
-returns true if file name corresponds to a binary file 
-";
-
-%feature("docstring")  OutputDataIOHelper::isIntFile "bool OutputDataIOHelper::isIntFile(const std::string &file_name)
-
-returns true if file name corresponds to BornAgain native format (compressed or not) 
-";
-
-%feature("docstring")  OutputDataIOHelper::isTxtFile "bool OutputDataIOHelper::isTxtFile(const std::string &file_name)
-
-returns true if file name corresponds to simple numpy-style ASCII file 
-";
-
-%feature("docstring")  OutputDataIOHelper::isTiffFile "bool OutputDataIOHelper::isTiffFile(const std::string &file_name)
-
-returns true if file name corresponds to tiff file (can be also compressed) 
-";
-
-%feature("docstring")  OutputDataIOHelper::isSimilarToFixedBinAxisType "bool OutputDataIOHelper::isSimilarToFixedBinAxisType(const std::string &line)
-
-Returns true if string representation of the axis contains one of  FixedBinAxis,  ConstKBinAxis or  CustomBinAxis to parse it later in similar way. 
-";
-
-%feature("docstring")  OutputDataIOHelper::isVariableBinAxisType "bool OutputDataIOHelper::isVariableBinAxisType(const std::string &line)
-";
-
-%feature("docstring")  OutputDataIOHelper::createAxis "IAxis * OutputDataIOHelper::createAxis(std::istream &input_stream)
-
-Creates axis of certain type from input stream. 
-";
-
-%feature("docstring")  OutputDataIOHelper::createFixedBinAxis "IAxis * OutputDataIOHelper::createFixedBinAxis(std::string line)
-
-Create one of  FixedBinAxis from string representation  FixedBinAxis(\"axis0\", 10, -1, 1)  ConstKBinAxis(\"axis0\", 10, -1, 1)  CustomBinAxis(\"axis0\", 10, -1, 1) 
-";
-
-%feature("docstring")  OutputDataIOHelper::createVariableBinAxis "IAxis * OutputDataIOHelper::createVariableBinAxis(std::string line)
-
-Create  VariableBinAxis from string representation  VariableBinAxis(\"axis0\", 4, [-1, -0.5, 0.5, 1, 2]) 
-";
-
-%feature("docstring")  OutputDataIOHelper::fillOutputData "void OutputDataIOHelper::fillOutputData(OutputData< double > *data, std::istream &input_stream)
-
-Fills output data raw buffer from input stream. 
-";
-
-%feature("docstring")  OutputDataIOHelper::parse_doubles "std::vector< double > OutputDataIOHelper::parse_doubles(const std::string &str)
-
-Parse double values from string to vector of double. 
-";
-
-%feature("docstring")  OutputDataIOHelper::readLineOfDoubles "void OutputDataIOHelper::readLineOfDoubles(std::vector< double > &buffer, std::istringstream &iss)
-";
-
-
 // File: namespacePythonFormatting.xml
-%feature("docstring")  PythonFormatting::representShape2D "BA_CORE_API_ std::string PythonFormatting::representShape2D(const std::string &indent, const Geometry::IShape2D *ishape, bool mask_value, std::function< std::string(double)> printValueFunc)
+%feature("docstring")  PythonFormatting::representShape2D "BA_CORE_API_ std::string PythonFormatting::representShape2D(const std::string &indent, const IShape2D *ishape, bool mask_value, std::function< std::string(double)> printValueFunc)
 
 Returns fixed Python code snippet that defines the function \"runSimulation\". 
 ";
@@ -13214,64 +13122,112 @@ Returns comma-separated list of parameter values, including unit multiplicator (
 
 
 // File: namespaceStandardSimulations.xml
-%feature("docstring")  StandardSimulations::PolarizedDWBAMagCylinders2 "GISASSimulation* StandardSimulations::PolarizedDWBAMagCylinders2()
+%feature("docstring")  StandardSimulations::PolarizedDWBAMagCylinders2 "GISASSimulation * StandardSimulations::PolarizedDWBAMagCylinders2()
 ";
 
-%feature("docstring")  StandardSimulations::BasicGISAS "GISASSimulation* StandardSimulations::BasicGISAS()
+%feature("docstring")  StandardSimulations::BasicGISAS "GISASSimulation * StandardSimulations::BasicGISAS()
+
+Basic GISAS simulation with the detector phi[0,2], theta[0,2]. 
 ";
 
-%feature("docstring")  StandardSimulations::BasicGISAS00 "GISASSimulation* StandardSimulations::BasicGISAS00()
+%feature("docstring")  StandardSimulations::BasicGISAS00 "GISASSimulation * StandardSimulations::BasicGISAS00()
+
+Basic GISAS for polarization studies. 
 ";
 
-%feature("docstring")  StandardSimulations::MiniGISAS "GISASSimulation* StandardSimulations::MiniGISAS()
+%feature("docstring")  StandardSimulations::MiniGISAS "GISASSimulation * StandardSimulations::MiniGISAS()
+
+GISAS simulation with small detector and phi[-2,2], theta[0,2]. 
 ";
 
-%feature("docstring")  StandardSimulations::MiniGISAS_v2 "GISASSimulation* StandardSimulations::MiniGISAS_v2()
+%feature("docstring")  StandardSimulations::MiniGISAS_v2 "GISASSimulation * StandardSimulations::MiniGISAS_v2()
+
+GISAS simulation with small detector and phi[-1,1], theta[0,1]. 
 ";
 
-%feature("docstring")  StandardSimulations::MiniGISASBeamDivergence "GISASSimulation* StandardSimulations::MiniGISASBeamDivergence()
+%feature("docstring")  StandardSimulations::MiniGISASBeamDivergence "GISASSimulation * StandardSimulations::MiniGISASBeamDivergence()
+
+GISAS simulation with beam divergence applied. 
 ";
 
-%feature("docstring")  StandardSimulations::MiniGISASDetectorResolution "GISASSimulation* StandardSimulations::MiniGISASDetectorResolution()
+%feature("docstring")  StandardSimulations::MiniGISASDetectorResolution "GISASSimulation * StandardSimulations::MiniGISASDetectorResolution()
+
+GISAS simulation with detector resolution. 
 ";
 
-%feature("docstring")  StandardSimulations::GISASWithMasks "GISASSimulation* StandardSimulations::GISASWithMasks()
+%feature("docstring")  StandardSimulations::GISASWithMasks "GISASSimulation * StandardSimulations::GISASWithMasks()
+
+GISAS simulation with multiple masks on the detector plane. 
 ";
 
-%feature("docstring")  StandardSimulations::MaxiGISAS "GISASSimulation* StandardSimulations::MaxiGISAS()
+%feature("docstring")  StandardSimulations::MaxiGISAS "GISASSimulation * StandardSimulations::MaxiGISAS()
+
+GISAS simulation with large detector to test performance. 
 ";
 
-%feature("docstring")  StandardSimulations::MaxiGISAS00 "GISASSimulation* StandardSimulations::MaxiGISAS00()
+%feature("docstring")  StandardSimulations::MaxiGISAS00 "GISASSimulation * StandardSimulations::MaxiGISAS00()
+
+Basic GISAS for polarization studies. 
 ";
 
-%feature("docstring")  StandardSimulations::IsGISAXSSimulation1 "GISASSimulation* StandardSimulations::IsGISAXSSimulation1()
+%feature("docstring")  StandardSimulations::IsGISAXSSimulation1 "GISASSimulation * StandardSimulations::IsGISAXSSimulation1()
+
+Typical IsGISAXS simulation with the detector phi[-1,1], theta[0,2]. 
 ";
 
-%feature("docstring")  StandardSimulations::IsGISAXSSimulation2 "GISASSimulation* StandardSimulations::IsGISAXSSimulation2()
+%feature("docstring")  StandardSimulations::IsGISAXSSimulation2 "GISASSimulation * StandardSimulations::IsGISAXSSimulation2()
+
+Typical IsGISAXS simulation with the detector phi[0,2], theta[0,2]. 
 ";
 
-%feature("docstring")  StandardSimulations::RectDetectorGeneric "GISASSimulation* StandardSimulations::RectDetectorGeneric()
+%feature("docstring")  StandardSimulations::RectDetectorGeneric "GISASSimulation * StandardSimulations::RectDetectorGeneric()
+
+GISAS simulation with generic rectangular detector. 
 ";
 
-%feature("docstring")  StandardSimulations::RectDetectorPerpToSample "GISASSimulation* StandardSimulations::RectDetectorPerpToSample()
+%feature("docstring")  StandardSimulations::RectDetectorPerpToSample "GISASSimulation * StandardSimulations::RectDetectorPerpToSample()
+
+GISAS simulation with the rectangular detector perpendicular to the sample. 
 ";
 
-%feature("docstring")  StandardSimulations::RectDetectorPerpToDirectBeam "GISASSimulation* StandardSimulations::RectDetectorPerpToDirectBeam()
+%feature("docstring")  StandardSimulations::RectDetectorPerpToDirectBeam "GISASSimulation * StandardSimulations::RectDetectorPerpToDirectBeam()
+
+GISAS simulation with the rectangular detector perpendicular to the direct beam. 
 ";
 
-%feature("docstring")  StandardSimulations::RectDetectorPerpToReflectedBeam "GISASSimulation* StandardSimulations::RectDetectorPerpToReflectedBeam()
+%feature("docstring")  StandardSimulations::RectDetectorPerpToReflectedBeam "GISASSimulation * StandardSimulations::RectDetectorPerpToReflectedBeam()
+
+GISAS simulation with the rectangular detector perpendicular to the reflected beam. 
 ";
 
-%feature("docstring")  StandardSimulations::RectDetectorPerpToReflectedBeamDpos "GISASSimulation* StandardSimulations::RectDetectorPerpToReflectedBeamDpos()
+%feature("docstring")  StandardSimulations::RectDetectorPerpToReflectedBeamDpos "GISASSimulation * StandardSimulations::RectDetectorPerpToReflectedBeamDpos()
+
+GISAS simulation with the rectangular detector perpendicular to the reflected beam when the coordinates of direct beam are known. 
 ";
 
-%feature("docstring")  StandardSimulations::MiniGISASMonteCarlo "GISASSimulation* StandardSimulations::MiniGISASMonteCarlo()
+%feature("docstring")  StandardSimulations::MiniGISASMonteCarlo "GISASSimulation * StandardSimulations::MiniGISASMonteCarlo()
+
+GISAS simulation with Monte-Carlo integration switched ON. 
 ";
 
-%feature("docstring")  StandardSimulations::SphericalDetWithRoi "GISASSimulation* StandardSimulations::SphericalDetWithRoi()
+%feature("docstring")  StandardSimulations::SphericalDetWithRoi "GISASSimulation * StandardSimulations::SphericalDetWithRoi()
+
+GISAS simulation with spherical detector, region of interest and mask. 
 ";
 
-%feature("docstring")  StandardSimulations::RectDetWithRoi "GISASSimulation* StandardSimulations::RectDetWithRoi()
+%feature("docstring")  StandardSimulations::RectDetWithRoi "GISASSimulation * StandardSimulations::RectDetWithRoi()
+
+GISAS simulation with rectangular detector, region of interest and mask. 
+";
+
+
+// File: namespaceSysUtils.xml
+%feature("docstring")  SysUtils::getCurrentDateAndTime "std::string SysUtils::getCurrentDateAndTime()
+";
+
+%feature("docstring")  SysUtils::enableFloatingPointExceptions "void SysUtils::enableFloatingPointExceptions()
+
+enables exception throw in the case of NaN, Inf 
 ";
 
 
@@ -13280,21 +13236,6 @@ Returns comma-separated list of parameter values, including unit multiplicator (
 ";
 
 %feature("docstring")  Units::deg2rad "double Units::deg2rad(double angle)
-";
-
-
-// File: namespaceUtil.xml
-%feature("docstring")  Util::getCurrentDateAndTime "std::string Util::getCurrentDateAndTime()
-";
-
-%feature("docstring")  Util::enableFloatingPointExceptions "void Util::enableFloatingPointExceptions()
-
-enables exception throw in the case of NaN, Inf 
-";
-
-%feature("docstring")  Util::getShape "std::pair< size_t, size_t > Util::getShape(const std::vector< std::vector< double >> &data)
-
-Returns shape nrows, ncols of 2D array. 
 ";
 
 
@@ -13394,9 +13335,6 @@ Returns exp(I*z), where I is the imaginary unit.
 // File: INoncopyable_8h.xml
 
 
-// File: IShareable_8h.xml
-
-
 // File: ISingleton_8h.xml
 
 
@@ -13407,17 +13345,9 @@ Returns exp(I*z), where I is the imaginary unit.
 
 
 // File: Bin_8cpp.xml
-%feature("docstring")  BinContains "bool BinContains(const Bin1D &bin, double value)
-
-Checks if value is contained in bin: value in [m_lower, m_upper) 
-";
 
 
 // File: Bin_8h.xml
-%feature("docstring")  BinContains "bool BinContains(const Bin1D &bin, double value)
-
-Checks if value is contained in bin: value in [m_lower, m_upper) 
-";
 
 
 // File: ConstKBinAxis_8cpp.xml
@@ -13442,10 +13372,6 @@ Checks if value is contained in bin: value in [m_lower, m_upper)
 
 
 // File: IAxis_8h.xml
-%feature("docstring")  HaveSameNameAndShape "bool HaveSameNameAndShape(const IAxis &left, const IAxis &right)
-
-global helper function for comparison of axes 
-";
 
 
 // File: IPixelMap_8h.xml
@@ -13457,21 +13383,11 @@ global helper function for comparison of axes
 Add element vector to element vector with weight. 
 ";
 
-%feature("docstring")  setAllElementIntensities "void setAllElementIntensities(std::vector< SimulationElement >::iterator first, std::vector< SimulationElement >::iterator last, double intensity)
-
-Set all element intensities to given value. 
-";
-
 
 // File: SimulationElement_8h.xml
 %feature("docstring")  addElementsWithWeight "void addElementsWithWeight(std::vector< SimulationElement >::const_iterator first, std::vector< SimulationElement >::const_iterator last, std::vector< SimulationElement >::iterator result, double weight)
 
 Add element vector to element vector with weight. 
-";
-
-%feature("docstring")  setAllElementIntensities "void setAllElementIntensities(std::vector< SimulationElement >::iterator first, std::vector< SimulationElement >::iterator last, double intensity)
-
-Set all element intensities to given value. 
 ";
 
 
@@ -13758,13 +13674,6 @@ Set all element intensities to given value.
 
 
 // File: FormFactorPolyhedron_8cpp.xml
-%feature("docstring")  I "static const complex_t I(0., 1.)
-
-The mathematics implemented here is described in full detail in a paper by Joachim Wuttke, entitled \"Form factor (Fourier shape transform) of polygon and polyhedron.\" 
-";
-
-%feature("docstring")  eps "static const double eps(2e-16)
-";
 
 
 // File: FormFactorPolyhedron_8h.xml
@@ -13853,16 +13762,16 @@ The mathematics implemented here is described in full detail in a paper by Joach
 // File: boost__streams_8h.xml
 
 
+// File: DataFormatUtils_8cpp.xml
+
+
+// File: DataFormatUtils_8h.xml
+
+
 // File: IntensityDataIOFactory_8cpp.xml
 
 
 // File: IntensityDataIOFactory_8h.xml
-
-
-// File: OutputDataIOHelper_8cpp.xml
-
-
-// File: OutputDataIOHelper_8h.xml
 
 
 // File: OutputDataReader_8cpp.xml
@@ -13896,11 +13805,6 @@ The mathematics implemented here is described in full detail in a paper by Joach
 
 
 // File: OutputDataWriteStrategy_8cpp.xml
-%feature("docstring")  IgnoreDenormalized "double IgnoreDenormalized(double value)
-";
-
-%feature("docstring")  WriteOutputDataDoubles "void WriteOutputDataDoubles(const OutputData< double > &data, std::ostream &output_stream, size_t n_columns)
-";
 
 
 // File: OutputDataWriteStrategy_8h.xml
@@ -13910,6 +13814,12 @@ The mathematics implemented here is described in full detail in a paper by Joach
 
 
 // File: TiffHandler_8h.xml
+
+
+// File: ArrayUtils_8cpp.xml
+
+
+// File: ArrayUtils_8h.xml
 
 
 // File: Beam_8cpp.xml
@@ -14043,12 +13953,6 @@ The mathematics implemented here is described in full detail in a paper by Joach
 ";
 
 
-// File: NumpyUtils_8cpp.xml
-
-
-// File: NumpyUtils_8h.xml
-
-
 // File: OutputData_8cpp.xml
 
 
@@ -14159,12 +14063,6 @@ make Swappable
 
 
 // File: IMaterial_8h.xml
-
-
-// File: Materials_8cpp.xml
-
-
-// File: Materials_8h.xml
 
 
 // File: DecouplingApproximationStrategy_8cpp.xml
@@ -14278,11 +14176,6 @@ make Swappable
 
 
 // File: SpecularMatrix_8cpp.xml
-%feature("docstring")  setZeroBelow "void setZeroBelow(SpecularMatrix::MultiLayerCoeff_t &coeff, size_t current_layer)
-";
-
-%feature("docstring")  calculateUpFromLayer "bool calculateUpFromLayer(SpecularMatrix::MultiLayerCoeff_t &coeff, const MultiLayer &sample, const kvector_t k, size_t layer_index)
-";
 
 
 // File: SpecularMatrix_8h.xml
@@ -14689,10 +14582,10 @@ Returns concatenated rotation (first right, then left).
 // File: TwoDimLatticeBuilder_8h.xml
 
 
-// File: FileSystem_8cpp.xml
+// File: FileSystemUtils_8cpp.xml
 
 
-// File: FileSystem_8h.xml
+// File: FileSystemUtils_8h.xml
 
 
 // File: fp__exception__glibc__extension_8h.xml
@@ -14714,16 +14607,22 @@ David N. Williams
 
 // File: IntegratorComplex_8h.xml
 %feature("docstring")  make_integrator_complex "P_integrator_complex<T> make_integrator_complex(const T *object, complex_integrand< T > mem_function)
+
+Template function to create an integrator object. 
 ";
 
 
 // File: IntegratorMCMiser_8h.xml
 %feature("docstring")  make_integrator_miser "P_integrator_miser<T> make_integrator_miser(const T *object, miser_integrand< T > mem_function, size_t dim)
+
+Template function to create an integrator object 
 ";
 
 
 // File: IntegratorReal_8h.xml
 %feature("docstring")  make_integrator_real "P_integrator_real<T> make_integrator_real(const T *object, real_integrand< T > mem_function)
+
+Template function to create an integrator object. 
 ";
 
 
@@ -14748,10 +14647,10 @@ David N. Williams
 // File: SafePointerVector_8h.xml
 
 
-// File: Utils_8cpp.xml
+// File: SysUtils_8cpp.xml
 
 
-// File: Utils_8h.xml
+// File: SysUtils_8h.xml
 
 
 // File: w32pragma_8h.xml

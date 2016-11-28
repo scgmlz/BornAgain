@@ -1556,7 +1556,7 @@ class ICloneable(INoncopyable):
 
     Mix-in for objects that must not be copied, except by cloning.
 
-    The base class  INoncopyable disables the copy constructor and the operator= in all its child classes. Child classes of  ICloneable should provide clone().
+    The base class  INoncopyable disables the copy constructor and the operator= in all its child classes. Child classes of  ICloneable must provide clone().
 
     C++ includes: ICloneable.h
 
@@ -1591,7 +1591,7 @@ class ICloneable(INoncopyable):
 
         virtual void ICloneable::transferToCPP()
 
-        Used for Python overriding of clone. 
+        Used for Python overriding of clone (see swig/tweaks.py) 
 
         """
         return self.__disown__()
@@ -2976,7 +2976,14 @@ Beam_swigregister = _libBornAgainCore.Beam_swigregister
 Beam_swigregister(Beam)
 
 class Bin1D(_object):
-    """Proxy of C++ Bin1D class."""
+    """
+
+
+    An interval [m_lower, m_upper) on the real line.
+
+    C++ includes: Bin.h
+
+    """
 
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Bin1D, name, value)
@@ -3027,7 +3034,12 @@ class Bin1D(_object):
 
 
     def contains(self, value):
-        """contains(Bin1D self, double value) -> bool"""
+        """
+        contains(Bin1D self, double value) -> bool
+
+        bool Bin1D::contains(double value)
+
+        """
         return _libBornAgainCore.Bin1D_contains(self, value)
 
     __swig_destroy__ = _libBornAgainCore.delete_Bin1D
@@ -3169,7 +3181,7 @@ class IAxis(_object):
     """
 
 
-    Interface for one-dimensional axes.
+    Pure virtual interface for one-dimensional axes, inherited by  FixedBinAxis and  VariableBinAxis.
 
     C++ includes: IAxis.h
 
@@ -3376,7 +3388,7 @@ class VariableBinAxis(IAxis):
     """
 
 
-    Axis with variable bin size.
+    Axis with bins of non-uniform size. Inherited by  ConstKBinAxis and  CustomBinAxis
 
     C++ includes: VariableBinAxis.h
 
@@ -3425,7 +3437,7 @@ class VariableBinAxis(IAxis):
         """
         clone(VariableBinAxis self) -> VariableBinAxis
 
-        VariableBinAxis * VariableBinAxis::clone() const
+        virtual VariableBinAxis* VariableBinAxis::clone() const
 
         clone function 
 
@@ -3598,7 +3610,7 @@ class ConstKBinAxis(VariableBinAxis):
         """
         clone(ConstKBinAxis self) -> ConstKBinAxis
 
-        ConstKBinAxis * ConstKBinAxis::clone() const
+        ConstKBinAxis* ConstKBinAxis::clone() const final
 
         clone function 
 
@@ -3610,7 +3622,7 @@ class ConstKBinAxis(VariableBinAxis):
         """
         createClippedAxis(ConstKBinAxis self, double left, double right) -> ConstKBinAxis
 
-        ConstKBinAxis * ConstKBinAxis::createClippedAxis(double left, double right) const
+        ConstKBinAxis * ConstKBinAxis::createClippedAxis(double left, double right) const final
 
         Creates a new clipped axis. 
 
@@ -3676,7 +3688,7 @@ class CustomBinAxis(VariableBinAxis):
         """
         clone(CustomBinAxis self) -> CustomBinAxis
 
-        CustomBinAxis * CustomBinAxis::clone() const
+        CustomBinAxis* CustomBinAxis::clone() const override final
 
         clone function 
 
@@ -3721,7 +3733,14 @@ CustomBinAxis_swigregister = _libBornAgainCore.CustomBinAxis_swigregister
 CustomBinAxis_swigregister(CustomBinAxis)
 
 class IShape2D(ICloneable, INamed):
-    """Proxy of C++ IShape2D class."""
+    """
+
+
+    Basic class for all shapes in 2D.
+
+    C++ includes: IShape2D.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [ICloneable, INamed]:
@@ -3740,7 +3759,7 @@ class IShape2D(ICloneable, INamed):
         """
         clone(IShape2D self) -> IShape2D
 
-        virtual ICloneable* ICloneable::clone() const =0
+        virtual IShape2D* IShape2D::clone() const =0
 
         """
         return _libBornAgainCore.IShape2D_clone(self)
@@ -3750,6 +3769,11 @@ class IShape2D(ICloneable, INamed):
         """
         contains(IShape2D self, double x, double y) -> bool
         contains(IShape2D self, Bin1D binx, Bin1D biny) -> bool
+
+        virtual bool IShape2D::contains(const Bin1D &binx, const Bin1D &biny) const =0
+
+        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
+
         """
         return _libBornAgainCore.IShape2D_contains(self, *args)
 
@@ -4658,9 +4682,7 @@ class IFitStrategy(INamed):
     """
 
 
-    Interface to concrete fit strategy.
-
-    Concrete implementation should manipulate with fit parameters/data and then call minimizer.
+    Interface to concrete fit strategy. Concrete implementation should manipulate with fit parameters/data and then call minimizer.
 
     C++ includes: IFitStrategy.h
 
@@ -5144,9 +5166,7 @@ class ISquaredFunction(_object):
     """
 
 
-    Interface providing measures for deviation between two values.
-
-    Used By  ChiSquaredModule for chi2 calculations
+    Interface providing measures for deviation between two values. Used By  ChiSquaredModule for chi2 calculations.
 
     C++ includes: ISquaredFunction.h
 
@@ -5200,9 +5220,7 @@ class SquaredFunctionDefault(ISquaredFunction):
     """
 
 
-    Squared difference between two values.
-
-    value = (a-b)*(a-b)/norm, where norm = max(b, 1.0) a - simulated values, b - real_values
+    Squared difference between two values. value = (a-b)*(a-b)/norm, where norm = max(b, 1.0), a = simulated values, b = real_values.
 
     C++ includes: ISquaredFunction.h
 
@@ -5270,9 +5288,7 @@ class SquaredFunctionSimError(ISquaredFunction):
     """
 
 
-    Squared difference between two values.
-
-    value = (a-b)*(a-b)/norm, where norm = max(a, 1.0) a - simulated values, b - real_values
+    Squared difference between two values. value = (a-b)*(a-b)/norm, where norm = max(a, 1.0), a = simulated values, b = real_values.
 
     C++ includes: ISquaredFunction.h
 
@@ -5329,9 +5345,7 @@ class SquaredFunctionMeanSquaredError(ISquaredFunction):
     """
 
 
-    Squared difference between two values normalized by mean squared error.
-
-    value = (a-b)*(a-b)/norm, where norm = sqrt(sigma1*sigma1 + sigma2*sigma2), sigma1=max(a, 1.0), sigma2=max(b,1.0)
+    Squared difference between two values normalized by mean squared error. value = (a-b)*(a-b)/norm, where norm = sqrt(sigma1*sigma1 + sigma2*sigma2), sigma1=max(a, 1.0), sigma2=max(b,1.0)
 
     C++ includes: ISquaredFunction.h
 
@@ -5388,9 +5402,7 @@ class SquaredFunctionSystematicError(ISquaredFunction):
     """
 
 
-    Squared difference between two values normalized by systematic error.
-
-    value = (a-b)*(a-b)/norm, where norm = max(error, 1.0), error = b + (epsilon*b)**2
+    Squared difference between two values normalized by systematic error. value = (a-b)*(a-b)/norm, where norm = max(error, 1.0), error = b + (epsilon*b)**2.
 
     C++ includes: ISquaredFunction.h
 
@@ -5447,9 +5459,7 @@ class SquaredFunctionGaussianError(ISquaredFunction):
     """
 
 
-    Squared difference between two values with gaussian error.
-
-    value = (a-b)*(a-b)/norm, where norm = sigma*sigma, sigma - is set by user
+    Squared difference between two values with gaussian error. value = (a-b)*(a-b)/norm, where norm = sigma*sigma; sigma is set by user.
 
     C++ includes: ISquaredFunction.h
 
@@ -6657,7 +6667,7 @@ class AdjustMinimizerStrategy(IFitStrategy):
         __init__(AdjustMinimizerStrategy self, std::string const & minimizerName, std::string const & algorithmName) -> AdjustMinimizerStrategy
         __init__(AdjustMinimizerStrategy self, std::string const & minimizerName) -> AdjustMinimizerStrategy
 
-        AdjustMinimizerStrategy::AdjustMinimizerStrategy(const std::string &minimizerName, const std::string &algorithmName=std::string(), const std::string &optionString=std::string())
+        AdjustMinimizerStrategy::AdjustMinimizerStrategy(const std::string &minimizerName, const std::string &algorithmName="", const std::string &optionString="")
 
         """
         this = _libBornAgainCore.new_AdjustMinimizerStrategy(*args)
@@ -6682,7 +6692,7 @@ class AdjustMinimizerStrategy(IFitStrategy):
         setMinimizer(AdjustMinimizerStrategy self, std::string const & minimizerName, std::string const & algorithmName)
         setMinimizer(AdjustMinimizerStrategy self, std::string const & minimizerName)
 
-        void AdjustMinimizerStrategy::setMinimizer(const std::string &minimizerName, const std::string &algorithmName=std::string(), const std::string &optionString=std::string())
+        void AdjustMinimizerStrategy::setMinimizer(const std::string &minimizerName, const std::string &algorithmName="", const std::string &optionString="")
 
         """
         return _libBornAgainCore.AdjustMinimizerStrategy_setMinimizer(self, *args)
@@ -6953,12 +6963,26 @@ class ISampleVisitor(_object):
 
 
     def depth(self):
-        """depth(ISampleVisitor self) -> int"""
+        """
+        depth(ISampleVisitor self) -> int
+
+        int ISampleVisitor::depth() const
+
+        Returns depth of the visitor in the composite hierarchy. 
+
+        """
         return _libBornAgainCore.ISampleVisitor_depth(self)
 
 
     def setDepth(self, depth):
-        """setDepth(ISampleVisitor self, int depth)"""
+        """
+        setDepth(ISampleVisitor self, int depth)
+
+        void ISampleVisitor::setDepth(int depth)
+
+        Sets depth of the visitor in the composite hierarchy. 
+
+        """
         return _libBornAgainCore.ISampleVisitor_setDepth(self, depth)
 
 ISampleVisitor_swigregister = _libBornAgainCore.ISampleVisitor_swigregister
@@ -7313,7 +7337,7 @@ class IDistribution1D(IParameterized):
     """
 
 
-    Interface for 1 dimensional distributions.
+    Interface for one-dimensional distributions.
 
     C++ includes: Distributions.h
 
@@ -7338,7 +7362,7 @@ class IDistribution1D(IParameterized):
         """
         clone(IDistribution1D self) -> IDistribution1D
 
-        IDistribution1D * IDistribution1D::clone() const
+        virtual IDistribution1D* IDistribution1D::clone() const =0
 
         """
         return _libBornAgainCore.IDistribution1D_clone(self)
@@ -7350,7 +7374,7 @@ class IDistribution1D(IParameterized):
 
         virtual double IDistribution1D::probabilityDensity(double x) const =0
 
-        get the probability density for value x 
+        Returns the distribution-specific probability density for value x. 
 
         """
         return _libBornAgainCore.IDistribution1D_probabilityDensity(self, x)
@@ -7362,7 +7386,7 @@ class IDistribution1D(IParameterized):
 
         virtual double IDistribution1D::getMean() const =0
 
-        get the mean of the distribution 
+        Returns the distribution-specific mean. 
 
         """
         return _libBornAgainCore.IDistribution1D_getMean(self)
@@ -7373,12 +7397,24 @@ class IDistribution1D(IParameterized):
         equidistantSamples(IDistribution1D self, size_t nbr_samples, double sigma_factor=0., RealLimits limits) -> std::vector< ParameterSample,std::allocator< ParameterSample > >
         equidistantSamples(IDistribution1D self, size_t nbr_samples, double sigma_factor=0.) -> std::vector< ParameterSample,std::allocator< ParameterSample > >
         equidistantSamples(IDistribution1D self, size_t nbr_samples) -> std::vector< ParameterSample,std::allocator< ParameterSample > >
+
+        std::vector< ParameterSample > IDistribution1D::equidistantSamples(size_t nbr_samples, double sigma_factor=0., const RealLimits &limits=RealLimits()) const
+
+        Returns equidistant samples, using intrinsic parameters, weighted with  probabilityDensity(). 
+
         """
         return _libBornAgainCore.IDistribution1D_equidistantSamples(self, *args)
 
 
     def equidistantSamplesInRange(self, nbr_samples, xmin, xmax):
-        """equidistantSamplesInRange(IDistribution1D self, size_t nbr_samples, double xmin, double xmax) -> std::vector< ParameterSample,std::allocator< ParameterSample > >"""
+        """
+        equidistantSamplesInRange(IDistribution1D self, size_t nbr_samples, double xmin, double xmax) -> std::vector< ParameterSample,std::allocator< ParameterSample > >
+
+        std::vector< ParameterSample > IDistribution1D::equidistantSamplesInRange(size_t nbr_samples, double xmin, double xmax) const
+
+        Returns equidistant samples from xmin to xmax, weighted with  probabilityDensity(). 
+
+        """
         return _libBornAgainCore.IDistribution1D_equidistantSamplesInRange(self, nbr_samples, xmin, xmax)
 
 
@@ -7386,12 +7422,24 @@ class IDistribution1D(IParameterized):
         """
         equidistantPoints(IDistribution1D self, size_t nbr_samples, double sigma_factor, RealLimits limits) -> vdouble1d_t
         equidistantPoints(IDistribution1D self, size_t nbr_samples, double sigma_factor) -> vdouble1d_t
+
+        virtual std::vector<double> IDistribution1D::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const =0
+
+        Returns equidistant interpolation points, with range computed in distribution-specific way from mean and width parameter, taking into account limits and sigma_factor. 
+
         """
         return _libBornAgainCore.IDistribution1D_equidistantPoints(self, *args)
 
 
     def equidistantPointsInRange(self, nbr_samples, xmin, xmax):
-        """equidistantPointsInRange(IDistribution1D self, size_t nbr_samples, double xmin, double xmax) -> vdouble1d_t"""
+        """
+        equidistantPointsInRange(IDistribution1D self, size_t nbr_samples, double xmin, double xmax) -> vdouble1d_t
+
+        std::vector< double > IDistribution1D::equidistantPointsInRange(size_t nbr_samples, double xmin, double xmax) const
+
+        Returns equidistant interpolation points from xmin to xmax. 
+
+        """
         return _libBornAgainCore.IDistribution1D_equidistantPointsInRange(self, nbr_samples, xmin, xmax)
 
 
@@ -7401,7 +7449,7 @@ class IDistribution1D(IParameterized):
 
         virtual bool IDistribution1D::isDelta() const =0
 
-        signals that the distribution is in the limit case of a delta distribution 
+        Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 
         """
         return _libBornAgainCore.IDistribution1D_isDelta(self)
@@ -7449,9 +7497,7 @@ class DistributionGate(IDistribution1D):
         """
         clone(DistributionGate self) -> DistributionGate
 
-        virtual DistributionGate* DistributionGate::clone() const
-
-        clone method 
+        DistributionGate* DistributionGate::clone() const final
 
         """
         return _libBornAgainCore.DistributionGate_clone(self)
@@ -7461,9 +7507,9 @@ class DistributionGate(IDistribution1D):
         """
         probabilityDensity(DistributionGate self, double x) -> double
 
-        double DistributionGate::probabilityDensity(double x) const
+        double DistributionGate::probabilityDensity(double x) const final
 
-        get the probability density for value x 
+        Returns the distribution-specific probability density for value x. 
 
         """
         return _libBornAgainCore.DistributionGate_probabilityDensity(self, x)
@@ -7473,9 +7519,9 @@ class DistributionGate(IDistribution1D):
         """
         getMean(DistributionGate self) -> double
 
-        virtual double DistributionGate::getMean() const
+        double DistributionGate::getMean() const final
 
-        get the mean of the distribution 
+        Returns the distribution-specific mean. 
 
         """
         return _libBornAgainCore.DistributionGate_getMean(self)
@@ -7487,8 +7533,6 @@ class DistributionGate(IDistribution1D):
 
         double DistributionGate::getMin() const
 
-        Returns the minimum value of the distribution. 
-
         """
         return _libBornAgainCore.DistributionGate_getMin(self)
 
@@ -7499,8 +7543,6 @@ class DistributionGate(IDistribution1D):
 
         double DistributionGate::getMax() const
 
-        Returns the maximum value of the distribution. 
-
         """
         return _libBornAgainCore.DistributionGate_getMax(self)
 
@@ -7509,6 +7551,11 @@ class DistributionGate(IDistribution1D):
         """
         equidistantPoints(DistributionGate self, size_t nbr_samples, double sigma_factor, RealLimits limits) -> vdouble1d_t
         equidistantPoints(DistributionGate self, size_t nbr_samples, double sigma_factor) -> vdouble1d_t
+
+        std::vector< double > DistributionGate::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+
+        Returns list of sample values. 
+
         """
         return _libBornAgainCore.DistributionGate_equidistantPoints(self, *args)
 
@@ -7517,9 +7564,9 @@ class DistributionGate(IDistribution1D):
         """
         isDelta(DistributionGate self) -> bool
 
-        bool DistributionGate::isDelta() const
+        bool DistributionGate::isDelta() const final
 
-        signals that the distribution is in the limit case of a delta distribution 
+        Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 
         """
         return _libBornAgainCore.DistributionGate_isDelta(self)
@@ -7567,7 +7614,7 @@ class DistributionLorentz(IDistribution1D):
         """
         clone(DistributionLorentz self) -> DistributionLorentz
 
-        virtual DistributionLorentz* DistributionLorentz::clone() const
+        DistributionLorentz* DistributionLorentz::clone() const final
 
         """
         return _libBornAgainCore.DistributionLorentz_clone(self)
@@ -7577,9 +7624,9 @@ class DistributionLorentz(IDistribution1D):
         """
         probabilityDensity(DistributionLorentz self, double x) -> double
 
-        double DistributionLorentz::probabilityDensity(double x) const
+        double DistributionLorentz::probabilityDensity(double x) const final
 
-        get the probability density for value x 
+        Returns the distribution-specific probability density for value x. 
 
         """
         return _libBornAgainCore.DistributionLorentz_probabilityDensity(self, x)
@@ -7589,9 +7636,9 @@ class DistributionLorentz(IDistribution1D):
         """
         getMean(DistributionLorentz self) -> double
 
-        virtual double DistributionLorentz::getMean() const
+        double DistributionLorentz::getMean() const final
 
-        Returns the mean of the distribution. 
+        Returns the distribution-specific mean. 
 
         """
         return _libBornAgainCore.DistributionLorentz_getMean(self)
@@ -7603,8 +7650,6 @@ class DistributionLorentz(IDistribution1D):
 
         double DistributionLorentz::getHWHM() const
 
-        Returns the half width at half maximum. 
-
         """
         return _libBornAgainCore.DistributionLorentz_getHWHM(self)
 
@@ -7613,6 +7658,11 @@ class DistributionLorentz(IDistribution1D):
         """
         equidistantPoints(DistributionLorentz self, size_t nbr_samples, double sigma_factor, RealLimits limits) -> vdouble1d_t
         equidistantPoints(DistributionLorentz self, size_t nbr_samples, double sigma_factor) -> vdouble1d_t
+
+        std::vector< double > DistributionLorentz::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+
+        generate list of sample values 
+
         """
         return _libBornAgainCore.DistributionLorentz_equidistantPoints(self, *args)
 
@@ -7621,9 +7671,9 @@ class DistributionLorentz(IDistribution1D):
         """
         isDelta(DistributionLorentz self) -> bool
 
-        bool DistributionLorentz::isDelta() const
+        bool DistributionLorentz::isDelta() const final
 
-        signals that the distribution is in the limit case of a delta distribution 
+        Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 
         """
         return _libBornAgainCore.DistributionLorentz_isDelta(self)
@@ -7671,9 +7721,7 @@ class DistributionGaussian(IDistribution1D):
         """
         clone(DistributionGaussian self) -> DistributionGaussian
 
-        virtual DistributionGaussian* DistributionGaussian::clone() const
-
-        clone method 
+        DistributionGaussian* DistributionGaussian::clone() const final
 
         """
         return _libBornAgainCore.DistributionGaussian_clone(self)
@@ -7683,9 +7731,9 @@ class DistributionGaussian(IDistribution1D):
         """
         probabilityDensity(DistributionGaussian self, double x) -> double
 
-        double DistributionGaussian::probabilityDensity(double x) const
+        double DistributionGaussian::probabilityDensity(double x) const final
 
-        get the probability density for value x 
+        Returns the distribution-specific probability density for value x. 
 
         """
         return _libBornAgainCore.DistributionGaussian_probabilityDensity(self, x)
@@ -7695,9 +7743,9 @@ class DistributionGaussian(IDistribution1D):
         """
         getMean(DistributionGaussian self) -> double
 
-        virtual double DistributionGaussian::getMean() const
+        double DistributionGaussian::getMean() const final
 
-        Returns the mean of the distribution. 
+        Returns the distribution-specific mean. 
 
         """
         return _libBornAgainCore.DistributionGaussian_getMean(self)
@@ -7709,8 +7757,6 @@ class DistributionGaussian(IDistribution1D):
 
         double DistributionGaussian::getStdDev() const
 
-        Returns the standard deviation. 
-
         """
         return _libBornAgainCore.DistributionGaussian_getStdDev(self)
 
@@ -7719,6 +7765,11 @@ class DistributionGaussian(IDistribution1D):
         """
         equidistantPoints(DistributionGaussian self, size_t nbr_samples, double sigma_factor, RealLimits limits) -> vdouble1d_t
         equidistantPoints(DistributionGaussian self, size_t nbr_samples, double sigma_factor) -> vdouble1d_t
+
+        std::vector< double > DistributionGaussian::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+
+        generate list of sample values 
+
         """
         return _libBornAgainCore.DistributionGaussian_equidistantPoints(self, *args)
 
@@ -7727,9 +7778,9 @@ class DistributionGaussian(IDistribution1D):
         """
         isDelta(DistributionGaussian self) -> bool
 
-        bool DistributionGaussian::isDelta() const
+        bool DistributionGaussian::isDelta() const final
 
-        signals that the distribution is in the limit case of a delta distribution 
+        Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 
         """
         return _libBornAgainCore.DistributionGaussian_isDelta(self)
@@ -7777,9 +7828,7 @@ class DistributionLogNormal(IDistribution1D):
         """
         clone(DistributionLogNormal self) -> DistributionLogNormal
 
-        virtual DistributionLogNormal* DistributionLogNormal::clone() const
-
-        clone method 
+        DistributionLogNormal* DistributionLogNormal::clone() const final
 
         """
         return _libBornAgainCore.DistributionLogNormal_clone(self)
@@ -7789,9 +7838,9 @@ class DistributionLogNormal(IDistribution1D):
         """
         probabilityDensity(DistributionLogNormal self, double x) -> double
 
-        double DistributionLogNormal::probabilityDensity(double x) const
+        double DistributionLogNormal::probabilityDensity(double x) const final
 
-        get the probability density for value x 
+        Returns the distribution-specific probability density for value x. 
 
         """
         return _libBornAgainCore.DistributionLogNormal_probabilityDensity(self, x)
@@ -7801,9 +7850,9 @@ class DistributionLogNormal(IDistribution1D):
         """
         getMean(DistributionLogNormal self) -> double
 
-        double DistributionLogNormal::getMean() const
+        double DistributionLogNormal::getMean() const final
 
-        get the mean of the distribution 
+        Returns the distribution-specific mean. 
 
         """
         return _libBornAgainCore.DistributionLogNormal_getMean(self)
@@ -7815,8 +7864,6 @@ class DistributionLogNormal(IDistribution1D):
 
         double DistributionLogNormal::getMedian() const
 
-        Returns the median of the distribution. 
-
         """
         return _libBornAgainCore.DistributionLogNormal_getMedian(self)
 
@@ -7827,8 +7874,6 @@ class DistributionLogNormal(IDistribution1D):
 
         double DistributionLogNormal::getScalePar() const
 
-        Returns the scale parameter of the distribution. 
-
         """
         return _libBornAgainCore.DistributionLogNormal_getScalePar(self)
 
@@ -7837,6 +7882,11 @@ class DistributionLogNormal(IDistribution1D):
         """
         equidistantPoints(DistributionLogNormal self, size_t nbr_samples, double sigma_factor, RealLimits limits) -> vdouble1d_t
         equidistantPoints(DistributionLogNormal self, size_t nbr_samples, double sigma_factor) -> vdouble1d_t
+
+        std::vector< double > DistributionLogNormal::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+
+        generate list of sample values 
+
         """
         return _libBornAgainCore.DistributionLogNormal_equidistantPoints(self, *args)
 
@@ -7845,9 +7895,9 @@ class DistributionLogNormal(IDistribution1D):
         """
         isDelta(DistributionLogNormal self) -> bool
 
-        bool DistributionLogNormal::isDelta() const
+        bool DistributionLogNormal::isDelta() const final
 
-        signals that the distribution is in the limit case of a delta distribution 
+        Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 
         """
         return _libBornAgainCore.DistributionLogNormal_isDelta(self)
@@ -7895,9 +7945,7 @@ class DistributionCosine(IDistribution1D):
         """
         clone(DistributionCosine self) -> DistributionCosine
 
-        virtual DistributionCosine* DistributionCosine::clone() const
-
-        clone method 
+        DistributionCosine* DistributionCosine::clone() const final
 
         """
         return _libBornAgainCore.DistributionCosine_clone(self)
@@ -7907,9 +7955,9 @@ class DistributionCosine(IDistribution1D):
         """
         probabilityDensity(DistributionCosine self, double x) -> double
 
-        double DistributionCosine::probabilityDensity(double x) const
+        double DistributionCosine::probabilityDensity(double x) const final
 
-        get the probability density for value x 
+        Returns the distribution-specific probability density for value x. 
 
         """
         return _libBornAgainCore.DistributionCosine_probabilityDensity(self, x)
@@ -7919,9 +7967,9 @@ class DistributionCosine(IDistribution1D):
         """
         getMean(DistributionCosine self) -> double
 
-        virtual double DistributionCosine::getMean() const
+        double DistributionCosine::getMean() const final
 
-        Returns the mean of the distribution. 
+        Returns the distribution-specific mean. 
 
         """
         return _libBornAgainCore.DistributionCosine_getMean(self)
@@ -7933,8 +7981,6 @@ class DistributionCosine(IDistribution1D):
 
         double DistributionCosine::getSigma() const
 
-        Returns the sigma parameter of the distribution. 
-
         """
         return _libBornAgainCore.DistributionCosine_getSigma(self)
 
@@ -7943,6 +7989,11 @@ class DistributionCosine(IDistribution1D):
         """
         equidistantPoints(DistributionCosine self, size_t nbr_samples, double sigma_factor, RealLimits limits) -> vdouble1d_t
         equidistantPoints(DistributionCosine self, size_t nbr_samples, double sigma_factor) -> vdouble1d_t
+
+        std::vector< double > DistributionCosine::equidistantPoints(size_t nbr_samples, double sigma_factor, const RealLimits &limits=RealLimits()) const
+
+        generate list of sample values 
+
         """
         return _libBornAgainCore.DistributionCosine_equidistantPoints(self, *args)
 
@@ -7951,9 +8002,9 @@ class DistributionCosine(IDistribution1D):
         """
         isDelta(DistributionCosine self) -> bool
 
-        bool DistributionCosine::isDelta() const
+        bool DistributionCosine::isDelta() const final
 
-        signals that the distribution is in the limit case of a delta distribution 
+        Returns true if the distribution is in the limit case of a Dirac delta distribution. 
 
         """
         return _libBornAgainCore.DistributionCosine_isDelta(self)
@@ -7995,7 +8046,7 @@ class DetectorMask(_object):
         """
         addMask(DetectorMask self, IShape2D shape, bool mask_value)
 
-        void DetectorMask::addMask(const Geometry::IShape2D &shape, bool mask_value)
+        void DetectorMask::addMask(const IShape2D &shape, bool mask_value)
 
         Add mask to the stack of detector masks. The value "true" means that the area will be excluded from the analysis.
 
@@ -8101,7 +8152,7 @@ class DetectorMask(_object):
         """
         getMaskShape(DetectorMask self, size_t mask_index, bool & mask_value) -> IShape2D
 
-        const Geometry::IShape2D * DetectorMask::getMaskShape(size_t mask_index, bool &mask_value) const
+        const IShape2D * DetectorMask::getMaskShape(size_t mask_index, bool &mask_value) const
 
         """
         return _libBornAgainCore.DetectorMask_getMaskShape(self, mask_index, mask_value)
@@ -8112,7 +8163,14 @@ DetectorMask_swigregister = _libBornAgainCore.DetectorMask_swigregister
 DetectorMask_swigregister(DetectorMask)
 
 class Ellipse(IShape2D):
-    """Proxy of C++ Ellipse class."""
+    """
+
+
+    Ellipse shape.
+
+    C++ includes: Ellipse.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -8128,6 +8186,27 @@ class Ellipse(IShape2D):
         """
         __init__(Ellipse self, double xcenter, double ycenter, double xradius, double yradius, double theta=0.0) -> Ellipse
         __init__(Ellipse self, double xcenter, double ycenter, double xradius, double yradius) -> Ellipse
+
+        Ellipse::Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta=0.0)
+
+        Parameters:
+        -----------
+
+        xcenter: 
+        x-coordinate of  Ellipse's center
+
+        ycenter: 
+        y-coordinate of  Ellipse's center
+
+        xradius: 
+        Radius along x-axis
+
+        yradius: 
+        Radius along y-axis
+
+        theta: 
+        Angle of  Ellipse rotation in radians 
+
         """
         this = _libBornAgainCore.new_Ellipse(xcenter, ycenter, xradius, yradius, theta)
         try:
@@ -8139,7 +8218,7 @@ class Ellipse(IShape2D):
         """
         clone(Ellipse self) -> Ellipse
 
-        virtual ICloneable* ICloneable::clone() const =0
+        Ellipse* Ellipse::clone() const
 
         """
         return _libBornAgainCore.Ellipse_clone(self)
@@ -8149,32 +8228,62 @@ class Ellipse(IShape2D):
         """
         contains(Ellipse self, double x, double y) -> bool
         contains(Ellipse self, Bin1D binx, Bin1D biny) -> bool
+
+        bool Ellipse::contains(const Bin1D &binx, const Bin1D &biny) const
+
+        Returns true if area defined by two bins is inside or on border of ellipse; more precisely, if mid point of two bins satisfy this condition. 
+
         """
         return _libBornAgainCore.Ellipse_contains(self, *args)
 
 
     def getCenterX(self):
-        """getCenterX(Ellipse self) -> double"""
+        """
+        getCenterX(Ellipse self) -> double
+
+        double Ellipse::getCenterX() const
+
+        """
         return _libBornAgainCore.Ellipse_getCenterX(self)
 
 
     def getCenterY(self):
-        """getCenterY(Ellipse self) -> double"""
+        """
+        getCenterY(Ellipse self) -> double
+
+        double Ellipse::getCenterY() const
+
+        """
         return _libBornAgainCore.Ellipse_getCenterY(self)
 
 
     def getRadiusX(self):
-        """getRadiusX(Ellipse self) -> double"""
+        """
+        getRadiusX(Ellipse self) -> double
+
+        double Ellipse::getRadiusX() const
+
+        """
         return _libBornAgainCore.Ellipse_getRadiusX(self)
 
 
     def getRadiusY(self):
-        """getRadiusY(Ellipse self) -> double"""
+        """
+        getRadiusY(Ellipse self) -> double
+
+        double Ellipse::getRadiusY() const
+
+        """
         return _libBornAgainCore.Ellipse_getRadiusY(self)
 
 
     def getTheta(self):
-        """getTheta(Ellipse self) -> double"""
+        """
+        getTheta(Ellipse self) -> double
+
+        double Ellipse::getTheta() const
+
+        """
         return _libBornAgainCore.Ellipse_getTheta(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_Ellipse
@@ -9652,7 +9761,7 @@ class FixedBinAxis(IAxis):
     """
 
 
-    Axis with fixed bin size.
+    Axis with bins of uniform size.
 
     C++ includes: FixedBinAxis.h
 
@@ -9704,7 +9813,7 @@ class FixedBinAxis(IAxis):
         """
         clone(FixedBinAxis self) -> FixedBinAxis
 
-        FixedBinAxis * FixedBinAxis::clone() const
+        FixedBinAxis* FixedBinAxis::clone() const final
 
         clone function 
 
@@ -15082,7 +15191,9 @@ class SimulationOptions(_object):
     """
 
 
-    Collect the different options for simulation  SimulationOptions.
+    Collect the different options for simulation.
+
+    SimulationOptions
 
     C++ includes: SimulationOptions.h
 
@@ -15421,7 +15532,7 @@ class GISASSimulation(Simulation):
         addMask(GISASSimulation self, IShape2D shape, bool mask_value=True)
         addMask(GISASSimulation self, IShape2D shape)
 
-        void GISASSimulation::addMask(const Geometry::IShape2D &shape, bool mask_value=true)
+        void GISASSimulation::addMask(const IShape2D &shape, bool mask_value=true)
 
         Adds mask of given shape to the stack of detector masks. The mask value 'true' means that the channel will be excluded from the simulation. The mask which is added last has priority.
 
@@ -15429,7 +15540,7 @@ class GISASSimulation(Simulation):
         -----------
 
         shape: 
-        The shape of mask (Rectangle, Polygon, Line, Ellipse)
+        The shape of mask ( Rectangle,  Polygon,  Line,  Ellipse)
 
         mask_value: 
         The value of mask 
@@ -15647,9 +15758,7 @@ class IHistogram(_object):
         x-axis bin index
 
         biny: 
-        y-axis bin index (for 2D histograms)
-
-        The global bin index 
+        y-axis bin index (for 2D histograms) 
 
         """
         return _libBornAgainCore.IHistogram_getGlobalBin(self, binx, biny)
@@ -15661,7 +15770,7 @@ class IHistogram(_object):
 
         size_t IHistogram::findGlobalBin(double x, double y) const
 
-        Returns closest global bin index for given axes coordinates. For 1D.
+        Returns closest global bin index for given axes coordinates. For 1D
 
         Parameters:
         -----------
@@ -15670,9 +15779,7 @@ class IHistogram(_object):
         Value on x-axis
 
         y: 
-        Value on y-axis (for 2D histograms)
-
-        Closest global bin index 
+        Value on y-axis (for 2D histograms) 
 
         """
         return _libBornAgainCore.IHistogram_findGlobalBin(self, x, y)
@@ -15708,15 +15815,13 @@ class IHistogram(_object):
 
         double IHistogram::getXaxisValue(size_t i)
 
-        Returns the value on x-axis corresponding to the global bin index.
+        Returns the center of the x-axis bin at the given global bin index.
 
         Parameters:
         -----------
 
         globalbin: 
-        The global bin index
-
-        The center of corresponding bin of the axis 
+        The global bin index 
 
         """
         return _libBornAgainCore.IHistogram_getXaxisValue(self, i)
@@ -15728,15 +15833,13 @@ class IHistogram(_object):
 
         double IHistogram::getYaxisValue(size_t i)
 
-        Returns the value on y-axis corresponding to the 2D histogram global bin index.
+        Returns the center of the y-axis bin at the given global bin index.
 
         Parameters:
         -----------
 
         globalbin: 
-        The global bin index
-
-        The center of corresponding bin of the axis 
+        The global bin index 
 
         """
         return _libBornAgainCore.IHistogram_getYaxisValue(self, i)
@@ -15769,9 +15872,7 @@ class IHistogram(_object):
         x-axis bin index
 
         biny: 
-        y-axis bin index
-
-        The value accumulated by the bin (integral) 
+        y-axis bin index 
 
         """
         return _libBornAgainCore.IHistogram_getBinContent(self, *args)
@@ -16045,7 +16146,14 @@ def IHistogram_createFrom(*args):
     return _libBornAgainCore.IHistogram_createFrom(*args)
 
 class Histogram1D(IHistogram):
-    """Proxy of C++ Histogram1D class."""
+    """
+
+
+    One dimensional histogram.
+
+    C++ includes: Histogram1D.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IHistogram]:
@@ -16394,14 +16502,19 @@ class IMaterial(INamed):
         """
         clone(IMaterial self) -> IMaterial
 
-        IMaterial * IMaterial::clone() const
+        virtual IMaterial* IMaterial::clone() const =0
 
         """
         return _libBornAgainCore.IMaterial_clone(self)
 
 
     def cloneInverted(self):
-        """cloneInverted(IMaterial self) -> IMaterial"""
+        """
+        cloneInverted(IMaterial self) -> IMaterial
+
+        virtual IMaterial* IMaterial::cloneInverted() const =0
+
+        """
         return _libBornAgainCore.IMaterial_cloneInverted(self)
 
 
@@ -16505,7 +16618,12 @@ class HomogeneousMaterial(IMaterial):
 
 
     def cloneInverted(self):
-        """cloneInverted(HomogeneousMaterial self) -> HomogeneousMaterial"""
+        """
+        cloneInverted(HomogeneousMaterial self) -> HomogeneousMaterial
+
+        virtual HomogeneousMaterial* HomogeneousMaterial::cloneInverted() const
+
+        """
         return _libBornAgainCore.HomogeneousMaterial_cloneInverted(self)
 
 
@@ -16583,16 +16701,19 @@ class HomogeneousMagneticMaterial(HomogeneousMaterial):
         """
         clone(HomogeneousMagneticMaterial self) -> HomogeneousMagneticMaterial
 
-        HomogeneousMagneticMaterial * HomogeneousMagneticMaterial::clone() const
-
-        Clone. 
+        HomogeneousMagneticMaterial * HomogeneousMagneticMaterial::clone() const final
 
         """
         return _libBornAgainCore.HomogeneousMagneticMaterial_clone(self)
 
 
     def cloneInverted(self):
-        """cloneInverted(HomogeneousMagneticMaterial self) -> HomogeneousMagneticMaterial"""
+        """
+        cloneInverted(HomogeneousMagneticMaterial self) -> HomogeneousMagneticMaterial
+
+        HomogeneousMagneticMaterial * HomogeneousMagneticMaterial::cloneInverted() const final
+
+        """
         return _libBornAgainCore.HomogeneousMagneticMaterial_cloneInverted(self)
 
 
@@ -16624,7 +16745,7 @@ class HomogeneousMagneticMaterial(HomogeneousMaterial):
         """
         isScalarMaterial(HomogeneousMagneticMaterial self) -> bool
 
-        virtual bool HomogeneousMagneticMaterial::isScalarMaterial() const
+        bool HomogeneousMagneticMaterial::isScalarMaterial() const final
 
         Indicates that the material is not scalar. This means that different polarization states will be diffracted differently 
 
@@ -16636,7 +16757,7 @@ class HomogeneousMagneticMaterial(HomogeneousMaterial):
         """
         createTransformedMaterial(HomogeneousMagneticMaterial self, Transform3D const & transform) -> IMaterial
 
-        const IMaterial * HomogeneousMagneticMaterial::createTransformedMaterial(const Transform3D &transform) const
+        const IMaterial * HomogeneousMagneticMaterial::createTransformedMaterial(const Transform3D &transform) const final
 
         Create a new material that is transformed with respect to this one. 
 
@@ -16649,7 +16770,14 @@ HomogeneousMagneticMaterial_swigregister = _libBornAgainCore.HomogeneousMagnetic
 HomogeneousMagneticMaterial_swigregister(HomogeneousMagneticMaterial)
 
 class IDetector2D(ICloneable, IParameterized):
-    """Proxy of C++ IDetector2D class."""
+    """
+
+
+    Pure virtual detector interface.
+
+    C++ includes: IDetector2D.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [ICloneable, IParameterized]:
@@ -16810,7 +16938,7 @@ class IDetector2D(ICloneable, IParameterized):
 
         void IDetector2D::removeMasks()
 
-        removes all masks from the detector 
+        Removes all masks from the detector. 
 
         """
         return _libBornAgainCore.IDetector2D_removeMasks(self)
@@ -16821,7 +16949,7 @@ class IDetector2D(ICloneable, IParameterized):
         addMask(IDetector2D self, IShape2D shape, bool mask_value=True)
         addMask(IDetector2D self, IShape2D shape)
 
-        void IDetector2D::addMask(const Geometry::IShape2D &shape, bool mask_value=true)
+        void IDetector2D::addMask(const IShape2D &shape, bool mask_value=true)
 
         Adds mask of given shape to the stack of detector masks. The mask value 'true' means that the channel will be excluded from the simulation. The mask which is added last has priority.
 
@@ -16829,7 +16957,7 @@ class IDetector2D(ICloneable, IParameterized):
         -----------
 
         shape: 
-        The shape of mask (Rectangle, Polygon, Line, Ellipse)
+        The shape of mask ( Rectangle,  Polygon,  Line,  Ellipse)
 
         mask_value: 
         The value of mask 
@@ -16935,7 +17063,7 @@ class IDetector2D(ICloneable, IParameterized):
 
         std::vector< IDetector2D::EAxesUnits > IDetector2D::getValidAxesUnits() const
 
-        returns vector of valid axes units 
+        Returns vector of valid axes units. 
 
         """
         return _libBornAgainCore.IDetector2D_getValidAxesUnits(self)
@@ -16947,7 +17075,7 @@ class IDetector2D(ICloneable, IParameterized):
 
         virtual EAxesUnits IDetector2D::getDefaultAxesUnits() const
 
-        return default axes units 
+        Return default axes units. 
 
         """
         return _libBornAgainCore.IDetector2D_getDefaultAxesUnits(self)
@@ -17031,7 +17159,7 @@ class IDetectorResolution(ICloneable, IParameterized):
     """
 
 
-    Interface for detector resolution algorithms.
+    Interface for detector resolution algorithms
 
     C++ includes: IDetectorResolution.h
 
@@ -17758,9 +17886,7 @@ class IRotation(ISample):
     """
 
 
-    must be subclass of sample, because it can be registered as a child in  ICompositeSample
-
-    An interface for classes representing a rotation.
+    Pure virtual interface for rotations. Must be subclass of sample, because it can be registered as a child in  ICompositeSample.
 
     C++ includes: Rotations.h
 
@@ -18617,7 +18743,7 @@ def getRelativeDifference(*args):
     getRelativeDifference(IntensityData dat, IntensityData ref) -> double
     getRelativeDifference(IHistogram dat, IHistogram ref) -> double
 
-    BA_CORE_API_ double IntensityDataFunctions::getRelativeDifference(const IHistogram &dat, const IHistogram &ref)
+    double IntensityDataFunctions::getRelativeDifference(const IHistogram &dat, const IHistogram &ref)
 
     """
     return _libBornAgainCore.getRelativeDifference(*args)
@@ -18626,7 +18752,7 @@ def createRelativeDifferenceData(data, reference):
     """
     createRelativeDifferenceData(IntensityData data, IntensityData reference) -> IntensityData
 
-    BA_CORE_API_ OutputData<double>* IntensityDataFunctions::createRelativeDifferenceData(const OutputData< double > &data, const OutputData< double > &reference)
+    OutputData< double > * IntensityDataFunctions::createRelativeDifferenceData(const OutputData< double > &data, const OutputData< double > &reference)
 
     """
     return _libBornAgainCore.createRelativeDifferenceData(data, reference)
@@ -18635,9 +18761,9 @@ def createClippedDataSet(origin, x1, y1, x2, y2):
     """
     createClippedDataSet(IntensityData origin, double x1, double y1, double x2, double y2) -> IntensityData
 
-    BA_CORE_API_ OutputData<double>* IntensityDataFunctions::createClippedDataSet(const OutputData< double > &origin, double x1, double y1, double x2, double y2)
+    OutputData< double > * IntensityDataFunctions::createClippedDataSet(const OutputData< double > &origin, double x1, double y1, double x2, double y2)
 
-    Returns new IntensityData objects which axes clipped to represent the specified rectangle 
+    Returns new IntensityData objects which axes clipped to represent the specified rectangle. 
 
     """
     return _libBornAgainCore.createClippedDataSet(origin, x1, y1, x2, y2)
@@ -18646,7 +18772,7 @@ def applyDetectorResolution(origin, resolution_function):
     """
     applyDetectorResolution(IntensityData origin, IResolutionFunction2D resolution_function) -> IntensityData
 
-    BA_CORE_API_ OutputData<double>* IntensityDataFunctions::applyDetectorResolution(const OutputData< double > &origin, const IResolutionFunction2D &resolution_function)
+    OutputData< double > * IntensityDataFunctions::applyDetectorResolution(const OutputData< double > &origin, const IResolutionFunction2D &resolution_function)
 
     Applies detector resolution function and returns new IntensityData object. 
 
@@ -18658,9 +18784,9 @@ def coordinateToBinf(*args):
     coordinateToBinf(double coordinate, IAxis axis) -> double
     coordinateToBinf(double & x, double & y, IntensityData data)
 
-    BA_CORE_API_ void IntensityDataFunctions::coordinateToBinf(double &x, double &y, const OutputData< double > &data)
+    void IntensityDataFunctions::coordinateToBinf(double &x, double &y, const OutputData< double > &data)
 
-    Transform x,y coordinate from  OutputData axes coordinates to bin-fraction-coordinates 
+    Transforms x,y coordinate from  OutputData axes coordinates to bin-fraction-coordinates. 
 
     """
     return _libBornAgainCore.coordinateToBinf(*args)
@@ -18670,9 +18796,9 @@ def coordinateFromBinf(*args):
     coordinateFromBinf(double value, IAxis axis) -> double
     coordinateFromBinf(double & x, double & y, IntensityData data)
 
-    BA_CORE_API_ void IntensityDataFunctions::coordinateFromBinf(double &x, double &y, const OutputData< double > &data)
+    void IntensityDataFunctions::coordinateFromBinf(double &x, double &y, const OutputData< double > &data)
 
-    Transform x,y coordinate from bin-fraction-coordinates to  OutputData's axes coordinates 
+    Transforms x,y coordinate from bin-fraction-coordinates to  OutputData's axes coordinates. 
 
     """
     return _libBornAgainCore.coordinateFromBinf(*args)
@@ -18680,9 +18806,7 @@ class IntensityDataIOFactory(_object):
     """
 
 
-    Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int - BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth "*.gz" or "*.bz2" the file will be zipped on the fly using appropriate algorithm.
-
-    Usage:
+    Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int -  BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth "*.gz" or "*.bz2" the file will be zipped on the fly using appropriate algorithm. Usage:
 
     C++ includes: IntensityDataIOFactory.h
 
@@ -18732,9 +18856,7 @@ class IntensityDataIOFactory(_object):
 
 
 
-        Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int - BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth "*.gz" or "*.bz2" the file will be zipped on the fly using appropriate algorithm.
-
-        Usage:
+        Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int -  BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth "*.gz" or "*.bz2" the file will be zipped on the fly using appropriate algorithm. Usage:
 
         C++ includes: IntensityDataIOFactory.h
 
@@ -20439,7 +20561,7 @@ class LayerRoughness(IRoughness):
         __init__(LayerRoughness self) -> LayerRoughness
         __init__(LayerRoughness self, double sigma, double hurstParameter, double lateralCorrLength) -> LayerRoughness
 
-        LayerRoughness::LayerRoughness(double sigma, double hurstParameter, double latteralCorrLength)
+        LayerRoughness::LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength)
 
         """
         this = _libBornAgainCore.new_LayerRoughness(*args)
@@ -20552,7 +20674,7 @@ class LayerRoughness(IRoughness):
         """
         setLatteralCorrLength(LayerRoughness self, double lateralCorrLength)
 
-        void LayerRoughness::setLatteralCorrLength(double latteralCorrLength)
+        void LayerRoughness::setLatteralCorrLength(double lateralCorrLength)
 
         Sets lateral correlation length. 
 
@@ -20566,7 +20688,7 @@ class LayerRoughness(IRoughness):
 
         double LayerRoughness::getLatteralCorrLength() const
 
-        Returns latteral correlation length. 
+        Returns lateral correlation length. 
 
         """
         return _libBornAgainCore.LayerRoughness_getLatteralCorrLength(self)
@@ -20577,7 +20699,14 @@ LayerRoughness_swigregister = _libBornAgainCore.LayerRoughness_swigregister
 LayerRoughness_swigregister(LayerRoughness)
 
 class Line(IShape2D):
-    """Proxy of C++ Line class."""
+    """
+
+
+    A line segment.
+
+    C++ includes: Line.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -20590,7 +20719,12 @@ class Line(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, x1, y1, x2, y2):
-        """__init__(Line self, double x1, double y1, double x2, double y2) -> Line"""
+        """
+        __init__(Line self, double x1, double y1, double x2, double y2) -> Line
+
+        Line::Line(double x1, double y1, double x2, double y2)
+
+        """
         this = _libBornAgainCore.new_Line(x1, y1, x2, y2)
         try:
             self.this.append(this)
@@ -20601,7 +20735,7 @@ class Line(IShape2D):
         """
         clone(Line self) -> Line
 
-        virtual ICloneable* ICloneable::clone() const =0
+        Line* Line::clone() const
 
         """
         return _libBornAgainCore.Line_clone(self)
@@ -20611,6 +20745,11 @@ class Line(IShape2D):
         """
         contains(Line self, double x, double y) -> bool
         contains(Line self, Bin1D binx, Bin1D biny) -> bool
+
+        bool Line::contains(const Bin1D &binx, const Bin1D &biny) const
+
+        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
+
         """
         return _libBornAgainCore.Line_contains(self, *args)
 
@@ -20620,7 +20759,14 @@ Line_swigregister = _libBornAgainCore.Line_swigregister
 Line_swigregister(Line)
 
 class VerticalLine(IShape2D):
-    """Proxy of C++ VerticalLine class."""
+    """
+
+
+    An infinite vertical line.
+
+    C++ includes: Line.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -20633,7 +20779,18 @@ class VerticalLine(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, x):
-        """__init__(VerticalLine self, double x) -> VerticalLine"""
+        """
+        __init__(VerticalLine self, double x) -> VerticalLine
+
+        VerticalLine::VerticalLine(double x)
+
+        Parameters:
+        -----------
+
+        x: 
+        The value at which it crosses x-axes 
+
+        """
         this = _libBornAgainCore.new_VerticalLine(x)
         try:
             self.this.append(this)
@@ -20644,7 +20801,7 @@ class VerticalLine(IShape2D):
         """
         clone(VerticalLine self) -> VerticalLine
 
-        virtual ICloneable* ICloneable::clone() const =0
+        VerticalLine* VerticalLine::clone() const
 
         """
         return _libBornAgainCore.VerticalLine_clone(self)
@@ -20654,12 +20811,22 @@ class VerticalLine(IShape2D):
         """
         contains(VerticalLine self, double x, double y) -> bool
         contains(VerticalLine self, Bin1D binx, Bin1D biny) -> bool
+
+        bool VerticalLine::contains(const Bin1D &binx, const Bin1D &biny) const
+
+        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
+
         """
         return _libBornAgainCore.VerticalLine_contains(self, *args)
 
 
     def getXpos(self):
-        """getXpos(VerticalLine self) -> double"""
+        """
+        getXpos(VerticalLine self) -> double
+
+        double VerticalLine::getXpos() const
+
+        """
         return _libBornAgainCore.VerticalLine_getXpos(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_VerticalLine
@@ -20668,7 +20835,14 @@ VerticalLine_swigregister = _libBornAgainCore.VerticalLine_swigregister
 VerticalLine_swigregister(VerticalLine)
 
 class HorizontalLine(IShape2D):
-    """Proxy of C++ HorizontalLine class."""
+    """
+
+
+    An infinite horizontal line.
+
+    C++ includes: Line.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -20681,7 +20855,18 @@ class HorizontalLine(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, y):
-        """__init__(HorizontalLine self, double y) -> HorizontalLine"""
+        """
+        __init__(HorizontalLine self, double y) -> HorizontalLine
+
+        HorizontalLine::HorizontalLine(double y)
+
+        Parameters:
+        -----------
+
+        y: 
+        The value at which it crosses y-axes 
+
+        """
         this = _libBornAgainCore.new_HorizontalLine(y)
         try:
             self.this.append(this)
@@ -20692,7 +20877,7 @@ class HorizontalLine(IShape2D):
         """
         clone(HorizontalLine self) -> HorizontalLine
 
-        virtual ICloneable* ICloneable::clone() const =0
+        HorizontalLine* HorizontalLine::clone() const
 
         """
         return _libBornAgainCore.HorizontalLine_clone(self)
@@ -20702,12 +20887,22 @@ class HorizontalLine(IShape2D):
         """
         contains(HorizontalLine self, double x, double y) -> bool
         contains(HorizontalLine self, Bin1D binx, Bin1D biny) -> bool
+
+        bool HorizontalLine::contains(const Bin1D &binx, const Bin1D &biny) const
+
+        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
+
         """
         return _libBornAgainCore.HorizontalLine_contains(self, *args)
 
 
     def getYpos(self):
-        """getYpos(HorizontalLine self) -> double"""
+        """
+        getYpos(HorizontalLine self) -> double
+
+        double HorizontalLine::getYpos() const
+
+        """
         return _libBornAgainCore.HorizontalLine_getYpos(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_HorizontalLine
@@ -21582,9 +21777,7 @@ class IntensityData(_object):
         -----------
 
         global_index: 
-        The global index of this data structure.
-
-        Vector of bin indices for all axes defined 
+        The global index of this data structure. 
 
         """
         return _libBornAgainCore.IntensityData_getAxesBinIndices(self, global_index)
@@ -21606,9 +21799,7 @@ class IntensityData(_object):
         The global index of this data structure.
 
         axis_name: 
-        The name of selected axis.
-
-        Corresponding bin index for selected axis 
+        The name of selected axis. 
 
         """
         return _libBornAgainCore.IntensityData_getAxisBinIndex(self, *args)
@@ -21626,9 +21817,7 @@ class IntensityData(_object):
         -----------
 
         axes_indices: 
-        Vector of axes indices for all specified axes in this dataset
-
-        Corresponding global index 
+        Vector of axes indices for all specified axes in this dataset 
 
         """
         return _libBornAgainCore.IntensityData_toGlobalIndex(self, axes_indices)
@@ -21640,15 +21829,13 @@ class IntensityData(_object):
 
         size_t OutputData< T >::findGlobalIndex(const std::vector< double > &coordinates) const
 
-        Returns global index for specified axes values
+        Returns closest global index for specified axes values
 
         Parameters:
         -----------
 
         coordinates: 
-        Vector of axes coordinates for all specified axes in this dataset
-
-        Closest global index 
+        Vector of axes coordinates for all specified axes in this dataset 
 
         """
         return _libBornAgainCore.IntensityData_findGlobalIndex(self, coordinates)
@@ -21670,9 +21857,7 @@ class IntensityData(_object):
         The global index of this data structure.
 
         axis_name: 
-        The name of selected axis.
-
-        corresponding bin center of selected axis 
+        The name of selected axis. 
 
         """
         return _libBornAgainCore.IntensityData_getAxisValue(self, *args)
@@ -21690,9 +21875,7 @@ class IntensityData(_object):
         -----------
 
         global_index: 
-        The global index of this data structure.
-
-        Vector of corresponding bin centers 
+        The global index of this data structure. 
 
         """
         return _libBornAgainCore.IntensityData_getAxesValues(self, global_index)
@@ -21714,9 +21897,7 @@ class IntensityData(_object):
         The global index of this data structure.
 
         axis_name: 
-        The name of selected axis.
-
-        Corresponding  Bin1D object 
+        The name of selected axis. 
 
         """
         return _libBornAgainCore.IntensityData_getAxisBin(self, *args)
@@ -22161,14 +22342,21 @@ class ParameterPool(_object):
 
         std::vector< RealParameter * > ParameterPool::getMatchedParameters(const std::string &wildcards) const
 
-        Returns vector of parameters that match the  pattern (wildcards '*' allowed). 
+        Returns nonempty vector of parameters that match the  pattern ('*' allowed), or throws. 
 
         """
         return _libBornAgainCore.ParameterPool_getMatchedParameters(self, wildcards)
 
 
     def getUniqueMatch(self, pattern):
-        """getUniqueMatch(ParameterPool self, std::string const & pattern) -> RealParameter"""
+        """
+        getUniqueMatch(ParameterPool self, std::string const & pattern) -> RealParameter
+
+        RealParameter * ParameterPool::getUniqueMatch(const std::string &pattern) const
+
+        Returns the one parameter that matches the  pattern (wildcards '*' allowed), or throws. 
+
+        """
         return _libBornAgainCore.ParameterPool_getUniqueMatch(self, pattern)
 
 
@@ -22190,14 +22378,21 @@ class ParameterPool(_object):
 
         int ParameterPool::setMatchedParametersValue(const std::string &wildcards, double value)
 
-        Sets parameter value. 
+        Sets value of the nonzero parameters that match  pattern ('*' allowed), or throws. 
 
         """
         return _libBornAgainCore.ParameterPool_setMatchedParametersValue(self, wildcards, value)
 
 
     def setUniqueMatchValue(self, pattern, value):
-        """setUniqueMatchValue(ParameterPool self, std::string const & pattern, double value)"""
+        """
+        setUniqueMatchValue(ParameterPool self, std::string const & pattern, double value)
+
+        void ParameterPool::setUniqueMatchValue(const std::string &pattern, double value)
+
+        Sets value of the one parameter that matches  pattern ('*' allowed), or throws. 
+
+        """
         return _libBornAgainCore.ParameterPool_setUniqueMatchValue(self, pattern, value)
 
 
@@ -22597,7 +22792,7 @@ class ParticleCoreShell(IParticle):
         """
         clone(ParticleCoreShell self) -> ParticleCoreShell
 
-        ParticleCoreShell * ParticleCoreShell::clone() const
+        ParticleCoreShell * ParticleCoreShell::clone() const final
 
         Returns a clone of this  ISample object. 
 
@@ -22609,7 +22804,7 @@ class ParticleCoreShell(IParticle):
         """
         cloneInvertB(ParticleCoreShell self) -> ParticleCoreShell
 
-        ParticleCoreShell * ParticleCoreShell::cloneInvertB() const
+        ParticleCoreShell * ParticleCoreShell::cloneInvertB() const final
 
         Returns a clone with inverted magnetic fields. 
 
@@ -22621,7 +22816,7 @@ class ParticleCoreShell(IParticle):
         """
         accept(ParticleCoreShell self, ISampleVisitor visitor)
 
-        virtual void ParticleCoreShell::accept(ISampleVisitor *visitor) const
+        void ParticleCoreShell::accept(ISampleVisitor *visitor) const final
 
         Calls the  ISampleVisitor's visit method. 
 
@@ -22633,7 +22828,7 @@ class ParticleCoreShell(IParticle):
         """
         setAmbientMaterial(ParticleCoreShell self, IMaterial material)
 
-        void ParticleCoreShell::setAmbientMaterial(const IMaterial &material)
+        void ParticleCoreShell::setAmbientMaterial(const IMaterial &material) final
 
         Sets the refractive index of the ambient material (which influences its scattering power) 
 
@@ -22645,7 +22840,7 @@ class ParticleCoreShell(IParticle):
         """
         getAmbientMaterial(ParticleCoreShell self) -> IMaterial
 
-        const IMaterial * ParticleCoreShell::getAmbientMaterial() const
+        const IMaterial * ParticleCoreShell::getAmbientMaterial() const final
 
         Returns nullptr, unless overwritten to return a specific material. 
 
@@ -22657,7 +22852,7 @@ class ParticleCoreShell(IParticle):
         """
         createTransformedFormFactor(ParticleCoreShell self, IRotation p_rotation, kvector_t translation) -> IFormFactor
 
-        IFormFactor * ParticleCoreShell::createTransformedFormFactor(const IRotation *p_rotation, kvector_t translation) const
+        IFormFactor * ParticleCoreShell::createTransformedFormFactor(const IRotation *p_rotation, kvector_t translation) const final
 
         Create a form factor for this particle with an extra scattering factor. 
 
@@ -22728,7 +22923,7 @@ class ParticleDistribution(IAbstractParticle):
         """
         clone(ParticleDistribution self) -> ParticleDistribution
 
-        ParticleDistribution * ParticleDistribution::clone() const
+        ParticleDistribution * ParticleDistribution::clone() const final
 
         Returns a clone of this  ISample object. 
 
@@ -22740,7 +22935,7 @@ class ParticleDistribution(IAbstractParticle):
         """
         cloneInvertB(ParticleDistribution self) -> ParticleDistribution
 
-        ParticleDistribution * ParticleDistribution::cloneInvertB() const
+        ParticleDistribution * ParticleDistribution::cloneInvertB() const final
 
         Returns a clone with inverted magnetic fields. 
 
@@ -22752,9 +22947,9 @@ class ParticleDistribution(IAbstractParticle):
         """
         accept(ParticleDistribution self, ISampleVisitor visitor)
 
-        void ParticleDistribution::accept(ISampleVisitor *visitor) const
+        void ParticleDistribution::accept(ISampleVisitor *visitor) const final
 
-        calls the  ISampleVisitor's visit method 
+        Calls the  ISampleVisitor's visit method. 
 
         """
         return _libBornAgainCore.ParticleDistribution_accept(self, visitor)
@@ -22765,9 +22960,9 @@ class ParticleDistribution(IAbstractParticle):
         to_str(ParticleDistribution self, int indent=0) -> std::string
         to_str(ParticleDistribution self) -> std::string
 
-        std::string ParticleDistribution::to_str(int indent=0) const
+        std::string ParticleDistribution::to_str(int indent=0) const final
 
-        Returns textual representation of* this and its descendants. 
+        Returns textual representation of *this and its descendants. 
 
         """
         return _libBornAgainCore.ParticleDistribution_to_str(self, indent)
@@ -22777,9 +22972,9 @@ class ParticleDistribution(IAbstractParticle):
         """
         setAmbientMaterial(ParticleDistribution self, IMaterial material)
 
-        void ParticleDistribution::setAmbientMaterial(const IMaterial &material)
+        void ParticleDistribution::setAmbientMaterial(const IMaterial &material) final
 
-        Sets the refractive index of the ambient material (which influences its scattering power) 
+        Sets the refractive index of the ambient material. 
 
         """
         return _libBornAgainCore.ParticleDistribution_setAmbientMaterial(self, material)
@@ -22789,7 +22984,7 @@ class ParticleDistribution(IAbstractParticle):
         """
         getAmbientMaterial(ParticleDistribution self) -> IMaterial
 
-        const IMaterial * ParticleDistribution::getAmbientMaterial() const
+        const IMaterial * ParticleDistribution::getAmbientMaterial() const final
 
         Returns particle's material. 
 
@@ -22801,9 +22996,11 @@ class ParticleDistribution(IAbstractParticle):
         """
         generateParticles(ParticleDistribution self) -> std::vector< IParticle const *,std::allocator< IParticle const * > >
 
-        void ParticleDistribution::generateParticles(std::vector< const IParticle * > &particle_vector) const
+        std::vector< const IParticle * > ParticleDistribution::generateParticles() const
 
-        Initializes list of new particles generated according to a distribution. 
+        Returns list of new particles generated according to a distribution.
+
+        Returns particle clones with parameter values drawn from distribution. 
 
         """
         return _libBornAgainCore.ParticleDistribution_generateParticles(self)
@@ -22825,7 +23022,7 @@ class ParticleDistribution(IAbstractParticle):
         """
         getParticle(ParticleDistribution self) -> IParticle
 
-        const IParticle * ParticleDistribution::getParticle() const
+        const IParticle* ParticleDistribution::getParticle() const
 
         Returns particle. 
 
@@ -23051,7 +23248,14 @@ ParticleLayout_swigregister = _libBornAgainCore.ParticleLayout_swigregister
 ParticleLayout_swigregister(ParticleLayout)
 
 class Polygon(IShape2D):
-    """Proxy of C++ Polygon class."""
+    """
+
+
+    A polygon in 2D space.Polygon defined by two arrays with x and y coordinates of points. Sizes of arrays should coincide. If polygon is unclosed (the last point doesn't repeat the first one), it will be closed automatically.
+
+    C++ includes: Polygon.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -23068,6 +23272,9 @@ class Polygon(IShape2D):
         __init__(Polygon self, vdouble1d_t x, vdouble1d_t y) -> Polygon
         __init__(Polygon self, vdouble2d_t points) -> Polygon
         __init__(Polygon self, PolygonPrivate const * d) -> Polygon
+
+        Polygon::Polygon(const PolygonPrivate *d)
+
         """
         this = _libBornAgainCore.new_Polygon(*args)
         try:
@@ -23081,7 +23288,7 @@ class Polygon(IShape2D):
         """
         clone(Polygon self) -> Polygon
 
-        virtual ICloneable* ICloneable::clone() const =0
+        virtual Polygon* Polygon::clone() const
 
         """
         return _libBornAgainCore.Polygon_clone(self)
@@ -23091,17 +23298,32 @@ class Polygon(IShape2D):
         """
         contains(Polygon self, double x, double y) -> bool
         contains(Polygon self, Bin1D binx, Bin1D biny) -> bool
+
+        bool Polygon::contains(const Bin1D &binx, const Bin1D &biny) const
+
+        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
+
         """
         return _libBornAgainCore.Polygon_contains(self, *args)
 
 
     def getArea(self):
-        """getArea(Polygon self) -> double"""
+        """
+        getArea(Polygon self) -> double
+
+        double Polygon::getArea() const
+
+        """
         return _libBornAgainCore.Polygon_getArea(self)
 
 
     def getPoints(self, xpos, ypos):
-        """getPoints(Polygon self, vdouble1d_t xpos, vdouble1d_t ypos)"""
+        """
+        getPoints(Polygon self, vdouble1d_t xpos, vdouble1d_t ypos)
+
+        void Polygon::getPoints(std::vector< double > &xpos, std::vector< double > &ypos) const
+
+        """
         return _libBornAgainCore.Polygon_getPoints(self, xpos, ypos)
 
 Polygon_swigregister = _libBornAgainCore.Polygon_swigregister
@@ -23257,7 +23479,14 @@ RealParameter_swigregister = _libBornAgainCore.RealParameter_swigregister
 RealParameter_swigregister(RealParameter)
 
 class Rectangle(IShape2D):
-    """Proxy of C++ Rectangle class."""
+    """
+
+
+    The rectangle shape having its axis aligned to the (non-rotated) coordinate system.
+
+    C++ includes: Rectangle.h
+
+    """
 
     __swig_setmethods__ = {}
     for _s in [IShape2D]:
@@ -23270,7 +23499,27 @@ class Rectangle(IShape2D):
     __repr__ = _swig_repr
 
     def __init__(self, xlow, ylow, xup, yup):
-        """__init__(Rectangle self, double xlow, double ylow, double xup, double yup) -> Rectangle"""
+        """
+        __init__(Rectangle self, double xlow, double ylow, double xup, double yup) -> Rectangle
+
+        Rectangle::Rectangle(double xlow, double ylow, double xup, double yup)
+
+        Parameters:
+        -----------
+
+        xlow: 
+        x-coordinate of lower left corner
+
+        ylow: 
+        y-coordinate of lower left corner
+
+        xup: 
+        x-coordinate of upper right corner
+
+        yup: 
+        y-coordinate of upper right corner 
+
+        """
         this = _libBornAgainCore.new_Rectangle(xlow, ylow, xup, yup)
         try:
             self.this.append(this)
@@ -23281,7 +23530,7 @@ class Rectangle(IShape2D):
         """
         clone(Rectangle self) -> Rectangle
 
-        virtual ICloneable* ICloneable::clone() const =0
+        Rectangle* Rectangle::clone() const
 
         """
         return _libBornAgainCore.Rectangle_clone(self)
@@ -23291,32 +23540,62 @@ class Rectangle(IShape2D):
         """
         contains(Rectangle self, double x, double y) -> bool
         contains(Rectangle self, Bin1D binx, Bin1D biny) -> bool
+
+        bool Rectangle::contains(const Bin1D &binx, const Bin1D &biny) const
+
+        Returns true if area defined by two bins is inside or on border of polygon (more precisely, if mid point of two bins satisfy this condition). 
+
         """
         return _libBornAgainCore.Rectangle_contains(self, *args)
 
 
     def getArea(self):
-        """getArea(Rectangle self) -> double"""
+        """
+        getArea(Rectangle self) -> double
+
+        double Rectangle::getArea() const
+
+        """
         return _libBornAgainCore.Rectangle_getArea(self)
 
 
     def getXlow(self):
-        """getXlow(Rectangle self) -> double"""
+        """
+        getXlow(Rectangle self) -> double
+
+        double Rectangle::getXlow() const
+
+        """
         return _libBornAgainCore.Rectangle_getXlow(self)
 
 
     def getYlow(self):
-        """getYlow(Rectangle self) -> double"""
+        """
+        getYlow(Rectangle self) -> double
+
+        double Rectangle::getYlow() const
+
+        """
         return _libBornAgainCore.Rectangle_getYlow(self)
 
 
     def getXup(self):
-        """getXup(Rectangle self) -> double"""
+        """
+        getXup(Rectangle self) -> double
+
+        double Rectangle::getXup() const
+
+        """
         return _libBornAgainCore.Rectangle_getXup(self)
 
 
     def getYup(self):
-        """getYup(Rectangle self) -> double"""
+        """
+        getYup(Rectangle self) -> double
+
+        double Rectangle::getYup() const
+
+        """
         return _libBornAgainCore.Rectangle_getYup(self)
 
     __swig_destroy__ = _libBornAgainCore.delete_Rectangle
@@ -23328,7 +23607,7 @@ class RectangularDetector(IDetector2D):
     """
 
 
-    A rectangular plane detector with axes and resolution function.
+    A flat rectangular detector with axes and resolution function.
 
     C++ includes: RectangularDetector.h
 
@@ -24092,7 +24371,7 @@ class SampleBuilderFactory(SampleBuilderFactoryTemp):
     """
 
 
-    Factory to create standard pre-defined samples.
+    Factory to create standard pre-defined samples
 
     C++ includes: SampleBuilderFactory.h
 

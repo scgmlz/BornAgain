@@ -4,7 +4,7 @@
 // File: classAttLimits.xml
 %feature("docstring") AttLimits "
 
-The  AttLimits class defines limited/free attribute of fit parameter and provides coupling between them.
+Attributes and limits of a fit parameter, and coupling between these properties.
 
 C++ includes: AttLimits.h
 ";
@@ -64,7 +64,7 @@ C++ includes: Attributes.h
 // File: classFitKernel.xml
 %feature("docstring") FitKernel "
 
-Main class to setup and run the minimization.
+Main class to setup and run a minimization. Implemented in pimpl idiom.
 
 C++ includes: FitKernel.h
 ";
@@ -78,9 +78,9 @@ C++ includes: FitKernel.h
 %feature("docstring")  FitKernel::clear "void FitKernel::clear()
 ";
 
-%feature("docstring")  FitKernel::setMinimizer "void FitKernel::setMinimizer(const std::string &minimizerName, const std::string &algorithmName=std::string())
+%feature("docstring")  FitKernel::setMinimizer "void FitKernel::setMinimizer(const std::string &minimizerName, const std::string &algorithmName=\"\")
 
-Sets minimizer with given name and algorithm type
+Sets minimizer with given name and algorithm type.
 
 Parameters:
 -----------
@@ -97,7 +97,7 @@ Optional name of the minimizer's algorithm
 
 %feature("docstring")  FitKernel::minimizer "const IMinimizer * FitKernel::minimizer() const
 
-Returns minimizer. 
+Returns the minimizer. 
 ";
 
 %feature("docstring")  FitKernel::addFitParameter "void FitKernel::addFitParameter(const std::string &name, double value, const AttLimits &limits, double step)
@@ -116,7 +116,7 @@ Adds fit parameter.
 
 %feature("docstring")  FitKernel::reportResults "std::string FitKernel::reportResults() const
 
-Reports results of minimization in the form of multi-line string. 
+Returns multi-line string to report results of minimization. 
 ";
 
 %feature("docstring")  FitKernel::fitParameters "FitParameterSet * FitKernel::fitParameters()
@@ -127,14 +127,14 @@ Reports results of minimization in the form of multi-line string.
 
 %feature("docstring")  FitKernel::functionCalls "int FitKernel::functionCalls() const
 
-Number of objective function calls. 
+Returns number of objective function calls. 
 ";
 
 
 // File: classFitKernelImpl.xml
 %feature("docstring") FitKernelImpl "
 
-The  FitKernel implementation.
+The implementation of class  FitKernel.
 
 C++ includes: FitKernelImpl.h
 ";
@@ -214,7 +214,7 @@ C++ includes: FitOptions.h
 // File: classFitParameter.xml
 %feature("docstring") FitParameter "
 
-The  FitParameter represents fittable parameter with value, error, step, and limits.
+A fittable parameter with value, error, step, and limits.
 
 C++ includes: FitParameter.h
 ";
@@ -289,7 +289,7 @@ C++ includes: FitParameter.h
 // File: classFitParameterSet.xml
 %feature("docstring") FitParameterSet "
 
-The  FitParameterSet represents collection of fit parameters for the minimizer.
+The set of fit parameters.
 
 C++ includes: FitParameterSet.h
 ";
@@ -301,8 +301,6 @@ C++ includes: FitParameterSet.h
 ";
 
 %feature("docstring")  FitParameterSet::clear "void FitParameterSet::clear()
-
-container specific
 
 Clears all defined parameters. 
 ";
@@ -328,14 +326,10 @@ Container iterators.
 
 %feature("docstring")  FitParameterSet::addFitParameter "void FitParameterSet::addFitParameter(FitParameter *par)
 
-adding fit parameters
-
 Adds fit parameter. 
 ";
 
 %feature("docstring")  FitParameterSet::fitParameter "const FitParameter * FitParameterSet::fitParameter(const std::string &name) const
-
-accessing fit parameters
 
 Returns fit parameter by given name. 
 ";
@@ -344,8 +338,6 @@ Returns fit parameter by given name.
 ";
 
 %feature("docstring")  FitParameterSet::values "std::vector< double > FitParameterSet::values() const
-
-fit parameter's values and errors
 
 Returns values of all defined parameters. 
 ";
@@ -372,8 +364,6 @@ Sets errors to all parameters.
 
 %feature("docstring")  FitParameterSet::freeFitParameterCount "size_t FitParameterSet::freeFitParameterCount() const
 
-Make parameters fixed and free.
-
 Returns number of free parameters. 
 ";
 
@@ -393,11 +383,6 @@ Set fixed flag for parameters from the list.
 ";
 
 %feature("docstring")  FitParameterSet::parametersToString "std::string FitParameterSet::parametersToString() const
-
-Printing and reporting. 
-";
-
-%feature("docstring")  FitParameterSet::reportResults "std::string FitParameterSet::reportResults() const
 ";
 
 %feature("docstring")  FitParameterSet::correlationMatrix "corr_matrix_t FitParameterSet::correlationMatrix() const
@@ -415,7 +400,7 @@ Returns true if parameter with such name exists.
 // File: classGeneticMinimizer.xml
 %feature("docstring") GeneticMinimizer "
 
-Wrapper for ROOT Genetic minimizer.
+Wrapper for the CERN ROOT Genetic minimizer.
 
 C++ includes: GeneticMinimizer.h
 ";
@@ -425,7 +410,7 @@ C++ includes: GeneticMinimizer.h
 
 %feature("docstring")  GeneticMinimizer::~GeneticMinimizer "GeneticMinimizer::~GeneticMinimizer()
 
-Sets tolerance on the function value at the minimum. Minimization will stop when the estimated vertical distance to the minimum (EDM) is less than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5 for negative log likelihood fit. Default value is 0.01. 
+Sets tolerance on the function value at the minimum. Minimization will stop when the estimated vertical distance to the minimum (EDM) is less than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5 for negative log likelihood fit. 
 ";
 
 %feature("docstring")  GeneticMinimizer::setTolerance "void GeneticMinimizer::setTolerance(double value)
@@ -436,7 +421,7 @@ Sets tolerance on the function value at the minimum. Minimization will stop when
 
 %feature("docstring")  GeneticMinimizer::setPrintLevel "void GeneticMinimizer::setPrintLevel(int value)
 
-Sets minimizer internal print level. Default value is 0 (silent). 
+Sets minimizer internal print level. 
 ";
 
 %feature("docstring")  GeneticMinimizer::printLevel "int GeneticMinimizer::printLevel() const
@@ -444,7 +429,7 @@ Sets minimizer internal print level. Default value is 0 (silent).
 
 %feature("docstring")  GeneticMinimizer::setMaxIterations "void GeneticMinimizer::setMaxIterations(int value)
 
-Sets maximum number of iterations to try at each step. Default values is 3. 
+Sets maximum number of iterations to try at each step. 
 ";
 
 %feature("docstring")  GeneticMinimizer::maxIterations "int GeneticMinimizer::maxIterations() const
@@ -452,7 +437,7 @@ Sets maximum number of iterations to try at each step. Default values is 3.
 
 %feature("docstring")  GeneticMinimizer::setPopulationSize "void GeneticMinimizer::setPopulationSize(int value)
 
-Sets population size. Default value is 300. 
+Sets population size. 
 ";
 
 %feature("docstring")  GeneticMinimizer::populationSize "int GeneticMinimizer::populationSize() const
@@ -460,7 +445,7 @@ Sets population size. Default value is 300.
 
 %feature("docstring")  GeneticMinimizer::setRandomSeed "void GeneticMinimizer::setRandomSeed(int value)
 
-Sets random seed. Default value is 0. 
+Sets random seed. 
 ";
 
 %feature("docstring")  GeneticMinimizer::randomSeed "int GeneticMinimizer::randomSeed() const
@@ -485,7 +470,7 @@ Returns map of string representing different minimizer statuses.
 // File: classGSLLevenbergMarquardtMinimizer.xml
 %feature("docstring") GSLLevenbergMarquardtMinimizer "
 
-Wrapper for GSL Levenberg-Marquardt minimizer. http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html.
+Wrapper for CERN ROOT facade of the GSL Levenberg-Marquardt minimizer. It's a facade to ROOT::Math::GSLNLSMinimizer which adapts ROOT::Math::GSLMultiFit minimizers to some CERN ROOT generic minimizer interface. ROOT::Math::GSLMultiFit, in turn, is a facade to the actual GSL's gsl_multifit_fdfsolver_type (http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html).
 
 C++ includes: GSLLevenbergMarquardtMinimizer.h
 ";
@@ -495,7 +480,7 @@ C++ includes: GSLLevenbergMarquardtMinimizer.h
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::~GSLLevenbergMarquardtMinimizer "GSLLevenbergMarquardtMinimizer::~GSLLevenbergMarquardtMinimizer()
 
-Sets tolerance on the function value at the minimum. Default value is 0.01. 
+Sets tolerance on the function value at the minimum. 
 ";
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::setTolerance "void GSLLevenbergMarquardtMinimizer::setTolerance(double value)
@@ -506,7 +491,7 @@ Sets tolerance on the function value at the minimum. Default value is 0.01.
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::setPrintLevel "void GSLLevenbergMarquardtMinimizer::setPrintLevel(int value)
 
-Sets minimizer internal print level. Default value is 0 (silent). 
+Sets minimizer internal print level. 
 ";
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::printLevel "int GSLLevenbergMarquardtMinimizer::printLevel() const
@@ -534,7 +519,7 @@ Returns map of string representing different minimizer statuses.
 // File: classGSLMultiMinimizer.xml
 %feature("docstring") GSLMultiMinimizer "
 
-Wrapper for GSL multi minimizer (gradient descent based) family.
+Wrapper for the CERN ROOT facade of the GSL multi minimizer family (gradient descent based).
 
 C++ includes: GSLMultiMinimizer.h
 ";
@@ -547,7 +532,7 @@ C++ includes: GSLMultiMinimizer.h
 
 %feature("docstring")  GSLMultiMinimizer::setPrintLevel "void GSLMultiMinimizer::setPrintLevel(int value)
 
-Sets minimizer internal print level. Default value is 0 (silent). 
+Sets minimizer internal print level. 
 ";
 
 %feature("docstring")  GSLMultiMinimizer::printLevel "int GSLMultiMinimizer::printLevel() const
@@ -570,7 +555,7 @@ Returns string representation of current minimizer status.
 // File: classIFitParameter.xml
 %feature("docstring") IFitParameter "
 
-The  IFitParameter is a base class for fit parameters.
+Pure virtual base class for fit parameters.
 
 C++ includes: IFitParameter.h
 ";
@@ -615,17 +600,17 @@ return name of the minimizer
 return name of the minimization algorithm 
 ";
 
-%feature("docstring")  IMinimizer::minimize "void IMinimizer::minimize()
+%feature("docstring")  IMinimizer::minimize "virtual void IMinimizer::minimize()=0
 
 run minimization 
 ";
 
-%feature("docstring")  IMinimizer::clear "void IMinimizer::clear()
+%feature("docstring")  IMinimizer::clear "virtual void IMinimizer::clear()
 
 clear resources (parameters) for consecutives minimizations 
 ";
 
-%feature("docstring")  IMinimizer::setParameters "void IMinimizer::setParameters(const FitParameterSet &parameters)
+%feature("docstring")  IMinimizer::setParameters "virtual void IMinimizer::setParameters(const FitParameterSet &parameters)=0
 
 Sets internal minimizer parameters using external parameter list. 
 ";
@@ -641,9 +626,7 @@ Sets internal minimizer parameters using external parameter list.
 Returns minimum function value. 
 ";
 
-%feature("docstring")  IMinimizer::reportResults "std::string IMinimizer::reportResults() const
-
-Prints fit results. 
+%feature("docstring")  IMinimizer::reportOutcome "virtual std::string IMinimizer::reportOutcome() const =0
 ";
 
 %feature("docstring")  IMinimizer::propagateResults "void IMinimizer::propagateResults(FitParameterSet &parameters)
@@ -660,7 +643,7 @@ Sets option string to the minimizer.
 // File: classInfoItem.xml
 %feature("docstring") InfoItem "
 
-Simple item to hold the name and the description.
+A name and a description.
 
 C++ includes: MinimizerInfo.h
 ";
@@ -678,31 +661,31 @@ C++ includes: MinimizerInfo.h
 ";
 
 
-// File: classMSG_1_1Logger.xml
-%feature("docstring") MSG::Logger "
+// File: classLogging_1_1Logger.xml
+%feature("docstring") Logging::Logger "
 
-Provides message service.
+Message service, used through macro msglog.
 
 C++ includes: Logger.h
 ";
 
-%feature("docstring")  MSG::Logger::Logger "MSG::Logger::Logger(EMessageLevel level)
+%feature("docstring")  Logging::Logger::Logger "Logging::Logger::Logger(EMessageLevel level)
 ";
 
-%feature("docstring")  MSG::Logger::~Logger "MSG::Logger::~Logger()
+%feature("docstring")  Logging::Logger::~Logger "Logging::Logger::~Logger()
 ";
 
-%feature("docstring")  MSG::Logger::NowTime "std::string MSG::Logger::NowTime()
+%feature("docstring")  Logging::Logger::nowTime "std::string Logging::Logger::nowTime()
 ";
 
-%feature("docstring")  MSG::Logger::ToString "const std::string & MSG::Logger::ToString(EMessageLevel level)
+%feature("docstring")  Logging::Logger::toString "const std::string & Logging::Logger::toString(EMessageLevel level)
 ";
 
 
 // File: classMinimizerCatalogue.xml
 %feature("docstring") MinimizerCatalogue "
 
-The  MinimizerCatalogue class contains information over all minimizers available.
+Hard-coded information about all minimizers available.
 
 C++ includes: MinimizerCatalogue.h
 ";
@@ -731,10 +714,6 @@ Returns list of algorithm's descriptions for the minimizer with a given name .
 
 Factory to create minimizers.
 
-Minimizer | Algorithms
-
-Minuit2 | Migrad Simplex Combined Scan Fumili GSLMultiMin | SteepestDescent ConjugateFR ConjugatePR BFGS BFGS2 GSLLMA | Default GSLSimAn | Default Genetic | Default
-
 C++ includes: MinimizerFactory.h
 ";
 
@@ -742,7 +721,7 @@ C++ includes: MinimizerFactory.h
 // File: classMinimizerInfo.xml
 %feature("docstring") MinimizerInfo "
 
-The  MinimizerInfo class provides info about the minimizer, including list of defined minimization algorithms.
+Info about a minimizer, including list of defined minimization algorithms.
 
 C++ includes: MinimizerInfo.h
 ";
@@ -775,7 +754,7 @@ Returns list of string with description of all available algorithms.
 // File: classMinimizerOptions.xml
 %feature("docstring") MinimizerOptions "
 
-The  MinimizerOptions class holds collection of internal minimizer settings.
+Collection of internal minimizer settings.
 
 C++ includes: MinimizerOptions.h
 ";
@@ -794,7 +773,7 @@ Set options from their string representation.
 // File: classMinimizerResultsHelper.xml
 %feature("docstring") MinimizerResultsHelper "
 
-The  MinimizerResultsHelper class contains all logic to generate reports with the result of minimization.
+Contains all logic to generate reports with the result of minimization.
 
 C++ includes: MinimizerResultsHelper.h
 ";
@@ -802,21 +781,11 @@ C++ includes: MinimizerResultsHelper.h
 %feature("docstring")  MinimizerResultsHelper::MinimizerResultsHelper "MinimizerResultsHelper::MinimizerResultsHelper()
 ";
 
-%feature("docstring")  MinimizerResultsHelper::reportResults "std::string MinimizerResultsHelper::reportResults(const RootMinimizerAdapter *minimizer) const
-
-Reports results of minimization in the form of multi-line string. 
-";
-
-%feature("docstring")  MinimizerResultsHelper::reportResults "std::string MinimizerResultsHelper::reportResults(const FitParameterSet *parameters) const
-
-Reports fit parameters settings and final results. 
-";
-
 
 // File: classMinuit2Minimizer.xml
 %feature("docstring") Minuit2Minimizer "
 
-The  Minuit2Minimizer class is a wrapper for ROOT Minuit2 minimizer See Minuit2 user manual https://root.cern.ch/root/htmldoc/guides/minuit2/Minuit2.pdf.
+Wrapper for the CERN ROOT facade of the Minuit2 minimizer. See Minuit2 user manual https://root.cern.ch/root/htmldoc/guides/minuit2/Minuit2.pdf.
 
 C++ includes: Minuit2Minimizer.h
 ";
@@ -829,7 +798,7 @@ C++ includes: Minuit2Minimizer.h
 
 %feature("docstring")  Minuit2Minimizer::setStrategy "void Minuit2Minimizer::setStrategy(int value)
 
-Sets minimization strategy (0-low, 1-medium, 2-high minimization quality). At low quality number of function calls will be economized. Default value is 1. 
+Sets minimization strategy (0-low, 1-medium, 2-high minimization quality). At low quality number of function calls will be economized. 
 ";
 
 %feature("docstring")  Minuit2Minimizer::strategy "int Minuit2Minimizer::strategy() const
@@ -837,12 +806,12 @@ Sets minimization strategy (0-low, 1-medium, 2-high minimization quality). At lo
 
 %feature("docstring")  Minuit2Minimizer::setErrorDefinition "void Minuit2Minimizer::setErrorDefinition(double value)
 
-Sets error definition factor for parameter error calculation. If objective function (OF) is the usual chisquare function and if the user wants the usual one-standard-deviation errors, then the error definition should be 1.0. If OF is a negative-log-likelihood function, then 0.5. If OF is a chisquare, but the user wants two-standard-deviation errors, 4.0. Default value is 1.0. 
+Sets error definition factor for parameter error calculation. If objective function (OF) is the usual chisquare function and if the user wants the usual one-standard-deviation errors, then the error definition should be 1.0. If OF is a negative-log-likelihood function, then 0.5. If OF is a chisquare, but the user wants two-standard-deviation errors, 4.0. 
 ";
 
 %feature("docstring")  Minuit2Minimizer::errorDefinition "double Minuit2Minimizer::errorDefinition() const
 
-Sets tolerance on the function value at the minimum. Minimization will stop when the estimated vertical distance to the minimum (EDM) is less than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5 for negative log likelihood fit. Default value is 0.01. 
+Sets tolerance on the function value at the minimum. Minimization will stop when the estimated vertical distance to the minimum (EDM) is less than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5 for negative log likelihood fit. 
 ";
 
 %feature("docstring")  Minuit2Minimizer::setTolerance "void Minuit2Minimizer::setTolerance(double value)
@@ -850,7 +819,7 @@ Sets tolerance on the function value at the minimum. Minimization will stop when
 
 %feature("docstring")  Minuit2Minimizer::tolerance "double Minuit2Minimizer::tolerance() const
 
-Sets relative floating point arithmetic precision. Should be adjusted when the user knows that objectiove function value is not calculated to the nominal machine accuracy. Typical values are between 10^-5 and 10^-14. Default value is -1.0 (minimizer specific will be used). 
+Sets relative floating point arithmetic precision. Should be adjusted when the user knows that objectiove function value is not calculated to the nominal machine accuracy. Typical values are between 10^-5 and 10^-14. 
 ";
 
 %feature("docstring")  Minuit2Minimizer::setPrecision "void Minuit2Minimizer::setPrecision(double value)
@@ -889,7 +858,7 @@ Returns map of string representing different minimizer statuses.
 // File: classMultiOption.xml
 %feature("docstring") MultiOption "
 
-The  MultiOption class is intended to store a single option for minimization algorithm. Int, double, string values are available. Relies on boost::variant, will be switched to std::variant in C++-17. (before was https://github.com/mapbox/variant.
+Stores a single option for minimization algorithm. Int, double, string values are available. Relies on boost::variant, will be switched to std::variant in C++-17.
 
 C++ includes: MultiOption.h
 ";
@@ -934,7 +903,7 @@ Sets the value of option from string. TODO find more elegant way (without if/els
 // File: classObjectiveFunction.xml
 %feature("docstring") ObjectiveFunction "
 
-The  ObjectiveFunction class represents function to minimize.
+Information about an objective function, i.e. a function that shall be minimized.
 
 C++ includes: ObjectiveFunction.h
 ";
@@ -968,7 +937,7 @@ Evaluates residual and gradients of the function for given vector of function pa
 // File: classOptionContainer.xml
 %feature("docstring") OptionContainer "
 
-The  OptionContainer class stores multi option (int,double,string) in a container.
+Stores multi option (int,double,string) in a container.
 
 C++ includes: OptionContainer.h
 ";
@@ -1089,7 +1058,7 @@ returns true if proposed value is in limits range
 // File: classRootGradientFunction.xml
 %feature("docstring") RootGradientFunction "
 
-Minimizer function with access to single data element residuals. Required by Fumili, Fumili2 and GSLMultiMin minimizers.
+Minimizer function with access to single data element residuals, required by Fumili, Fumili2 and GSLMultiMin minimizers.
 
 C++ includes: RootMinimizerFunctions.h
 ";
@@ -1112,7 +1081,7 @@ evaluation of single data element residual
 // File: classRootMinimizerAdapter.xml
 %feature("docstring") RootMinimizerAdapter "
 
-The  RootMinimizerAdapter class adapts ROOT minimizer interface to our  IMinimizer.
+Pure virtual interface that adapts the CERN ROOT minimizer to our  IMinimizer.
 
 C++ includes: RootMinimizerAdapter.h
 ";
@@ -1151,9 +1120,7 @@ Sets internal minimizer parameters using external parameter list.
 Returns minimum function value. 
 ";
 
-%feature("docstring")  RootMinimizerAdapter::reportResults "std::string RootMinimizerAdapter::reportResults() const override final
-
-Prints fit results. 
+%feature("docstring")  RootMinimizerAdapter::reportOutcome "std::string RootMinimizerAdapter::reportOutcome() const override final
 ";
 
 %feature("docstring")  RootMinimizerAdapter::options "MinimizerOptions& RootMinimizerAdapter::options()
@@ -1191,7 +1158,7 @@ Sets option string to the minimizer.
 // File: classRootObjectiveFunction.xml
 %feature("docstring") RootObjectiveFunction "
 
-minimizer chi2 function
+The chi2 function for use in minimizers.
 
 C++ includes: RootMinimizerFunctions.h
 ";
@@ -1203,7 +1170,7 @@ C++ includes: RootMinimizerFunctions.h
 // File: classRootObjectiveFunctionAdapter.xml
 %feature("docstring") RootObjectiveFunctionAdapter "
 
-The  RootObjectiveFunctionAdapter class adapts our objective functions to ROOT.
+Adapts our objective functions to ROOT.
 
 C++ includes: RootObjectiveFuncAdapter.h
 ";
@@ -1240,7 +1207,7 @@ Creates and returns gradient function suitable for ROOT minimizers.
 // File: classSimAnMinimizer.xml
 %feature("docstring") SimAnMinimizer "
 
-Wrapper for ROOT GSL simmulated annealing minimizer.
+Wrapper for the CERN ROOT facade of the GSL simmulated annealing minimizer.
 
 C++ includes: SimAnMinimizer.h
 ";
@@ -1261,7 +1228,7 @@ Sets minimizer internal print level. Default value is 0 (silent).
 
 %feature("docstring")  SimAnMinimizer::setMaxIterations "void SimAnMinimizer::setMaxIterations(int value)
 
-Sets maximum number of iterations to try at each step. Default values is 100. 
+Sets maximum number of iterations to try at each step. 
 ";
 
 %feature("docstring")  SimAnMinimizer::maxIterations "int SimAnMinimizer::maxIterations() const
@@ -1269,7 +1236,7 @@ Sets maximum number of iterations to try at each step. Default values is 100.
 
 %feature("docstring")  SimAnMinimizer::setIterationsAtEachTemp "void SimAnMinimizer::setIterationsAtEachTemp(int value)
 
-Sets number of iterations at each temperature. Default value is 10. 
+Sets number of iterations at each temperature. 
 ";
 
 %feature("docstring")  SimAnMinimizer::iterationsAtEachTemp "int SimAnMinimizer::iterationsAtEachTemp() const
@@ -1277,7 +1244,7 @@ Sets number of iterations at each temperature. Default value is 10.
 
 %feature("docstring")  SimAnMinimizer::setStepSize "void SimAnMinimizer::setStepSize(double value)
 
-Sets max step size used in random walk. Default value is 1.0. 
+Sets max step size used in random walk. 
 ";
 
 %feature("docstring")  SimAnMinimizer::stepSize "double SimAnMinimizer::stepSize() const
@@ -1285,7 +1252,7 @@ Sets max step size used in random walk. Default value is 1.0.
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannK "void SimAnMinimizer::setBoltzmannK(double value)
 
-Sets Boltzmann distribution parameter: k. Default value 1.0. 
+Sets Boltzmann distribution parameter: k. 
 ";
 
 %feature("docstring")  SimAnMinimizer::boltzmannK "double SimAnMinimizer::boltzmannK() const
@@ -1293,7 +1260,7 @@ Sets Boltzmann distribution parameter: k. Default value 1.0.
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannInitialTemp "void SimAnMinimizer::setBoltzmannInitialTemp(double value)
 
-Sets Boltzmann distribution parameter: initial temperature. Default value 50.0. 
+Sets Boltzmann distribution parameter: initial temperature. 
 ";
 
 %feature("docstring")  SimAnMinimizer::boltzmannInitialTemp "double SimAnMinimizer::boltzmannInitialTemp() const
@@ -1301,7 +1268,7 @@ Sets Boltzmann distribution parameter: initial temperature. Default value 50.0.
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannMu "void SimAnMinimizer::setBoltzmannMu(double value)
 
-Sets Boltzmann distribution parameter: mu. Default value 1.05. 
+Sets Boltzmann distribution parameter: mu. 
 ";
 
 %feature("docstring")  SimAnMinimizer::boltzmannMu "double SimAnMinimizer::boltzmannMu() const
@@ -1309,7 +1276,7 @@ Sets Boltzmann distribution parameter: mu. Default value 1.05.
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannMinTemp "void SimAnMinimizer::setBoltzmannMinTemp(double value)
 
-Sets Boltzmann distribution parameter: minimal temperature. Default value 0.1. 
+Sets Boltzmann distribution parameter: minimal temperature. 
 ";
 
 %feature("docstring")  SimAnMinimizer::boltzmannMinTemp "double SimAnMinimizer::boltzmannMinTemp() const
@@ -1361,9 +1328,7 @@ Sets internal minimizer parameters using external parameter list.
 %feature("docstring")  TestMinimizer::setObjectiveFunction "void TestMinimizer::setObjectiveFunction(objective_function_t func) override
 ";
 
-%feature("docstring")  TestMinimizer::reportResults "std::string TestMinimizer::reportResults() const override
-
-Prints fit results. 
+%feature("docstring")  TestMinimizer::reportOutcome "std::string TestMinimizer::reportOutcome() const override
 ";
 
 
@@ -1398,19 +1363,19 @@ returns run time in sec.msec
 // File: namespace_0D0.xml
 
 
-// File: namespace_0D15.xml
+// File: namespace_0D19.xml
 
 
-// File: namespace_0D17.xml
+// File: namespace_0D35.xml
 
 
-// File: namespace_0D39.xml
+// File: namespace_0D37.xml
 
 
 // File: namespace_0D41.xml
 
 
-// File: namespace_0D45.xml
+// File: namespace_0D43.xml
 
 
 // File: namespaceAlgorithmNames.xml
@@ -1425,72 +1390,77 @@ returns run time in sec.msec
 // File: namespaceBA__ROOT_1_1Minuit2.xml
 
 
+// File: namespaceLogging.xml
+%feature("docstring")  Logging::setLevel "BA_CORE_API_ void Logging::setLevel(EMessageLevel level)
+";
+
+%feature("docstring")  Logging::setLevel "BA_CORE_API_ void Logging::setLevel(const std::string &levelname)
+";
+
+
 // File: namespaceMinimizerNames.xml
 
 
-// File: namespaceMinimizerUtil.xml
-%feature("docstring")  MinimizerUtil::toString "std::string MinimizerUtil::toString(const std::vector< std::string > &v, const std::string &delim=\"\")
+// File: namespaceMinimizerUtils.xml
+%feature("docstring")  MinimizerUtils::toString "std::string MinimizerUtils::toString(const std::vector< std::string > &v, const std::string &delim=\"\")
 ";
 
-%feature("docstring")  MinimizerUtil::gslErrorDescriptionMap "std::map< int, std::string > MinimizerUtil::gslErrorDescriptionMap()
+%feature("docstring")  MinimizerUtils::gslErrorDescriptionMap "std::map< int, std::string > MinimizerUtils::gslErrorDescriptionMap()
 
 Returns translation of GSL error code to string. 
 ";
 
-%feature("docstring")  MinimizerUtil::gslErrorDescription "std::string MinimizerUtil::gslErrorDescription(int errorCode)
+%feature("docstring")  MinimizerUtils::gslErrorDescription "std::string MinimizerUtils::gslErrorDescription(int errorCode)
 ";
 
-%feature("docstring")  MinimizerUtil::numbersDiffer "bool MinimizerUtil::numbersDiffer(double a, double b, double tol)
+%feature("docstring")  MinimizerUtils::numbersDiffer "bool MinimizerUtils::numbersDiffer(double a, double b, double tol)
 ";
 
-%feature("docstring")  MinimizerUtil::sectionString "std::string MinimizerUtil::sectionString(const std::string &sectionName=std::string(), int report_width=80)
+%feature("docstring")  MinimizerUtils::sectionString "std::string MinimizerUtils::sectionString(const std::string &sectionName=\"\", int report_width=80)
 
 Returns horizontal line of 80 characters length with section name in it. 
-";
-
-
-// File: namespaceMSG.xml
-%feature("docstring")  MSG::SetLevel "BA_CORE_API_ void MSG::SetLevel(EMessageLevel level)
-";
-
-%feature("docstring")  MSG::SetLevel "BA_CORE_API_ void MSG::SetLevel(const std::string &levelname)
 ";
 
 
 // File: namespaceOptionNames.xml
 
 
-// File: namespaceStringUtil.xml
-%feature("docstring")  StringUtil::matchesPattern "bool StringUtil::matchesPattern(const std::string &text, const std::string &wildcardPattern)
+// File: namespaceStringUtils.xml
+%feature("docstring")  StringUtils::matchesPattern "bool StringUtils::matchesPattern(const std::string &text, const std::string &wildcardPattern)
 
 Returns true if text matches pattern with wildcards '*' and '?'. 
 ";
 
-%feature("docstring")  StringUtil::padRight "std::string StringUtil::padRight(const std::string &name, int length)
+%feature("docstring")  StringUtils::padRight "std::string StringUtils::padRight(const std::string &name, int length)
 
 Returns string right-padded with blanks. 
 ";
 
-%feature("docstring")  StringUtil::split "std::vector< std::string > StringUtil::split(const std::string &text, const std::string &delimeter)
+%feature("docstring")  StringUtils::split "std::vector< std::string > StringUtils::split(const std::string &text, const std::string &delimeter)
 
 Split string into vector of string using delimeter.
 
 Returns token vector obtained by splitting string at delimiters. 
 ";
 
-%feature("docstring")  StringUtil::replaceItemsFromString "void StringUtil::replaceItemsFromString(std::string &text, const std::vector< std::string > &items, const std::string &replacement=std::string(\"\"))
+%feature("docstring")  StringUtils::replaceItemsFromString "void StringUtils::replaceItemsFromString(std::string &text, const std::vector< std::string > &items, const std::string &replacement=\"\")
 
 Replaces all occurences of items from string text with delimiter. 
 ";
 
-%feature("docstring")  StringUtil::join "std::string StringUtil::join(const std::vector< std::string > &joinable, const std::string &joint)
+%feature("docstring")  StringUtils::join "std::string StringUtils::join(const std::vector< std::string > &joinable, const std::string &joint)
 
 Returns string obtain by joining vector elements. 
 ";
 
-%feature("docstring")  StringUtil::removeSubstring "std::string StringUtil::removeSubstring(const std::string &text, const std::string &substr)
+%feature("docstring")  StringUtils::removeSubstring "std::string StringUtils::removeSubstring(const std::string &text, const std::string &substr)
 
 Removes multiple occurences of given substring from a string and returns result. 
+";
+
+%feature("docstring")  StringUtils::scientific "std::string StringUtils::scientific(const T value, int n=10)
+
+Returns scientific string representing given value of any numeric type. 
 ";
 
 
@@ -1506,7 +1476,22 @@ Removes multiple occurences of given substring from a string and returns result.
 // File: FitKernelImpl_8h.xml
 
 
-// File: FitOptions_8h.xml
+// File: MinimizerCatalogue_8cpp.xml
+
+
+// File: MinimizerCatalogue_8h.xml
+
+
+// File: MinimizerFactory_8cpp.xml
+
+
+// File: MinimizerFactory_8h.xml
+
+
+// File: ObjectiveFunction_8cpp.xml
+
+
+// File: ObjectiveFunction_8h.xml
 
 
 // File: IMinimizer_8cpp.xml
@@ -1518,19 +1503,7 @@ Removes multiple occurences of given substring from a string and returns result.
 // File: KernelTypes_8h.xml
 
 
-// File: MinimizerCatalogue_8cpp.xml
-
-
-// File: MinimizerCatalogue_8h.xml
-
-
 // File: MinimizerConstants_8h.xml
-
-
-// File: MinimizerFactory_8cpp.xml
-
-
-// File: MinimizerFactory_8h.xml
 
 
 // File: MinimizerInfo_8cpp.xml
@@ -1539,27 +1512,19 @@ Removes multiple occurences of given substring from a string and returns result.
 // File: MinimizerInfo_8h.xml
 
 
+// File: TestMinimizer_8cpp.xml
+
+
+// File: TestMinimizer_8h.xml
+
+
+// File: FitOptions_8h.xml
+
+
 // File: MinimizerOptions_8cpp.xml
 
 
 // File: MinimizerOptions_8h.xml
-
-
-// File: MinimizerResultsHelper_8cpp.xml
-
-
-// File: MinimizerResultsHelper_8h.xml
-%feature("docstring")  to_string_with_precision "std::string to_string_with_precision(const T a_value, int precision=10, int width=0)
-";
-
-%feature("docstring")  to_string_scientific "std::string to_string_scientific(const T a_value, int n=10)
-";
-
-
-// File: MinimizerUtils_8cpp.xml
-
-
-// File: MinimizerUtils_8h.xml
 
 
 // File: MultiOption_8cpp.xml
@@ -1568,22 +1533,10 @@ Removes multiple occurences of given substring from a string and returns result.
 // File: MultiOption_8h.xml
 
 
-// File: ObjectiveFunction_8cpp.xml
-
-
-// File: ObjectiveFunction_8h.xml
-
-
 // File: OptionContainer_8cpp.xml
 
 
 // File: OptionContainer_8h.xml
-
-
-// File: TestMinimizer_8cpp.xml
-
-
-// File: TestMinimizer_8h.xml
 
 
 // File: AttLimits_8cpp.xml
@@ -1634,6 +1587,12 @@ Removes multiple occurences of given substring from a string and returns result.
 // File: GSLMultiMinimizer_8h.xml
 
 
+// File: MinimizerResultsHelper_8cpp.xml
+
+
+// File: MinimizerResultsHelper_8h.xml
+
+
 // File: Minuit2Minimizer_8cpp.xml
 
 
@@ -1667,6 +1626,12 @@ Removes multiple occurences of given substring from a string and returns result.
 // File: Logger_8h.xml
 
 
+// File: MinimizerUtils_8cpp.xml
+
+
+// File: MinimizerUtils_8h.xml
+
+
 // File: StringUtils_8cpp.xml
 
 
@@ -1683,6 +1648,12 @@ Removes multiple occurences of given substring from a string and returns result.
 
 
 // File: dir_ddbc8017d498762c6500a9e593e25277.xml
+
+
+// File: dir_7c95011753c2f8fb6f2a9c22c1fbdc50.xml
+
+
+// File: dir_aea64d0d381a46dd3068eeb95bfe1848.xml
 
 
 // File: dir_17bde39ef6b5d64be6f6883a061c9058.xml
