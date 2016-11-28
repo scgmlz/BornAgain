@@ -36,13 +36,13 @@ namespace YAML {
 class PyPersistenceTest : public IReferencedTest
 {
 public:
-    PyPersistenceTest(const std::string& directory, const std::string& name, double threshold);
+    PyPersistenceTest(const std::string& path, const std::string& name, double threshold);
     ~PyPersistenceTest() final {}
 
     bool runTest() final;
 
 private:
-    std::string m_directory;
+    std::string m_path;
 
     static std::map<const std::string, const std::string>
         glob2map(const std::string& dir, const std::string& stem);

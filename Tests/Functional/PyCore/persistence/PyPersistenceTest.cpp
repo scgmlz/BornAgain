@@ -28,9 +28,9 @@
 #include <iomanip>
 
 PyPersistenceTest::PyPersistenceTest(
-    const std::string& directory, const std::string& name, double threshold)
+    const std::string& path, const std::string& name, double threshold)
     : IReferencedTest(name, "persistence test on script "+name, threshold)
-    , m_directory(directory)
+    , m_path(path)
 {}
 
 //! Runs a Python script, and returns true if the output of the script agrees with reference data.
@@ -43,10 +43,9 @@ bool PyPersistenceTest::runTest()
         std::cout << "Removed old output " << fname.c_str() << "\n";
     }
 
-    // Run Python script
-    std::string pyscript_filename = FileSystemUtils::jointPath(m_directory, getName()+".py");
+    // Run Python script, which writes output to PYPERSIST_OUT_DIR.
     std::string dat_stem = FileSystemUtils::jointPath(PYPERSIST_OUT_DIR, getName());
-    if (!runPython(pyscript_filename + " " + dat_stem))
+    if (!runPython(m_path + " " + dat_stem))
         return false;
 
     // Retrieve new output and reference files
@@ -62,9 +61,7 @@ bool PyPersistenceTest::runTest()
 
     // Compare files one by one
     for (auto const& it: dat)
-        if (!compareFilePair(
-                FileSystemUtils::jointPath(PYPERSIST_OUT_DIR, it.second),
-                FileSystemUtils::jointPath(PYPERSIST_REF_DIR, ref[it.first])))
+        if (!compareFilePair(it.second, ref[it.first]))
             return false;
     return true;
 }
@@ -78,7 +75,8 @@ PyPersistenceTest::glob2map(const std::string& dir, const std::string& stem)
     for (const std::string& fname: FileSystemUtils::glob(dir, stem+"\\.\\w+\\..+")) {
         std::vector<std::string> fname_segments =
             StringUtils::split(FileSystemUtils::filename(fname), ".");
-        ret.insert(make_pair(fname_segments[1]+"."+fname_segments[2], fname));
+        ret.insert(make_pair(fname_segments[1]+"."+fname_segments[2],
+                             FileSystemUtils::jointPath(dir, fname)));
     }
     return ret;
 }
@@ -92,7 +90,7 @@ bool PyPersistenceTest::compareFileMaps(
     // All dat files present in ref?
     for (auto const& it: dat) {
         if (ref.find(it.first)==ref.end()) {
-            std::cerr << "For test output " << it.second
+            std::cerr << "For test output "  << it.second
                       << " there is no reference file in " << PYPERSIST_REF_DIR << "\n";
             success = false;
         }
@@ -100,7 +98,7 @@ bool PyPersistenceTest::compareFileMaps(
     // All ref files present in dat?
     for (auto const& it: ref) {
         if (dat.find(it.first)==dat.end()) {
-            std::cerr << "For reference file " << it.second
+            std::cerr << "For reference file "  << it.second
                       << " there is no test output in " << PYPERSIST_OUT_DIR << "\n";
             success = false;
         }

@@ -33,14 +33,14 @@ class BA_CORE_API_ SimulationElement
 public:
     SimulationElement(double wavelength, double alpha_i, double phi_i,
                       std::unique_ptr<IPixelMap> pixelmap);
-    SimulationElement(const SimulationElement &other);
+    SimulationElement(const SimulationElement& other);
     SimulationElement &operator=(const SimulationElement &other);
 
     //! Construct SimulationElement from other element and restrict k_f to specific value in
     //! the original detector pixel
-    SimulationElement(const SimulationElement &other, double x, double y);
+    SimulationElement(const SimulationElement& other, double x, double y);
 
-    SimulationElement(SimulationElement &&other) noexcept;
+    SimulationElement(SimulationElement&& other) noexcept;
 
     ~SimulationElement();
 
