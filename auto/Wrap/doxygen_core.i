@@ -4359,6 +4359,30 @@ C++ includes: FormFactorWrapper.h
 %feature("docstring")  FormFactorWrapper::clone "FormFactorWrapper * FormFactorWrapper::clone() const
 ";
 
+%feature("docstring")  FormFactorWrapper::evaluate "complex_t FormFactorWrapper::evaluate(const SimulationElement &sim_element) const
+";
+
+%feature("docstring")  FormFactorWrapper::evaluatePol "Eigen::Matrix2cd FormFactorWrapper::evaluatePol(const SimulationElement &sim_element) const
+";
+
+%feature("docstring")  FormFactorWrapper::formfactor "IFormFactor * FormFactorWrapper::formfactor()
+";
+
+%feature("docstring")  FormFactorWrapper::formfactor "const IFormFactor * FormFactorWrapper::formfactor() const
+";
+
+%feature("docstring")  FormFactorWrapper::setSpecularInfo "void FormFactorWrapper::setSpecularInfo(const LayerSpecularInfo &specular_info)
+";
+
+%feature("docstring")  FormFactorWrapper::relativeAbundance "double FormFactorWrapper::relativeAbundance() const
+";
+
+%feature("docstring")  FormFactorWrapper::scaleRelativeAbundance "void FormFactorWrapper::scaleRelativeAbundance(double total_abundance)
+";
+
+%feature("docstring")  FormFactorWrapper::radialExtension "double FormFactorWrapper::radialExtension() const
+";
+
 
 // File: classFTDecayFunction1DCauchy.xml
 %feature("docstring") FTDecayFunction1DCauchy "
@@ -6550,7 +6574,7 @@ C++ includes: IInterferenceFunctionStrategy.h
 %feature("docstring")  IInterferenceFunctionStrategy::~IInterferenceFunctionStrategy "IInterferenceFunctionStrategy::~IInterferenceFunctionStrategy()
 ";
 
-%feature("docstring")  IInterferenceFunctionStrategy::init "void IInterferenceFunctionStrategy::init(const SafePointerVector< FormFactorWrapper > &weighted_formfactors, const IInterferenceFunction &iff, const LayerSpecularInfo &specular_info)
+%feature("docstring")  IInterferenceFunctionStrategy::init "void IInterferenceFunctionStrategy::init(const SafePointerVector< FormFactorWrapper > &weighted_formfactors, const IInterferenceFunction &iff)
 
 Initializes the object with form factors and interference functions. 
 ";
@@ -9452,12 +9476,6 @@ Returns read/write iterator that points to the one past last element.
 Returns read-only iterator that points to the one past last element. 
 ";
 
-%feature("docstring")  OutputData::setVariability "void OutputData< T >::setVariability(double variability)
-";
-
-%feature("docstring")  OutputData::getVariability "double OutputData< T >::getVariability() const
-";
-
 %feature("docstring")  OutputData::getAxesBinIndices "std::vector< int > OutputData< T >::getAxesBinIndices(size_t global_index) const
 
 Returns vector of axes indices for given global index
@@ -11929,9 +11947,6 @@ Sets the batch and thread information to be used.
 ";
 
 %feature("docstring")  SimulationOptions::getHardwareConcurrency "int SimulationOptions::getHardwareConcurrency() const
-";
-
-%feature("docstring")  SimulationOptions::getDefaultVariability "double SimulationOptions::getDefaultVariability() const
 ";
 
 %feature("docstring")  SimulationOptions::setIncludeSpecular "void SimulationOptions::setIncludeSpecular(bool include_specular)

@@ -21,6 +21,7 @@
 #include <iomanip>
 
 namespace {
+
     const int precision { 12 };
 
     double IgnoreDenormalized(double value)
