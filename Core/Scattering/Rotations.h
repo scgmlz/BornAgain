@@ -45,7 +45,7 @@ public:
     virtual bool isIdentity() const;
 };
 
-BA_CORE_API_ IRotation* CreateProduct(const IRotation& left, const IRotation& right);
+BA_CORE_API_ IRotation* createProduct(const IRotation& left, const IRotation& right);
 
 class BA_CORE_API_ RotationX : public IRotation
 {

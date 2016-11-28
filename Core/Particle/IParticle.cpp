@@ -35,7 +35,7 @@ void IParticle::applyRotation(const IRotation& rotation)
 {
     if (mP_rotation) {
         deregisterChild(mP_rotation.get());
-        mP_rotation.reset(CreateProduct(rotation, *mP_rotation));
+        mP_rotation.reset(createProduct(rotation, *mP_rotation));
     } else {
         mP_rotation.reset(rotation.clone());
     }
@@ -52,7 +52,7 @@ IRotation* IParticle::createComposedRotation(const IRotation* p_rotation) const
 {
     if (p_rotation) {
         if (mP_rotation)
-            return CreateProduct(*p_rotation, *mP_rotation);
+            return createProduct(*p_rotation, *mP_rotation);
         else
             return p_rotation->clone();
     } else {
