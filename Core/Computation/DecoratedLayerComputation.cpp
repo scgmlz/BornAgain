@@ -56,7 +56,8 @@ void DecoratedLayerComputation::eval(
         if (n_layers > 1 && alpha_f < 0)
             continue;
         // each ffdwba: one call to getOutCoeffs
-        it->setIntensity(p_strategy->evaluate(*it) * total_surface_density);
+        it->setIntensity(pow(it->getKi().mag2() / 4 / M_PI, 2)
+             * total_surface_density * p_strategy->evaluate(*it));
         counter.stepProgress(progress);
     }
 }

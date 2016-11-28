@@ -37,26 +37,22 @@ FormFactorWrapper* FormFactorWrapper::clone() const
 
 complex_t FormFactorWrapper::evaluate(const SimulationElement& sim_element) const
 {
-    WavevectorPair wavevectors(sim_element.getKi(), sim_element.getMeanKf());
-
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
     const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
         mP_specular_info->getOutCoefficients(sim_element));
     mP_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
-    return sim_element.getKi().mag2() / 4 /M_PI * mP_ff->evaluate(wavevectors);
+    return mP_ff->evaluate({sim_element.getKi(), sim_element.getMeanKf()});
 }
 
 Eigen::Matrix2cd FormFactorWrapper::evaluatePol(const SimulationElement& sim_element) const
 {
-    WavevectorPair wavevectors(sim_element.getKi(), sim_element.getMeanKf());
-
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
     const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
         mP_specular_info->getOutCoefficients(sim_element));
     mP_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
-    return sim_element.getKi().mag2() / 4 /M_PI * mP_ff->evaluatePol(wavevectors);
+    return mP_ff->evaluatePol({sim_element.getKi(), sim_element.getMeanKf()});
 }
 
 IFormFactor* FormFactorWrapper::formfactor()
