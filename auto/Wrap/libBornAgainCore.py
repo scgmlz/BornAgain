@@ -17982,16 +17982,9 @@ def IRotation_createRotation(transform):
     return _libBornAgainCore.IRotation_createRotation(transform)
 
 
-def CreateProduct(left, right):
-    """
-    CreateProduct(IRotation left, IRotation right) -> IRotation
-
-    BA_CORE_API_ IRotation* CreateProduct(const IRotation &left, const IRotation &right)
-
-    Returns concatenated rotation (first right, then left). 
-
-    """
-    return _libBornAgainCore.CreateProduct(left, right)
+def createProduct(left, right):
+    """createProduct(IRotation left, IRotation right) -> IRotation"""
+    return _libBornAgainCore.createProduct(left, right)
 class RotationX(IRotation):
     """Proxy of C++ RotationX class."""
 
