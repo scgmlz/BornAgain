@@ -44,7 +44,7 @@ bool IRotation::isIdentity() const
 
 //! Returns concatenated rotation (first right, then left).
 
-IRotation* CreateProduct(const IRotation& left, const IRotation& right)
+IRotation* createProduct(const IRotation& left, const IRotation& right)
 {
     Transform3D tr_left = left.getTransform3D();
     Transform3D tr_right = right.getTransform3D();

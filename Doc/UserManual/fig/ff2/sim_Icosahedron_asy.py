@@ -23,7 +23,7 @@ data = bp.run_simulation(det,ff,trafo)
 results.append( bp.Result(1, data, title) )
 
 title = 'rotated, tilted'
-trafo = ba.CreateProduct( ba.RotationX(9*degree), ba.RotationZ(13*degree))
+trafo = ba.createProduct( ba.RotationX(9*degree), ba.RotationZ(13*degree))
 ff = ba.FormFactorIcosahedron(edge*nanometer)
 data = bp.run_simulation(det,ff,trafo)
 results.append( bp.Result(2, data, title) )

@@ -383,7 +383,7 @@ RectPixelMap *RectPixelMap::createZeroSizeMap(double x, double y) const
 kvector_t RectPixelMap::getK(double x, double y, double wavelength) const
 {
     kvector_t direction = m_corner_pos + x*m_width + y*m_height;
-    double length = PI2/wavelength;
+    double length = M_TWOPI/wavelength;
     return normalizeLength(direction, length);
 }
 

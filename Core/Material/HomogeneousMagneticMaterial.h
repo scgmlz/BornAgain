@@ -27,18 +27,16 @@ public:
 #ifndef SWIG
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 #endif
-    //! Constructs a material with _name_, _refractive_index_ and
-    //! _magnetic_field_
-    HomogeneousMagneticMaterial(const std::string &name, const complex_t refractive_index,
+    //! Constructs a material with _name_, _refractive_index_ and _magnetic_field_
+    HomogeneousMagneticMaterial(const std::string& name, const complex_t refractive_index,
                                 const kvector_t magnetic_field);
 
-    //! Constructs a material with _name_, refractive_index parameters and
-    //! _magnetic_field_
+    //! Constructs a material with _name_, refractive_index parameters and _magnetic_field_
     HomogeneousMagneticMaterial(const std::string &name, double refractive_index_delta,
                                 double refractive_index_beta, const kvector_t magnetic_field);
 
-    HomogeneousMagneticMaterial* clone() const final override;
-    HomogeneousMagneticMaterial* cloneInverted() const final override;
+    HomogeneousMagneticMaterial* clone() const final;
+    HomogeneousMagneticMaterial* cloneInverted() const final;
 
     //! Get the magnetic field (in Tesla)
     kvector_t getMagneticField() const { return m_magnetic_field; }
@@ -48,7 +46,7 @@ public:
 
     //! Indicates that the material is not scalar. This means that different
     //! polarization states will be diffracted differently
-    virtual bool isScalarMaterial() const { return false; }
+    bool isScalarMaterial() const final { return false; }
 
 #ifndef SWIG
     //! Get the scattering matrix (~potential V) from the material.
@@ -57,11 +55,10 @@ public:
 #endif
 
     //! Create a new material that is transformed with respect to this one
-    virtual const IMaterial* createTransformedMaterial(
-        const Transform3D& transform) const;
+    const IMaterial* createTransformedMaterial(const Transform3D& transform) const final;
 
 protected:
-    virtual void print(std::ostream &ostr) const {
+    void print(std::ostream &ostr) const final {
         ostr << "HomMagMat:" << getName() << "<" << this << ">{ "
              << "R=" << m_refractive_index << ", B=" << m_magnetic_field << "}";  }
 
