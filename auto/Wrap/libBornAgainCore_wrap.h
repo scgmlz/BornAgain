@@ -307,7 +307,7 @@ public:
     virtual std::vector< ISample const *,std::allocator< ISample const * > > getChildren() const;
     virtual size_t size() const;
     virtual void setAmbientMaterial(IMaterial const &arg0);
-    virtual complex_t evaluate(WavevectorInfo const &wavevectors) const;
+    virtual complex_t evaluate(WavevectorPair const &wavevectors) const;
     virtual double getVolume() const;
     virtual double getRadialExtension() const;
     virtual void setSpecularInfo(ILayerRTCoefficients const *arg0, ILayerRTCoefficients const *arg1);
@@ -371,7 +371,7 @@ public:
     virtual std::vector< ISample const *,std::allocator< ISample const * > > getChildren() const;
     virtual size_t size() const;
     virtual void setAmbientMaterial(IMaterial const &arg0);
-    virtual complex_t evaluate(WavevectorInfo const &wavevectors) const;
+    virtual complex_t evaluate(WavevectorPair const &wavevectors) const;
     virtual double getVolume() const;
     virtual double getRadialExtension() const;
     virtual void setSpecularInfo(ILayerRTCoefficients const *arg0, ILayerRTCoefficients const *arg1);

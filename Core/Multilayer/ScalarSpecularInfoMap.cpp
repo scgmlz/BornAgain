@@ -28,13 +28,13 @@ ScalarSpecularInfoMap::ScalarSpecularInfoMap(const MultiLayer* multilayer, int l
 const ILayerRTCoefficients* ScalarSpecularInfoMap::getOutCoefficients(
         const SimulationElement& sim_element) const
 {
-    return getCoefficients(-sim_element.getMeanKF());
+    return getCoefficients(-sim_element.getMeanKf());
 }
 
 const ILayerRTCoefficients* ScalarSpecularInfoMap::getInCoefficients(
         const SimulationElement& sim_element) const
 {
-    return getCoefficients(sim_element.getKI());
+    return getCoefficients(sim_element.getKi());
 }
 
 const ScalarRTCoefficients* ScalarSpecularInfoMap::getCoefficients(kvector_t kvec) const

@@ -16,12 +16,12 @@
 #include "FormFactorWrapper.h"
 #include "IFormFactor.h"
 #include "SimulationElement.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 #include "LayerSpecularInfo.h"
 #include "ILayerRTCoefficients.h"
 #include "Exceptions.h"
 
-FormFactorWrapper::FormFactorWrapper(IFormFactor *ff, double abundance)
+FormFactorWrapper::FormFactorWrapper(IFormFactor* ff, double abundance)
 : mP_ff(ff), m_abundance(abundance)
 {
 }
@@ -35,45 +35,37 @@ FormFactorWrapper* FormFactorWrapper::clone() const
     return clone;
 }
 
-complex_t FormFactorWrapper::evaluate(const SimulationElement &sim_element) const
+complex_t FormFactorWrapper::evaluate(const SimulationElement& sim_element) const
 {
-    double wavelength = sim_element.getWavelength();
-    double wavevector_scattering_factor = M_PI/wavelength/wavelength;
-    WavevectorInfo wavevectors(sim_element.getKI(), sim_element.getMeanKF(), wavelength);
-
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
     const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
         mP_specular_info->getOutCoefficients(sim_element));
     mP_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
-    return wavevector_scattering_factor*mP_ff->evaluate(wavevectors);
+    return mP_ff->evaluate({sim_element.getKi(), sim_element.getMeanKf()});
 }
 
-Eigen::Matrix2cd FormFactorWrapper::evaluatePol(const SimulationElement &sim_element) const
+Eigen::Matrix2cd FormFactorWrapper::evaluatePol(const SimulationElement& sim_element) const
 {
-    double wavelength = sim_element.getWavelength();
-    double wavevector_scattering_factor = M_PI/wavelength/wavelength;
-    WavevectorInfo wavevectors(sim_element.getKI(), sim_element.getMeanKF(), wavelength);
-
     const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
         mP_specular_info->getInCoefficients(sim_element));
     const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
         mP_specular_info->getOutCoefficients(sim_element));
     mP_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
-    return wavevector_scattering_factor*mP_ff->evaluatePol(wavevectors);
+    return mP_ff->evaluatePol({sim_element.getKi(), sim_element.getMeanKf()});
 }
 
-IFormFactor *FormFactorWrapper::formfactor()
+IFormFactor* FormFactorWrapper::formfactor()
 {
     return mP_ff.get();
 }
 
-const IFormFactor *FormFactorWrapper::formfactor() const
+const IFormFactor* FormFactorWrapper::formfactor() const
 {
     return mP_ff.get();
 }
 
-void FormFactorWrapper::setSpecularInfo(const LayerSpecularInfo &specular_info)
+void FormFactorWrapper::setSpecularInfo(const LayerSpecularInfo& specular_info)
 {
     mP_specular_info.reset(specular_info.clone());
 }

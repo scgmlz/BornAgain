@@ -34,7 +34,7 @@ public:
     void accept(ISampleVisitor* visitor) const override { visitor->visit(this); }
 
     //! Calculates and returns a form factor calculation in DWBA
-    complex_t evaluate(const WavevectorInfo& wavevectors) const override;
+    complex_t evaluate(const WavevectorPair& wavevectors) const override;
 
     //! Returns the total volume of the particle of this form factor's shape
     double getVolume() const override { return mp_form_factor->getVolume(); }

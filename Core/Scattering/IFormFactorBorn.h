@@ -35,10 +35,10 @@ public:
 
     IFormFactorBorn* clone() const override=0;
 
-    complex_t evaluate(const WavevectorInfo& wavevectors) const override;
+    complex_t evaluate(const WavevectorPair& wavevectors) const override;
 
 #ifndef SWIG
-    Eigen::Matrix2cd evaluatePol(const WavevectorInfo& wavevectors) const override;
+    Eigen::Matrix2cd evaluatePol(const WavevectorPair& wavevectors) const override;
 #endif
 
     //! Returns scattering amplitude for complex scattering wavevector q=k_i-k_f.

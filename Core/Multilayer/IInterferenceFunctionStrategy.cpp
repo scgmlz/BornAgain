@@ -24,7 +24,7 @@
 #include "RealParameter.h"
 #include "ScalarRTCoefficients.h"
 #include "SimulationElement.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 IInterferenceFunctionStrategy::IInterferenceFunctionStrategy()
 {}
@@ -93,9 +93,8 @@ void IInterferenceFunctionStrategy1::precomputeParticleFormfactors(
     const SimulationElement& sim_element) const
 {
     m_precomputed_ff1.clear();
-    for (auto ffw: m_formfactor_wrappers) {
+    for (auto ffw: m_formfactor_wrappers)
         m_precomputed_ff1.push_back(ffw->evaluate(sim_element));
-    }
 }
 
 //! Precomputes matrix form factors.
@@ -103,7 +102,6 @@ void IInterferenceFunctionStrategy2::precomputeParticleFormfactors(
     const SimulationElement& sim_element) const
 {
     m_precomputed_ff2.clear();
-    for (auto ffw: m_formfactor_wrappers) {
+    for (auto ffw: m_formfactor_wrappers)
         m_precomputed_ff2.push_back(ffw->evaluatePol(sim_element));
-    }
 }

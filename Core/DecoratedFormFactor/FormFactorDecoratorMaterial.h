@@ -46,7 +46,7 @@ public:
 
 #ifndef SWIG
     //! Returns scattering amplitude for matrix interactions
-    Eigen::Matrix2cd evaluatePol(const WavevectorInfo& wavevectors) const override final;
+    Eigen::Matrix2cd evaluatePol(const WavevectorPair& wavevectors) const override final;
 #endif
 
 private:

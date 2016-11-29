@@ -15,11 +15,11 @@
 
 #include "IFormFactor.h"
 #include "Exceptions.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 IFormFactor::~IFormFactor() {}
 
-Eigen::Matrix2cd IFormFactor::evaluatePol(const WavevectorInfo&) const
+Eigen::Matrix2cd IFormFactor::evaluatePol(const WavevectorPair&) const
 {
     // Throws to prevent unanticipated behaviour
     throw Exceptions::NotImplementedException(
@@ -28,6 +28,6 @@ Eigen::Matrix2cd IFormFactor::evaluatePol(const WavevectorInfo&) const
 
 double IFormFactor::getVolume() const
 {
-    WavevectorInfo zero_wavevectors;
+    WavevectorPair zero_wavevectors;
     return std::abs(evaluate(zero_wavevectors));
 }

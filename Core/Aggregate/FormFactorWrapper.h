@@ -46,6 +46,7 @@ public:
     double relativeAbundance() const { return m_abundance; }
     void scaleRelativeAbundance(double total_abundance);
     double radialExtension() const;
+
 private:
     std::unique_ptr<IFormFactor> mP_ff;
     std::unique_ptr<LayerSpecularInfo> mP_specular_info; //!< R and T coefficients for DWBA

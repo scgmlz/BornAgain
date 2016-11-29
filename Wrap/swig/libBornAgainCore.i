@@ -212,7 +212,7 @@
 #include "Units.h"
 #include "VariableBinAxis.h"
 #include "Vectors3D.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 #include "IChiSquaredModule.h"
 #include "IIntensityFunction.h"
 #include "IIntensityNormalizer.h"
@@ -262,7 +262,7 @@
 %include "Complex.h"
 %include "Units.h"
 %include "Vectors3D.h"
-%include "WavevectorInfo.h"
+%include "WavevectorPair.h"
 
 %include "Beam.h"
 %include "Bin.h"

@@ -46,7 +46,7 @@ const ILayerRTCoefficients* MatrixSpecularInfoMap::getOutCoefficients(
         const SimulationElement& sim_element) const
 {
     SpecularMagnetic::MultiLayerCoeff_t coeffs;
-    SpecularMagnetic::execute(*mP_inverted_multilayer, -sim_element.getMeanKF(), coeffs);
+    SpecularMagnetic::execute(*mP_inverted_multilayer, -sim_element.getMeanKf(), coeffs);
     return new MatrixRTCoefficients(coeffs[m_layer]);
 }
 
@@ -54,6 +54,6 @@ const ILayerRTCoefficients* MatrixSpecularInfoMap::getInCoefficients(
         const SimulationElement& sim_element) const
 {
     SpecularMagnetic::MultiLayerCoeff_t coeffs;
-    SpecularMagnetic::execute(*mP_multilayer, sim_element.getKI(), coeffs);
+    SpecularMagnetic::execute(*mP_multilayer, sim_element.getKi(), coeffs);
     return new MatrixRTCoefficients(coeffs[m_layer]);
 }

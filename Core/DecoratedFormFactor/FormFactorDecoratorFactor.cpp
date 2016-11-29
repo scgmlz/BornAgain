@@ -23,12 +23,12 @@ FormFactorDecoratorFactor::FormFactorDecoratorFactor(const IFormFactor& form_fac
     setName(BornAgain::FormFactorDecoratorFactorType);
 }
 
-complex_t FormFactorDecoratorFactor::evaluate(const WavevectorInfo& wavevectors) const
+complex_t FormFactorDecoratorFactor::evaluate(const WavevectorPair& wavevectors) const
 {
     return m_factor * mp_form_factor->evaluate(wavevectors);
 }
 
-Eigen::Matrix2cd FormFactorDecoratorFactor::evaluatePol(const WavevectorInfo &wavevectors) const
+Eigen::Matrix2cd FormFactorDecoratorFactor::evaluatePol(const WavevectorPair &wavevectors) const
 {
     return m_factor * mp_form_factor->evaluatePol(wavevectors);
 }

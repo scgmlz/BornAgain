@@ -16,7 +16,7 @@
 #include "FormFactorDecoratorPositionFactor.h"
 #include "BornAgainNamespace.h"
 #include "ISampleVisitor.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 FormFactorDecoratorPositionFactor::FormFactorDecoratorPositionFactor(
     const IFormFactor& form_factor, const kvector_t& position)
@@ -26,19 +26,19 @@ FormFactorDecoratorPositionFactor::FormFactorDecoratorPositionFactor(
 }
 
 complex_t FormFactorDecoratorPositionFactor::evaluate(
-    const WavevectorInfo& wavevectors) const
+    const WavevectorPair& wavevectors) const
 {
     return getPositionFactor(wavevectors) * mp_form_factor->evaluate(wavevectors);
 }
 
 Eigen::Matrix2cd FormFactorDecoratorPositionFactor::evaluatePol(
-        const WavevectorInfo& wavevectors) const
+        const WavevectorPair& wavevectors) const
 {
     return getPositionFactor(wavevectors) * mp_form_factor->evaluatePol(wavevectors);
 }
 
 complex_t FormFactorDecoratorPositionFactor::getPositionFactor(
-    const WavevectorInfo& wavevectors) const
+    const WavevectorPair& wavevectors) const
 {
     cvector_t q = wavevectors.getQ();
     return exp_I( m_position.dot(q) );

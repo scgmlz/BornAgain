@@ -16,7 +16,7 @@
 #include "FormFactorDWBA.h"
 #include "BornAgainNamespace.h"
 #include "ILayerRTCoefficients.h"
-#include "WavevectorInfo.h"
+#include "WavevectorPair.h"
 
 FormFactorDWBA::FormFactorDWBA(const IFormFactor& form_factor)
     : mp_form_factor(form_factor.clone())
@@ -36,26 +36,14 @@ FormFactorDWBA* FormFactorDWBA::clone() const
     return result;
 }
 
-complex_t FormFactorDWBA::evaluate(const WavevectorInfo& wavevectors) const
+complex_t FormFactorDWBA::evaluate(const WavevectorPair& wavevectors) const
 {
-    // Retrieve the two different incoming wavevectors in the layer
-    cvector_t k_i_T = wavevectors.getKi();
-    k_i_T.setZ(-mp_in_coeffs->getScalarKz());
-    cvector_t k_i_R = k_i_T;
-    k_i_R.setZ(-k_i_T.z());
-
-    // Retrieve the two different outgoing wavevector bins in the layer
-    cvector_t k_f_T = wavevectors.getKf();
-    k_f_T.setZ(mp_out_coeffs->getScalarKz());
-    cvector_t k_f_R = k_f_T;
-    k_f_R.setZ(-k_f_T.z());
-
-    // Construct the four different scattering contributions wavevector infos
-    double wavelength = wavevectors.getWavelength();
-    WavevectorInfo k_TT(k_i_T, k_f_T, wavelength);
-    WavevectorInfo k_RT(k_i_R, k_f_T, wavelength);
-    WavevectorInfo k_TR(k_i_T, k_f_R, wavelength);
-    WavevectorInfo k_RR(k_i_R, k_f_R, wavelength);
+    const complex_t kiz = mp_in_coeffs->getScalarKz();
+    const complex_t kfz = mp_out_coeffs->getScalarKz();
+    const WavevectorPair k_TT = wavevectors.newZZ(-kiz,+kfz);
+    const WavevectorPair k_RT = wavevectors.newZZ(+kiz,+kfz);
+    const WavevectorPair k_TR = wavevectors.newZZ(-kiz,-kfz);
+    const WavevectorPair k_RR = wavevectors.newZZ(+kiz,-kfz);
 
     // Get the four R,T coefficients
     complex_t T_in = mp_in_coeffs->getScalarT();

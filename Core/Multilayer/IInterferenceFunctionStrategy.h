@@ -82,6 +82,7 @@ private:
 #endif
 };
 
+
 //! Pure virtual base class of all scalar interference function strategy classes.
 //! Provides the precomputation of particle form factors.
 
@@ -93,6 +94,7 @@ protected:
 private:
     void precomputeParticleFormfactors(const SimulationElement& sim_element) const final;
 };
+
 
 //! Pure virtual base class of all polarized interference function strategy classes.
 //! Provides the precomputation of particle form factors.
