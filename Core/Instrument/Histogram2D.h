@@ -17,6 +17,7 @@
 #define HISTOGRAM2D_H
 
 #include "IHistogram.h"
+#include "ArrayUtils.h"
 
 #ifdef BORNAGAIN_PYTHON
 #ifndef PyObject_HEAD
@@ -57,7 +58,7 @@ public:
     Histogram2D(const OutputData<double>& data);
 
     //! Constructor for 2D histograms from numpy array (thanks to swig)
-    Histogram2D(const std::vector<std::vector<double>> data);
+    Histogram2D(std::vector<std::vector<double>> data);
 
     //! Returns clone of other histogram
     Histogram2D* clone() const;
@@ -108,6 +109,9 @@ public:
     void addContent(const std::vector<std::vector<double>>& data);
 
 protected:
+    template<typename T>
+    void initFromShape(const T& data);
+
     //! Creates projection along X. The projections is made by collecting the data in the range
     //! between [ybinlow, ybinup].
     Histogram1D* create_projectionX(int ybinlow, int ybinup);
@@ -116,5 +120,21 @@ protected:
     //! between [xbinlow, xbinup].
     Histogram1D* create_projectionY(int xbinlow, int xbinup);
 };
+
+
+template<typename T> void Histogram2D::initFromShape(const T& data)
+{
+    auto shape = ArrayUtils::getShape(data);
+    const size_t nrows = shape.first;
+    const size_t ncols = shape.second;
+
+    if(nrows == 0 || ncols == 0)
+        throw Exceptions::LogicErrorException("Histogram2D::Histogram2D() -> Error. "
+                                              "Not a two-dimensional numpy array");
+
+    m_data.addAxis(FixedBinAxis("x-axis", ncols, 0.0, static_cast<double>(ncols)));
+    m_data.addAxis(FixedBinAxis("y-axis", nrows, 0.0, static_cast<double>(nrows)));
+
+}
 
 #endif // HISTOGRAM2D_H

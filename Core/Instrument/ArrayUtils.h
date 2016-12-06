@@ -17,6 +17,7 @@
 #define ARRAYUTILS_H
 
 #include <vector>
+#include "WinDllMacros.h"
 
 #ifdef BORNAGAIN_PYTHON
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
@@ -29,12 +30,23 @@ namespace ArrayUtils
 {
 
     //! Returns shape nrows, ncols of 2D array.
-    BA_CORE_API_ std::pair<size_t, size_t> getShape(const std::vector<std::vector<double>>& data);
+    template<class T> BA_CORE_API_ std::pair<size_t, size_t> getShape(const T& data);
 
 #ifdef BORNAGAIN_PYTHON
     PyObject* createNumpyArray(const std::vector<double>& data);
 #endif // BORNAGAIN_PYTHON
 
+}
+
+template<class T>  std::pair<size_t, size_t> ArrayUtils::getShape(const T& data){
+    size_t nrows = data.size();
+    size_t ncols(0);
+    if(nrows) ncols = data[0].size();
+    for(size_t row=0; row<nrows; row++)
+        if(data[row].size() != ncols)
+            throw std::runtime_error("Util::getShape() -> Error. "
+                                     "Number of elements is different from row to row.");
+    return std::make_pair(nrows, ncols);
 }
 
 #endif // ARRAYUTILS_H

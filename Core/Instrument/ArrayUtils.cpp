@@ -16,18 +16,6 @@
 #include "Exceptions.h"
 #include "ArrayUtils.h"
 
-std::pair<size_t, size_t> ArrayUtils::getShape(const std::vector<std::vector<double>>& data)
-{
-    size_t nrows = data.size();
-    size_t ncols(0);
-    if(nrows) ncols = data[0].size();
-    for(size_t row=0; row<nrows; row++)
-        if(data[row].size() != ncols)
-            throw std::runtime_error("Util::getShape() -> Error. "
-                                     "Number of elements is different from row to row.");
-    return std::make_pair(nrows, ncols);
-}
-
 #ifdef BORNAGAIN_PYTHON
 #define PY_ARRAY_UNIQUE_SYMBOL BORNAGAIN_PYTHONAPI_ARRAY
 #define NO_IMPORT_ARRAY

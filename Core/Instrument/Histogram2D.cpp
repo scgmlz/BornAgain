@@ -20,6 +20,15 @@
 #include "ArrayUtils.h"
 #include <memory>
 
+namespace {
+std::vector<std::vector<double>> convertToDouble(const std::vector<std::vector<int>>& data)
+{
+    std::vector<std::vector<double>> result;
+    for(size_t i=0; i<data.size(); ++i)
+        result.push_back(std::vector<double>(data[i].begin(), data[i].end()));
+    return result;
+}
+}
 
 Histogram2D::Histogram2D(int nbinsx, double xlow, double xup, int nbinsy, double ylow, double yup)
 {
@@ -43,19 +52,10 @@ Histogram2D::Histogram2D(const OutputData<double>& data)
     init_from_data(data);
 }
 
-Histogram2D::Histogram2D(const std::vector<std::vector<double> > data)
+// IMPORTANT intentionally passed by copy to avoid problems on Python side
+Histogram2D::Histogram2D(std::vector<std::vector<double> > data)
 {
-    auto shape = ArrayUtils::getShape(data);
-    const size_t nrows = shape.first;
-    const size_t ncols = shape.second;
-
-    if(nrows == 0 || ncols == 0)
-        throw Exceptions::LogicErrorException("Histogram2D::Histogram2D() -> Error. "
-                                              "Not a two-dimensional numpy array");
-
-    m_data.addAxis(FixedBinAxis("x-axis", ncols, 0.0, static_cast<double>(ncols)));
-    m_data.addAxis(FixedBinAxis("y-axis", nrows, 0.0, static_cast<double>(nrows)));
-
+    initFromShape(data);
     this->setContent(data);
 }
 

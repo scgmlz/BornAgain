@@ -38,8 +38,9 @@
 %include "directors.i"
 
 %template(vdouble1d_t) std::vector<double>;
-%template(vdouble2d_t) std::vector< std::vector<double>>;
+%template(vdouble2d_t) std::vector<std::vector<double>>;
 %template(vector_integer_t) std::vector<int>;
+%template(vinteger2d_t) std::vector<std::vector<int>>;
 %template(vector_longinteger_t) std::vector<unsigned long int>;
 %template(vector_complex_t) std::vector< std::complex<double>>;
 %template(vector_string_t) std::vector<std::string>;
