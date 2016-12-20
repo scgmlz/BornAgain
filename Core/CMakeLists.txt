@@ -8,7 +8,12 @@ if(POLICY CMP0042)
     cmake_policy(SET CMP0042 NEW)
 endif()
 
-# --- source and include files ---------
+############################################################################
+# Compilation
+############################################################################
+
+# --- Glob source directories and files ---
+
 include(GlobDirectories)
 GLOB_DIRECTORIES(CORE_SUBDIRS)
 
@@ -17,7 +22,7 @@ foreach(subdir ${CORE_SUBDIRS})
     list(APPEND CORE_SOURCE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/${subdir}")
 endforeach()
 
-# export for use in functional tests:
+# export for use in functional tests
 set(CORE_SOURCE_DIRS ${CORE_SOURCE_DIRS} ${EIGEN3_INCLUDE_DIR} PARENT_SCOPE)
 
 set(include_dirs
@@ -29,8 +34,12 @@ set(include_dirs
 
 include_directories(${include_dirs})
 
+# Glob source files (further files will be added in Python section):
 file(GLOB source_files "*/*.cpp")
 file(GLOB include_files "*/*.h")
+
+
+# --- Optional Python support ---
 
 if(BORNAGAIN_PYTHON)
 
@@ -105,28 +114,26 @@ if(BORNAGAIN_PYTHON)
 endif()
 
 
+# --- Compile -> library ---
+
 if(WIN32)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBA_CORE_BUILD_DLL")
 endif()
 
-
-# --- making library ---------
 add_library(${library_name} SHARED ${include_files} ${source_files})
 
 set_Target_properties(${library_name} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${library_name}_LIBRARY_TYPE SHARED)
 
-
 if(BORNAGAIN_PYTHON)
     add_dependencies(${library_name} ${library_name}_python)
 endif()
 
-# exposing library name and list of include directories outside
 set(${library_name}_INCLUDE_DIRS ${include_dirs} PARENT_SCOPE)
 set(${library_name}_LIBRARY ${library_name} PARENT_SCOPE)
 
 
-# --- external dependencies ---------
+# --- Specify external libraries and flags to use when linking libBornAgainCore ---
 
 target_link_libraries(${library_name} ${BornAgainFit_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 
@@ -162,7 +169,12 @@ if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
 endif()
 
 
-# --- installation ---------
+############################################################################
+# Installation
+############################################################################
+
+# DESTINATION arguments like ${destination_lib} are set in BornAgainConfiguration.cmake.
+# They are paths relative to CMAKE_INSTALL_PREFIX
 
 install (DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/ DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.py" )
 install (DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/ DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "README")
@@ -221,28 +233,30 @@ if(WIN32)
 else()
     # Install thisbornagain.sh.
     install(FILES
-                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.sh
-                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.csh
-        PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
-        GROUP_EXECUTE GROUP_READ WORLD_EXECUTE WORLD_READ
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.sh
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.csh
+        PERMISSIONS
+            OWNER_EXECUTE OWNER_READ OWNER_WRITE
+            GROUP_EXECUTE GROUP_READ
+            WORLD_EXECUTE WORLD_READ
         DESTINATION ${destination_libexec})
 
     if(NOT BORNAGAIN_APPLE_BUNDLE AND NOT BUILD_DEBIAN)
         # Create bin directory for links.
         install(CODE "
-            FILE(MAKE_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
+            FILE(MAKE_DIRECTORY \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
             "
             COMPONENT Runtime)
         # Make links.
         install(CODE "
         execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink
         \"../${destination_libexec}/thisbornagain.sh\" \"thisbornagain.sh\"
-        WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
+        WORKING_DIRECTORY \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
         " COMPONENT Runtime)
         install(CODE "
         execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink
         \"../${destination_libexec}/thisbornagain.csh\" \"thisbornagain.csh\"
-        WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
+        WORKING_DIRECTORY \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
         " COMPONENT Runtime)
     else()
 
@@ -252,8 +266,10 @@ else()
 
 endif()
 
-# Install bornagain/__init__.py and utilites
-install(FILES "${CMAKE_BINARY_DIR}/lib/bornagain/__init__.py"
+if(BORNAGAIN_PYTHON)
+    # Install bornagain/__init__.py and utilites
+    install(FILES "${CMAKE_BINARY_DIR}/lib/bornagain/__init__.py"
         DESTINATION ${destination_libexec}/bornagain/ COMPONENT Libraries)
-install(FILES "${CMAKE_BINARY_DIR}/lib/bornagain/plot_utils.py"
+    install(FILES "${CMAKE_BINARY_DIR}/lib/bornagain/plot_utils.py"
         DESTINATION ${destination_libexec}/bornagain/ COMPONENT Libraries)
+endif()
