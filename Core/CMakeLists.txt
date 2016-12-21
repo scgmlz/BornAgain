@@ -244,19 +244,19 @@ else()
     if(NOT BORNAGAIN_APPLE_BUNDLE AND NOT BUILD_DEBIAN)
         # Create bin directory for links.
         install(CODE "
-            FILE(MAKE_DIRECTORY \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
+            FILE(MAKE_DIRECTORY \"$$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
             "
             COMPONENT Runtime)
         # Make links.
         install(CODE "
         execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink
         \"../${destination_libexec}/thisbornagain.sh\" \"thisbornagain.sh\"
-        WORKING_DIRECTORY \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
+        WORKING_DIRECTORY \"$$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
         " COMPONENT Runtime)
         install(CODE "
         execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink
         \"../${destination_libexec}/thisbornagain.csh\" \"thisbornagain.csh\"
-        WORKING_DIRECTORY \"$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
+        WORKING_DIRECTORY \"$$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
         " COMPONENT Runtime)
     else()
 
