@@ -35,6 +35,8 @@ public:
 
     CustomBinAxis* clone() const;
 
+    virtual void revert() override;
+
     Bin1D getBin(size_t index) const;
 
     std::vector<double > getBinCenters() const;

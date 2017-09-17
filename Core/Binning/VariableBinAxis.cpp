@@ -45,6 +45,10 @@ VariableBinAxis* VariableBinAxis::clone() const
     return result;
 }
 
+void VariableBinAxis::revert()
+{
+    std::reverse(m_bin_boundaries.begin(), m_bin_boundaries.end());
+}
 
 double VariableBinAxis::operator[](size_t index) const
 {

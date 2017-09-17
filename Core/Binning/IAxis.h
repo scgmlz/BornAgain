@@ -46,6 +46,9 @@ public:
     //! Sets the axis label
     void setName(std::string name) { m_name = name; }
 
+    //! Reverts axis direction
+    virtual void revert() = 0;
+
     //! indexed accessor retrieves a sample
     virtual double operator[](size_t index) const=0;
 
