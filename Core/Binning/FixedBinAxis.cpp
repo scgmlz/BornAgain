@@ -30,6 +30,11 @@ FixedBinAxis *FixedBinAxis::clone() const
     return result;
 }
 
+FixedBinAxis* FixedBinAxis::createReverted() const
+{
+    return new FixedBinAxis(getName(), m_nbins, m_end, m_start);
+}
+
 double FixedBinAxis::operator[](size_t index) const
 {
     if(index >= m_nbins)

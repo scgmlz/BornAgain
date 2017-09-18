@@ -45,6 +45,11 @@ VariableBinAxis* VariableBinAxis::clone() const
     return result;
 }
 
+VariableBinAxis* VariableBinAxis::createReverted() const
+{
+    return new VariableBinAxis(getName(), m_nbins,
+        std::vector<double>(m_bin_boundaries.crbegin(), m_bin_boundaries.crend()));
+}
 
 double VariableBinAxis::operator[](size_t index) const
 {

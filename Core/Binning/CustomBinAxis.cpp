@@ -16,6 +16,7 @@
 #include "CustomBinAxis.h"
 #include "Exceptions.h"
 #include "Numeric.h"
+#include <algorithm>
 #include <iomanip>
 #include <limits>
 
@@ -49,6 +50,11 @@ CustomBinAxis::CustomBinAxis(const std::string &name, size_t nbins, double start
 CustomBinAxis *CustomBinAxis::clone() const
 {
     return new CustomBinAxis(getName(), m_nbins, m_start, m_end);
+}
+
+CustomBinAxis* CustomBinAxis::createReverted() const
+{
+    return new CustomBinAxis(getName(), m_nbins, m_end, m_start);
 }
 
 Bin1D CustomBinAxis::getBin(size_t index) const

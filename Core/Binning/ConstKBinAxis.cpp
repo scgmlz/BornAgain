@@ -51,6 +51,11 @@ ConstKBinAxis* ConstKBinAxis::clone() const
     return new ConstKBinAxis(getName(), m_nbins, m_start, m_end);
 }
 
+ConstKBinAxis* ConstKBinAxis::createReverted() const
+{
+    return new ConstKBinAxis(getName(), m_nbins, m_end, m_start);
+}
+
 ConstKBinAxis* ConstKBinAxis::createClippedAxis(double left, double right) const
 {
     if(left >= right)

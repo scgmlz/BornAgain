@@ -35,6 +35,8 @@ public:
 
     VariableBinAxis* clone() const;
 
+    virtual VariableBinAxis* createReverted() const override;
+
     size_t size() const { return m_nbins; }
 
     double operator[](size_t index) const;

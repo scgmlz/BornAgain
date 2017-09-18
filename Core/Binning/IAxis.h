@@ -31,6 +31,9 @@ public:
     //! clone function
     virtual IAxis* clone() const=0;
 
+    //! Returns axis with inverted direction
+    virtual IAxis* createReverted() const = 0;
+
     //! Creates a new axis with half the number of bins
     virtual IAxis* createDoubleBinSize() const;
 
