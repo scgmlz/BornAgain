@@ -35,7 +35,7 @@ public:
 
     VariableBinAxis* clone() const;
 
-    virtual void revert() override;
+    virtual VariableBinAxis* createReverted() const override;
 
     size_t size() const { return m_nbins; }
 

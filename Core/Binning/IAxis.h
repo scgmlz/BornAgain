@@ -31,6 +31,9 @@ public:
     //! clone function
     virtual IAxis* clone() const=0;
 
+    //! Returns axis with inverted direction
+    virtual IAxis* createReverted() const = 0;
+
     //! Creates a new axis with half the number of bins
     virtual IAxis* createDoubleBinSize() const;
 
@@ -45,9 +48,6 @@ public:
 
     //! Sets the axis label
     void setName(std::string name) { m_name = name; }
-
-    //! Reverts axis direction
-    virtual void revert() = 0;
 
     //! indexed accessor retrieves a sample
     virtual double operator[](size_t index) const=0;

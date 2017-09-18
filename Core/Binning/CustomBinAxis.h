@@ -35,7 +35,7 @@ public:
 
     CustomBinAxis* clone() const;
 
-    virtual void revert() override;
+    virtual CustomBinAxis* createReverted() const override;
 
     Bin1D getBin(size_t index) const;
 

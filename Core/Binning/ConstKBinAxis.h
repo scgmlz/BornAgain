@@ -34,7 +34,7 @@ public:
 
     ConstKBinAxis* clone() const final;
 
-    virtual void revert() override;
+    virtual ConstKBinAxis* createReverted() const override;
 
     ConstKBinAxis* createClippedAxis(double left, double right) const final;
 

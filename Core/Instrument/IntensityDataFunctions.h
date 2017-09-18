@@ -38,7 +38,7 @@ BA_CORE_API_ OutputData<double>* createRelativeDifferenceData(
 //! Returns a pointer to new object with input data rotated by
 //! n*90 deg counterclockwise (n > 0) or clockwise (n < 0)
 //! Applicable to 2D arrays only
-BA_CORE_API_ OutputData<double>* rotateDataByN90Deg(const OutputData<double>& data, int n);
+BA_CORE_API_ OutputData<double>* createRotatedByN90Deg(const OutputData<double>& data, int n);
 
 //! Returns new IntensityData objects which axes clipped to represent the specified rectangle.
 BA_CORE_API_ OutputData<double>* createClippedDataSet(

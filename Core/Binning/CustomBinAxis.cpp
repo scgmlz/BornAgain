@@ -52,13 +52,9 @@ CustomBinAxis *CustomBinAxis::clone() const
     return new CustomBinAxis(getName(), m_nbins, m_start, m_end);
 }
 
-void CustomBinAxis::revert()
+CustomBinAxis* CustomBinAxis::createReverted() const
 {
-    VariableBinAxis::revert();
-    std::reverse(m_bin_centers.begin(), m_bin_centers.end());
-    double tmp = m_start;
-    m_start = m_end;
-    m_end = tmp;
+    return new CustomBinAxis(getName(), m_nbins, m_end, m_start);
 }
 
 Bin1D CustomBinAxis::getBin(size_t index) const

@@ -60,56 +60,42 @@ OutputData<double>* IntensityDataFunctions::createRelativeDifferenceData(
     return result;
 }
 
-static void rotateDataByOddN(const OutputData<double>& data, OutputData<double>& output,
-    size_t rev_axis_i)
+namespace {
+std::function<void(std::vector<int>&)>
+rotateDataByPiFraction(const OutputData<double>& data, OutputData<double>& output, size_t rev_axis_i)
 {
     const size_t inv_axis_i = 1 ^ rev_axis_i;
-    std::unique_ptr<IAxis> rev_axis(data.getAxis(rev_axis_i).clone());
-    rev_axis->revert();
-    if (rev_axis_i == 1) {
-        output.addAxis(*rev_axis);
-        output.addAxis(data.getAxis(inv_axis_i));
-    } else {
-        output.addAxis(data.getAxis(inv_axis_i));
-        output.addAxis(*rev_axis);
-    }
+    std::unique_ptr<IAxis> rev_axis(data.getAxis(rev_axis_i).createReverted());
+    output.addAxis(rev_axis_i == 1 ? *rev_axis : data.getAxis(inv_axis_i));
+    output.addAxis(rev_axis_i == 1 ? data.getAxis(inv_axis_i) : *rev_axis);
 
-    int tmp_index;
     const size_t end_bin = rev_axis->size() - 1;
-    for (size_t index = 0, size = data.getAllocatedSize(); index < size; ++index) {
-        std::vector<int> axis_inds = data.getAxesBinIndices(index);
-        tmp_index = axis_inds[rev_axis_i];
-        axis_inds[rev_axis_i] = axis_inds[inv_axis_i];
-        axis_inds[inv_axis_i] = end_bin - tmp_index;
-        size_t output_index = output.toGlobalIndex(std::vector<unsigned>{
-            static_cast<unsigned>(axis_inds[0]), static_cast<unsigned>(axis_inds[1])});
-        output[output_index] = data[index];
-    }
+    return [rev_axis_i, inv_axis_i, end_bin](std::vector<int>& inds) {
+        const int tmp_index = inds[rev_axis_i];
+        inds[rev_axis_i] = inds[inv_axis_i];
+        inds[inv_axis_i] = end_bin - tmp_index;
+    };
 }
 
-static void rotateDataByEvenN(const OutputData<double>& data, OutputData<double>& output)
+std::function<void(std::vector<int>&)> rotateDataByPi(const OutputData<double>& data,
+    OutputData<double>& output)
 {
-    std::unique_ptr<IAxis> x_axis(data.getAxis(0).clone());
-    std::unique_ptr<IAxis> y_axis(data.getAxis(1).clone());
-    x_axis->revert();
-    y_axis->revert();
+    std::unique_ptr<IAxis> x_axis(data.getAxis(0).createReverted());
+    std::unique_ptr<IAxis> y_axis(data.getAxis(1).createReverted());
 
     output.addAxis(*x_axis);
     output.addAxis(*y_axis);
 
     const int end_bin_x = x_axis->size() - 1;
     const int end_bin_y = y_axis->size() - 1;
-    for (size_t index = 0, size = data.getAllocatedSize(); index < size; ++index) {
-        std::vector<int> axis_inds = data.getAxesBinIndices(index);
-        axis_inds[0] = end_bin_x - axis_inds[0];
-        axis_inds[1] = end_bin_y - axis_inds[1];
-        size_t output_index = output.toGlobalIndex(std::vector<unsigned>{
-            static_cast<unsigned>(axis_inds[0]), static_cast<unsigned>(axis_inds[1])});
-        output[output_index] = data[index];
-    }
+    return [end_bin_x, end_bin_y](std::vector<int>& inds) {
+        inds[0] = end_bin_x - inds[0];
+        inds[1] = end_bin_y - inds[1];
+    };
+}
 }
 
-OutputData<double>* IntensityDataFunctions::rotateDataByN90Deg(
+OutputData<double>* IntensityDataFunctions::createRotatedByN90Deg(
     const OutputData<double>& data, int n)
 {
     if (data.getRank() != 2)
@@ -118,15 +104,20 @@ OutputData<double>* IntensityDataFunctions::rotateDataByN90Deg(
     n = (4 + n % 4) % 4;
     if (n == 0)
         return data.clone();
-
     std::unique_ptr<OutputData<double>> output(new OutputData<double>());
-    if (n == 1)
-        rotateDataByOddN(data, *output, 1);
-    else if (n == 2)
-        rotateDataByEvenN(data, *output);
-    else
-        rotateDataByOddN(data, *output, 0);
 
+    // rotate/revert axes if necessary and define index mapping
+    const auto& index_mapping = (n == 2)
+        ? rotateDataByPi(data, *output)
+        : rotateDataByPiFraction(data, *output, n % 3);
+
+    for (size_t index = 0, size = data.getAllocatedSize(); index < size; ++index) {
+        std::vector<int> axis_inds = data.getAxesBinIndices(index);
+        index_mapping(axis_inds);
+        size_t output_index = output->toGlobalIndex(std::vector<unsigned>{
+            static_cast<unsigned>(axis_inds[0]), static_cast<unsigned>(axis_inds[1])});
+        (*output)[output_index] = data[index];
+    }
     return output.release();
 }
 

@@ -34,7 +34,7 @@ public:
 
     FixedBinAxis *clone() const;
 
-    virtual void revert() override;
+    virtual FixedBinAxis* createReverted() const override;
 
     size_t size() const { return m_nbins; }
 
