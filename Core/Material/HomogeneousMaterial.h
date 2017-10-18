@@ -63,11 +63,12 @@ public:
     //! Set the magnetizationd (in A/m)
     void setMagnetization(const kvector_t magnetization);
 
-    complex_t scalarSLD(const WavevectorInfo& wavevectors) const;
+    //! Returns \pi/(wl*wl) - sld, with wl being the wavelength
+    complex_t scalarSubstrSLD(const WavevectorInfo& wavevectors) const;
 
 #ifndef SWIG
-    //! Get the scattering matrix for a material defined by its magnetization
-    Eigen::Matrix2cd polarizedSLD(const WavevectorInfo& wavevectors) const;
+    //! Returns \pi/(wl*wl) - sld matrix with magnetization corrections. wl denotes the wavelength
+    Eigen::Matrix2cd polarizedSubstrSLD(const WavevectorInfo& wavevectors) const;
 #endif
 
     HomogeneousMaterial transformedMaterial(const Transform3D& transform) const;

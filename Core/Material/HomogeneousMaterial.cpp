@@ -102,7 +102,7 @@ void HomogeneousMaterial::setMagnetization(const kvector_t magnetic_field)
     m_magnetization = magnetic_field;
 }
 
-complex_t HomogeneousMaterial::scalarSLD(const WavevectorInfo& wavevectors) const
+complex_t HomogeneousMaterial::scalarSubstrSLD(const WavevectorInfo& wavevectors) const
 {
     double wavelength = wavevectors.getWavelength();
     double prefactor = M_PI/wavelength/wavelength;
@@ -110,10 +110,10 @@ complex_t HomogeneousMaterial::scalarSLD(const WavevectorInfo& wavevectors) cons
     return prefactor * refractive_index * refractive_index;
 }
 
-Eigen::Matrix2cd HomogeneousMaterial::polarizedSLD(const WavevectorInfo& wavevectors) const
+Eigen::Matrix2cd HomogeneousMaterial::polarizedSubstrSLD(const WavevectorInfo& wavevectors) const
 {
     cvector_t mag_ortho = OrthogonalToBaseVector(wavevectors.getQ(), m_magnetization);
-    complex_t unit_factor = scalarSLD(wavevectors);
+    complex_t unit_factor = scalarSubstrSLD(wavevectors);
     Eigen::Matrix2cd result;
     result = unit_factor*Unit_Matrix
             + Magnetization_Prefactor*Pauli_X*mag_ortho[0]

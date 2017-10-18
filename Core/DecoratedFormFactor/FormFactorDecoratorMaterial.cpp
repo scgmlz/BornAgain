@@ -66,13 +66,13 @@ Eigen::Matrix2cd FormFactorDecoratorMaterial::evaluatePol(const WavevectorInfo& 
     time_reverse_conj(1, 0) = -1.0;
     // the interaction and time reversal taken together:
     Eigen::Matrix2cd V_eff = time_reverse_conj
-                             * (  m_material.polarizedSLD(wavevectors)
-                                - m_ambient_material.polarizedSLD(wavevectors) );
+                             * (  m_material.polarizedSubstrSLD(wavevectors)
+                                - m_ambient_material.polarizedSubstrSLD(wavevectors) );
     return mp_form_factor->evaluate(wavevectors) * V_eff;
 }
 
 complex_t FormFactorDecoratorMaterial::getRefractiveIndexFactor(
         const WavevectorInfo& wavevectors) const
 {
-    return m_material.scalarSLD(wavevectors) - m_ambient_material.scalarSLD(wavevectors);
+    return m_material.scalarSubstrSLD(wavevectors) - m_ambient_material.scalarSubstrSLD(wavevectors);
 }
