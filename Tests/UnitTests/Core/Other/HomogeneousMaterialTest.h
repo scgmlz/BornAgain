@@ -51,10 +51,12 @@ TEST_F(HomogeneousMaterialTest, HomogeneousMaterialTransform)
     HomogeneousMaterial material("MagMaterial", refIndex, magnetism);
 
     RotationZ transform(45.*Units::degree);
-    HomogeneousMaterial material2 = material.transformedMaterial(transform.getTransform3D());
+    HomogeneousMaterial* material2 = material.transformedMaterial(transform.getTransform3D());
 
-    EXPECT_EQ("MagMaterial", material2.getName());
-    EXPECT_EQ(refIndex, material2.refractiveIndex());
+    EXPECT_EQ("MagMaterial", material2->getName());
+    EXPECT_EQ(refIndex, material2->refractiveIndex());
+
+    delete material2;
 }
 
 TEST_F(HomogeneousMaterialTest, HomogeneousMaterialCopy)
@@ -78,8 +80,10 @@ TEST_F(HomogeneousMaterialTest, HomogeneousMaterialCopy)
     EXPECT_EQ(magnetism2, copy.magnetization());
 
     RotationZ transform(45.*Units::degree);
-    HomogeneousMaterial material2 = copy.transformedMaterial(transform.getTransform3D());
+    HomogeneousMaterial* material2 = copy.transformedMaterial(transform.getTransform3D());
 
-    EXPECT_EQ("MagMaterial", material2.getName());
-    EXPECT_EQ(refIndex2, material2.refractiveIndex());
+    EXPECT_EQ("MagMaterial", material2->getName());
+    EXPECT_EQ(refIndex2, material2->refractiveIndex());
+
+    delete material2;
 }

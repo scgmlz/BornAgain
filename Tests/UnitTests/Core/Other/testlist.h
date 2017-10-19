@@ -15,4 +15,5 @@
 #include "OrderedMapTest.h"
 #include "SampleBuilderNoteTest.h"
 #include "SampleProviderTest.h"
+#include "VariableWavelengthMaterialTest.h"
 

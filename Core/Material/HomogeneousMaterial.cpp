@@ -1,6 +1,8 @@
 #include "HomogeneousMaterial.h"
 #include "WavevectorInfo.h"
 #include "Transform3D.h"
+#include <memory>
+#include <typeinfo>
 
 // this prefactor is equal to m_n*g_n*mu_N / (hbar^2), with
 // m_n: neutron mass
@@ -64,12 +66,26 @@ HomogeneousMaterial::HomogeneousMaterial(
     , m_magnetization(magnetization)
 {}
 
-HomogeneousMaterial HomogeneousMaterial::inverted() const
+HomogeneousMaterial::HomogeneousMaterial(const std::string& name, complex_t sld, double wavelength,
+                                         kvector_t magnetization)
+    : INamed(name), m_refractive_index(std::sqrt(1.0 - wavelength * wavelength * sld / M_PI))
+    , m_magnetization(magnetization)
+{}
+
+HomogeneousMaterial* HomogeneousMaterial::clone() const
+{
+    return new HomogeneousMaterial(*this);
+}
+
+HomogeneousMaterial* HomogeneousMaterial::inverted() const
 {
     std::string name = isScalarMaterial() ? getName()
                                           : getName()+"_inv";
-    HomogeneousMaterial result(name, refractiveIndex(), -magnetization());
-    return result;
+    std::unique_ptr<HomogeneousMaterial> result(clone());
+    result->setMagnetization(-magnetization());
+    result->setName(name);
+
+    return result.release();
 }
 
 complex_t HomogeneousMaterial::refractiveIndex() const
@@ -79,12 +95,17 @@ complex_t HomogeneousMaterial::refractiveIndex() const
 
 complex_t HomogeneousMaterial::refractiveIndex2() const
 {
-    return m_refractive_index*m_refractive_index;
+    return m_refractive_index * m_refractive_index;
 }
 
 void HomogeneousMaterial::setRefractiveIndex(const complex_t refractive_index)
 {
     m_refractive_index = refractive_index;
+}
+
+void HomogeneousMaterial::setMaterialData(complex_t sld, double wavelength)
+{
+    m_refractive_index = std::sqrt(1.0 - wavelength * wavelength * sld / M_PI);
 }
 
 bool HomogeneousMaterial::isScalarMaterial() const
@@ -102,7 +123,7 @@ void HomogeneousMaterial::setMagnetization(const kvector_t magnetic_field)
     m_magnetization = magnetic_field;
 }
 
-complex_t HomogeneousMaterial::scalarSLD(const WavevectorInfo& wavevectors) const
+complex_t HomogeneousMaterial::scalarSubstrSLD(const WavevectorInfo& wavevectors) const
 {
     double wavelength = wavevectors.getWavelength();
     double prefactor = M_PI/wavelength/wavelength;
@@ -110,10 +131,10 @@ complex_t HomogeneousMaterial::scalarSLD(const WavevectorInfo& wavevectors) cons
     return prefactor * refractive_index * refractive_index;
 }
 
-Eigen::Matrix2cd HomogeneousMaterial::polarizedSLD(const WavevectorInfo& wavevectors) const
+Eigen::Matrix2cd HomogeneousMaterial::polarizedSubstrSLD(const WavevectorInfo& wavevectors) const
 {
     cvector_t mag_ortho = OrthogonalToBaseVector(wavevectors.getQ(), m_magnetization);
-    complex_t unit_factor = scalarSLD(wavevectors);
+    complex_t unit_factor = scalarSubstrSLD(wavevectors);
     Eigen::Matrix2cd result;
     result = unit_factor*Unit_Matrix
             + Magnetization_Prefactor*Pauli_X*mag_ortho[0]
@@ -122,10 +143,12 @@ Eigen::Matrix2cd HomogeneousMaterial::polarizedSLD(const WavevectorInfo& wavevec
     return result;
 }
 
-HomogeneousMaterial HomogeneousMaterial::transformedMaterial(const Transform3D& transform) const
+HomogeneousMaterial* HomogeneousMaterial::transformedMaterial(const Transform3D& transform) const
 {
     kvector_t transformed_field = transform.transformed(m_magnetization);
-    return HomogeneousMaterial(getName(), refractiveIndex(), transformed_field);
+    std::unique_ptr<HomogeneousMaterial> result(clone());
+    result->setMagnetization(transformed_field);
+    return result.release();
 }
 
 void HomogeneousMaterial::print(std::ostream& ostr) const
@@ -161,8 +184,9 @@ Eigen::Matrix2cd PolarizedReducedPotential(complex_t n, kvector_t b_field,
 bool operator==(const HomogeneousMaterial& left, const HomogeneousMaterial& right)
 {
     if (left.getName() != right.getName()) return false;
-    if (left.refractiveIndex() != right.refractiveIndex()) return false;
     if (left.magnetization() != right.magnetization()) return false;
+    if (typeid(left).hash_code() != typeid(right).hash_code()) return false;
+    if (left.refractiveIndex() != right.refractiveIndex()) return false;
     return true;
 }
 
