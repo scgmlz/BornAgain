@@ -42,14 +42,22 @@ public:
     //! delta and beta (n = 1 - delta + i*beta).
     HomogeneousMaterial(const std::string &name, double refractive_index_delta,
                         double refractive_index_beta, kvector_t magnetization=kvector_t());
-    ~HomogeneousMaterial() {}
+
+    //! Constructs a material with name and refractive index calculated from sld and wavelength (wl)
+    //! refractive_index = sqrt(1 - wl * wl * sld / \pi)
+    HomogeneousMaterial(const std::string& name, complex_t sld, double wl,
+                        kvector_t magnetization = kvector_t());
+
+    virtual ~HomogeneousMaterial() {}
 
     //! Constructs a material with inverted magnetization
-    HomogeneousMaterial inverted() const;
+    HomogeneousMaterial* inverted() const;
 
     complex_t refractiveIndex() const;
     complex_t refractiveIndex2() const;
-    void setRefractiveIndex(const complex_t refractive_index);
+    //TODO: setRefractiveIndex method should be removed in favor of setMaterialData method
+    virtual void setRefractiveIndex(const complex_t refractive_index);
+    virtual void setMaterialData(complex_t sld, double wavelength);
 
     //! Indicates whether the interaction with the material is scalar.
     //! This means that different polarization states will be diffracted equally
@@ -64,19 +72,20 @@ public:
     void setMagnetization(const kvector_t magnetization);
 
     //! Returns \pi/(wl*wl) - sld, with wl being the wavelength
-    complex_t scalarSubstrSLD(const WavevectorInfo& wavevectors) const;
+    virtual complex_t scalarSubstrSLD(const WavevectorInfo& wavevectors) const;
 
 #ifndef SWIG
     //! Returns \pi/(wl*wl) - sld matrix with magnetization corrections. wl denotes the wavelength
     Eigen::Matrix2cd polarizedSubstrSLD(const WavevectorInfo& wavevectors) const;
 #endif
 
-    HomogeneousMaterial transformedMaterial(const Transform3D& transform) const;
+    HomogeneousMaterial* transformedMaterial(const Transform3D& transform) const;
 
     friend BA_CORE_API_ std::ostream& operator<<(
             std::ostream& ostr, const HomogeneousMaterial& mat);
 private:
-    void print(std::ostream &ostr) const;
+    virtual HomogeneousMaterial* clone() const;
+    virtual void print(std::ostream &ostr) const;
 
     complex_t m_refractive_index; //!< complex index of refraction
     kvector_t m_magnetization; //!< magnetization
