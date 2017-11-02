@@ -54,7 +54,7 @@ std::string Material::getName() const
     return m_material_impl->getName();
 }
 
-size_t Material::dataType() const
+size_t Material::typeID() const
 {
     //TODO: reimplement using CRTP or just static type identifiers in material implementations
     return typeid(*m_material_impl).hash_code();
@@ -97,7 +97,7 @@ bool operator==(const Material& left, const Material& right)
     if (left.getName() != right.getName()) return false;
     if (left.magnetization() != right.magnetization()) return false;
     if (left.materialData() != right.materialData()) return false;
-    if (left.dataType() != right.dataType()) return false;
+    if (left.typeID() != right.typeID()) return false;
     return true;
 }
 
