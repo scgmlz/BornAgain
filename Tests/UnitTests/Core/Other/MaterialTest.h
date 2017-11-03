@@ -1,4 +1,6 @@
 #include "MaterialFactoryFuncs.h"
+#include "WavelengthIndependentMaterial.h"
+#include "RefractiveCoefMaterial.h"
 #include "WavevectorInfo.h"
 #include "Rotations.h"
 #include "Units.h"
@@ -64,8 +66,8 @@ TEST_F(MaterialTest, MaterialConstruction)
     EXPECT_EQ(material7.materialData(), MaterialBySLD().materialData());
     EXPECT_EQ(material7.magnetization(), HomogeneousMaterial().magnetization());
     EXPECT_EQ(material7.magnetization(), MaterialBySLD().magnetization());
-    EXPECT_TRUE(material7.dataType() == HomogeneousMaterial().dataType());
-    EXPECT_FALSE(material7.dataType() == MaterialBySLD().dataType());
+    EXPECT_TRUE(material7.typeID() == HomogeneousMaterial().typeID());
+    EXPECT_FALSE(material7.typeID() == MaterialBySLD().typeID());
 
     constexpr double basic_wavelength = 0.1798197; // nm
     Material material8 = MaterialByAbsCX("Material", material_data.real(),
@@ -74,7 +76,7 @@ TEST_F(MaterialTest, MaterialConstruction)
     EXPECT_TRUE(material8.magnetization() == material6.magnetization());
     EXPECT_DOUBLE_EQ(material8.materialData().real(), material6.materialData().real());
     EXPECT_DOUBLE_EQ(material8.materialData().imag(), material6.materialData().imag());
-    EXPECT_TRUE(material8.dataType() == material6.dataType());
+    EXPECT_TRUE(material8.typeID() == material6.typeID());
 }
 
 TEST_F(MaterialTest, MaterialTransform)
@@ -136,6 +138,17 @@ TEST_F(MaterialTest, ComputationTest)
     const complex_t subtrSLDWlIndep = material.scalarSubtrSLD(wv_info);
     EXPECT_FLOAT_EQ(subtrSLD.real(), subtrSLDWlIndep.real());
     EXPECT_FLOAT_EQ(subtrSLD.imag(), subtrSLDWlIndep.imag());
+}
+
+TEST_F(MaterialTest, TypeIdsTest)
+{
+    Material material = MaterialBySLD("Material", 1.0, 1.0);
+    Material material2 = HomogeneousMaterial("Material", 1.0, 1.0);
+    EXPECT_TRUE(material.typeID() == BaseMaterialImpl::g_typeID<WavelengthIndependentMaterial>());
+    EXPECT_TRUE(material2.typeID() == BaseMaterialImpl::g_typeID<RefractiveCoefMaterial>());
+    EXPECT_TRUE(material.typeID() != material2.typeID());
+    Material material3 = MaterialBySLD("Material", 1.0, 1.0);
+    EXPECT_TRUE(material.typeID() == material3.typeID());
 }
 
 TEST_F(MaterialTest, MaterialComparison)

@@ -7,22 +7,22 @@
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2015
+//! @copyright Forschungszentrum Jülich GmbH 2017
 //! @authors   Scientific Computing Group at MLZ Garching
-//! @authors   C. Durniak, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke
+//! @authors   M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke, D. Yurov
 //
 // ************************************************************************** //
 
 #ifndef WAVELENGTHINDEPENDENTMATERIAL_H_
 #define WAVELENGTHINDEPENDENTMATERIAL_H_
 
-#include "BaseMaterialImpl.h"
+#include "MagneticMaterialImpl.h"
 #include "Material.h"
 
 //! Material implementation based on wavelength-independent data (valid for a range of wavelengths)
 //! @ingroup materials
 
-class BA_CORE_API_ WavelengthIndependentMaterial : public BaseMaterialImpl
+class BA_CORE_API_ WavelengthIndependentMaterial : public MagneticMaterialImpl
 {
 public:
     friend BA_CORE_API_ Material MaterialBySLD(const std::string&, double, double, kvector_t);
@@ -44,6 +44,9 @@ public:
 
     //! Returns underlying material data
     virtual complex_t materialData() const override;
+
+    //! Returns material type id
+    virtual unsigned typeID() const override;
 
     //! Returns (\f$ \pi/\lambda^2 \f$ - sld), sld (in \f$nm^{-2}\f$) being the scattering length density
     virtual complex_t scalarSubtrSLD(const WavevectorInfo& wavevectors) const override;
