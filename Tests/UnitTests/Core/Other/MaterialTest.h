@@ -1,4 +1,6 @@
 #include "MaterialFactoryFuncs.h"
+#include "WavelengthIndependentMaterial.h"
+#include "RefractiveCoefMaterial.h"
 #include "WavevectorInfo.h"
 #include "Rotations.h"
 #include "Units.h"
@@ -136,6 +138,17 @@ TEST_F(MaterialTest, ComputationTest)
     const complex_t subtrSLDWlIndep = material.scalarSubtrSLD(wv_info);
     EXPECT_FLOAT_EQ(subtrSLD.real(), subtrSLDWlIndep.real());
     EXPECT_FLOAT_EQ(subtrSLD.imag(), subtrSLDWlIndep.imag());
+}
+
+TEST_F(MaterialTest, TypeIdsTest)
+{
+    Material material = MaterialBySLD("Material", 1.0, 1.0);
+    Material material2 = HomogeneousMaterial("Material", 1.0, 1.0);
+    EXPECT_TRUE(material.typeID() == BaseMaterialImpl::g_typeID<WavelengthIndependentMaterial>());
+    EXPECT_TRUE(material2.typeID() == BaseMaterialImpl::g_typeID<RefractiveCoefMaterial>());
+    EXPECT_TRUE(material.typeID() != material2.typeID());
+    Material material3 = MaterialBySLD("Material", 1.0, 1.0);
+    EXPECT_TRUE(material.typeID() == material3.typeID());
 }
 
 TEST_F(MaterialTest, MaterialComparison)
