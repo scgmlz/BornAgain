@@ -54,10 +54,9 @@ std::string Material::getName() const
     return m_material_impl->getName();
 }
 
-size_t Material::typeID() const
+unsigned Material::typeID() const
 {
-    //TODO: reimplement using CRTP or just static type identifiers in material implementations
-    return typeid(*m_material_impl).hash_code();
+    return m_material_impl->typeID();
 }
 
 kvector_t Material::magnetization() const

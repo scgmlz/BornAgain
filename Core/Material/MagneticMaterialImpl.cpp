@@ -1,4 +1,4 @@
-#include "BaseMaterialImpl.h"
+#include "MagneticMaterialImpl.h"
 #include "WavevectorInfo.h"
 #include "Transform3D.h"
 #include "MaterialUtils.h"
@@ -21,37 +21,48 @@ cvector_t OrthogonalToBaseVector(cvector_t base, const kvector_t vector)
 }
 }
 
-BaseMaterialImpl::BaseMaterialImpl(const std::string& name, kvector_t magnetization)
-    : INamed(name)
+MagneticMaterialImpl::MagneticMaterialImpl(const std::string& name, kvector_t magnetization)
+    : BaseMaterialImpl(name)
     , m_magnetization(magnetization)
 {}
 
-BaseMaterialImpl::~BaseMaterialImpl()
-{}
-
-BaseMaterialImpl* BaseMaterialImpl::inverted() const
+MagneticMaterialImpl* MagneticMaterialImpl::inverted() const
 {
     std::string name = isScalarMaterial() ? getName()
                                           : getName()+"_inv";
-    std::unique_ptr<BaseMaterialImpl> result(this->clone());
+    std::unique_ptr<MagneticMaterialImpl> result(this->clone());
     result->setName(name);
     result->setMagnetization(-magnetization());
     return result.release();
 }
 
-Eigen::Matrix2cd BaseMaterialImpl::polarizedSubtrSLD(const WavevectorInfo& wavevectors) const
+bool MagneticMaterialImpl::isScalarMaterial() const
+{
+    return m_magnetization == kvector_t{};
+}
+
+bool MagneticMaterialImpl::isMagneticMaterial() const
+{
+    return !isScalarMaterial();
+}
+
+kvector_t MagneticMaterialImpl::magnetization() const
+{
+    return m_magnetization;
+}
+
+Eigen::Matrix2cd MagneticMaterialImpl::polarizedSubtrSLD(const WavevectorInfo& wavevectors) const
 {
     cvector_t mag_ortho = OrthogonalToBaseVector(wavevectors.getQ(), m_magnetization);
     complex_t unit_factor = scalarSubtrSLD(wavevectors);
     return MaterialUtils::MagnetizationCorrection(unit_factor, magnetization_prefactor, mag_ortho);
 }
 
-BaseMaterialImpl* BaseMaterialImpl::transformedMaterial(const Transform3D& transform) const
+MagneticMaterialImpl* MagneticMaterialImpl::transformedMaterial(const Transform3D& transform) const
 {
     kvector_t transformed_field = transform.transformed(m_magnetization);
-    std::unique_ptr<BaseMaterialImpl> result(this->clone());
+    std::unique_ptr<MagneticMaterialImpl> result(this->clone());
     result->setName(this->getName());
     result->setMagnetization(transformed_field);
     return result.release();
 }
-

@@ -67,8 +67,8 @@ public:
     //! Returns the name of material
     std::string getName() const;
 
-    //! Returns hash code of underlying material implementation
-    size_t typeID() const;
+    //! Returns type identifier of underlying material implementation
+    unsigned typeID() const;
 
     //! Get the magnetization (in A/m)
     kvector_t magnetization() const;

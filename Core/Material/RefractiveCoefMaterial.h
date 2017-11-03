@@ -7,22 +7,22 @@
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2015
+//! @copyright Forschungszentrum Jülich GmbH 2017
 //! @authors   Scientific Computing Group at MLZ Garching
-//! @authors   C. Durniak, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke
+//! @authors   M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke, D. Yurov
 //
 // ************************************************************************** //
 
 #ifndef REFRACTIVECOEFMATERIAL_H_
 #define REFRACTIVECOEFMATERIAL_H_
 
-#include "BaseMaterialImpl.h"
+#include "MagneticMaterialImpl.h"
 #include "Material.h"
 
 //! Material implementation based on refractive coefficiencts (valid for one wavelength value only)
 //! @ingroup materials
 
-class BA_CORE_API_ RefractiveCoefMaterial : public BaseMaterialImpl
+class BA_CORE_API_ RefractiveCoefMaterial : public MagneticMaterialImpl
 {
 public:
     friend BA_CORE_API_ Material HomogeneousMaterial(const std::string&, complex_t, kvector_t);
@@ -49,6 +49,9 @@ public:
 
     //! Returns underlying material data
     virtual complex_t materialData() const override;
+
+    //! Returns material type id
+    virtual unsigned typeID() const override;
 
     //! Returns (\f$ \pi/\lambda^2 \f$ - sld), sld (in \f$nm^{-2}\f$) being the scattering length density.
     //! If the wavelength associated with passed wavevector is different from the one

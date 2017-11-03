@@ -19,7 +19,7 @@ inline double getWlPrefactor(double wavelength)
 WavelengthIndependentMaterial::WavelengthIndependentMaterial(const std::string& name, double sld,
                                                              double abs_term,
                                                              kvector_t magnetization)
-    : BaseMaterialImpl(name, magnetization), m_sld(sld), m_abs_term(abs_term)
+    : MagneticMaterialImpl(name, magnetization), m_sld(sld), m_abs_term(abs_term)
 {}
 
 WavelengthIndependentMaterial::~WavelengthIndependentMaterial()
@@ -43,6 +43,11 @@ complex_t WavelengthIndependentMaterial::refractiveIndex2(double wavelength) con
 complex_t WavelengthIndependentMaterial::materialData() const
 {
     return complex_t(m_sld, m_abs_term);
+}
+
+unsigned WavelengthIndependentMaterial::typeID() const
+{
+    return BaseMaterialImpl::g_typeID<WavelengthIndependentMaterial>();
 }
 
 complex_t WavelengthIndependentMaterial::scalarSubtrSLD(const WavevectorInfo& wavevectors) const
