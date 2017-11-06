@@ -15,7 +15,7 @@ protected:
 TEST_F(ParticleTest, InitialState)
 {
     Particle particle;
-    EXPECT_EQ(HomogeneousMaterial(), *particle.material());
+    EXPECT_EQ(createVacuumMaterial(), *particle.material());
     EXPECT_EQ(nullptr, particle.createFormFactor());
     EXPECT_EQ(nullptr, particle.rotation());
     EXPECT_EQ(BornAgain::ParticleType, particle.getName());
@@ -25,7 +25,7 @@ TEST_F(ParticleTest, Clone)
 {
     Particle particle;
     std::unique_ptr<Particle> clone(particle.clone());
-    EXPECT_EQ(HomogeneousMaterial(), *clone->material());
+    EXPECT_EQ(createVacuumMaterial(), *clone->material());
     EXPECT_EQ(nullptr, clone->createFormFactor());
     EXPECT_EQ(nullptr, clone->rotation());
     EXPECT_EQ(BornAgain::ParticleType, clone->getName());
@@ -63,7 +63,7 @@ TEST_F(ParticleTest, setters)
     RotationY transform(45.*Units::degree);
 
     Particle particle;
-    Material vacuum = HomogeneousMaterial();
+    Material vacuum = createVacuumMaterial();
     EXPECT_EQ(vacuum, *particle.material());
     EXPECT_EQ(nullptr, particle.rotation());
 

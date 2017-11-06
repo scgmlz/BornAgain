@@ -59,15 +59,10 @@ TEST_F(MaterialTest, MaterialConstruction)
     EXPECT_EQ(material_data, material6.materialData());
     EXPECT_EQ(default_magnetism, material6.magnetization());
 
-    Material material7 = HomogeneousMaterial();
-    EXPECT_EQ(material7.getName(), HomogeneousMaterial().getName());
-    EXPECT_EQ(material7.getName(), MaterialBySLD().getName());
-    EXPECT_EQ(material7.materialData(), HomogeneousMaterial().materialData());
-    EXPECT_EQ(material7.materialData(), MaterialBySLD().materialData());
-    EXPECT_EQ(material7.magnetization(), HomogeneousMaterial().magnetization());
-    EXPECT_EQ(material7.magnetization(), MaterialBySLD().magnetization());
-    EXPECT_TRUE(material7.typeID() == HomogeneousMaterial().typeID());
-    EXPECT_FALSE(material7.typeID() == MaterialBySLD().typeID());
+    Material material7 = createVacuumMaterial();
+    EXPECT_EQ(material7.getName(), std::string("vacuum"));
+    EXPECT_EQ(material7.materialData(), complex_t(0.0, 0.0));
+    EXPECT_EQ(material7.magnetization(), kvector_t{});
 
     constexpr double basic_wavelength = 0.1798197; // nm
     Material material8 = MaterialByAbsCX("Material", material_data.real(),
@@ -100,6 +95,13 @@ TEST_F(MaterialTest, MaterialTransform)
     EXPECT_EQ("Material", material4.getName());
     EXPECT_EQ(material_data, material4.materialData());
     EXPECT_EQ(transformed_mag, material4.magnetization());
+
+    Material material5 = createVacuumMaterial();
+    Material material6 = material5.transformedMaterial(transform.getTransform3D());
+    Material material7 = material5.inverted();
+
+    EXPECT_EQ(material5.magnetization(), material6.magnetization());
+    EXPECT_EQ(material5.magnetization(), material7.magnetization());
 }
 
 TEST_F(MaterialTest, ComputationTest)
@@ -144,11 +146,17 @@ TEST_F(MaterialTest, TypeIdsTest)
 {
     Material material = MaterialBySLD("Material", 1.0, 1.0);
     Material material2 = HomogeneousMaterial("Material", 1.0, 1.0);
+    Material material3 = createVacuumMaterial();
+
     EXPECT_TRUE(material.typeID() == MATERIAL_TYPES::WavelengthIndependentMaterial);
     EXPECT_TRUE(material2.typeID() == MATERIAL_TYPES::RefractiveCoefMaterial);
+    EXPECT_TRUE(material3.typeID() == MATERIAL_TYPES::VacuumMaterial);
     EXPECT_TRUE(material.typeID() != material2.typeID());
-    Material material3 = MaterialBySLD("Material", 1.0, 1.0);
-    EXPECT_TRUE(material.typeID() == material3.typeID());
+    EXPECT_TRUE(material.typeID() != material3.typeID());
+    EXPECT_TRUE(material2.typeID() != material3.typeID());
+
+    Material material4 = MaterialBySLD("Material", 1.0, 1.0);
+    EXPECT_TRUE(material.typeID() == material4.typeID());
 }
 
 TEST_F(MaterialTest, MaterialComparison)
@@ -167,8 +175,10 @@ TEST_F(MaterialTest, MaterialComparison)
     EXPECT_FALSE(material4 == material2);
     EXPECT_TRUE(material4 != material2);
 
-    EXPECT_FALSE(HomogeneousMaterial() == MaterialBySLD());
-    EXPECT_TRUE(HomogeneousMaterial() != MaterialBySLD());
+    Material material5 = createVacuumMaterial();
+    EXPECT_FALSE(material == material5);
+    EXPECT_FALSE(material2 == material5);
+    EXPECT_TRUE(material5 == createVacuumMaterial());
 }
 
 TEST_F(MaterialTest, MaterialCopy)

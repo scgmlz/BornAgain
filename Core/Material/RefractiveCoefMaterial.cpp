@@ -8,9 +8,6 @@ RefractiveCoefMaterial::RefractiveCoefMaterial(const std::string& name, double d
     , m_beta(beta)
 {}
 
-RefractiveCoefMaterial::~RefractiveCoefMaterial()
-{}
-
 RefractiveCoefMaterial* RefractiveCoefMaterial::clone() const
 {
     return new RefractiveCoefMaterial(*this);

@@ -1,6 +1,7 @@
 #include "MaterialFactoryFuncs.h"
 #include "RefractiveCoefMaterial.h"
 #include "WavelengthIndependentMaterial.h"
+#include "VacuumMaterial.h"
 
 Material HomogeneousMaterial(const std::string& name, complex_t refractive_index,
                                  kvector_t magnetization)
@@ -18,9 +19,11 @@ Material HomogeneousMaterial(const std::string& name, double delta, double beta,
     return Material(std::move(mat_impl));
 }
 
-Material HomogeneousMaterial()
+Material createVacuumMaterial()
 {
-    return HomogeneousMaterial("vacuum", 0.0, 0.0, kvector_t{});
+    std::unique_ptr<VacuumMaterial> mat_impl(
+        new VacuumMaterial("vacuum"));
+    return Material(std::move(mat_impl));
 }
 
 Material MaterialBySLD(const std::string& name, double sld, double abs_term,
@@ -35,12 +38,5 @@ constexpr double basic_wavelength = 0.1798197; // nm, wavelength of 2200 m/s neu
 Material MaterialByAbsCX(const std::string& name, double sld, double abs_cx,
                          kvector_t magnetization)
 {
-    std::unique_ptr<WavelengthIndependentMaterial> mat_impl(
-        new WavelengthIndependentMaterial(name, sld, abs_cx / basic_wavelength, magnetization));
-    return Material(std::move(mat_impl));
-}
-
-Material MaterialBySLD()
-{
-    return MaterialBySLD("vacuum", 0.0, 0.0, kvector_t{});
+    return MaterialBySLD(name, sld, abs_cx / basic_wavelength, magnetization);
 }

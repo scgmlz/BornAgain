@@ -22,9 +22,6 @@ WavelengthIndependentMaterial::WavelengthIndependentMaterial(const std::string& 
     : MagneticMaterialImpl(name, magnetization), m_sld(sld), m_abs_term(abs_term)
 {}
 
-WavelengthIndependentMaterial::~WavelengthIndependentMaterial()
-{}
-
 WavelengthIndependentMaterial* WavelengthIndependentMaterial::clone() const
 {
     return new WavelengthIndependentMaterial(*this);
