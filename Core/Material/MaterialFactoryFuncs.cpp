@@ -35,9 +35,7 @@ constexpr double basic_wavelength = 0.1798197; // nm, wavelength of 2200 m/s neu
 Material MaterialByAbsCX(const std::string& name, double sld, double abs_cx,
                          kvector_t magnetization)
 {
-    std::unique_ptr<WavelengthIndependentMaterial> mat_impl(
-        new WavelengthIndependentMaterial(name, sld, abs_cx / basic_wavelength, magnetization));
-    return Material(std::move(mat_impl));
+    return MaterialBySLD(name, sld, abs_cx / basic_wavelength, magnetization);
 }
 
 Material MaterialBySLD()
