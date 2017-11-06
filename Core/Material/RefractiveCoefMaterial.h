@@ -28,7 +28,7 @@ public:
     friend BA_CORE_API_ Material HomogeneousMaterial(const std::string&, double, double,
                                                          kvector_t);
 
-    virtual ~RefractiveCoefMaterial();
+    virtual ~RefractiveCoefMaterial() = default;
 
     //! Returns pointer to a copy of material
     virtual RefractiveCoefMaterial* clone() const override;

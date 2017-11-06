@@ -27,7 +27,7 @@ class BA_CORE_API_ WavelengthIndependentMaterial : public MagneticMaterialImpl
 public:
     friend BA_CORE_API_ Material MaterialBySLD(const std::string&, double, double, kvector_t);
 
-    virtual ~WavelengthIndependentMaterial();
+    virtual ~WavelengthIndependentMaterial() = default;
 
     //! Returns pointer to a copy of material
     virtual WavelengthIndependentMaterial* clone() const override;
