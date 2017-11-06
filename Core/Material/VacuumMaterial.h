@@ -25,6 +25,7 @@
 class BA_CORE_API_ VacuumMaterial : public BaseMaterialImpl
 {
 public:
+    friend BA_CORE_API_ Material createVacuumMaterial();
 
     virtual ~VacuumMaterial() = default;
 

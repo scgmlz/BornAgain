@@ -59,15 +59,11 @@ TEST_F(MaterialTest, MaterialConstruction)
     EXPECT_EQ(material_data, material6.materialData());
     EXPECT_EQ(default_magnetism, material6.magnetization());
 
-    Material material7 = HomogeneousMaterial();
-    EXPECT_EQ(material7.getName(), HomogeneousMaterial().getName());
-    EXPECT_EQ(material7.getName(), MaterialBySLD().getName());
-    EXPECT_EQ(material7.materialData(), HomogeneousMaterial().materialData());
-    EXPECT_EQ(material7.materialData(), MaterialBySLD().materialData());
-    EXPECT_EQ(material7.magnetization(), HomogeneousMaterial().magnetization());
-    EXPECT_EQ(material7.magnetization(), MaterialBySLD().magnetization());
-    EXPECT_TRUE(material7.typeID() == HomogeneousMaterial().typeID());
-    EXPECT_FALSE(material7.typeID() == MaterialBySLD().typeID());
+    Material material7 = createVacuumMaterial();
+    EXPECT_EQ(material7.getName(), createVacuumMaterial().getName());
+    EXPECT_EQ(material7.materialData(), createVacuumMaterial().materialData());
+    EXPECT_EQ(material7.magnetization(), createVacuumMaterial().magnetization());
+    EXPECT_TRUE(material7.typeID() == createVacuumMaterial().typeID());
 
     constexpr double basic_wavelength = 0.1798197; // nm
     Material material8 = MaterialByAbsCX("Material", material_data.real(),
@@ -166,9 +162,6 @@ TEST_F(MaterialTest, MaterialComparison)
     Material material4 = HomogeneousMaterial("Material", 1.0, 1.0, kvector_t{1.0, 2.0, 3.0});
     EXPECT_FALSE(material4 == material2);
     EXPECT_TRUE(material4 != material2);
-
-    EXPECT_FALSE(HomogeneousMaterial() == MaterialBySLD());
-    EXPECT_TRUE(HomogeneousMaterial() != MaterialBySLD());
 }
 
 TEST_F(MaterialTest, MaterialCopy)

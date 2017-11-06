@@ -19,7 +19,7 @@
 #include "MaterialFactoryFuncs.h"
 
 Particle::Particle()
-    : m_material(HomogeneousMaterial())
+    : m_material(createVacuumMaterial())
 {
     initialize();
 }

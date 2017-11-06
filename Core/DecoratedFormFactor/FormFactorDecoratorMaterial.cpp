@@ -21,8 +21,8 @@
 
 FormFactorDecoratorMaterial::FormFactorDecoratorMaterial(const IFormFactor& form_factor)
     : IFormFactorDecorator(form_factor)
-    , m_material(HomogeneousMaterial())
-    , m_ambient_material(HomogeneousMaterial())
+    , m_material(createVacuumMaterial())
+    , m_ambient_material(createVacuumMaterial())
 {
     setName(BornAgain::FormFactorDecoratorMaterialType);
 }
