@@ -22707,7 +22707,6 @@ def HomogeneousMaterial(*args):
     HomogeneousMaterial(std::string const & name, complex_t refractive_index) -> Material
     HomogeneousMaterial(std::string const & name, double delta, double beta, kvector_t magnetization) -> Material
     HomogeneousMaterial(std::string const & name, double delta, double beta) -> Material
-    HomogeneousMaterial() -> Material
 
     BA_CORE_API_ Material HomogeneousMaterial()
 
@@ -22715,6 +22714,22 @@ def HomogeneousMaterial(*args):
 
     """
     return _libBornAgainCore.HomogeneousMaterial(*args)
+
+def createVacuumMaterial():
+    """createVacuumMaterial() -> Material"""
+    return _libBornAgainCore.createVacuumMaterial()
+
+def MaterialBySLD(*args):
+    """
+    MaterialBySLD(std::string const & name, double sld, double abs_term, kvector_t magnetization) -> Material
+    MaterialBySLD(std::string const & name, double sld, double abs_term) -> Material
+
+    BA_CORE_API_ Material MaterialBySLD()
+
+    Constructs wavelength-independent vacuum material. Though in practice there is no difference between vacuum materials produced with  MaterialBySLD() and  HomogeneousMaterial(), they are not equal because of the difference in the type of underlying data 
+
+    """
+    return _libBornAgainCore.MaterialBySLD(*args)
 
 def MaterialByAbsCX(*args):
     """
@@ -22739,19 +22754,6 @@ def MaterialByAbsCX(*args):
 
     """
     return _libBornAgainCore.MaterialByAbsCX(*args)
-
-def MaterialBySLD(*args):
-    """
-    MaterialBySLD(std::string const & name, double sld, double abs_term, kvector_t magnetization) -> Material
-    MaterialBySLD(std::string const & name, double sld, double abs_term) -> Material
-    MaterialBySLD() -> Material
-
-    BA_CORE_API_ Material MaterialBySLD()
-
-    Constructs wavelength-independent vacuum material. Though in practice there is no difference between vacuum materials produced with  MaterialBySLD() and  HomogeneousMaterial(), they are not equal because of the difference in the type of underlying data 
-
-    """
-    return _libBornAgainCore.MaterialBySLD(*args)
 class MesoCrystal(IParticle):
     """
 
