@@ -36,8 +36,6 @@ BA_CORE_API_ Material HomogeneousMaterial(const std::string& name, double delta,
 //! @ingroup materials
 
 //! Constructs vacuum material.
-//! In comparing materials, vacuum material type is considered equal (compatible)
-//! with all other types of materials
 BA_CORE_API_ Material createVacuumMaterial();
 
 //! @ingroup materials
