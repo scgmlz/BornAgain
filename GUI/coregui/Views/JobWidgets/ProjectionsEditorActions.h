@@ -25,6 +25,7 @@
 class SessionModel;
 class QItemSelectionModel;
 class QAction;
+class IntensityDataItem;
 
 //! Provides various actions for ProjectionsEditor.
 
@@ -35,7 +36,9 @@ class BA_CORE_API_ ProjectionsEditorActions : public QObject
 public:
     ProjectionsEditorActions(QWidget* parent = 0);
 
-    void setModel(SessionModel* maskModel, const QModelIndex& rootIndex);
+    void setContext(SessionModel* model, const QModelIndex& shapeContainerIndex,
+                    IntensityDataItem* intensityItem);
+
     void setSelectionModel(QItemSelectionModel* selectionModel);
 
     QList<QAction*> topToolBarActions();
@@ -53,8 +56,10 @@ private:
     QAction* m_togglePanelAction;
     QAction* m_deleteAction;
     SessionModel* m_model;
-    QModelIndex m_rootIndex; //! Index in the model corresponding to IntensityDataItem
+    QModelIndex m_containerIndex; //!< Index of container with projections
+    IntensityDataItem* m_intensityDataItem;
     QItemSelectionModel* m_selectionModel;
+    QWidget* m_parent;
 };
 
 #endif // PROJECTIONSEDITORACTIONS_H

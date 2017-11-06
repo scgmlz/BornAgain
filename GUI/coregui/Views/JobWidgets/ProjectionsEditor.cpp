@@ -67,7 +67,7 @@ void ProjectionsEditor::setContext(SessionModel* model, const QModelIndex& shape
     m_projectionsCanvas->setContext(model, shapeContainerIndex, intensityItem);
     m_projectionsWidget->setItem(intensityItem);
 
-    m_editorActions->setModel(model, shapeContainerIndex);
+    m_editorActions->setContext(model, shapeContainerIndex, intensityItem);
     m_editorActions->setSelectionModel(m_selectionModel);
 }
 

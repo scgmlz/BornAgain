@@ -28,7 +28,9 @@ ProjectionsEditorActions::ProjectionsEditorActions(QWidget* parent)
     , m_togglePanelAction(new QAction(this))
     , m_deleteAction(new QAction("Remove selected", this))
     , m_model(nullptr)
+    , m_intensityDataItem(nullptr)
     , m_selectionModel(nullptr)
+    , m_parent(parent)
 {
     // Actions for top toolbar
     m_resetViewAction->setText("Reset");
@@ -49,10 +51,13 @@ ProjectionsEditorActions::ProjectionsEditorActions(QWidget* parent)
     connect(m_deleteAction, &QAction::triggered, this, &ProjectionsEditorActions::onDeleteAction);
 }
 
-void ProjectionsEditorActions::setModel(SessionModel* maskModel, const QModelIndex& rootIndex)
+void ProjectionsEditorActions::setContext(SessionModel* model,
+                                          const QModelIndex& containerIndex,
+                                          IntensityDataItem* intensityItem)
 {
-    m_model = maskModel;
-    m_rootIndex = rootIndex;
+    m_model = model;
+    m_containerIndex = containerIndex;
+    m_intensityDataItem = intensityItem;
 }
 
 void ProjectionsEditorActions::setSelectionModel(QItemSelectionModel* selectionModel)
@@ -80,9 +85,9 @@ void ProjectionsEditorActions::onDeleteAction()
 //! Performs saving of projections in ascii file
 void ProjectionsEditorActions::onSaveAction()
 {
-    if (!m_rootIndex.isValid())
+    if (!m_intensityDataItem)
         return;
 
     SaveProjectionsAssistant assistant;
-    assistant.saveProjections(nullptr);
+    assistant.saveProjections(m_parent, m_intensityDataItem);
 }
