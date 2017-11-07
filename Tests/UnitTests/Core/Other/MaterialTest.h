@@ -163,7 +163,8 @@ TEST_F(MaterialTest, AveragedMaterialTest)
     const Material material_avr = createAveragedMaterial(material, regions);
     EXPECT_EQ(material_avr.getName(), material.getName() + "_avg");
     EXPECT_EQ(material_avr.magnetization(), magnetization);
-    EXPECT_EQ(material_avr.materialData(), complex_t(0.5, 0.5));
+    EXPECT_DOUBLE_EQ(material_avr.materialData().real(), 0.5);
+    EXPECT_DOUBLE_EQ(material_avr.materialData().imag(), 0.5);
     EXPECT_TRUE(material_avr.typeID() == MATERIAL_TYPES::RefractiveMaterial);
 
     const Material material2 = MaterialBySLD();

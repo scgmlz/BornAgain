@@ -18,7 +18,7 @@
 
 #include "Material.h"
 
-class HomogeneousRegion;
+struct HomogeneousRegion;
 
 //! @ingroup materials
 
