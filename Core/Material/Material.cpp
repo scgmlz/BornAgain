@@ -69,6 +69,11 @@ complex_t Material::materialData() const
     return m_material_impl->materialData();
 }
 
+bool Material::isDefaultMaterial() const
+{
+    return materialData() == complex_t() && isScalarMaterial();
+}
+
 complex_t Material::scalarSubtrSLD(const WavevectorInfo& wavevectors) const
 {
     return m_material_impl->scalarSubtrSLD(wavevectors);

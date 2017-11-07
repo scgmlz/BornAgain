@@ -17,7 +17,6 @@
 #include "ParticleLayoutComputation.h"
 #include "Layer.h"
 #include "IFresnelMap.h"
-#include "Instrument.h"
 #include "MatrixFresnelMap.h"
 #include "MultiLayer.h"
 #include "RoughMultiLayerComputation.h"
@@ -27,21 +26,13 @@
 #include "SimulationElement.h"
 #include "MaterialFactoryFuncs.h"
 
-namespace
-{
-Material CalculateAverageMaterial(const Material& layer_mat, double wavelength,
-                                  const std::vector<HomogeneousRegion>& regions);
-}
-
 MainComputation::MainComputation(
     const MultiLayer& multilayer,
-    const Instrument& instrument,
     const SimulationOptions& options,
     ProgressHandler& progress,
     const std::vector<SimulationElement>::iterator& begin_it,
     const std::vector<SimulationElement>::iterator& end_it)
     : mP_multi_layer(multilayer.cloneSliced(options.useAvgMaterials()))
-    , m_instrument(instrument)
     , m_sim_options(options)
     , m_progress(&progress)
     , m_begin_it(begin_it)
@@ -129,8 +120,7 @@ std::unique_ptr<MultiLayer> MainComputation::getAveragedMultilayer() const
         if (!checkRegions(entry.second))
             throw std::runtime_error("MainComputation::getAveragedMultilayer: "
                                      "total volumetric fraction of particles exceeds 1!");
-        double beam_wavelength = m_instrument.getBeam().getWavelength();
-        auto new_mat = CalculateAverageMaterial(layer_mat, beam_wavelength, entry.second);
+        auto new_mat = createAveragedMaterial(layer_mat, entry.second);
         P_result->setLayerMaterial(i_layer, new_mat);
     }
     return P_result;
@@ -157,26 +147,4 @@ bool MainComputation::checkRegions(const std::vector<HomogeneousRegion>& regions
     for (auto& region : regions)
         total_fraction += region.m_volume;
     return (total_fraction >= 0 && total_fraction <= 1);
-}
-
-namespace
-{
-// TODO: make this procedure correct for all types of materials
-Material CalculateAverageMaterial(const Material& layer_mat, double wavelength,
-                                  const std::vector<HomogeneousRegion>& regions)
-{
-    kvector_t magnetization_layer = layer_mat.magnetization();
-    complex_t refr_index2_layer = layer_mat.refractiveIndex2(wavelength);
-    kvector_t magnetization_avg = magnetization_layer;
-    complex_t refr_index2_avg = refr_index2_layer;
-    for (auto& region : regions)
-    {
-        kvector_t magnetization_region = region.m_material.magnetization();
-        complex_t refr_index2_region = region.m_material.refractiveIndex2(wavelength);
-        magnetization_avg += region.m_volume*(magnetization_region - magnetization_layer);
-        refr_index2_avg += region.m_volume*(refr_index2_region - refr_index2_layer);
-    }
-    complex_t refr_index_avg = std::sqrt(refr_index2_avg);
-    return HomogeneousMaterial(layer_mat.getName() + "_avg", refr_index_avg, magnetization_avg);
-}
 }

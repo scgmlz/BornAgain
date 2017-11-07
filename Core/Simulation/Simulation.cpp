@@ -215,7 +215,7 @@ void Simulation::runSingleSimulation()
     if (m_options.getNumberOfThreads() == 1) {
         // Single thread.
         std::unique_ptr<MainComputation> P_computation(
-            new MainComputation(*sample(), m_instrument, m_options, m_progress, batch_start, batch_end));
+            new MainComputation(*sample(), m_options, m_progress, batch_start, batch_end));
         P_computation->run(); // the work is done here
         if (!P_computation->isCompleted()) {
             std::string message = P_computation->errorMessage();
@@ -246,7 +246,7 @@ void Simulation::runSingleSimulation()
             else
                 end_it = batch_start + end_thread_index;
             computations.emplace_back(
-                new MainComputation(*sample(), m_instrument, m_options, m_progress, begin_it, end_it));
+                new MainComputation(*sample(), m_options, m_progress, begin_it, end_it));
         }
 
         // Run simulations in n threads.

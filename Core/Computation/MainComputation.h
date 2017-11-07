@@ -25,7 +25,6 @@
 
 class IFresnelMap;
 class MultiLayer;
-class Instrument;
 struct HomogeneousRegion;
 class IComputationTerm;
 class ProgressHandler;
@@ -43,7 +42,6 @@ class MainComputation final : public INoncopyable
 public:
     MainComputation(
         const MultiLayer& multilayer,
-        const Instrument& instrument,
         const SimulationOptions& options,
         ProgressHandler& progress,
         const std::vector<SimulationElement>::iterator& begin_it,
@@ -68,7 +66,6 @@ private:
     bool checkRegions(const std::vector<HomogeneousRegion>& regions) const;
 
     std::unique_ptr<MultiLayer> mP_multi_layer;
-    const Instrument& m_instrument;
     SimulationOptions m_sim_options;
     ProgressHandler* m_progress;
     //! these iterators define the span of detector bins this simulation will work on

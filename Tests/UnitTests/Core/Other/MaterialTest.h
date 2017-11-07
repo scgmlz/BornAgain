@@ -1,6 +1,7 @@
 #include "MaterialFactoryFuncs.h"
-#include "WavelengthIndependentMaterial.h"
-#include "RefractiveCoefMaterial.h"
+#include "MaterialBySLDImpl.h"
+#include "RefractiveMaterialImpl.h"
+#include "SlicedParticle.h"
 #include "WavevectorInfo.h"
 #include "Rotations.h"
 #include "Units.h"
@@ -59,24 +60,14 @@ TEST_F(MaterialTest, MaterialConstruction)
     EXPECT_EQ(material_data, material6.materialData());
     EXPECT_EQ(default_magnetism, material6.magnetization());
 
-    Material material7 = HomogeneousMaterial();
-    EXPECT_EQ(material7.getName(), HomogeneousMaterial().getName());
-    EXPECT_EQ(material7.getName(), MaterialBySLD().getName());
-    EXPECT_EQ(material7.materialData(), HomogeneousMaterial().materialData());
-    EXPECT_EQ(material7.materialData(), MaterialBySLD().materialData());
-    EXPECT_EQ(material7.magnetization(), HomogeneousMaterial().magnetization());
-    EXPECT_EQ(material7.magnetization(), MaterialBySLD().magnetization());
-    EXPECT_TRUE(material7.typeID() == HomogeneousMaterial().typeID());
-    EXPECT_FALSE(material7.typeID() == MaterialBySLD().typeID());
-
     constexpr double basic_wavelength = 0.1798197; // nm
-    Material material8 = MaterialByAbsCX("Material", material_data.real(),
+    Material material7 = MaterialByAbsCX("Material", material_data.real(),
                                          material_data.imag() * basic_wavelength);
-    EXPECT_TRUE(material8.getName() == material6.getName());
-    EXPECT_TRUE(material8.magnetization() == material6.magnetization());
-    EXPECT_DOUBLE_EQ(material8.materialData().real(), material6.materialData().real());
-    EXPECT_DOUBLE_EQ(material8.materialData().imag(), material6.materialData().imag());
-    EXPECT_TRUE(material8.typeID() == material6.typeID());
+    EXPECT_TRUE(material7.getName() == material6.getName());
+    EXPECT_TRUE(material7.magnetization() == material6.magnetization());
+    EXPECT_DOUBLE_EQ(material7.materialData().real(), material6.materialData().real());
+    EXPECT_DOUBLE_EQ(material7.materialData().imag(), material6.materialData().imag());
+    EXPECT_TRUE(material7.typeID() == material6.typeID());
 }
 
 TEST_F(MaterialTest, MaterialTransform)
@@ -100,6 +91,28 @@ TEST_F(MaterialTest, MaterialTransform)
     EXPECT_EQ("Material", material4.getName());
     EXPECT_EQ(material_data, material4.materialData());
     EXPECT_EQ(transformed_mag, material4.magnetization());
+}
+
+TEST_F(MaterialTest, DefaultMaterials)
+{
+    Material material = HomogeneousMaterial();
+    const double dummy_wavelength = 1.0;
+
+    EXPECT_EQ(material.getName(), std::string("vacuum"));
+    EXPECT_EQ(material.getName(), MaterialBySLD().getName());
+
+    EXPECT_EQ(material.materialData(), complex_t());
+    EXPECT_EQ(material.materialData(), MaterialBySLD().materialData());
+
+    EXPECT_EQ(material.magnetization(), kvector_t{});
+    EXPECT_EQ(material.magnetization(), MaterialBySLD().magnetization());
+
+    EXPECT_EQ(material.refractiveIndex(dummy_wavelength), complex_t(1.0, 0.0));
+    EXPECT_EQ(material.refractiveIndex(dummy_wavelength),
+              MaterialBySLD().refractiveIndex(dummy_wavelength));
+
+    EXPECT_TRUE(material.typeID() == HomogeneousMaterial().typeID());
+    EXPECT_FALSE(material.typeID() == MaterialBySLD().typeID());
 }
 
 TEST_F(MaterialTest, ComputationTest)
@@ -140,12 +153,47 @@ TEST_F(MaterialTest, ComputationTest)
     EXPECT_FLOAT_EQ(subtrSLD.imag(), subtrSLDWlIndep.imag());
 }
 
+TEST_F(MaterialTest, AveragedMaterialTest)
+{
+    kvector_t magnetization = kvector_t {1.0, 0.0, 0.0};
+    const Material material = HomogeneousMaterial("Material", 0.5, 0.5, magnetization);
+    const std::vector<HomogeneousRegion> regions = {HomogeneousRegion{0.25, material},
+                                                    HomogeneousRegion{0.25, material}};
+
+    const Material material_avr = createAveragedMaterial(material, regions);
+    EXPECT_EQ(material_avr.getName(), material.getName() + "_avg");
+    EXPECT_EQ(material_avr.magnetization(), magnetization);
+    EXPECT_DOUBLE_EQ(material_avr.materialData().real(), 0.5);
+    EXPECT_DOUBLE_EQ(material_avr.materialData().imag(), 0.5);
+    EXPECT_TRUE(material_avr.typeID() == MATERIAL_TYPES::RefractiveMaterial);
+
+    const Material material2 = MaterialBySLD();
+    const Material material_avr2 = createAveragedMaterial(material2, regions);
+    const complex_t expected_res = std::conj(1.0 - std::sqrt(complex_t(0.5, 0.25)));
+    EXPECT_DOUBLE_EQ(material_avr2.materialData().real(), expected_res.real());
+    EXPECT_DOUBLE_EQ(material_avr2.materialData().imag(), expected_res.imag());
+    EXPECT_EQ(material_avr2.magnetization(), kvector_t(0.5, 0.0, 0.0));
+    EXPECT_TRUE(material_avr2.typeID() == MATERIAL_TYPES::RefractiveMaterial);
+
+    const Material material3 = MaterialBySLD("Material3", 0.5, 0.5, magnetization);
+    EXPECT_THROW(createAveragedMaterial(material3, regions), std::runtime_error);
+
+    const Material material4 = HomogeneousMaterial();
+    const std::vector<HomogeneousRegion> regions2
+        = {HomogeneousRegion{0.25, material3}, HomogeneousRegion{0.25, material3}};
+    const Material material_avr3 = createAveragedMaterial(material4, regions2);
+    EXPECT_DOUBLE_EQ(material_avr3.materialData().real(), 0.25);
+    EXPECT_DOUBLE_EQ(material_avr3.materialData().imag(), 0.25);
+    EXPECT_EQ(material_avr3.magnetization(), kvector_t(0.5, 0.0, 0.0));
+    EXPECT_TRUE(material_avr3.typeID() == MATERIAL_TYPES::MaterialBySLD);
+}
+
 TEST_F(MaterialTest, TypeIdsTest)
 {
     Material material = MaterialBySLD("Material", 1.0, 1.0);
     Material material2 = HomogeneousMaterial("Material", 1.0, 1.0);
-    EXPECT_TRUE(material.typeID() == MATERIAL_TYPES::WavelengthIndependentMaterial);
-    EXPECT_TRUE(material2.typeID() == MATERIAL_TYPES::RefractiveCoefMaterial);
+    EXPECT_TRUE(material.typeID() == MATERIAL_TYPES::MaterialBySLD);
+    EXPECT_TRUE(material2.typeID() == MATERIAL_TYPES::RefractiveMaterial);
     EXPECT_TRUE(material.typeID() != material2.typeID());
     Material material3 = MaterialBySLD("Material", 1.0, 1.0);
     EXPECT_TRUE(material.typeID() == material3.typeID());

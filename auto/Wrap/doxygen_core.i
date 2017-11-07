@@ -43,19 +43,14 @@ C++ includes: AdjustMinimizerStrategy.h
 
 
 // File: classBaseMaterialImpl.xml
-%feature("docstring") BaseMaterialImpl "
+%feature("docstring") BaseMaterialImpl "";
 
-A basic implementation for homogeneous and wavelength-independent materials. Incorporates data and methods required to handle material magnetization.
+%feature("docstring")  BaseMaterialImpl::BaseMaterialImpl "BaseMaterialImpl::BaseMaterialImpl(const std::string &name)
 
-C++ includes: BaseMaterialImpl.h
+Constructs basic material with name. 
 ";
 
-%feature("docstring")  BaseMaterialImpl::BaseMaterialImpl "BaseMaterialImpl::BaseMaterialImpl(const std::string &name, kvector_t magnetization)
-
-Constructs basic material with name and magnetization. 
-";
-
-%feature("docstring")  BaseMaterialImpl::~BaseMaterialImpl "BaseMaterialImpl::~BaseMaterialImpl()
+%feature("docstring")  BaseMaterialImpl::~BaseMaterialImpl "virtual BaseMaterialImpl::~BaseMaterialImpl()=default
 ";
 
 %feature("docstring")  BaseMaterialImpl::clone "virtual BaseMaterialImpl* BaseMaterialImpl::clone() const =0
@@ -63,26 +58,30 @@ Constructs basic material with name and magnetization.
 Returns pointer to a copy of material. 
 ";
 
-%feature("docstring")  BaseMaterialImpl::inverted "BaseMaterialImpl * BaseMaterialImpl::inverted() const
+%feature("docstring")  BaseMaterialImpl::inverted "virtual BaseMaterialImpl* BaseMaterialImpl::inverted() const =0
 
 Constructs a material with inverted magnetization. 
 ";
 
 %feature("docstring")  BaseMaterialImpl::refractiveIndex "virtual complex_t BaseMaterialImpl::refractiveIndex(double wavelength) const =0
+
+Returns refractive index. 
 ";
 
 %feature("docstring")  BaseMaterialImpl::refractiveIndex2 "virtual complex_t BaseMaterialImpl::refractiveIndex2(double wavelength) const =0
+
+Returns squared refractive index. 
 ";
 
-%feature("docstring")  BaseMaterialImpl::isScalarMaterial "bool BaseMaterialImpl::isScalarMaterial() const
+%feature("docstring")  BaseMaterialImpl::isScalarMaterial "virtual bool BaseMaterialImpl::isScalarMaterial() const =0
 
 Indicates whether the interaction with the material is scalar. This means that different polarization states will be diffracted equally 
 ";
 
-%feature("docstring")  BaseMaterialImpl::isMagneticMaterial "bool BaseMaterialImpl::isMagneticMaterial() const
+%feature("docstring")  BaseMaterialImpl::isMagneticMaterial "virtual bool BaseMaterialImpl::isMagneticMaterial() const =0
 ";
 
-%feature("docstring")  BaseMaterialImpl::magnetization "kvector_t BaseMaterialImpl::magnetization() const
+%feature("docstring")  BaseMaterialImpl::magnetization "virtual kvector_t BaseMaterialImpl::magnetization() const =0
 
 Returns the magnetization (in A/m) 
 ";
@@ -92,17 +91,22 @@ Returns the magnetization (in A/m)
 Returns underlying material data. 
 ";
 
+%feature("docstring")  BaseMaterialImpl::typeID "virtual MATERIAL_TYPES BaseMaterialImpl::typeID() const =0
+
+Returns type of material implementation. 
+";
+
 %feature("docstring")  BaseMaterialImpl::scalarSubtrSLD "virtual complex_t BaseMaterialImpl::scalarSubtrSLD(const WavevectorInfo &wavevectors) const =0
 
 Returns (  $ \\\\pi/\\\\lambda^2 $ - sld), sld being the scattering length density. 
 ";
 
-%feature("docstring")  BaseMaterialImpl::polarizedSubtrSLD "Eigen::Matrix2cd BaseMaterialImpl::polarizedSubtrSLD(const WavevectorInfo &wavevectors) const
+%feature("docstring")  BaseMaterialImpl::polarizedSubtrSLD "virtual Eigen::Matrix2cd BaseMaterialImpl::polarizedSubtrSLD(const WavevectorInfo &wavevectors) const =0
 
 Returns (  $ \\\\pi/\\\\lambda^2 $ - sld) matrix with magnetization corrections. 
 ";
 
-%feature("docstring")  BaseMaterialImpl::transformedMaterial "BaseMaterialImpl * BaseMaterialImpl::transformedMaterial(const Transform3D &transform) const
+%feature("docstring")  BaseMaterialImpl::transformedMaterial "virtual BaseMaterialImpl* BaseMaterialImpl::transformedMaterial(const Transform3D &transform) const =0
 ";
 
 %feature("docstring")  BaseMaterialImpl::print "virtual void BaseMaterialImpl::print(std::ostream &ostr) const =0
@@ -597,21 +601,21 @@ C++ includes: BoxCompositionBuilder.h
 ";
 
 
-// File: structIntegratorReal_1_1CallBackHolder.xml
-%feature("docstring") IntegratorReal::CallBackHolder "
-
-structure holding the object and possible extra parameters
-
-C++ includes: IntegratorReal.h
-";
-
-
 // File: structIntegratorMCMiser_1_1CallBackHolder.xml
 %feature("docstring") IntegratorMCMiser::CallBackHolder "
 
 structure holding the object and possible extra parameters
 
 C++ includes: IntegratorMCMiser.h
+";
+
+
+// File: structIntegratorReal_1_1CallBackHolder.xml
+%feature("docstring") IntegratorReal::CallBackHolder "
+
+structure holding the object and possible extra parameters
+
+C++ includes: IntegratorReal.h
 ";
 
 
@@ -9882,6 +9886,54 @@ C++ includes: MagneticParticlesBuilder.h
 ";
 
 
+// File: classMagneticMaterialImpl.xml
+%feature("docstring") MagneticMaterialImpl "
+
+Basic implementation for magnetized material. Incorporates data and methods required to handle material magnetization.
+
+C++ includes: MagneticMaterialImpl.h
+";
+
+%feature("docstring")  MagneticMaterialImpl::MagneticMaterialImpl "MagneticMaterialImpl::MagneticMaterialImpl(const std::string &name, kvector_t magnetization)
+
+Constructs basic material with name and magnetization. 
+";
+
+%feature("docstring")  MagneticMaterialImpl::~MagneticMaterialImpl "virtual MagneticMaterialImpl::~MagneticMaterialImpl()=default
+";
+
+%feature("docstring")  MagneticMaterialImpl::clone "virtual MagneticMaterialImpl* MagneticMaterialImpl::clone() const override=0
+
+Returns pointer to a copy of material. 
+";
+
+%feature("docstring")  MagneticMaterialImpl::inverted "MagneticMaterialImpl * MagneticMaterialImpl::inverted() const override final
+
+Constructs a material with inverted magnetization. 
+";
+
+%feature("docstring")  MagneticMaterialImpl::isScalarMaterial "bool MagneticMaterialImpl::isScalarMaterial() const override final
+
+Indicates whether the interaction with the material is scalar. This means that different polarization states will be diffracted equally 
+";
+
+%feature("docstring")  MagneticMaterialImpl::isMagneticMaterial "bool MagneticMaterialImpl::isMagneticMaterial() const override final
+";
+
+%feature("docstring")  MagneticMaterialImpl::magnetization "kvector_t MagneticMaterialImpl::magnetization() const override final
+
+Returns the magnetization (in A/m) 
+";
+
+%feature("docstring")  MagneticMaterialImpl::polarizedSubtrSLD "Eigen::Matrix2cd MagneticMaterialImpl::polarizedSubtrSLD(const WavevectorInfo &wavevectors) const override final
+
+Returns (  $ \\\\pi/\\\\lambda^2 $ - sld) matrix with magnetization corrections. 
+";
+
+%feature("docstring")  MagneticMaterialImpl::transformedMaterial "MagneticMaterialImpl * MagneticMaterialImpl::transformedMaterial(const Transform3D &transform) const override final
+";
+
+
 // File: classMagneticParticleZeroFieldBuilder.xml
 %feature("docstring") MagneticParticleZeroFieldBuilder "
 
@@ -9952,7 +10004,7 @@ Controlled by the multi-threading machinery in  Simulation::runSingleSimulation(
 C++ includes: MainComputation.h
 ";
 
-%feature("docstring")  MainComputation::MainComputation "MainComputation::MainComputation(const MultiLayer &multilayer, const Instrument &instrument, const SimulationOptions &options, ProgressHandler &progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it)
+%feature("docstring")  MainComputation::MainComputation "MainComputation::MainComputation(const MultiLayer &multilayer, const SimulationOptions &options, ProgressHandler &progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it)
 ";
 
 %feature("docstring")  MainComputation::~MainComputation "MainComputation::~MainComputation()
@@ -10019,9 +10071,9 @@ Indicates whether the interaction with the material is scalar. This means that d
 Returns the name of material. 
 ";
 
-%feature("docstring")  Material::dataType "size_t Material::dataType() const
+%feature("docstring")  Material::typeID "MATERIAL_TYPES Material::typeID() const
 
-Returns hash code of underlying material implementation. 
+Returns the type of underlying material implementation. 
 ";
 
 %feature("docstring")  Material::magnetization "kvector_t Material::magnetization() const
@@ -10039,6 +10091,11 @@ Returns underlying material data.
 Returns true if material underlying data is nullptr. 
 ";
 
+%feature("docstring")  Material::isDefaultMaterial "bool Material::isDefaultMaterial() const
+
+Returns true if material has refractive index of (1.0, 0.0) and zero magnetization. 
+";
+
 %feature("docstring")  Material::scalarSubtrSLD "complex_t Material::scalarSubtrSLD(const WavevectorInfo &wavevectors) const
 
 Returns (  $ \\\\pi/\\\\lambda^2 $ - sld), sld (in  $nm^{-2}$) being the scattering length density. 
@@ -10050,6 +10107,53 @@ Returns (  $ \\\\pi/\\\\lambda^2 $ - sld) matrix with magnetization corrections.
 ";
 
 %feature("docstring")  Material::transformedMaterial "Material Material::transformedMaterial(const Transform3D &transform) const
+";
+
+
+// File: classMaterialBySLDImpl.xml
+%feature("docstring") MaterialBySLDImpl "
+
+Material implementation based on wavelength-independent data (valid for a range of wavelengths)
+
+C++ includes: MaterialBySLDImpl.h
+";
+
+%feature("docstring")  MaterialBySLDImpl::~MaterialBySLDImpl "virtual MaterialBySLDImpl::~MaterialBySLDImpl()=default
+";
+
+%feature("docstring")  MaterialBySLDImpl::clone "MaterialBySLDImpl * MaterialBySLDImpl::clone() const override
+
+Returns pointer to a copy of material. 
+";
+
+%feature("docstring")  MaterialBySLDImpl::refractiveIndex "complex_t MaterialBySLDImpl::refractiveIndex(double wavelength) const override
+
+Returns refractive index. 
+";
+
+%feature("docstring")  MaterialBySLDImpl::refractiveIndex2 "complex_t MaterialBySLDImpl::refractiveIndex2(double wavelength) const override
+
+Returns squared refractive index. 
+";
+
+%feature("docstring")  MaterialBySLDImpl::materialData "complex_t MaterialBySLDImpl::materialData() const override
+
+Returns underlying material data. 
+";
+
+%feature("docstring")  MaterialBySLDImpl::typeID "virtual MATERIAL_TYPES MaterialBySLDImpl::typeID() const override
+
+Returns type of material implementation. 
+";
+
+%feature("docstring")  MaterialBySLDImpl::scalarSubtrSLD "complex_t MaterialBySLDImpl::scalarSubtrSLD(const WavevectorInfo &wavevectors) const override
+
+Returns (  $ \\\\pi/\\\\lambda^2 $ - sld), sld (in  $nm^{-2}$) being the scattering length density. 
+";
+
+%feature("docstring")  MaterialBySLDImpl::print "void MaterialBySLDImpl::print(std::ostream &ostr) const override
+
+Prints object data. 
 ";
 
 
@@ -12127,43 +12231,48 @@ C++ includes: ParaCrystalBuilder.h
 ";
 
 
-// File: classRefractiveCoefMaterial.xml
-%feature("docstring") RefractiveCoefMaterial "
+// File: classRefractiveMaterialImpl.xml
+%feature("docstring") RefractiveMaterialImpl "
 
 Material implementation based on refractive coefficiencts (valid for one wavelength value only)
 
-C++ includes: RefractiveCoefMaterial.h
+C++ includes: RefractiveMaterialImpl.h
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::~RefractiveCoefMaterial "RefractiveCoefMaterial::~RefractiveCoefMaterial()
+%feature("docstring")  RefractiveMaterialImpl::~RefractiveMaterialImpl "virtual RefractiveMaterialImpl::~RefractiveMaterialImpl()=default
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::clone "RefractiveCoefMaterial * RefractiveCoefMaterial::clone() const override
+%feature("docstring")  RefractiveMaterialImpl::clone "RefractiveMaterialImpl * RefractiveMaterialImpl::clone() const override
 
 Returns pointer to a copy of material. 
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::refractiveIndex "complex_t RefractiveCoefMaterial::refractiveIndex(double wavelength) const override
+%feature("docstring")  RefractiveMaterialImpl::refractiveIndex "complex_t RefractiveMaterialImpl::refractiveIndex(double wavelength) const override
 
 Returns refractive index For this particular implementation returned value does not depend on passed wavelength 
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::refractiveIndex2 "complex_t RefractiveCoefMaterial::refractiveIndex2(double wavelength) const override
+%feature("docstring")  RefractiveMaterialImpl::refractiveIndex2 "complex_t RefractiveMaterialImpl::refractiveIndex2(double wavelength) const override
 
 Returns squared refractive index. For this particular implementation returned value does not depend on passed wavelength. 
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::materialData "complex_t RefractiveCoefMaterial::materialData() const override
+%feature("docstring")  RefractiveMaterialImpl::materialData "complex_t RefractiveMaterialImpl::materialData() const override
 
 Returns underlying material data. 
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::scalarSubtrSLD "complex_t RefractiveCoefMaterial::scalarSubtrSLD(const WavevectorInfo &wavevectors) const override
+%feature("docstring")  RefractiveMaterialImpl::typeID "virtual MATERIAL_TYPES RefractiveMaterialImpl::typeID() const override
+
+Returns type of material implementation. 
+";
+
+%feature("docstring")  RefractiveMaterialImpl::scalarSubtrSLD "complex_t RefractiveMaterialImpl::scalarSubtrSLD(const WavevectorInfo &wavevectors) const override
 
 Returns (  $ \\\\pi/\\\\lambda^2 $ - sld), sld (in  $nm^{-2}$) being the scattering length density. If the wavelength associated with passed wavevector is different from the one associated with refractive coefficients used during the object construction, provided result is inconsistent. 
 ";
 
-%feature("docstring")  RefractiveCoefMaterial::print "void RefractiveCoefMaterial::print(std::ostream &ostr) const override
+%feature("docstring")  RefractiveMaterialImpl::print "void RefractiveMaterialImpl::print(std::ostream &ostr) const override
 
 Prints object data. 
 ";
@@ -14218,48 +14327,6 @@ Returns true if area defined by two bins is inside or on border of polygon (more
 ";
 
 
-// File: classWavelengthIndependentMaterial.xml
-%feature("docstring") WavelengthIndependentMaterial "
-
-Material implementation based on wavelength-independent data (valid for a range of wavelengths)
-
-C++ includes: WavelengthIndependentMaterial.h
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::~WavelengthIndependentMaterial "WavelengthIndependentMaterial::~WavelengthIndependentMaterial()
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::clone "WavelengthIndependentMaterial * WavelengthIndependentMaterial::clone() const override
-
-Returns pointer to a copy of material. 
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::refractiveIndex "complex_t WavelengthIndependentMaterial::refractiveIndex(double wavelength) const override
-
-Returns refractive index. 
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::refractiveIndex2 "complex_t WavelengthIndependentMaterial::refractiveIndex2(double wavelength) const override
-
-Returns squared refractive index. 
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::materialData "complex_t WavelengthIndependentMaterial::materialData() const override
-
-Returns underlying material data. 
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::scalarSubtrSLD "complex_t WavelengthIndependentMaterial::scalarSubtrSLD(const WavevectorInfo &wavevectors) const override
-
-Returns (  $ \\\\pi/\\\\lambda^2 $ - sld), sld (in  $nm^{-2}$) being the scattering length density. 
-";
-
-%feature("docstring")  WavelengthIndependentMaterial::print "void WavelengthIndependentMaterial::print(std::ostream &ostr) const override
-
-Prints object data. 
-";
-
-
 // File: classWavevectorInfo.xml
 %feature("docstring") WavevectorInfo "
 
@@ -14335,52 +14402,52 @@ C++ includes: ZLimits.h
 // File: namespace_0D249.xml
 
 
-// File: namespace_0D275.xml
+// File: namespace_0D276.xml
 
 
-// File: namespace_0D281.xml
+// File: namespace_0D280.xml
 
 
-// File: namespace_0D285.xml
+// File: namespace_0D282.xml
 
 
-// File: namespace_0D291.xml
+// File: namespace_0D284.xml
 
 
-// File: namespace_0D306.xml
+// File: namespace_0D292.xml
 
 
-// File: namespace_0D314.xml
+// File: namespace_0D307.xml
 
 
-// File: namespace_0D320.xml
+// File: namespace_0D315.xml
 
 
-// File: namespace_0D323.xml
+// File: namespace_0D321.xml
 
 
-// File: namespace_0D325.xml
+// File: namespace_0D324.xml
 
 
-// File: namespace_0D346.xml
+// File: namespace_0D326.xml
 
 
-// File: namespace_0D355.xml
+// File: namespace_0D347.xml
 
 
-// File: namespace_0D388.xml
+// File: namespace_0D356.xml
 
 
-// File: namespace_0D395.xml
+// File: namespace_0D389.xml
 
 
-// File: namespace_0D501.xml
+// File: namespace_0D396.xml
 
 
-// File: namespace_0D523.xml
+// File: namespace_0D502.xml
 
 
-// File: namespace_0D57.xml
+// File: namespace_0D524.xml
 
 
 // File: namespace_0D63.xml
@@ -15969,16 +16036,25 @@ make Swappable
 // File: Rectangle_8h.xml
 
 
-// File: BaseMaterialImpl_8cpp.xml
-
-
 // File: BaseMaterialImpl_8h.xml
+
+
+// File: MagneticMaterialImpl_8cpp.xml
+
+
+// File: MagneticMaterialImpl_8h.xml
 
 
 // File: Material_8cpp.xml
 
 
 // File: Material_8h.xml
+
+
+// File: MaterialBySLDImpl_8cpp.xml
+
+
+// File: MaterialBySLDImpl_8h.xml
 
 
 // File: MaterialFactoryFuncs_8cpp.xml
@@ -16006,7 +16082,7 @@ magnetization (in A/m)
 
 %feature("docstring")  HomogeneousMaterial "Material HomogeneousMaterial()
 
-Constructs vacuum material based on refractive coefficients. Though in practice there is no difference between vacuum materials produced with  MaterialBySLD() and  HomogeneousMaterial(), they are not equal because of the difference in the type of underlying data 
+Constructs material with zero refractive coefficients and zero magnetization. 
 ";
 
 %feature("docstring")  MaterialBySLD "Material MaterialBySLD(const std::string &name, double sld, double abs_term, kvector_t magnetization)
@@ -16045,7 +16121,12 @@ magnetization (in A/m)
 
 %feature("docstring")  MaterialBySLD "Material MaterialBySLD()
 
-Constructs wavelength-independent vacuum material. Though in practice there is no difference between vacuum materials produced with  MaterialBySLD() and  HomogeneousMaterial(), they are not equal because of the difference in the type of underlying data 
+Constructs wavelength-independent material with zero sld and zero magnetization. 
+";
+
+%feature("docstring")  createAveragedMaterial "Material createAveragedMaterial(const Material &layer_mat, const std::vector< HomogeneousRegion > &regions)
+
+Creates averaged material. Square refractive index of returned material is arithmetic mean over  regions and  layer_mat. Magnetization (if present) is averaged linearly. 
 ";
 
 
@@ -16074,7 +16155,7 @@ magnetization (in A/m)
 
 %feature("docstring")  HomogeneousMaterial "BA_CORE_API_ Material HomogeneousMaterial()
 
-Constructs vacuum material based on refractive coefficients. Though in practice there is no difference between vacuum materials produced with  MaterialBySLD() and  HomogeneousMaterial(), they are not equal because of the difference in the type of underlying data 
+Constructs material with zero refractive coefficients and zero magnetization. 
 ";
 
 %feature("docstring")  MaterialBySLD "BA_CORE_API_ Material MaterialBySLD(const std::string &name, double sld, double abs_term, kvector_t magnetization=kvector_t())
@@ -16113,7 +16194,12 @@ magnetization (in A/m)
 
 %feature("docstring")  MaterialBySLD "BA_CORE_API_ Material MaterialBySLD()
 
-Constructs wavelength-independent vacuum material. Though in practice there is no difference between vacuum materials produced with  MaterialBySLD() and  HomogeneousMaterial(), they are not equal because of the difference in the type of underlying data 
+Constructs wavelength-independent material with zero sld and zero magnetization. 
+";
+
+%feature("docstring")  createAveragedMaterial "BA_CORE_API_ Material createAveragedMaterial(const Material &layer_mat, const std::vector< HomogeneousRegion > &regions)
+
+Creates averaged material. Square refractive index of returned material is arithmetic mean over  regions and  layer_mat. Magnetization (if present) is averaged linearly. 
 ";
 
 
@@ -16125,16 +16211,10 @@ Constructs wavelength-independent vacuum material. Though in practice there is n
 // File: MaterialUtils_8h.xml
 
 
-// File: RefractiveCoefMaterial_8cpp.xml
+// File: RefractiveMaterialImpl_8cpp.xml
 
 
-// File: RefractiveCoefMaterial_8h.xml
-
-
-// File: WavelengthIndependentMaterial_8cpp.xml
-
-
-// File: WavelengthIndependentMaterial_8h.xml
+// File: RefractiveMaterialImpl_8h.xml
 
 
 // File: DecouplingApproximationStrategy_8cpp.xml

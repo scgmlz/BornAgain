@@ -81,6 +81,10 @@ public:
     //! Returns true if material underlying data is nullptr
     bool isEmpty() const {return !m_material_impl;}
 
+    //! Returns true if material has refractive index of (1.0, 0.0)
+    //! and zero magnetization.
+    bool isDefaultMaterial() const;
+
     //! Returns (\f$ \pi/\lambda^2 \f$ - sld), sld (in \f$nm^{-2}\f$) being the scattering length density
     complex_t scalarSubtrSLD(const WavevectorInfo& wavevectors) const;
 
