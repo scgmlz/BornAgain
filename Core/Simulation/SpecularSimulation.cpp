@@ -18,32 +18,32 @@
 #include "MultiLayer.h"
 #include "SpecularMatrix.h"
 #include "MaterialUtils.h"
+#include "Histogram1D.h"
 #include <memory>
 
 SpecularSimulation::SpecularSimulation() : Simulation()
 {
-    initialize();
+    setName(BornAgain::SpecularSimulationType);
 }
 
 SpecularSimulation::SpecularSimulation(const MultiLayer& sample) : Simulation(sample)
 {
-    initialize();
+    setName(BornAgain::SpecularSimulationType);
 }
 
 SpecularSimulation::SpecularSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder)
     : Simulation(sample_builder)
 {
-    initialize();
+    setName(BornAgain::SpecularSimulationType);
 }
 
 SpecularSimulation::SpecularSimulation(const SpecularSimulation& other)
     : Simulation(other)
 {
-    const IAxis* alpha_i_axis = other.getAlphaAxis();
-    if (alpha_i_axis)
-	m_alpha_i_axis.reset(alpha_i_axis->clone());
+    if (other.m_alpha_i_axis)
+	m_alpha_i_axis.reset(other.m_alpha_i_axis->clone());
     m_RT_coefficients.copyFrom(other.m_RT_coefficients);
-    initialize();
+    setName(BornAgain::SpecularSimulationType);
 }
 
 SpecularSimulation* SpecularSimulation::clone() const
@@ -89,11 +89,52 @@ void SpecularSimulation::setBeamParameters(double lambda, int nbins, double alph
 
 const IAxis* SpecularSimulation::getAlphaAxis() const
 {
+    std::cerr << "Warning in SpecularSimulation::getAlphaAxis: the method is deprecated and will be "
+                 "removed in next release. Consider using Histogram1D::getBinCenters."
+              << std::endl;
     return m_alpha_i_axis.get();
+}
+
+std::unique_ptr<OutputData<double>>
+SpecularSimulation::getData(size_t i_layer, DataGetter fn_ptr) const
+{
+    checkCoefficients(i_layer);
+    std::unique_ptr<OutputData<double>> output_ptr = std::make_unique<OutputData<double>>();
+    output_ptr->copyShapeFrom(m_RT_coefficients);
+    OutputData<double>& output = *output_ptr.get();
+    for (size_t i = 0; i < m_RT_coefficients.getAllocatedSize(); ++i)
+        output[i] = std::norm((m_RT_coefficients[i][i_layer].get()->*fn_ptr)());
+    return output_ptr;
+}
+
+OutputData<double>* SpecularSimulation::getDetectorIntensity(IDetector2D::EAxesUnits) const
+{
+    return getData(0, &ILayerRTCoefficients::getScalarR).release();
+}
+
+Histogram1D* SpecularSimulation::reflectivity(size_t i_layer) const
+{
+    return new Histogram1D(*getData(i_layer, &ILayerRTCoefficients::getScalarR).get());
+}
+
+Histogram1D* SpecularSimulation::transmissivity() const
+{
+    const size_t i_layer = m_RT_coefficients.isInitialized() && m_RT_coefficients[0].size() != 0
+                               ? static_cast<size_t>(m_RT_coefficients[0].size() - 1)
+                               : 0;
+    return transmissivity(i_layer);
+}
+Histogram1D* SpecularSimulation::transmissivity(size_t i_layer) const
+{
+    return new Histogram1D(*getData(i_layer, &ILayerRTCoefficients::getScalarT).get());
 }
 
 std::vector<complex_t> SpecularSimulation::getScalarR(size_t i_layer) const
 {
+    std::cerr << "Warning in SpecularSimulation::getScalarR: the method is deprecated and will be "
+                 "removed in next release. Consider using SpecularSimulation::reflectivity "
+                 "instead."
+              << std::endl;
     checkCoefficients(i_layer);
     std::vector<complex_t> result;
     result.resize(m_RT_coefficients.getAllocatedSize());
@@ -105,6 +146,10 @@ std::vector<complex_t> SpecularSimulation::getScalarR(size_t i_layer) const
 
 std::vector<complex_t> SpecularSimulation::getScalarT(size_t i_layer) const
 {
+    std::cerr << "Warning in SpecularSimulation::getScalarT: the method is deprecated and will be "
+                 "removed in next release. Consider using SpecularSimulation::transmissivity "
+                 "instead."
+              << std::endl;
     checkCoefficients(i_layer);
     std::vector<complex_t> result;
     result.resize(m_RT_coefficients.getAllocatedSize());
@@ -116,6 +161,9 @@ std::vector<complex_t> SpecularSimulation::getScalarT(size_t i_layer) const
 
 std::vector<complex_t> SpecularSimulation::getScalarKz(size_t i_layer) const
 {
+    std::cerr << "Warning in SpecularSimulation::getScalarKz: the method is deprecated and will be "
+                 "removed in next release."
+              << std::endl;
     checkCoefficients(i_layer);
     std::vector<complex_t> result;
     result.resize(m_RT_coefficients.getAllocatedSize());
@@ -155,7 +203,7 @@ void SpecularSimulation::collectRTCoefficientsMatrix(const MultiLayer* /*multila
 
 void SpecularSimulation::checkCoefficients(size_t i_layer) const
 {
-    if (m_RT_coefficients.getAllocatedSize() == 1 || m_RT_coefficients[0].size() == 0)
+    if (!m_RT_coefficients.isInitialized() || m_RT_coefficients[0].size() == 0)
         throw std::runtime_error(
             "SpecularSimulation::checkCoefficients() -> Error. "
             "No coefficients found, check that (1) you have set beam parameters "
@@ -168,16 +216,4 @@ void SpecularSimulation::checkCoefficients(size_t i_layer) const
                 << m_RT_coefficients[0].size() << std::endl;
         throw std::runtime_error(message.str());
     }
-}
-
-void SpecularSimulation::initialize()
-{
-    setName(BornAgain::SpecularSimulationType);
-}
-
-OutputData<double>* SpecularSimulation::getDetectorIntensity(IDetector2D::EAxesUnits) const
-{
-    throw std::runtime_error(
-        "Error in SpecularSimulation::getDetectorIntensity: the method should not be called");
-    return new OutputData<double>;
 }
