@@ -13640,22 +13640,43 @@ Sets beam parameters with alpha_i of the beam defined in the range.
 
 %feature("docstring")  SpecularSimulation::getAlphaAxis "const IAxis * SpecularSimulation::getAlphaAxis() const
 
-Returns a pointer to incident angle axis. 
+Returns a pointer to incident angle axis. Method is deprecated and will be removed in next release Consider using  IHistogram::getXaxis
+";
+
+%feature("docstring")  SpecularSimulation::getDetectorIntensity "OutputData< double > * SpecularSimulation::getDetectorIntensity(IDetector2D::EAxesUnits units_type=IDetector2D::DEFAULT) const override
+
+Returns reflectivity values  $Reflectivity = \\\\|R\\\\|^2$ from the upper layer in the form of  OutputData<double>
+";
+
+%feature("docstring")  SpecularSimulation::reflectivity "Histogram1D* SpecularSimulation::reflectivity() const
+
+Returns reflectivity values  $Reflectivity = \\\\|R\\\\|^2$ in the form of 1D Histogram. With no parameters returns the reflectivity of the upper layer 
+";
+
+%feature("docstring")  SpecularSimulation::reflectivity "Histogram1D * SpecularSimulation::reflectivity(size_t i_layer) const
+";
+
+%feature("docstring")  SpecularSimulation::transmissivity "Histogram1D * SpecularSimulation::transmissivity() const
+
+Returns transmissivity values  $Transmissivity = \\\\|T\\\\|^2$ in the form of 1D Histogram. With no parameters returns the transmissivity of the bottom layer 
+";
+
+%feature("docstring")  SpecularSimulation::transmissivity "Histogram1D * SpecularSimulation::transmissivity(size_t i_layer) const
 ";
 
 %feature("docstring")  SpecularSimulation::getScalarR "std::vector< complex_t > SpecularSimulation::getScalarR(size_t i_layer) const
 
-returns vector of reflection coefficients for all alpha_i angles for given layer index 
+Returns vector of reflection coefficients (  $R$) for all alpha_i angles for given layer index Method is deprecated in favor of  SpecularSimulation::reflectivity. 
 ";
 
 %feature("docstring")  SpecularSimulation::getScalarT "std::vector< complex_t > SpecularSimulation::getScalarT(size_t i_layer) const
 
-returns vector of transmission coefficients for all alpha_i angles for given layer index 
+Returns vector of transmission coefficients for all alpha_i angles for given layer index Method is deprecated in favor of  SpecularSimulation::transmissivity. 
 ";
 
 %feature("docstring")  SpecularSimulation::getScalarKz "std::vector< complex_t > SpecularSimulation::getScalarKz(size_t i_layer) const
 
-returns vector of Kz coefficients for all alpha_i angles for given layer index 
+Returns vector of Kz coefficients for all alpha_i angles for given layer index Method is deprecated and will be removed in next release. 
 ";
 
 
