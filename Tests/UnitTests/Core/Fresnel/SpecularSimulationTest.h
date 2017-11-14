@@ -35,14 +35,14 @@ SpecularSimulationTest::SpecularSimulationTest()
 TEST_F(SpecularSimulationTest, InitialState)
 {
     SpecularSimulation sim;
-    ASSERT_THROW( sim.runSimulation(), std::runtime_error);
+    ASSERT_THROW(sim.runSimulation(), std::runtime_error);
     EXPECT_EQ(nullptr, sim.getAlphaAxis());
     EXPECT_EQ(nullptr, sim.sample());
-    ASSERT_THROW( sim.getScalarR(0), std::runtime_error);
-    ASSERT_THROW( sim.getScalarT(0), std::runtime_error);
-    ASSERT_THROW( sim.getScalarKz(0), std::runtime_error);
-    ASSERT_THROW( sim.reflectivity(), std::runtime_error);
-    ASSERT_THROW( sim.transmissivity(), std::runtime_error);
+    ASSERT_THROW(sim.getScalarR(0), std::runtime_error);
+    ASSERT_THROW(sim.getScalarT(0), std::runtime_error);
+    ASSERT_THROW(sim.getScalarKz(0), std::runtime_error);
+    ASSERT_THROW(sim.reflectivity(), std::runtime_error);
+    ASSERT_THROW(sim.transmissivity(), std::runtime_error);
 }
 
 TEST_F(SpecularSimulationTest, CloneOfEmpty)
@@ -50,14 +50,14 @@ TEST_F(SpecularSimulationTest, CloneOfEmpty)
     SpecularSimulation sim;
 
     SpecularSimulation *clone = sim.clone();
-    ASSERT_THROW( clone->runSimulation(), std::runtime_error);
+    ASSERT_THROW(clone->runSimulation(), std::runtime_error);
     EXPECT_EQ(nullptr, clone->getAlphaAxis());
     EXPECT_EQ(nullptr, clone->sample());
-    ASSERT_THROW( clone->getScalarR(0), std::runtime_error);
-    ASSERT_THROW( clone->getScalarT(0), std::runtime_error);
-    ASSERT_THROW( clone->getScalarKz(0), std::runtime_error);
-    ASSERT_THROW( clone->reflectivity(), std::runtime_error);
-    ASSERT_THROW( clone->transmissivity(), std::runtime_error);
+    ASSERT_THROW(clone->getScalarR(0), std::runtime_error);
+    ASSERT_THROW(clone->getScalarT(0), std::runtime_error);
+    ASSERT_THROW(clone->getScalarKz(0), std::runtime_error);
+    ASSERT_THROW(clone->reflectivity(), std::runtime_error);
+    ASSERT_THROW(clone->transmissivity(), std::runtime_error);
     delete clone;
 }
 
@@ -87,11 +87,11 @@ TEST_F(SpecularSimulationTest, ConstructSimulation)
     sim.setSample(multilayer);
     EXPECT_EQ(3u, sim.sample()->numberOfLayers());
 
-    ASSERT_THROW( sim.getScalarR(0), std::runtime_error);
-    ASSERT_THROW( sim.getScalarT(0), std::runtime_error);
-    ASSERT_THROW( sim.getScalarKz(0), std::runtime_error);
-    ASSERT_THROW( sim.reflectivity(), std::runtime_error);
-    ASSERT_THROW( sim.transmissivity(), std::runtime_error);
+    ASSERT_THROW(sim.getScalarR(0), std::runtime_error);
+    ASSERT_THROW(sim.getScalarT(0), std::runtime_error);
+    ASSERT_THROW(sim.getScalarKz(0), std::runtime_error);
+    ASSERT_THROW(sim.reflectivity(), std::runtime_error);
+    ASSERT_THROW(sim.transmissivity(), std::runtime_error);
 
     sim.runSimulation();
     EXPECT_EQ(10u, sim.getScalarR(0).size());
@@ -138,22 +138,22 @@ TEST_F(SpecularSimulationTest, SimulationClone)
 
     SpecularSimulation *clone = sim.clone();
 
-    EXPECT_EQ( size_t(3), clone->sample()->numberOfLayers());
+    EXPECT_EQ(3u, clone->sample()->numberOfLayers());
 
-    ASSERT_THROW( clone->getScalarR(0), std::runtime_error);
-    ASSERT_THROW( clone->getScalarT(0), std::runtime_error);
-    ASSERT_THROW( clone->getScalarKz(0), std::runtime_error);
-    ASSERT_THROW( clone->reflectivity(), std::runtime_error);
-    ASSERT_THROW( clone->transmissivity(), std::runtime_error);
-    ASSERT_THROW( clone->getDetectorIntensity(), std::runtime_error);
+    ASSERT_THROW(clone->getScalarR(0), std::runtime_error);
+    ASSERT_THROW(clone->getScalarT(0), std::runtime_error);
+    ASSERT_THROW(clone->getScalarKz(0), std::runtime_error);
+    ASSERT_THROW(clone->reflectivity(), std::runtime_error);
+    ASSERT_THROW(clone->transmissivity(), std::runtime_error);
+    ASSERT_THROW(clone->getDetectorIntensity(), std::runtime_error);
     delete clone;
 
     sim.runSimulation();
 
     clone = sim.clone();
-    EXPECT_EQ(size_t(10), clone->getScalarR(0).size());
-    EXPECT_EQ(size_t(10), clone->getScalarT(0).size());
-    EXPECT_EQ(size_t(10), clone->getScalarKz(0).size());
+    EXPECT_EQ(10u, clone->getScalarR(0).size());
+    EXPECT_EQ(10u, clone->getScalarT(0).size());
+    EXPECT_EQ(10u, clone->getScalarKz(0).size());
 
     Histogram1D* output = clone->reflectivity();
     EXPECT_EQ(10u, output->getTotalNumberOfBins());
