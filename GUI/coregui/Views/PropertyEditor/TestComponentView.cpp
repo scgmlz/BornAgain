@@ -16,7 +16,6 @@
 
 #include "TestComponentView.h"
 #include "mainwindow.h"
-#include "ComponentProxyModel.h"
 #include "SampleModel.h"
 #include "item_constants.h"
 #include "SessionModelDelegate.h"
@@ -26,6 +25,7 @@
 #include "GUIObjectBuilder.h"
 #include "MultiLayer.h"
 #include "SampleModel.h"
+#include "ComponentTreeView.h"
 #include <QTreeView>
 #include <QBoxLayout>
 #include <QItemSelectionModel>
@@ -35,9 +35,8 @@
 TestComponentView::TestComponentView(MainWindow* mainWindow)
     : m_mainWindow(mainWindow)
     , m_sourceModel(new SampleModel(this))
-    , m_proxyModel(new ComponentProxyModel(this))
     , m_sourceTree(new QTreeView)
-    , m_proxyTree(new QTreeView)
+    , m_componentTree(new ComponentTreeView)
     , m_updateButton(new QPushButton("Update models"))
     , m_addItemButton(new QPushButton("Add item"))
     , m_expandButton(new QPushButton("Expand tree"))
@@ -51,7 +50,7 @@ TestComponentView::TestComponentView(MainWindow* mainWindow)
 
     auto widgetLayout = new QHBoxLayout;
     widgetLayout->addWidget(m_sourceTree);
-    widgetLayout->addWidget(m_proxyTree);
+    widgetLayout->addWidget(m_componentTree);
 
     auto layout = new QVBoxLayout();
     layout->setMargin(0);
@@ -73,19 +72,11 @@ TestComponentView::TestComponentView(MainWindow* mainWindow)
     connect(m_sourceTree->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &TestComponentView::onSelectionChanged);
 
-    m_proxyTree->setModel(m_proxyModel);
-//    m_proxyTree->setModel(m_sourceModel);
-    m_proxyTree->setItemDelegate(m_delegate);
-    m_proxyTree->setRootIsDecorated(false);
-    StyleUtils::setPropertyStyle(m_proxyTree);
 }
 
 void TestComponentView::onUpdateRequest()
 {
-    qDebug() << "TestComponentView::onUpdateRequest() ->";
-    m_proxyModel->setSessionModel(m_sourceModel);
-    m_proxyModel->setRootIndex(QModelIndex());
-    m_proxyTree->reset();
+    m_componentTree->setModel(m_sourceModel);
 }
 
 void TestComponentView::onAddItemRequest()
@@ -99,12 +90,12 @@ void TestComponentView::onExpandRequest()
         m_sourceTree->expandAll();
         m_sourceTree->resizeColumnToContents(0);
         m_sourceTree->resizeColumnToContents(1);
-        m_proxyTree->expandAll();
-        m_proxyTree->resizeColumnToContents(0);
-        m_proxyTree->resizeColumnToContents(1);
+        m_componentTree->treeView()->expandAll();
+        m_componentTree->treeView()->resizeColumnToContents(0);
+        m_componentTree->treeView()->resizeColumnToContents(1);
     } else {
         m_sourceTree->collapseAll();
-        m_proxyTree->collapseAll();
+        m_componentTree->treeView()->collapseAll();
     }
     m_isExpaned = !m_isExpaned;
 }
@@ -132,8 +123,8 @@ void TestComponentView::onSelectionChanged(const QItemSelection& selected, const
 
     if (indexes.size()) {
         QModelIndex selectedIndex = indexes.front();
-        m_proxyModel->setRootIndex(selectedIndex);
-        m_proxyTree->expandAll();
+        m_componentTree->setRootIndex(selectedIndex);
+        m_componentTree->treeView()->expandAll();
     }
 
 }

@@ -31,3 +31,19 @@ void ModelUtils::iterate(const QModelIndex& index, const QAbstractItemModel* mod
         for (int j = 0; j < model->columnCount(index); ++j)
             iterate(model->index(i, j, index), model, fun);
 }
+
+void ModelUtils::iterate_if(const QModelIndex& index, const QAbstractItemModel* model,
+                            const std::function<bool (const QModelIndex&)>& fun)
+{
+    bool proceed_with_children(true);
+    if (index.isValid())
+        proceed_with_children = fun(index);
+
+    if (!model->hasChildren(index) || !proceed_with_children)
+        return;
+
+    for (int i = 0; i < model->rowCount(index); ++i)
+        for (int j = 0; j < model->columnCount(index); ++j)
+            iterate_if(model->index(i, j, index), model, fun);
+
+}

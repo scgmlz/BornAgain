@@ -31,6 +31,7 @@ class BA_CORE_API_ ProxyModelStrategy
 public:
     using map_t = QMap<QPersistentModelIndex, QPersistentModelIndex>;
 
+    ProxyModelStrategy();
     virtual ~ProxyModelStrategy() = default;
 
     void buildModelMap(SessionModel* source, ComponentProxyModel* proxy);
@@ -42,9 +43,8 @@ public:
     void setRootIndex(const QModelIndex& sourceRootIndex);
 
 protected:
-    QModelIndex createProxyIndex(ComponentProxyModel* proxy, int nrow, int ncol, void* adata);
-    virtual void processSourceIndex(SessionModel* model, ComponentProxyModel* proxy,
-                                    const QModelIndex& index) = 0;
+    QModelIndex createProxyIndex(int nrow, int ncol, void* adata);
+    virtual bool processSourceIndex(const QModelIndex& index) = 0;
 
     //!< Mapping of proxy model indices to indices in source model
     QMap<QPersistentModelIndex, QPersistentModelIndex> m_sourceToProxy;
@@ -52,6 +52,8 @@ protected:
     QMap<QPersistentModelIndex, QPersistentModelIndex> m_proxySourceParent;
 
     QModelIndex m_sourceRootIndex;
+    SessionModel* m_source;
+    ComponentProxyModel* m_proxy;
 };
 
 //! Strategy for ComponentProxyModel which makes it identical to source model.
@@ -59,25 +61,7 @@ protected:
 class BA_CORE_API_ IndentityProxyStrategy : public ProxyModelStrategy
 {
 protected:
-    void processSourceIndex(SessionModel* model, ComponentProxyModel* proxy,
-                            const QModelIndex& index);
-};
-
-//! Strategy for ComponentProxyModel which hides extra level of GroupProperty.
-
-class BA_CORE_API_ ComponentProxyStrategy : public ProxyModelStrategy
-{
-public:
-    void onDataChanged(SessionModel* source, ComponentProxyModel* proxy);
-
-protected:
-    void processSourceIndex(SessionModel* model, ComponentProxyModel* proxy,
-                            const QModelIndex& index);
-private:
-    bool isGroupChildren(SessionItem* item);
-    void processGroupItem(SessionItem* item, const QPersistentModelIndex& sourceIndex,
-                          const QPersistentModelIndex& proxyIndex);
-
+    bool processSourceIndex(const QModelIndex& index);
 };
 
 #endif  // ProxyModelStrategy

@@ -17,7 +17,7 @@
 #include "ComponentProxyModel.h"
 #include "SessionModel.h"
 #include "ModelUtils.h"
-#include "ProxyModelStrategy.h"
+#include "ComponentProxyStrategy.h"
 #include <functional>
 #include <QDebug>
 
@@ -70,7 +70,6 @@ void ComponentProxyModel::setSessionModel(SessionModel* model)
 
 void ComponentProxyModel::setRootIndex(const QModelIndex& sourceRootIndex)
 {
-    Q_ASSERT(m_model);
     m_proxyStrategy->setRootIndex(sourceRootIndex);
     buildModelMap();
 }
@@ -78,9 +77,7 @@ void ComponentProxyModel::setRootIndex(const QModelIndex& sourceRootIndex)
 void ComponentProxyModel::setProxyStrategy(ProxyModelStrategy* strategy)
 {
     m_proxyStrategy.reset(strategy);
-
-    if (m_model)
-        buildModelMap();
+    buildModelMap();
 }
 
 QModelIndex ComponentProxyModel::mapToSource(const QModelIndex& proxyIndex) const
@@ -206,6 +203,8 @@ void ComponentProxyModel::sourceRowsInserted(const QModelIndex& parent, int star
 
 void ComponentProxyModel::buildModelMap()
 {
+    if (!m_model)
+        return;
     m_proxyStrategy->buildModelMap(m_model, this);
     layoutChanged();
 }

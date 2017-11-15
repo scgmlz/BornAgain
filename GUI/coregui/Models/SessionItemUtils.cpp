@@ -42,3 +42,21 @@ void SessionItemUtils::SetVectorItem(const SessionItem& item, const QString& nam
     p_vector_item->setItemValue(VectorItem::P_Y, value.y());
     p_vector_item->setItemValue(VectorItem::P_Z, value.z());
 }
+
+int SessionItemUtils::ParentVisibleRow(const SessionItem& item)
+{
+    int result(-1);
+
+    if (!item.parent() || !item.isVisible())
+        return result;
+
+    for(auto child : item.parent()->children()) {
+        if (child->isVisible())
+            ++result;
+
+        if (&item == child)
+            return result;
+    }
+
+    return result;
+}

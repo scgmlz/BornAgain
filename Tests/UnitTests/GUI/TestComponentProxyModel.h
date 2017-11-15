@@ -5,6 +5,7 @@
 #include "ComponentProxyModel.h"
 #include "VectorItem.h"
 #include "ProxyModelStrategy.h"
+#include "ComponentProxyStrategy.h"
 #include "ParticleItem.h"
 #include "FormFactorItems.h"
 #include "GroupItem.h"
@@ -381,7 +382,7 @@ inline void TestComponentProxyModel::test_setRootIndexLayer()
     QVERIFY(multilayerProxyIndex.isValid() == false);
 
     QModelIndex layerProxyIndex = proxy.mapFromSource(model.indexOfItem(layer1));
-    QCOMPARE(proxy.rowCount(layerProxyIndex), 6); // thickness, roughness, etc
+    QCOMPARE(proxy.rowCount(layerProxyIndex), 4); // thickness, material, slices, roughness
     QCOMPARE(proxy.columnCount(layerProxyIndex), 2);
     QVERIFY(layerProxyIndex.isValid());
     QVERIFY(layerProxyIndex.parent() == QModelIndex());
