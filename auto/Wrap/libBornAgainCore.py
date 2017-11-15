@@ -26185,10 +26185,49 @@ class SpecularSimulation(Simulation):
 
         const IAxis * SpecularSimulation::getAlphaAxis() const
 
-        Returns a pointer to incident angle axis. 
+        Returns a pointer to incident angle axis. Method is deprecated and will be removed in next release. Consider using  IHistogram::getXaxis. 
 
         """
         return _libBornAgainCore.SpecularSimulation_getAlphaAxis(self)
+
+
+    def getDetectorIntensity(self, *args):
+        """
+        getDetectorIntensity(SpecularSimulation self, IDetector2D::EAxesUnits units_type) -> IntensityData
+        getDetectorIntensity(SpecularSimulation self) -> IntensityData
+
+        OutputData< double > * SpecularSimulation::getDetectorIntensity(IDetector2D::EAxesUnits units_type=IDetector2D::DEFAULT) const override
+
+        Returns reflectivity values  $Reflectivity = \\|R\\|^2$ from the upper layer in the form of  OutputData<double>. 
+
+        """
+        return _libBornAgainCore.SpecularSimulation_getDetectorIntensity(self, *args)
+
+
+    def reflectivity(self, *args):
+        """
+        reflectivity(SpecularSimulation self) -> Histogram1D
+        reflectivity(SpecularSimulation self, size_t i_layer) -> Histogram1D
+
+        Histogram1D * SpecularSimulation::reflectivity(size_t i_layer) const
+
+        Returns reflectivity values  $Reflectivity = |R|^2$ in the form of 1D Histogram. With no parameters returns the reflectivity of the upper layer. 
+
+        """
+        return _libBornAgainCore.SpecularSimulation_reflectivity(self, *args)
+
+
+    def transmissivity(self, *args):
+        """
+        transmissivity(SpecularSimulation self) -> Histogram1D
+        transmissivity(SpecularSimulation self, size_t i_layer) -> Histogram1D
+
+        Histogram1D * SpecularSimulation::transmissivity(size_t i_layer) const
+
+        Returns transmissivity values  $Transmissivity = |T|^2$ in the form of 1D Histogram. With no parameters returns the transmissivity of the bottom layer. 
+
+        """
+        return _libBornAgainCore.SpecularSimulation_transmissivity(self, *args)
 
 
     def getScalarR(self, i_layer):
@@ -26197,7 +26236,7 @@ class SpecularSimulation(Simulation):
 
         std::vector< complex_t > SpecularSimulation::getScalarR(size_t i_layer) const
 
-        returns vector of reflection coefficients for all alpha_i angles for given layer index 
+        Returns vector of reflection coefficients (  $R$) for all alpha_i angles for given layer index. Method is deprecated in favor of SpecularSimulation::reflectivity. 
 
         """
         return _libBornAgainCore.SpecularSimulation_getScalarR(self, i_layer)
@@ -26209,7 +26248,7 @@ class SpecularSimulation(Simulation):
 
         std::vector< complex_t > SpecularSimulation::getScalarT(size_t i_layer) const
 
-        returns vector of transmission coefficients for all alpha_i angles for given layer index 
+        Returns vector of transmission coefficients for all alpha_i angles for given layer index. Method is deprecated in favor of SpecularSimulation::transmissivity. 
 
         """
         return _libBornAgainCore.SpecularSimulation_getScalarT(self, i_layer)
@@ -26221,7 +26260,7 @@ class SpecularSimulation(Simulation):
 
         std::vector< complex_t > SpecularSimulation::getScalarKz(size_t i_layer) const
 
-        returns vector of Kz coefficients for all alpha_i angles for given layer index 
+        Returns vector of Kz coefficients for all alpha_i angles for given layer index. Method is deprecated and will be removed in next release. 
 
         """
         return _libBornAgainCore.SpecularSimulation_getScalarKz(self, i_layer)
