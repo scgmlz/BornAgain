@@ -20,6 +20,12 @@
 #include "TestUtils.h"
 #include "BABuild.h"
 
+CoreStandardTest::CoreStandardTest(const std::string& name, const std::string& description,
+                 const Simulation& simulation, double threshold)
+    : IStandardTest(name, description, threshold)
+    , m_reference_simulation(simulation.clone())
+{}
+
 bool CoreStandardTest::runTest()
 {
     std::unique_ptr<OutputData<double>> reference;

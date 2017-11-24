@@ -26499,7 +26499,7 @@ class SimulationFactoryTemp(_object):
 
     def __init__(self):
         """
-        __init__(IFactory<(std::string,GISASSimulation)> self) -> SimulationFactoryTemp
+        __init__(IFactory<(std::string,Simulation)> self) -> SimulationFactoryTemp
 
         IFactory< Key, AbstractProduct >::IFactory()
 
@@ -26512,7 +26512,7 @@ class SimulationFactoryTemp(_object):
 
     def createItem(self, item_key):
         """
-        createItem(SimulationFactoryTemp self, std::string const & item_key) -> GISASSimulation
+        createItem(SimulationFactoryTemp self, std::string const & item_key) -> Simulation
 
         AbstractProduct* IFactory< Key, AbstractProduct >::createItem(const Key &item_key)
 
@@ -26524,8 +26524,8 @@ class SimulationFactoryTemp(_object):
 
     def registerItem(self, *args):
         """
-        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,GISASSimulation >::CreateItemCallback CreateFn, std::string const & itemDescription) -> bool
-        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,GISASSimulation >::CreateItemCallback CreateFn) -> bool
+        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,Simulation >::CreateItemCallback CreateFn, std::string const & itemDescription) -> bool
+        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,Simulation >::CreateItemCallback CreateFn) -> bool
 
         bool IFactory< Key, AbstractProduct >::registerItem(const Key &item_key, CreateItemCallback CreateFn, const std::string &itemDescription="")
 
@@ -26561,7 +26561,7 @@ class SimulationFactoryTemp(_object):
 
     def begin(self):
         """
-        begin(SimulationFactoryTemp self) -> IFactory< std::string,GISASSimulation >::const_iterator
+        begin(SimulationFactoryTemp self) -> IFactory< std::string,Simulation >::const_iterator
 
         const_iterator IFactory< Key, AbstractProduct >::begin() const
 
@@ -26571,7 +26571,7 @@ class SimulationFactoryTemp(_object):
 
     def end(self):
         """
-        end(SimulationFactoryTemp self) -> IFactory< std::string,GISASSimulation >::const_iterator
+        end(SimulationFactoryTemp self) -> IFactory< std::string,Simulation >::const_iterator
 
         const_iterator IFactory< Key, AbstractProduct >::end() const
 

@@ -18,15 +18,21 @@
 
 #include "IStandardTest.h"
 
+class Simulation;
+
 //! A functional test of BornAgain/Core.
 //! Performs a given standard simulation, and compares results with reference data.
 
 class CoreStandardTest : public IStandardTest
 {
 public:
-    using IStandardTest::IStandardTest;
+    CoreStandardTest(const std::string& name, const std::string& description,
+                     const Simulation& simulation, double threshold);
 
     bool runTest() final;
+
+private:
+    std::unique_ptr<Simulation> m_reference_simulation;
 };
 
 #endif // CORESTANDARDTEST_H

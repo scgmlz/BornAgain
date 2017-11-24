@@ -19,6 +19,9 @@
 
 #include "IStandardTest.h"
 
+class Simulation;
+class GISASSimulation;
+
 //! A functional test of the BornAgain GUI.
 //! Performs a given standard simulation directly, and through domain->GUI->domain,
 //! and compares results.
@@ -26,9 +29,13 @@
 class GUIStandardTest : public IStandardTest
 {
 public:
-    using IStandardTest::IStandardTest;
+    GUIStandardTest(const std::string& name, const std::string& description,
+                    const Simulation& simulation, double threshold);
 
     bool runTest() final;
+
+private:
+    std::unique_ptr<GISASSimulation> m_reference_simulation;
 };
 
 #endif // GUISTANDARDTEST_H

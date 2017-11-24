@@ -47,7 +47,12 @@ GUITranslationTest::GUITranslationTest(const std::string& simName, const std::st
     , m_sampleName(sampleName)
 {
     SimulationFactory simFactory;
-    m_simulation = simFactory.create(m_simulationName);
+    std::unique_ptr<Simulation> simulation = simFactory.create(m_simulationName);
+    if (GISASSimulation* gisas = dynamic_cast<GISASSimulation*>(simulation.get())) {
+        m_simulation.reset(gisas);
+        simulation.release();
+    } else
+        throw std::runtime_error("Error in GUITranslationTest: wrong simulation type.");
 
     SampleBuilderFactory sampleFactory;
     m_simulation->setSample(*sampleFactory.createSample(m_sampleName));

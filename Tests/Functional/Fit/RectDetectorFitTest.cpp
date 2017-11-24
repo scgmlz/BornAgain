@@ -25,7 +25,7 @@ RectDetectorFitTest::RectDetectorFitTest()
 {
 }
 
-std::unique_ptr<GISASSimulation> RectDetectorFitTest::createSimulation()
+std::unique_ptr<Simulation> RectDetectorFitTest::createSimulation()
 {
     std::unique_ptr<GISASSimulation> result(new GISASSimulation());
 
@@ -44,10 +44,10 @@ std::unique_ptr<GISASSimulation> RectDetectorFitTest::createSimulation()
 }
 
 //! Creates cropped output data using histogram machinery
-std::unique_ptr<OutputData<double> >
-RectDetectorFitTest::createOutputData(const GISASSimulation *simulation)
+std::unique_ptr<OutputData<double>>
+RectDetectorFitTest::createOutputData(const Simulation* simulation)
 {
-    std::unique_ptr<GISASSimulation> simWithRoi(simulation->clone());
+    std::unique_ptr<Simulation> simWithRoi(simulation->clone());
     simWithRoi->getInstrument().getDetector()->resetRegionOfInterest();
     simWithRoi->runSimulation();
     std::unique_ptr<OutputData<double>> result(simWithRoi->getDetectorIntensity());

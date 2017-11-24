@@ -18,15 +18,22 @@
 
 #include "IStandardTest.h"
 
+class Simulation;
+class GISASSimulation;
+
 //! A functional test of PyCore (the Python wrapper of BornAgain/Core).
 //! Performs a given standard simulation, both directly and from a Python dump.
 
 class PyStandardTest : public IStandardTest
 {
 public:
-    using IStandardTest::IStandardTest;
+    PyStandardTest(const std::string& name, const std::string& description,
+                   const Simulation& simulation, double threshold);
 
     bool runTest() final;
+
+private:
+    std::unique_ptr<GISASSimulation> m_reference_simulation;
 };
 
 #endif // PYSTANDARDTEST_H
