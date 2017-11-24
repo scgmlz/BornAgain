@@ -27,7 +27,9 @@
 #include "RectangularDetector.h"
 #include "ResolutionFunction2DGaussian.h"
 #include "SampleBuilderFactory.h"
+#include "SpecularSimulation.h"
 #include "Units.h"
+#include <memory>
 
 namespace {
     const int rdet_nbinsx(40), rdet_nbinsy(30);
@@ -363,4 +365,16 @@ GISASSimulation* StandardSimulations::RectDetWithRoi()
     result->addMask(Rectangle(3.0, 4.0, 5.0, 7.0));
     result->setRegionOfInterest(2.0, 3.0, 18.0, 15.0);
     return result;
+}
+
+SpecularSimulation* StandardSimulations::BasicSpecular()
+{
+    const double wavelength = 1.54 * Units::angstrom;
+    const int number_of_bins = 2000;
+    const double min_angle = 0 * Units::deg;
+    const double max_angle = 5 * Units::deg;
+
+    std::unique_ptr<SpecularSimulation> result(new SpecularSimulation());
+    result->setBeamParameters(wavelength, number_of_bins, min_angle, max_angle);
+    return result.release();
 }

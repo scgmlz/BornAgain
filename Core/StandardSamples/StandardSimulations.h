@@ -17,6 +17,7 @@
 #define STANDARDSIMULATIONS_H
 
 class GISASSimulation;
+class SpecularSimulation;
 
 //! Standard pre-defined simulations.
 
@@ -49,6 +50,9 @@ GISASSimulation* RectDetectorPerpToReflectedBeamDpos();
 GISASSimulation* MiniGISASMonteCarlo();
 GISASSimulation* SphericalDetWithRoi();
 GISASSimulation* RectDetWithRoi();
+
+// Specular simulation tests:
+SpecularSimulation* BasicSpecular();
 
 } // namespace StandardSimulations
 

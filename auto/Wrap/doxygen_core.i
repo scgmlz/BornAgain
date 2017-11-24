@@ -610,21 +610,21 @@ C++ includes: BoxCompositionBuilder.h
 ";
 
 
-// File: structIntegratorReal_1_1CallBackHolder.xml
-%feature("docstring") IntegratorReal::CallBackHolder "
-
-structure holding the object and possible extra parameters
-
-C++ includes: IntegratorReal.h
-";
-
-
 // File: structIntegratorMCMiser_1_1CallBackHolder.xml
 %feature("docstring") IntegratorMCMiser::CallBackHolder "
 
 structure holding the object and possible extra parameters
 
 C++ includes: IntegratorMCMiser.h
+";
+
+
+// File: structIntegratorReal_1_1CallBackHolder.xml
+%feature("docstring") IntegratorReal::CallBackHolder "
+
+structure holding the object and possible extra parameters
+
+C++ includes: IntegratorReal.h
 ";
 
 
@@ -5919,6 +5919,21 @@ Sets the values in histograms channels from numpy array,.
 %feature("docstring")  Histogram2D::addContent "void Histogram2D::addContent(const std::vector< std::vector< double >> &data)
 
 Add to values in histograms channels from numpy array,. 
+";
+
+
+// File: classHomogeneousMultilayerBuilder.xml
+%feature("docstring") HomogeneousMultilayerBuilder "
+
+Builds a sample with 10 interchanging homogeneous layers of Ti and Ni on silicone substrate. Ti is 70 angstroms thick, Ni is 30 angstroms thick. No absorption, no roughness, target wavelength is 1.54 angstroms.
+
+C++ includes: HomogeneousMultilayerBuilder.h
+";
+
+%feature("docstring")  HomogeneousMultilayerBuilder::HomogeneousMultilayerBuilder "HomogeneousMultilayerBuilder::HomogeneousMultilayerBuilder()
+";
+
+%feature("docstring")  HomogeneousMultilayerBuilder::buildSample "MultiLayer * HomogeneousMultilayerBuilder::buildSample() const
 ";
 
 
@@ -14549,10 +14564,10 @@ C++ includes: ZLimits.h
 // File: namespace_0D438.xml
 
 
-// File: namespace_0D506.xml
+// File: namespace_0D508.xml
 
 
-// File: namespace_0D528.xml
+// File: namespace_0D530.xml
 
 
 // File: namespace_0D63.xml
@@ -15253,6 +15268,9 @@ GISAS simulation with spherical detector, region of interest and mask.
 %feature("docstring")  StandardSimulations::RectDetWithRoi "GISASSimulation * StandardSimulations::RectDetWithRoi()
 
 GISAS simulation with rectangular detector, region of interest and mask. 
+";
+
+%feature("docstring")  StandardSimulations::BasicSpecular "SpecularSimulation * StandardSimulations::BasicSpecular()
 ";
 
 
@@ -16969,6 +16987,12 @@ Generate vertices of centered ellipse with given semi-axes at height z.
 
 
 // File: CylindersBuilder_8h.xml
+
+
+// File: HomogeneousMultilayerBuilder_8cpp.xml
+
+
+// File: HomogeneousMultilayerBuilder_8h.xml
 
 
 // File: IFactory_8h.xml
