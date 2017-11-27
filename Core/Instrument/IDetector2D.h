@@ -71,7 +71,7 @@ public:
     void setRegionOfInterest(double xlow, double ylow, double xup, double yup);
 
     //! Resets region of interest making whole detector plane available for the simulation.
-    void resetRegionOfInterest();
+    virtual void resetRegionOfInterest() override;
 
 protected:
     IDetector2D(const IDetector2D& other);

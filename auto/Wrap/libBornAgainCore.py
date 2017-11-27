@@ -16905,18 +16905,6 @@ class GISASSimulation(Simulation):
         """
         return _libBornAgainCore.GISASSimulation_setRegionOfInterest(self, xlow, ylow, xup, yup)
 
-
-    def resetRegionOfInterest(self):
-        """
-        resetRegionOfInterest(GISASSimulation self)
-
-        void GISASSimulation::resetRegionOfInterest()
-
-        Resets region of interest making whole detector plane available for the simulation. 
-
-        """
-        return _libBornAgainCore.GISASSimulation_resetRegionOfInterest(self)
-
 GISASSimulation_swigregister = _libBornAgainCore.GISASSimulation_swigregister
 GISASSimulation_swigregister(GISASSimulation)
 
@@ -17894,7 +17882,7 @@ class IDetector(ICloneable, INode):
         """
         clone(IDetector self) -> IDetector
 
-        virtual IDetector* IDetector::clone() const =0
+        virtual IDetector* IDetector::clone() const override=0
 
         """
         return _libBornAgainCore.IDetector_clone(self)
@@ -18074,6 +18062,18 @@ class IDetector(ICloneable, INode):
         return _libBornAgainCore.IDetector_regionOfInterest(self)
 
 
+    def resetRegionOfInterest(self):
+        """
+        resetRegionOfInterest(IDetector self)
+
+        virtual void IDetector::resetRegionOfInterest()=0
+
+        Resets region of interest making whole detector plane available for the simulation. 
+
+        """
+        return _libBornAgainCore.IDetector_resetRegionOfInterest(self)
+
+
     def detectionProperties(self):
         """
         detectionProperties(IDetector self) -> DetectionProperties const &
@@ -18188,7 +18188,7 @@ class IDetector2D(IDetector):
         """
         clone(IDetector2D self) -> IDetector2D
 
-        virtual IDetector2D* IDetector2D::clone() const =0
+        virtual IDetector2D* IDetector2D::clone() const override=0
 
         """
         return _libBornAgainCore.IDetector2D_clone(self)
@@ -18306,7 +18306,7 @@ class IDetector2D(IDetector):
         """
         resetRegionOfInterest(IDetector2D self)
 
-        void IDetector2D::resetRegionOfInterest()
+        void IDetector2D::resetRegionOfInterest() override
 
         Resets region of interest making whole detector plane available for the simulation. 
 
@@ -26499,7 +26499,7 @@ class SimulationFactoryTemp(_object):
 
     def __init__(self):
         """
-        __init__(IFactory<(std::string,GISASSimulation)> self) -> SimulationFactoryTemp
+        __init__(IFactory<(std::string,Simulation)> self) -> SimulationFactoryTemp
 
         IFactory< Key, AbstractProduct >::IFactory()
 
@@ -26512,7 +26512,7 @@ class SimulationFactoryTemp(_object):
 
     def createItem(self, item_key):
         """
-        createItem(SimulationFactoryTemp self, std::string const & item_key) -> GISASSimulation
+        createItem(SimulationFactoryTemp self, std::string const & item_key) -> Simulation
 
         AbstractProduct* IFactory< Key, AbstractProduct >::createItem(const Key &item_key)
 
@@ -26524,8 +26524,8 @@ class SimulationFactoryTemp(_object):
 
     def registerItem(self, *args):
         """
-        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,GISASSimulation >::CreateItemCallback CreateFn, std::string const & itemDescription) -> bool
-        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,GISASSimulation >::CreateItemCallback CreateFn) -> bool
+        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,Simulation >::CreateItemCallback CreateFn, std::string const & itemDescription) -> bool
+        registerItem(SimulationFactoryTemp self, std::string const & item_key, IFactory< std::string,Simulation >::CreateItemCallback CreateFn) -> bool
 
         bool IFactory< Key, AbstractProduct >::registerItem(const Key &item_key, CreateItemCallback CreateFn, const std::string &itemDescription="")
 
@@ -26561,7 +26561,7 @@ class SimulationFactoryTemp(_object):
 
     def begin(self):
         """
-        begin(SimulationFactoryTemp self) -> IFactory< std::string,GISASSimulation >::const_iterator
+        begin(SimulationFactoryTemp self) -> IFactory< std::string,Simulation >::const_iterator
 
         const_iterator IFactory< Key, AbstractProduct >::begin() const
 
@@ -26571,7 +26571,7 @@ class SimulationFactoryTemp(_object):
 
     def end(self):
         """
-        end(SimulationFactoryTemp self) -> IFactory< std::string,GISASSimulation >::const_iterator
+        end(SimulationFactoryTemp self) -> IFactory< std::string,Simulation >::const_iterator
 
         const_iterator IFactory< Key, AbstractProduct >::end() const
 

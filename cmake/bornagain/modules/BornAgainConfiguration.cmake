@@ -129,9 +129,9 @@ configure_file(${TEMPLATE_DIR}/BABuild.h.in  ${BUILD_INC_DIR}/BABuild.h @ONLY)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${BUILD_INC_DIR}")
 
 configure_file(${CMAKE_SOURCE_DIR}/Examples/python/utils/plot_intensity_data.py
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/view1.py @ONLY)
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/plot_intensity_data.py COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/Examples/python/utils/plot_intensity_data_diff.py
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/view2.py @ONLY)
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/plot_intensity_data_diff.py COPYONLY)
 
 # -----------------------------------------------------------------------------
 # configure BornAgain launch scripts

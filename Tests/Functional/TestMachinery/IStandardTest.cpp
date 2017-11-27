@@ -14,12 +14,10 @@
 // ************************************************************************** //
 
 #include "IStandardTest.h"
-#include "GISASSimulation.h"
 
 IStandardTest::IStandardTest(const std::string& name, const std::string& description,
-                             const GISASSimulation& simulation, double threshold)
+                             double threshold)
     : IFunctionalTest(name, description)
-    , m_reference_simulation(simulation.clone())
     , m_threshold(threshold)
 {
 

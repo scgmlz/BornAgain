@@ -5614,11 +5614,6 @@ Put the mask for all detector channels (i.e. exclude whole detector from the ana
 Sets rectangular region of interest with lower left and upper right corners defined. 
 ";
 
-%feature("docstring")  GISASSimulation::resetRegionOfInterest "void GISASSimulation::resetRegionOfInterest()
-
-Resets region of interest making whole detector plane available for the simulation. 
-";
-
 
 // File: classHash2Doubles.xml
 %feature("docstring") Hash2Doubles "";
@@ -5924,6 +5919,21 @@ Sets the values in histograms channels from numpy array,.
 %feature("docstring")  Histogram2D::addContent "void Histogram2D::addContent(const std::vector< std::vector< double >> &data)
 
 Add to values in histograms channels from numpy array,. 
+";
+
+
+// File: classHomogeneousMultilayerBuilder.xml
+%feature("docstring") HomogeneousMultilayerBuilder "
+
+Builds a sample with 10 interchanging homogeneous layers of Ti and Ni on silicone substrate. Ti is 70 angstroms thick, Ni is 30 angstroms thick. No absorption, no roughness, target wavelength is 1.54 angstroms.
+
+C++ includes: HomogeneousMultilayerBuilder.h
+";
+
+%feature("docstring")  HomogeneousMultilayerBuilder::HomogeneousMultilayerBuilder "HomogeneousMultilayerBuilder::HomogeneousMultilayerBuilder()
+";
+
+%feature("docstring")  HomogeneousMultilayerBuilder::buildSample "MultiLayer * HomogeneousMultilayerBuilder::buildSample() const
 ";
 
 
@@ -6261,7 +6271,7 @@ C++ includes: IDetector.h
 %feature("docstring")  IDetector::IDetector "IDetector::IDetector()
 ";
 
-%feature("docstring")  IDetector::clone "virtual IDetector* IDetector::clone() const =0
+%feature("docstring")  IDetector::clone "virtual IDetector* IDetector::clone() const override=0
 ";
 
 %feature("docstring")  IDetector::~IDetector "IDetector::~IDetector()
@@ -6344,6 +6354,11 @@ Create a vector of  SimulationElement objects according to the detector and its 
 Returns region of interest if exists. 
 ";
 
+%feature("docstring")  IDetector::resetRegionOfInterest "virtual void IDetector::resetRegionOfInterest()=0
+
+Resets region of interest making whole detector plane available for the simulation. 
+";
+
 %feature("docstring")  IDetector::detectionProperties "const DetectionProperties& IDetector::detectionProperties() const
 
 Returns detection properties. 
@@ -6391,7 +6406,7 @@ C++ includes: IDetector2D.h
 %feature("docstring")  IDetector2D::IDetector2D "IDetector2D::IDetector2D()
 ";
 
-%feature("docstring")  IDetector2D::clone "virtual IDetector2D* IDetector2D::clone() const =0
+%feature("docstring")  IDetector2D::clone "virtual IDetector2D* IDetector2D::clone() const override=0
 ";
 
 %feature("docstring")  IDetector2D::~IDetector2D "IDetector2D::~IDetector2D()
@@ -6451,7 +6466,7 @@ Returns region of interest if exists.
 Sets rectangular region of interest with lower left and upper right corners defined. 
 ";
 
-%feature("docstring")  IDetector2D::resetRegionOfInterest "void IDetector2D::resetRegionOfInterest()
+%feature("docstring")  IDetector2D::resetRegionOfInterest "void IDetector2D::resetRegionOfInterest() override
 
 Resets region of interest making whole detector plane available for the simulation. 
 ";
@@ -13595,6 +13610,59 @@ Calculate scattering intensity for each  SimulationElement returns false if noth
 ";
 
 
+// File: classSpecularDetector1D.xml
+%feature("docstring") SpecularDetector1D "
+
+1D detector for specular simulations
+
+C++ includes: SpecularDetector1D.h
+";
+
+%feature("docstring")  SpecularDetector1D::SpecularDetector1D "SpecularDetector1D::SpecularDetector1D(const IAxis &axis)
+";
+
+%feature("docstring")  SpecularDetector1D::~SpecularDetector1D "SpecularDetector1D::~SpecularDetector1D()
+";
+
+%feature("docstring")  SpecularDetector1D::clone "SpecularDetector1D * SpecularDetector1D::clone() const override
+";
+
+%feature("docstring")  SpecularDetector1D::accept "virtual void SpecularDetector1D::accept(INodeVisitor *visitor) const override
+
+Calls the  INodeVisitor's visit method. 
+";
+
+%feature("docstring")  SpecularDetector1D::detectorMask "virtual const DetectorMask* SpecularDetector1D::detectorMask() const override
+
+Returns detector masks container. 
+";
+
+%feature("docstring")  SpecularDetector1D::createSimulationElements "std::vector< SimulationElement > SpecularDetector1D::createSimulationElements(const Beam &beam) override
+
+Create a vector of  SimulationElement objects according to the detector and its mask. 
+";
+
+%feature("docstring")  SpecularDetector1D::regionOfInterest "virtual const RegionOfInterest* SpecularDetector1D::regionOfInterest() const override
+
+Returns region of interest if exists. 
+";
+
+%feature("docstring")  SpecularDetector1D::resetRegionOfInterest "virtual void SpecularDetector1D::resetRegionOfInterest() override
+
+Resets region of interest making whole detector plane available for the simulation. 
+";
+
+%feature("docstring")  SpecularDetector1D::defaultAxesUnits "AxesUnits SpecularDetector1D::defaultAxesUnits() const override
+
+Return default axes units. 
+";
+
+%feature("docstring")  SpecularDetector1D::validAxesUnits "std::vector< AxesUnits > SpecularDetector1D::validAxesUnits() const override
+
+Returns vector of valid axes units. 
+";
+
+
 // File: classSpecularMagnetic.xml
 %feature("docstring") SpecularMagnetic "
 
@@ -14448,10 +14516,10 @@ C++ includes: ZLimits.h
 // File: namespace_0D251.xml
 
 
-// File: namespace_0D278.xml
+// File: namespace_0D259.xml
 
 
-// File: namespace_0D282.xml
+// File: namespace_0D280.xml
 
 
 // File: namespace_0D284.xml
@@ -14460,43 +14528,46 @@ C++ includes: ZLimits.h
 // File: namespace_0D286.xml
 
 
-// File: namespace_0D294.xml
+// File: namespace_0D288.xml
 
 
-// File: namespace_0D309.xml
+// File: namespace_0D296.xml
 
 
-// File: namespace_0D317.xml
+// File: namespace_0D311.xml
 
 
-// File: namespace_0D323.xml
+// File: namespace_0D319.xml
 
 
-// File: namespace_0D326.xml
+// File: namespace_0D325.xml
 
 
 // File: namespace_0D328.xml
 
 
-// File: namespace_0D349.xml
+// File: namespace_0D330.xml
 
 
-// File: namespace_0D358.xml
+// File: namespace_0D351.xml
 
 
-// File: namespace_0D391.xml
+// File: namespace_0D360.xml
 
 
-// File: namespace_0D398.xml
+// File: namespace_0D393.xml
 
 
-// File: namespace_0D436.xml
+// File: namespace_0D400.xml
 
 
-// File: namespace_0D504.xml
+// File: namespace_0D438.xml
 
 
-// File: namespace_0D526.xml
+// File: namespace_0D508.xml
+
+
+// File: namespace_0D530.xml
 
 
 // File: namespace_0D63.xml
@@ -15197,6 +15268,9 @@ GISAS simulation with spherical detector, region of interest and mask.
 %feature("docstring")  StandardSimulations::RectDetWithRoi "GISASSimulation * StandardSimulations::RectDetWithRoi()
 
 GISAS simulation with rectangular detector, region of interest and mask. 
+";
+
+%feature("docstring")  StandardSimulations::BasicSpecular "SpecularSimulation * StandardSimulations::BasicSpecular()
 ";
 
 
@@ -16040,6 +16114,12 @@ make Swappable
 
 
 // File: SimulationAreaIterator_8h.xml
+
+
+// File: SpecularDetector1D_8cpp.xml
+
+
+// File: SpecularDetector1D_8h.xml
 
 
 // File: SphericalDetector_8cpp.xml
@@ -16907,6 +16987,12 @@ Generate vertices of centered ellipse with given semi-axes at height z.
 
 
 // File: CylindersBuilder_8h.xml
+
+
+// File: HomogeneousMultilayerBuilder_8cpp.xml
+
+
+// File: HomogeneousMultilayerBuilder_8h.xml
 
 
 // File: IFactory_8h.xml

@@ -20,6 +20,7 @@
 #include "CustomMorphologyBuilder.h"
 #include "CylindersAndPrismsBuilder.h"
 #include "CylindersBuilder.h"
+#include "HomogeneousMultilayerBuilder.h"
 #include "LatticeBuilder.h"
 #include "LayersWithAbsorptionBuilder.h"
 #include "MagneticParticlesBuilder.h"
@@ -290,6 +291,10 @@ SampleBuilderFactory::SampleBuilderFactory()
         create_new<ConesWithLimitsDistributionBuilder>,
         "Cones with the distribution applied to the angle and RealLimits defined.");
 
+    registerItem(
+        "HomogeneousMultilayerBuilder",
+        create_new<HomogeneousMultilayerBuilder>,
+        "Alternating homogeneous layers of Ti and Ni on silicone substrate.");
 }
 
 //! Retrieves a SampleBuilder from the registry, does the build, and returns the result.

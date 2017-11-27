@@ -15,6 +15,7 @@
 
 #include "SimulationFactory.h"
 #include "GISASSimulation.h"
+#include "SpecularSimulation.h"
 #include "RealParameter.h"
 #include "StandardSimulations.h"
 
@@ -122,4 +123,11 @@ SimulationFactory::SimulationFactory()
     registerItem("RectDetWithRoi",
                  StandardSimulations::RectDetWithRoi,
                  "Rectangular detector with ROI and mask");
+
+    // specular simulations
+
+    registerItem("BasicSpecular",
+                 StandardSimulations::BasicSpecular,
+                 "Basic specular simulation with [0, 15] deg incident angle range and "
+                 "1.54 angstroms wavelength.");
 }

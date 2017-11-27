@@ -14,7 +14,7 @@
 // ************************************************************************** //
 
 #include "BatchSimulation.h"
-#include "GISASSimulation.h"
+#include "Simulation.h"
 #include "SimulationFactory.h"
 #include "IFunctionalTest.h"
 #include "IntensityDataFunctions.h"
@@ -25,7 +25,7 @@
 bool BatchSimulation::runTest()
 {
     SimulationFactory sim_registry;
-    const std::unique_ptr<GISASSimulation> simulation = sim_registry.create("MiniGISAS");
+    const std::unique_ptr<Simulation> simulation = sim_registry.create("MiniGISAS");
 
     SampleBuilderFactory sampleFactory;
     std::shared_ptr<class IMultiLayerBuilder> builder(
@@ -39,7 +39,7 @@ bool BatchSimulation::runTest()
     const int n_batches = 9;
     const double threshold = 2e-10;
     for(int i_batch=0; i_batch<n_batches; ++i_batch) {
-        const std::unique_ptr<GISASSimulation> batch(simulation->clone());
+        const std::unique_ptr<Simulation> batch(simulation->clone());
         ThreadInfo threadInfo;
         threadInfo.n_threads = 1;
         threadInfo.n_batches = n_batches;

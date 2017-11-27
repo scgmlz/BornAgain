@@ -23,7 +23,7 @@
 
 class FitSuite;
 class MultiLayer;
-class GISASSimulation;
+class Simulation;
 
 //! @class IMinimizerTest
 //! @ingroup standard_samples
@@ -42,8 +42,8 @@ protected:
     virtual void initParameterPlan();
     virtual std::unique_ptr<FitSuite> createFitSuite();
     virtual std::unique_ptr<MultiLayer> createSample();
-    virtual std::unique_ptr<GISASSimulation> createSimulation();
-    virtual std::unique_ptr<OutputData<double>> createOutputData(const GISASSimulation* simulation);
+    virtual std::unique_ptr<Simulation> createSimulation();
+    virtual std::unique_ptr<OutputData<double>> createOutputData(const Simulation* simulation);
 
     std::vector<FitParameterPlan*> m_parplans;
     std::string m_minimizer_name;

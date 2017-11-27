@@ -15,7 +15,7 @@
 
 #include "IMinimizerTest.h"
 #include "FitSuite.h"
-#include "GISASSimulation.h"
+#include "Simulation.h"
 #include "MultiLayer.h"
 #include "MinimizerFactory.h"
 #include "SampleBuilderFactory.h"
@@ -51,7 +51,7 @@ bool IMinimizerTest::runTest()
 
     std::unique_ptr<MultiLayer> sample(createSample());
 
-    std::unique_ptr<GISASSimulation> simulation(createSimulation());
+    std::unique_ptr<Simulation> simulation(createSimulation());
     simulation->setSample(*sample.get());
     simulation->runSimulation();
 
@@ -123,14 +123,14 @@ std::unique_ptr<MultiLayer> IMinimizerTest::createSample()
     return result;
 }
 
-std::unique_ptr<GISASSimulation> IMinimizerTest::createSimulation()
+std::unique_ptr<Simulation> IMinimizerTest::createSimulation()
 {
     SimulationFactory simRegistry;
     return simRegistry.create(m_simulation_name);
 }
 
 std::unique_ptr<OutputData<double> > IMinimizerTest::createOutputData(
-    const GISASSimulation* simulation)
+    const Simulation* simulation)
 {
     std::unique_ptr<OutputData<double>> result(simulation->getDetectorIntensity());
     return result;

@@ -41,6 +41,8 @@ public:
     //! Returns region of interest if exists.
     virtual const RegionOfInterest* regionOfInterest() const override {return nullptr;}
 
+    virtual void resetRegionOfInterest() override {}
+
     //! Return default axes units
     virtual AxesUnits defaultAxesUnits() const override;
 

@@ -59,6 +59,7 @@ set(test_cases
     RotatedPyramidsDistribution
     SpheresWithLimitsDistribution
     ConesWithLimitsDistribution
+    HomogeneousTiNiSample
     )
 
 add_executable(CoreStandardTest main.cpp CoreStandardTest.h CoreStandardTest.cpp)

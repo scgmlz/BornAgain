@@ -362,6 +362,14 @@ StandardTestCatalogue::StandardTestCatalogue()
         "MiniGISAS",
         "SlicedCompositionBuilder",
         1e-10);
+
+    // Specular simulations
+
+    add("HomogeneousTiNiSample",
+        "Specular simulation for 10 interchanging Ti-Ni homogeneous layers",
+        "BasicSpecular",
+        "HomogeneousMultilayerBuilder",
+        1e-10);
 }
 
 //! Adds test description to the catalogue.

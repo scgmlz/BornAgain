@@ -108,12 +108,6 @@ void GISASSimulation::setRegionOfInterest(double xlow, double ylow, double xup, 
     detector2D(m_instrument)->setRegionOfInterest(xlow, ylow, xup, yup);
 }
 
-void GISASSimulation::resetRegionOfInterest()
-{
-
-    detector2D(m_instrument)->resetRegionOfInterest();
-}
-
 void GISASSimulation::removeMasks()
 {
     detector2D(m_instrument)->removeMasks();
