@@ -16905,18 +16905,6 @@ class GISASSimulation(Simulation):
         """
         return _libBornAgainCore.GISASSimulation_setRegionOfInterest(self, xlow, ylow, xup, yup)
 
-
-    def resetRegionOfInterest(self):
-        """
-        resetRegionOfInterest(GISASSimulation self)
-
-        void GISASSimulation::resetRegionOfInterest()
-
-        Resets region of interest making whole detector plane available for the simulation. 
-
-        """
-        return _libBornAgainCore.GISASSimulation_resetRegionOfInterest(self)
-
 GISASSimulation_swigregister = _libBornAgainCore.GISASSimulation_swigregister
 GISASSimulation_swigregister(GISASSimulation)
 
@@ -17894,7 +17882,7 @@ class IDetector(ICloneable, INode):
         """
         clone(IDetector self) -> IDetector
 
-        virtual IDetector* IDetector::clone() const =0
+        virtual IDetector* IDetector::clone() const override=0
 
         """
         return _libBornAgainCore.IDetector_clone(self)
@@ -18074,6 +18062,18 @@ class IDetector(ICloneable, INode):
         return _libBornAgainCore.IDetector_regionOfInterest(self)
 
 
+    def resetRegionOfInterest(self):
+        """
+        resetRegionOfInterest(IDetector self)
+
+        virtual void IDetector::resetRegionOfInterest()=0
+
+        Resets region of interest making whole detector plane available for the simulation. 
+
+        """
+        return _libBornAgainCore.IDetector_resetRegionOfInterest(self)
+
+
     def detectionProperties(self):
         """
         detectionProperties(IDetector self) -> DetectionProperties const &
@@ -18188,7 +18188,7 @@ class IDetector2D(IDetector):
         """
         clone(IDetector2D self) -> IDetector2D
 
-        virtual IDetector2D* IDetector2D::clone() const =0
+        virtual IDetector2D* IDetector2D::clone() const override=0
 
         """
         return _libBornAgainCore.IDetector2D_clone(self)
@@ -18306,7 +18306,7 @@ class IDetector2D(IDetector):
         """
         resetRegionOfInterest(IDetector2D self)
 
-        void IDetector2D::resetRegionOfInterest()
+        void IDetector2D::resetRegionOfInterest() override
 
         Resets region of interest making whole detector plane available for the simulation. 
 

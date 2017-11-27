@@ -48,11 +48,8 @@ std::unique_ptr<OutputData<double> >
 RectDetectorFitTest::createOutputData(const GISASSimulation *simulation)
 {
     std::unique_ptr<GISASSimulation> simWithRoi(simulation->clone());
-    simWithRoi->resetRegionOfInterest();
+    simWithRoi->getInstrument().getDetector()->resetRegionOfInterest();
     simWithRoi->runSimulation();
-//    std::unique_ptr<Histogram2D> tempHist(simulation->getIntensityData());
-//    std::unique_ptr<Histogram2D> crop(tempHist->crop(2.0, 6.0, 16.0, 14.0));
-//    std::unique_ptr<OutputData<double> > result(crop->createOutputData());
     std::unique_ptr<OutputData<double>> result(simWithRoi->getDetectorIntensity());
     return result;
 }
