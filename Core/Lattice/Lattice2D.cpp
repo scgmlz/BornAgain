@@ -22,9 +22,7 @@
 
 Lattice2D::Lattice2D(double rotation_angle)
     : m_xi(rotation_angle)
-{
-
-}
+{}
 
 Lattice2D::ReciprocalBases Lattice2D::reciprocalBases() const
 {

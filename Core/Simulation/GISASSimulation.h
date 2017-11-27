@@ -87,6 +87,11 @@ public:
     //! Resets region of interest making whole detector plane available for the simulation.
     void resetRegionOfInterest();
 
+protected:
+    virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
+            std::vector<SimulationElement>::iterator start,
+            std::vector<SimulationElement>::iterator end);
+
 private:
     GISASSimulation(const GISASSimulation& other);
 

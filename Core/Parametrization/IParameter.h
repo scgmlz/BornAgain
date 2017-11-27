@@ -16,7 +16,6 @@
 #ifndef IPARAMETER_H
 #define IPARAMETER_H
 
-#include "INoncopyable.h"
 #include "INamed.h"
 #include <functional>
 #include <stdexcept>
@@ -29,7 +28,8 @@
 //! @ingroup tools_internal
 
 template<class T>
-class IParameter : public INamed, public INoncopyable {
+class IParameter : public INamed
+{
 public:
     IParameter() =delete;
     IParameter(const std::string& name, T* data, const std::string& parent_name,
@@ -45,6 +45,10 @@ public:
 
     bool hasSameData(const IParameter& other);
 
+    static_assert(std::is_copy_constructible<IParameter<T>>::value==false,
+                  "IParameter should not be copy constructable");
+    static_assert(std::is_copy_assignable<IParameter<T>>::value==false,
+                  "IParameter should not be copy assignable");
 protected:
     T* m_data;
     std::string m_parent_name;

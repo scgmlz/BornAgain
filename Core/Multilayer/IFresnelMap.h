@@ -16,7 +16,7 @@
 #ifndef IFRESNELMAP_H
 #define IFRESNELMAP_H
 
-#include "INoncopyable.h"
+#include "WinDllMacros.h"
 #include <cstddef>
 #include <memory>
 
@@ -29,11 +29,11 @@ class SimulationElement;
 //! (these amplitudes correspond to the specular part of the wavefunction).
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IFresnelMap : public INoncopyable
+class BA_CORE_API_ IFresnelMap
 {
 public:
     IFresnelMap();
-    ~IFresnelMap();
+    virtual ~IFresnelMap();
 
     //! Retrieves the amplitude coefficients for a (time-reversed) outgoing wavevector.
     virtual const ILayerRTCoefficients* getOutCoefficients(
@@ -49,6 +49,10 @@ public:
     //! Disables caching of previously computed Fresnel coefficients
     void disableCaching();
 
+    static_assert(std::is_copy_constructible<IFresnelMap>::value==false,
+                  "IFresnelMap should not be copy constructable");
+    static_assert(std::is_copy_assignable<IFresnelMap>::value==false,
+                  "IFresnelMap should not be copy assignable");
 protected:
     bool m_use_cache;
     std::unique_ptr<MultiLayer> mP_multilayer;

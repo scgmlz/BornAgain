@@ -16,7 +16,6 @@
 #ifndef PROGRESSHANDLER_H
 #define PROGRESSHANDLER_H
 
-#include "INoncopyable.h"
 #include "WinDllMacros.h"
 #include <functional>
 

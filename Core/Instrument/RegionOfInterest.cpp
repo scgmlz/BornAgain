@@ -44,19 +44,14 @@ RegionOfInterest::RegionOfInterest(double xlow, double ylow, double xup, double 
     , m_ax2(0)
     , m_ay2(0)
     , m_glob_index0(0)
-{
-
-}
+{}
 
 RegionOfInterest *RegionOfInterest::clone() const
 {
     return new RegionOfInterest(*this);
 }
 
-RegionOfInterest::~RegionOfInterest()
-{
-
-}
+RegionOfInterest::~RegionOfInterest() {}
 
 RegionOfInterest::RegionOfInterest(const RegionOfInterest &other)
     : m_rectangle(other.m_rectangle->clone())
@@ -67,9 +62,7 @@ RegionOfInterest::RegionOfInterest(const RegionOfInterest &other)
     , m_glob_index0(other.m_glob_index0)
     , m_detector_dims(other.m_detector_dims)
     , m_roi_dims(other.m_roi_dims)
-{
-
-}
+{}
 
 double RegionOfInterest::getXlow() const
 {

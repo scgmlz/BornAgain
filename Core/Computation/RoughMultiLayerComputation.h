@@ -24,7 +24,7 @@ class ProgressHandler;
 class SimulationElement;
 
 //! Computes the diffuse reflection from the rough interfaces of a multilayer.
-//! Controlled by MainComputation.
+//! Used by DWBAComputation.
 //! @ingroup algorithms_internal
 
 class RoughMultiLayerComputation final : public IComputationTerm

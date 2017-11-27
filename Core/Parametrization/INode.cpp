@@ -21,9 +21,9 @@
 #include "ParameterPool.h"
 #include <algorithm>
 
-INode::INode() : m_parent(nullptr)
-{
-}
+INode::INode()
+    : m_parent(nullptr)
+{}
 
 std::string INode::treeToString() const
 {

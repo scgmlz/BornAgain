@@ -16,18 +16,17 @@
 #ifndef DELAYEDPROGRESSCOUNTER_H
 #define DELAYEDPROGRESSCOUNTER_H
 
-#include "INoncopyable.h"
 #include <cstddef>
 
 class ProgressHandler;
 
 //! Counter for reporting progress (with delay interval) in a threaded computation.
 
-class DelayedProgressCounter: public INoncopyable
+class DelayedProgressCounter
 {
 public:
     DelayedProgressCounter(size_t interval) : m_interval(interval), m_count(0) {}
-    ~DelayedProgressCounter();
+    ~DelayedProgressCounter() {}
 
     //! Increments inner counter; at regular intervals updates progress handler.
     void stepProgress(ProgressHandler* progress);

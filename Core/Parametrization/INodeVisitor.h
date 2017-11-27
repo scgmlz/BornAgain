@@ -20,6 +20,7 @@
 
 class BasicLattice;
 class Beam;
+class ConstantBackground;
 class ConvolutionDetectorResolution;
 class Crystal;
 class DistributionCosine;
@@ -140,6 +141,7 @@ public:
 
     virtual void visit(const BasicLattice*) {}
     virtual void visit(const Beam*) {}
+    virtual void visit(const ConstantBackground*) {}
     virtual void visit(const ConvolutionDetectorResolution*) {}
     virtual void visit(const Crystal*) {}
     virtual void visit(const DistributionCosine*) {}

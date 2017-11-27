@@ -25,7 +25,7 @@ class ILayout;
 class IInterferenceFunctionStrategy;
 
 //! Computes the scattering contribution from one particle layout.
-//! Controlled by MainComputation.
+//! Used by DWBAComputation.
 //! @ingroup algorithms_internal
 
 class ParticleLayoutComputation final : public IComputationTerm

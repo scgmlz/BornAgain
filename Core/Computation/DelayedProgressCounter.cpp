@@ -16,9 +16,6 @@
 #include "ProgressHandler.h"
 #include "DelayedProgressCounter.h"
 
-// To emit vtable in this translation unit (see warning weak-vtables):
-DelayedProgressCounter::~DelayedProgressCounter() {}
-
 void DelayedProgressCounter::stepProgress(ProgressHandler* progress)
 {
     ++m_count;

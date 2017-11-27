@@ -23,9 +23,9 @@ class IChiSquaredModule;
 //! Holds vector of FitObject's (simulation and real data) to fit
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ FitSuiteObjects : public INode, public INoncopyable
+class BA_CORE_API_ FitSuiteObjects : public INode
 {
- public:
+public:
     typedef SafePointerVector<FitObject> FitObjects_t;
     typedef FitObjects_t::iterator iterator;
 
@@ -78,13 +78,18 @@ class BA_CORE_API_ FitSuiteObjects : public INode, public INoncopyable
     std::vector<const INode*> getChildren() const;
 
     std::string getDefaultAxesUnits(size_t i_item = 0) const;
- protected:
+
+    static_assert(std::is_copy_constructible<FitSuiteObjects>::value==false,
+                  "FitSuiteObjects should not be copy constructable");
+    static_assert(std::is_copy_assignable<FitSuiteObjects>::value==false,
+                  "FitSuiteObjects should not be copy assignable");
+protected:
     //! Registers some class members for later access via parameter pool
     void init_parameters() {}
 
     double calculateChiSquaredValue();
 
- private:
+private:
     inline size_t check_index(size_t index) const;
 
     FitObjects_t m_fit_objects;

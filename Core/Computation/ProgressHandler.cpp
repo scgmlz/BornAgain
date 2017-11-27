@@ -16,7 +16,6 @@
 #include "ProgressHandler.h"
 #include <mutex>
 #include <stdexcept>
-#include <iostream> // DEBUG
 
 void ProgressHandler::subscribe(ProgressHandler::Callback_t inform)
 {

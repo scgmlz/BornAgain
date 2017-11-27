@@ -19,7 +19,7 @@
 #include "IComputationTerm.h"
 
 //! Computes the specular scattering.
-//! Controlled by MainComputation.
+//! Used by DWBAComputation.
 //! @ingroup algorithms_internal
 
 class SpecularComputation final : public IComputationTerm

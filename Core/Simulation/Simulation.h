@@ -25,12 +25,14 @@
 #include "SampleProvider.h"
 
 template<class T> class OutputData;
-class Computation;
-class MultiLayer;
+class IBackground;
+class IComputation;
 class IMultiLayerBuilder;
+class MultiLayer;
 
-//! Pure virtual base class of OffSpecularSimulation and GISASSimulation,
-//! holds common infrastructure to run a simulation.
+//! Pure virtual base class of OffSpecularSimulation, GISASSimulation and SpecularSimulation.
+//! Holds the common infrastructure to run a simulation: multithreading, batch processing,
+//! weighting over parameter distributions, ...
 //! @ingroup simulation
 
 class BA_CORE_API_ Simulation : public ICloneable, public INode
@@ -69,6 +71,8 @@ public:
 
     void setSampleBuilder(const std::shared_ptr<IMultiLayerBuilder> sample_builder);
 
+    void setBackGround(const IBackground& bg);
+
     virtual size_t numberOfSimulationElements() const=0;
 
     //! Clone simulated intensity map
@@ -102,6 +106,11 @@ protected:
     //! Update the sample by calling the sample builder, if present
     void updateSample();
 
+    //! Generate a single threaded computation for a given range of SimulationElement's
+    virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
+            std::vector<SimulationElement>::iterator start,
+            std::vector<SimulationElement>::iterator end);
+
     void runSingleSimulation();
 
     virtual void updateIntensityMap() =0;
@@ -109,6 +118,9 @@ protected:
 #ifndef SWIG
     void normalize(std::vector<SimulationElement>::iterator begin_it,
                    std::vector<SimulationElement>::iterator end_it) const;
+
+    void addBackGroundIntensity(std::vector<SimulationElement>::iterator begin_it,
+                                std::vector<SimulationElement>::iterator end_it) const;
 #endif
 
     //! Returns the start iterator of simulation elements for the current batch
@@ -123,6 +135,7 @@ protected:
     ProgressHandler m_progress;
     std::vector<SimulationElement> m_sim_elements;
     Instrument m_instrument;
+    std::unique_ptr<IBackground> mP_background;
 
 private:
     void initialize();

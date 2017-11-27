@@ -56,6 +56,11 @@ public:
     void setDetectorParameters(size_t n_x, double x_min, double x_max,
                                size_t n_y, double y_min, double y_max);
 
+protected:
+    virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
+            std::vector<SimulationElement>::iterator start,
+            std::vector<SimulationElement>::iterator end);
+
 private:
     OffSpecSimulation(const OffSpecSimulation& other);
 

@@ -26,10 +26,10 @@
 //! @ingroup distribution_internal
 class BA_CORE_API_ IFTDecayFunction1D : public ICloneable, public INode
 {
-public:    
+public:
     //! Constructor of one-dimensional decay function.
     //! @param decay_length: half-width of the distribution in nanometers
-    IFTDecayFunction1D(double decay_length) : m_decay_length(decay_length) {}
+    IFTDecayFunction1D(double decay_length);
 
     virtual IFTDecayFunction1D* clone() const=0;
     virtual double evaluate(double q) const=0;

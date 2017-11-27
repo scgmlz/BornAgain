@@ -22,6 +22,10 @@
 
 //===============1D======================
 
+IFTDecayFunction1D::IFTDecayFunction1D(double decay_length)
+    : m_decay_length(decay_length)
+{}
+
 void IFTDecayFunction1D::register_decay_length()
 {
     registerParameter(BornAgain::DecayLength, &m_decay_length);

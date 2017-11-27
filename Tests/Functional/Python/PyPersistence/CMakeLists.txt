@@ -74,6 +74,7 @@ test_example("simulation/ex05_BeamAndDetector/BeamDivergence" 2e-10)
 test_example("simulation/ex05_BeamAndDetector/DetectorResolutionFunction" 2e-10)
 test_example("simulation/ex05_BeamAndDetector/OffSpecularSimulation" 2e-10)
 test_example("simulation/ex05_BeamAndDetector/SpecularSimulation" 2e-10)
+test_example("simulation/ex05_BeamAndDetector/ConstantBackground" 2e-10)
 
 test_example("simulation/ex06_Miscellaneous/CylindersInAverageLayer" 2e-10)
 test_example("simulation/ex06_Miscellaneous/HalfSpheresInAverageTopLayer" 2e-10)

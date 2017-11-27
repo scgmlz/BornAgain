@@ -14,9 +14,10 @@
 // ************************************************************************** //
 
 #include "Simulation.h"
+#include "IBackground.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "MainComputation.h"
+#include "IComputation.h"
 #include "ParameterPool.h"
 #include "ParameterSample.h"
 #include "SimulationElement.h"
@@ -50,6 +51,8 @@ Simulation::Simulation(const Simulation& other)
     , m_progress(other.m_progress)
     , m_instrument(other.m_instrument)
 {
+    if (other.mP_background)
+        setBackGround(*other.mP_background);
     initialize();
 }
 
@@ -175,11 +178,19 @@ void Simulation::setSampleBuilder(const std::shared_ptr<class IMultiLayerBuilder
     m_sample_provider.setSampleBuilder(p_sample_builder);
 }
 
+void Simulation::setBackGround(const IBackground& bg)
+{
+    mP_background.reset(bg.clone());
+    registerChild(mP_background.get());
+}
+
 std::vector<const INode*> Simulation::getChildren() const
 {
     std::vector<const INode*> result;
     result.push_back(&m_instrument);
     result << m_sample_provider.getChildren();
+    if (mP_background)
+        result.push_back(mP_background.get());
     return result;
 }
 
@@ -201,6 +212,13 @@ void Simulation::updateSample()
     m_sample_provider.updateSample();
 }
 
+std::unique_ptr<IComputation> Simulation::generateSingleThreadedComputation(
+        std::vector<SimulationElement>::iterator,
+        std::vector<SimulationElement>::iterator)
+{
+    return {};
+}
+
 //! Runs a single simulation with fixed parameter values.
 //! If desired, the simulation is run in several threads.
 void Simulation::runSingleSimulation()
@@ -217,8 +235,7 @@ void Simulation::runSingleSimulation()
 
     if (m_options.getNumberOfThreads() == 1) {
         // Single thread.
-        std::unique_ptr<MainComputation> P_computation(
-            new MainComputation(*sample(), m_options, m_progress, batch_start, batch_end));
+        auto P_computation = generateSingleThreadedComputation(batch_start, batch_end);
         P_computation->run(); // the work is done here
         if (!P_computation->isCompleted()) {
             std::string message = P_computation->errorMessage();
@@ -229,7 +246,7 @@ void Simulation::runSingleSimulation()
     } else {
         // Multithreading.
         std::vector<std::unique_ptr<std::thread>> threads;
-        std::vector<std::unique_ptr<MainComputation>> computations;
+        std::vector<std::unique_ptr<IComputation>> computations;
 
         // Initialize n computations.
         auto total_batch_elements = batch_end - batch_start;
@@ -248,8 +265,7 @@ void Simulation::runSingleSimulation()
                 end_it = batch_end;
             else
                 end_it = batch_start + end_thread_index;
-            computations.emplace_back(
-                new MainComputation(*sample(), m_options, m_progress, begin_it, end_it));
+            computations.push_back(generateSingleThreadedComputation(begin_it, end_it));
         }
 
         // Run simulations in n threads.
@@ -274,6 +290,7 @@ void Simulation::runSingleSimulation()
                 "Messages: " + StringUtils::join(failure_messages, " --- "));
     }
     normalize(batch_start, batch_end);
+    addBackGroundIntensity(batch_start, batch_end);
 }
 
 //! Normalize the detector counts to beam intensity, to solid angle, and to exposure angle.
@@ -288,6 +305,14 @@ void Simulation::normalize(std::vector<SimulationElement>::iterator begin_it,
         if (sin_alpha_i==0.0) sin_alpha_i = 1.0;
         double solid_angle = it->getSolidAngle();
         it->setIntensity(it->getIntensity()*beam_intensity*solid_angle/sin_alpha_i);
+    }
+}
+
+void Simulation::addBackGroundIntensity(std::vector<SimulationElement>::iterator begin_it,
+                                        std::vector<SimulationElement>::iterator end_it) const
+{
+    if (mP_background) {
+        mP_background->addBackGround(begin_it, end_it);
     }
 }
 

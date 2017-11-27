@@ -43,7 +43,8 @@ typedef AxesUnitsWrap::AxesUnits AxesUnits;
 //! Abstract detector interface.
 //! @ingroup simulation
 
-class BA_CORE_API_ IDetector :  public ICloneable, public INode {
+class BA_CORE_API_ IDetector :  public ICloneable, public INode
+{
 public:
     IDetector();
 

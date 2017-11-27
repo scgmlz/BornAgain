@@ -27,7 +27,7 @@
 #include "LayerRoughness.h"
 #include "MesoCrystal.h"
 #include "MultiLayer.h"
-#include "MainComputation.h"
+#include "DWBAComputation.h"
 #include "Material.h"
 #include "Particle.h"
 #include "ParticleComposition.h"

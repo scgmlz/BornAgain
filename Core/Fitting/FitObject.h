@@ -18,7 +18,6 @@
 
 #include "INode.h"
 #include "OutputData.h"
-#include <INoncopyable.h>
 #include <memory>
 
 class FitElement;
@@ -28,7 +27,7 @@ class IIntensityNormalizer;
 //! Holds simulation description and real data to run the fit.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ FitObject : public INode, public INoncopyable
+class BA_CORE_API_ FitObject : public INode
 {
 public:
     //! FitObject constructor
@@ -69,6 +68,10 @@ public:
 
     std::string getDefaultAxisUnits() const;
 
+    static_assert(std::is_copy_constructible<FitObject>::value==false,
+                  "FitObject should not be copy constructable");
+    static_assert(std::is_copy_assignable<FitObject>::value==false,
+                  "FitObject should not be copy assignable");
 protected:
     //! Registers some class members for later access via parameter pool
     virtual void init_parameters() {}

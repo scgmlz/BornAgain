@@ -27,7 +27,7 @@ class SimulationElement;
 class SimulationOptions;
 
 //! Computes an independent term of the scattering intensity.
-//! Controlled by MainComputation, which adds up all contributions from subclasses
+//! Used by DWBAComputation, which adds up all contributions from subclasses
 //! of IComputationTerm
 //! @ingroup algorithms_internal
 

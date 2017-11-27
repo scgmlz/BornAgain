@@ -15,6 +15,7 @@
 
 #include "OffSpecSimulation.h"
 #include "BornAgainNamespace.h"
+#include "DWBAComputation.h"
 #include "Histogram2D.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
@@ -37,16 +38,6 @@ OffSpecSimulation::OffSpecSimulation(const std::shared_ptr<IMultiLayerBuilder> p
     : Simulation(p_sample_builder)
     , mp_alpha_i_axis(nullptr)
 {
-    initialize();
-}
-
-OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
-    : Simulation(other)
-    , mp_alpha_i_axis(nullptr)
-{
-    if(other.mp_alpha_i_axis)
-        mp_alpha_i_axis = other.mp_alpha_i_axis->clone();
-    m_intensity_map.copyFrom(other.m_intensity_map);
     initialize();
 }
 
@@ -90,6 +81,23 @@ void OffSpecSimulation::setDetectorParameters(size_t n_x, double x_min, double x
         throw std::runtime_error(
             "Error in OffSpecSimulation::setDetectorParameters: wrong detector type");
     updateIntensityMap();
+}
+
+std::unique_ptr<IComputation> OffSpecSimulation::generateSingleThreadedComputation(
+        std::vector<SimulationElement>::iterator start,
+        std::vector<SimulationElement>::iterator end)
+{
+    return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
+}
+
+OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
+    : Simulation(other)
+    , mp_alpha_i_axis(nullptr)
+{
+    if(other.mp_alpha_i_axis)
+        mp_alpha_i_axis = other.mp_alpha_i_axis->clone();
+    m_intensity_map.copyFrom(other.m_intensity_map);
+    initialize();
 }
 
 void OffSpecSimulation::initSimulationElementVector()
