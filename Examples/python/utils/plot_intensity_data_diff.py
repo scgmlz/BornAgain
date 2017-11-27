@@ -4,37 +4,34 @@ Plots intensity data difference stored in BornAgain "*.int" or "*.int.gz" format
 Usage: python plot_intensity_data_diff.py intensity_reference.int.gz intensity_other.int.gz
 '''
 
-import matplotlib, numpy, sys
-from matplotlib import pyplot as plt
-from matplotlib import rc
-rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
-rc('text', usetex=True)
+import numpy as np
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+import plot_intensity_data as pid
+import sys
 
 
-def plot_intensity_data(ref, data):
-    im = plt.imshow(
-        data,
-        norm=matplotlib.colors.LogNorm(),
-        extent=[ref.getXmin()/deg, ref.getXmax()/deg, ref.getYmin()/deg, ref.getYmax()/deg],
-        aspect='auto')
-
-    cb = plt.colorbar(im)
-    cb.set_label(r'Intensity (arb. u.)', size=16)
-    plt.xlabel(r'$\phi_f (^{\circ})$', fontsize=16)
-    plt.ylabel(r'$\alpha_f (^{\circ})$', fontsize=16)
-    plt.show()
+def plot_intensity_data_diff(filename1, filename2):
+    intensity_ref = ba.IntensityDataIOFactory.readIntensityData(filename1)
+    intensity_other = ba.IntensityDataIOFactory.readIntensityData(filename2)
+    data = 2 * np.abs(intensity_ref.getArray() - intensity_other.getArray()) \
+           / (np.abs(intensity_ref.getArray()) + np.abs(intensity_other.getArray()))
+    if data.max() == 0:
+        exit("Both data sets are equal, there is nothing to plot.")
+    rank = intensity_ref.getRank()
+    if rank == 2:
+        pid.plot_raw_data_2d(data,
+                             [intensity_ref.getXmin() / ba.deg, intensity_ref.getXmax() / ba.deg,
+                              intensity_ref.getYmin() / ba.deg, intensity_ref.getYmax() / ba.deg],
+                             data.max())
+    elif rank == 1:
+        axis_values = np.asarray(intensity_ref.getXaxis().getBinCenters()) / ba.deg
+        pid.plot_raw_data_1d(axis_values, data, log_y=False)
+    else:
+        exit("Error in plot_intensity_data_diff: wrong data rank")
 
 
 if __name__ == '__main__':
     if len(sys.argv)!=3:
         exit("Usage: plot_intensity_data_diff.py reference.int.gz other.int.gz")
 
-    intensity_ref = ba.IntensityDataIOFactory.readIntensityData(sys.argv[1])
-    intensity_other = ba.IntensityDataIOFactory.readIntensityData(sys.argv[2])
-    data = 2 * numpy.abs(intensity_ref.getArray() - intensity_other.getArray()) \
-           / (numpy.abs(intensity_ref.getArray())+numpy.abs(intensity_other.getArray()))
-    if data.max()==0:
-        exit("Both data sets are equal, there is nothing to plot.")
-    plot_intensity_data(intensity_ref, data)
+    plot_intensity_data_diff(sys.argv[1], sys.argv[2])
