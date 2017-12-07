@@ -89,9 +89,9 @@ ivector_t Lattice::getNearestLatticeVectorCoordinates(const kvector_t vector_in)
     double a1_coord = vector_in.dot(m_ra)/M_TWOPI;
     double a2_coord = vector_in.dot(m_rb)/M_TWOPI;
     double a3_coord = vector_in.dot(m_rc)/M_TWOPI;
-    int c1 = (int)std::floor(a1_coord + 0.5);
-    int c2 = (int)std::floor(a2_coord + 0.5);
-    int c3 = (int)std::floor(a3_coord + 0.5);
+    int c1 = static_cast<int>(std::floor(a1_coord + 0.5));
+    int c2 = static_cast<int>(std::floor(a2_coord + 0.5));
+    int c3 = static_cast<int>(std::floor(a3_coord + 0.5));
     return ivector_t(c1, c2, c3);
 }
 
@@ -100,9 +100,9 @@ ivector_t Lattice::getNearestReciprocalLatticeVectorCoordinates(const kvector_t 
     double b1_coord = vector_in.dot(m_a)/M_TWOPI;
     double b2_coord = vector_in.dot(m_b)/M_TWOPI;
     double b3_coord = vector_in.dot(m_c)/M_TWOPI;
-    int c1 = (int)std::floor(b1_coord + 0.5);
-    int c2 = (int)std::floor(b2_coord + 0.5);
-    int c3 = (int)std::floor(b3_coord + 0.5);
+    int c1 = static_cast<int>(std::floor(b1_coord + 0.5));
+    int c2 = static_cast<int>(std::floor(b2_coord + 0.5));
+    int c3 = static_cast<int>(std::floor(b3_coord + 0.5));
     return ivector_t(c1, c2, c3);
 }
 
@@ -162,9 +162,9 @@ std::vector<kvector_t> Lattice::vectorsWithinRadius(
     const kvector_t v1, const kvector_t v2, const kvector_t v3,
     const kvector_t rec1, const kvector_t rec2, const kvector_t rec3) const
 {
-    int max_X = (int)std::floor( rec1.mag()*radius/M_TWOPI );
-    int max_Y = (int)std::floor( rec2.mag()*radius/M_TWOPI );
-    int max_Z = (int)std::floor( rec3.mag()*radius/M_TWOPI );
+    int max_X = static_cast<int>(std::floor(rec1.mag()*radius/M_TWOPI + 0.5));
+    int max_Y = static_cast<int>(std::floor(rec2.mag()*radius/M_TWOPI + 0.5));
+    int max_Z = static_cast<int>(std::floor(rec3.mag()*radius/M_TWOPI + 0.5));
 
     std::vector<kvector_t> ret;
     for (int index_X = -max_X; index_X <= max_X; ++index_X) {

@@ -156,10 +156,7 @@ TEST_F(LatticeTest, reciprocalLatticeVectorsWithinRadiusTest)
 
     EXPECT_EQ(vectors_expected, l1.reciprocalLatticeVectorsWithinRadius(vector_in, M_TWOPI));
 
-    // FIXME !FAILED TEST! reciprocalLatticeVectorsWithinRadius()
-    //EXPECT_EQ(vectors_expected, l1.reciprocalLatticeVectorsWithinRadius(vector_in, M_TWOPI-0.1));
-    // Should expect both vectors expected_1 and expected _2 to be present whereas only
-    // one of them i.e. expected_2 is present
+    EXPECT_EQ(vectors_expected, l1.reciprocalLatticeVectorsWithinRadius(vector_in, M_TWOPI-0.1));
 }
 
 
