@@ -10,6 +10,9 @@ from libBornAgainCore import *
 # this line needed to fix python3 import problem
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from plot_utils import *
+# To prevent inclusion of plotting tools during functional tests:
+if not "NOPLOT" in os.environ:
+    from plot_utils import *
+
 from yaml_utils import *
 
