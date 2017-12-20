@@ -94,7 +94,10 @@ public:
 
     std::vector<const INode*> getChildren() const;
 
+    typedef std::vector<SimulationElement> SimElementVector;
+
 protected:
+
     Simulation(const Simulation& other);
 
     //! Initializes the vector of Simulation elements
@@ -109,30 +112,30 @@ protected:
 
     //! Generate a single threaded computation for a given range of SimulationElement's
     virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
-            std::vector<SimulationElement>::iterator start,
-            std::vector<SimulationElement>::iterator end) = 0;
+            SimElementVector::iterator start,
+            SimElementVector::iterator end) = 0;
 
     void runSingleSimulation();
 
     virtual void updateIntensityMap() =0;
 
-    virtual void normalize(std::vector<SimulationElement>::iterator begin_it,
-                   std::vector<SimulationElement>::iterator end_it) const;
+    virtual void normalize(SimElementVector::iterator begin_it,
+                           SimElementVector::iterator end_it) const;
 
-    void addBackGroundIntensity(std::vector<SimulationElement>::iterator begin_it,
-                                std::vector<SimulationElement>::iterator end_it) const;
+    void addBackGroundIntensity(SimElementVector::iterator begin_it,
+                                SimElementVector::iterator end_it) const;
 
     //! Returns the start iterator of simulation elements for the current batch
-    std::vector<SimulationElement>::iterator getBatchStart(int n_batches, int current_batch);
+    SimElementVector::iterator getBatchStart(int n_batches, int current_batch);
 
     //! Returns the end iterator of simulation elements for the current batch
-    std::vector<SimulationElement>::iterator getBatchEnd(int n_batches, int current_batch);
+    SimElementVector::iterator getBatchEnd(int n_batches, int current_batch);
 
     SampleProvider m_sample_provider;
     SimulationOptions m_options;
     DistributionHandler m_distribution_handler;
     ProgressHandler m_progress;
-    std::vector<SimulationElement> m_sim_elements;
+    SimElementVector m_sim_elements;
     Instrument m_instrument;
     std::unique_ptr<IBackground> mP_background;
 

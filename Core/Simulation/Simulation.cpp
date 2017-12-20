@@ -137,7 +137,7 @@ void Simulation::runSimulation()
 
     // average over parameter distributions:
     initSimulationElementVector();
-    std::vector<SimulationElement> total_intensity = m_sim_elements;
+    SimElementVector total_intensity = m_sim_elements;
     std::unique_ptr<ParameterPool> P_param_pool(createParameterTree());
     for (size_t index = 0; index < param_combinations; ++index) {
         double weight = m_distribution_handler.setParameterValues(P_param_pool.get(), index);
@@ -226,11 +226,9 @@ void Simulation::runSingleSimulation()
     initSimulationElementVector();
 
     // restrict calculation to current batch
-    std::vector<SimulationElement>::iterator batch_start
-        = getBatchStart(m_options.getNumberOfBatches(), m_options.getCurrentBatch());
+    auto batch_start = getBatchStart(m_options.getNumberOfBatches(), m_options.getCurrentBatch());
 
-    std::vector<SimulationElement>::iterator batch_end
-        = getBatchEnd(m_options.getNumberOfBatches(), m_options.getCurrentBatch());
+    auto batch_end = getBatchEnd(m_options.getNumberOfBatches(), m_options.getCurrentBatch());
 
     if (m_options.getNumberOfThreads() == 1) {
         // Single thread.
@@ -256,14 +254,10 @@ void Simulation::runSingleSimulation()
         for (int i_thread = 0; i_thread < m_options.getNumberOfThreads(); ++i_thread) {
             if (i_thread*element_thread_step >= total_batch_elements)
                 break;
-            std::vector<SimulationElement>::iterator begin_it = batch_start
-                                                                + i_thread * element_thread_step;
-            std::vector<SimulationElement>::iterator end_it;
-            auto end_thread_index = (i_thread+1) * element_thread_step;
-            if (end_thread_index >= total_batch_elements)
-                end_it = batch_end;
-            else
-                end_it = batch_start + end_thread_index;
+            auto begin_it = batch_start + i_thread * element_thread_step;
+            auto end_thread_index = (i_thread + 1) * element_thread_step;
+            auto end_it = end_thread_index >= total_batch_elements ? batch_end
+                                                                   : batch_start + end_thread_index;
             computations.push_back(generateSingleThreadedComputation(begin_it, end_it));
         }
 
@@ -293,8 +287,8 @@ void Simulation::runSingleSimulation()
 }
 
 //! Normalize the detector counts to beam intensity, to solid angle, and to exposure angle.
-void Simulation::normalize(std::vector<SimulationElement>::iterator begin_it,
-                           std::vector<SimulationElement>::iterator end_it) const
+void Simulation::normalize(SimElementVector::iterator begin_it,
+                           SimElementVector::iterator end_it) const
 {
     double beam_intensity = getBeamIntensity();
     if (beam_intensity==0.0)
@@ -307,15 +301,15 @@ void Simulation::normalize(std::vector<SimulationElement>::iterator begin_it,
     }
 }
 
-void Simulation::addBackGroundIntensity(std::vector<SimulationElement>::iterator begin_it,
-                                        std::vector<SimulationElement>::iterator end_it) const
+void Simulation::addBackGroundIntensity(SimElementVector::iterator begin_it,
+                                        SimElementVector::iterator end_it) const
 {
     if (mP_background) {
         mP_background->addBackGround(begin_it, end_it);
     }
 }
 
-std::vector<SimulationElement>::iterator Simulation::getBatchStart(int n_batches, int current_batch)
+Simulation::SimElementVector::iterator Simulation::getBatchStart(int n_batches, int current_batch)
 {
     imposeConsistencyOfBatchNumbers(n_batches, current_batch);
     int total_size = static_cast<int>(m_sim_elements.size());
@@ -327,7 +321,7 @@ std::vector<SimulationElement>::iterator Simulation::getBatchStart(int n_batches
     return m_sim_elements.begin() + current_batch*size_per_batch;
 }
 
-std::vector<SimulationElement>::iterator Simulation::getBatchEnd(int n_batches, int current_batch)
+Simulation::SimElementVector::iterator Simulation::getBatchEnd(int n_batches, int current_batch)
 {
     imposeConsistencyOfBatchNumbers(n_batches, current_batch);
     int total_size = static_cast<int>(m_sim_elements.size());
