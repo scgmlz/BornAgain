@@ -15,21 +15,19 @@
 #ifndef SPECULARSIMULATION_H
 #define SPECULARSIMULATION_H
 
-#include "Simulation.h"
+#include "SimulationImpl.h"
 #include "ILayerRTCoefficients.h"
 #include "OutputData.h"
 
 class IAxis;
 class IComputation;
 class ISample;
-class IMultiLayerBuilder;
-class MultiLayer;
 class Histogram1D;
 
 //! Main class to run a specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ SpecularSimulation : public Simulation
+class BA_CORE_API_ SpecularSimulation : public SimulationImpl
 {
 public:
     SpecularSimulation();

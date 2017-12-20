@@ -31,16 +31,24 @@ GISASSimulation::GISASSimulation()
 }
 
 GISASSimulation::GISASSimulation(const MultiLayer& p_sample)
-    : Simulation(p_sample)
+    : SimulationImpl(p_sample)
 {
     initialize();
 }
 
 GISASSimulation::GISASSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
-    : Simulation(p_sample_builder)
+    : SimulationImpl(p_sample_builder)
 {
     initialize();
 }
+
+GISASSimulation::GISASSimulation(const GISASSimulation& other)
+    : SimulationImpl(other)
+{
+    initialize();
+}
+
+GISASSimulation::~GISASSimulation() = default;
 
 void GISASSimulation::prepareSimulation()
 {
@@ -115,12 +123,6 @@ std::unique_ptr<IComputation> GISASSimulation::generateSingleThreadedComputation
         std::vector<SimulationElement>::iterator end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
-}
-
-GISASSimulation::GISASSimulation(const GISASSimulation& other)
-    : Simulation(other)
-{
-    initialize();
 }
 
 void GISASSimulation::transferResultsToIntensityMap() {}

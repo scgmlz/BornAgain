@@ -22,24 +22,25 @@
 #include "SpecularComputation.h"
 #include "SpecularDetector1D.h"
 
-SpecularSimulation::SpecularSimulation() : Simulation()
+SpecularSimulation::SpecularSimulation()
 {
     initialize();
 }
 
-SpecularSimulation::SpecularSimulation(const MultiLayer& sample) : Simulation(sample)
+SpecularSimulation::SpecularSimulation(const MultiLayer& sample)
+    : SimulationImpl(sample)
 {
     initialize();
 }
 
 SpecularSimulation::SpecularSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder)
-    : Simulation(sample_builder)
+    : SimulationImpl(sample_builder)
 {
     initialize();
 }
 
 SpecularSimulation::SpecularSimulation(const SpecularSimulation& other)
-    : Simulation(other)
+    : SimulationImpl(other)
 {
     initialize();
 }

@@ -27,18 +27,30 @@ OffSpecSimulation::OffSpecSimulation()
 }
 
 OffSpecSimulation::OffSpecSimulation(const MultiLayer& p_sample)
-    : Simulation(p_sample)
+    : SimulationImpl(p_sample)
     , mp_alpha_i_axis(nullptr)
 {
     initialize();
 }
 
 OffSpecSimulation::OffSpecSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
-    : Simulation(p_sample_builder)
+    : SimulationImpl(p_sample_builder)
     , mp_alpha_i_axis(nullptr)
 {
     initialize();
 }
+
+OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
+    : SimulationImpl(other)
+    , mp_alpha_i_axis(nullptr)
+{
+    if(other.mp_alpha_i_axis)
+        mp_alpha_i_axis = other.mp_alpha_i_axis->clone();
+    m_intensity_map.copyFrom(other.m_intensity_map);
+    initialize();
+}
+
+OffSpecSimulation::~OffSpecSimulation() = default;
 
 void OffSpecSimulation::prepareSimulation()
 {
@@ -87,16 +99,6 @@ std::unique_ptr<IComputation> OffSpecSimulation::generateSingleThreadedComputati
         std::vector<SimulationElement>::iterator end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
-}
-
-OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
-    : Simulation(other)
-    , mp_alpha_i_axis(nullptr)
-{
-    if(other.mp_alpha_i_axis)
-        mp_alpha_i_axis = other.mp_alpha_i_axis->clone();
-    m_intensity_map.copyFrom(other.m_intensity_map);
-    initialize();
 }
 
 void OffSpecSimulation::initSimulationElementVector()
