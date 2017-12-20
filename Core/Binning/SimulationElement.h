@@ -106,13 +106,6 @@ private:
     std::unique_ptr<SpecularData> m_specular_data;
 };
 
-
-//! Add element vector to element vector with weight
-void addElementsWithWeight(std::vector<SimulationElement>::const_iterator first,
-                           std::vector<SimulationElement>::const_iterator last,
-                           std::vector<SimulationElement>::iterator result,
-                           double weight);
-
 //! Helper class for SimulationElement to carry specular information
 //! @ingroup simulation
 

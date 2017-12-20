@@ -142,10 +142,9 @@ void Simulation::runSimulation()
     for (size_t index = 0; index < param_combinations; ++index) {
         double weight = m_distribution_handler.setParameterValues(P_param_pool.get(), index);
         runSingleSimulation();
-        addElementsWithWeight(m_sim_elements.begin(), m_sim_elements.end(), total_intensity.begin(),
-                              weight);
+        addElementsWithWeight(total_intensity.begin(), weight);
     }
-    m_sim_elements = total_intensity;
+    m_sim_elements = std::move(total_intensity);
     transferResultsToIntensityMap();
 }
 
@@ -332,6 +331,12 @@ Simulation::SimElementVector::iterator Simulation::getBatchEnd(int n_batches, in
     if (end_index >= total_size)
         return m_sim_elements.end();
     return m_sim_elements.begin() + end_index;
+}
+
+void Simulation::addElementsWithWeight(SimElementVector::iterator result, double weight) const
+{
+    for (auto it = m_sim_elements.cbegin(); it != m_sim_elements.cend(); ++it, ++result)
+        result->addIntensity(it->getIntensity() * weight);
 }
 
 void Simulation::initialize()

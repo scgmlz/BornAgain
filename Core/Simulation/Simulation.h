@@ -140,6 +140,8 @@ protected:
     std::unique_ptr<IBackground> mP_background;
 
 private:
+    //! Add element vector to element vector with weight
+    void addElementsWithWeight(SimElementVector::iterator result, double weight) const;
     void initialize();
     void imposeConsistencyOfBatchNumbers(int& n_batches, int& current_batch);
 };
