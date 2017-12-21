@@ -84,9 +84,9 @@ public:
     void setRegionOfInterest(double xlow, double ylow, double xup, double yup);
 
 protected:
-    virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
-            std::vector<SimulationElement>::iterator start,
-            std::vector<SimulationElement>::iterator end);
+    virtual std::unique_ptr<IComputation>
+    generateSingleThreadedComputation(SimElementVector::iterator start,
+                                      SimElementVector::iterator end);
 
 private:
     GISASSimulation(const GISASSimulation& other);

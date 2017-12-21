@@ -118,9 +118,9 @@ void GISASSimulation::setRegionOfInterest(double xlow, double ylow, double xup, 
     Detector2D(m_instrument)->setRegionOfInterest(xlow, ylow, xup, yup);
 }
 
-std::unique_ptr<IComputation> GISASSimulation::generateSingleThreadedComputation(
-        std::vector<SimulationElement>::iterator start,
-        std::vector<SimulationElement>::iterator end)
+std::unique_ptr<IComputation>
+GISASSimulation::generateSingleThreadedComputation(SimElementVector::iterator start,
+                                                   SimElementVector::iterator end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
 }

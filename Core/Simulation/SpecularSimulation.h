@@ -89,12 +89,12 @@ private:
 
     //! Generate a single threaded computation for a given range of SimulationElement's
     virtual std::unique_ptr<IComputation>
-    generateSingleThreadedComputation(std::vector<SimulationElement>::iterator start,
-                                      std::vector<SimulationElement>::iterator end) override;
+    generateSingleThreadedComputation(SimElementVector::iterator start,
+                                      SimElementVector::iterator end) override;
 
     //! Normalize the detector counts to beam intensity, to solid angle, and to exposure angle.
-    virtual void normalize(std::vector<SimulationElement>::iterator begin_it,
-                           std::vector<SimulationElement>::iterator end_it) const override;
+    virtual void normalize(SimElementVector::iterator begin_it,
+                           SimElementVector::iterator end_it) const override;
 
     //! Checks if simulation data is ready for retrieval
     void validityCheck(size_t i_layer) const;

@@ -94,9 +94,9 @@ void OffSpecSimulation::setDetectorParameters(size_t n_x, double x_min, double x
     updateIntensityMap();
 }
 
-std::unique_ptr<IComputation> OffSpecSimulation::generateSingleThreadedComputation(
-        std::vector<SimulationElement>::iterator start,
-        std::vector<SimulationElement>::iterator end)
+std::unique_ptr<IComputation>
+OffSpecSimulation::generateSingleThreadedComputation(SimElementVector::iterator start,
+                                                     SimElementVector::iterator end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
 }
@@ -114,7 +114,7 @@ void OffSpecSimulation::initSimulationElementVector()
         double alpha_i = mp_alpha_i_axis->getBin(iAlpha).getMidPoint();
         beam.setCentralK(wavelength, alpha_i, phi_i);
         m_instrument.setBeam(beam);
-        std::vector<SimulationElement> sim_elements_alpha_i =
+        SimElementVector sim_elements_alpha_i =
             m_instrument.createSimulationElements();
         m_sim_elements.insert(m_sim_elements.end(), sim_elements_alpha_i.begin(),
                               sim_elements_alpha_i.end());

@@ -110,8 +110,9 @@ SpecularSimulation::getDataByAbsValue(size_t i_layer, DataGetter fn_ptr) const
     return output_ptr;
 }
 
-std::unique_ptr<IComputation> SpecularSimulation::generateSingleThreadedComputation(
-    std::vector<SimulationElement>::iterator start, std::vector<SimulationElement>::iterator end)
+std::unique_ptr<IComputation>
+SpecularSimulation::generateSingleThreadedComputation(SimElementVector::iterator start,
+                                                      SimElementVector::iterator end)
 {
     return std::make_unique<SpecularComputation>(*sample(), m_options, m_progress, start, end);
 }
@@ -150,8 +151,8 @@ std::vector<complex_t> SpecularSimulation::getScalarKz(size_t i_layer) const
     return getData(i_layer, &ILayerRTCoefficients::getScalarKz);
 }
 
-void SpecularSimulation::normalize(std::vector<SimulationElement>::iterator begin_it,
-                           std::vector<SimulationElement>::iterator end_it) const
+void SpecularSimulation::normalize(SimElementVector::iterator begin_it,
+                                   SimElementVector::iterator end_it) const
 {
     double beam_intensity = getBeamIntensity();
     if (beam_intensity==0.0)
