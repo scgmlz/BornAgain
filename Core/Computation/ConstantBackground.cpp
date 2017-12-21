@@ -31,12 +31,9 @@ ConstantBackground* ConstantBackground::clone() const
     return new ConstantBackground(m_background_value);
 }
 
-void ConstantBackground::addBackGround(std::vector<SimulationElement>::iterator start,
-                                       std::vector<SimulationElement>::iterator end) const
+void ConstantBackground::addBackGroundToElement(SimulationElement& element) const
 {
-    for (auto it=start; it != end; it++) {
-        it->addIntensity(m_background_value);
-    }
+    element.addIntensity(m_background_value);
 }
 
 void ConstantBackground::init_parameters()

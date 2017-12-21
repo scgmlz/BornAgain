@@ -28,11 +28,8 @@ PoissonNoiseBackground*PoissonNoiseBackground::clone() const
     return new PoissonNoiseBackground;
 }
 
-void PoissonNoiseBackground::addBackGround(std::vector<SimulationElement>::iterator start,
-                                           std::vector<SimulationElement>::iterator end) const
+void PoissonNoiseBackground::addBackGroundToElement(SimulationElement& element) const
 {
-    for (auto it=start; it != end; it++) {
-        auto intensity = it->getIntensity();
-        it->setIntensity(MathFunctions::GeneratePoissonRandom(intensity));
-    }
+    auto intensity = element.getIntensity();
+    element.setIntensity(MathFunctions::GeneratePoissonRandom(intensity));
 }

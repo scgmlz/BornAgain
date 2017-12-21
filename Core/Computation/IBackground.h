@@ -31,8 +31,14 @@ public:
     virtual ~IBackground();
     virtual IBackground* clone() const =0;
 
-    virtual void addBackGround(std::vector<SimulationElement>::iterator start,
-                               std::vector<SimulationElement>::iterator end) const =0;
+    template <class Iter> void addBackGround(Iter start, Iter end) const
+    {
+        for (auto it = start; it != end; it++)
+            addBackGroundToElement(*it);
+    }
+
+protected:
+    virtual void addBackGroundToElement(SimulationElement& element) const = 0;
 };
 
 #endif // IBACKGROUND_H
