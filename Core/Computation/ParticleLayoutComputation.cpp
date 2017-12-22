@@ -24,9 +24,10 @@
 #include "SimulationElement.h"
 
 const size_t element_interval = 100;
-ParticleLayoutComputation::ParticleLayoutComputation(
-        const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map, const ILayout* p_layout,
-        size_t layer_index, const SimulationOptions& options, bool polarized, ProgressHandler& progress)
+ParticleLayoutComputation::ParticleLayoutComputation(const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map,
+                                                     const ILayout* p_layout, size_t layer_index,
+                                                     const SimulationOptions& options, bool polarized,
+                                                     const std::shared_ptr<ProgressHandler>& progress)
     : IComputationTerm(p_multilayer, p_fresnel_map)
     , m_progress(progress)
     , m_progress_counter(element_interval)
@@ -40,7 +41,7 @@ ParticleLayoutComputation::ParticleLayoutComputation(
 
 void ParticleLayoutComputation::evalSingle(SimulationElement& element) const
 {
-    if (!m_progress.alive())
+    if (!m_progress->alive())
         return;
     const double alpha_f = element.getAlphaMean();
     const size_t n_layers = mp_multilayer->numberOfLayers();
@@ -48,5 +49,5 @@ void ParticleLayoutComputation::evalSingle(SimulationElement& element) const
         return; // zero for transmission with multilayers (n>1)
     else
         element.addIntensity(mP_strategy->evaluate(element) * m_surface_density);
-    m_progress_counter.stepProgress(m_progress);
+    m_progress_counter.stepProgress(*m_progress);
 }

@@ -42,7 +42,7 @@ namespace {
 const size_t element_interval = 100;
 RoughMultiLayerComputation::RoughMultiLayerComputation(const MultiLayer *p_multi_layer,
                                                        const IFresnelMap* p_fresnel_map,
-                                                       ProgressHandler& progress)
+                                                       const std::shared_ptr<ProgressHandler>& progress)
     : IComputationTerm(p_multi_layer, p_fresnel_map)
     , m_progress(progress)
     , m_progress_counter(element_interval)
@@ -53,7 +53,7 @@ RoughMultiLayerComputation::~RoughMultiLayerComputation()
 
 void RoughMultiLayerComputation::evalSingle(SimulationElement& element) const
 {
-    if (element.getAlphaMean() < 0.0 || !m_progress.alive())
+    if (element.getAlphaMean() < 0.0 || !m_progress->alive())
         return;
     const kvector_t q = element.getMeanQ();
     const double wavelength = element.getWavelength();
@@ -90,7 +90,7 @@ void RoughMultiLayerComputation::evalSingle(SimulationElement& element) const
     const double result = (autocorr + crosscorr.real()) * M_PI / 4. / wavelength / wavelength;
     element.addIntensity(result);
 
-    m_progress_counter.stepProgress(m_progress);
+    m_progress_counter.stepProgress(*m_progress);
 }
 
 bool RoughMultiLayerComputation::checkComputation() const

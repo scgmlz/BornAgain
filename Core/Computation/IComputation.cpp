@@ -17,12 +17,13 @@
 #include "ProgressHandler.h"
 #include "SimulationElement.h"
 
-IComputation::IComputation(const SimulationOptions& options, ProgressHandler& progress,
+IComputation::IComputation(const SimulationOptions& options,
+                           const std::shared_ptr<ProgressHandler>& progress,
                            const std::vector<SimulationElement>::iterator& start,
                            const std::vector<SimulationElement>::iterator& end,
                            const MultiLayer& sample)
     : m_sim_options(options)
-    , m_progress(&progress)
+    , m_progress(progress)
     , m_begin_it(start)
     , m_end_it(end)
     , mP_multi_layer(sample.cloneSliced(options.useAvgMaterials()))

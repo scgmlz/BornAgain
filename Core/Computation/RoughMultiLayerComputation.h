@@ -32,7 +32,7 @@ class RoughMultiLayerComputation final : public IComputationTerm
 public:
     RoughMultiLayerComputation(const MultiLayer* p_multi_layer,
                                const IFresnelMap* p_fresnel_map,
-                               ProgressHandler& progress);
+                               const std::shared_ptr<ProgressHandler>& progress);
     ~RoughMultiLayerComputation();
 
 private:
@@ -41,7 +41,7 @@ private:
     complex_t get_refractive_term(size_t ilayer, double wavelength) const;
     complex_t get_sum8terms(size_t ilayer, const SimulationElement& sim_element) const;
 
-    ProgressHandler& m_progress;
+    std::shared_ptr<ProgressHandler> m_progress;
     mutable DelayedProgressCounter m_progress_counter;
 };
 

@@ -32,15 +32,16 @@ class ProgressHandler;
 class ParticleLayoutComputation final : public IComputationTerm
 {
 public:
-    ParticleLayoutComputation(
-        const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map, const ILayout* p_layout,
-        size_t layer_index, const SimulationOptions& options, bool polarized, ProgressHandler& progress);
+    ParticleLayoutComputation(const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map,
+                              const ILayout* p_layout, size_t layer_index,
+                              const SimulationOptions& options, bool polarized,
+                              const std::shared_ptr<ProgressHandler>& progress);
 
 private:
     virtual void evalSingle(SimulationElement& element) const override;
     std::unique_ptr<const IInterferenceFunctionStrategy> mP_strategy;
     double m_surface_density;
-    ProgressHandler& m_progress;
+    std::shared_ptr<ProgressHandler> m_progress;
     mutable DelayedProgressCounter m_progress_counter;
 };
 

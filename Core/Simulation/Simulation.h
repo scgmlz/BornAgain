@@ -85,7 +85,7 @@ public:
     const SimulationOptions& getOptions() const { return m_options; }
     SimulationOptions& getOptions() { return m_options; }
 
-    void subscribe(ProgressHandler::Callback_t inform) { m_progress.subscribe(inform); }
+    void subscribe(ProgressHandler::Callback_t inform) { m_progress->subscribe(inform); }
     void setTerminalProgressMonitor();
 
     std::vector<const INode*> getChildren() const;
@@ -104,7 +104,7 @@ protected:
     SampleProvider m_sample_provider;
     SimulationOptions m_options;
     DistributionHandler m_distribution_handler;
-    ProgressHandler m_progress;
+    std::shared_ptr<ProgressHandler> m_progress;
     Instrument m_instrument;
     std::unique_ptr<IBackground> mP_background;
 

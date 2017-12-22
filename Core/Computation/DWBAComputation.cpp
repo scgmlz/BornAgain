@@ -31,7 +31,7 @@ static_assert(std::is_copy_assignable<DWBAComputation>::value == false,
     "DWBAComputation should not be copy assignable");
 
 DWBAComputation::DWBAComputation(const MultiLayer& multilayer, const SimulationOptions& options,
-                                 ProgressHandler& progress,
+                                 const std::shared_ptr<ProgressHandler>& progress,
                                  const std::vector<SimulationElement>::iterator& begin_it,
                                  const std::vector<SimulationElement>::iterator& end_it)
     : IComputation(options, progress, begin_it, end_it, multilayer)
@@ -45,12 +45,12 @@ DWBAComputation::DWBAComputation(const MultiLayer& multilayer, const SimulationO
             m_computation_terms.emplace_back(
                         new ParticleLayoutComputation(
                             mP_multi_layer.get(), mP_fresnel_map.get(), p_layout, i,
-                            m_sim_options, polarized, *m_progress));
+                            m_sim_options, polarized, m_progress));
     }
     // scattering from rough surfaces in DWBA
     if (mP_multi_layer->hasRoughness())
         m_computation_terms.emplace_back(new RoughMultiLayerComputation(
-            mP_multi_layer.get(), mP_fresnel_map.get(), *m_progress));
+            mP_multi_layer.get(), mP_fresnel_map.get(), m_progress));
     if (m_sim_options.includeSpecular())
         m_computation_terms.emplace_back(new NormalizingSpecularComputationTerm(mP_multi_layer.get(),
                                                               mP_fresnel_map.get()));

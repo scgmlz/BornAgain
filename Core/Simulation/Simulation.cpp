@@ -21,19 +21,20 @@
 #include <iostream>
 
 Simulation::Simulation()
+    : m_progress(std::make_shared<ProgressHandler>())
 {
     initialize();
 }
 
 Simulation::Simulation(const MultiLayer& p_sample)
+    : Simulation()
 {
-    initialize();
     m_sample_provider.setSample(p_sample);
 }
 
 Simulation::Simulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
+    : Simulation()
 {
-    initialize();
     m_sample_provider.setSampleBuilder(p_sample_builder);
 }
 
@@ -55,7 +56,7 @@ Simulation::~Simulation() {}
 //! Initializes a progress monitor that prints to stdout.
 void Simulation::setTerminalProgressMonitor()
 {
-    m_progress.subscribe( [] (size_t percentage_done) -> bool {
+    m_progress->subscribe( [] (size_t percentage_done) -> bool {
             if (percentage_done<100)
                 std::cout << std::setprecision(2)
                           << "\r... " << percentage_done << "%" << std::flush;
