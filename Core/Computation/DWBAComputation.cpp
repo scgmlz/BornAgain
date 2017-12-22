@@ -45,12 +45,12 @@ DWBAComputation::DWBAComputation(const MultiLayer& multilayer, const SimulationO
             m_computation_terms.emplace_back(
                         new ParticleLayoutComputation(
                             mP_multi_layer.get(), mP_fresnel_map.get(), p_layout, i,
-                            m_sim_options, polarized));
+                            m_sim_options, polarized, *m_progress));
     }
     // scattering from rough surfaces in DWBA
     if (mP_multi_layer->hasRoughness())
-        m_computation_terms.emplace_back(new RoughMultiLayerComputation(mP_multi_layer.get(),
-                                                                     mP_fresnel_map.get()));
+        m_computation_terms.emplace_back(new RoughMultiLayerComputation(
+            mP_multi_layer.get(), mP_fresnel_map.get(), *m_progress));
     if (m_sim_options.includeSpecular())
         m_computation_terms.emplace_back(new NormalizingSpecularComputationTerm(mP_multi_layer.get(),
                                                               mP_fresnel_map.get()));
@@ -70,7 +70,7 @@ void DWBAComputation::runProtected()
     for (auto& comp: m_computation_terms) {
         if (!m_progress->alive())
             return;
-        comp->eval(m_progress, m_begin_it, m_end_it );
+        comp->eval(m_begin_it, m_end_it );
     }
 }
 

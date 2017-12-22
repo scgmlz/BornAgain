@@ -39,36 +39,24 @@ namespace {
     }
 }
 
+const size_t element_interval = 100;
 RoughMultiLayerComputation::RoughMultiLayerComputation(const MultiLayer *p_multi_layer,
-                                                       const IFresnelMap* p_fresnel_map)
+                                                       const IFresnelMap* p_fresnel_map,
+                                                       ProgressHandler& progress)
     : IComputationTerm(p_multi_layer, p_fresnel_map)
+    , m_progress(progress)
+    , m_progress_counter(element_interval)
 {}
 
 RoughMultiLayerComputation::~RoughMultiLayerComputation()
 {}
 
-void RoughMultiLayerComputation::eval(ProgressHandler* progress,
-    const std::vector<SimulationElement>::iterator& begin_it,
-    const std::vector<SimulationElement>::iterator& end_it) const
+void RoughMultiLayerComputation::evalSingle(SimulationElement& element) const
 {
-    if (mp_multilayer->requiresMatrixRTCoefficients()) {
+    if (element.getAlphaMean() < 0.0 || !m_progress.alive())
         return;
-    }
-    DelayedProgressCounter counter(100);
-    for (std::vector<SimulationElement>::iterator it = begin_it; it != end_it; ++it) {
-        if (!progress->alive())
-            return;
-        it->addIntensity(evaluate(*it));
-        counter.stepProgress(progress);
-    }
-}
-
-double RoughMultiLayerComputation::evaluate(const SimulationElement& sim_element) const
-{
-    if (sim_element.getAlphaMean()<0.0)
-        return 0.0;
-    kvector_t q = sim_element.getMeanQ();
-    double wavelength = sim_element.getWavelength();
+    const kvector_t q = element.getMeanQ();
+    const double wavelength = element.getWavelength();
     double autocorr(0.0);
     complex_t crosscorr(0.0, 0.0);
 
@@ -77,7 +65,7 @@ double RoughMultiLayerComputation::evaluate(const SimulationElement& sim_element
 
     for (size_t i=0; i<mp_multilayer->numberOfLayers()-1; i++){
         rterm[i] = get_refractive_term(i, wavelength);
-        sterm[i] = get_sum8terms(i, sim_element);
+        sterm[i] = get_sum8terms(i, element);
     }
 
     for (size_t i=0; i<mp_multilayer->numberOfLayers()-1; i++) {
@@ -99,8 +87,15 @@ double RoughMultiLayerComputation::evaluate(const SimulationElement& sim_element
         }
     }
 
-    //! @TODO clarify complex vs double
-    return (autocorr+crosscorr.real())*M_PI/4./wavelength/wavelength;
+    const double result = (autocorr + crosscorr.real()) * M_PI / 4. / wavelength / wavelength;
+    element.addIntensity(result);
+
+    m_progress_counter.stepProgress(m_progress);
+}
+
+bool RoughMultiLayerComputation::checkComputation() const
+{
+    return !mp_multilayer->requiresMatrixRTCoefficients();
 }
 
 complex_t RoughMultiLayerComputation::get_refractive_term(size_t ilayer, double wavelength) const

@@ -15,6 +15,7 @@
 #ifndef PARTICLELAYOUTCOMPUTATION_H
 #define PARTICLELAYOUTCOMPUTATION_H
 
+#include "DelayedProgressCounter.h"
 #include "IComputationTerm.h"
 #include <memory>
 
@@ -22,6 +23,7 @@ using std::size_t;
 
 class ILayout;
 class IInterferenceFunctionStrategy;
+class ProgressHandler;
 
 //! Computes the scattering contribution from one particle layout.
 //! Used by DWBAComputation.
@@ -32,15 +34,14 @@ class ParticleLayoutComputation final : public IComputationTerm
 public:
     ParticleLayoutComputation(
         const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map, const ILayout* p_layout,
-        size_t layer_index, const SimulationOptions& options, bool polarized);
-
-    void eval(ProgressHandler* progress,
-              const std::vector<SimulationElement>::iterator& begin_it,
-              const std::vector<SimulationElement>::iterator& end_it) const override;
+        size_t layer_index, const SimulationOptions& options, bool polarized, ProgressHandler& progress);
 
 private:
+    virtual void evalSingle(SimulationElement& element) const override;
     std::unique_ptr<const IInterferenceFunctionStrategy> mP_strategy;
     double m_surface_density;
+    ProgressHandler& m_progress;
+    mutable DelayedProgressCounter m_progress_counter;
 };
 
 #endif // PARTICLELAYOUTCOMPUTATION_H

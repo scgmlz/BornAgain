@@ -15,11 +15,11 @@
 #include "ProgressHandler.h"
 #include "DelayedProgressCounter.h"
 
-void DelayedProgressCounter::stepProgress(ProgressHandler* progress)
+void DelayedProgressCounter::stepProgress(ProgressHandler& progress)
 {
     ++m_count;
     if( m_count==m_interval ) {
-        progress->incrementDone(m_interval);
+        progress.incrementDone(m_interval);
         m_count = 0;
     }
 }

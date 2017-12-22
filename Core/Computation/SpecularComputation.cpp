@@ -44,7 +44,7 @@ void SpecularComputation::runProtected()
 {
     if (!m_progress->alive())
         return;
-    m_computation_term->eval(m_progress, m_begin_it, m_end_it);
+    m_computation_term->eval(m_begin_it, m_end_it);
 }
 
 std::unique_ptr<IFresnelMap> SpecularComputation::createFresnelMap()

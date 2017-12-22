@@ -28,7 +28,7 @@ public:
     NormalizingSpecularComputationTerm(const MultiLayer* p_multi_layer, const IFresnelMap* p_fresnel_map);
 
 private:
-    virtual void evalSingle(const std::vector<SimulationElement>::iterator& iter) const override;
+    virtual void evalSingle(SimulationElement& iter) const override;
 };
 
 #endif // NORMALIZINGSPECULARCOMPUTATIONTERM_H
