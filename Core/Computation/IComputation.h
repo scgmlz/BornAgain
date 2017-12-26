@@ -16,13 +16,13 @@
 #define ICOMPUTATION_H
 
 #include "ComputationStatus.h"
+#include "IComputationTerm.h"
 #include "SimulationOptions.h"
 #include <memory>
 #include <vector>
 
 class MultiLayer;
 class ProgressHandler;
-class SimulationElement;
 
 //! Interface for a single-threaded computation with given range of SimulationElements
 //! and ProgressHandler.
@@ -33,11 +33,12 @@ class SimulationElement;
 
 class IComputation
 {
+protected:
+    struct IIterHandler;
 public:
     IComputation(const SimulationOptions& options,
                  const std::shared_ptr<ProgressHandler>& progress,
-                 const std::vector<SimulationElement>::iterator& start,
-                 const std::vector<SimulationElement>::iterator& end,
+                 std::unique_ptr<IIterHandler> iter_holder,
                  const MultiLayer& sample);
     virtual ~IComputation();
 
@@ -47,11 +48,29 @@ public:
     std::string errorMessage() const { return m_status.errorMessage(); }
 
 protected:
+    struct IIterHandler
+    {
+        virtual ~IIterHandler() = default;
+        virtual void eval(const IComputationTerm& comp_term) const = 0;
+    };
+
+    template<typename Iter>
+    struct IterHandler : IIterHandler
+    {
+        explicit IterHandler(const Iter& begin, const Iter& end) : m_begin(begin), m_end(end) {}
+        virtual void eval(const IComputationTerm& comp_term) const override
+        {
+            comp_term.eval(m_begin, m_end);
+        }
+
+        Iter m_begin, m_end;
+    };
+
     virtual void runProtected() = 0;
 
     SimulationOptions m_sim_options;
     std::shared_ptr<ProgressHandler> m_progress;
-    std::vector<SimulationElement>::iterator m_begin_it, m_end_it; //!< these iterators define the span of detector bins this simulation will work on
+    std::unique_ptr<IIterHandler> m_iter_holder; //!< defines the span of detector bins this simulation will work on
     ComputationStatus m_status;
     std::unique_ptr<MultiLayer> mP_multi_layer;
 };
