@@ -121,7 +121,7 @@ OutputData<double>* SpecularSimulation::getDetectorIntensity(AxesUnits units_typ
 {
     const size_t i_layer = 0; // detector intensity is proportional to reflectivity from the zeroth layer
     validityCheck(i_layer);
-    return m_instrument.createDetectorIntensity(m_sim_elements, units_type);
+    return m_instrument.createDetectorIntensity(m_sim_elements, units_type).release();
 }
 
 Histogram1D* SpecularSimulation::reflectivity() const

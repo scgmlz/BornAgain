@@ -22,6 +22,7 @@
 class Beam;
 class IPixel;
 class IShape2D;
+class SimulationElement;
 
 //! Abstract 2D detector interface.
 //! @ingroup simulation

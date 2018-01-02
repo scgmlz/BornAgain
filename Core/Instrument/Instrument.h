@@ -27,7 +27,6 @@ class DetectorMask;
 class IAxis;
 class IDetector2D;
 class IResolutionFunction2D;
-class SimulationElement;
 
 //! Assembles beam, detector and their relative positions wrt the sample.
 //! @ingroup simulation_internal
@@ -90,19 +89,25 @@ public:
     //! apply the detector resolution to the given intensity map
     void applyDetectorResolution(OutputData<double>* p_intensity_map) const;
 
+#ifndef SWIG
     //! Returns new intensity map with detector resolution applied and axes in requested units
-    OutputData<double>* createDetectorIntensity(const std::vector<SimulationElement> &elements,
-            AxesUnits units=AxesUnits::DEFAULT) const;
+    template <class SimElement>
+    std::unique_ptr<OutputData<double>>
+    createDetectorIntensity(const std::vector<SimElement>& elements,
+                            AxesUnits units = AxesUnits::DEFAULT) const
+    {
+        return mP_detector->createDetectorIntensity(elements, m_beam, units);
+    }
 
     //! Returns histogram representing intensity map in requested axes units
-    Histogram2D* createIntensityData(const std::vector<SimulationElement> &elements,
-            AxesUnits units_type = AxesUnits::DEFAULT) const;
+    template<class SimElement>
+    Histogram2D* createIntensityData(const std::vector<SimElement>& elements,
+                                     AxesUnits units_type = AxesUnits::DEFAULT) const
+    {
+        auto data = createDetectorIntensity(elements, units_type);
+        return createUnitSpecificHistogram(std::move(data), units_type).release();
+    }
 
-    //! Returns empty detector map in given axes units.
-    virtual OutputData<double>* createDetectorMap(
-            AxesUnits units=AxesUnits::DEFAULT) const;
-
-#ifndef SWIG
     //! Create a vector of SimulationElement objects according to the beam, detector and its mask
     template <class SimElement> std::vector<SimElement> createSimulationElements()
     {
@@ -113,6 +118,9 @@ public:
             throw std::runtime_error("Error in Instrument::createSimulationElements: Incorrect detector or element type");
         return agent->releaseSimElements();
     }
+
+    //! Returns empty detector map in given axes units.
+    OutputData<double>* createDetectorMap(AxesUnits units = AxesUnits::DEFAULT) const;
 #endif
 
     //! init detector with beam settings
@@ -120,9 +128,10 @@ public:
 
     std::vector<const INode*> getChildren() const;
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    virtual void init_parameters() {}
+private:
+    //! Creates 2D Histogram in specified units from OutputData array
+    std::unique_ptr<Histogram2D>
+    createUnitSpecificHistogram(std::unique_ptr<OutputData<double>> output_data, AxesUnits units) const;
 
     std::unique_ptr<IDetector> mP_detector;
     Beam m_beam;
