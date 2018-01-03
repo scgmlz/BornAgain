@@ -118,7 +118,7 @@ void test_sim_elements(const IDetector& detector)
 {
     auto instr = createInstrument(detector);
     instr->initDetector();
-    instr->createSimulationElements();
+    instr->createSimulationElements<SimulationElement>();
 }
 
 void test_run_simulation(const IDetector& detector)

@@ -48,7 +48,7 @@ void SimulationImpl::runSimulation()
 
 void SimulationImpl::initSimulationElementVector()
 {
-    m_sim_elements = m_instrument.createSimulationElements();
+    m_sim_elements = m_instrument.createSimulationElements<SimElementVector::value_type>();
 }
 
 void SimulationImpl::runSingleSimulation()

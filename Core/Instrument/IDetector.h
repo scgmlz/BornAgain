@@ -25,6 +25,7 @@ class Beam;
 class DetectorMask;
 class IDetectorResolution;
 class IResolutionFunction2D;
+class ISimulationElementsProvider;
 template<class T> class OutputData;
 class SimulationElement;
 class RegionOfInterest;
@@ -94,7 +95,7 @@ public:
     std::unique_ptr<OutputData<double>> createDetectorMap(const Beam& beam, AxesUnits units) const;
 
     //! Create a vector of SimulationElement objects according to the detector and its mask
-    virtual std::vector<SimulationElement> createSimulationElements(const Beam& beam) = 0;
+    virtual std::unique_ptr<ISimulationElementsProvider> createSimulationElements(const Beam& beam) = 0;
 #endif // SWIG
 
     //! Returns region of  interest if exists.

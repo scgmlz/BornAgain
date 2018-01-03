@@ -18,6 +18,7 @@
 #include "IDetector.h"
 #include "INode.h"
 #include "Beam.h"
+#include "SimulationElementsProvider.h"
 #include <memory>
 
 template<class T> class OutputData;
@@ -103,7 +104,15 @@ public:
 
 #ifndef SWIG
     //! Create a vector of SimulationElement objects according to the beam, detector and its mask
-    std::vector<SimulationElement> createSimulationElements();
+    template <class SimElement> std::vector<SimElement> createSimulationElements()
+    {
+        using ElementProvider = SimulationElementsProvider<SimElement>;
+        auto agent_base = mP_detector->createSimulationElements(m_beam);
+        auto agent = dynamic_cast<ElementProvider*>(agent_base.get());
+        if (!agent)
+            throw std::runtime_error("Error in Instrument::createSimulationElements: Incorrect detector or element type");
+        return agent->releaseSimElements();
+    }
 #endif
 
     //! init detector with beam settings

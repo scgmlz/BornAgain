@@ -2,6 +2,7 @@
 #include "Numeric.h"
 #include "RectangularDetector.h"
 #include "SimulationElement.h"
+#include "SimulationElementsProvider.h"
 #include "Units.h"
 #include "google_test.h"
 #include <iostream>
@@ -29,6 +30,17 @@ protected:
             std::cout << "lhs:" << lhs << " rhs:" << rhs << " diff:" << (lhs - rhs) << std::endl;
         }
         return is_equal;
+    }
+
+    std::vector<SimulationElement>
+    extractSimulationElements(std::unique_ptr<ISimulationElementsProvider> agent_base)
+    {
+        auto agent
+            = dynamic_cast<SimulationElementsProvider<SimulationElement>*>(agent_base.get());
+        std::vector<SimulationElement> result;
+        if (agent)
+            result = agent->releaseSimElements();
+        return result;
     }
 };
 
@@ -94,8 +106,8 @@ TEST_F(RectangularDetectorTest, PerpToSample)
     EXPECT_TRUE(kvector_t(distance, 0, 0) == det.getNormalVector());
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
 
-    std::vector<SimulationElement> elements
-        = det.createSimulationElements(simulation.getInstrument().getBeam());
+    std::vector<SimulationElement> elements = extractSimulationElements(
+        det.createSimulationElements(simulation.getInstrument().getBeam()));
     EXPECT_EQ(elements.size(), nbinsx * nbinsy);
 
     // lower left bin
@@ -151,8 +163,8 @@ TEST_F(RectangularDetectorTest, PerpToDirectBeam)
     EXPECT_TRUE(isEqual(normal, det.getNormalVector()));
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
 
-    std::vector<SimulationElement> elements
-        = det.createSimulationElements(simulation.getInstrument().getBeam());
+    std::vector<SimulationElement> elements = extractSimulationElements(
+        det.createSimulationElements(simulation.getInstrument().getBeam()));
     EXPECT_EQ(elements.size(), nbinsx * nbinsy);
 
     // lower left bin
@@ -195,8 +207,8 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeam)
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
 
     // checking detector elements
-    std::vector<SimulationElement> elements
-        = det.createSimulationElements(simulation.getInstrument().getBeam());
+    std::vector<SimulationElement> elements = extractSimulationElements(
+        det.createSimulationElements(simulation.getInstrument().getBeam()));
     EXPECT_EQ(elements.size(), nbinsx * nbinsy);
 
     double ds = v0 - dy / 2.;
@@ -253,8 +265,8 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeamDpos)
     EXPECT_EQ(v0, det.getV0());
 
     // checking detector elements
-    std::vector<SimulationElement> elements
-        = det.createSimulationElements(simulation.getInstrument().getBeam());
+    std::vector<SimulationElement> elements = extractSimulationElements(
+        det.createSimulationElements(simulation.getInstrument().getBeam()));
     EXPECT_EQ(elements.size(), nbinsx * nbinsy);
 
     double ds = v0 - dy / 2.;

@@ -34,7 +34,7 @@ public:
 
 #ifndef SWIG
     //! Create a vector of SimulationElement objects according to the detector and its mask
-    virtual std::vector<SimulationElement> createSimulationElements(const Beam& beam) override;
+    virtual std::unique_ptr<ISimulationElementsProvider> createSimulationElements(const Beam& beam) override;
 #endif // SWIG
 
     //! Returns region of interest if exists.

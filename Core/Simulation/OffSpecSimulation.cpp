@@ -115,7 +115,7 @@ void OffSpecSimulation::initSimulationElementVector()
         beam.setCentralK(wavelength, alpha_i, phi_i);
         m_instrument.setBeam(beam);
         SimElementVector sim_elements_alpha_i =
-            m_instrument.createSimulationElements();
+            m_instrument.createSimulationElements<SimElementVector::value_type>();
         m_sim_elements.insert(m_sim_elements.end(), sim_elements_alpha_i.begin(),
                               sim_elements_alpha_i.end());
     }

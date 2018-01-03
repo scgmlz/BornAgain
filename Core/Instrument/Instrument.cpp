@@ -77,12 +77,6 @@ std::vector<const INode*> Instrument::getChildren() const
     return result;
 }
 
-
-std::vector<SimulationElement> Instrument::createSimulationElements()
-{
-    return mP_detector->createSimulationElements(m_beam);
-}
-
 void Instrument::setDetectorResolutionFunction(const IResolutionFunction2D& p_resolution_function)
 {
     mP_detector->setResolutionFunction(p_resolution_function);
