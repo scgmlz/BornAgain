@@ -2626,7 +2626,7 @@ class kvector_t(_object):
     """
 
 
-    Three-dimensional vector template, for use with integer, double, or complex components.
+    Forked from CLHEP/Geometry by E. Chernyaev Evgueni.Tcherniaev@cern.ch, then reworked beyond recongnition. Removed split of point and vector semantics. Transforms are relegated to a separate class  Transform3D. Three-dimensional vector template, for use with integer, double, or complex components.
 
     C++ includes: BasicVector3D.h
 
@@ -3138,7 +3138,7 @@ class cvector_t(_object):
     """
 
 
-    Three-dimensional vector template, for use with integer, double, or complex components.
+    Forked from CLHEP/Geometry by E. Chernyaev Evgueni.Tcherniaev@cern.ch, then reworked beyond recongnition. Removed split of point and vector semantics. Transforms are relegated to a separate class  Transform3D. Three-dimensional vector template, for use with integer, double, or complex components.
 
     C++ includes: BasicVector3D.h
 
@@ -16179,7 +16179,7 @@ class Simulation(ICloneable, INode):
     """
 
 
-    Pure virtual base class of OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Holds the common infrastructure to run a simulation: multithreading, batch processing, weighting over parameter distributions, ...
+    Abstract base class for simulation implementations. Holds the common infrastructure to run a simulation: multithreading, batch processing, weighting over parameter distributions, ...
 
     C++ includes: Simulation.h
 
@@ -16210,27 +16210,13 @@ class Simulation(ICloneable, INode):
         return _libBornAgainCore.Simulation_clone(self)
 
 
-    def prepareSimulation(self):
-        """
-        prepareSimulation(Simulation self)
-
-        void Simulation::prepareSimulation()
-
-        Put into a clean state for running a simulation. 
-
-        """
-        return _libBornAgainCore.Simulation_prepareSimulation(self)
-
-
     def runSimulation(self):
         """
         runSimulation(Simulation self)
 
-        void Simulation::runSimulation()
+        virtual void Simulation::runSimulation()=0
 
-        Run a simulation, possibly averaged over parameter distributions.
-
-        Run simulation with possible averaging over parameter distributions. 
+        Run a simulation, possibly averaged over parameter distributions. 
 
         """
         return _libBornAgainCore.Simulation_runSimulation(self)
@@ -16481,6 +16467,45 @@ class Simulation(ICloneable, INode):
 Simulation_swigregister = _libBornAgainCore.Simulation_swigregister
 Simulation_swigregister(Simulation)
 
+class SimulationImpl(Simulation):
+    """
+
+
+    Abstract  Simulation implementation, base class for OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Operates on the vector of simulation elements
+
+    C++ includes: SimulationImpl.h
+
+    """
+
+    __swig_setmethods__ = {}
+    for _s in [Simulation]:
+        __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, SimulationImpl, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Simulation]:
+        __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
+    __getattr__ = lambda self, name: _swig_getattr(self, SimulationImpl, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _libBornAgainCore.delete_SimulationImpl
+    __del__ = lambda self: None
+
+    def runSimulation(self):
+        """
+        runSimulation(SimulationImpl self)
+
+        void SimulationImpl::runSimulation() override final
+
+        Run a simulation, possibly averaged over parameter distributions. 
+
+        """
+        return _libBornAgainCore.SimulationImpl_runSimulation(self)
+
+SimulationImpl_swigregister = _libBornAgainCore.SimulationImpl_swigregister
+SimulationImpl_swigregister(SimulationImpl)
+
 class SimulationOptions(_object):
     """
 
@@ -16675,7 +16700,7 @@ class SimulationOptions(_object):
 SimulationOptions_swigregister = _libBornAgainCore.SimulationOptions_swigregister
 SimulationOptions_swigregister(SimulationOptions)
 
-class GISASSimulation(Simulation):
+class GISASSimulation(SimulationImpl):
     """
 
 
@@ -16686,11 +16711,11 @@ class GISASSimulation(Simulation):
     """
 
     __swig_setmethods__ = {}
-    for _s in [Simulation]:
+    for _s in [SimulationImpl]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, GISASSimulation, name, value)
     __swig_getmethods__ = {}
-    for _s in [Simulation]:
+    for _s in [SimulationImpl]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
     __getattr__ = lambda self, name: _swig_getattr(self, GISASSimulation, name)
     __repr__ = _swig_repr
@@ -17853,16 +17878,6 @@ class IBackground(ICloneable, INode):
         """
         return _libBornAgainCore.IBackground_clone(self)
 
-
-    def addBackGround(self, start, end):
-        """
-        addBackGround(IBackground self, std::vector< SimulationElement,std::allocator< SimulationElement > >::iterator start, std::vector< SimulationElement,std::allocator< SimulationElement > >::iterator end)
-
-        virtual void IBackground::addBackGround(std::vector< SimulationElement >::iterator start, std::vector< SimulationElement >::iterator end) const =0
-
-        """
-        return _libBornAgainCore.IBackground_addBackGround(self, start, end)
-
 IBackground_swigregister = _libBornAgainCore.IBackground_swigregister
 IBackground_swigregister(IBackground)
 
@@ -17931,16 +17946,6 @@ class ConstantBackground(IBackground):
 
         """
         return _libBornAgainCore.ConstantBackground_accept(self, visitor)
-
-
-    def addBackGround(self, start, end):
-        """
-        addBackGround(ConstantBackground self, std::vector< SimulationElement,std::allocator< SimulationElement > >::iterator start, std::vector< SimulationElement,std::allocator< SimulationElement > >::iterator end)
-
-        void ConstantBackground::addBackGround(std::vector< SimulationElement >::iterator start, std::vector< SimulationElement >::iterator end) const override final
-
-        """
-        return _libBornAgainCore.ConstantBackground_addBackGround(self, start, end)
 
 ConstantBackground_swigregister = _libBornAgainCore.ConstantBackground_swigregister
 ConstantBackground_swigregister(ConstantBackground)
@@ -18215,19 +18220,6 @@ class IDetector(ICloneable, INode):
 
         """
         return _libBornAgainCore.IDetector_initOutputData(self, data)
-
-
-    def createDetectorIntensity(self, *args):
-        """
-        createDetectorIntensity(IDetector self, std::vector< SimulationElement,std::allocator< SimulationElement > > const & elements, Beam beam, AxesUnits units_type) -> IntensityData
-        createDetectorIntensity(IDetector self, std::vector< SimulationElement,std::allocator< SimulationElement > > const & elements, Beam beam) -> IntensityData
-
-        OutputData< double > * IDetector::createDetectorIntensity(const std::vector< SimulationElement > &elements, const Beam &beam, AxesUnits units_type=AxesUnits::DEFAULT) const
-
-        Returns new intensity map with detector resolution applied and axes in requested units. 
-
-        """
-        return _libBornAgainCore.IDetector_createDetectorIntensity(self, *args)
 
 
     def defaultAxesUnits(self):
@@ -20073,45 +20065,6 @@ class Instrument(INode):
 
         """
         return _libBornAgainCore.Instrument_applyDetectorResolution(self, p_intensity_map)
-
-
-    def createDetectorIntensity(self, *args):
-        """
-        createDetectorIntensity(Instrument self, std::vector< SimulationElement,std::allocator< SimulationElement > > const & elements, AxesUnits units) -> IntensityData
-        createDetectorIntensity(Instrument self, std::vector< SimulationElement,std::allocator< SimulationElement > > const & elements) -> IntensityData
-
-        OutputData< double > * Instrument::createDetectorIntensity(const std::vector< SimulationElement > &elements, AxesUnits units=AxesUnits::DEFAULT) const
-
-        Returns new intensity map with detector resolution applied and axes in requested units. 
-
-        """
-        return _libBornAgainCore.Instrument_createDetectorIntensity(self, *args)
-
-
-    def createIntensityData(self, *args):
-        """
-        createIntensityData(Instrument self, std::vector< SimulationElement,std::allocator< SimulationElement > > const & elements, AxesUnits units_type) -> Histogram2D
-        createIntensityData(Instrument self, std::vector< SimulationElement,std::allocator< SimulationElement > > const & elements) -> Histogram2D
-
-        Histogram2D * Instrument::createIntensityData(const std::vector< SimulationElement > &elements, AxesUnits units_type=AxesUnits::DEFAULT) const
-
-        Returns histogram representing intensity map in requested axes units. 
-
-        """
-        return _libBornAgainCore.Instrument_createIntensityData(self, *args)
-
-
-    def createDetectorMap(self, *args):
-        """
-        createDetectorMap(Instrument self, AxesUnits units) -> IntensityData
-        createDetectorMap(Instrument self) -> IntensityData
-
-        OutputData< double > * Instrument::createDetectorMap(AxesUnits units=AxesUnits::DEFAULT) const
-
-        Returns empty detector map in given axes units. 
-
-        """
-        return _libBornAgainCore.Instrument_createDetectorMap(self, *args)
 
 
     def initDetector(self):
@@ -23514,7 +23467,7 @@ class MultiLayer(ISample):
 MultiLayer_swigregister = _libBornAgainCore.MultiLayer_swigregister
 MultiLayer_swigregister(MultiLayer)
 
-class OffSpecSimulation(Simulation):
+class OffSpecSimulation(SimulationImpl):
     """
 
 
@@ -23525,11 +23478,11 @@ class OffSpecSimulation(Simulation):
     """
 
     __swig_setmethods__ = {}
-    for _s in [Simulation]:
+    for _s in [SimulationImpl]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, OffSpecSimulation, name, value)
     __swig_getmethods__ = {}
-    for _s in [Simulation]:
+    for _s in [SimulationImpl]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
     __getattr__ = lambda self, name: _swig_getattr(self, OffSpecSimulation, name)
     __repr__ = _swig_repr
@@ -25470,16 +25423,6 @@ class PoissonNoiseBackground(IBackground):
         """
         return _libBornAgainCore.PoissonNoiseBackground_accept(self, visitor)
 
-
-    def addBackGround(self, start, end):
-        """
-        addBackGround(PoissonNoiseBackground self, std::vector< SimulationElement,std::allocator< SimulationElement > >::iterator start, std::vector< SimulationElement,std::allocator< SimulationElement > >::iterator end)
-
-        void PoissonNoiseBackground::addBackGround(std::vector< SimulationElement >::iterator start, std::vector< SimulationElement >::iterator end) const override final
-
-        """
-        return _libBornAgainCore.PoissonNoiseBackground_addBackGround(self, start, end)
-
 PoissonNoiseBackground_swigregister = _libBornAgainCore.PoissonNoiseBackground_swigregister
 PoissonNoiseBackground_swigregister(PoissonNoiseBackground)
 
@@ -26279,7 +26222,7 @@ class ResolutionFunction2DGaussian(IResolutionFunction2D):
 ResolutionFunction2DGaussian_swigregister = _libBornAgainCore.ResolutionFunction2DGaussian_swigregister
 ResolutionFunction2DGaussian_swigregister(ResolutionFunction2DGaussian)
 
-class SpecularSimulation(Simulation):
+class SpecularSimulation(SimulationImpl):
     """
 
 
@@ -26290,11 +26233,11 @@ class SpecularSimulation(Simulation):
     """
 
     __swig_setmethods__ = {}
-    for _s in [Simulation]:
+    for _s in [SimulationImpl]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, SpecularSimulation, name, value)
     __swig_getmethods__ = {}
-    for _s in [Simulation]:
+    for _s in [SimulationImpl]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
     __getattr__ = lambda self, name: _swig_getattr(self, SpecularSimulation, name)
     __repr__ = _swig_repr
