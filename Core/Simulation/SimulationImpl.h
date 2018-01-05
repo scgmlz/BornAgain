@@ -51,10 +51,6 @@ protected:
     generateSingleThreadedComputation(SimElementVector::iterator start,
                                       SimElementVector::iterator end) = 0;
 
-    //! Runs a single simulation with fixed parameter values.
-    //! If desired, the simulation is run in several threads.
-    void runSingleSimulation();
-
     //! Normalize the detector counts to beam intensity, to solid angle, and to exposure angle.
     virtual void normalize(SimElementVector::iterator begin_it,
                            SimElementVector::iterator end_it) const;
@@ -62,15 +58,19 @@ protected:
     void addBackGroundIntensity(SimElementVector::iterator begin_it,
                                 SimElementVector::iterator end_it) const;
 
+    SimElementVector m_sim_elements;
+
+private:
+    //! Runs a single simulation with fixed parameter values.
+    //! If desired, the simulation is run in several threads.
+    void runSingleSimulation();
+
     //! Returns the start iterator of simulation elements for the current batch
     SimElementVector::iterator getBatchStart(int n_batches, int current_batch);
 
     //! Returns the end iterator of simulation elements for the current batch
     SimElementVector::iterator getBatchEnd(int n_batches, int current_batch);
 
-    SimElementVector m_sim_elements;
-
-private:
     //! Add element vector to element vector with weight
     void addElementsWithWeight(SimElementVector::iterator result, double weight) const;
     void imposeConsistencyOfBatchNumbers(int& n_batches, int& current_batch);
