@@ -18,7 +18,7 @@
 #include "SpecularMatrix.h"
 #include "MaterialUtils.h"
 #include "Histogram1D.h"
-#include "SimulationElement.h"
+#include "OutputData.h"
 #include "SpecularComputation.h"
 #include "SpecularDetector1D.h"
 
@@ -111,8 +111,7 @@ SpecularSimulation::getDataByAbsValue(size_t i_layer, DataGetter fn_ptr) const
 }
 
 std::unique_ptr<IComputation>
-SpecularSimulation::generateSingleThreadedComputation(SimElementVector::iterator start,
-                                                      SimElementVector::iterator end)
+SpecularSimulation::generateSingleThreadedComputation(SimIter start, SimIter end)
 {
     return std::make_unique<SpecularComputation>(*sample(), m_options, m_progress, start, end);
 }
@@ -151,8 +150,7 @@ std::vector<complex_t> SpecularSimulation::getScalarKz(size_t i_layer) const
     return getData(i_layer, &ILayerRTCoefficients::getScalarKz);
 }
 
-void SpecularSimulation::normalize(SimElementVector::iterator begin_it,
-                                   SimElementVector::iterator end_it) const
+void SpecularSimulation::normalize(SimIter begin_it, SimIter end_it) const
 {
     double beam_intensity = getBeamIntensity();
     if (beam_intensity==0.0)

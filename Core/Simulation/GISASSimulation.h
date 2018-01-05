@@ -16,6 +16,7 @@
 #define GISASSIMULATION_H
 
 #include "SimulationImpl.h"
+#include "SimulationElement.h"
 
 class MultiLayer;
 class IMultiLayerBuilder;
@@ -25,7 +26,7 @@ class Histogram2D;
 //! Main class to run a Grazing-Incidence Small-Angle Scattering simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ GISASSimulation : public SimulationImpl
+class BA_CORE_API_ GISASSimulation : public SimulationImpl<SimulationElement>
 {
 public:
     GISASSimulation();
@@ -85,8 +86,7 @@ public:
 
 protected:
     virtual std::unique_ptr<IComputation>
-    generateSingleThreadedComputation(SimElementVector::iterator start,
-                                      SimElementVector::iterator end);
+    generateSingleThreadedComputation(SimIter start, SimIter end);
 
 private:
     GISASSimulation(const GISASSimulation& other);

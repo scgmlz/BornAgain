@@ -3,17 +3,24 @@
 #include "MultiLayer.h"
 #include "ParameterPool.h"
 #include "SimulationImpl.h"
+#include "SimulationElement.h"
 #include "StringUtils.h"
 #include <thread>
 
-SimulationImpl::SimulationImpl() = default;
-SimulationImpl::SimulationImpl(const SimulationImpl& other)
+template <class SimElement>
+SimulationImpl<SimElement>::SimulationImpl() = default;
+
+template <class SimElement>
+SimulationImpl<SimElement>::SimulationImpl(const SimulationImpl<SimElement>& other)
     : Simulation(other)
     , m_sim_elements(other.m_sim_elements)
 {}
-SimulationImpl::~SimulationImpl() = default;
 
-void SimulationImpl::runSimulation()
+template <class SimElement>
+SimulationImpl<SimElement>::~SimulationImpl() = default;
+
+template <class SimElement>
+void SimulationImpl<SimElement>::runSimulation()
 {
     prepareSimulation();
 
@@ -46,12 +53,14 @@ void SimulationImpl::runSimulation()
     transferResultsToIntensityMap();
 }
 
-void SimulationImpl::initSimulationElementVector()
+template <class SimElement>
+void SimulationImpl<SimElement>::initSimulationElementVector()
 {
-    m_sim_elements = m_instrument.createSimulationElements<SimElementVector::value_type>();
+    m_sim_elements = m_instrument.createSimulationElements<typename SimElementVector::value_type>();
 }
 
-void SimulationImpl::runSingleSimulation()
+template <class SimElement>
+void SimulationImpl<SimElement>::runSingleSimulation()
 {
     prepareSimulation();
     initSimulationElementVector();
@@ -117,8 +126,9 @@ void SimulationImpl::runSingleSimulation()
     addBackGroundIntensity(batch_start, batch_end);
 }
 
-void SimulationImpl::normalize(SimElementVector::iterator begin_it,
-                               SimElementVector::iterator end_it) const
+template <class SimElement>
+void SimulationImpl<SimElement>::normalize(SimIter begin_it,
+                               SimIter end_it) const
 {
     double beam_intensity = getBeamIntensity();
     if (beam_intensity==0.0)
@@ -131,14 +141,9 @@ void SimulationImpl::normalize(SimElementVector::iterator begin_it,
     }
 }
 
-void SimulationImpl::addBackGroundIntensity(SimElementVector::iterator begin_it,
-                                            SimElementVector::iterator end_it) const
-{
-    if (mP_background)
-        mP_background->addBackGround(begin_it, end_it);
-}
-
-SimulationImpl::SimElementVector::iterator SimulationImpl::getBatchStart(int n_batches, int current_batch)
+template <class SimElement>
+typename SimulationImpl<SimElement>::SimIter
+SimulationImpl<SimElement>::getBatchStart(int n_batches, int current_batch)
 {
     imposeConsistencyOfBatchNumbers(n_batches, current_batch);
     int total_size = static_cast<int>(m_sim_elements.size());
@@ -150,26 +155,37 @@ SimulationImpl::SimElementVector::iterator SimulationImpl::getBatchStart(int n_b
     return m_sim_elements.begin() + current_batch*size_per_batch;
 }
 
-SimulationImpl::SimElementVector::iterator SimulationImpl::getBatchEnd(int n_batches, int current_batch)
+template <class SimElement>
+typename SimulationImpl<SimElement>::SimIter
+SimulationImpl<SimElement>::getBatchEnd(int n_batches, int current_batch)
 {
     imposeConsistencyOfBatchNumbers(n_batches, current_batch);
     int total_size = static_cast<int>(m_sim_elements.size());
-    int size_per_batch = total_size/n_batches;
-    if (total_size%n_batches)
+    int size_per_batch = total_size / n_batches;
+    if (total_size % n_batches)
         ++size_per_batch;
-    int end_index = (current_batch + 1)*size_per_batch;
+    int end_index = (current_batch + 1) * size_per_batch;
     if (end_index >= total_size)
         return m_sim_elements.end();
     return m_sim_elements.begin() + end_index;
 }
 
-void SimulationImpl::addElementsWithWeight(SimElementVector::iterator result, double weight) const
+template<class SimElement>
+void SimulationImpl<SimElement>::addBackGroundIntensity(SimIter begin_it, SimIter end_it) const
+{
+    if (mP_background)
+        mP_background->addBackGround(begin_it, end_it);
+}
+
+template<class SimElement>
+void SimulationImpl<SimElement>::addElementsWithWeight(SimIter result, double weight) const
 {
     for (auto it = m_sim_elements.cbegin(); it != m_sim_elements.cend(); ++it, ++result)
         result->addIntensity(it->getIntensity() * weight);
 }
 
-void SimulationImpl::imposeConsistencyOfBatchNumbers(int& n_batches, int& current_batch)
+template<class SimElement>
+void SimulationImpl<SimElement>::imposeConsistencyOfBatchNumbers(int& n_batches, int& current_batch)
 {
     if (n_batches < 2) {
         n_batches = 1;
@@ -181,3 +197,6 @@ void SimulationImpl::imposeConsistencyOfBatchNumbers(int& n_batches, int& curren
             "number of batches.");
 }
 
+
+// explicit instantiations of simulation implementation:
+template class SimulationImpl<SimulationElement>;

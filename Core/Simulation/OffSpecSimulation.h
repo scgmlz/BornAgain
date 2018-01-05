@@ -16,13 +16,14 @@
 #define OFFSPECSIMULATION_H
 
 #include "SimulationImpl.h"
+#include "SimulationElement.h"
 
 class Histogram2D;
 
 //! Main class to run an off-specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ OffSpecSimulation : public SimulationImpl
+class BA_CORE_API_ OffSpecSimulation : public SimulationImpl<SimulationElement>
 {
 public:
     OffSpecSimulation();
@@ -57,8 +58,7 @@ public:
 
 protected:
     virtual std::unique_ptr<IComputation>
-    generateSingleThreadedComputation(SimElementVector::iterator start,
-                                      SimElementVector::iterator end);
+    generateSingleThreadedComputation(SimIter start, SimIter end);
 
 private:
     OffSpecSimulation(const OffSpecSimulation& other);

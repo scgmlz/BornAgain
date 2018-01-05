@@ -18,7 +18,6 @@
 #include "Histogram2D.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "SimulationElement.h"
 
 namespace
 {
@@ -119,8 +118,7 @@ void GISASSimulation::setRegionOfInterest(double xlow, double ylow, double xup, 
 }
 
 std::unique_ptr<IComputation>
-GISASSimulation::generateSingleThreadedComputation(SimElementVector::iterator start,
-                                                   SimElementVector::iterator end)
+GISASSimulation::generateSingleThreadedComputation(SimIter start, SimIter end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
 }

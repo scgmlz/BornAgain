@@ -18,7 +18,6 @@
 #include "Histogram2D.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "SimulationElement.h"
 
 OffSpecSimulation::OffSpecSimulation()
     : mp_alpha_i_axis(nullptr)
@@ -95,8 +94,7 @@ void OffSpecSimulation::setDetectorParameters(size_t n_x, double x_min, double x
 }
 
 std::unique_ptr<IComputation>
-OffSpecSimulation::generateSingleThreadedComputation(SimElementVector::iterator start,
-                                                     SimElementVector::iterator end)
+OffSpecSimulation::generateSingleThreadedComputation(SimIter start, SimIter end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
 }

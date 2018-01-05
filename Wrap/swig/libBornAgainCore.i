@@ -357,6 +357,7 @@
 
 %include "Simulation.h"
 %include "SimulationImpl.h"
+%template(SimulationElementSimulationImpl) SimulationImpl<SimulationElement>;
 %include "SimulationOptions.h"
 %include "GISASSimulation.h"
 %include "IHistogram.h"
