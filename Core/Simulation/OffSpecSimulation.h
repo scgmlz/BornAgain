@@ -15,20 +15,21 @@
 #ifndef OFFSPECSIMULATION_H
 #define OFFSPECSIMULATION_H
 
-#include "Simulation.h"
+#include "SimulationImpl.h"
+#include "SimulationElement.h"
 
 class Histogram2D;
 
 //! Main class to run an off-specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ OffSpecSimulation : public Simulation
+class BA_CORE_API_ OffSpecSimulation : public SimulationImpl<SimulationElement>
 {
 public:
     OffSpecSimulation();
     OffSpecSimulation(const MultiLayer& p_sample);
     OffSpecSimulation(const std::shared_ptr<class IMultiLayerBuilder> p_sample_builder);
-    ~OffSpecSimulation() final {}
+    virtual ~OffSpecSimulation();
 
     OffSpecSimulation* clone() const { return new OffSpecSimulation(*this); }
 
@@ -56,9 +57,8 @@ public:
                                size_t n_y, double y_min, double y_max);
 
 protected:
-    virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
-            std::vector<SimulationElement>::iterator start,
-            std::vector<SimulationElement>::iterator end);
+    virtual std::unique_ptr<IComputation>
+    generateSingleThreadedComputation(SimIter start, SimIter end);
 
 private:
     OffSpecSimulation(const OffSpecSimulation& other);

@@ -15,21 +15,20 @@
 #ifndef SPECULARSIMULATION_H
 #define SPECULARSIMULATION_H
 
-#include "Simulation.h"
 #include "ILayerRTCoefficients.h"
-#include "OutputData.h"
+#include "SimulationImpl.h"
+#include "SimulationElement.h"
 
 class IAxis;
 class IComputation;
 class ISample;
-class IMultiLayerBuilder;
-class MultiLayer;
 class Histogram1D;
+template <class T> class OutputData;
 
 //! Main class to run a specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ SpecularSimulation : public Simulation
+class BA_CORE_API_ SpecularSimulation : public SimulationImpl<SimulationElement>
 {
 public:
     SpecularSimulation();
@@ -91,12 +90,10 @@ private:
 
     //! Generate a single threaded computation for a given range of SimulationElement's
     virtual std::unique_ptr<IComputation>
-    generateSingleThreadedComputation(std::vector<SimulationElement>::iterator start,
-                                      std::vector<SimulationElement>::iterator end) override;
+    generateSingleThreadedComputation(SimIter start, SimIter end) override;
 
     //! Normalize the detector counts to beam intensity, to solid angle, and to exposure angle.
-    virtual void normalize(std::vector<SimulationElement>::iterator begin_it,
-                           std::vector<SimulationElement>::iterator end_it) const override;
+    virtual void normalize(SimIter begin_it, SimIter end_it) const override;
 
     //! Checks if simulation data is ready for retrieval
     void validityCheck(size_t i_layer) const;

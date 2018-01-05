@@ -18,7 +18,6 @@
 #include "Histogram2D.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "SimulationElement.h"
 
 namespace
 {
@@ -31,16 +30,24 @@ GISASSimulation::GISASSimulation()
 }
 
 GISASSimulation::GISASSimulation(const MultiLayer& p_sample)
-    : Simulation(p_sample)
+    : SimulationImpl(p_sample)
 {
     initialize();
 }
 
 GISASSimulation::GISASSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
-    : Simulation(p_sample_builder)
+    : SimulationImpl(p_sample_builder)
 {
     initialize();
 }
+
+GISASSimulation::GISASSimulation(const GISASSimulation& other)
+    : SimulationImpl(other)
+{
+    initialize();
+}
+
+GISASSimulation::~GISASSimulation() = default;
 
 void GISASSimulation::prepareSimulation()
 {
@@ -110,17 +117,10 @@ void GISASSimulation::setRegionOfInterest(double xlow, double ylow, double xup, 
     Detector2D(m_instrument)->setRegionOfInterest(xlow, ylow, xup, yup);
 }
 
-std::unique_ptr<IComputation> GISASSimulation::generateSingleThreadedComputation(
-        std::vector<SimulationElement>::iterator start,
-        std::vector<SimulationElement>::iterator end)
+std::unique_ptr<IComputation>
+GISASSimulation::generateSingleThreadedComputation(SimIter start, SimIter end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
-}
-
-GISASSimulation::GISASSimulation(const GISASSimulation& other)
-    : Simulation(other)
-{
-    initialize();
 }
 
 void GISASSimulation::transferResultsToIntensityMap() {}

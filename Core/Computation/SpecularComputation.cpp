@@ -14,28 +14,22 @@
 
 #include "SpecularComputation.h"
 #include "Layer.h"
-#include "IFresnelMap.h"
 #include "MatrixFresnelMap.h"
 #include "MultiLayer.h"
 #include "ScalarFresnelMap.h"
 #include "ProgressHandler.h"
 #include "SimulationElement.h"
-#include "SpecularComputationTerm.h"
 
 static_assert(std::is_copy_constructible<SpecularComputation>::value == false,
               "SpecularComputation should not be copy constructible");
 static_assert(std::is_copy_assignable<SpecularComputation>::value == false,
               "SpecularComputation should not be copy assignable");
 
-SpecularComputation::SpecularComputation(const MultiLayer& multilayer,
-                                         const SimulationOptions& options,
-                                         ProgressHandler& progress,
-                                         const std::vector<SimulationElement>::iterator& begin_it,
-                                         const std::vector<SimulationElement>::iterator& end_it)
-    : IComputation(options, progress, begin_it, end_it, multilayer)
+void SpecularComputation::init()
 {
     mP_fresnel_map = createFresnelMap();
-    m_computation_term.reset(new SpecularComputationTerm(mP_multi_layer.get(), mP_fresnel_map.get()));
+    m_computation_term.reset(
+        new SpecularComputationTerm(mP_multi_layer.get(), mP_fresnel_map.get()));
 }
 
 SpecularComputation::~SpecularComputation() = default;
@@ -44,7 +38,7 @@ void SpecularComputation::runProtected()
 {
     if (!m_progress->alive())
         return;
-    m_computation_term->eval(m_progress, m_begin_it, m_end_it);
+    m_iter_holder->eval(*m_computation_term);
 }
 
 std::unique_ptr<IFresnelMap> SpecularComputation::createFresnelMap()

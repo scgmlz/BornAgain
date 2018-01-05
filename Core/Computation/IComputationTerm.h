@@ -21,7 +21,6 @@
 
 class IFresnelMap;
 class MultiLayer;
-class ProgressHandler;
 class SimulationElement;
 class SimulationOptions;
 
@@ -36,16 +35,23 @@ public:
     IComputationTerm(const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map);
     virtual ~IComputationTerm();
 
-    //! Calculate scattering intensity for each SimulationElement
-    //! returns false if nothing needed to be calculated
-    virtual void eval(ProgressHandler* progress,
-                      const std::vector<SimulationElement>::iterator& begin_it,
-                      const std::vector<SimulationElement>::iterator& end_it) const =0;
+    //! Calculates scattering intensity for a range of simulation elements.
+    template <class Iter>
+    void eval(Iter begin, Iter end) const
+    {
+        if (!checkComputation())
+            return;
+        for (auto it = begin; it != end; ++it)
+            evalSingle(*it);
+    }
 
     //! Merges its region map into the given one (notice non-const reference parameter)
     void mergeRegionMap(std::map<size_t, std::vector<HomogeneousRegion>>& region_map) const;
 
 protected:
+    //! Calculates scattering intensity for single simulation element.
+    virtual void evalSingle(SimulationElement& element) const = 0;
+    virtual bool checkComputation() const {return true;}
     const MultiLayer* mp_multilayer;
     const IFresnelMap* mp_fresnel_map;
     std::map<size_t, std::vector<HomogeneousRegion>> m_region_map;

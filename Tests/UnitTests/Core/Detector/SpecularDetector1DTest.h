@@ -2,8 +2,9 @@
 #include "BornAgainNamespace.h"
 #include "FixedBinAxis.h"
 #include "OutputData.h"
-#include "SimulationElement.h"
 #include "SimulationArea.h"
+#include "SimulationElement.h"
+#include "SimulationElementsProvider.h"
 #include "SpecularDetector1D.h"
 #include "Units.h"
 #include "google_test.h"
@@ -13,6 +14,17 @@ class SpecularDetectorTest : public ::testing::Test
 {
 protected:
     ~SpecularDetectorTest();
+
+    std::vector<SimulationElement>
+    extractSimulationElements(std::unique_ptr<ISimulationElementsProvider> agent_base)
+    {
+        auto agent
+            = dynamic_cast<SimulationElementsProvider<SimulationElement>*>(agent_base.get());
+        std::vector<SimulationElement> result;
+        if (agent)
+            result = agent->releaseSimElements();
+        return result;
+    }
 };
 
 SpecularDetectorTest::~SpecularDetectorTest() = default;
@@ -111,7 +123,7 @@ TEST_F(SpecularDetectorTest, SimulationElements)
     Beam beam;
     beam.setCentralK(1.0 * Units::angstrom, 0.4 * Units::deg, 0.0);
 
-    auto sim_elements = detector.createSimulationElements(beam);
+    auto sim_elements = extractSimulationElements(detector.createSimulationElements(beam));
 
     EXPECT_EQ(5u, sim_elements.size());
 

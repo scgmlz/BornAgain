@@ -27,7 +27,6 @@ Instrument::Instrument()
     setName(BornAgain::InstrumentType);
     registerChild(mP_detector.get());
     registerChild(&m_beam);
-    init_parameters();
 }
 
 Instrument::Instrument(const Instrument &other) : m_beam(other.m_beam)
@@ -36,7 +35,6 @@ Instrument::Instrument(const Instrument &other) : m_beam(other.m_beam)
         setDetector(*other.mP_detector);
     registerChild(&m_beam);
     setName(other.getName());
-    init_parameters();
 }
 
 Instrument::~Instrument() {}
@@ -48,7 +46,6 @@ Instrument &Instrument::operator=(const Instrument &other)
         registerChild(&m_beam);
         if(other.mP_detector)
             setDetector(*other.mP_detector);
-        init_parameters();
     }
     return *this;
 }
@@ -77,12 +74,6 @@ std::vector<const INode*> Instrument::getChildren() const
     return result;
 }
 
-
-std::vector<SimulationElement> Instrument::createSimulationElements()
-{
-    return mP_detector->createSimulationElements(m_beam);
-}
-
 void Instrument::setDetectorResolutionFunction(const IResolutionFunction2D& p_resolution_function)
 {
     mP_detector->setResolutionFunction(p_resolution_function);
@@ -96,25 +87,6 @@ void Instrument::removeDetectorResolution()
 void Instrument::applyDetectorResolution(OutputData<double>* p_intensity_map) const
 {
     mP_detector->applyDetectorResolution(p_intensity_map);
-}
-
-OutputData<double> *Instrument::createDetectorIntensity(
-        const std::vector<SimulationElement> &elements, AxesUnits units) const
-{
-    return mP_detector->createDetectorIntensity(elements, m_beam, units);
-}
-
-Histogram2D* Instrument::createIntensityData(const std::vector<SimulationElement>& elements,
-                                         AxesUnits units_type) const
-{
-    const std::unique_ptr<OutputData<double>> data(createDetectorIntensity(elements, units_type));
-    std::unique_ptr<Histogram2D> result(new Histogram2D(*data));
-
-    if (units_type == AxesUnits::DEFAULT)
-        units_type = mP_detector->defaultAxesUnits();
-
-    result->setAxesUnits(DetectorFunctions::detectorUnitsName(units_type));
-    return result.release();
 }
 
 OutputData<double> *Instrument::createDetectorMap(AxesUnits units) const
@@ -183,4 +155,17 @@ void Instrument::setAnalyzerProperties(const kvector_t direction, double efficie
                                        double total_transmission)
 {
     mP_detector->setAnalyzerProperties(direction, efficiency, total_transmission);
+}
+
+std::unique_ptr<Histogram2D>
+Instrument::createUnitSpecificHistogram(std::unique_ptr<OutputData<double>> output_data,
+                                        AxesUnits units) const
+{
+    std::unique_ptr<Histogram2D> result = std::make_unique<Histogram2D>(*output_data);
+
+    if (units == AxesUnits::DEFAULT)
+        units = mP_detector->defaultAxesUnits();
+
+    result->setAxesUnits(DetectorFunctions::detectorUnitsName(units));
+    return result;
 }

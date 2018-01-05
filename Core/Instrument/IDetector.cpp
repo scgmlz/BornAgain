@@ -15,10 +15,7 @@
 #include "ConvolutionDetectorResolution.h"
 #include "IDetector.h"
 #include "IDetectorResolution.h"
-#include "OutputData.h"
 #include "RegionOfInterest.h"
-#include "SimulationArea.h"
-#include "SimulationElement.h"
 
 IDetector::IDetector()
 {
@@ -148,33 +145,6 @@ void IDetector::initOutputData(OutputData<double> &data) const {
   data.setAllTo(0.);
 }
 
-OutputData<double>*
-IDetector::createDetectorIntensity(const std::vector<SimulationElement>& elements, const Beam& beam,
-                                   AxesUnits units_type) const
-{
-    std::unique_ptr<OutputData<double>> detectorMap(createDetectorMap(beam, units_type));
-    if (!detectorMap)
-        throw Exceptions::RuntimeErrorException("Instrument::createDetectorIntensity:"
-                                                "can't create detector map.");
-
-    if (mP_detector_resolution) {
-        if (units_type != AxesUnits::DEFAULT) {
-            std::unique_ptr<OutputData<double>> defaultMap(
-                createDetectorMap(beam, AxesUnits::DEFAULT));
-            setDataToDetectorMap(*defaultMap, elements);
-            applyDetectorResolution(defaultMap.get());
-            detectorMap->setRawDataVector(defaultMap->getRawDataVector());
-        } else {
-            setDataToDetectorMap(*detectorMap, elements);
-            applyDetectorResolution(detectorMap.get());
-        }
-    } else {
-        setDataToDetectorMap(*detectorMap, elements);
-    }
-
-    return detectorMap.release();
-}
-
 void IDetector::checkAxesUnits(AxesUnits units) const
 {
     if(units == AxesUnits::DEFAULT)
@@ -223,17 +193,6 @@ std::unique_ptr<OutputData<double>> IDetector::createDetectorMap(const Beam& bea
         result->addAxis(*translateAxisToUnits(i, beam, units));
     result->setAllTo(0.);
     return result;
-}
-
-void IDetector::setDataToDetectorMap(OutputData<double> &detectorMap,
-                                       const std::vector<SimulationElement> &elements) const
-{
-    if(elements.empty())
-        return;
-    SimulationArea area(this);
-    for(SimulationArea::iterator it = area.begin(); it!=area.end(); ++it)
-        detectorMap[it.roiIndex()] = elements[it.elementIndex()].getIntensity();
-
 }
 
 size_t IDetector::numberOfSimulationElements() const

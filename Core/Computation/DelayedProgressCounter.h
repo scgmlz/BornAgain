@@ -28,7 +28,7 @@ public:
     ~DelayedProgressCounter() {}
 
     //! Increments inner counter; at regular intervals updates progress handler.
-    void stepProgress(ProgressHandler* progress);
+    void stepProgress(ProgressHandler& progress);
 private:
     const size_t m_interval;
     size_t m_count;

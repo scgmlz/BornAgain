@@ -18,28 +18,29 @@
 #include "SpecularMatrix.h"
 #include "MaterialUtils.h"
 #include "Histogram1D.h"
-#include "SimulationElement.h"
+#include "OutputData.h"
 #include "SpecularComputation.h"
 #include "SpecularDetector1D.h"
 
-SpecularSimulation::SpecularSimulation() : Simulation()
+SpecularSimulation::SpecularSimulation()
 {
     initialize();
 }
 
-SpecularSimulation::SpecularSimulation(const MultiLayer& sample) : Simulation(sample)
+SpecularSimulation::SpecularSimulation(const MultiLayer& sample)
+    : SimulationImpl(sample)
 {
     initialize();
 }
 
 SpecularSimulation::SpecularSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder)
-    : Simulation(sample_builder)
+    : SimulationImpl(sample_builder)
 {
     initialize();
 }
 
 SpecularSimulation::SpecularSimulation(const SpecularSimulation& other)
-    : Simulation(other)
+    : SimulationImpl(other)
 {
     initialize();
 }
@@ -109,8 +110,8 @@ SpecularSimulation::getDataByAbsValue(size_t i_layer, DataGetter fn_ptr) const
     return output_ptr;
 }
 
-std::unique_ptr<IComputation> SpecularSimulation::generateSingleThreadedComputation(
-    std::vector<SimulationElement>::iterator start, std::vector<SimulationElement>::iterator end)
+std::unique_ptr<IComputation>
+SpecularSimulation::generateSingleThreadedComputation(SimIter start, SimIter end)
 {
     return std::make_unique<SpecularComputation>(*sample(), m_options, m_progress, start, end);
 }
@@ -119,7 +120,7 @@ OutputData<double>* SpecularSimulation::getDetectorIntensity(AxesUnits units_typ
 {
     const size_t i_layer = 0; // detector intensity is proportional to reflectivity from the zeroth layer
     validityCheck(i_layer);
-    return m_instrument.createDetectorIntensity(m_sim_elements, units_type);
+    return m_instrument.createDetectorIntensity(m_sim_elements, units_type).release();
 }
 
 Histogram1D* SpecularSimulation::reflectivity() const
@@ -149,8 +150,7 @@ std::vector<complex_t> SpecularSimulation::getScalarKz(size_t i_layer) const
     return getData(i_layer, &ILayerRTCoefficients::getScalarKz);
 }
 
-void SpecularSimulation::normalize(std::vector<SimulationElement>::iterator begin_it,
-                           std::vector<SimulationElement>::iterator end_it) const
+void SpecularSimulation::normalize(SimIter begin_it, SimIter end_it) const
 {
     double beam_intensity = getBeamIntensity();
     if (beam_intensity==0.0)

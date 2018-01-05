@@ -18,7 +18,6 @@
 #include "Histogram2D.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "SimulationElement.h"
 
 OffSpecSimulation::OffSpecSimulation()
     : mp_alpha_i_axis(nullptr)
@@ -27,18 +26,30 @@ OffSpecSimulation::OffSpecSimulation()
 }
 
 OffSpecSimulation::OffSpecSimulation(const MultiLayer& p_sample)
-    : Simulation(p_sample)
+    : SimulationImpl(p_sample)
     , mp_alpha_i_axis(nullptr)
 {
     initialize();
 }
 
 OffSpecSimulation::OffSpecSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
-    : Simulation(p_sample_builder)
+    : SimulationImpl(p_sample_builder)
     , mp_alpha_i_axis(nullptr)
 {
     initialize();
 }
+
+OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
+    : SimulationImpl(other)
+    , mp_alpha_i_axis(nullptr)
+{
+    if(other.mp_alpha_i_axis)
+        mp_alpha_i_axis = other.mp_alpha_i_axis->clone();
+    m_intensity_map.copyFrom(other.m_intensity_map);
+    initialize();
+}
+
+OffSpecSimulation::~OffSpecSimulation() = default;
 
 void OffSpecSimulation::prepareSimulation()
 {
@@ -82,21 +93,10 @@ void OffSpecSimulation::setDetectorParameters(size_t n_x, double x_min, double x
     updateIntensityMap();
 }
 
-std::unique_ptr<IComputation> OffSpecSimulation::generateSingleThreadedComputation(
-        std::vector<SimulationElement>::iterator start,
-        std::vector<SimulationElement>::iterator end)
+std::unique_ptr<IComputation>
+OffSpecSimulation::generateSingleThreadedComputation(SimIter start, SimIter end)
 {
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, start, end);
-}
-
-OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
-    : Simulation(other)
-    , mp_alpha_i_axis(nullptr)
-{
-    if(other.mp_alpha_i_axis)
-        mp_alpha_i_axis = other.mp_alpha_i_axis->clone();
-    m_intensity_map.copyFrom(other.m_intensity_map);
-    initialize();
 }
 
 void OffSpecSimulation::initSimulationElementVector()
@@ -112,8 +112,8 @@ void OffSpecSimulation::initSimulationElementVector()
         double alpha_i = mp_alpha_i_axis->getBin(iAlpha).getMidPoint();
         beam.setCentralK(wavelength, alpha_i, phi_i);
         m_instrument.setBeam(beam);
-        std::vector<SimulationElement> sim_elements_alpha_i =
-            m_instrument.createSimulationElements();
+        SimElementVector sim_elements_alpha_i =
+            m_instrument.createSimulationElements<SimElementVector::value_type>();
         m_sim_elements.insert(m_sim_elements.end(), sim_elements_alpha_i.begin(),
                               sim_elements_alpha_i.end());
     }

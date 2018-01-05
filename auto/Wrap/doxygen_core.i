@@ -193,7 +193,7 @@ Calls the  INodeVisitor's visit method.
 // File: classBasicVector3D.xml
 %feature("docstring") BasicVector3D "
 
-Three-dimensional vector template, for use with integer, double, or complex components.
+Forked from CLHEP/Geometry by E. Chernyaev Evgueni.Tcherniaev@cern.ch, then reworked beyond recongnition. Removed split of point and vector semantics. Transforms are relegated to a separate class  Transform3D. Three-dimensional vector template, for use with integer, double, or complex components.
 
 C++ includes: BasicVector3D.h
 ";
@@ -610,21 +610,21 @@ C++ includes: BoxCompositionBuilder.h
 ";
 
 
-// File: structIntegratorReal_1_1CallBackHolder.xml
-%feature("docstring") IntegratorReal::CallBackHolder "
-
-structure holding the object and possible extra parameters
-
-C++ includes: IntegratorReal.h
-";
-
-
 // File: structIntegratorMCMiser_1_1CallBackHolder.xml
 %feature("docstring") IntegratorMCMiser::CallBackHolder "
 
 structure holding the object and possible extra parameters
 
 C++ includes: IntegratorMCMiser.h
+";
+
+
+// File: structIntegratorReal_1_1CallBackHolder.xml
+%feature("docstring") IntegratorReal::CallBackHolder "
+
+structure holding the object and possible extra parameters
+
+C++ includes: IntegratorReal.h
 ";
 
 
@@ -744,9 +744,6 @@ C++ includes: ConstantBackground.h
 %feature("docstring")  ConstantBackground::accept "void ConstantBackground::accept(INodeVisitor *visitor) const override
 
 Calls the  INodeVisitor's visit method. 
-";
-
-%feature("docstring")  ConstantBackground::addBackGround "void ConstantBackground::addBackGround(std::vector< SimulationElement >::iterator start, std::vector< SimulationElement >::iterator end) const override final
 ";
 
 
@@ -1170,7 +1167,7 @@ C++ includes: DelayedProgressCounter.h
 %feature("docstring")  DelayedProgressCounter::~DelayedProgressCounter "DelayedProgressCounter::~DelayedProgressCounter()
 ";
 
-%feature("docstring")  DelayedProgressCounter::stepProgress "void DelayedProgressCounter::stepProgress(ProgressHandler *progress)
+%feature("docstring")  DelayedProgressCounter::stepProgress "void DelayedProgressCounter::stepProgress(ProgressHandler &progress)
 
 Increments inner counter; at regular intervals updates progress handler. 
 ";
@@ -1683,18 +1680,15 @@ Calls the  INodeVisitor's visit method.
 
 Performs a single-threaded DWBA computation with given sample and simulation parameters.
 
-Controlled by the multi-threading machinery in  Simulation::runSingleSimulation().
+Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
 
 C++ includes: DWBAComputation.h
 ";
 
-%feature("docstring")  DWBAComputation::DWBAComputation "DWBAComputation::DWBAComputation(const MultiLayer &multilayer, const SimulationOptions &options, ProgressHandler &progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it)
+%feature("docstring")  DWBAComputation::DWBAComputation "DWBAComputation::DWBAComputation(const MultiLayer &multilayer, const SimulationOptions &options, const std::shared_ptr< ProgressHandler > &progress, Iter begin_it, Iter end_it)
 ";
 
 %feature("docstring")  DWBAComputation::~DWBAComputation "DWBAComputation::~DWBAComputation()
-";
-
-%feature("docstring")  DWBAComputation::run "void DWBAComputation::run()
 ";
 
 
@@ -5567,7 +5561,7 @@ C++ includes: GISASSimulation.h
 %feature("docstring")  GISASSimulation::GISASSimulation "GISASSimulation::GISASSimulation(const std::shared_ptr< IMultiLayerBuilder > p_sample_builder)
 ";
 
-%feature("docstring")  GISASSimulation::~GISASSimulation "GISASSimulation::~GISASSimulation() final
+%feature("docstring")  GISASSimulation::~GISASSimulation "GISASSimulation::~GISASSimulation()
 ";
 
 %feature("docstring")  GISASSimulation::clone "GISASSimulation* GISASSimulation::clone() const
@@ -6177,7 +6171,7 @@ C++ includes: IBackground.h
 %feature("docstring")  IBackground::clone "virtual IBackground* IBackground::clone() const =0
 ";
 
-%feature("docstring")  IBackground::addBackGround "virtual void IBackground::addBackGround(std::vector< SimulationElement >::iterator start, std::vector< SimulationElement >::iterator end) const =0
+%feature("docstring")  IBackground::addBackGround "void IBackground::addBackGround(Iter start, Iter end) const
 ";
 
 
@@ -6306,12 +6300,12 @@ Creates region information with volumetric densities instead of absolute volume 
 
 Interface for a single-threaded computation with given range of SimulationElements and  ProgressHandler.
 
-Controlled by the multi-threading machinery in  Simulation::runSingleSimulation().
+Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
 
 C++ includes: IComputation.h
 ";
 
-%feature("docstring")  IComputation::IComputation "IComputation::IComputation(const SimulationOptions &options, ProgressHandler &progress, const std::vector< SimulationElement >::iterator &start, const std::vector< SimulationElement >::iterator &end, const MultiLayer &sample)
+%feature("docstring")  IComputation::IComputation "IComputation::IComputation(const SimulationOptions &options, const std::shared_ptr< ProgressHandler > &progress, std::unique_ptr< IIterHandler > iter_holder, const MultiLayer &sample)
 ";
 
 %feature("docstring")  IComputation::~IComputation "IComputation::~IComputation()
@@ -6341,9 +6335,9 @@ C++ includes: IComputationTerm.h
 %feature("docstring")  IComputationTerm::~IComputationTerm "IComputationTerm::~IComputationTerm()
 ";
 
-%feature("docstring")  IComputationTerm::eval "virtual void IComputationTerm::eval(ProgressHandler *progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it) const =0
+%feature("docstring")  IComputationTerm::eval "void IComputationTerm::eval(Iter begin, Iter end) const
 
-Calculate scattering intensity for each  SimulationElement returns false if nothing needed to be calculated 
+Calculates scattering intensity for a range of simulation elements. 
 ";
 
 %feature("docstring")  IComputationTerm::mergeRegionMap "void IComputationTerm::mergeRegionMap(std::map< size_t, std::vector< HomogeneousRegion >> &region_map) const
@@ -6446,9 +6440,14 @@ Returns a pointer to detector resolution object.
 Returns empty detector map in given axes units. 
 ";
 
-%feature("docstring")  IDetector::createSimulationElements "virtual std::vector<SimulationElement> IDetector::createSimulationElements(const Beam &beam)=0
+%feature("docstring")  IDetector::createSimulationElements "virtual std::unique_ptr<ISimulationElementsProvider> IDetector::createSimulationElements(const Beam &beam)=0
 
 Create a vector of  SimulationElement objects according to the detector and its mask. 
+";
+
+%feature("docstring")  IDetector::createDetectorIntensity "std::unique_ptr<OutputData<double> > IDetector::createDetectorIntensity(const std::vector< SimElement > &elements, const Beam &beam, AxesUnits units_type=AxesUnits::DEFAULT) const
+
+Returns new intensity map with detector resolution applied and axes in requested units. 
 ";
 
 %feature("docstring")  IDetector::regionOfInterest "virtual const RegionOfInterest* IDetector::regionOfInterest() const =0
@@ -6469,11 +6468,6 @@ Returns detection properties.
 %feature("docstring")  IDetector::initOutputData "void IDetector::initOutputData(OutputData< double > &data) const
 
 Inits axes of  OutputData to match the detector and sets values to zero. 
-";
-
-%feature("docstring")  IDetector::createDetectorIntensity "OutputData< double > * IDetector::createDetectorIntensity(const std::vector< SimulationElement > &elements, const Beam &beam, AxesUnits units_type=AxesUnits::DEFAULT) const
-
-Returns new intensity map with detector resolution applied and axes in requested units. 
 ";
 
 %feature("docstring")  IDetector::defaultAxesUnits "virtual AxesUnits IDetector::defaultAxesUnits() const
@@ -6553,7 +6547,7 @@ The value of mask
 Put the mask for all detector channels (i.e. exclude whole detector from the analysis) 
 ";
 
-%feature("docstring")  IDetector2D::createSimulationElements "std::vector< SimulationElement > IDetector2D::createSimulationElements(const Beam &beam) override
+%feature("docstring")  IDetector2D::createSimulationElements "std::unique_ptr< ISimulationElementsProvider > IDetector2D::createSimulationElements(const Beam &beam) override
 
 Create a vector of  SimulationElement objects according to the detector and its mask. 
 ";
@@ -7556,6 +7550,9 @@ Calculates the intensity for scalar particles/interactions.
 ";
 
 
+// File: structIComputation_1_1IIterHandler.xml
+
+
 // File: classILayerRTCoefficients.xml
 %feature("docstring") ILayerRTCoefficients "
 
@@ -8259,24 +8256,24 @@ Sets the polarization analyzer characteristics of the detector.
 apply the detector resolution to the given intensity map 
 ";
 
-%feature("docstring")  Instrument::createDetectorIntensity "OutputData< double > * Instrument::createDetectorIntensity(const std::vector< SimulationElement > &elements, AxesUnits units=AxesUnits::DEFAULT) const
+%feature("docstring")  Instrument::createDetectorIntensity "std::unique_ptr<OutputData<double> > Instrument::createDetectorIntensity(const std::vector< SimElement > &elements, AxesUnits units=AxesUnits::DEFAULT) const
 
 Returns new intensity map with detector resolution applied and axes in requested units. 
 ";
 
-%feature("docstring")  Instrument::createIntensityData "Histogram2D * Instrument::createIntensityData(const std::vector< SimulationElement > &elements, AxesUnits units_type=AxesUnits::DEFAULT) const
+%feature("docstring")  Instrument::createIntensityData "Histogram2D* Instrument::createIntensityData(const std::vector< SimElement > &elements, AxesUnits units_type=AxesUnits::DEFAULT) const
 
 Returns histogram representing intensity map in requested axes units. 
+";
+
+%feature("docstring")  Instrument::createSimulationElements "std::vector<SimElement> Instrument::createSimulationElements()
+
+Create a vector of  SimulationElement objects according to the beam, detector and its mask. 
 ";
 
 %feature("docstring")  Instrument::createDetectorMap "OutputData< double > * Instrument::createDetectorMap(AxesUnits units=AxesUnits::DEFAULT) const
 
 Returns empty detector map in given axes units. 
-";
-
-%feature("docstring")  Instrument::createSimulationElements "std::vector< SimulationElement > Instrument::createSimulationElements()
-
-Create a vector of  SimulationElement objects according to the beam, detector and its mask. 
 ";
 
 %feature("docstring")  Instrument::initDetector "void Instrument::initDetector()
@@ -9354,6 +9351,18 @@ Returns true if area defined by two bins is inside or on border of polygon (more
 ";
 
 
+// File: classISimulationElementsProvider.xml
+%feature("docstring") ISimulationElementsProvider "
+
+Base for  SimulationElementsProvider.
+
+C++ includes: SimulationElementsProvider.h
+";
+
+%feature("docstring")  ISimulationElementsProvider::~ISimulationElementsProvider "virtual ISimulationElementsProvider::~ISimulationElementsProvider()=default
+";
+
+
 // File: classISingleton.xml
 %feature("docstring") ISingleton "
 
@@ -9473,6 +9482,9 @@ C++ includes: NodeIterator.h
 
 %feature("docstring")  IteratorState::next "void IteratorState::next()
 ";
+
+
+// File: structIComputation_1_1IterHandler.xml
 
 
 // File: classLabelMap.xml
@@ -10712,7 +10724,7 @@ C++ includes: OffSpecSimulation.h
 %feature("docstring")  OffSpecSimulation::OffSpecSimulation "OffSpecSimulation::OffSpecSimulation(const std::shared_ptr< class IMultiLayerBuilder > p_sample_builder)
 ";
 
-%feature("docstring")  OffSpecSimulation::~OffSpecSimulation "OffSpecSimulation::~OffSpecSimulation() final
+%feature("docstring")  OffSpecSimulation::~OffSpecSimulation "OffSpecSimulation::~OffSpecSimulation()
 ";
 
 %feature("docstring")  OffSpecSimulation::clone "OffSpecSimulation* OffSpecSimulation::clone() const
@@ -11838,12 +11850,7 @@ Computes the scattering contribution from one particle layout. Used by  DWBAComp
 C++ includes: ParticleLayoutComputation.h
 ";
 
-%feature("docstring")  ParticleLayoutComputation::ParticleLayoutComputation "ParticleLayoutComputation::ParticleLayoutComputation(const MultiLayer *p_multilayer, const IFresnelMap *p_fresnel_map, const ILayout *p_layout, size_t layer_index, const SimulationOptions &options, bool polarized)
-";
-
-%feature("docstring")  ParticleLayoutComputation::eval "void ParticleLayoutComputation::eval(ProgressHandler *progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it) const override
-
-Computes scattering intensity for given range of simulation elements. 
+%feature("docstring")  ParticleLayoutComputation::ParticleLayoutComputation "ParticleLayoutComputation::ParticleLayoutComputation(const MultiLayer *p_multilayer, const IFresnelMap *p_fresnel_map, const ILayout *p_layout, size_t layer_index, const SimulationOptions &options, bool polarized, const std::shared_ptr< ProgressHandler > &progress)
 ";
 
 
@@ -11871,9 +11878,6 @@ C++ includes: PoissonNoiseBackground.h
 %feature("docstring")  PoissonNoiseBackground::accept "void PoissonNoiseBackground::accept(INodeVisitor *visitor) const override
 
 Calls the  INodeVisitor's visit method. 
-";
-
-%feature("docstring")  PoissonNoiseBackground::addBackGround "void PoissonNoiseBackground::addBackGround(std::vector< SimulationElement >::iterator start, std::vector< SimulationElement >::iterator end) const override final
 ";
 
 
@@ -12807,15 +12811,10 @@ Computes the diffuse reflection from the rough interfaces of a multilayer. Used 
 C++ includes: RoughMultiLayerComputation.h
 ";
 
-%feature("docstring")  RoughMultiLayerComputation::RoughMultiLayerComputation "RoughMultiLayerComputation::RoughMultiLayerComputation(const MultiLayer *p_multi_layer, const IFresnelMap *p_fresnel_map)
+%feature("docstring")  RoughMultiLayerComputation::RoughMultiLayerComputation "RoughMultiLayerComputation::RoughMultiLayerComputation(const MultiLayer *p_multi_layer, const IFresnelMap *p_fresnel_map, const std::shared_ptr< ProgressHandler > &progress)
 ";
 
 %feature("docstring")  RoughMultiLayerComputation::~RoughMultiLayerComputation "RoughMultiLayerComputation::~RoughMultiLayerComputation()
-";
-
-%feature("docstring")  RoughMultiLayerComputation::eval "void RoughMultiLayerComputation::eval(ProgressHandler *progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it) const override
-
-Calculate scattering intensity for each  SimulationElement returns false if nothing needed to be calculated 
 ";
 
 
@@ -13239,7 +13238,7 @@ C++ includes: ISelectionRule.h
 // File: classSimulation.xml
 %feature("docstring") Simulation "
 
-Pure virtual base class of OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Holds the common infrastructure to run a simulation: multithreading, batch processing, weighting over parameter distributions, ...
+Abstract base class for simulation implementations. Holds the common infrastructure to run a simulation: multithreading, batch processing, weighting over parameter distributions, ...
 
 C++ includes: Simulation.h
 ";
@@ -13259,16 +13258,9 @@ C++ includes: Simulation.h
 %feature("docstring")  Simulation::clone "virtual Simulation* Simulation::clone() const =0
 ";
 
-%feature("docstring")  Simulation::prepareSimulation "void Simulation::prepareSimulation()
+%feature("docstring")  Simulation::runSimulation "virtual void Simulation::runSimulation()=0
 
-Put into a clean state for running a simulation. 
-";
-
-%feature("docstring")  Simulation::runSimulation "void Simulation::runSimulation()
-
-Run a simulation, possibly averaged over parameter distributions.
-
-Run simulation with possible averaging over parameter distributions. 
+Run a simulation, possibly averaged over parameter distributions. 
 ";
 
 %feature("docstring")  Simulation::setInstrument "void Simulation::setInstrument(const Instrument &instrument)
@@ -13531,6 +13523,21 @@ Turn on specular data.
 ";
 
 
+// File: classSimulationElementsProvider.xml
+%feature("docstring") SimulationElementsProvider "
+
+SimulationElementsProvider template, gives access to created simulation elements Intended to be used in detectors for access to simulation elements of different types
+
+C++ includes: SimulationElementsProvider.h
+";
+
+%feature("docstring")  SimulationElementsProvider::getElementVector "std::vector<SimElement>& SimulationElementsProvider< SimElement >::getElementVector()
+";
+
+%feature("docstring")  SimulationElementsProvider::releaseSimElements "std::vector<SimElement> SimulationElementsProvider< SimElement >::releaseSimElements()
+";
+
+
 // File: classSimulationFactory.xml
 %feature("docstring") SimulationFactory "
 
@@ -13540,6 +13547,26 @@ C++ includes: SimulationFactory.h
 ";
 
 %feature("docstring")  SimulationFactory::SimulationFactory "SimulationFactory::SimulationFactory()
+";
+
+
+// File: classSimulationImpl.xml
+%feature("docstring") SimulationImpl "
+
+Template base class for OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Operates on the vector of simulation elements
+
+C++ includes: SimulationImpl.h
+";
+
+%feature("docstring")  SimulationImpl::SimulationImpl "SimulationImpl< SimElement >::SimulationImpl()
+";
+
+%feature("docstring")  SimulationImpl::~SimulationImpl "SimulationImpl< SimElement >::~SimulationImpl()
+";
+
+%feature("docstring")  SimulationImpl::runSimulation "void SimulationImpl< SimElement >::runSimulation() override final
+
+Run a simulation, possibly averaged over parameter distributions. 
 ";
 
 
@@ -13740,18 +13767,15 @@ C++ includes: IFormFactorBorn.h
 
 Performs a single-threaded specular computation with given sample.
 
-Controlled by the multi-threading machinery in  Simulation::runSingleSimulation().
+Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
 
 C++ includes: SpecularComputation.h
 ";
 
-%feature("docstring")  SpecularComputation::SpecularComputation "SpecularComputation::SpecularComputation(const MultiLayer &multilayer, const SimulationOptions &options, ProgressHandler &progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it)
+%feature("docstring")  SpecularComputation::SpecularComputation "SpecularComputation::SpecularComputation(const MultiLayer &multilayer, const SimulationOptions &options, const std::shared_ptr< ProgressHandler > &progress, Iter begin_it, Iter end_it)
 ";
 
 %feature("docstring")  SpecularComputation::~SpecularComputation "SpecularComputation::~SpecularComputation()
-";
-
-%feature("docstring")  SpecularComputation::run "void SpecularComputation::run()
 ";
 
 
@@ -13764,11 +13788,6 @@ C++ includes: SpecularComputationTerm.h
 ";
 
 %feature("docstring")  SpecularComputationTerm::SpecularComputationTerm "SpecularComputationTerm::SpecularComputationTerm(const MultiLayer *p_multi_layer, const IFresnelMap *p_fresnel_map)
-";
-
-%feature("docstring")  SpecularComputationTerm::eval "void SpecularComputationTerm::eval(ProgressHandler *progress, const std::vector< SimulationElement >::iterator &begin_it, const std::vector< SimulationElement >::iterator &end_it) const override
-
-Calculate scattering intensity for each  SimulationElement returns false if nothing needed to be calculated 
 ";
 
 
@@ -13820,7 +13839,7 @@ Calls the  INodeVisitor's visit method.
 Returns detector masks container. 
 ";
 
-%feature("docstring")  SpecularDetector1D::createSimulationElements "std::vector< SimulationElement > SpecularDetector1D::createSimulationElements(const Beam &beam) override
+%feature("docstring")  SpecularDetector1D::createSimulationElements "std::unique_ptr< ISimulationElementsProvider > SpecularDetector1D::createSimulationElements(const Beam &beam) override
 
 Create a vector of  SimulationElement objects according to the detector and its mask. 
 ";
@@ -14694,58 +14713,58 @@ C++ includes: ZLimits.h
 // File: namespace_0D263.xml
 
 
-// File: namespace_0D271.xml
+// File: namespace_0D272.xml
 
 
-// File: namespace_0D292.xml
+// File: namespace_0D293.xml
 
 
-// File: namespace_0D296.xml
+// File: namespace_0D297.xml
 
 
-// File: namespace_0D298.xml
+// File: namespace_0D299.xml
 
 
-// File: namespace_0D300.xml
+// File: namespace_0D301.xml
 
 
-// File: namespace_0D308.xml
+// File: namespace_0D309.xml
 
 
-// File: namespace_0D323.xml
+// File: namespace_0D324.xml
 
 
-// File: namespace_0D331.xml
+// File: namespace_0D332.xml
 
 
-// File: namespace_0D337.xml
+// File: namespace_0D338.xml
 
 
-// File: namespace_0D340.xml
+// File: namespace_0D341.xml
 
 
-// File: namespace_0D342.xml
+// File: namespace_0D343.xml
 
 
-// File: namespace_0D363.xml
+// File: namespace_0D364.xml
 
 
-// File: namespace_0D372.xml
+// File: namespace_0D373.xml
 
 
-// File: namespace_0D405.xml
+// File: namespace_0D406.xml
 
 
-// File: namespace_0D412.xml
+// File: namespace_0D413.xml
 
 
-// File: namespace_0D450.xml
+// File: namespace_0D451.xml
 
 
-// File: namespace_0D522.xml
+// File: namespace_0D525.xml
 
 
-// File: namespace_0D544.xml
+// File: namespace_0D547.xml
 
 
 // File: namespace_0D73.xml
@@ -15654,17 +15673,9 @@ global helper function for comparison of axes
 
 
 // File: SimulationElement_8cpp.xml
-%feature("docstring")  addElementsWithWeight "void addElementsWithWeight(std::vector< SimulationElement >::const_iterator first, std::vector< SimulationElement >::const_iterator last, std::vector< SimulationElement >::iterator result, double weight)
-
-Add element vector to element vector with weight. 
-";
 
 
 // File: SimulationElement_8h.xml
-%feature("docstring")  addElementsWithWeight "void addElementsWithWeight(std::vector< SimulationElement >::const_iterator first, std::vector< SimulationElement >::const_iterator last, std::vector< SimulationElement >::iterator result, double weight)
-
-Add element vector to element vector with weight. 
-";
 
 
 // File: VariableBinAxis_8cpp.xml
@@ -16334,6 +16345,9 @@ make Swappable
 
 
 // File: SimulationAreaIterator_8h.xml
+
+
+// File: SimulationElementsProvider_8h.xml
 
 
 // File: SpecularDetector1D_8cpp.xml
@@ -17111,6 +17125,12 @@ Generate vertices of centered ellipse with given semi-axes at height z.
 
 
 // File: Simulation_8h.xml
+
+
+// File: SimulationImpl_8cpp.xml
+
+
+// File: SimulationImpl_8h.xml
 
 
 // File: SpecularSimulation_8cpp.xml

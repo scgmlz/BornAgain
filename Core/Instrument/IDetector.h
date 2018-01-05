@@ -19,14 +19,15 @@
 #include "ICloneable.h"
 #include "INode.h"
 #include "DetectionProperties.h"
+#include "OutputData.h"
 #include "SafePointerVector.h"
+#include "SimulationArea.h"
 
 class Beam;
 class DetectorMask;
 class IDetectorResolution;
 class IResolutionFunction2D;
-template<class T> class OutputData;
-class SimulationElement;
+class ISimulationElementsProvider;
 class RegionOfInterest;
 
 //! Wrapper for detector axes units, required for a better representation of
@@ -94,7 +95,32 @@ public:
     std::unique_ptr<OutputData<double>> createDetectorMap(const Beam& beam, AxesUnits units) const;
 
     //! Create a vector of SimulationElement objects according to the detector and its mask
-    virtual std::vector<SimulationElement> createSimulationElements(const Beam& beam) = 0;
+    virtual std::unique_ptr<ISimulationElementsProvider> createSimulationElements(const Beam& beam) = 0;
+
+    //! Returns new intensity map with detector resolution applied and axes in requested units
+    template <class SimElement>
+    std::unique_ptr<OutputData<double>>
+    createDetectorIntensity(const std::vector<SimElement>& elements, const Beam& beam,
+                            AxesUnits units_type = AxesUnits::DEFAULT) const
+    {
+        auto detectorMap = createDetectorMap(beam, units_type);
+
+        if (mP_detector_resolution) {
+            if (units_type != AxesUnits::DEFAULT) {
+                auto defaultMap = createDetectorMap(beam, AxesUnits::DEFAULT);
+                setDataToDetectorMap(*defaultMap, elements);
+                applyDetectorResolution(defaultMap.get());
+                detectorMap->setRawDataVector(defaultMap->getRawDataVector());
+            } else {
+                setDataToDetectorMap(*detectorMap, elements);
+                applyDetectorResolution(detectorMap.get());
+            }
+        } else {
+            setDataToDetectorMap(*detectorMap, elements);
+        }
+
+        return detectorMap;
+    }
 #endif // SWIG
 
     //! Returns region of  interest if exists.
@@ -108,11 +134,6 @@ public:
 
     //! Inits axes of OutputData to match the detector and sets values to zero.
     void initOutputData(OutputData<double>& data) const;
-
-    //! Returns new intensity map with detector resolution applied and axes in requested units
-    OutputData<double>* createDetectorIntensity(const std::vector<SimulationElement>& elements,
-                                                const Beam& beam,
-                                                AxesUnits units_type = AxesUnits::DEFAULT) const;
 
     //! Return default axes units
     virtual AxesUnits defaultAxesUnits() const {return AxesUnits::DEFAULT;}
@@ -147,8 +168,16 @@ private:
     //! Checks if given unit is valid for the detector. Throws exception if it is not the case.
     void checkAxesUnits(AxesUnits units) const;
 
+    template <class SimElement>
     void setDataToDetectorMap(OutputData<double>& detectorMap,
-                              const std::vector<SimulationElement>& elements) const;
+                              const std::vector<SimElement>& elements) const
+    {
+        if (elements.empty())
+            return;
+        SimulationArea area(this);
+        for (SimulationArea::iterator it = area.begin(); it != area.end(); ++it)
+            detectorMap[it.roiIndex()] = elements[it.elementIndex()].getIntensity();
+    }
 
     SafePointerVector<IAxis> m_axes;
     DetectionProperties m_detection_properties;

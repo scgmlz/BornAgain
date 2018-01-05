@@ -15,8 +15,9 @@
 #include "IDetector2D.h"
 #include "Beam.h"
 #include "InfinitePlane.h"
-#include "SimulationElement.h"
 #include "SimulationArea.h"
+#include "SimulationElement.h"
+#include "SimulationElementsProvider.h"
 #include "BornAgainNamespace.h"
 #include "Units.h"
 #include "RegionOfInterest.h"
@@ -89,9 +90,10 @@ const DetectorMask* IDetector2D::detectorMask() const
     return &m_detector_mask;
 }
 
-std::vector<SimulationElement> IDetector2D::createSimulationElements(const Beam &beam)
+std::unique_ptr<ISimulationElementsProvider> IDetector2D::createSimulationElements(const Beam &beam)
 {
-    std::vector<SimulationElement> result;
+    auto agent = std::make_unique<SimulationElementsProvider<SimulationElement>>();
+    auto& elements = agent->getElementVector();
 
     const double wavelength = beam.getWavelength();
     const double alpha_i = - beam.getAlpha();  // Defined to be always positive in Beam
@@ -104,18 +106,18 @@ std::vector<SimulationElement> IDetector2D::createSimulationElements(const Beam 
     size_t spec_index = getIndexOfSpecular(beam);
 
     SimulationArea area(this);
-    result.reserve(area.totalSize());
+    elements.reserve(area.totalSize());
     for(SimulationArea::iterator it = area.begin(); it!=area.end(); ++it) {
-        result.emplace_back(wavelength, alpha_i, phi_i,
+        elements.emplace_back(wavelength, alpha_i, phi_i,
                             std::unique_ptr<IPixel>(createPixel(it.detectorIndex())));
-        auto& sim_element = result.back();
+        auto& sim_element = elements.back();
         sim_element.setPolarization(beam_polarization);
         sim_element.setAnalyzerOperator(analyzer_operator);
         if (it.index()==spec_index)
             sim_element.setSpecular();
     }
 
-    return result;
+    return std::move(agent);
 }
 
 SimulationElement IDetector2D::getSimulationElement(size_t index, const Beam &beam) const

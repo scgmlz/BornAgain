@@ -23,10 +23,14 @@
 #include "ProgressHandler.h"
 #include "SimulationElement.h"
 
-ParticleLayoutComputation::ParticleLayoutComputation(
-        const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map, const ILayout* p_layout,
-        size_t layer_index, const SimulationOptions& options, bool polarized)
+const size_t element_interval = 100;
+ParticleLayoutComputation::ParticleLayoutComputation(const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map,
+                                                     const ILayout* p_layout, size_t layer_index,
+                                                     const SimulationOptions& options, bool polarized,
+                                                     const std::shared_ptr<ProgressHandler>& progress)
     : IComputationTerm(p_multilayer, p_fresnel_map)
+    , m_progress(progress)
+    , m_progress_counter(element_interval)
 {
     LayoutStrategyBuilder builder(mp_multilayer, p_layout, mp_fresnel_map,
                                   polarized, options, layer_index);
@@ -35,22 +39,15 @@ ParticleLayoutComputation::ParticleLayoutComputation(
     m_surface_density = p_layout->totalParticleSurfaceDensity();
 }
 
-//! Computes scattering intensity for given range of simulation elements.
-void ParticleLayoutComputation::eval(ProgressHandler* progress,
-    const std::vector<SimulationElement>::iterator& begin_it,
-    const std::vector<SimulationElement>::iterator& end_it) const
+void ParticleLayoutComputation::evalSingle(SimulationElement& element) const
 {
-    DelayedProgressCounter counter(100);
-    for (std::vector<SimulationElement>::iterator it = begin_it; it != end_it; ++it) {
-        if (!progress->alive())
-            return;
-        double alpha_f = it->getAlphaMean();
-        size_t n_layers = mp_multilayer->numberOfLayers();
-        if (n_layers > 1 && alpha_f < 0) {
-            continue; // zero for transmission with multilayers (n>1)
-        } else {
-            it->addIntensity(mP_strategy->evaluate(*it) * m_surface_density);
-        }
-        counter.stepProgress(progress);
-    }
+    if (!m_progress->alive())
+        return;
+    const double alpha_f = element.getAlphaMean();
+    const size_t n_layers = mp_multilayer->numberOfLayers();
+    if (n_layers > 1 && alpha_f < 0)
+        return; // zero for transmission with multilayers (n>1)
+    else
+        element.addIntensity(mP_strategy->evaluate(element) * m_surface_density);
+    m_progress_counter.stepProgress(*m_progress);
 }

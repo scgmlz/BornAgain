@@ -25,11 +25,10 @@
 
 template<class T> class OutputData;
 class IBackground;
-class IComputation;
 class IMultiLayerBuilder;
 class MultiLayer;
 
-//! Pure virtual base class of OffSpecularSimulation, GISASSimulation and SpecularSimulation.
+//! Abstract base class for simulation implementations.
 //! Holds the common infrastructure to run a simulation: multithreading, batch processing,
 //! weighting over parameter distributions, ...
 //! @ingroup simulation
@@ -44,11 +43,8 @@ public:
 
     virtual Simulation* clone() const =0;
 
-    //! Put into a clean state for running a simulation
-    virtual void prepareSimulation();
-
     //! Run a simulation, possibly averaged over parameter distributions
-    void runSimulation();
+    virtual void runSimulation() = 0;
 
     void setInstrument(const Instrument& instrument);
     const Instrument& getInstrument() const { return m_instrument; }
@@ -89,7 +85,7 @@ public:
     const SimulationOptions& getOptions() const { return m_options; }
     SimulationOptions& getOptions() { return m_options; }
 
-    void subscribe(ProgressHandler::Callback_t inform) { m_progress.subscribe(inform); }
+    void subscribe(ProgressHandler::Callback_t inform) { m_progress->subscribe(inform); }
     void setTerminalProgressMonitor();
 
     std::vector<const INode*> getChildren() const;
@@ -97,48 +93,23 @@ public:
 protected:
     Simulation(const Simulation& other);
 
-    //! Initializes the vector of Simulation elements
-    virtual void initSimulationElementVector();
-
-    //! Creates the appropriate data structure (e.g. 2D intensity map) from the calculated
-    //! SimulationElement objects
-    virtual void transferResultsToIntensityMap() =0;
+    //! Put into a clean state for running a simulation
+    virtual void prepareSimulation();
 
     //! Update the sample by calling the sample builder, if present
     void updateSample();
 
-    //! Generate a single threaded computation for a given range of SimulationElement's
-    virtual std::unique_ptr<IComputation> generateSingleThreadedComputation(
-            std::vector<SimulationElement>::iterator start,
-            std::vector<SimulationElement>::iterator end) = 0;
-
-    void runSingleSimulation();
-
     virtual void updateIntensityMap() =0;
-
-    virtual void normalize(std::vector<SimulationElement>::iterator begin_it,
-                   std::vector<SimulationElement>::iterator end_it) const;
-
-    void addBackGroundIntensity(std::vector<SimulationElement>::iterator begin_it,
-                                std::vector<SimulationElement>::iterator end_it) const;
-
-    //! Returns the start iterator of simulation elements for the current batch
-    std::vector<SimulationElement>::iterator getBatchStart(int n_batches, int current_batch);
-
-    //! Returns the end iterator of simulation elements for the current batch
-    std::vector<SimulationElement>::iterator getBatchEnd(int n_batches, int current_batch);
 
     SampleProvider m_sample_provider;
     SimulationOptions m_options;
     DistributionHandler m_distribution_handler;
-    ProgressHandler m_progress;
-    std::vector<SimulationElement> m_sim_elements;
+    std::shared_ptr<ProgressHandler> m_progress;
     Instrument m_instrument;
     std::unique_ptr<IBackground> mP_background;
 
 private:
     void initialize();
-    void imposeConsistencyOfBatchNumbers(int& n_batches, int& current_batch);
 };
 
 #endif // SIMULATION_H

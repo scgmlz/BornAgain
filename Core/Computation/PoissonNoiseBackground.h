@@ -30,8 +30,8 @@ public:
 
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
-    void addBackGround(std::vector<SimulationElement>::iterator start,
-                       std::vector<SimulationElement>::iterator end) const override final;
+private:
+    virtual void addBackGroundToElement(SimulationElement& element) const override final;
 };
 
 #endif // POISSONNOISEBACKGROUND_H

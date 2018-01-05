@@ -16,10 +16,10 @@
 #define MAINCOMPUTATION_H
 
 #include "IComputation.h"
+#include "IFresnelMap.h"
 #include "Complex.h"
 #include "SimulationOptions.h"
 
-class IFresnelMap;
 class MultiLayer;
 struct HomogeneousRegion;
 class IComputationTerm;
@@ -33,17 +33,21 @@ class IComputationTerm;
 class DWBAComputation : public IComputation
 {
 public:
-    DWBAComputation(
-        const MultiLayer& multilayer,
-        const SimulationOptions& options,
-        ProgressHandler& progress,
-        const std::vector<SimulationElement>::iterator& begin_it,
-        const std::vector<SimulationElement>::iterator& end_it);
+    template <class Iter>
+    explicit DWBAComputation(const MultiLayer& multilayer,
+                             const SimulationOptions& options,
+                             const std::shared_ptr<ProgressHandler>& progress,
+                             Iter begin_it, Iter end_it)
+        : IComputation(options, progress, std::make_unique<IterHandler<Iter>>(begin_it, end_it),
+                       multilayer)
+    {
+        init();
+    }
+
     ~DWBAComputation();
 
-    void run();
-
 private:
+    void init();
     virtual void runProtected() override;
     std::unique_ptr<IFresnelMap> createFresnelMap();
     // creates a multilayer that contains averaged materials, for use in Fresnel calculations
