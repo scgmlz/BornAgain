@@ -16467,11 +16467,11 @@ class Simulation(ICloneable, INode):
 Simulation_swigregister = _libBornAgainCore.Simulation_swigregister
 Simulation_swigregister(Simulation)
 
-class SimulationImpl(Simulation):
+class SimulationElementSimulationImpl(Simulation):
     """
 
 
-    Abstract  Simulation implementation, base class for OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Operates on the vector of simulation elements
+    Template base class for OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Operates on the vector of simulation elements
 
     C++ includes: SimulationImpl.h
 
@@ -16480,31 +16480,31 @@ class SimulationImpl(Simulation):
     __swig_setmethods__ = {}
     for _s in [Simulation]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, SimulationImpl, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, SimulationElementSimulationImpl, name, value)
     __swig_getmethods__ = {}
     for _s in [Simulation]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
-    __getattr__ = lambda self, name: _swig_getattr(self, SimulationImpl, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, SimulationElementSimulationImpl, name)
 
     def __init__(self, *args, **kwargs):
         raise AttributeError("No constructor defined - class is abstract")
     __repr__ = _swig_repr
-    __swig_destroy__ = _libBornAgainCore.delete_SimulationImpl
+    __swig_destroy__ = _libBornAgainCore.delete_SimulationElementSimulationImpl
     __del__ = lambda self: None
 
     def runSimulation(self):
         """
-        runSimulation(SimulationImpl self)
+        runSimulation(SimulationElementSimulationImpl self)
 
-        void SimulationImpl::runSimulation() override final
+        void SimulationImpl< SimElement >::runSimulation() override final
 
         Run a simulation, possibly averaged over parameter distributions. 
 
         """
-        return _libBornAgainCore.SimulationImpl_runSimulation(self)
+        return _libBornAgainCore.SimulationElementSimulationImpl_runSimulation(self)
 
-SimulationImpl_swigregister = _libBornAgainCore.SimulationImpl_swigregister
-SimulationImpl_swigregister(SimulationImpl)
+SimulationElementSimulationImpl_swigregister = _libBornAgainCore.SimulationElementSimulationImpl_swigregister
+SimulationElementSimulationImpl_swigregister(SimulationElementSimulationImpl)
 
 class SimulationOptions(_object):
     """
@@ -16700,7 +16700,7 @@ class SimulationOptions(_object):
 SimulationOptions_swigregister = _libBornAgainCore.SimulationOptions_swigregister
 SimulationOptions_swigregister(SimulationOptions)
 
-class GISASSimulation(SimulationImpl):
+class GISASSimulation(SimulationElementSimulationImpl):
     """
 
 
@@ -16711,11 +16711,11 @@ class GISASSimulation(SimulationImpl):
     """
 
     __swig_setmethods__ = {}
-    for _s in [SimulationImpl]:
+    for _s in [SimulationElementSimulationImpl]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, GISASSimulation, name, value)
     __swig_getmethods__ = {}
-    for _s in [SimulationImpl]:
+    for _s in [SimulationElementSimulationImpl]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
     __getattr__ = lambda self, name: _swig_getattr(self, GISASSimulation, name)
     __repr__ = _swig_repr
@@ -23467,7 +23467,7 @@ class MultiLayer(ISample):
 MultiLayer_swigregister = _libBornAgainCore.MultiLayer_swigregister
 MultiLayer_swigregister(MultiLayer)
 
-class OffSpecSimulation(SimulationImpl):
+class OffSpecSimulation(SimulationElementSimulationImpl):
     """
 
 
@@ -23478,11 +23478,11 @@ class OffSpecSimulation(SimulationImpl):
     """
 
     __swig_setmethods__ = {}
-    for _s in [SimulationImpl]:
+    for _s in [SimulationElementSimulationImpl]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, OffSpecSimulation, name, value)
     __swig_getmethods__ = {}
-    for _s in [SimulationImpl]:
+    for _s in [SimulationElementSimulationImpl]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
     __getattr__ = lambda self, name: _swig_getattr(self, OffSpecSimulation, name)
     __repr__ = _swig_repr
@@ -26222,7 +26222,7 @@ class ResolutionFunction2DGaussian(IResolutionFunction2D):
 ResolutionFunction2DGaussian_swigregister = _libBornAgainCore.ResolutionFunction2DGaussian_swigregister
 ResolutionFunction2DGaussian_swigregister(ResolutionFunction2DGaussian)
 
-class SpecularSimulation(SimulationImpl):
+class SpecularSimulation(SimulationElementSimulationImpl):
     """
 
 
@@ -26233,11 +26233,11 @@ class SpecularSimulation(SimulationImpl):
     """
 
     __swig_setmethods__ = {}
-    for _s in [SimulationImpl]:
+    for _s in [SimulationElementSimulationImpl]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, SpecularSimulation, name, value)
     __swig_getmethods__ = {}
-    for _s in [SimulationImpl]:
+    for _s in [SimulationElementSimulationImpl]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
     __getattr__ = lambda self, name: _swig_getattr(self, SpecularSimulation, name)
     __repr__ = _swig_repr

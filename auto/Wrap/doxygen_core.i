@@ -13553,18 +13553,18 @@ C++ includes: SimulationFactory.h
 // File: classSimulationImpl.xml
 %feature("docstring") SimulationImpl "
 
-Abstract  Simulation implementation, base class for OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Operates on the vector of simulation elements
+Template base class for OffSpecularSimulation,  GISASSimulation and  SpecularSimulation. Operates on the vector of simulation elements
 
 C++ includes: SimulationImpl.h
 ";
 
-%feature("docstring")  SimulationImpl::SimulationImpl "SimulationImpl::SimulationImpl()
+%feature("docstring")  SimulationImpl::SimulationImpl "SimulationImpl< SimElement >::SimulationImpl()
 ";
 
-%feature("docstring")  SimulationImpl::~SimulationImpl "SimulationImpl::~SimulationImpl()
+%feature("docstring")  SimulationImpl::~SimulationImpl "SimulationImpl< SimElement >::~SimulationImpl()
 ";
 
-%feature("docstring")  SimulationImpl::runSimulation "void SimulationImpl::runSimulation() override final
+%feature("docstring")  SimulationImpl::runSimulation "void SimulationImpl< SimElement >::runSimulation() override final
 
 Run a simulation, possibly averaged over parameter distributions. 
 ";
@@ -13776,9 +13776,6 @@ C++ includes: SpecularComputation.h
 ";
 
 %feature("docstring")  SpecularComputation::~SpecularComputation "SpecularComputation::~SpecularComputation()
-";
-
-%feature("docstring")  SpecularComputation::run "void SpecularComputation::run()
 ";
 
 
