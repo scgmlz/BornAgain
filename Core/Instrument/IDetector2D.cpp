@@ -117,7 +117,7 @@ std::unique_ptr<ISimulationElementsProvider> IDetector2D::createSimulationElemen
             sim_element.setSpecular();
     }
 
-    return agent;
+    return std::move(agent);
 }
 
 SimulationElement IDetector2D::getSimulationElement(size_t index, const Beam &beam) const

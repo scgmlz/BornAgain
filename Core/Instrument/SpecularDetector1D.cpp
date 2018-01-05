@@ -101,7 +101,7 @@ std::unique_ptr<ISimulationElementsProvider> SpecularDetector1D::createSimulatio
         sim_element.setSpecular();
     }
 
-    return agent;
+    return std::move(agent);
 }
 
 std::string SpecularDetector1D::axisName(size_t index) const

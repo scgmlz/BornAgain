@@ -48,8 +48,6 @@ public:
 
     virtual ~SpecularComputation();
 
-    void run();
-
 private:
     void init();
     virtual void runProtected() override;
