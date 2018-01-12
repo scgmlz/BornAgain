@@ -74,19 +74,16 @@ public:
     Transform3D getInverse() const;
 
     //! Return transformed vector _v_.
-    BasicVector3D<double> transformed(const BasicVector3D<double>& v) const;
+    kvector_t transformed(const kvector_t& v) const;
 
     //! Return transformed vector _v_.
-    BasicVector3D<complex_t>
-        transformed(const BasicVector3D<complex_t>& v) const;
+    cvector_t transformed(const cvector_t& v) const;
 
     //! Return transformed vector _v_.
-    BasicVector3D<double>
-        transformedInverse(const BasicVector3D<double>& v) const;
+    kvector_t transformedInverse(const kvector_t& v) const;
 
     //! Return transformed vector _v_.
-    BasicVector3D<complex_t>
-        transformedInverse(const BasicVector3D<complex_t>& v) const;
+    cvector_t transformedInverse(const cvector_t& v) const;
 
     //! Composes two transformations
     Transform3D operator*(const Transform3D &other) const;

@@ -62,6 +62,13 @@ bool IsZRotation(const IRotation& rot)
     return transform.isZRotation();
 }
 
+// --- IdentityRotation -------------------------------------------------------
+
+Transform3D IdentityRotation::getTransform3D() const
+{
+    return Transform3D::createIdentity();
+}
+
 // --- RotationX --------------------------------------------------------------
 
 //! Constructor of rotation around x-axis
@@ -136,4 +143,3 @@ Transform3D RotationEuler::getTransform3D() const
 {
     return Transform3D::createRotateEuler(m_alpha, m_beta, m_gamma);
 }
-

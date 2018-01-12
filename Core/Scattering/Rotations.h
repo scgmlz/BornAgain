@@ -46,6 +46,21 @@ BA_CORE_API_ IRotation* createProduct(const IRotation& left, const IRotation& ri
 
 bool IsZRotation(const IRotation& rot);
 
+class BA_CORE_API_ IdentityRotation : public IRotation
+{
+public:
+    IdentityRotation() =default;
+
+    IdentityRotation* clone() const { return new IdentityRotation(); }
+    IdentityRotation* createInverse() const { return new IdentityRotation(); }
+
+    void accept(INodeVisitor* visitor) const { visitor->visit(this); }
+
+    Transform3D getTransform3D() const;
+
+    bool isIdentity() const { return true; }
+};
+
 class BA_CORE_API_ RotationX : public IRotation
 {
 public:

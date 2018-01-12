@@ -100,46 +100,17 @@ ParticleLayout* ParticleLayout::cloneWithOffset(double offset) const
     return p_result;
 }
 
-//! Adds generic particle to the layout.
-void ParticleLayout::addParticle(const IAbstractParticle& particle)
-{
-    addAndRegisterAbstractParticle(particle.clone());
-}
-
-//! Adds generic particle to the layout with only abundance defined.
-//! @param particle to be added
-//! @param abundance Particle abundance
-void ParticleLayout::addParticle(const IAbstractParticle& particle, double abundance)
-{
-    std::unique_ptr<IAbstractParticle> P_particle_clone { particle.clone() };
-    P_particle_clone->setAbundance(abundance);
-    addAndRegisterAbstractParticle(P_particle_clone.release());
-}
-
-//! Adds particle to the layout with abundance and position defined.
-//! @param particle to be added
-//! @param abundance Particle abundance
-//! @param position Particle position
-void ParticleLayout::addParticle(const IParticle& particle, double abundance,
-                                 const kvector_t position)
-{
-    std::unique_ptr<IParticle> P_particle_clone { particle.clone() };
-    P_particle_clone->setAbundance(abundance);
-    if (position != kvector_t(0,0,0))
-        P_particle_clone->translate(position);
-    addAndRegisterAbstractParticle(P_particle_clone.release());
-}
-
 //! Adds particle to the layout with abundance, position and the rotation defined.
 //! @param particle to be added
 //! @param abundance Particle abundance
 //! @param position Particle position
 //! @param rotation Particle rotation
-void ParticleLayout::addParticle(const IParticle& particle, double abundance,
+void ParticleLayout::addParticle(const IAbstractParticle& particle, double abundance,
                                  const kvector_t position, const IRotation& rotation)
 {
-    std::unique_ptr<IParticle> P_particle_clone { particle.clone() };
-    P_particle_clone->setAbundance(abundance);
+    std::unique_ptr<IAbstractParticle> P_particle_clone { particle.clone() };
+    if (abundance>=0.0)
+        P_particle_clone->setAbundance(abundance);
     if (!rotation.isIdentity())
         P_particle_clone->rotate(rotation);
     if(position != kvector_t(0,0,0))

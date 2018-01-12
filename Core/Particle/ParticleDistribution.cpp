@@ -48,6 +48,11 @@ void ParticleDistribution::translate(kvector_t translation)
     mP_particle->translate(translation);
 }
 
+void ParticleDistribution::rotate(const IRotation& rotation)
+{
+    mP_particle->rotate(rotation);
+}
+
 //! Returns particle clones with parameter values drawn from distribution.
 
 std::vector<const IParticle*> ParticleDistribution::generateParticles() const

@@ -44,23 +44,6 @@ TEST_F(ParticleLayoutTest, ParticleLayoutInitByValue)
     EXPECT_EQ(2.0, particleDecoration.getTotalAbundance());
 }
 
-TEST_F(ParticleLayoutTest, ParticleLayoutInitByRef)
-{
-    Particle particle;
-
-    ParticleLayout particleDecoration(particle, -2.0);
-    auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
-    auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
-
-    EXPECT_EQ(BornAgain::ParticleLayoutType, particleDecoration.getName());
-    EXPECT_EQ(size_t(1), particles.size());
-    EXPECT_EQ(nullptr, p_iff);
-
-    const IAbstractParticle* p_particle = particles[0];
-    EXPECT_TRUE(nullptr != p_particle);
-    EXPECT_EQ(-2.0, particleDecoration.getTotalAbundance());
-}
-
 TEST_F(ParticleLayoutTest, ParticleLayoutAddParticle)
 {
     ParticleLayout particleDecoration;
@@ -76,7 +59,7 @@ TEST_F(ParticleLayoutTest, ParticleLayoutAddParticle)
     particleDecoration.addParticle(particle1);
     particleDecoration.addParticle(particle2, 2.2);
     particleDecoration.addParticle(particle3, 1.0, kvector_t(0, 0, 0), transform3);
-    particleDecoration.addParticle(particle4, -4.2, kvector_t(0, 0, 0), transform4);
+    particleDecoration.addParticle(particle4, 4.2, kvector_t(0, 0, 0), transform4);
     auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
 
     EXPECT_EQ(size_t(4), particles.size());
@@ -95,7 +78,7 @@ TEST_F(ParticleLayoutTest, ParticleLayoutAddParticle)
 
     const IAbstractParticle* p_particle4 = particles[3];
     EXPECT_TRUE(nullptr != p_particle4);
-    EXPECT_EQ(-4.2, p_particle4->abundance());
+    EXPECT_EQ(4.2, p_particle4->abundance());
 }
 
 TEST_F(ParticleLayoutTest, ParticleLayoutAbundanceFraction)

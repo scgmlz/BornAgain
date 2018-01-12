@@ -18,6 +18,8 @@
 #include "ISample.h"
 #include "Vectors3D.h"
 
+class IRotation;
+
 //! Interface for a generic particle.
 //!
 //! Inherited by IParticle and ParticleDistribution.
@@ -43,6 +45,9 @@ public:
 
     //! Translates the particle with the given vector
     virtual void translate(kvector_t translation) =0;
+
+    //! Applies the given rotation to the particle
+    virtual void rotate(const IRotation& rotation) =0;
 
 protected:
     double m_abundance;

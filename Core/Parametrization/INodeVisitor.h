@@ -89,6 +89,7 @@ class GISASSimulation;
 class HexagonalLattice;
 class IAbstractParticle;
 class IClusteredParticles;
+class IdentityRotation;
 class IFormFactor;
 class IFormFactorBorn;
 class IFormFactorDecorator;
@@ -211,6 +212,7 @@ public:
     virtual void visit(const HexagonalLattice*) {}
     virtual void visit(const IAbstractParticle*) {}
     virtual void visit(const IClusteredParticles*) {}
+    virtual void visit(const IdentityRotation*) {}
     virtual void visit(const IFormFactor*) {}
     virtual void visit(const IFormFactorBorn*) {}
     virtual void visit(const IFormFactorDecorator*) {}

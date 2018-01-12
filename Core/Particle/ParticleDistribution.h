@@ -28,11 +28,13 @@ class BA_CORE_API_ ParticleDistribution : public IAbstractParticle
 public:
     ParticleDistribution(const IParticle& prototype, const ParameterDistribution& par_distr);
 
-    ParticleDistribution* clone() const final override;
+    ParticleDistribution* clone() const override final;
 
-    void accept(INodeVisitor* visitor) const final override { visitor->visit(this); }
+    void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
 
-    void translate(kvector_t translation) final override;
+    void translate(kvector_t translation) override final;
+
+    void rotate(const IRotation& rotation) override final;
 
     //! Returns list of new particles generated according to a distribution.
     std::vector<const IParticle*> generateParticles() const;
@@ -43,7 +45,7 @@ public:
     //! Returns the distributed parameter data
     ParameterDistribution parameterDistribution() const { return m_par_distribution; }
 
-    std::vector<const INode*> getChildren() const final override;
+    std::vector<const INode*> getChildren() const override final;
 
 private:
     std::unique_ptr<IParticle> mP_particle;
