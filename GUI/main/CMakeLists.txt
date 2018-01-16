@@ -7,6 +7,7 @@ set(executable_name BornAgain)
 # source files
 # -----------------------------------------------------------------------------
 include_directories(
+    ${Boost_INCLUDE_DIRS}
     ${BornAgainGUI_INCLUDE_DIRS}
     ${QtAddOn_INCLUDE_DIRS}
     ${GSL_INCLUDE_DIR}
