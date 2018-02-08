@@ -30,7 +30,7 @@ bool PyStandardTest::runTest()
         = FileSystemUtils::jointPath(BATesting::PyStandardOutputDir(), getName());
     std::string output_path = output_name + ".ref.int.gz";
     std::remove(output_path.c_str());
-    std::cout << "Removed old output " << output_path << "n";
+    std::cout << "Removed old output " << output_path << "\n";
 
     // Generate Python script
     std::string pyscript_filename

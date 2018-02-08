@@ -49,6 +49,9 @@ public:
     //! Sets beam parameters from here (forwarded to Instrument)
     void setBeamParameters(double wavelength, const IAxis& alpha_axis, double phi_i);
 
+    //! Returns axis of the beam.
+    const IAxis* beamAxis() const;
+
 private:
     OffSpecSimulation(const OffSpecSimulation& other);
 

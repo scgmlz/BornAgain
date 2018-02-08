@@ -73,6 +73,11 @@ void OffSpecSimulation::setBeamParameters(double wavelength, const IAxis& alpha_
     updateIntensityMap();
 }
 
+const IAxis* OffSpecSimulation::beamAxis() const
+{
+    return mP_alpha_i_axis.get();
+}
+
 OffSpecSimulation::OffSpecSimulation(const OffSpecSimulation& other)
     : Simulation2D(other)
 {

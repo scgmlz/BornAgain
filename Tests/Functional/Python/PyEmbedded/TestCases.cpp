@@ -23,6 +23,7 @@
 #include "BornAgainNamespace.h"
 #include "SampleBuilderFactory.h"
 #include "ExportToPython.h"
+#include "PythonFormatting.h"
 #include <iostream>
 #include <sstream>
 
@@ -363,12 +364,10 @@ bool ExportToPythonAndBack::runTest()
     auto code = ExportToPython::generateSampleCode(*sample);
 
     std::stringstream snippet;
-    snippet << "import bornagain as ba                                        \n";
-    snippet << "from bornagain import deg, angstrom, nm                     \n\n";
-    snippet << code;
+    snippet << PythonFormatting::scriptPreamble() << code;
 
-    auto multilayer = PyImport::createFromPython(snippet.str(), "getSample",
-                                                 BABuild::buildLibDir());
+    auto multilayer = PyImport::createFromPython(snippet.str(),
+            PythonFormatting::getSampleFunctionName(), BABuild::buildLibDir());
     auto new_code = ExportToPython::generateSampleCode(*multilayer);
 
     return code == new_code;

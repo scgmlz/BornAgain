@@ -56,6 +56,7 @@ set(test_cases
     RotatedPyramidsDistribution
     SpheresWithLimitsDistribution
     ConesWithLimitsDistribution
+    OffSpecularResonator
 )
 
 add_executable(PyStandardTest main.cpp PyStandardTest.h PyStandardTest.cpp)

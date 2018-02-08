@@ -17,6 +17,7 @@
 
 class GISASSimulation;
 class SpecularSimulation;
+class OffSpecSimulation;
 
 //! Standard pre-defined simulations.
 
@@ -56,6 +57,10 @@ SpecularSimulation* BasicSpecular();
 SpecularSimulation* SpecularWithGaussianBeam();
 SpecularSimulation* SpecularWithSquareBeam();
 SpecularSimulation* SpecularDivergentBeam();
+
+// OffSpec simulations
+OffSpecSimulation* MiniOffSpec();
+
 
 } // namespace StandardSimulations
 

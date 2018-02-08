@@ -17,6 +17,7 @@
 #include "SpecularSimulation.h"
 #include "RealParameter.h"
 #include "StandardSimulations.h"
+#include "OffSpecSimulation.h"
 
 SimulationFactory::SimulationFactory()
 {
@@ -147,4 +148,7 @@ SimulationFactory::SimulationFactory()
     registerItem("SpecularDivergentBeam", StandardSimulations::SpecularDivergentBeam,
                  "Simulation implies beam divergence both in wavelength and "
                  "inclination angle.");
+
+    registerItem("OffSpecMini", StandardSimulations::MiniOffSpec,
+                 "Mini OffSpecular simulation for resonator experiment.");
 }

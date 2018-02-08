@@ -86,11 +86,11 @@ SampleToPython::~SampleToPython() = default;
 
 std::string SampleToPython::defineGetSample() const
 {
-    return "def getSample():\n" + defineMaterials() + defineLayers() + defineFormFactors()
+    return "def "+getSampleFunctionName()+"():\n" + defineMaterials() + defineLayers() + defineFormFactors()
            + defineParticles() + defineCoreShellParticles() + defineParticleCompositions()
            + defineLattices() + defineCrystals() + defineMesoCrystals()
            + defineParticleDistributions() + defineInterferenceFunctions() + defineParticleLayouts()
-           + defineRoughnesses() + addLayoutsToLayers() + defineMultiLayers() + "\n";
+           + defineRoughnesses() + addLayoutsToLayers() + defineMultiLayers() + "\n\n";
 }
 
 const std::map<MATERIAL_TYPES, std::string> factory_names{

@@ -408,6 +408,12 @@ StandardTestCatalogue::StandardTestCatalogue()
         "SpecularDivergentBeam",
         "HomogeneousMultilayerBuilder",
         1e-10);
+
+    add("OffSpecularResonator",
+        "Simulates resonator in OffSpec setup",
+        "OffSpecMini",
+        "ResonatorBuilder",
+        1e-10);
 }
 
 //! Adds test description to the catalogue.
