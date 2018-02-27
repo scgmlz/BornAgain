@@ -151,7 +151,7 @@ def run_fitting():
 
     # set fitting strategies
     strategy1 = ba.AdjustMinimizerStrategy("Genetic", "",
-                                           "PopSize=80;MaxIterations=50")
+                                           "PopSize=80;MaxIterations=100")
     fit_suite.addFitStrategy(strategy1)
     strategy2 = ba.AdjustMinimizerStrategy("Minuit2", "Migrad")
     fit_suite.addFitStrategy(strategy2)
