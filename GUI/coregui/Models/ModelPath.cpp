@@ -87,35 +87,42 @@ bool ModelPath::isValidItem(SessionModel* model, SessionItem* item, const QModel
 
 //! Returns true when we know how to translate ParameterItem link to domain name.
 
-bool ModelPath::isTranslatable(const SessionItem* item, const QString& par_name)
+bool ModelPath::isInFittingBlackList(const QString& par_name)
 {
-    Q_UNUSED(item);
-    QStringList non_translatable_names{Constants::DistributionSigmaFactor};
-    if (par_name.contains(Constants::SphericalDetectorType)) {
-        QStringList excluded_names{SphericalDetectorItem::P_PHI_AXIS,
-                                   SphericalDetectorItem::P_ALPHA_AXIS};
-        for (auto name : excluded_names) {
-            if (par_name.contains(name))
-                return false;
-        }
-    }
-    if (par_name.contains(Constants::RectangularDetectorType)) {
-        QStringList excluded_names{
-            RectangularDetectorItem::P_X_AXIS,    RectangularDetectorItem::P_Y_AXIS,
-            RectangularDetectorItem::P_ALIGNMENT, RectangularDetectorItem::P_NORMAL,
-            RectangularDetectorItem::P_DIRECTION, RectangularDetectorItem::P_U0,
-            RectangularDetectorItem::P_V0,        RectangularDetectorItem::P_DBEAM_U0,
-            RectangularDetectorItem::P_DBEAM_V0,  RectangularDetectorItem::P_DISTANCE,
-        };
-        for (auto name : excluded_names) {
-            if (par_name.contains(name))
-                return false;
-        }
-    }
-    for (auto name : non_translatable_names) {
+    static const QStringList fitting_black_list {
+        // distribution types
+        Constants::DistributionGateType,
+        Constants::DistributionLorentzType,
+        Constants::DistributionGaussianType,
+        Constants::DistributionLogNormalType,
+        Constants::DistributionCosineType,
+        Constants::DistributionTrapezoidType,
+
+        // axes
+        SphericalDetectorItem::P_PHI_AXIS,
+        SphericalDetectorItem::P_ALPHA_AXIS,
+        RectangularDetectorItem::P_X_AXIS,
+        RectangularDetectorItem::P_Y_AXIS,
+        OffSpecInstrumentItem::P_ALPHA_AXIS,
+
+         // rectangular detector positioning
+         RectangularDetectorItem::P_ALIGNMENT,
+         RectangularDetectorItem::P_NORMAL,
+         RectangularDetectorItem::P_DIRECTION,
+         RectangularDetectorItem::P_U0,
+         RectangularDetectorItem::P_V0,
+         RectangularDetectorItem::P_DBEAM_U0,
+         RectangularDetectorItem::P_DBEAM_V0,
+         RectangularDetectorItem::P_DISTANCE,
+
+         // Detector resolution
+         Constants::ResolutionFunction2DGaussianType
+    };
+
+    for (const auto& name : fitting_black_list)
         if (par_name.contains(name))
             return false;
-    }
+
     return true;
 }
 

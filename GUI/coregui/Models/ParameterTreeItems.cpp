@@ -13,9 +13,10 @@
 // ************************************************************************** //
 
 #include "ParameterTreeItems.h"
+#include "DistributionItems.h"
+#include "FitParameterHelper.h"
 #include "ModelPath.h"
 #include "SessionModel.h"
-#include "FitParameterHelper.h"
 
 // ----------------------------------------------------------------------------
 
@@ -77,9 +78,8 @@ void ParameterItem::restoreFromBackup()
 
 bool ParameterItem::isFittable() const
 {
-    const SessionItem *jobItem = ModelPath::ancestor(this, Constants::JobItemType);
-    Q_ASSERT(jobItem);
-    return ModelPath::isTranslatable(jobItem, FitParameterHelper::getParameterItemPath(this));
+    Q_ASSERT(ModelPath::ancestor(this, Constants::JobItemType));
+    return ModelPath::isInFittingBlackList(FitParameterHelper::getParameterItemPath(this));
 }
 
 // ----------------------------------------------------------------------------
