@@ -93,7 +93,7 @@ void SimulationDataSelectorWidget::setApplicationModels(ApplicationModels *appli
 
 const MultiLayerItem *SimulationDataSelectorWidget::selectedMultiLayerItem() const
 {
-    auto items = m_applicationModels->sampleModel()->topItems();
+    auto items = m_applicationModels->sampleModel()->topItems<MultiLayerItem>();
     if(items.isEmpty()) return nullptr;
     return dynamic_cast<const MultiLayerItem *>(items.at(selectedSampleIndex()));
 }
