@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "ParameterTreeItems.h"
+#include "BeamItem.h"
 #include "DistributionItems.h"
 #include "FitParameterHelper.h"
 #include "InstrumentItems.h"
@@ -86,39 +87,44 @@ void ParameterItem::restoreFromBackup()
 bool ParameterItem::isFittable() const
 {
     static const QVector<QPair<QStringList, QStringList>> black_list {
-        {// global scope
-         {QString()},
-         {Constants::DistributionSigmaFactor}
+        {// Global scope
+            {
+                QString()
+            },
+            {
+                Constants::DistributionSigmaFactor
+            }
         },
+        {// Instrument scope
+            {
+                Constants::GISASInstrumentType,
+                Constants::OffSpecInstrumentType,
+                Constants::SpecularInstrumentType
+            },
+            {// Distribution types
+                Constants::DistributionGateType, Constants::DistributionLorentzType,
+                Constants::DistributionGaussianType, Constants::DistributionLogNormalType,
+                Constants::DistributionCosineType, Constants::DistributionTrapezoidType,
 
-        {// instrument scope
-         {
-          Constants::GISASInstrumentType,
-          Constants::OffSpecInstrumentType,
-          Constants::SpecularInstrumentType
-         },
-         {// distribution types
-          Constants::DistributionGateType, Constants::DistributionLorentzType,
-          Constants::DistributionGaussianType, Constants::DistributionLogNormalType,
-          Constants::DistributionCosineType, Constants::DistributionTrapezoidType,
+                // Detector axes
+                SphericalDetectorItem::P_PHI_AXIS, SphericalDetectorItem::P_ALPHA_AXIS,
+                RectangularDetectorItem::P_X_AXIS, RectangularDetectorItem::P_Y_AXIS,
+                OffSpecInstrumentItem::P_ALPHA_AXIS,
 
-          // axes
-          SphericalDetectorItem::P_PHI_AXIS, SphericalDetectorItem::P_ALPHA_AXIS,
-          RectangularDetectorItem::P_X_AXIS, RectangularDetectorItem::P_Y_AXIS,
-          OffSpecInstrumentItem::P_ALPHA_AXIS,
+                // Rectangular detector positioning
+                RectangularDetectorItem::P_ALIGNMENT, RectangularDetectorItem::P_NORMAL,
+                RectangularDetectorItem::P_DIRECTION, RectangularDetectorItem::P_U0,
+                RectangularDetectorItem::P_V0, RectangularDetectorItem::P_DBEAM_U0,
+                RectangularDetectorItem::P_DBEAM_V0, RectangularDetectorItem::P_DISTANCE,
 
-          // rectangular detector positioning
-          RectangularDetectorItem::P_ALIGNMENT, RectangularDetectorItem::P_NORMAL,
-          RectangularDetectorItem::P_DIRECTION, RectangularDetectorItem::P_U0,
-          RectangularDetectorItem::P_V0, RectangularDetectorItem::P_DBEAM_U0,
-          RectangularDetectorItem::P_DBEAM_V0, RectangularDetectorItem::P_DISTANCE,
+                // Detector resolution
+                Constants::ResolutionFunction2DGaussianType,
 
-          // Detector resolution
-          Constants::ResolutionFunction2DGaussianType
-         }
+                // Beam angle parameters
+                BeamItem::P_INCLINATION_ANGLE, BeamItem::P_AZIMUTHAL_ANGLE
+            }
         }
     };
-
     Q_ASSERT(ModelPath::ancestor(this, Constants::JobItemType));
 
     const QString& par_path = FitParameterHelper::getParameterItemPath(this);
@@ -132,7 +138,6 @@ bool ParameterItem::isFittable() const
                 return false;
         }
     }
-
     return true;
 }
 

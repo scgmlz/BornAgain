@@ -20,9 +20,7 @@
 
 ParameterTuningModel::ParameterTuningModel(QObject *parent)
     : FilterPropertyProxy(2, parent)
-{
-
-}
+{}
 
 Qt::ItemFlags ParameterTuningModel::flags(const QModelIndex &proxyIndex) const
 {
@@ -40,7 +38,6 @@ Qt::ItemFlags ParameterTuningModel::flags(const QModelIndex &proxyIndex) const
             }
         }
     }
-
     return result;
 }
 
