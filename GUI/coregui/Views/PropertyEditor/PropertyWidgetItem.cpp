@@ -40,6 +40,7 @@ PropertyWidgetItem::PropertyWidgetItem(QWidget* parent)
 
 PropertyWidgetItem::~PropertyWidgetItem()
 {
+    m_editor->clearFocus();
     delete m_label;
     delete m_editor;
     delete m_delegate;
