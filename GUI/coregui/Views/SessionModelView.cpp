@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 
 namespace {
-const bool show_test_view = false;
+const bool show_test_view = true;
 }
 
 SessionModelView::SessionModelView(MainWindow *mainWindow)

@@ -26,8 +26,8 @@
 void RealSpaceBuilder::populate(RealSpaceModel* model, const SessionItem& item)
 {
     model->defCamPos = RealSpace::Camera::Position(
-        RealSpace::Vector3D(-10, -140, 20),   // eye
-        RealSpace::Vector3D(0, 0, -30),       // center
+        RealSpace::Vector3D(0, -140, 90),   // eye
+        RealSpace::Vector3D(0, 0, 0),       // center
         RealSpace::Vector3D::_z);             // up vector
 
     if (item.modelType() == Constants::MultiLayerType)

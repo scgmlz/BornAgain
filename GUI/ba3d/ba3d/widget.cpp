@@ -48,6 +48,21 @@ void Widget3D::setModel(Model* model) {
   camera->set();
 }
 
+void Widget3D::defaultView()
+{
+    canvas->defaultView();
+}
+
+void Widget3D::edgeView()
+{
+    canvas->edgeView();
+}
+
+void Widget3D::faceView()
+{
+    canvas->faceView();
+}
+
 Model* Widget3D::model() {
   return canvas->getModel();
 }

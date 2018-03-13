@@ -64,6 +64,21 @@ void RealSpaceCanvas::onSelectionChanged(const QModelIndex& selected)
     }
 }
 
+void RealSpaceCanvas::onDefaultViewAction()
+{
+    defaultView();
+}
+
+void RealSpaceCanvas::onEdgeViewAction()
+{
+    edgeView();
+}
+
+void RealSpaceCanvas::onFaceViewAction()
+{
+    faceView();
+}
+
 void RealSpaceCanvas::updateScene()
 {
     if (!m_currentSelection.isValid())
@@ -84,6 +99,21 @@ void RealSpaceCanvas::resetScene()
     m_realSpaceModel.reset();
     m_view->setModel(nullptr);
     m_currentSelection = QModelIndex();
+}
+
+void RealSpaceCanvas::defaultView()
+{
+    m_view->defaultView();
+}
+
+void RealSpaceCanvas::edgeView()
+{
+    m_view->edgeView();
+}
+
+void RealSpaceCanvas::faceView()
+{
+    m_view->faceView();
 }
 
 void RealSpaceCanvas::showEvent(QShowEvent*)

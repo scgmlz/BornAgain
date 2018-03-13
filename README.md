@@ -6,6 +6,9 @@ BornAgain is a software to simulate and fit neutron and x-ray scattering at graz
 #### Homepage
 http://bornagainproject.org
 
+#### Copyright
+[Forschungszentrum Jülich GmbH](http://www.fz-juelich.de) 2013-
+
 #### License
 GNU General Public License v3 or higher (see COPYING)
 

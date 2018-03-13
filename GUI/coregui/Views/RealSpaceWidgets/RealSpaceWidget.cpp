@@ -46,6 +46,19 @@ RealSpaceWidget::RealSpaceWidget(QWidget* parent)
 
     connect(m_panel, SIGNAL(selectionChanged(QModelIndex)),
             m_canvas, SLOT(onSelectionChanged(QModelIndex)));
+
+    //connect(m_toolBar, SIGNAL(defaultViewAction()), m_canvas, SLOT(onDefaultViewAction()));
+    connect(m_toolBar, &RealSpaceToolBar::defaultViewAction,
+            m_canvas, &RealSpaceCanvas::onDefaultViewAction);
+
+    //connect(m_toolBar, SIGNAL(edgeViewAction()), m_canvas, SLOT(onEdgeViewAction()));
+    connect(m_toolBar, &RealSpaceToolBar::edgeViewAction,
+            m_canvas, &RealSpaceCanvas::onEdgeViewAction);
+
+    //connect(m_toolBar, SIGNAL(faceViewAction()), m_canvas, SLOT(onFaceViewAction()));
+    connect(m_toolBar, &RealSpaceToolBar::faceViewAction,
+            m_canvas, &RealSpaceCanvas::onFaceViewAction);
+
 }
 
 void RealSpaceWidget::setModel(SampleModel* model)

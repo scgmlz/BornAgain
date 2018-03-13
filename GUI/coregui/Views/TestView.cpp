@@ -47,12 +47,12 @@ TestView::TestView(MainWindow *mainWindow)
     : QWidget(mainWindow)
     , m_mainWindow(mainWindow)
 {
-    test_ComponentProxyModel();
+//    test_ComponentProxyModel();
 //    test_MaterialEditor();
 //    test_MinimizerSettings();
 //    test_AccordionWidget();
 //    test_RunFitWidget();
-//    test_ba3d();
+    test_ba3d();
 //    test_specular_data_widget();
 }
 

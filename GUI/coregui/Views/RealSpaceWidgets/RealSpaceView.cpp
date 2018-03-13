@@ -33,3 +33,18 @@ void RealSpaceView::setModel(RealSpaceModel* model)
 {
     m_3dview->setModel(model);
 }
+
+void RealSpaceView::defaultView()
+{
+    m_3dview->defaultView();
+}
+
+void RealSpaceView::edgeView()
+{
+    m_3dview->edgeView();
+}
+
+void RealSpaceView::faceView()
+{
+    m_3dview->faceView();
+}

@@ -17,6 +17,8 @@
 
 #include "StyledToolBar.h"
 
+class QToolButton;
+
 //! Thin toolbar on top of RealSpaceWidget.
 
 class BA_CORE_API_ RealSpaceToolBar : public StyledToolBar
@@ -25,6 +27,16 @@ class BA_CORE_API_ RealSpaceToolBar : public StyledToolBar
 
 public:
     RealSpaceToolBar(QWidget* parent = 0);
+
+signals:
+    void defaultViewAction();
+    void edgeViewAction();
+    void faceViewAction();
+
+private:
+    QToolButton *m_defaultViewButton;
+    QToolButton *m_edgeViewButton;
+    QToolButton *m_faceViewButton;
 };
 
 #endif // REALSPACETOOLBAR_H

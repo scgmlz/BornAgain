@@ -42,6 +42,13 @@ public:
     void setModel(Model*);
     Model* getModel();
 
+    // ToolBar Actions
+    void defaultView();
+    void edgeView();
+    void faceView();
+
+    void canvasHintMessageBox();
+
 private:
     QRect viewport;
     float aspectRatio, colorBgR, colorBgG, colorBgB;
@@ -61,6 +68,7 @@ private:
     void mousePressEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
+    void wheelEvent(QWheelEvent*);
 
     Camera  *camera;
     Program *program;

@@ -39,9 +39,17 @@ public:
 public slots:
     void onSelectionChanged(const QModelIndex& selected);
 
+    void onDefaultViewAction();
+    void onEdgeViewAction();
+    void onFaceViewAction();
+
 private slots:
     void updateScene();
     void resetScene();
+
+    void defaultView();
+    void edgeView();
+    void faceView();
 
 protected:
     virtual void showEvent(QShowEvent*);

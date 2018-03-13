@@ -21,6 +21,7 @@
 
 #include <QMouseEvent>
 #include <qmath.h>
+#include <QMessageBox>
 
 namespace RealSpace {
 
@@ -171,6 +172,26 @@ void Canvas::mouseReleaseEvent(QMouseEvent*) {
     }
 }
 
+void Canvas::wheelEvent(QWheelEvent* e)
+{
+    if (camera)
+    {
+        if(e->delta() < 0)
+        {
+            //Zoom in
+            camera->zoomBy(1.25);
+        }
+        else
+        {
+            //Zoom out
+            camera->zoomBy(0.75);
+        }
+        camera->endTransform(true);
+        update();
+    }
+    e->accept(); // disabling the event from propagating further to the parent widgets
+}
+
 void Canvas::releaseBuffer(Geometry const* g) {
     delete buffers.take(g);
 }
@@ -193,6 +214,64 @@ void Canvas::draw(QColor const& color, QMatrix4x4 const& mat, Geometry const& ge
     program->set(color);
     program->set(mat);
     buf->draw();
+}
+
+void Canvas::defaultView()
+{
+    if (model){
+        // Default view
+        camera->lookAt(model->defCamPos);
+        camera->endTransform(true);
+        update();
+    }
+    else{
+        canvasHintMessageBox();
+    }
+}
+
+void Canvas::edgeView()
+{
+    if (model){
+        // Edge view
+        camera->lookAt(RealSpace::Camera::Position(
+                                   RealSpace::Vector3D(0, -140, 0),   // eye
+                                   RealSpace::Vector3D(0, 0, 0),       // center
+                                   RealSpace::Vector3D::_z));
+        camera->endTransform(true);
+        update();
+    }
+    else{
+        canvasHintMessageBox();
+    }
+}
+
+void Canvas::faceView()
+{
+    if (model){
+        // Top-face view
+        camera->lookAt(RealSpace::Camera::Position(
+                                   RealSpace::Vector3D(1, 0, 140),   // eye
+                                   RealSpace::Vector3D(0, 0, 0),       // center
+                                   RealSpace::Vector3D::_z));
+        camera->endTransform(true);
+        update();
+    }
+    else{
+        canvasHintMessageBox();
+    }
+}
+
+// Display message when no Sample is selected and a ToolBar action is clicked
+void Canvas::canvasHintMessageBox()
+{
+    QMessageBox box;
+    box.setIcon(QMessageBox::Information);
+    box.setText("Sample not selected! Nothing to display!");
+    box.setDetailedText("Hint:"
+                        "\n1. Build the sample."
+                        "\n2. Select it from the panel on the right.");
+    box.setWindowFlags(box.windowFlags() & ~Qt::WindowCloseButtonHint); // Hide Close Button
+    box.exec();
 }
 
 }  // namespace RealSpace
