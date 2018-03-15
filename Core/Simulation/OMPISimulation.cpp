@@ -47,7 +47,7 @@ void OMPISimulation::runSimulation(Simulation* simulation)
         sim_options.setThreadInfo(info);
         simulation->runSimulation();
 
-        std::vector<double> raw = simulation->result().data()->getRawDataVector();
+        std::vector<double> raw = simulation->rawResults();
         MPI_Send(&raw[0], raw.size(), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     }
     if(world_rank == 0) {
@@ -61,7 +61,7 @@ void OMPISimulation::runSimulation(Simulation* simulation)
             for(size_t i_raw=0; i_raw<total_size; ++i_raw)
                 sum_of_raw[i_raw] += raw[i_raw];
         }
-        simulation->setRawResultVector(sum_of_raw);
+        simulation->setRawResults(sum_of_raw);
     }
 }
 #else

@@ -127,16 +127,6 @@ const IAxis* SpecularSimulation::getAlphaAxis() const
     return m_coordinate_axis.get();
 }
 
-void SpecularSimulation::setRawResultVector(const std::vector<double>& raw_data)
-{
-    if (raw_data.size() != m_sim_elements.size())
-        throw std::runtime_error("SpecularSimulation::setRawResultVector: size of vector passed as "
-                                 "argument doesn't match number of elements in this simulation");
-    for (unsigned i=0; i<raw_data.size(); i++) {
-        m_sim_elements[i].setIntensity(raw_data[i]);
-    }
-}
-
 void SpecularSimulation::initSimulationElementVector()
 {
     const auto& beam = m_instrument.getBeam();
@@ -319,4 +309,26 @@ std::vector<complex_t> SpecularSimulation::getScalarT(size_t i_layer) const
 std::vector<complex_t> SpecularSimulation::getScalarKz(size_t i_layer) const
 {
     return getData(i_layer, &ILayerRTCoefficients::getScalarKz);
+}
+
+std::vector<double> SpecularSimulation::rawResults() const
+{
+    std::vector<double> result;
+    result.resize(m_sim_elements.size());
+    for (unsigned i=0; i<m_sim_elements.size(); ++i) {
+        result[i] = m_sim_elements[i].getIntensity();
+    }
+    return result;
+}
+
+void SpecularSimulation::setRawResults(const std::vector<double>& raw_data)
+{
+    initSimulationElementVector();
+    if (raw_data.size() != m_sim_elements.size())
+        throw std::runtime_error("SpecularSimulation::setRawResults: size of vector passed as "
+                                 "argument doesn't match number of elements in this simulation");
+    for (unsigned i=0; i<raw_data.size(); i++) {
+        m_sim_elements[i].setIntensity(raw_data[i]);
+    }
+    transferResultsToIntensityMap();
 }

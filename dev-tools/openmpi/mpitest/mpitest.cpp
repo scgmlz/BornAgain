@@ -5,6 +5,7 @@
 #include "SampleBuilderFactory.h"
 #include "SimulationFactory.h"
 #include "IntensityDataFunctions.h"
+#include "IntensityDataIOFactory.h"
 
 int main(int argc, char **argv)
 {
@@ -30,10 +31,12 @@ int main(int argc, char **argv)
 
     if(world_rank ==0) {
         auto result = p_simulation->result();
+        IntensityDataIOFactory::writeSimulationResult(result, "mpi_result.int");
 
         std::cout << "Running normal simulation..." << std::endl;
         p_simulation->runSimulation();
         auto reference = p_simulation->result();
+        IntensityDataIOFactory::writeSimulationResult(reference, "simple_result.int");
 
         double diff = IntensityDataFunctions::RelativeDifference(result, reference);
         std::cout << "Difference: " << diff << std::endl;

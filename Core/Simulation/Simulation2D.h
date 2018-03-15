@@ -61,8 +61,6 @@ public:
     //! Sets rectangular region of interest with lower left and upper right corners defined.
     void setRegionOfInterest(double xlow, double ylow, double xup, double yup);
 
-    void setRawResultVector(const std::vector<double>& raw_data) override;
-
 protected:
     Simulation2D(const Simulation2D& other);
 
@@ -88,6 +86,10 @@ protected:
 
     std::vector<SimulationElement> m_sim_elements;
     std::vector<double> m_cache;
+
+private:
+    std::vector<double> rawResults() const override;
+    void setRawResults(const std::vector<double>& raw_data) override;
 };
 
 #endif // SIMULATION2D_H

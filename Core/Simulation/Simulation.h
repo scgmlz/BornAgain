@@ -98,14 +98,16 @@ public:
 
     std::vector<const INode*> getChildren() const;
 
-    virtual void setRawResultVector(const std::vector<double>& raw_data) =0;
-
+    friend class OMPISimulation;
 protected:
     Simulation(const Simulation& other);
 
     //! Creates the appropriate data structure (e.g. 2D intensity map) from the calculated
     //! SimulationElement objects
     virtual void transferResultsToIntensityMap() {}
+
+    //! Initializes the vector of Simulation elements
+    virtual void initSimulationElementVector() = 0;
 
     virtual void updateIntensityMap() {}
 
@@ -123,9 +125,6 @@ private:
     void updateSample();
 
     void runSingleSimulation(size_t batch_start, size_t batch_size, double weight = 1.0);
-
-    //! Initializes the vector of Simulation elements
-    virtual void initSimulationElementVector() = 0;
 
     //! Generate a single threaded computation for a given range of simulation elements
     //! @param start Index of the first element to include into computation
@@ -150,6 +149,10 @@ private:
     virtual void addDataToCache(double weight) = 0;
 
     virtual void moveDataFromCache() = 0;
+
+    // used in MPI calculations for transfer of partial results
+    virtual std::vector<double> rawResults() const=0;
+    virtual void setRawResults(const std::vector<double>& raw_data) =0;
 };
 
 #endif // SIMULATION_H
