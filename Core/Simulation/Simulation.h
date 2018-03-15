@@ -51,6 +51,9 @@ public:
     //! Run a simulation, possibly averaged over parameter distributions
     void runSimulation();
 
+    //! Run a simulation in an openMPI environment
+    void runOMPISimulation();
+
     void setInstrument(const Instrument& instrument);
     const Instrument& getInstrument() const { return m_instrument; }
     Instrument& getInstrument() { return m_instrument; }
@@ -94,6 +97,8 @@ public:
     void setTerminalProgressMonitor();
 
     std::vector<const INode*> getChildren() const;
+
+    virtual void setRawResultVector(const std::vector<double>& raw_data) =0;
 
 protected:
     Simulation(const Simulation& other);

@@ -53,6 +53,16 @@ void Simulation2D::setRegionOfInterest(double xlow, double ylow, double xup, dou
     Detector2D(m_instrument)->setRegionOfInterest(xlow, ylow, xup, yup);
 }
 
+void Simulation2D::setRawResultVector(const std::vector<double>& raw_data)
+{
+    if (raw_data.size() != m_sim_elements.size())
+        throw std::runtime_error("Simulation2D::setRawResultVector: size of vector passed as "
+                                 "argument doesn't match number of elements in this simulation");
+    for (unsigned i=0; i<raw_data.size(); i++) {
+        m_sim_elements[i].setIntensity(raw_data[i]);
+    }
+}
+
 Simulation2D::Simulation2D(const Simulation2D& other)
     : Simulation(other)
     , m_sim_elements(other.m_sim_elements)

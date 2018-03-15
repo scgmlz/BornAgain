@@ -64,7 +64,7 @@ def run_simulation():
     simulation = get_simulation()
 
     if(world_size == 1):
-        print "Not an OpenMPI environment, run with 'mpirun -np 12 python ompi_sim_example.py'"
+        print("Not an OpenMPI environment, run with 'mpirun -np 12 python ompi_sim_example.py'")
         exit(0)
 
     SetMessageLevel("DEBUG")
@@ -73,7 +73,7 @@ def run_simulation():
 
     if(world_rank == 0):
         sumresult = simulation.result().array()
-        print sumresult
+        print(sumresult)
         #pylab.imshow(sumresult + 1, norm=matplotlib.colors.LogNorm(), extent=[-1.0, 1.0, 0, 2.0])
         #pylab.show()
 

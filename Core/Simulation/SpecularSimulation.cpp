@@ -127,6 +127,16 @@ const IAxis* SpecularSimulation::getAlphaAxis() const
     return m_coordinate_axis.get();
 }
 
+void SpecularSimulation::setRawResultVector(const std::vector<double>& raw_data)
+{
+    if (raw_data.size() != m_sim_elements.size())
+        throw std::runtime_error("SpecularSimulation::setRawResultVector: size of vector passed as "
+                                 "argument doesn't match number of elements in this simulation");
+    for (unsigned i=0; i<raw_data.size(); i++) {
+        m_sim_elements[i].setIntensity(raw_data[i]);
+    }
+}
+
 void SpecularSimulation::initSimulationElementVector()
 {
     const auto& beam = m_instrument.getBeam();

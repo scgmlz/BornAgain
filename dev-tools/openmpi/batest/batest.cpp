@@ -1,6 +1,6 @@
 #include <iostream>
 #include "SimulationFactory.h"
-#include "OutputDataFunctions.h"
+#include "IntensityDataFunctions.h"
 #include <mpi.h>
 
 int main(int argc, char **argv)
@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     std::cout << "Hello World" << std::endl;
 
     SimulationFactory sim_registry;
-    GISASSimulation *simulation = sim_registry.createSimulation("isgisaxs01");
+    Simulation *simulation = sim_registry.createItem("isgisaxs01");
 
     simulation->runOMPISimulation();
 

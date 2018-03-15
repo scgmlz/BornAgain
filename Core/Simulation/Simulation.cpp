@@ -14,9 +14,10 @@
 
 #include "Simulation.h"
 #include "IBackground.h"
+#include "IComputation.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "IComputation.h"
+#include "OMPISimulation.h"
 #include "ParameterPool.h"
 #include "ParameterSample.h"
 #include "StringUtils.h"
@@ -150,13 +151,11 @@ void Simulation::runSimulation()
     transferResultsToIntensityMap();
 }
 
-/* currently unused
 void Simulation::runOMPISimulation()
 {
     OMPISimulation ompi;
     ompi.runSimulation(this);
 }
-*/
 
 void Simulation::setInstrument(const Instrument& instrument)
 {

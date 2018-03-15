@@ -61,6 +61,8 @@ public:
     //! Returns a pointer to incident angle axis.
     const IAxis* getAlphaAxis() const;
 
+    void setRawResultVector(const std::vector<double>& raw_data) override;
+
 private:
     typedef complex_t (ILayerRTCoefficients::*DataGetter)() const;
 

@@ -16618,6 +16618,11 @@ class Simulation(ICloneable, INode):
         return _libBornAgainCore.Simulation_runSimulation(self)
 
 
+    def runOMPISimulation(self):
+        """runOMPISimulation(Simulation self)"""
+        return _libBornAgainCore.Simulation_runOMPISimulation(self)
+
+
     def setInstrument(self, instrument):
         """
         setInstrument(Simulation self, Instrument instrument)
@@ -16855,6 +16860,11 @@ class Simulation(ICloneable, INode):
         return _libBornAgainCore.Simulation_getChildren(self)
 
 
+    def setRawResultVector(self, raw_data):
+        """setRawResultVector(Simulation self, vdouble1d_t raw_data)"""
+        return _libBornAgainCore.Simulation_setRawResultVector(self, raw_data)
+
+
     def setSampleBuilder(self, ptr):
         self.samplebuilder = ptr
         self.setSampleBuilderCpp(ptr)
@@ -16998,6 +17008,11 @@ class Simulation2D(Simulation):
 
         """
         return _libBornAgainCore.Simulation2D_setRegionOfInterest(self, xlow, ylow, xup, yup)
+
+
+    def setRawResultVector(self, raw_data):
+        """setRawResultVector(Simulation2D self, vdouble1d_t raw_data)"""
+        return _libBornAgainCore.Simulation2D_setRawResultVector(self, raw_data)
 
 Simulation2D_swigregister = _libBornAgainCore.Simulation2D_swigregister
 Simulation2D_swigregister(Simulation2D)
@@ -26956,6 +26971,11 @@ class SpecularSimulation(Simulation):
 
         """
         return _libBornAgainCore.SpecularSimulation_getAlphaAxis(self)
+
+
+    def setRawResultVector(self, raw_data):
+        """setRawResultVector(SpecularSimulation self, vdouble1d_t raw_data)"""
+        return _libBornAgainCore.SpecularSimulation_setRawResultVector(self, raw_data)
 
 
     def setSampleBuilder(self, ptr):
