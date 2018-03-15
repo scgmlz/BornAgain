@@ -16,5 +16,3 @@ find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 
 target_link_libraries(helloworld ${MPI_LIBRARIES})
-
-

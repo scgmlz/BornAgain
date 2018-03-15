@@ -1,4 +1,4 @@
-# Finds BornAgain instalation
+# Finds BornAgain installation
 # It defines:
 # BORNAGAIN_INCLUDE_DIR  PATH to the include directory
 # BORNAGAIN_LIBRARIES    BornAgain libraries

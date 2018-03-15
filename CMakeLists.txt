@@ -25,7 +25,7 @@ add_custom_target(fullcheck COMMAND ${CMAKE_CTEST_COMMAND}) # => 'make check' is
 
 include(VERSION.cmake)
 
-# --- Declare project-wide user flags, and set default values ---
+# declare project-wide user flags, and set default values
 option(BORNAGAIN_PYTHON "Build with python support" ON)
 option(BORNAGAIN_USE_PYTHON3 "Build against python 3.x instead of 2.7" ON)
 option(BORNAGAIN_GENERATE_BINDINGS "Generate python bindings during build (requires swig)" OFF)
@@ -53,7 +53,7 @@ if(AUTOGENERATE)
     set(BORNAGAIN_GENERATE_BINDINGS ON)
 endif()
 
-#--- Include CMake macros and functions ---
+# include CMake macros and functions
 include(GetFilenameComponent) # overwrite CMake command
 include(SearchInstalledSoftware)
 include(ThirdPartyLibUtilities)
@@ -80,7 +80,7 @@ if(BORNAGAIN_COVERAGE)
   include(SetupCoverage)
 endif()
 
-#--- Recurse into the given subdirectories ---
+# recurse into the given subdirectories
 if(BORNAGAIN_USERMANUAL)
     add_subdirectory(Doc/UserManual)
 endif()
@@ -98,10 +98,15 @@ if(BORNAGAIN_GUI)
     add_subdirectory(GUI)
 endif()
 
+# build OpenMPI test executable
+if(BORNAGAIN_OPENMPI)
+    add_subdirectory(dev-tools/openmpi/mpitest)
+endif()
+
 add_subdirectory(Tests/UnitTests)
 add_subdirectory(Tests/Functional) # functional tests (ctest)
 
 add_subdirectory(cmake/bornagain) # trick to print an after-install message
 
-#--- Make package targets ---
+# make package targets
 include(BornAgainCPack)
