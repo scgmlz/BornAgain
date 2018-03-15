@@ -1,23 +1,32 @@
 set(executable_name MPITest)
 
-add_executable(${executable_name} mpitest.cpp)
-
-# Find libraries
-message(STATUS "Configuring with OpenMPI support")
+# find libraries
+message(STATUS "Configuring MPI test executable")
 find_package(MPI REQUIRED)
-set(CMAKE_C_COMPILER mpicc)
-set(CMAKE_CXX_COMPILER mpic++)
 
-# BornAgain
-target_link_libraries(${executable_name} ${BornAgainCore_LIBRARY})
-
+# include dirs
 include_directories(
+    ${MPI_CXX_INCLUDE_PATH}
     ${EIGEN3_INCLUDE_DIR}
     ${BornAgainCore_INCLUDE_DIRS}
-    ${MPI_INCLUDE_PATH}
-)
+    )
 
+# executable and its dependencies
+add_executable(${executable_name} mpitest.cpp)
 target_link_libraries(${executable_name}
+    ${MPI_CXX_LIBRARIES}
     ${BornAgainCore_LIBRARY}
-    ${MPI_LIBRARIES}
-)
+    )
+
+# compile and link flags
+message(STATUS "MPI compile flags: ${MPI_CXX_COMPILE_FLAGS}")
+message(STATUS "MPI link flags: ${MPI_CXX_LINK_FLAGS}")
+if(MPI_CXX_COMPILE_FLAGS)
+  set_target_properties(${executable_name} PROPERTIES
+    COMPILE_FLAGS "${MPI_CXX_COMPILE_FLAGS}")
+endif()
+
+if(MPI_CXX_LINK_FLAGS)
+  set_target_properties(${executable_name} PROPERTIES
+    LINK_FLAGS "${MPI_CXX_LINK_FLAGS}")
+endif()

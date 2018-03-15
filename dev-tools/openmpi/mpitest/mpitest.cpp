@@ -1,9 +1,10 @@
+#include <mpi.h>
+
 #include <iostream>
 #include "MultiLayer.h"
 #include "SampleBuilderFactory.h"
 #include "SimulationFactory.h"
 #include "IntensityDataFunctions.h"
-#include <mpi.h>
 
 int main(int argc, char **argv)
 {

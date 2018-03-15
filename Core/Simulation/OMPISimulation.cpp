@@ -35,11 +35,6 @@ void OMPISimulation::runSimulation(Simulation* simulation)
         return;
     }
 
-    // Get the name of the processor
-    char processor_name[MPI_MAX_PROCESSOR_NAME];
-    int name_len;
-    MPI_Get_processor_name(processor_name, &name_len);
-
     if(world_rank != 0) {
         SimulationOptions sim_options = simulation->getOptions();
         unsigned n_threads = sim_options.getNumberOfThreads();
