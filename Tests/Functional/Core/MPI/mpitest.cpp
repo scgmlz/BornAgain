@@ -23,11 +23,20 @@ int main(int argc, char **argv)
                 sample_factory.createSample("CylindersInDWBABuilder"));
     p_simulation->setSample(*P_sample);
 
+    // make backup of original simulation options
+    SimulationOptions sim_options;
+    if (world_rank==0) {
+        sim_options = p_simulation->getOptions();
+    }
+
     std::cout << "Running MPI simulation: rank " << world_rank << " of " << world_size << std::endl;
     p_simulation->runMPISimulation();
 
     if(world_rank ==0) {
         auto result = p_simulation->result();
+
+        // restore original simulation options
+        p_simulation->setOptions(sim_options);
 
         std::cout << "Running normal simulation..." << std::endl;
         p_simulation->runSimulation();

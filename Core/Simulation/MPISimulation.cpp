@@ -18,6 +18,7 @@
 #ifdef BORNAGAIN_MPI
 #include <mpi.h>
 #include "Simulation.h"
+#include "IntensityDataIOFactory.h"
 // -----------------------------------------------------------------------------
 // MPI support
 // -----------------------------------------------------------------------------
@@ -35,28 +36,26 @@ void MPISimulation::runSimulation(Simulation* simulation)
         return;
     }
 
-    if(world_rank != 0) {
-        SimulationOptions& sim_options = simulation->getOptions();
-        unsigned n_threads = sim_options.getNumberOfThreads();
-        unsigned n_batches = world_size - 1;
-        unsigned current_batch = world_rank - 1;
-        ThreadInfo info;
-        info.n_threads = n_threads;
-        info.n_batches = n_batches;
-        info.current_batch = current_batch;
-        sim_options.setThreadInfo(info);
-        simulation->runSimulation();
+    SimulationOptions& sim_options = simulation->getOptions();
+    unsigned n_threads = sim_options.getNumberOfThreads();
+    unsigned n_batches = world_size;
+    unsigned current_batch = world_rank;
+    ThreadInfo info;
+    info.n_threads = n_threads;
+    info.n_batches = n_batches;
+    info.current_batch = current_batch;
+    sim_options.setThreadInfo(info);
+    simulation->runSimulation();
 
+    if(world_rank != 0) {
         std::vector<double> raw = simulation->rawResults();
         MPI_Send(&raw[0], raw.size(), MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
     }
     if(world_rank == 0) {
-        size_t total_size = simulation->numberOfSimulationElements();
-        std::vector<double> sum_of_raw;
-        sum_of_raw.resize(total_size, 0.0);
+        auto sum_of_raw = simulation->rawResults();
+        size_t total_size = sum_of_raw.size();
         for(int i=1; i<world_size; ++i) {
-            std::vector<double> raw;
-            raw.resize(total_size, 0.0);
+            std::vector<double> raw(total_size);
             MPI_Recv(&raw[0], total_size, MPI_DOUBLE, i, 0, MPI_COMM_WORLD, &st);
             for(size_t i_raw=0; i_raw<total_size; ++i_raw)
                 sum_of_raw[i_raw] += raw[i_raw];
