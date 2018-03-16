@@ -98,11 +98,6 @@ if(BORNAGAIN_GUI)
     add_subdirectory(GUI)
 endif()
 
-# build OpenMPI test executable
-if(BORNAGAIN_OPENMPI)
-    add_subdirectory(dev-tools/openmpi/mpitest)
-endif()
-
 add_subdirectory(Tests/UnitTests)
 add_subdirectory(Tests/Functional) # functional tests (ctest)
 
