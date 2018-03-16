@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      unused/OMPISimulation.cpp
-//! @brief     Implements class OMPISimulation.
+//! @file      unused/MPISimulation.cpp
+//! @brief     Implements class MPISimulation.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -13,16 +13,16 @@
 //
 // ************************************************************************** //
 
-#include "OMPISimulation.h"
+#include "MPISimulation.h"
 
-#ifdef BORNAGAIN_OPENMPI
+#ifdef BORNAGAIN_MPI
 #include <mpi.h>
 #include "Simulation.h"
 // -----------------------------------------------------------------------------
-// OpenMPI support
+// MPI support
 // -----------------------------------------------------------------------------
 
-void OMPISimulation::runSimulation(Simulation* simulation)
+void MPISimulation::runSimulation(Simulation* simulation)
 {
     MPI_Status st;
 
@@ -66,13 +66,13 @@ void OMPISimulation::runSimulation(Simulation* simulation)
 }
 #else
 // -----------------------------------------------------------------------------
-// No OpenMPI support
+// No MPI support
 // -----------------------------------------------------------------------------
 
-void OMPISimulation::runSimulation(Simulation* /* simulation */)
+void MPISimulation::runSimulation(Simulation* /* simulation */)
 {
     throw Exceptions::RuntimeErrorException(
-        "OMPISimulation::runSimulation() -> Error! Can't run OpenMPI simulation. "
-        "The package was compiled without OpenMPI support (compile with -DBORNAGAIN_OPENMPI=ON)" );
+        "MPISimulation::runSimulation() -> Error! Can't run MPI simulation. "
+        "The package was compiled without MPI support (compile with -DBORNAGAIN_MPI=ON)" );
 }
 #endif

@@ -16618,9 +16618,9 @@ class Simulation(ICloneable, INode):
         return _libBornAgainCore.Simulation_runSimulation(self)
 
 
-    def runOMPISimulation(self):
-        """runOMPISimulation(Simulation self)"""
-        return _libBornAgainCore.Simulation_runOMPISimulation(self)
+    def runMPISimulation(self):
+        """runMPISimulation(Simulation self)"""
+        return _libBornAgainCore.Simulation_runMPISimulation(self)
 
 
     def setInstrument(self, instrument):

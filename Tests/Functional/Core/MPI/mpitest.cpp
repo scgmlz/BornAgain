@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     p_simulation->setSample(*P_sample);
 
     std::cout << "Running MPI simulation: rank " << world_rank << " of " << world_size << std::endl;
-    p_simulation->runOMPISimulation();
+    p_simulation->runMPISimulation();
 
     if(world_rank ==0) {
         auto result = p_simulation->result();

@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      unused/OMPISimulation.h
-//! @brief     Defines class OMPISimulation.
+//! @file      unused/MPISimulation.h
+//! @brief     Defines class MPISimulation.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -13,15 +13,15 @@
 //
 // ************************************************************************** //
 
-#ifndef OMPISIMULATION_H
-#define OMPISIMULATION_H
+#ifndef MPISIMULATION_H
+#define MPISIMULATION_H
 
 class Simulation;
 
-class OMPISimulation
+class MPISimulation
 {
 public:
     void runSimulation(Simulation *simulation);
 };
 
-#endif // OMPISIMULATION_H
+#endif // MPISIMULATION_H

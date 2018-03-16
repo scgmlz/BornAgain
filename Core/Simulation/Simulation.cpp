@@ -17,7 +17,7 @@
 #include "IComputation.h"
 #include "IMultiLayerBuilder.h"
 #include "MultiLayer.h"
-#include "OMPISimulation.h"
+#include "MPISimulation.h"
 #include "ParameterPool.h"
 #include "ParameterSample.h"
 #include "StringUtils.h"
@@ -151,9 +151,9 @@ void Simulation::runSimulation()
     transferResultsToIntensityMap();
 }
 
-void Simulation::runOMPISimulation()
+void Simulation::runMPISimulation()
 {
-    OMPISimulation ompi;
+    MPISimulation ompi;
     ompi.runSimulation(this);
 }
 

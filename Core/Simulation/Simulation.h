@@ -51,8 +51,8 @@ public:
     //! Run a simulation, possibly averaged over parameter distributions
     void runSimulation();
 
-    //! Run a simulation in an openMPI environment
-    void runOMPISimulation();
+    //! Run a simulation in a MPI environment
+    void runMPISimulation();
 
     void setInstrument(const Instrument& instrument);
     const Instrument& getInstrument() const { return m_instrument; }
@@ -98,7 +98,7 @@ public:
 
     std::vector<const INode*> getChildren() const;
 
-    friend class OMPISimulation;
+    friend class MPISimulation;
 protected:
     Simulation(const Simulation& other);
 

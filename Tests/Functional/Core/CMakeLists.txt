@@ -6,7 +6,7 @@
 add_subdirectory(CoreStandardTest)
 add_subdirectory(CoreSpecial)
 
-# build OpenMPI test executable
-if(BORNAGAIN_OPENMPI)
+# build MPI test executable
+if(BORNAGAIN_MPI)
     add_subdirectory(MPI)
 endif()
