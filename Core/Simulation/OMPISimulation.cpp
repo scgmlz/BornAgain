@@ -36,7 +36,7 @@ void OMPISimulation::runSimulation(Simulation* simulation)
     }
 
     if(world_rank != 0) {
-        SimulationOptions sim_options = simulation->getOptions();
+        SimulationOptions& sim_options = simulation->getOptions();
         unsigned n_threads = sim_options.getNumberOfThreads();
         unsigned n_batches = world_size - 1;
         unsigned current_batch = world_rank - 1;
