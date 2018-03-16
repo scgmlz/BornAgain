@@ -27,15 +27,13 @@ def get_sample():
     prism_ff = FormFactorPrism3(10*nanometer, 5*nanometer)
     prism = Particle(m_particle, prism_ff)
     particle_layout = ParticleLayout()
-    particle_layout.addParticle(cylinder, 0.0, 0.5)
-    particle_layout.addParticle(prism, 0.0, 0.5)
-    interference = InterferenceFunctionNone()
-    particle_layout.setInterferenceFunction(interference)
+    particle_layout.addParticle(cylinder, 0.5)
+    particle_layout.addParticle(prism, 0.5)
 
     # air layer with particles and substrate form multi layer
     air_layer = Layer(m_air)
     air_layer.addLayout(particle_layout)
-    substrate_layer = Layer(m_substrate, 0)
+    substrate_layer = Layer(m_substrate)
     multi_layer = MultiLayer()
     multi_layer.addLayer(air_layer)
     multi_layer.addLayer(substrate_layer)
@@ -47,9 +45,7 @@ def get_simulation():
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = GISASSimulation()
-    detector = IsGISAXSDetector()
-    detector.setDetectorParameters(100, -1.0*degree, 1.0*degree, 100, 0.0*degree, 2.0*degree)
-    simulation.setDetector(detector)
+    simulation.setDetectorParameters(100, -1.0*degree, 1.0*degree, 100, 0.0*degree, 2.0*degree)
     simulation.setBeamParameters(1.0*angstrom, 0.2*degree, 0.0*degree)
     sample = get_sample()
     simulation.setSample(sample)
@@ -64,22 +60,17 @@ def run_simulation():
     simulation = get_simulation()
 
     if(world_size == 1):
-        print("Not an OpenMPI environment, run with 'mpirun -np 12 python ompi_sim_example.py'")
+        print("Not an OpenMPI environment, run with 'mpirun -n 4 python ompi_sim_example.py'")
         exit(0)
-
-    SetMessageLevel("DEBUG")
 
     simulation.runOMPISimulation()
 
     if(world_rank == 0):
         sumresult = simulation.result().array()
         print(sumresult)
-        #pylab.imshow(sumresult + 1, norm=matplotlib.colors.LogNorm(), extent=[-1.0, 1.0, 0, 2.0])
-        #pylab.show()
+        # pylab.imshow(sumresult + 1, norm=matplotlib.colors.LogNorm(), extent=[-1.0, 1.0, 0, 2.0])
+        # pylab.show()
 
 
 if __name__ == '__main__':
     run_simulation()
-
-
-
