@@ -16,9 +16,10 @@
 #include "MPISimulation.h"
 
 #ifdef BORNAGAIN_MPI
+
 #include <mpi.h>
 #include "Simulation.h"
-#include "IntensityDataIOFactory.h"
+
 // -----------------------------------------------------------------------------
 // MPI support
 // -----------------------------------------------------------------------------
@@ -64,6 +65,9 @@ void MPISimulation::runSimulation(Simulation* simulation)
     }
 }
 #else
+
+#include "Exceptions.h"
+
 // -----------------------------------------------------------------------------
 // No MPI support
 // -----------------------------------------------------------------------------
@@ -74,4 +78,4 @@ void MPISimulation::runSimulation(Simulation* /* simulation */)
         "MPISimulation::runSimulation() -> Error! Can't run MPI simulation. "
         "The package was compiled without MPI support (compile with -DBORNAGAIN_MPI=ON)" );
 }
-#endif
+#endif  // BORNAGAIN_MPI
