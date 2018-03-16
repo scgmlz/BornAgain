@@ -16618,6 +16618,11 @@ class Simulation(ICloneable, INode):
         return _libBornAgainCore.Simulation_runSimulation(self)
 
 
+    def runMPISimulation(self):
+        """runMPISimulation(Simulation self)"""
+        return _libBornAgainCore.Simulation_runMPISimulation(self)
+
+
     def setInstrument(self, instrument):
         """
         setInstrument(Simulation self, Instrument instrument)

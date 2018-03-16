@@ -25,7 +25,7 @@ add_custom_target(fullcheck COMMAND ${CMAKE_CTEST_COMMAND}) # => 'make check' is
 
 include(VERSION.cmake)
 
-# --- Declare project-wide user flags, and set default values ---
+# declare project-wide user flags, and set default values
 option(BORNAGAIN_PYTHON "Build with python support" ON)
 option(BORNAGAIN_USE_PYTHON3 "Build against python 3.x instead of 2.7" ON)
 option(BORNAGAIN_GENERATE_BINDINGS "Generate python bindings during build (requires swig)" OFF)
@@ -35,7 +35,7 @@ option(BORNAGAIN_USERMANUAL "Build the User Manual" OFF)
 option(BORNAGAIN_MANPAGE "Build Unix man page" OFF)
 option(BUILD_DEBIAN "Build a debian package" OFF)
 option(BORNAGAIN_APPLE_BUNDLE "Create a Mac OS X bundle" OFF)
-option(BORNAGAIN_OPENMPI "Build with OpenMPI support" OFF)
+option(BORNAGAIN_MPI "Build with MPI support" OFF)
 option(BORNAGAIN_RELEASE "Special option for making release" OFF)
 option(BORNAGAIN_TIFF_SUPPORT "Tiff files read/write support" ON)
 option(AUTOGENERATE "Regenerate directory auto (Py docs, Py wrappers, man page)" OFF)
@@ -53,7 +53,7 @@ if(AUTOGENERATE)
     set(BORNAGAIN_GENERATE_BINDINGS ON)
 endif()
 
-#--- Include CMake macros and functions ---
+# include CMake macros and functions
 include(GetFilenameComponent) # overwrite CMake command
 include(SearchInstalledSoftware)
 include(ThirdPartyLibUtilities)
@@ -80,7 +80,7 @@ if(BORNAGAIN_COVERAGE)
   include(SetupCoverage)
 endif()
 
-#--- Recurse into the given subdirectories ---
+# recurse into the given subdirectories
 if(BORNAGAIN_USERMANUAL)
     add_subdirectory(Doc/UserManual)
 endif()
@@ -103,5 +103,5 @@ add_subdirectory(Tests/Functional) # functional tests (ctest)
 
 add_subdirectory(cmake/bornagain) # trick to print an after-install message
 
-#--- Make package targets ---
+# make package targets
 include(BornAgainCPack)

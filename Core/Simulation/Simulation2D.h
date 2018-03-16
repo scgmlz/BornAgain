@@ -86,6 +86,10 @@ protected:
 
     std::vector<SimulationElement> m_sim_elements;
     std::vector<double> m_cache;
+
+private:
+    std::vector<double> rawResults() const override;
+    void setRawResults(const std::vector<double>& raw_data) override;
 };
 
 #endif // SIMULATION2D_H

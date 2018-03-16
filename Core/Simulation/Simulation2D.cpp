@@ -149,6 +149,28 @@ void Simulation2D::moveDataFromCache()
     }
 }
 
+std::vector<double> Simulation2D::rawResults() const
+{
+    std::vector<double> result;
+    result.resize(m_sim_elements.size());
+    for (unsigned i=0; i<m_sim_elements.size(); ++i) {
+        result[i] = m_sim_elements[i].getIntensity();
+    }
+    return result;
+}
+
+void Simulation2D::setRawResults(const std::vector<double>& raw_data)
+{
+    initSimulationElementVector();
+    if (raw_data.size() != m_sim_elements.size())
+        throw std::runtime_error("Simulation2D::setRawResults: size of vector passed as "
+                                 "argument doesn't match number of elements in this simulation");
+    for (unsigned i=0; i<raw_data.size(); i++) {
+        m_sim_elements[i].setIntensity(raw_data[i]);
+    }
+    transferResultsToIntensityMap();
+}
+
 namespace
 {
 IDetector2D* Detector2D(Instrument& instrument)

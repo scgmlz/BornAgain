@@ -118,6 +118,9 @@ private:
     //! Deprecated and will be removed.
     std::vector<complex_t> getScalarKz(size_t i_layer) const;
 
+    std::vector<double> rawResults() const override;
+    void setRawResults(const std::vector<double>& raw_data) override;
+
     std::unique_ptr<IAxis> m_coordinate_axis;
     std::vector<SpecularSimulationElement> m_sim_elements;
     std::vector<double> m_cache;

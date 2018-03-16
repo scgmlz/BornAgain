@@ -24,10 +24,12 @@ message(STATUS "Found Boost includes at ${Boost_INCLUDE_DIRS}, libraries at ${Bo
 
 # === optional packages ===
 
-# --- multithreading ---
-if(BORNAGAIN_OPENMPI)
-    message(STATUS "Configuring with OpenMPI support")
+# --- MPI support ---
+if(BORNAGAIN_MPI)
+    message(STATUS "Configuring with MPI support")
     find_package(MPI REQUIRED)
+    message(STATUS "MPI_CXX_INCLUDE_PATH: ${MPI_CXX_INCLUDE_PATH}")
+    message(STATUS "MPI_CXX_LIBRARIES: ${MPI_CXX_LIBRARIES}")
 endif()
 
 # --- Tiff ---

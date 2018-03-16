@@ -159,8 +159,8 @@ include_directories(${Boost_INCLUDE_DIRS} ${FFTW_INCLUDE_DIR}
 target_link_libraries(${library_name} ${Boost_LIBRARIES} ${FFTW_LIBRARY} ${GSL_LIBRARIES}
     ${Faddeeva_LIBRARY})
 
-if(BORNAGAIN_OPENMPI)
-    add_definitions(-DBORNAGAIN_OPENMPI)
+if(BORNAGAIN_MPI)
+    add_definitions(-DBORNAGAIN_MPI)
     include_directories(${MPI_INCLUDE_PATH})
     target_link_libraries(${library_name} ${MPI_LIBRARIES})
 endif()
