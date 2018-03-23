@@ -4,6 +4,7 @@
 //#include "MatrixSpecularInfoMapTest.h"
 #include "ScalarRTCoefficientsTest.h"
 #include "MatrixRTCoefficientsTest.h"
+#include "DepthProbeSimulationTest.h"
 #include "SpecularSimulationTest.h"
 #include "SpecularMatrixTest.h"
 #include "SpecularMagneticTest.h"
