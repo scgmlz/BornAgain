@@ -4,4 +4,4 @@
 #include "PolarizationHandler.h"
 #include "SpecularDataTest.h"
 #include "SpecularSimulationElementTest.h"
-
+#include "DepthProbeElementTest.h"
