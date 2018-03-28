@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "IFormFactor.h"
+#include "ILayerRTCoefficients.h"
 #include "Exceptions.h"
 #include "FormFactorDecoratorPositionFactor.h"
 #include "FormFactorDecoratorRotation.h"

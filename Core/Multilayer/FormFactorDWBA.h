@@ -48,8 +48,8 @@ public:
 
     double topZ(const IRotation& rotation) const override;
 
-    void setSpecularInfo (const ILayerRTCoefficients* p_in_coeffs,
-                          const ILayerRTCoefficients* p_out_coeffs) override;
+    void setSpecularInfo(std::unique_ptr<const ILayerRTCoefficients> p_in_coeffs,
+                         std::unique_ptr<const ILayerRTCoefficients> p_out_coeffs) override;
 
     friend class TestPolarizedDWBATerms;
 
@@ -57,8 +57,8 @@ private:
     //! The form factor for BA
     std::unique_ptr<IFormFactor> mP_form_factor;
 
-    const ILayerRTCoefficients* mp_in_coeffs;  //!< not owned by this
-    const ILayerRTCoefficients* mp_out_coeffs; //!< not owned by this
+    std::unique_ptr<const ILayerRTCoefficients> mp_in_coeffs;
+    std::unique_ptr<const ILayerRTCoefficients> mp_out_coeffs;
 };
 
 #endif // FORMFACTORDWBA_H

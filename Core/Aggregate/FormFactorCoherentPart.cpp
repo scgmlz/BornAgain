@@ -39,11 +39,9 @@ complex_t FormFactorCoherentPart::evaluate(const SimulationElement& sim_element)
     WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf(),
                                sim_element.getWavelength());
 
-    const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
-        mp_fresnel_map->getInCoefficients(sim_element, m_layer_index));
-    const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
-        mp_fresnel_map->getOutCoefficients(sim_element, m_layer_index));
-    mP_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
+    auto P_in_coeffs = mp_fresnel_map->getInCoefficients(sim_element, m_layer_index);
+    auto P_out_coeffs = mp_fresnel_map->getOutCoefficients(sim_element, m_layer_index);
+    mP_ff->setSpecularInfo(std::move(P_in_coeffs), std::move(P_out_coeffs));
     return mP_ff->evaluate(wavevectors);
 }
 
@@ -52,11 +50,9 @@ Eigen::Matrix2cd FormFactorCoherentPart::evaluatePol(const SimulationElement& si
     WavevectorInfo wavevectors(sim_element.getKi(), sim_element.getMeanKf(),
                                sim_element.getWavelength());
 
-    const std::unique_ptr<const ILayerRTCoefficients> P_in_coeffs(
-        mp_fresnel_map->getInCoefficients(sim_element, m_layer_index));
-    const std::unique_ptr<const ILayerRTCoefficients> P_out_coeffs(
-        mp_fresnel_map->getOutCoefficients(sim_element, m_layer_index));
-    mP_ff->setSpecularInfo(P_in_coeffs.get(), P_out_coeffs.get());
+    auto P_in_coeffs = mp_fresnel_map->getInCoefficients(sim_element, m_layer_index);
+    auto P_out_coeffs = mp_fresnel_map->getOutCoefficients(sim_element, m_layer_index);
+    mP_ff->setSpecularInfo(std::move(P_in_coeffs), std::move(P_out_coeffs));
     return mP_ff->evaluatePol(wavevectors);
 }
 

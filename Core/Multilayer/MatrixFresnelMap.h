@@ -35,11 +35,9 @@ public:
     MatrixFresnelMap();
     virtual ~MatrixFresnelMap();
 
-    const ILayerRTCoefficients* getOutCoefficients(const SimulationElement& sim_element,
-                                                   size_t layer_index) const final override;
-
-    const ILayerRTCoefficients* getInCoefficients(const SimulationElement& sim_element,
-                                                  size_t layer_index) const final override;
+    std::unique_ptr<const ILayerRTCoefficients>
+    getOutCoefficients(const SimulationElement& sim_element,
+                       size_t layer_index) const final override;
 
     void setMultilayer(const MultiLayer& multilayer) final override;
 
@@ -50,9 +48,12 @@ public:
         CoefficientHash;
 
 private:
-    const ILayerRTCoefficients* getCoefficients(kvector_t kvec, size_t layer_index,
-                                                const MultiLayer& multilayer,
-                                                CoefficientHash& hash_table) const;
+    std::unique_ptr<const ILayerRTCoefficients> getCoefficients(const kvector_t& kvec,
+                                                                size_t layer_index) const override;
+    std::unique_ptr<const ILayerRTCoefficients> getCoefficients(const kvector_t& kvec,
+                                                                size_t layer_index,
+                                                                const MultiLayer& multilayer,
+                                                                CoefficientHash& hash_table) const;
 
     std::unique_ptr<MultiLayer> mP_inverted_multilayer;
     mutable CoefficientHash m_hash_table_out;

@@ -642,21 +642,21 @@ C++ includes: BoxCompositionBuilder.h
 ";
 
 
-// File: structIntegratorReal_1_1CallBackHolder.xml
-%feature("docstring") IntegratorReal::CallBackHolder "
-
-structure holding the object and possible extra parameters
-
-C++ includes: IntegratorReal.h
-";
-
-
 // File: structIntegratorMCMiser_1_1CallBackHolder.xml
 %feature("docstring") IntegratorMCMiser::CallBackHolder "
 
 structure holding the object and possible extra parameters
 
 C++ includes: IntegratorMCMiser.h
+";
+
+
+// File: structIntegratorReal_1_1CallBackHolder.xml
+%feature("docstring") IntegratorReal::CallBackHolder "
+
+structure holding the object and possible extra parameters
+
+C++ includes: IntegratorReal.h
 ";
 
 
@@ -3657,7 +3657,7 @@ Returns the z-coordinate of the lowest point in this shape after a given rotatio
 Returns the z-coordinate of the lowest point in this shape after a given rotation. 
 ";
 
-%feature("docstring")  FormFactorDWBA::setSpecularInfo "void FormFactorDWBA::setSpecularInfo(const ILayerRTCoefficients *p_in_coeffs, const ILayerRTCoefficients *p_out_coeffs) override
+%feature("docstring")  FormFactorDWBA::setSpecularInfo "void FormFactorDWBA::setSpecularInfo(std::unique_ptr< const ILayerRTCoefficients > p_in_coeffs, std::unique_ptr< const ILayerRTCoefficients > p_out_coeffs) override
 
 Sets reflection/transmission info. 
 ";
@@ -3722,7 +3722,7 @@ Returns the z-coordinate of the lowest point in this shape after a given rotatio
 Returns the z-coordinate of the lowest point in this shape after a given rotation. 
 ";
 
-%feature("docstring")  FormFactorDWBAPol::setSpecularInfo "void FormFactorDWBAPol::setSpecularInfo(const ILayerRTCoefficients *p_in_coeffs, const ILayerRTCoefficients *p_out_coeffs) override
+%feature("docstring")  FormFactorDWBAPol::setSpecularInfo "void FormFactorDWBAPol::setSpecularInfo(std::unique_ptr< const ILayerRTCoefficients > p_in_coeffs, std::unique_ptr< const ILayerRTCoefficients > p_out_coeffs) override
 
 Sets reflection/transmission info. 
 ";
@@ -6969,7 +6969,7 @@ Returns the z-coordinate of the lowest point in this shape after a given rotatio
 Returns the z-coordinate of the lowest point in this shape after a given rotation. 
 ";
 
-%feature("docstring")  IFormFactor::setSpecularInfo "virtual void IFormFactor::setSpecularInfo(const ILayerRTCoefficients *, const ILayerRTCoefficients *)
+%feature("docstring")  IFormFactor::setSpecularInfo "virtual void IFormFactor::setSpecularInfo(std::unique_ptr< const ILayerRTCoefficients >, std::unique_ptr< const ILayerRTCoefficients >)
 
 Sets reflection/transmission info. 
 ";
@@ -7093,12 +7093,12 @@ C++ includes: IFresnelMap.h
 %feature("docstring")  IFresnelMap::~IFresnelMap "IFresnelMap::~IFresnelMap()
 ";
 
-%feature("docstring")  IFresnelMap::getOutCoefficients "virtual const ILayerRTCoefficients* IFresnelMap::getOutCoefficients(const SimulationElement &sim_element, size_t layer_index) const =0
+%feature("docstring")  IFresnelMap::getOutCoefficients "virtual std::unique_ptr<const ILayerRTCoefficients> IFresnelMap::getOutCoefficients(const SimulationElement &sim_element, size_t layer_index) const =0
 
 Retrieves the amplitude coefficients for a (time-reversed) outgoing wavevector. 
 ";
 
-%feature("docstring")  IFresnelMap::getInCoefficients "virtual const ILayerRTCoefficients* IFresnelMap::getInCoefficients(const SimulationElement &sim_element, size_t layer_index) const =0
+%feature("docstring")  IFresnelMap::getInCoefficients "std::unique_ptr<const ILayerRTCoefficients> IFresnelMap::getInCoefficients(const T &sim_element, size_t layer_index) const
 
 Retrieves the amplitude coefficients for an incoming wavevector. 
 ";
@@ -10483,14 +10483,9 @@ C++ includes: MatrixFresnelMap.h
 %feature("docstring")  MatrixFresnelMap::~MatrixFresnelMap "MatrixFresnelMap::~MatrixFresnelMap()
 ";
 
-%feature("docstring")  MatrixFresnelMap::getOutCoefficients "const ILayerRTCoefficients * MatrixFresnelMap::getOutCoefficients(const SimulationElement &sim_element, size_t layer_index) const final override
+%feature("docstring")  MatrixFresnelMap::getOutCoefficients "std::unique_ptr< const ILayerRTCoefficients > MatrixFresnelMap::getOutCoefficients(const SimulationElement &sim_element, size_t layer_index) const final override
 
 Retrieves the amplitude coefficients for a (time-reversed) outgoing wavevector. 
-";
-
-%feature("docstring")  MatrixFresnelMap::getInCoefficients "const ILayerRTCoefficients * MatrixFresnelMap::getInCoefficients(const SimulationElement &sim_element, size_t layer_index) const final override
-
-Retrieves the amplitude coefficients for an incoming wavevector. 
 ";
 
 %feature("docstring")  MatrixFresnelMap::setMultilayer "void MatrixFresnelMap::setMultilayer(const MultiLayer &multilayer) final override
@@ -13385,14 +13380,9 @@ C++ includes: ScalarFresnelMap.h
 %feature("docstring")  ScalarFresnelMap::~ScalarFresnelMap "ScalarFresnelMap::~ScalarFresnelMap() final
 ";
 
-%feature("docstring")  ScalarFresnelMap::getOutCoefficients "const ILayerRTCoefficients * ScalarFresnelMap::getOutCoefficients(const SimulationElement &sim_element, size_t layer_index) const final override
+%feature("docstring")  ScalarFresnelMap::getOutCoefficients "std::unique_ptr< const ILayerRTCoefficients > ScalarFresnelMap::getOutCoefficients(const SimulationElement &sim_element, size_t layer_index) const override
 
 Retrieves the amplitude coefficients for a (time-reversed) outgoing wavevector. 
-";
-
-%feature("docstring")  ScalarFresnelMap::getInCoefficients "const ILayerRTCoefficients * ScalarFresnelMap::getInCoefficients(const SimulationElement &sim_element, size_t layer_index) const final override
-
-Retrieves the amplitude coefficients for an incoming wavevector. 
 ";
 
 %feature("docstring")  ScalarFresnelMap::fillSpecularData "void ScalarFresnelMap::fillSpecularData(SpecularSimulationElement &sim_element) const override
@@ -15163,10 +15153,10 @@ C++ includes: WavevectorInfo.h
 ";
 
 
-// File: classFourierTransform_1_1Workspace.xml
-
-
 // File: classConvolve_1_1Workspace.xml
+
+
+// File: classFourierTransform_1_1Workspace.xml
 
 
 // File: classZLimits.xml
@@ -16923,6 +16913,8 @@ global helper function for comparison of axes
 
 
 // File: IUnitConverter_8h.xml
+%feature("docstring")  SubstituteDefaultUnits "AxesUnits SubstituteDefaultUnits(const IUnitConverter &converter, AxesUnits units)
+";
 
 
 // File: LLData_8cpp.xml

@@ -34,17 +34,11 @@ MatrixFresnelMap::MatrixFresnelMap() = default;
 
 MatrixFresnelMap::~MatrixFresnelMap() = default;
 
-const ILayerRTCoefficients*
+std::unique_ptr<const ILayerRTCoefficients>
 MatrixFresnelMap::getOutCoefficients(const SimulationElement& sim_element, size_t layer_index) const
 {
     return getCoefficients(-sim_element.getMeanKf(), layer_index, *mP_inverted_multilayer,
                            m_hash_table_out);
-}
-
-const ILayerRTCoefficients*
-MatrixFresnelMap::getInCoefficients(const SimulationElement& sim_element, size_t layer_index) const
-{
-    return getCoefficients(sim_element.getKi(), layer_index, *mP_multilayer, m_hash_table_in);
 }
 
 void MatrixFresnelMap::fillSpecularData(SpecularSimulationElement& sim_element) const
@@ -57,16 +51,22 @@ void MatrixFresnelMap::fillSpecularData(SpecularSimulationElement& sim_element) 
         sim_element.setSpecular(SpecularData(calculateCoefficients(*mP_multilayer, kvec)));
 }
 
-const ILayerRTCoefficients* MatrixFresnelMap::getCoefficients(kvector_t kvec, size_t layer_index,
-                                                const MultiLayer& multilayer,
-                                                CoefficientHash& hash_table) const
+std::unique_ptr<const ILayerRTCoefficients>
+MatrixFresnelMap::getCoefficients(const kvector_t& kvec, size_t layer_index) const
+{
+    return getCoefficients(kvec, layer_index, *mP_multilayer, m_hash_table_in);
+}
+
+std::unique_ptr<const ILayerRTCoefficients>
+MatrixFresnelMap::getCoefficients(const kvector_t& kvec, size_t layer_index,
+                                  const MultiLayer& multilayer, CoefficientHash& hash_table) const
 {
     if (!m_use_cache) {
         auto coeffs = calculateCoefficients(multilayer, kvec);
-        return new MatrixRTCoefficients(coeffs[layer_index]);
+        return std::make_unique<MatrixRTCoefficients>(coeffs[layer_index]);
     }
     const auto& coef_vector = getCoefficientsFromCache(kvec, multilayer, hash_table);
-    return new MatrixRTCoefficients(coef_vector[layer_index]);
+    return std::make_unique<MatrixRTCoefficients>(coef_vector[layer_index]);
 }
 
 void MatrixFresnelMap::setMultilayer(const MultiLayer& multilayer)

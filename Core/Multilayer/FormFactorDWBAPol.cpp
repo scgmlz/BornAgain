@@ -27,8 +27,6 @@ namespace {
 
 FormFactorDWBAPol::FormFactorDWBAPol(const IFormFactor& form_factor)
     : mP_form_factor(form_factor.clone())
-    , mp_in_coeffs(0)
-    , mp_out_coeffs(0)
 {
     setName(BornAgain::FormFactorPolarizedDWBAType);
 }
@@ -39,7 +37,13 @@ FormFactorDWBAPol::~FormFactorDWBAPol()
 FormFactorDWBAPol* FormFactorDWBAPol::clone() const
 {
     FormFactorDWBAPol* p_result = new FormFactorDWBAPol(*mP_form_factor);
-    p_result->setSpecularInfo(mp_in_coeffs, mp_out_coeffs);
+    std::unique_ptr<const ILayerRTCoefficients> p_in_coefs
+        = mp_in_coeffs ? std::unique_ptr<const ILayerRTCoefficients>(mp_in_coeffs->clone())
+                       : nullptr;
+    std::unique_ptr<const ILayerRTCoefficients> p_out_coefs
+        = mp_out_coeffs ? std::unique_ptr<const ILayerRTCoefficients>(mp_out_coeffs->clone())
+                        : nullptr;
+    p_result->setSpecularInfo(std::move(p_in_coefs), std::move(p_out_coefs));
     return p_result;
 }
 
@@ -210,9 +214,9 @@ double FormFactorDWBAPol::topZ(const IRotation& rotation) const
     return mP_form_factor->topZ(rotation);
 }
 
-void FormFactorDWBAPol::setSpecularInfo(const ILayerRTCoefficients* p_in_coeffs,
-                                        const ILayerRTCoefficients* p_out_coeffs)
+void FormFactorDWBAPol::setSpecularInfo(std::unique_ptr<const ILayerRTCoefficients> p_in_coeffs,
+                                        std::unique_ptr<const ILayerRTCoefficients> p_out_coeffs)
 {
-    mp_in_coeffs = p_in_coeffs;
-    mp_out_coeffs = p_out_coeffs;
+    mp_in_coeffs = std::move(p_in_coeffs);
+    mp_out_coeffs = std::move(p_out_coeffs);
 }

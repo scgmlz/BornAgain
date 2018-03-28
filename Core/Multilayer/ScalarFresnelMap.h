@@ -17,8 +17,6 @@
 
 #include "Hash2Doubles.h"
 #include "IFresnelMap.h"
-#include "Vectors3D.h"
-#include <memory>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -37,17 +35,16 @@ public:
     ScalarFresnelMap();
     ~ScalarFresnelMap() final;
 
-    const ILayerRTCoefficients* getOutCoefficients (const SimulationElement& sim_element,
-                                                    size_t layer_index) const final override;
-
-    const ILayerRTCoefficients* getInCoefficients(const SimulationElement& sim_element,
-                                                  size_t layer_index) const final override;
+    std::unique_ptr<const ILayerRTCoefficients>
+    getOutCoefficients(const SimulationElement& sim_element,
+                       size_t layer_index) const override;
 
     //! Fills simulation element specular data
     void fillSpecularData(SpecularSimulationElement& sim_element) const override;
 
 private:
-    const ScalarRTCoefficients* getCoefficients(kvector_t kvec, size_t layer_index) const;
+    std::unique_ptr<const ILayerRTCoefficients> getCoefficients(const kvector_t& kvec,
+                                                                size_t layer_index) const override;
     const std::vector<ScalarRTCoefficients>& getCoefficientsFromCache(kvector_t kvec) const;
 
     mutable std::unordered_map<std::pair<double, double>, std::vector<ScalarRTCoefficients>,
