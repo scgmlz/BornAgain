@@ -26794,6 +26794,131 @@ class ResolutionFunction2DGaussian(IResolutionFunction2D):
 ResolutionFunction2DGaussian_swigregister = _libBornAgainCore.ResolutionFunction2DGaussian_swigregister
 ResolutionFunction2DGaussian_swigregister(ResolutionFunction2DGaussian)
 
+class DepthProbeSimulation(Simulation):
+    """Proxy of C++ DepthProbeSimulation class."""
+
+    __swig_setmethods__ = {}
+    for _s in [Simulation]:
+        __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, DepthProbeSimulation, name, value)
+    __swig_getmethods__ = {}
+    for _s in [Simulation]:
+        __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
+    __getattr__ = lambda self, name: _swig_getattr(self, DepthProbeSimulation, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        """
+        __init__(DepthProbeSimulation self) -> DepthProbeSimulation
+        __init__(DepthProbeSimulation self, MultiLayer sample) -> DepthProbeSimulation
+        __init__(DepthProbeSimulation self, std::shared_ptr< IMultiLayerBuilder > const sample_builder) -> DepthProbeSimulation
+
+        DepthProbeSimulation::DepthProbeSimulation(const std::shared_ptr< IMultiLayerBuilder > sample_builder)
+
+        """
+        this = _libBornAgainCore.new_DepthProbeSimulation(*args)
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _libBornAgainCore.delete_DepthProbeSimulation
+    __del__ = lambda self: None
+
+    def clone(self):
+        """
+        clone(DepthProbeSimulation self) -> DepthProbeSimulation
+
+        DepthProbeSimulation * DepthProbeSimulation::clone() const override
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_clone(self)
+
+
+    def accept(self, visitor):
+        """
+        accept(DepthProbeSimulation self, INodeVisitor visitor)
+
+        void DepthProbeSimulation::accept(INodeVisitor *visitor) const override final
+
+        Calls the  INodeVisitor's visit method. 
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_accept(self, visitor)
+
+
+    def numberOfSimulationElements(self):
+        """
+        numberOfSimulationElements(DepthProbeSimulation self) -> size_t
+
+        size_t DepthProbeSimulation::numberOfSimulationElements() const override
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_numberOfSimulationElements(self)
+
+
+    def result(self):
+        """
+        result(DepthProbeSimulation self) -> SimulationResult
+
+        SimulationResult DepthProbeSimulation::result() const override
+
+        Returns the results of the simulation in a format that supports unit conversion and export to numpy arrays 
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_result(self)
+
+
+    def setBeamParameters(self, arg2, nbins, alpha_i_min, alpha_i_max, beam_shape=None):
+        """
+        setBeamParameters(DepthProbeSimulation self, double arg2, int nbins, double alpha_i_min, double alpha_i_max, IFootprintFactor beam_shape=None)
+        setBeamParameters(DepthProbeSimulation self, double arg2, int nbins, double alpha_i_min, double alpha_i_max)
+
+        void DepthProbeSimulation::setBeamParameters(double lambda, int nbins, double alpha_i_min, double alpha_i_max, const IFootprintFactor *beam_shape=nullptr)
+
+        Sets beam parameters with alpha_i of the beam defined in the range. 
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_setBeamParameters(self, arg2, nbins, alpha_i_min, alpha_i_max, beam_shape)
+
+
+    def setZSpan(self, n_bins, z_min, z_max):
+        """
+        setZSpan(DepthProbeSimulation self, size_t n_bins, double z_min, double z_max)
+
+        void DepthProbeSimulation::setZSpan(size_t n_bins, double z_min, double z_max)
+
+        Set z positions for intensity calculations. Negative z's correspond to the area under sample surface. The more negative z is, the deeper layer corresponds to it. 
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_setZSpan(self, n_bins, z_min, z_max)
+
+
+    def getAlphaAxis(self):
+        """
+        getAlphaAxis(DepthProbeSimulation self) -> IAxis
+
+        const IAxis * DepthProbeSimulation::getAlphaAxis() const
+
+        Returns a pointer to incident angle axis. 
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_getAlphaAxis(self)
+
+
+    def getZAxis(self):
+        """
+        getZAxis(DepthProbeSimulation self) -> IAxis
+
+        const IAxis * DepthProbeSimulation::getZAxis() const
+
+        Returns a pointer to z-position axis. 
+
+        """
+        return _libBornAgainCore.DepthProbeSimulation_getZAxis(self)
+
+DepthProbeSimulation_swigregister = _libBornAgainCore.DepthProbeSimulation_swigregister
+DepthProbeSimulation_swigregister(DepthProbeSimulation)
+
 class SpecularSimulation(Simulation):
     """
 
@@ -27273,6 +27398,7 @@ class AxesUnits(_object):
     RADIANS = _libBornAgainCore.AxesUnits_RADIANS
     DEGREES = _libBornAgainCore.AxesUnits_DEGREES
     MM = _libBornAgainCore.AxesUnits_MM
+    NM = _libBornAgainCore.AxesUnits_NM
     QSPACE = _libBornAgainCore.AxesUnits_QSPACE
     __swig_destroy__ = _libBornAgainCore.delete_AxesUnits
     __del__ = lambda self: None
