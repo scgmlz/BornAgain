@@ -30,7 +30,7 @@ struct HomogeneousRegion;
 //!
 //! @ingroup algorithms_internal
 
-class DepthProbeComputation : public IComputation
+class BA_CORE_API_ DepthProbeComputation : public IComputation
 {
     using DepthProbeElementIter = std::vector<DepthProbeElement>::iterator;
 public:

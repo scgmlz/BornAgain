@@ -31,7 +31,7 @@ class SimulationElement;
 //!
 //! @ingroup algorithms_internal
 
-class IComputation
+class BA_CORE_API_ IComputation
 {
 public:
     IComputation(const SimulationOptions& options, ProgressHandler& progress,
