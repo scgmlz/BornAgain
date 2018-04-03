@@ -105,4 +105,3 @@ TEST_F(SpecularSimulationElementTest, CopyMoveAssign)
 
     compareElements(element5, element3);
 }
-

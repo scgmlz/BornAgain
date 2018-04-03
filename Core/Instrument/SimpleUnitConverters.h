@@ -134,4 +134,32 @@ private:
     void addDetectorYAxis(const IDetector2D& detector);
 };
 
+//! DepthProbeConverter class handles the unit translations for depth probe simulations
+//! Its default units are radians for x-axis and nm for y-axis
+//! @ingroup simulation_internal
+
+class BA_CORE_API_ DepthProbeConverter : public UnitConverterSimple
+{
+public:
+    DepthProbeConverter(const Beam& beam, const IAxis& alpha_axis, const IAxis& z_axis);
+    virtual ~DepthProbeConverter();
+
+    DepthProbeConverter* clone() const override;
+
+    double calculateMin(size_t i_axis, AxesUnits units_type) const override;
+    double calculateMax(size_t i_axis, AxesUnits units_type) const override;
+
+    // TODO: remove axisName after implementing functionality for two axis in different units
+    std::string axisName(size_t i_axis, AxesUnits units_type = AxesUnits::DEFAULT) const override;
+    AxesUnits defaultUnits() const override { return AxesUnits::DEGREES; }
+    std::unique_ptr<IAxis> createConvertedAxis(size_t i_axis, AxesUnits units) const override;
+
+private:
+    DepthProbeConverter(const DepthProbeConverter& other);
+    void checkForDefaultUnits(AxesUnits units_type) const;
+    double calculateValue(size_t, AxesUnits units_type, double value) const override;
+    std::vector<std::map<AxesUnits, std::string>> createNameMaps() const override;
+    void addZAxis(const IAxis& z_axis);
+};
+
 #endif // SIMPLEUNITCONVERTERS_H

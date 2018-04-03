@@ -350,3 +350,105 @@ void OffSpecularConverter::addDetectorYAxis(const IDetector2D& detector)
                                  "wrong detector type");
     }
 }
+
+/* DepthProbeConverter **********************************************/
+
+const std::string z_axis_name = "Position [nm]";
+
+DepthProbeConverter::DepthProbeConverter(const Beam& beam, const IAxis& alpha_axis,
+                                         const IAxis& z_axis)
+    : UnitConverterSimple(beam)
+{
+    auto alpha_axis_name = axisName(0);
+    addAxisData(alpha_axis_name, alpha_axis.getMin(), alpha_axis.getMax(), defaultUnits(),
+                alpha_axis.size());
+    addZAxis(z_axis);
+}
+
+DepthProbeConverter::~DepthProbeConverter() = default;
+
+DepthProbeConverter* DepthProbeConverter::clone() const
+{
+    return new DepthProbeConverter(*this);
+}
+
+double DepthProbeConverter::calculateMin(size_t i_axis, AxesUnits units_type) const
+{
+    checkForDefaultUnits(units_type);
+    if (i_axis > 0) {
+        checkIndex(i_axis);
+        const AxisData& axis_data = m_axis_data_table[i_axis];
+        return axis_data.min;
+    }
+    return UnitConverterSimple::calculateMin(i_axis, units_type);
+}
+
+double DepthProbeConverter::calculateMax(size_t i_axis, AxesUnits units_type) const
+{
+    checkForDefaultUnits(units_type);
+    if (i_axis > 0) {
+        checkIndex(i_axis);
+        const AxisData& axis_data = m_axis_data_table[i_axis];
+        return axis_data.max;
+    }
+    return UnitConverterSimple::calculateMax(i_axis, units_type);
+}
+
+std::string DepthProbeConverter::axisName(size_t i_axis, AxesUnits units_type) const
+{
+    checkForDefaultUnits(units_type);
+    if (i_axis > 0) {
+        checkIndex(i_axis);
+        return z_axis_name;
+    }
+    return IUnitConverter::axisName(i_axis, units_type);
+
+}
+
+std::unique_ptr<IAxis> DepthProbeConverter::createConvertedAxis(size_t i_axis,
+                                                                AxesUnits units) const
+{
+    checkForDefaultUnits(units);
+    if (i_axis > 0) {
+        checkIndex(i_axis);
+        const AxisData& axis_data = m_axis_data_table[i_axis];
+        return std::make_unique<FixedBinAxis>(axis_data.name, axis_data.nbins, axis_data.min,
+                                              axis_data.max);
+    }
+    return UnitConverterSimple::createConvertedAxis(i_axis, units);
+}
+
+DepthProbeConverter::DepthProbeConverter(const DepthProbeConverter& other)
+    : UnitConverterSimple(other)
+{}
+
+void DepthProbeConverter::checkForDefaultUnits(AxesUnits units_type) const
+{
+    if (units_type != AxesUnits::DEFAULT)
+        throw std::runtime_error(
+            "Error DepthProbeConverter::checkForDefaultUnits: only default units are allowed.");
+}
+
+double DepthProbeConverter::calculateValue(size_t, AxesUnits units_type, double value) const
+{
+    switch(units_type) {
+    case AxesUnits::DEGREES:
+        return Units::rad2deg(value);
+    default:
+        throw std::runtime_error("Error in DepthProbeConverter::calculateValue: "
+                                 "target units not available: "
+                                 + std::to_string(static_cast<int>(units_type)));
+    }
+}
+
+std::vector<std::map<AxesUnits, std::string>> DepthProbeConverter::createNameMaps() const
+{
+    std::vector<std::map<AxesUnits, std::string>> result;
+    result.push_back(AxisNames::InitSpecAxis());
+    return result;
+}
+
+void DepthProbeConverter::addZAxis(const IAxis &z_axis)
+{
+    addAxisData(z_axis_name, z_axis.getMin(), z_axis.getMax(), AxesUnits::NM, z_axis.size());
+}

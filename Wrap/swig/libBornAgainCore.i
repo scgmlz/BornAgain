@@ -78,6 +78,7 @@
 #include "ConstKBinAxis.h"
 #include "Crystal.h"
 #include "CustomBinAxis.h"
+#include "DepthProbeSimulation.h"
 #include "DetectorMask.h"
 #include "Distributions.h"
 #include "Distributions.h"
@@ -430,6 +431,7 @@
 %include "ResolutionFunction2DGaussian.h"
 %include "Rotations.h"
 %include "ISelectionRule.h"
+%include "DepthProbeSimulation.h"
 %include "SpecularSimulation.h"
 %include "ThreadInfo.h"
 %template(SampleBuilderFactoryTemp) IFactory<std::string, IMultiLayerBuilder>;

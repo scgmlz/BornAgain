@@ -1,6 +1,7 @@
 // To renew this file, run /G/ba/dev-tools/code-tools/update-gtestlist.py <directory>
 
 #include "CustomBinAxisTest.h"
+#include "DepthProbeConverterTest.h"
 #include "Histogram1DTest.h"
 #include "VariableBinAxisTest.h"
 #include "Histogram2DTest.h"

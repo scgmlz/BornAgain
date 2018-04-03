@@ -1208,6 +1208,169 @@ Increments inner counter; at regular intervals updates progress handler.
 ";
 
 
+// File: classDepthProbeComputation.xml
+%feature("docstring") DepthProbeComputation "
+
+Performs a single-threaded depth probe computation with given sample.
+
+Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
+
+C++ includes: DepthProbeComputation.h
+";
+
+%feature("docstring")  DepthProbeComputation::DepthProbeComputation "DepthProbeComputation::DepthProbeComputation(const MultiLayer &multilayer, const SimulationOptions &options, ProgressHandler &progress, DepthProbeElementIter begin_it, DepthProbeElementIter end_it)
+";
+
+%feature("docstring")  DepthProbeComputation::~DepthProbeComputation "DepthProbeComputation::~DepthProbeComputation()
+";
+
+
+// File: classDepthProbeComputationTerm.xml
+%feature("docstring") DepthProbeComputationTerm "";
+
+%feature("docstring")  DepthProbeComputationTerm::DepthProbeComputationTerm "DepthProbeComputationTerm::DepthProbeComputationTerm(const MultiLayer *p_multi_layer, const IFresnelMap *p_fresnel_map)
+";
+
+%feature("docstring")  DepthProbeComputationTerm::eval "void DepthProbeComputationTerm::eval(ProgressHandler *progress, const DepthProbeElementIter &begin_it, const DepthProbeElementIter &end_it) const
+";
+
+
+// File: classDepthProbeConverter.xml
+%feature("docstring") DepthProbeConverter "
+
+DepthProbeConverter class handles the unit translations for depth probe simulations Its default units are radians for x-axis and nm for y-axis
+
+C++ includes: SimpleUnitConverters.h
+";
+
+%feature("docstring")  DepthProbeConverter::DepthProbeConverter "DepthProbeConverter::DepthProbeConverter(const Beam &beam, const IAxis &alpha_axis, const IAxis &z_axis)
+";
+
+%feature("docstring")  DepthProbeConverter::~DepthProbeConverter "DepthProbeConverter::~DepthProbeConverter()
+";
+
+%feature("docstring")  DepthProbeConverter::clone "DepthProbeConverter * DepthProbeConverter::clone() const override
+";
+
+%feature("docstring")  DepthProbeConverter::calculateMin "double DepthProbeConverter::calculateMin(size_t i_axis, AxesUnits units_type) const override
+";
+
+%feature("docstring")  DepthProbeConverter::calculateMax "double DepthProbeConverter::calculateMax(size_t i_axis, AxesUnits units_type) const override
+";
+
+%feature("docstring")  DepthProbeConverter::axisName "std::string DepthProbeConverter::axisName(size_t i_axis, AxesUnits units_type=AxesUnits::DEFAULT) const override
+";
+
+%feature("docstring")  DepthProbeConverter::defaultUnits "AxesUnits DepthProbeConverter::defaultUnits() const override
+";
+
+%feature("docstring")  DepthProbeConverter::createConvertedAxis "std::unique_ptr< IAxis > DepthProbeConverter::createConvertedAxis(size_t i_axis, AxesUnits units) const override
+";
+
+
+// File: classDepthProbeElement.xml
+%feature("docstring") DepthProbeElement "";
+
+%feature("docstring")  DepthProbeElement::DepthProbeElement "DepthProbeElement::DepthProbeElement(double wavelength, double alpha_i, const IAxis *z_positions)
+";
+
+%feature("docstring")  DepthProbeElement::DepthProbeElement "DepthProbeElement::DepthProbeElement(const DepthProbeElement &other)
+";
+
+%feature("docstring")  DepthProbeElement::DepthProbeElement "DepthProbeElement::DepthProbeElement(DepthProbeElement &&other) noexcept
+";
+
+%feature("docstring")  DepthProbeElement::~DepthProbeElement "DepthProbeElement::~DepthProbeElement()
+";
+
+%feature("docstring")  DepthProbeElement::getWavelength "double DepthProbeElement::getWavelength() const
+";
+
+%feature("docstring")  DepthProbeElement::getAlphaI "double DepthProbeElement::getAlphaI() const
+";
+
+%feature("docstring")  DepthProbeElement::getKi "kvector_t DepthProbeElement::getKi() const
+";
+
+%feature("docstring")  DepthProbeElement::setIntensities "void DepthProbeElement::setIntensities(T &&intensities)
+";
+
+%feature("docstring")  DepthProbeElement::addIntensities "void DepthProbeElement::addIntensities(const std::valarray< double > &intensities)
+";
+
+%feature("docstring")  DepthProbeElement::getIntensities "const std::valarray<double>& DepthProbeElement::getIntensities() const
+";
+
+%feature("docstring")  DepthProbeElement::setZPositions "void DepthProbeElement::setZPositions(const IAxis *z_positions)
+";
+
+%feature("docstring")  DepthProbeElement::getZPositions "const IAxis* DepthProbeElement::getZPositions() const
+";
+
+%feature("docstring")  DepthProbeElement::size "size_t DepthProbeElement::size()
+";
+
+%feature("docstring")  DepthProbeElement::setCalculationFlag "void DepthProbeElement::setCalculationFlag(bool calculation_flag)
+
+Set calculation flag (if it's false, zero intensity is assigned to the element) 
+";
+
+%feature("docstring")  DepthProbeElement::isCalculated "bool DepthProbeElement::isCalculated() const
+";
+
+
+// File: classDepthProbeSimulation.xml
+%feature("docstring") DepthProbeSimulation "";
+
+%feature("docstring")  DepthProbeSimulation::DepthProbeSimulation "DepthProbeSimulation::DepthProbeSimulation()
+";
+
+%feature("docstring")  DepthProbeSimulation::DepthProbeSimulation "DepthProbeSimulation::DepthProbeSimulation(const MultiLayer &sample)
+";
+
+%feature("docstring")  DepthProbeSimulation::DepthProbeSimulation "DepthProbeSimulation::DepthProbeSimulation(const std::shared_ptr< IMultiLayerBuilder > sample_builder)
+";
+
+%feature("docstring")  DepthProbeSimulation::~DepthProbeSimulation "DepthProbeSimulation::~DepthProbeSimulation()
+";
+
+%feature("docstring")  DepthProbeSimulation::clone "DepthProbeSimulation * DepthProbeSimulation::clone() const override
+";
+
+%feature("docstring")  DepthProbeSimulation::accept "void DepthProbeSimulation::accept(INodeVisitor *visitor) const override final
+
+Calls the  INodeVisitor's visit method. 
+";
+
+%feature("docstring")  DepthProbeSimulation::numberOfSimulationElements "size_t DepthProbeSimulation::numberOfSimulationElements() const override
+";
+
+%feature("docstring")  DepthProbeSimulation::result "SimulationResult DepthProbeSimulation::result() const override
+
+Returns the results of the simulation in a format that supports unit conversion and export to numpy arrays 
+";
+
+%feature("docstring")  DepthProbeSimulation::setBeamParameters "void DepthProbeSimulation::setBeamParameters(double lambda, int nbins, double alpha_i_min, double alpha_i_max, const IFootprintFactor *beam_shape=nullptr)
+
+Sets beam parameters with alpha_i of the beam defined in the range. 
+";
+
+%feature("docstring")  DepthProbeSimulation::setZSpan "void DepthProbeSimulation::setZSpan(size_t n_bins, double z_min, double z_max)
+
+Set z positions for intensity calculations. Negative z's correspond to the area under sample surface. The more negative z is, the deeper layer corresponds to it. 
+";
+
+%feature("docstring")  DepthProbeSimulation::getAlphaAxis "const IAxis * DepthProbeSimulation::getAlphaAxis() const
+
+Returns a pointer to incident angle axis. 
+";
+
+%feature("docstring")  DepthProbeSimulation::getZAxis "const IAxis * DepthProbeSimulation::getZAxis() const
+
+Returns a pointer to z-position axis. 
+";
+
+
 // File: classDetectionProperties.xml
 %feature("docstring") DetectionProperties "
 
@@ -15153,10 +15316,10 @@ C++ includes: WavevectorInfo.h
 ";
 
 
-// File: classConvolve_1_1Workspace.xml
-
-
 // File: classFourierTransform_1_1Workspace.xml
+
+
+// File: classConvolve_1_1Workspace.xml
 
 
 // File: classZLimits.xml
@@ -15186,85 +15349,88 @@ C++ includes: ZLimits.h
 ";
 
 
-// File: namespace_0D104.xml
+// File: namespace_0D108.xml
 
 
-// File: namespace_0D172.xml
+// File: namespace_0D176.xml
 
 
-// File: namespace_0D213.xml
+// File: namespace_0D217.xml
 
 
 // File: namespace_0D24.xml
 
 
-// File: namespace_0D280.xml
+// File: namespace_0D284.xml
 
 
-// File: namespace_0D296.xml
-
-
-// File: namespace_0D315.xml
+// File: namespace_0D300.xml
 
 
 // File: namespace_0D319.xml
 
 
-// File: namespace_0D321.xml
-
-
 // File: namespace_0D323.xml
 
 
-// File: namespace_0D331.xml
+// File: namespace_0D325.xml
 
 
-// File: namespace_0D346.xml
+// File: namespace_0D327.xml
 
 
-// File: namespace_0D354.xml
+// File: namespace_0D335.xml
 
 
-// File: namespace_0D360.xml
+// File: namespace_0D350.xml
 
 
-// File: namespace_0D363.xml
+// File: namespace_0D358.xml
 
 
-// File: namespace_0D365.xml
+// File: namespace_0D364.xml
 
 
-// File: namespace_0D386.xml
+// File: namespace_0D367.xml
 
 
-// File: namespace_0D395.xml
+// File: namespace_0D369.xml
 
 
-// File: namespace_0D428.xml
+// File: namespace_0D390.xml
 
 
-// File: namespace_0D435.xml
+// File: namespace_0D399.xml
 
 
-// File: namespace_0D479.xml
+// File: namespace_0D432.xml
 
 
-// File: namespace_0D481.xml
+// File: namespace_0D439.xml
 
 
-// File: namespace_0D483.xml
+// File: namespace_0D477.xml
 
 
-// File: namespace_0D561.xml
+// File: namespace_0D485.xml
 
 
-// File: namespace_0D583.xml
+// File: namespace_0D487.xml
 
 
-// File: namespace_0D80.xml
+// File: namespace_0D489.xml
 
 
-// File: namespace_0D95.xml
+// File: namespace_0D569.xml
+
+
+// File: namespace_0D591.xml
+
+
+// File: namespace_0D84.xml
+
+
+// File: namespace_0D99.xml
 
 
 // File: namespaceArrayUtils.xml
@@ -16298,6 +16464,18 @@ global helper function for comparison of axes
 
 
 // File: DelayedProgressCounter_8h.xml
+
+
+// File: DepthProbeComputation_8cpp.xml
+
+
+// File: DepthProbeComputation_8h.xml
+
+
+// File: DepthProbeComputationTerm_8cpp.xml
+
+
+// File: DepthProbeComputationTerm_8h.xml
 
 
 // File: DWBAComputation_8cpp.xml
@@ -17717,6 +17895,12 @@ Generate vertices of centered ellipse with given semi-axes at height z.
 // File: TruncatedEllipsoid_8h.xml
 
 
+// File: DepthProbeSimulation_8cpp.xml
+
+
+// File: DepthProbeSimulation_8h.xml
+
+
 // File: GISASSimulation_8cpp.xml
 
 
@@ -17751,6 +17935,12 @@ Generate vertices of centered ellipse with given semi-axes at height z.
 
 
 // File: SpecularSimulation_8h.xml
+
+
+// File: DepthProbeElement_8cpp.xml
+
+
+// File: DepthProbeElement_8h.xml
 
 
 // File: PolarizationHandler_8cpp.xml
