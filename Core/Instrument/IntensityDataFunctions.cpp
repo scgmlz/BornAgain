@@ -163,7 +163,7 @@ IntensityDataFunctions::createClippedDataSet(const OutputData<double>& origin, d
 // be converted into 0.5 (which is a bin center expressed in bin fraction coordinates).
 // The coordinate -5.0 (outside of axis definition) will be converted to -0.5
 // (center of non-existing bin #-1).
-// Used for Mask convertion.
+// Used for Mask conversion.
 
 double IntensityDataFunctions::coordinateToBinf(double coordinate, const IAxis& axis)
 {

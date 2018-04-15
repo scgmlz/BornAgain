@@ -51,7 +51,7 @@ protected:
     virtual std::unique_ptr<IDetector2D> createDomainDetector() const = 0;
     std::unique_ptr<IResolutionFunction2D> createResolutionFunction() const;
 
-    //! Scales the values provided by axes (to perform deg->rad convertion on the way to domain).
+    //! Scales the values provided by axes (to perform deg->rad conversion on the way to domain).
     virtual double axesToDomainUnitsFactor() const { return 1.0; }
 
     void addMasksToDomain(IDetector2D* detector) const;

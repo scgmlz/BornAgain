@@ -127,7 +127,7 @@ TEST_F(IntensityDataFunctionsTest, coordinateToFromBinf)
     EXPECT_EQ(3.5, IntensityDataFunctions::coordinateFromBinf(8.5, axis));
 }
 
-//! Transformation of coordinates from one OutputData to another using convertion from axes
+//! Transformation of coordinates from one OutputData to another using conversion from axes
 //! coordinates to bin-fraction-coordinates and then to another axes coordinates.
 
 TEST_F(IntensityDataFunctionsTest, outputDataCoordinatesToFromBinf)

@@ -133,7 +133,7 @@ QPixmap DesignerHelper::getPixmapParticle()
     return pixmap;
 }
 
-// non-linear convertion of layer's thickness in nanometers to screen size to have reasonable
+// non-linear conversion of layer's thickness in nanometers to screen size to have reasonable
 // graphics representation
 int DesignerHelper::nanometerToScreen(double nanometer)
 {

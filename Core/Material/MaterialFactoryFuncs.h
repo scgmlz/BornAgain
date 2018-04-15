@@ -46,7 +46,7 @@ BA_CORE_API_ Material MaterialBySLD();
 //! @ingroup materials
 
 //! Constructs a wavelength-independent material with a given complex-valued
-//! scattering lenght density (SLD).
+//! scattering length density (SLD).
 //! SLD values for a wide variety of materials can be found on
 //! https://sld-calculator.appspot.com/
 //! and

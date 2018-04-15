@@ -17,7 +17,7 @@
 
 namespace {
 const QString hurst_tooltip =
-    "Hurst parameter which decribes how jagged the interface,\n "
+    "Hurst parameter which describes how jagged the interface,\n "
     "dimensionless [0.0, 1.0], where 0.0 gives more spikes, \n1.0 more smoothness.";
 }
 

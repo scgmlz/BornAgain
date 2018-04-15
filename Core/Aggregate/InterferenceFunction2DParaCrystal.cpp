@@ -209,7 +209,7 @@ double InterferenceFunction2DParaCrystal::interference1D(double qx, double qy, d
         throw Exceptions::NullPointerException(
             "InterferenceFunction2DParaCrystal::"
             "interference1D() -> Error! Probability distributions for "
-            "interference funtion not properly initialized");
+            "interference function not properly initialized");
 
     double result(0.0);
     double length = index ? m_lattice->length2() : m_lattice->length1();

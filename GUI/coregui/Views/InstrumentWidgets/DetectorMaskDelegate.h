@@ -25,7 +25,7 @@ class MaskEditor;
 class SessionModel;
 class DetectorItem;
 
-//! The DetectorMaskDelegate class provides syncronization between DetectorItem (defined
+//! The DetectorMaskDelegate class provides synchronization between DetectorItem (defined
 //! in InstrumentModel) and temporary IntensityDataItem (defined in temporary SessionModel).
 //! The later one is used by MaskEditor for mask drawing.
 

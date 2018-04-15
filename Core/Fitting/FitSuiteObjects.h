@@ -55,7 +55,7 @@ public:
     double getChiSquaredValue() const { return m_chi_squared_value; }
 
     //! Returns residuals for single data element
-    //! @param global_index index accross all element in FitElement vector
+    //! @param global_index index across all element in FitElement vector
     double getResidualValue(size_t global_index);
 
     void setNfreeParameters(int nfree_parameters) { m_nfree_parameters = nfree_parameters; }

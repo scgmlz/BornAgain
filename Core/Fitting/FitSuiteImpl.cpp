@@ -191,7 +191,7 @@ void FitSuiteImpl::link_fit_parameters()
     if(FitSuiteUtils::hasConflicts(*m_kernel->fitParameters())) {
         std::ostringstream message;
         message << "FitSuite::runFit() -> Error. Fit parameters are conflicting with each other, "
-                << "meaning that one sample parameter can be controled by "
+                << "meaning that one sample parameter can be controlled by "
                 << "two different fit parameters.\n";
         message << FitSuiteUtils::fitParameterSettingsToString(*m_kernel->fitParameters());
         throw Exceptions::RuntimeErrorException(message.str());

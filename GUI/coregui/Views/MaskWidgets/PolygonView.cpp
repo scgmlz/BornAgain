@@ -166,7 +166,7 @@ void PolygonView::update_polygon()
     m_block_on_point_update = false;
 }
 
-//! When polygon moves as a whole thing accross the scene, given method updates coordinates
+//! When polygon moves as a whole thing across the scene, given method updates coordinates
 //! of PolygonPointItem's
 void PolygonView::update_points()
 {

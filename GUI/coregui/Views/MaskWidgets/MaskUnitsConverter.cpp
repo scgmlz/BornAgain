@@ -135,5 +135,5 @@ double MaskUnitsConverter::convert(double value, int axis_index)
         return IntensityDataFunctions::coordinateFromBinf(value, mp_data->getAxis(axis_index));
     }
 
-    throw GUIHelpers::Error("MaskUnitsConverter::convertX() -> Error. Unknown convertion");
+    throw GUIHelpers::Error("MaskUnitsConverter::convertX() -> Error. Unknown conversion");
 }

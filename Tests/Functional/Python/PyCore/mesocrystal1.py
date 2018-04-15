@@ -62,7 +62,7 @@ class MySampleBuilder(IMultiLayerBuilder):
         air_layer = Layer(p_air_material)
         avg_layer = Layer(p_average_layer_material, self.meso_height.value)
         substrate_layer = Layer(p_substrate_material)
-        p_interference_funtion = InterferenceFunctionNone()
+        p_interference_function = InterferenceFunctionNone()
         particle_layout = ParticleLayout()
 
         n_max_phi_rotation_steps = 2
@@ -81,7 +81,7 @@ class MySampleBuilder(IMultiLayerBuilder):
                 particle_layout.addParticle(meso, 1.0, kvector_t(0,0,0), total_transform)
 
         particle_layout.setTotalParticleSurfaceDensity(surface_density)
-        particle_layout.setInterferenceFunction(p_interference_funtion)
+        particle_layout.setInterferenceFunction(p_interference_function)
 
         avg_layer.addLayout(particle_layout)
 

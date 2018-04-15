@@ -22,7 +22,7 @@ class SessionModel;
 class IntensityDataItem;
 class PropertyRepeater;
 
-//! Provides syncronization between certain properties of fit related IntensityDataItems.
+//! Provides synchronization between certain properties of fit related IntensityDataItems.
 //! Part of FitComparisonWidget.
 
 class BA_CORE_API_ FitComparisonController : public QObject

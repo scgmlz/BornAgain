@@ -8,7 +8,7 @@ class Histogram2DTest(unittest.TestCase):
     def test_constructFromNumpyInt(self):
         """
         Testing construction of 2D histogram from numpy array.
-        Automatic convertion under Python3 is not working, that's why it is float64 and not int64
+        Automatic conversion under Python3 is not working, that's why it is float64 and not int64
         """
         arr = numpy.array([[ 1,  2,  3,  4,  5],
                            [ 6,  7,  8,  9, 10],

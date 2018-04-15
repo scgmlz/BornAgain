@@ -87,7 +87,7 @@ public:
         return left->y() < right->y();
     }
 
-    //! non-linear convertion of layer's thickness in nanometers to screen size
+    //! non-linear conversion of layer's thickness in nanometers to screen size
     //! to have reasonable graphics representation of layer in the form of QRect
     static int nanometerToScreen(double nanometer);
 

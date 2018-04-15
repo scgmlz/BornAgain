@@ -83,7 +83,7 @@ double InterferenceFunctionRadialParaCrystal::evaluate(const kvector_t q) const
     if (!mP_pdf)
         throw Exceptions::NullPointerException("InterferenceFunctionRadialParaCrystal::"
                 "evaluate() -> Error! Probability distribution for "
-                "interference funtion not properly initialized");
+                "interference function not properly initialized");
     double result=0.0;
     double qxr = q.x();
     double qyr = q.y();

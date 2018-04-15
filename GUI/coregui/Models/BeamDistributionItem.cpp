@@ -111,7 +111,7 @@ double BeamDistributionItem::meanValue() const
         return getGroupItem(P_DISTRIBUTION)->getItemValue(DistributionNoneItem::P_VALUE).toDouble();
 }
 
-//! Scales the values provided by distribution (to perform deg->rad convertion in the case
+//! Scales the values provided by distribution (to perform deg->rad conversion in the case
 //! of AngleDistributionItems.
 
 double BeamDistributionItem::scaleFactor() const

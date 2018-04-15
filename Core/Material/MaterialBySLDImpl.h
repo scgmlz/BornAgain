@@ -56,7 +56,7 @@ public:
 
 private:
     //! Constructs a wavelength-independent material with a given complex-valued
-    //! scattering lenght density (SLD). SLD units are \f$ nm^{-2} \f$.
+    //! scattering length density (SLD). SLD units are \f$ nm^{-2} \f$.
     MaterialBySLDImpl(const std::string& name, double sld_real, double sld_imag,
                       kvector_t magnetization);
 
