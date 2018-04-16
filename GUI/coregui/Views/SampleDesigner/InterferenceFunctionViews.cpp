@@ -56,3 +56,14 @@ InterferenceFunction2DLatticeView::InterferenceFunction2DLatticeView(QGraphicsIt
     addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
     m_roundpar = 3;
 }
+
+InterferenceFunctionFinite2DLatticeView::InterferenceFunctionFinite2DLatticeView(
+        QGraphicsItem *parent)
+    : ConnectableView(parent)
+{
+    setName(Constants::InterferenceFunctionFinite2DLatticeType);
+    setColor(QColor(255, 236, 139));
+    setRectangle( DesignerHelper::getDefaultBoundingRect(getName()) );
+    addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
+    m_roundpar = 3;
+}

@@ -119,6 +119,11 @@ SampleBuilderFactory::SampleBuilderFactory()
         "2D lattice rotated");
 
     registerItem(
+        "FiniteSquareLatticeBuilder",
+        create_new<FiniteSquareLatticeBuilder>,
+        "Finite 2D lattice");
+
+    registerItem(
         "CustomMorphologyBuilder",
         create_new<CustomMorphologyBuilder>,
         "Mixture of different particles a la IsGISAXS morphology file");

@@ -40,9 +40,9 @@ bool SessionItemTags::registerTag(const QString& name, int min, int max,
     return true;
 }
 
-//! Returns true if were is registered tag with such name.
-//! If modelType is not empty, than additional check is performed if tag is
-//! intended for given modelType.
+//! Returns true if there is a registered tag with such name.
+//! If modelType is not empty, than an additional check is performed if tag is
+//! intended for the given modelType.
 
 bool SessionItemTags::isValid(const QString& tagName, const QString& modelType) const
 {

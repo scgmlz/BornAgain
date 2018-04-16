@@ -49,6 +49,7 @@ set(test_cases
     RotatedCylinder
     RotatedPyramids
     RotatedSquareLattice
+    FiniteSquareLattice
     SimulationWithMasks
     SquareLattice
     TransformBox

@@ -79,6 +79,8 @@ ItemCatalogue::ItemCatalogue()
         create_new<InterferenceFunction2DParaCrystalItem>);
     add(Constants::InterferenceFunction2DLatticeType,
         create_new<InterferenceFunction2DLatticeItem>);
+    add(Constants::InterferenceFunctionFinite2DLatticeType,
+        create_new<InterferenceFunctionFinite2DLatticeItem>);
     add(Constants::InterferenceFunction1DLatticeType,
         create_new<InterferenceFunction1DLatticeItem>);
     add(Constants::GISASInstrumentType, create_new<GISASInstrumentItem>);

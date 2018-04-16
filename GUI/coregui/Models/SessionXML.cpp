@@ -28,6 +28,7 @@ namespace
 const QString bool_type_name = "bool";
 const QString double_type_name = "double";
 const QString int_type_name = "int";
+const QString uint_type_name = "uint";
 const QString qstring_type_name = "QString";
 
 void report_error(MessageService* messageService, SessionItem* item, const QString& message);
@@ -79,21 +80,21 @@ void SessionXML::writeVariant(QXmlStreamWriter* writer, QVariant variant, int ro
             writer->writeAttribute(SessionXML::ParameterValueAttribute,
                                    QString::number(variant.toDouble(), 'e', 12));
         }
-
         else if (type_name == int_type_name) {
             writer->writeAttribute(SessionXML::ParameterValueAttribute,
                                    QString::number(variant.toInt()));
         }
-
+        else if (type_name == uint_type_name) {
+            writer->writeAttribute(SessionXML::ParameterValueAttribute,
+                                   QString::number(variant.toUInt()));
+        }
         else if (type_name == bool_type_name) {
             writer->writeAttribute(SessionXML::ParameterValueAttribute,
                                    QString::number(variant.toBool()));
         }
-
         else if (type_name == qstring_type_name) {
             writer->writeAttribute(SessionXML::ParameterValueAttribute, variant.toString());
         }
-
         else if (type_name == Constants::ExternalPropertyType) {
             ExternalProperty prop = variant.value<ExternalProperty>();
             writer->writeAttribute(SessionXML::ExternalPropertyTextAtt, prop.text());
@@ -102,7 +103,6 @@ void SessionXML::writeVariant(QXmlStreamWriter* writer, QVariant variant, int ro
             writer->writeAttribute(SessionXML::ExternalPropertyColorAtt, tcol);
             writer->writeAttribute(SessionXML::ExternalPropertyIdentifierAtt, prop.identifier());
         }
-
         else if (type_name == Constants::ComboPropertyType) {
             int currentIndex = variant.value<ComboProperty>().currentIndex();
             writer->writeAttribute(SessionXML::ParameterValueAttribute,
@@ -111,9 +111,8 @@ void SessionXML::writeVariant(QXmlStreamWriter* writer, QVariant variant, int ro
                                    variant.value<ComboProperty>().stringOfValues());
 
         }
-
         else {
-            throw GUIHelpers::Error("SessionModel::writeProperty: Parameter type not supported "
+            throw GUIHelpers::Error("SessionXML::writeVariant: Parameter type not supported "
                                     + type_name);
         }
 
@@ -187,25 +186,26 @@ QString SessionXML::readProperty(QXmlStreamReader* reader, SessionItem* item,
             = reader->attributes().value(SessionXML::ParameterValueAttribute).toDouble();
         variant = parameter_value;
     }
-
     else if (parameter_type == int_type_name) {
         int parameter_value
             = reader->attributes().value(SessionXML::ParameterValueAttribute).toInt();
         variant = parameter_value;
     }
-
+    else if (parameter_type == uint_type_name) {
+        unsigned parameter_value
+            = reader->attributes().value(SessionXML::ParameterValueAttribute).toUInt();
+        variant = parameter_value;
+    }
     else if (parameter_type == bool_type_name) {
         bool parameter_value
             = reader->attributes().value(SessionXML::ParameterValueAttribute).toInt();
         variant = parameter_value;
     }
-
     else if (parameter_type == qstring_type_name) {
         QString parameter_value
             = reader->attributes().value(SessionXML::ParameterValueAttribute).toString();
         variant = parameter_value;
     }
-
     else if (parameter_type == Constants::ExternalPropertyType) {
         QString text = reader->attributes().value(SessionXML::ExternalPropertyTextAtt).toString();
         QString colorName
@@ -219,7 +219,6 @@ QString SessionXML::readProperty(QXmlStreamReader* reader, SessionItem* item,
         property.setIdentifier(identifier);
         variant = property.variant();
     }
-
     else if (parameter_type == Constants::ComboPropertyType) {
         int parameter_value
             = reader->attributes().value(SessionXML::ParameterValueAttribute).toInt();
@@ -232,7 +231,6 @@ QString SessionXML::readProperty(QXmlStreamReader* reader, SessionItem* item,
 
         variant = combo_property.variant();
     }
-
     else {
         QString message = QString("SessionModel::readProperty: parameter type not supported '"+
                                   parameter_type+"'");

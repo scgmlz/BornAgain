@@ -60,4 +60,14 @@ public:
     MultiLayer* buildSample() const;
 };
 
+//! Builds sample: 2D finite lattice with thermal disorder.
+//! @ingroup standard_samples
+
+class BA_CORE_API_ FiniteSquareLatticeBuilder : public IMultiLayerBuilder
+{
+public:
+    FiniteSquareLatticeBuilder(){}
+    MultiLayer* buildSample() const;
+};
+
 #endif // TWODIMLATTICEBUILDER_H

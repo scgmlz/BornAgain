@@ -73,6 +73,7 @@ const std::string InterferenceFunctionRadialParaCrystalType = "InterferenceRadia
 const std::string InterferenceFunction2DParaCrystalType = "Interference2DParaCrystal";
 const std::string InterferenceFunction1DLatticeType = "Interference1DLattice";
 const std::string InterferenceFunction2DLatticeType = "Interference2DLattice";
+const std::string InterferenceFunctionFinite2DLatticeType = "InterferenceFinite2DLattice";
 
 const std::string CrystalType = "Crystal";
 const std::string LatticeType = "Lattice";
@@ -175,6 +176,7 @@ const std::string FullWidth = "FullWidth";
 const std::string Edge = "Edge";
 const std::string BaseEdge = "BaseEdge";
 const std::string Length = "Length";
+const std::string PositionVariance = "PositionVariance";
 const std::string RemovedLength = "RemovedLength";
 const std::string Width = "Width";
 const std::string LeftWidth = "LeftWidth";
@@ -241,6 +243,7 @@ const std::string BeamToSampleWidthRatio = "BeamToSampleWidthRatio";
 
 const std::string UnitsRad = "rad";
 const std::string UnitsNm = "nm";
+const std::string UnitsNm2 = "nm^2";
 const std::string UnitsNone = "";
 }
 

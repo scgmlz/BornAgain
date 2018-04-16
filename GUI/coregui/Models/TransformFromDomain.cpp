@@ -152,6 +152,21 @@ void TransformFromDomain::set2DLatticeItem(SessionItem* item,
     SetDecayFunction2D(item, p_pdf, group_name);
 }
 
+void TransformFromDomain::set2DLatticeItem(SessionItem* item,
+                                           const InterferenceFunctionFinite2DLattice& sample)
+{
+    set2DLatticeParameters(item, sample.lattice());
+
+    item->setItemValue(InterferenceFunctionFinite2DLatticeItem::P_DOMAIN_SIZE_1,
+                       sample.domainSize1());
+    item->setItemValue(InterferenceFunctionFinite2DLatticeItem::P_DOMAIN_SIZE_2,
+                       sample.domainSize2());
+    item->setItemValue(InterferenceFunctionFinite2DLatticeItem::P_POSITION_VARIANCE,
+                       sample.positionVariance());
+    item->setItemValue(InterferenceFunctionFinite2DLatticeItem::P_XI_INTEGRATION,
+                       sample.integrationOverXi());
+}
+
 void TransformFromDomain::setLayerItem(SessionItem* layerItem, const Layer* layer,
                                        const LayerInterface* top_interface)
 {
@@ -743,7 +758,7 @@ void SetDecayFunction2D(SessionItem* item, const IFTDecayFunction2D* pdf, QStrin
 
 void set2DLatticeParameters(SessionItem* item, const Lattice2D& lattice)
 {
-    SessionItem* latticeItem(0);
+    SessionItem* latticeItem(nullptr);
     if (lattice.getName() == BornAgain::SquareLatticeType) {
         latticeItem = item->setGroupProperty(InterferenceFunction2DLatticeItem::P_LATTICE_TYPE,
                                              Constants::SquareLatticeType);

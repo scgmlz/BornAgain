@@ -26,6 +26,7 @@ namespace
 bool isInterference2D(const QString& name)
 {
     if (name == Constants::InterferenceFunction2DLatticeType
+        || name == Constants::InterferenceFunctionFinite2DLatticeType
         || name == Constants::InterferenceFunction2DParaCrystalType)
         return true;
     return false;
@@ -60,11 +61,12 @@ ParticleLayoutItem::ParticleLayoutItem() : SessionGraphicsItem(Constants::Partic
                               << Constants::ParticleCompositionType << Constants::MesoCrystalType
                               << Constants::ParticleDistributionType);
     setDefaultTag(T_PARTICLES);
-    registerTag(T_INTERFERENCE, 0, 1, QStringList()
-                                          << Constants::InterferenceFunctionRadialParaCrystalType
-                                          << Constants::InterferenceFunction2DParaCrystalType
-                                          << Constants::InterferenceFunction1DLatticeType
-                                          << Constants::InterferenceFunction2DLatticeType);
+    registerTag(T_INTERFERENCE, 0, 1,
+                QStringList() << Constants::InterferenceFunctionRadialParaCrystalType
+                              << Constants::InterferenceFunction2DParaCrystalType
+                              << Constants::InterferenceFunction1DLatticeType
+                              << Constants::InterferenceFunction2DLatticeType
+                              << Constants::InterferenceFunctionFinite2DLatticeType);
 
     mapper()->setOnChildrenChange([this](SessionItem*) {
         updateDensityAppearance();

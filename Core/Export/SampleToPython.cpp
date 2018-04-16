@@ -420,6 +420,21 @@ std::string SampleToPython::defineInterferenceFunctions() const
 
             if (p_lattice_2d->integrationOverXi() == true)
                 result << indent() << it->second << ".setIntegrationOverXi(True)\n";
+        } else if (auto p_lattice_2d
+                   = dynamic_cast<const InterferenceFunctionFinite2DLattice*>(interference)) {
+            const Lattice2D& lattice = p_lattice_2d->lattice();
+            result << indent() << it->second << " = ba.InterferenceFunctionFinite2DLattice("
+                   << printNm(lattice.length1()) << ", " << printNm(lattice.length2()) << ", "
+                   << printDegrees(lattice.latticeAngle()) << ", "
+                   << printDegrees(lattice.rotationAngle()) << ", "
+                   << p_lattice_2d->domainSize1() << ", " << p_lattice_2d->domainSize2() << ")\n";
+
+            if (p_lattice_2d->positionVariance()>0.0) {
+                result << indent() << it->second << ".setPositionVariance("
+                       << p_lattice_2d->positionVariance() << ")\n";
+            }
+            if (p_lattice_2d->integrationOverXi() == true)
+                result << indent() << it->second << ".setIntegrationOverXi(True)\n";
         } else if (auto p_para_2d
                    = dynamic_cast<const InterferenceFunction2DParaCrystal*>(interference)) {
             std::vector<double> domainSize = p_para_2d->domainSizes();

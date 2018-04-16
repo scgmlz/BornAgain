@@ -67,4 +67,16 @@ public:
     int type() const { return TYPE; }
 };
 
+class BA_CORE_API_ InterferenceFunctionFinite2DLatticeView : public ConnectableView
+{
+    Q_OBJECT
+
+public:
+    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_FINITE_2D_LATTICE };
+
+    InterferenceFunctionFinite2DLatticeView(QGraphicsItem *parent = 0);
+
+    int type() const { return TYPE; }
+};
+
 #endif // INTERFERENCEFUNCTIONVIEWS_H

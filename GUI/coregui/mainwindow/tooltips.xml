@@ -44,6 +44,12 @@
             </property>
         </category>
 
+        <category name="InterferenceFinite2DLattice">
+             <property name="Title">
+                 <tooltip>Interference function of finite 2D lattice</tooltip>
+             </property>
+        </category>
+
         <category name="AnisoPyramid">
             <property name="Title">
                 <tooltip>Pyramid with a rectangular base</tooltip>

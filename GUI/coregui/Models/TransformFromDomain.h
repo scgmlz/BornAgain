@@ -25,6 +25,7 @@ class GISASSimulation;
 class IFootprintFactor;
 class InterferenceFunction1DLattice;
 class InterferenceFunction2DLattice;
+class InterferenceFunctionFinite2DLattice;
 class InterferenceFunction2DParaCrystal;
 class InterferenceFunctionRadialParaCrystal;
 class Layer;
@@ -61,6 +62,9 @@ BA_CORE_API_ void set1DLatticeItem(SessionItem* item, const InterferenceFunction
 
 BA_CORE_API_ void set2DLatticeItem(SessionItem* item, const InterferenceFunction2DLattice& sample);
 
+BA_CORE_API_ void set2DLatticeItem(SessionItem* item,
+                                   const InterferenceFunctionFinite2DLattice& sample);
+
 BA_CORE_API_ void setLayerItem(SessionItem* layer_item, const Layer* layer,
                                const LayerInterface* top_interface);
 
@@ -75,7 +79,8 @@ BA_CORE_API_ void setGISASBeamItem(BeamItem* beam_item, const GISASSimulation& s
 
 BA_CORE_API_ void setOffSpecBeamItem(BeamItem* beam_item, const OffSpecSimulation& simulation);
 
-BA_CORE_API_ void setSpecularBeamItem(SpecularBeamItem* beam_item, const SpecularSimulation& simulation);
+BA_CORE_API_ void setSpecularBeamItem(SpecularBeamItem* beam_item,
+                                      const SpecularSimulation& simulation);
 
 BA_CORE_API_ void setDetector(Instrument2DItem* instrument_item, const Simulation2D& simulation);
 

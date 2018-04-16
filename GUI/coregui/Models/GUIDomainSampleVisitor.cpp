@@ -450,6 +450,19 @@ void GUIDomainSampleVisitor::visit(const InterferenceFunction2DLattice* p_sample
     m_levelToParentItem[depth()] = item;
 }
 
+void GUIDomainSampleVisitor::visit(const InterferenceFunctionFinite2DLattice* p_sample)
+{
+    SessionItem* parent = m_levelToParentItem[depth() - 1];
+    Q_ASSERT(parent);
+    SessionItem* item = m_sampleModel->insertNewItem(
+                            Constants::InterferenceFunctionFinite2DLatticeType,
+                            m_sampleModel->indexOfItem(parent), -1,
+                            ParticleLayoutItem::T_INTERFERENCE);
+    Q_ASSERT(item);
+    TransformFromDomain::set2DLatticeItem(item, *p_sample);
+    m_levelToParentItem[depth()] = item;
+}
+
 void GUIDomainSampleVisitor::visit(const RotationX* p_sample)
 {
     SessionItem* parent = m_levelToParentItem[depth() - 1];
