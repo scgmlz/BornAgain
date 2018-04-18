@@ -38,6 +38,8 @@ SpecularDataCanvas::SpecularDataCanvas(QWidget* parent)
 
     initActions();
 
+    m_plot_canvas->setStatusLabelEnabled(true);
+
     connect(m_plot_canvas->customPlot(), &QCustomPlot::mousePress, this,
             &SpecularDataCanvas::onMousePress, Qt::UniqueConnection);
 }

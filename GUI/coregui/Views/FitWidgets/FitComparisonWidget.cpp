@@ -14,8 +14,9 @@
 
 #include "FitComparisonWidget.h"
 #include "AxesItems.h"
+#include "ColorMap.h"
 #include "ColorMapCanvas.h"
-#include "ColorMapLabel.h"
+#include "PlotStatusLabel.h"
 #include "FitFlowWidget.h"
 #include "IntensityDataFunctions.h"
 #include "IntensityDataItem.h"
@@ -46,7 +47,7 @@ FitComparisonWidget::FitComparisonWidget(QWidget *parent)
     , m_simulatedDataPlot(new ColorMapCanvas)
     , m_relativeDiffPlot(new ColorMapCanvas)
     , m_fitFlowWidget(new FitFlowWidget)
-    , m_statusLabel(new ColorMapLabel(0, this))
+    , m_statusLabel(new PlotStatusLabel(0, this))
     , m_propertyWidget(new IntensityDataPropertyWidget)
     , m_resetViewAction(new QAction(this))
     , m_comparisonController(new FitComparisonController(this))
@@ -119,9 +120,9 @@ void FitComparisonWidget::subscribeToItem()
     m_fitFlowWidget->setItem(jobItem()->fitSuiteItem());
 
     m_statusLabel->reset();
-    m_statusLabel->addColorMap(m_realDataPlot);
-    m_statusLabel->addColorMap(m_simulatedDataPlot);
-    m_statusLabel->addColorMap(m_relativeDiffPlot);
+    m_statusLabel->addPlot(m_realDataPlot->colorMap());
+    m_statusLabel->addPlot(m_simulatedDataPlot->colorMap());
+    m_statusLabel->addPlot(m_relativeDiffPlot->colorMap());
 
     m_comparisonController->setItems(realDataItem(), simulatedDataItem());
 

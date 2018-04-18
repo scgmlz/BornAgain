@@ -15,7 +15,7 @@
 #include "ColorMapCanvas.h"
 #include "ColorMap.h"
 #include "ColorMapCanvasEvent.h"
-#include "ColorMapLabel.h"
+#include "PlotStatusLabel.h"
 #include "IntensityDataItem.h"
 #include "StatusLabel.h"
 #include <QLabel>
@@ -25,7 +25,7 @@ ColorMapCanvas::ColorMapCanvas(QWidget *parent)
     : SessionItemWidget(parent)
     , m_colorMap(new ColorMap)
     , m_canvasEvent(new ColorMapCanvasEvent(this))
-    , m_statusLabel(new ColorMapLabel(m_colorMap, this))
+    , m_statusLabel(new PlotStatusLabel(m_colorMap, this))
 {
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(0);

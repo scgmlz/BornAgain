@@ -15,8 +15,7 @@
 #ifndef SPECULARPLOT_H
 #define SPECULARPLOT_H
 
-#include "SessionItemWidget.h"
-#include "ColorMapBin.h"
+#include "DescriptedPlot.h"
 #include "qcustomplot.h"
 #include <memory>
 
@@ -30,21 +29,21 @@ class UpdateTimer;
 //! Provides minimal functionality for data plotting and axes interaction. Should be a component
 //! for more complicated plotting widgets. Corresponds to ColorMap for 2D intensity data.
 
-class BA_CORE_API_ SpecularPlot : public SessionItemWidget
+class BA_CORE_API_ SpecularPlot : public DescriptedPlot
 {
     Q_OBJECT
 
 public:
-    explicit SpecularPlot(QWidget* parent = 0);
+    explicit SpecularPlot(QWidget* parent = nullptr);
 
     QSize sizeHint() const override { return QSize(500, 400); }
     QSize minimumSizeHint() const override { return QSize(128, 128); }
 
-    QCustomPlot* customPlot() { return m_custom_plot; }
-    const QCustomPlot* customPlot() const { return m_custom_plot; }
+    //! Returns plot descriptor corresponding to given axes coordinates.
+    std::unique_ptr<IPlotDescriptor> plotDescriptor(double xpos, double ypos) const override;
 
-    //! to track move events (used when showing profile histograms and printing status string)
-    void setMouseTrackingEnabled(bool enable);
+    QCustomPlot* customPlot() override { return m_custom_plot; }
+    const QCustomPlot* customPlot() const override { return m_custom_plot; }
 
     //! sets logarithmic scale
     void setLog(bool log);
@@ -106,7 +105,6 @@ private:
 
     QCustomPlot* m_custom_plot;
     UpdateTimer* m_update_timer;
-    SpecularPlotEvent* m_plot_event;
 
     bool m_block_update;
 };

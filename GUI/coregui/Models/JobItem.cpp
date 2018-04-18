@@ -273,8 +273,9 @@ QString JobItem::defaultPresentationType()
 {
     auto instrument = instrumentItem();
     if (!instrument)
-        GUIHelpers::Error("Error in JobItem::defaultPresentationType: default presentation type "
-                          "cannot be determined");
+        throw GUIHelpers::Error(
+            "Error in JobItem::defaultPresentationType: default presentation type "
+            "cannot be determined");
 
     auto instrument_type = instrument->modelType();
     if (instrument_type == Constants::SpecularInstrumentType)

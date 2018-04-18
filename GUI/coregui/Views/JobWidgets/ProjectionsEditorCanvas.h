@@ -25,7 +25,7 @@ class MaskGraphicsView;
 class SessionModel;
 class IntensityDataItem;
 class ColorMap;
-class ColorMapLabel;
+class PlotStatusLabel;
 class SessionItem;
 class QItemSelectionModel;
 
@@ -70,7 +70,7 @@ private:
     MaskGraphicsScene* m_scene;
     MaskGraphicsView* m_view;
     ColorMap* m_colorMap;
-    ColorMapLabel* m_statusLabel;
+    PlotStatusLabel* m_statusLabel;
 
     SessionItem* m_liveProjection; //!< temporary projection item matching mouse move
     SessionModel* m_model;

@@ -14,7 +14,6 @@
 
 #include "ColorMap.h"
 #include "AxesItems.h"
-#include "ColorMapEvent.h"
 #include "ColorMapUtils.h"
 #include "IntensityDataItem.h"
 #include "MathConstants.h"
@@ -28,11 +27,10 @@ const int colorbar_width = 80;
 }
 
 ColorMap::ColorMap(QWidget* parent)
-    : SessionItemWidget(parent)
+    : DescriptedPlot(parent)
     , m_customPlot(new QCustomPlot)
     , m_colorMap(nullptr), m_colorScale(nullptr)
     , m_updateTimer(new UpdateTimer(replot_update_interval, this))
-    , m_colorMapEvent(new ColorMapEvent(this))
     , m_colorBarLayout(new  QCPLayoutGrid)
     , m_block_update(true)    
 {
@@ -46,26 +44,6 @@ ColorMap::ColorMap(QWidget* parent)
 
     setMouseTrackingEnabled(true);
     //    setFixedColorMapMargins();
-}
-
-double ColorMap::xAxisCoordToPixel(double axis_coordinate) const
-{
-    return m_customPlot->xAxis->coordToPixel(axis_coordinate);
-}
-
-double ColorMap::yAxisCoordToPixel(double axis_coordinate) const
-{
-    return m_customPlot->yAxis->coordToPixel(axis_coordinate);
-}
-
-double ColorMap::pixelToXaxisCoord(double pixel) const
-{
-    return m_customPlot->xAxis->pixelToCoord(pixel);
-}
-
-double ColorMap::pixelToYaxisCoord(double pixel) const
-{
-    return m_customPlot->yAxis->pixelToCoord(pixel);
 }
 
 QRectF ColorMap::viewportRectangleInWidgetCoordinates()
@@ -82,40 +60,23 @@ QRectF ColorMap::viewportRectangleInWidgetCoordinates()
                   yAxisCoordToPixel(bottom) - yAxisCoordToPixel(top));
 }
 
-bool ColorMap::axesRangeContains(double xpos, double ypos) const
+std::unique_ptr<IPlotDescriptor> ColorMap::plotDescriptor(double xpos, double ypos) const
 {
-    if (customPlot()->xAxis->range().contains(xpos)
-        && customPlot()->yAxis->range().contains(ypos)) {
-        return true;
-    }
-    return false;
-}
-
-ColorMapBin ColorMap::colorMapBin(double xpos, double ypos) const
-{
-    ColorMapBin result;
+    std::unique_ptr<ColorMapDescriptor> result(new ColorMapDescriptor);
     if (!intensityItem())
         return result;
 
-    result.m_x = xpos;
-    result.m_y = ypos;
+    result->x() = xpos;
+    result->y() = ypos;
 
-    if (axesRangeContains(xpos, ypos))
-        result.in_axes_range = true;
+    result->inAxesRange() = axesRangeContains(xpos, ypos);
 
-    m_colorMap->data()->coordToCell(xpos, ypos, &result.m_nx, &result.m_ny);
-    result.m_value = m_colorMap->data()->cell(result.m_nx, result.m_ny);
+    m_colorMap->data()->coordToCell(xpos, ypos, &result->m_nx, &result->m_ny);
+    result->m_value = m_colorMap->data()->cell(result->m_nx, result->m_ny);
 
-    result.m_logz = intensityItem()->isLogz();
+    result->m_logz = intensityItem()->isLogz();
 
     return result;
-}
-
-//! to track move events (used when showing profile histograms and printing status string)
-
-void ColorMap::setMouseTrackingEnabled(bool enable)
-{
-    m_colorMapEvent->setMouseTrackingEnabled(enable);
 }
 
 //! sets logarithmic scale

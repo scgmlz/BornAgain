@@ -16,7 +16,7 @@
 #include "MaskGraphicsScene.h"
 #include "MaskGraphicsView.h"
 #include "MaskResultsPresenter.h"
-#include "ColorMapLabel.h"
+#include "PlotStatusLabel.h"
 #include "SavePlotAssistant.h"
 #include "AppSvc.h"
 #include "projectmanager.h"
@@ -30,7 +30,7 @@ MaskEditorCanvas::MaskEditorCanvas(QWidget *parent)
     , m_scene(new MaskGraphicsScene(this))
     , m_view(new MaskGraphicsView(m_scene))
     , m_intensityDataItem(0)
-    , m_statusLabel(new ColorMapLabel(0, this))
+    , m_statusLabel(new PlotStatusLabel(0, this))
     , m_resultsPresenter(new MaskResultsPresenter(this))
 {
     setObjectName(QStringLiteral("MaskEditorCanvas"));
@@ -58,7 +58,7 @@ void MaskEditorCanvas::setMaskContext(SessionModel *model, const QModelIndex &ma
     m_resultsPresenter->setMaskContext(model, maskContainerIndex, intensityItem);
     m_view->updateSize(m_view->size());
 
-    m_statusLabel->addColorMap(m_scene->colorMap());
+    m_statusLabel->addPlot(m_scene->colorMap());
 }
 
 void MaskEditorCanvas::resetContext()

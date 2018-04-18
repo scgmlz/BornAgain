@@ -23,7 +23,7 @@ class IntensityDataItem;
 class ColorMapCanvas;
 class SessionModel;
 class FitFlowWidget;
-class ColorMapLabel;
+class PlotStatusLabel;
 class QAction;
 class IntensityDataPropertyWidget;
 class PropertyRepeater;
@@ -62,7 +62,7 @@ private:
     ColorMapCanvas* m_simulatedDataPlot;
     ColorMapCanvas* m_relativeDiffPlot;
     FitFlowWidget* m_fitFlowWidget;
-    ColorMapLabel* m_statusLabel;
+    PlotStatusLabel* m_statusLabel;
     IntensityDataPropertyWidget* m_propertyWidget;
 
     QAction* m_resetViewAction;

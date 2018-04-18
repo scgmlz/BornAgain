@@ -21,7 +21,7 @@ class ColorMap;
 class QCustomPlot;
 class ColorMapCanvasEvent;
 class IntensityDataItem;
-class ColorMapLabel;
+class PlotStatusLabel;
 
 //! The ColorMapCanvas class contains ColorMap for intensity data presentation, and provide
 //! control of font size, status string appearance, defines common actions
@@ -47,7 +47,7 @@ public slots:
 private:
     ColorMap* m_colorMap;
     ColorMapCanvasEvent* m_canvasEvent;
-    ColorMapLabel* m_statusLabel;
+    PlotStatusLabel* m_statusLabel;
 };
 
 #endif // COLORMAPCANVAS_H

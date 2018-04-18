@@ -18,8 +18,8 @@
 #include "SessionModel.h"
 #include "IntensityDataItem.h"
 #include "ColorMap.h"
-#include "ColorMapLabel.h"
-#include "ColorMapEvent.h"
+#include "PlotStatusLabel.h"
+#include "MouseMoveEvent.h"
 #include "MaskItems.h"
 #include <QVBoxLayout>
 #include <QItemSelectionModel>
@@ -29,7 +29,7 @@ ProjectionsEditorCanvas::ProjectionsEditorCanvas(QWidget* parent)
     , m_scene(new MaskGraphicsScene(this))
     , m_view(new MaskGraphicsView(m_scene))
     , m_colorMap(nullptr)
-    , m_statusLabel(new ColorMapLabel(0, this))
+    , m_statusLabel(new PlotStatusLabel(nullptr, this))
     , m_liveProjection(nullptr)
     , m_model(nullptr)
     , m_intensityDataItem(nullptr)
@@ -158,7 +158,7 @@ void ProjectionsEditorCanvas::setColorMap(ColorMap* colorMap)
     setConnected(true);
 
     m_statusLabel->reset();
-    m_statusLabel->addColorMap(colorMap);
+    m_statusLabel->addPlot(colorMap);
 }
 
 void ProjectionsEditorCanvas::setConnected(bool isConnected)
@@ -167,24 +167,24 @@ void ProjectionsEditorCanvas::setConnected(bool isConnected)
         return;
 
     if(isConnected) {
-        connect(m_colorMap->colorMapEvent(), SIGNAL(enteringColorMap()),
-                this, SLOT(onEnteringColorMap()), Qt::UniqueConnection);
-        connect(m_colorMap->colorMapEvent(), SIGNAL(leavingColorMap()),
-                this, SLOT(onLeavingColorMap()), Qt::UniqueConnection);
-        connect(m_colorMap->colorMapEvent(), SIGNAL(positionChanged(double, double)),
-                this, SLOT(onPositionChanged(double, double)), Qt::UniqueConnection);
-        connect(m_colorMap, SIGNAL(marginsChanged(double,double)),
-                this, SIGNAL(marginsChanged(double,double)), Qt::UniqueConnection);
+        connect(m_colorMap->colorMapEvent(), &MouseMoveEvent::enteringPlot, this,
+                &ProjectionsEditorCanvas::onEnteringColorMap, Qt::UniqueConnection);
+        connect(m_colorMap->colorMapEvent(), &MouseMoveEvent::leavingPlot, this,
+                &ProjectionsEditorCanvas::onLeavingColorMap, Qt::UniqueConnection);
+        connect(m_colorMap->colorMapEvent(), &MouseMoveEvent::positionChanged, this,
+                &ProjectionsEditorCanvas::onPositionChanged, Qt::UniqueConnection);
+        connect(m_colorMap, &ColorMap::marginsChanged, this,
+                &ProjectionsEditorCanvas::marginsChanged, Qt::UniqueConnection);
     }
 
     else {
-        disconnect(m_colorMap->colorMapEvent(), SIGNAL(enteringColorMap()),
-                this, SLOT(onEnteringColorMap()));
-        disconnect(m_colorMap->colorMapEvent(), SIGNAL(leavingColorMap()),
-                this, SLOT(onLeavingColorMap()));
-        disconnect(m_colorMap->colorMapEvent(), SIGNAL(positionChanged(double, double)),
-                this, SLOT(onPositionChanged(double, double)));
-        disconnect(m_colorMap, SIGNAL(marginsChanged(double,double)),
-                this, SIGNAL(marginsChanged(double,double)));
+        disconnect(m_colorMap->colorMapEvent(), &MouseMoveEvent::enteringPlot, this,
+                   &ProjectionsEditorCanvas::onEnteringColorMap);
+        disconnect(m_colorMap->colorMapEvent(), &MouseMoveEvent::leavingPlot, this,
+                   &ProjectionsEditorCanvas::onLeavingColorMap);
+        disconnect(m_colorMap->colorMapEvent(), &MouseMoveEvent::positionChanged, this,
+                   &ProjectionsEditorCanvas::onPositionChanged);
+        disconnect(m_colorMap, &ColorMap::marginsChanged, this,
+                   &ProjectionsEditorCanvas::marginsChanged);
     }
 }
