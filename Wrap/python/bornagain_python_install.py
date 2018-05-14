@@ -183,28 +183,6 @@ setup(name='bornagain',
     pass
 
 
-def generate_init_py(destination_dir):
-    """
-    Generates __init__.py file in BornAgain's Python package directory
-    """
-    text = '''\
-import sys
-import os
-
-sys.path.append(
-    os.path.join(os.path.abspath(os.path.dirname(__file__)), "lib/BornAgain-{0}")
-    )
-
-from libBornAgainCore import *
-from libBornAgainFit import * 
-    
-'''.format(BORNAGAIN_VERSION)
-    with open(os.path.join(destination_dir,"__init__.py"), "w") as fout:
-        fout.write(text)
-        fout.close()
-    pass
-
-
 def prepare_init_module(app_dir, bundle_dir):
     source_dir = os.path.join(app_dir, "Contents", "libexec")
     libexec_dir = os.path.join(source_dir, "BornAgain-"+BORNAGAIN_VERSION, "bornagain")    

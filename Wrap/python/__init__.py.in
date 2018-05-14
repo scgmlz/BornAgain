@@ -4,13 +4,13 @@ import os
 sys.path.append(os.path.abspath(
                 os.path.join(os.path.split(__file__)[0], '@BA_MODULES_IMPORT_PATH@')))
 
-from libBornAgainFit import *
-from libBornAgainCore import *
+from .libBornAgainFit import *
+from .libBornAgainCore import *
 
 # this line needed to fix python3 import problem
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 # To prevent inclusion of plotting tools during functional tests:
 if not "NOPLOT" in os.environ:
-    from plot_utils import *
+    from .plot_utils import *
 
