@@ -97,6 +97,8 @@ if(BORNAGAIN_PYTHON)
         ${library_name}_python
         COMMAND ${CMAKE_COMMAND} -E copy
             ${AUTO_DIR}/libBornAgainCore.py ${CMAKE_BINARY_DIR}/lib/libBornAgainCore.py
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${AUTO_DIR}/libBornAgainCore.py ${CMAKE_BINARY_DIR}/lib/bornagain/libBornAgainCore.py
         DEPENDS ${AUTO_DIR}/libBornAgainCore.py
         )
 
@@ -266,7 +268,8 @@ else()
 endif()
 
 # Install bornagain/__init__.py and utilites
-install(FILES "${CMAKE_BINARY_DIR}/lib/bornagain/__init__.py"
-        DESTINATION ${destination_libexec}/bornagain/ COMPONENT Libraries)
-install(FILES "${CMAKE_BINARY_DIR}/lib/bornagain/plot_utils.py"
-        DESTINATION ${destination_libexec}/bornagain/ COMPONENT Libraries)
+install(DIRECTORY "${CMAKE_BINARY_DIR}/lib/bornagain/"
+        DESTINATION "${destination_libexec}/bornagain"
+        COMPONENT Libraries
+        FILES_MATCHING PATTERN "*.py"
+        PATTERN "__pycache__" EXCLUDE)

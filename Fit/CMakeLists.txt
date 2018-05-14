@@ -82,6 +82,8 @@ if(BORNAGAIN_PYTHON)
         ${library_name}_python
         COMMAND ${CMAKE_COMMAND} -E copy ${AUTO_DIR}/libBornAgainFit.py
              ${CMAKE_BINARY_DIR}/lib/libBornAgainFit.py
+        COMMAND ${CMAKE_COMMAND} -E copy ${AUTO_DIR}/libBornAgainFit.py
+             ${CMAKE_BINARY_DIR}/lib/bornagain/libBornAgainFit.py
         DEPENDS ${AUTO_DIR}/libBornAgainFit.py
         )
 
