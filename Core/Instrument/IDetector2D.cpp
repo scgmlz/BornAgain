@@ -102,7 +102,7 @@ std::vector<DetectorElement> IDetector2D::createDetectorElements(const Beam& bea
     result.reserve(numberOfSimulationElements());
     iterate([&](const_iterator it){
         result.emplace_back(createPixel(it.detectorIndex()), analyzer_operator);
-        if (it.index()==spec_index) {
+        if (it.detectorIndex()==spec_index) {
             auto& detector_element = result.back();
             detector_element.setSpecular();
         }
