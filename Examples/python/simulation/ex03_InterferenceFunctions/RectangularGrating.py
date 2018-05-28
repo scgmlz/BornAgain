@@ -4,30 +4,31 @@ Monte-carlo integration is used to get rid of
 large-particle form factor oscillations.
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import deg, angstrom, nm, micrometer
 
 
-def get_sample(lattice_rotation_angle=45*deg):
+def get_sample(lattice_rotation_angle=0.0*deg):
     """
-    Returns a sample with a grating on a substrate,
-    modelled by very long boxes forming a 1D lattice with Cauchy correlations.
+    Returns a sample with a grating on a substrate.
+    lattice_rotation_angle = 0 - beam parallel to grating lines
+    lattice_rotation_angle = 90*deg - beam perpendicular to grating lines
     """
     # defining materials
     m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
+    m_si = ba.HomogeneousMaterial("Si", 5.78164736e-6, 1.02294578e-7)
 
-    box_length, box_width, box_height = 10*nm, 10000*nm, 10*nm
-    lattice_length = 30*nm
+    box_length, box_width, box_height = 50*micrometer, 70*nm, 50*nm
+    lattice_length = 150*nm
 
     # collection of particles
     interference = ba.InterferenceFunction1DLattice(
-        lattice_length, lattice_rotation_angle)
-    pdf = ba.FTDecayFunction1DCauchy(1000.0)
+        lattice_length, 90.0*deg - lattice_rotation_angle)
+
+    pdf = ba.ba.FTDecayFunction1DGauss(450.0)
     interference.setDecayFunction(pdf)
 
-    box_ff = ba.FormFactorBox(box_length, box_width, box_height)
-    box = ba.Particle(m_particle, box_ff)
+    box_ff = ba.FormFactorLongBoxLorentz(box_length, box_width, box_height)
+    box = ba.Particle(m_si, box_ff)
 
     particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(
@@ -37,11 +38,16 @@ def get_sample(lattice_rotation_angle=45*deg):
     # assembling the sample
     air_layer = ba.Layer(m_ambience)
     air_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate)
+    substrate_layer = ba.Layer(m_si)
+
+    roughness = ba.LayerRoughness()
+    roughness.setSigma(5.0 * nm)
+    roughness.setHurstParameter(0.5)
+    roughness.setLatteralCorrLength(10.0 * nm)
 
     multi_layer = ba.MultiLayer()
     multi_layer.addLayer(air_layer)
-    multi_layer.addLayer(substrate_layer)
+    multi_layer.addLayerWithTopRoughness(substrate_layer, roughness)
     return multi_layer
 
 
@@ -50,9 +56,10 @@ def get_simulation():
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, -1.0*deg, 1.0*deg,
-                                     200, 0.0*deg, 2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(200, -0.5*deg, 0.5*deg,
+                                     200, 0.0*deg, 0.6*deg)
+    simulation.setBeamParameters(1.34*angstrom, 0.4*deg, 0.0*deg)
+    simulation.setBeamIntensity(1e+08)
     simulation.getOptions().setMonteCarloIntegration(True, 100)
     return simulation
 

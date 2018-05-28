@@ -36,5 +36,6 @@
         <file>images/SizeDistribution.png</file>
         <file>images/Lattice1D.png</file>
         <file>images/sample_layers2.png</file>
+        <file>images/Lattice2DFinite.png</file>
     </qresource>
 </RCC>

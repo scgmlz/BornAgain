@@ -80,31 +80,23 @@ class DrawObserver(ba.IFitObserver):
         self.fig.canvas.draw()
         plt.ion()
 
-    def plot_colormap(self, data, title, min=1.0, max=1e6):
-        im = plt.imshow(
-            data.getArray(),
-            norm=matplotlib.colors.LogNorm(min, max),
-            extent=[data.getXmin()/deg, data.getXmax()/deg,
-                    data.getYmin()/deg, data.getYmax()/deg],
-            aspect='auto')
-        plt.colorbar(im)
-        plt.title(title)
-
     def plot_datasets(self, fit_suite, canvas):
         for i_dataset in range(0, fit_suite.numberOfFitObjects()):
-            real_data = fit_suite.getRealData(i_dataset)
-            simul_data = fit_suite.getSimulationData(i_dataset)
-            chi2_map = fit_suite.getChiSquaredMap(i_dataset)
+            real_data = fit_suite.experimentalData(i_dataset)
+            simul_data = fit_suite.simulationResult(i_dataset)
+            chi2_map = fit_suite.relativeDifference(i_dataset)
+
+            zmax = real_data.histogram2d().getMaximum()
 
             plt.subplot(canvas[i_dataset*3])
-            self.plot_colormap(real_data, "\"Real\" data - #"+str(i_dataset+1),
-                               min=1.0, max=real_data.getMaximum())
+            ba.plot_colormap(real_data, title="\"Real\" data - #"+str(i_dataset+1),
+                               zmin=1.0, zmax=zmax, zlabel="")
             plt.subplot(canvas[1+i_dataset*3])
-            self.plot_colormap(simul_data, "Simulated data - #"+str(i_dataset+1),
-                               min=1.0, max=real_data.getMaximum())
+            ba.plot_colormap(simul_data, title="Simulated data - #"+str(i_dataset+1),
+                               zmin=1.0, zmax=zmax, zlabel="")
             plt.subplot(canvas[2+i_dataset*3])
-            self.plot_colormap(chi2_map, "Chi2 map - #"+str(i_dataset+1),
-                               min=0.001, max=10.0)
+            ba.plot_colormap(chi2_map, title="Chi2 map - #"+str(i_dataset+1),
+                               zmin=0.001, zmax=10.0, zlabel="")
 
     def plot_fit_parameters(self, fit_suite, canvas):
         # fit parameters
@@ -125,7 +117,7 @@ class DrawObserver(ba.IFitObserver):
         # most of the space
         canvas = matplotlib.gridspec.GridSpec(
             3, 3, width_ratios=[1, 1, 1], height_ratios=[4, 4, 1])
-        canvas.update(left=0.05, right=0.95, hspace=0.4, wspace=0.2)
+        canvas.update(left=0.05, right=0.95, hspace=0.5, wspace=0.2)
 
         self.plot_datasets(fit_suite, canvas)
         self.plot_fit_parameters(fit_suite, canvas)
