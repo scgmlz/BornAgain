@@ -1,3 +1,71 @@
+BornAgain-1.12.0, released 2018.05.30
+  > No API changes
+  > Summary:
+    1) First implementation of specular simulation in GUI.
+    2) DepthProbeSimulation for experiment preparation.
+    3) Documentation: remaining part of website has been migrated to Hugo website.
+    4) Beta version of 3d sample view.
+    5) Interference function for finite 2d lattices (core + GUI).
+    6) Interference function for a 2d superlattice.
+    7) Fitting: first refactoring to bring it closer to generic Python fit interfaces.
+    8) Numerous other bugfixes.
+
+  * Bug #1975: Failed to import numpy on Windows (in virtual environment)
+  * Bug #1991: Cannot add real data to off-specular instrument
+  * Bug #1997: GUI: fit view shows experimental/simulated data in different scale
+  * Bug #1998: Wrong number of samples displayed in distribution widget for cosine distribution
+  * Bug #2009: qwindowsvistatsyle.dll cannot be found under Qt5.9.3 on windows
+  * Bug #2010: cmake should notify user if eigen3 is not found
+  * Bug #2019: Windows build ocassionally fails
+  * Bug #2021: GUI crash while import python script
+  * Bug #2029: Unit convertion bug when ROI is set
+  * Bug #2035: Specular peak disappears if ROI is set
+  * Bug #2044: Users cannot see python functions' descriptions, jump to their definitions or use autocompletion in PyCharm
+  * Bug #2049: GUI-> Crash on Instrument->Clone
+  * Bug #2053: GUI (Win) whitespaces are missing in saved projection ascii file
+  * Bug #2054: InterferenceFunction2DLattice handles integration over xi wrongly
+  * Bug #2060: RealSpaceDialog doesn't stay on top on Mac
+  * Bug #2061: Prevent RealSpaceDialog from making the GUI crash
+  * Feature #926: Provide evanescent wave python example
+  * Feature #1675: Get rid of ctypes.addressof in PySampleBuilder
+  * Feature #1846: Investigate the effort to implement 3d correlations of particles in DWBA
+  * Feature #1937: Implement export-to-Python for specular instrument
+  * Feature #1938: Implement transform from domain for specular instrument
+  * Feature #1964: Provide "fair" unit conversions for specular data (including q-space)
+  * Feature #1974: Provide full-fledged functionality for specular simulation in DomainSimulationBuilder
+  * Feature #2006: Core: implement instrument type for depth probes (evanescent wave)
+  * Feature #2012: Reenable openMPI calculations
+  * Feature #2018: Revise RealDataItem and the way it handles cropped experimental data
+  * Feature #2023: Provide finite 2d lattice interference function (with position fluctuations)
+  * Feature #2026: Provide capability of switching angular axis in DepthProbe to different units
+  * Feature #2030: Provide unit conversions for specular instrument in GUI
+  * Feature #2036: Bring the appearance of specular simulation to compliance with GISAS/Off-Spec job   * views
+  * Feature #2042: Create and use icon for finite 2d lattice
+  * Feature #2043: Implement lattice block particle
+  * Documentation #1360: reequilibrate hierarchy levels in online docs
+  * Documentation #1940: Website: port installation instructions to Hugo
+  * Documentation #1952: Update "Accessing simulation results" tutorial
+  * Documentation #1968: Website: finalize migration to Hugo based website
+  * Documentation #2001: Website: port "functionality overview" to Hugo
+  * Documentation #2002: Website: port all release letters
+  * Documentation #2005: Website: switch bornagainproject.org to the new website
+  * Documentation #2015: Website: create download section
+  * Documentation #2016: Website: create contact section
+  * Documentation #2017: Website: create about section
+  * Documentation #2022: Website: provide automatic generation of Python example summary
+  * Documentation #2057: Update "Importing experimental data" tutorial
+  * Documentation #2059: Revise all Python examples
+  * Refactoring #1954: Use new unit conversions from core in GUI
+  * Refactoring #1987: Replace Qt's foreach with c++ range-based for loop
+  * Refactoring #1995: Remove obsolete Find<library> files in cmake/generic/modules
+  * Refactoring #2014: Provide uniform access interface for simulation/fitting results
+  * Refactoring #2028: Remove the functionality doubled in DepthProbeSimulation from SpecularSimulation and reuse common code
+  * Refactoring #2031: replace obsolete qt5_use_modules
+  * Refactoring #2033: Investigate FitSuite refactoring in the context of external minimizer
+  * Refactoring #2045: Verify and possibly correct QQuaternion construction from our Euler angles in RealSpace::Object::transform
+  * Testing #2027: Provide functional test + example for depth probe simulation
+  * Configuration #2048: Get rid of CMAKE_LIBRARY_PATH
+
 BornAgain-1.11.1, released 2018.03.21
   > Hotfix:
     * Bug #1993: Plot ticks are not updated if axes changed in real time view
