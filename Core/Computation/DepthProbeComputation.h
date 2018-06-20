@@ -16,13 +16,11 @@
 #define DEPTHPROBECOMPUTATION_H
 
 #include "IComputation.h"
-#include "Complex.h"
 #include "SimulationOptions.h"
 #include "DepthProbeComputationTerm.h"
 
 class IFresnelMap;
 class MultiLayer;
-struct HomogeneousRegion;
 
 //! Performs a single-threaded depth probe computation with given sample.
 //!
@@ -37,11 +35,10 @@ public:
     DepthProbeComputation(const MultiLayer& multilayer, const SimulationOptions& options,
                           ProgressHandler& progress, DepthProbeElementIter begin_it,
                           DepthProbeElementIter end_it);
-    virtual ~DepthProbeComputation();
+    ~DepthProbeComputation() override;
 
 private:
     void runProtected() override;
-    std::unique_ptr<IFresnelMap> createFresnelMap();
 
     DepthProbeElementIter m_begin_it, m_end_it;
     std::unique_ptr<IFresnelMap> mP_fresnel_map;

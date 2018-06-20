@@ -111,15 +111,6 @@ std::vector<DetectorElement> IDetector2D::createDetectorElements(const Beam& bea
     return result;
 }
 
-SimulationElement IDetector2D::getSimulationElement(size_t index, const Beam& beam) const
-{
-    double wavelength = beam.getWavelength();
-    double alpha_i = - beam.getAlpha();  // Defined to be always positive in Beam
-    double phi_i = beam.getPhi();
-    return SimulationElement(wavelength, alpha_i, phi_i,
-                             std::unique_ptr<IPixel>(createPixel(index)));
-}
-
 size_t IDetector2D::getGlobalIndex(size_t x, size_t y) const
 {
     if (dimension() != 2)

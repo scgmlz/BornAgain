@@ -87,9 +87,6 @@ protected:
     //! returned. This corresponds to an overflow index.
     virtual size_t getIndexOfSpecular(const Beam& beam) const=0;
 
-    //! Creates single simulation element.
-    SimulationElement getSimulationElement(size_t index, const Beam& beam) const;
-
 private:
     DetectorMask m_detector_mask;
     std::unique_ptr<RegionOfInterest> m_region_of_interest;

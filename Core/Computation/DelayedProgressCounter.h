@@ -24,12 +24,13 @@ class ProgressHandler;
 class DelayedProgressCounter
 {
 public:
-    DelayedProgressCounter(size_t interval) : m_interval(interval), m_count(0) {}
+    DelayedProgressCounter(ProgressHandler* p_progress, size_t interval);
     ~DelayedProgressCounter() {}
 
     //! Increments inner counter; at regular intervals updates progress handler.
-    void stepProgress(ProgressHandler* progress);
+    void stepProgress();
 private:
+    ProgressHandler* mp_progress;
     const size_t m_interval;
     size_t m_count;
 };

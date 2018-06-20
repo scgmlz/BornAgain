@@ -22,7 +22,6 @@
 
 class MultiLayer;
 class ProgressHandler;
-class SimulationElement;
 
 //! Interface for a single-threaded computation with given range of SimulationElements
 //! and ProgressHandler.
@@ -44,12 +43,13 @@ public:
     std::string errorMessage() const { return m_status.errorMessage(); }
 
 protected:
-    virtual void runProtected() = 0;
-
     SimulationOptions m_sim_options;
-    ProgressHandler* m_progress;
+    ProgressHandler* mp_progress;
     ComputationStatus m_status;
     std::unique_ptr<MultiLayer> mP_multi_layer;
+
+private:
+    virtual void runProtected() = 0;
 };
 
 #endif // ICOMPUTATION_H

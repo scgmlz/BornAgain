@@ -171,7 +171,6 @@ DepthProbeSimulation::generateSimulationElements(const Beam& beam)
         if (!alpha_limits.isInRange(result_angle))
             result.back().setCalculationFlag(false); // false = exclude from calculations
     }
-
     return result;
 }
 

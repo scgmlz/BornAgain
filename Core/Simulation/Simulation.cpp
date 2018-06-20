@@ -128,9 +128,7 @@ void Simulation::runSimulation()
     size_t param_combinations = m_distribution_handler.getTotalNumberOfSamples();
 
     m_progress.reset();
-    size_t prefactor = ( sample()->totalNofLayouts()>0 ? 1 : 0 )
-        + ( sample()->hasRoughness() ? 1 : 0 );
-    m_progress.setExpectedNTicks(prefactor*param_combinations*numberOfSimulationElements());
+    m_progress.setExpectedNTicks(param_combinations*numberOfSimulationElements());
 
     // restrict calculation to current batch
     const size_t n_batches = m_options.getNumberOfBatches();

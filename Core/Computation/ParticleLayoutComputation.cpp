@@ -26,31 +26,36 @@
 ParticleLayoutComputation::ParticleLayoutComputation(
         const MultiLayer* p_multilayer, const IFresnelMap* p_fresnel_map, const ILayout* p_layout,
         size_t layer_index, const SimulationOptions& options, bool polarized)
-    : IComputationTerm(p_multilayer, p_fresnel_map)
+    : m_multilayer_info(p_multilayer, p_fresnel_map)
 {
-    LayoutStrategyBuilder builder(mp_multilayer, p_layout, mp_fresnel_map,
+    LayoutStrategyBuilder builder(p_multilayer, p_layout, p_fresnel_map,
                                   polarized, options, layer_index);
     mP_strategy.reset(builder.releaseStrategy());
     m_region_map = builder.regionMap();
     m_surface_density = p_layout->totalParticleSurfaceDensity();
 }
 
-//! Computes scattering intensity for given range of simulation elements.
-void ParticleLayoutComputation::eval(ProgressHandler* progress,
-    const std::vector<SimulationElement>::iterator& begin_it,
-    const std::vector<SimulationElement>::iterator& end_it) const
+ParticleLayoutComputation::~ParticleLayoutComputation() =default;
+
+void ParticleLayoutComputation::compute(SimulationElement& elem) const
 {
-    DelayedProgressCounter counter(100);
-    for (std::vector<SimulationElement>::iterator it = begin_it; it != end_it; ++it) {
-        if (!progress->alive())
-            return;
-        double alpha_f = it->getAlphaMean();
-        size_t n_layers = mp_multilayer->numberOfLayers();
-        if (n_layers > 1 && alpha_f < 0) {
-            continue; // zero for transmission with multilayers (n>1)
-        } else {
-            it->addIntensity(mP_strategy->evaluate(*it) * m_surface_density);
-        }
-        counter.stepProgress(progress);
+    auto p_multilayer = m_multilayer_info.mp_multilayer;
+    double alpha_f = elem.getAlphaMean();
+    size_t n_layers = p_multilayer->numberOfLayers();
+    if (n_layers > 1 && alpha_f < 0) {
+        return; // zero for transmission with multilayers (n>1)
+    } else {
+        elem.addIntensity(mP_strategy->evaluate(elem) * m_surface_density);
+    }
+}
+
+void ParticleLayoutComputation::mergeRegionMap(
+        std::map<size_t, std::vector<HomogeneousRegion> >& region_map) const
+{
+    for (auto& entry : m_region_map)
+    {
+        size_t i = entry.first;
+        auto& regions = entry.second;
+        region_map[i].insert(region_map[i].begin(), regions.begin(), regions.end());
     }
 }

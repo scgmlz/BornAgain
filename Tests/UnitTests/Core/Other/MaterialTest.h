@@ -163,7 +163,7 @@ TEST_F(MaterialTest, AveragedMaterialTest)
     const std::vector<HomogeneousRegion> regions
         = {HomogeneousRegion{0.25, material}, HomogeneousRegion{0.25, material}};
 
-    const Material material_avr = createAveragedMaterial(material, regions);
+    const Material material_avr = CreateAveragedMaterial(material, regions);
     EXPECT_EQ(material_avr.getName(), material.getName() + "_avg");
     EXPECT_EQ(material_avr.magnetization(), magnetization);
     EXPECT_DOUBLE_EQ(material_avr.materialData().real(), 0.5);
@@ -171,7 +171,7 @@ TEST_F(MaterialTest, AveragedMaterialTest)
     EXPECT_TRUE(material_avr.typeID() == MATERIAL_TYPES::RefractiveMaterial);
 
     const Material material2 = MaterialBySLD();
-    const Material material_avr2 = createAveragedMaterial(material2, regions);
+    const Material material_avr2 = CreateAveragedMaterial(material2, regions);
     const complex_t expected_res = std::conj(1.0 - std::sqrt(complex_t(0.5, 0.25)));
     EXPECT_DOUBLE_EQ(material_avr2.materialData().real(), expected_res.real());
     EXPECT_DOUBLE_EQ(material_avr2.materialData().imag(), expected_res.imag());
@@ -179,12 +179,12 @@ TEST_F(MaterialTest, AveragedMaterialTest)
     EXPECT_TRUE(material_avr2.typeID() == MATERIAL_TYPES::RefractiveMaterial);
 
     const Material material3 = MaterialBySLD("Material3", 0.5, 0.5, magnetization);
-    EXPECT_THROW(createAveragedMaterial(material3, regions), std::runtime_error);
+    EXPECT_THROW(CreateAveragedMaterial(material3, regions), std::runtime_error);
 
     const Material material4 = HomogeneousMaterial();
     const std::vector<HomogeneousRegion> regions2
         = {HomogeneousRegion{0.25, material3}, HomogeneousRegion{0.25, material3}};
-    const Material material_avr3 = createAveragedMaterial(material4, regions2);
+    const Material material_avr3 = CreateAveragedMaterial(material4, regions2);
     EXPECT_DOUBLE_EQ(material_avr3.materialData().real(), 0.25);
     EXPECT_DOUBLE_EQ(material_avr3.materialData().imag(), 0.25);
     EXPECT_EQ(material_avr3.magnetization(), kvector_t(0.5, 0.0, 0.0));

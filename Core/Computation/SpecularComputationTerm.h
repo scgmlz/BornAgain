@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Computation/SpecularComputationTerm.h
-//! @brief     Defines class SpecularComputationTerm.
+//! @brief     Defines functor SpecularComputationTerm.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -15,12 +15,12 @@
 #ifndef SPECULARCOMPUTATIONTERM_H_
 #define SPECULARCOMPUTATIONTERM_H_
 
+#include <memory>
 #include <vector>
 
+class DelayedProgressCounter;
 class IFresnelMap;
-class MultiLayer;
 class ProgressHandler;
-class SimulationElement;
 class SpecularSimulationElement;
 
 //! Computes the specular scattering.
@@ -29,16 +29,17 @@ class SpecularSimulationElement;
 
 class SpecularComputationTerm
 {
-    using SpecularElementIter = std::vector<SpecularSimulationElement>::iterator;
 public:
-    SpecularComputationTerm(const MultiLayer* p_multi_layer, const IFresnelMap* p_fresnel_map);
+    SpecularComputationTerm(const IFresnelMap* p_fresnel_map);
+    ~SpecularComputationTerm();
 
-    void eval(ProgressHandler* progress, const SpecularElementIter& begin_it,
-              const SpecularElementIter& end_it) const;
+    void setProgressHandler(ProgressHandler* p_progress);
+
+    void compute(SpecularSimulationElement& elem) const;
 
 private:
-    const MultiLayer* mp_multilayer;
     const IFresnelMap* mp_fresnel_map;
+    std::unique_ptr<DelayedProgressCounter> mP_progress_counter;
 };
 
 #endif /* SPECULARCOMPUTATIONTERM_H_ */

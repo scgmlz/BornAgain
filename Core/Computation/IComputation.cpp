@@ -19,7 +19,7 @@
 
 IComputation::IComputation(const SimulationOptions& options, ProgressHandler& progress,
                            const MultiLayer& sample)
-    : m_sim_options(options), m_progress(&progress)
+    : m_sim_options(options), mp_progress(&progress)
     , mP_multi_layer(sample.cloneSliced(options.useAvgMaterials()))
 {
     if (!mP_multi_layer)

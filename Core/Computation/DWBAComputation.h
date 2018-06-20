@@ -16,13 +16,13 @@
 #define MAINCOMPUTATION_H
 
 #include "IComputation.h"
-#include "Complex.h"
+#include "DWBASingleComputation.h"
 #include "SimulationOptions.h"
 
 class IFresnelMap;
-class MultiLayer;
 struct HomogeneousRegion;
-class IComputationTerm;
+class MultiLayer;
+class SimulationElement;
 
 //! Performs a single-threaded DWBA computation with given sample and simulation parameters.
 //!
@@ -37,23 +37,16 @@ public:
                     ProgressHandler& progress,
                     std::vector<SimulationElement>::iterator begin_it,
                     std::vector<SimulationElement>::iterator end_it);
-    ~DWBAComputation();
+    ~DWBAComputation() override;
 
 private:
     void runProtected() override;
-    std::unique_ptr<IFresnelMap> createFresnelMap();
-    // creates a multilayer that contains averaged materials, for use in Fresnel calculations
-    std::unique_ptr<MultiLayer> getAveragedMultilayer() const;
-    // creates a multilayer for use in Fresnel calculations; if needed, it calculates average
-    // materials and precalculates the magnetic B fields
-    std::unique_ptr<MultiLayer> getMultilayerForFresnel() const;
     // sets the correct layer materials for the Fresnel map to use
     void initFresnelMap();
-    bool checkRegions(const std::vector<HomogeneousRegion>& regions) const;
 
     std::vector<SimulationElement>::iterator m_begin_it, m_end_it; //!< these iterators define the span of detector bins this simulation will work on
     std::unique_ptr<IFresnelMap> mP_fresnel_map; //!< Contains the information, necessary to calculate the Fresnel coefficients.
-    std::vector<std::unique_ptr<IComputationTerm>> m_computation_terms;
+    DWBASingleComputation m_single_computation;
 };
 
 #endif // MAINCOMPUTATION_H

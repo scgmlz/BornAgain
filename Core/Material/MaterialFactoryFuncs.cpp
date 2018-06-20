@@ -62,7 +62,7 @@ Material MaterialBySLD(const std::string& name, double sld_real, double sld_imag
     return Material(std::move(mat_impl));
 }
 
-Material createAveragedMaterial(const Material& layer_mat,
+Material CreateAveragedMaterial(const Material& layer_mat,
                                 const std::vector<HomogeneousRegion>& regions)
 {
     // determine the type of returned material

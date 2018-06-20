@@ -18,8 +18,6 @@
 #include "ICloneable.h"
 #include "INode.h"
 
-class SimulationElement;
-
 //! Interface for a simulating the background signal
 //!
 //! @ingroup algorithms_internal
