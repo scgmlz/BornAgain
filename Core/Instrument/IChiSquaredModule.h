@@ -60,6 +60,8 @@ public:
     virtual void processFitElements(std::vector<FitElement>::iterator,
                                     std::vector<FitElement>::iterator){}
 
+    virtual double residual(double a, double b, double weight) = 0;
+
 protected:
     IChiSquaredModule(const IChiSquaredModule& other);
 

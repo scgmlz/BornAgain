@@ -16,6 +16,7 @@ set(tests
     "fitsuite_api.py"
     "minimizer_api.py"
     "standalone_fits.py"
+    "fitobjective_api.py"
 #    "testfit_GSLLMA.py"
 #    "testfit_GSLMultiMin.py"
 #    "testfit_GSLSimAn.py"

@@ -34,8 +34,8 @@
 
 %include "warnings.i"
 %include "deprecated.i"
-%include "extendCore.i"
 %include "ignores.i"
+%include "renameCore.i"
 %include "directors.i"
 
 %template(vdouble1d_t) std::vector<double>;
@@ -96,6 +96,8 @@
 #include "FitSuite.h"
 #include "FitSuiteImpl.h"
 #include "FitSuiteObjects.h"
+#include "PyBuilderCallback.h"
+#include "FitObjective.h"
 #include "FixedBinAxis.h"
 #include "FootprintFactorGaussian.h"
 #include "FootprintFactorSquare.h"
@@ -239,6 +241,8 @@
 %newobject IHistogram::createFrom(const std::string& filename);
 %newobject IHistogram::createFrom(const std::vector<std::vector<double>>& data);
 
+%newobject PyBuilderCallback::build_simulation(const std::string& filename);
+
 // The following goes verbatim from libBornAgainCore.i to libBornAgainCore_wrap.cxx.
 // Note that the order matters, as base classes must be included before derived classes.
 
@@ -297,6 +301,8 @@
 %include "FitParameter.h"
 %include "FitSuite.h"
 %include "FitSuiteObjects.h"
+%include "PyBuilderCallback.h"
+%include "FitObjective.h"
 %include "MathFunctions.h"
 %include "AdjustMinimizerStrategy.h"
 %include "IFactory.h"
@@ -437,3 +443,4 @@
 %include "SimulationFactory.h"
 %include "IUnitConverter.h"
 
+%include "extendCore.i"

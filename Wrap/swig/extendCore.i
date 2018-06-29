@@ -54,7 +54,6 @@
 };
 
 // needed to prevent ownership problems with passed IMultiLayerBuilder
-%rename(setSampleBuilderCpp) Simulation::setSampleBuilder;
 %extend Simulation {
     %pythoncode %{
          def setSampleBuilder(self, ptr):
@@ -63,7 +62,6 @@
     %}
  };
 
-%rename(setSampleBuilderCpp) SpecularSimulation::setSampleBuilder;
 %extend SpecularSimulation {
     %pythoncode %{
          def setSampleBuilder(self, ptr):
@@ -71,11 +69,6 @@
              self.setSampleBuilderCpp(ptr)
     %}
  };
-
-// force swig to use move ctor instead of copy ctor
-%typemap(out) SlicedParticle %{
-    $result = SWIG_NewPointerObj(new $1_ltype(std::move($1)), $&1_descriptor, SWIG_POINTER_OWN);
-  %}
 
 // --- ParameterPool accessors -------------------------------------------------------------------
 
@@ -155,5 +148,22 @@ class FitParameterSetIterator(object):
 }
 };
 
+%pythoncode %{
+class SimulationBuilderWrapper(PyBuilderCallback):
+    def __init__(self, f):
+        super(SimulationBuilderWrapper, self).__init__()
+        self.f_ = f
+    def build_simulation(self, obj):
+        return self.f_(obj)
 
+
+%}
+
+%extend FitObjective {
+%pythoncode %{
+    def addSimulationAndData(self, callback, data, weight):
+        self.wrp = SimulationBuilderWrapper(callback)
+        return self.addSimulationAndData_cpp(self.wrp, data, weight)
+%}
+};
 

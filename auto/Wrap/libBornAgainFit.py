@@ -2837,5 +2837,6 @@ class CallableWrapper(PyCallback):
     def call_residuals(self, obj):
         return self.f_(obj)
 
+
 # This file is compatible with both classic and new-style classes.
 

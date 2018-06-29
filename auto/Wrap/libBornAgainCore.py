@@ -224,46 +224,6 @@ def deprecated(message):
       return deprecated_func
   return deprecated_decorator
 
-
-class ParameterPoolIterator(object):
-
-    def __init__(self, pool):
-        self.pool = pool
-        self.index = -1
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        self.index += 1
-        if self.index < self.pool.size():
-            return self.pool[self.index]
-        else:
-            raise StopIteration
-
-    def __next__(self):
-        return self.next()
-
-
-class FitParameterSetIterator(object):
-
-    def __init__(self, fitParameters):
-        self.fitParameters = fitParameters
-        self.index = -1
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        self.index += 1
-        if self.index < self.fitParameters.size():
-            return self.fitParameters[self.index]
-        else:
-            raise StopIteration
-
-    def __next__(self):
-        return self.next()
-
 class vdouble1d_t(_object):
     """Proxy of C++ std::vector<(double)> class."""
 
@@ -5163,6 +5123,11 @@ class IChiSquaredModule(ICloneable):
         """
         return _libBornAgainCore.IChiSquaredModule_processFitElements(self, arg2, arg3)
 
+
+    def residual(self, a, b, weight):
+        """residual(IChiSquaredModule self, double a, double b, double weight) -> double"""
+        return _libBornAgainCore.IChiSquaredModule_residual(self, a, b, weight)
+
 IChiSquaredModule_swigregister = _libBornAgainCore.IChiSquaredModule_swigregister
 IChiSquaredModule_swigregister(IChiSquaredModule)
 
@@ -6253,6 +6218,11 @@ class ChiSquaredModule(IChiSquaredModule):
 
         """
         return _libBornAgainCore.ChiSquaredModule_processFitElements(self, first, last)
+
+
+    def residual(self, a, b, weight):
+        """residual(ChiSquaredModule self, double a, double b, double weight) -> double"""
+        return _libBornAgainCore.ChiSquaredModule_residual(self, a, b, weight)
 
 ChiSquaredModule_swigregister = _libBornAgainCore.ChiSquaredModule_swigregister
 ChiSquaredModule_swigregister(ChiSquaredModule)
@@ -7553,6 +7523,99 @@ class FitSuiteObjects(INode):
 FitSuiteObjects_swigregister = _libBornAgainCore.FitSuiteObjects_swigregister
 FitSuiteObjects_swigregister(FitSuiteObjects)
 
+class PyBuilderCallback(_object):
+    """Proxy of C++ PyBuilderCallback class."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, PyBuilderCallback, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, PyBuilderCallback, name)
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        """__init__(PyBuilderCallback self) -> PyBuilderCallback"""
+        if self.__class__ == PyBuilderCallback:
+            _self = None
+        else:
+            _self = self
+        this = _libBornAgainCore.new_PyBuilderCallback(_self, )
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _libBornAgainCore.delete_PyBuilderCallback
+    __del__ = lambda self: None
+
+    def build_simulation(self, arg0):
+        """build_simulation(PyBuilderCallback self, Fit::Parameters arg0) -> Simulation"""
+        return _libBornAgainCore.PyBuilderCallback_build_simulation(self, arg0)
+
+    def __disown__(self):
+        self.this.disown()
+        _libBornAgainCore.disown_PyBuilderCallback(self)
+        return weakref_proxy(self)
+PyBuilderCallback_swigregister = _libBornAgainCore.PyBuilderCallback_swigregister
+PyBuilderCallback_swigregister(PyBuilderCallback)
+
+class FitObjective(_object):
+    """Proxy of C++ FitObjective class."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FitObjective, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, FitObjective, name)
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        """__init__(FitObjective self) -> FitObjective"""
+        this = _libBornAgainCore.new_FitObjective()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _libBornAgainCore.delete_FitObjective
+    __del__ = lambda self: None
+
+    def addSimulationAndData_cpp(self, callback, data, weight=1.0):
+        """
+        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble2d_t data, double weight=1.0)
+        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble2d_t data)
+        """
+        return _libBornAgainCore.FitObjective_addSimulationAndData_cpp(self, callback, data, weight)
+
+
+    def evaluate(self, params):
+        """evaluate(FitObjective self, Fit::Parameters const & params) -> double"""
+        return _libBornAgainCore.FitObjective_evaluate(self, params)
+
+
+    def evaluate_residuals(self, params):
+        """evaluate_residuals(FitObjective self, Fit::Parameters const & params) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjective_evaluate_residuals(self, params)
+
+
+    def numberOfFitElements(self):
+        """numberOfFitElements(FitObjective self) -> size_t"""
+        return _libBornAgainCore.FitObjective_numberOfFitElements(self)
+
+
+    def experimental_array(self):
+        """experimental_array(FitObjective self) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjective_experimental_array(self)
+
+
+    def simulation_array(self):
+        """simulation_array(FitObjective self) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjective_simulation_array(self)
+
+
+    def addSimulationAndData(self, callback, data, weight):
+        self.wrp = SimulationBuilderWrapper(callback)
+        return self.addSimulationAndData_cpp(self.wrp, data, weight)
+
+FitObjective_swigregister = _libBornAgainCore.FitObjective_swigregister
+FitObjective_swigregister(FitObjective)
+
 
 def StandardNormal(x):
     """
@@ -7883,40 +7946,72 @@ class IMultiLayerBuilder(IParameterized):
 
 
     def registerParameter(self, name, parpointer):
-        """registerParameter(IMultiLayerBuilder self, std::string const & name, int64_t parpointer) -> RealParameter"""
+        """
+        registerParameter(IMultiLayerBuilder self, std::string const & name, int64_t parpointer) -> RealParameter
+
+        RealParameter & IParameterized::registerParameter(const std::string &name, double *parpointer)
+
+        """
         return _libBornAgainCore.IMultiLayerBuilder_registerParameter(self, name, parpointer)
 
 
     def setParameterValue(self, name, value):
-        """setParameterValue(IMultiLayerBuilder self, std::string const & name, double value)"""
+        """
+        setParameterValue(IMultiLayerBuilder self, std::string const & name, double value)
+
+        void IParameterized::setParameterValue(const std::string &name, double value)
+
+        """
         return _libBornAgainCore.IMultiLayerBuilder_setParameterValue(self, name, value)
 
 
     def parametersToString(self):
-        """parametersToString(IMultiLayerBuilder self) -> std::string"""
+        """
+        parametersToString(IMultiLayerBuilder self) -> std::string
+
+        std::string IParameterized::parametersToString() const
+
+        Returns multiline string representing available parameters. 
+
+        """
         return _libBornAgainCore.IMultiLayerBuilder_parametersToString(self)
 
 
     def createParameterTree(self):
-        """createParameterTree(IMultiLayerBuilder self) -> ParameterPool"""
+        """
+        createParameterTree(IMultiLayerBuilder self) -> ParameterPool
+
+        ParameterPool * IParameterized::createParameterTree() const
+
+        Creates new parameter pool, with all local parameters and those of its children. 
+
+        """
         return _libBornAgainCore.IMultiLayerBuilder_createParameterTree(self)
 
 
     def parameterPool(self):
-        """parameterPool(IMultiLayerBuilder self) -> ParameterPool"""
+        """
+        parameterPool(IMultiLayerBuilder self) -> ParameterPool
+
+        ParameterPool* IParameterized::parameterPool() const
+
+        Returns pointer to the parameter pool. 
+
+        """
         return _libBornAgainCore.IMultiLayerBuilder_parameterPool(self)
 
 
     def onChange(self):
-        """onChange(IMultiLayerBuilder self)"""
+        """
+        onChange(IMultiLayerBuilder self)
+
+        virtual void IParameterized::onChange()
+
+        Action to be taken in inherited class when a parameter has changed. 
+
+        """
         return _libBornAgainCore.IMultiLayerBuilder_onChange(self)
 
-
-    def isPythonBuilder():
-        """isPythonBuilder() -> bool"""
-        return _libBornAgainCore.IMultiLayerBuilder_isPythonBuilder()
-
-    isPythonBuilder = staticmethod(isPythonBuilder)
     __swig_destroy__ = _libBornAgainCore.delete_IMultiLayerBuilder
     __del__ = lambda self: None
     def __disown__(self):
@@ -7925,10 +8020,6 @@ class IMultiLayerBuilder(IParameterized):
         return weakref_proxy(self)
 IMultiLayerBuilder_swigregister = _libBornAgainCore.IMultiLayerBuilder_swigregister
 IMultiLayerBuilder_swigregister(IMultiLayerBuilder)
-
-def IMultiLayerBuilder_isPythonBuilder():
-    """IMultiLayerBuilder_isPythonBuilder() -> bool"""
-    return _libBornAgainCore.IMultiLayerBuilder_isPythonBuilder()
 
 class INodeVisitor(_object):
     """
@@ -28333,6 +28424,56 @@ class IUnitConverter(ICloneable):
 
 IUnitConverter_swigregister = _libBornAgainCore.IUnitConverter_swigregister
 IUnitConverter_swigregister(IUnitConverter)
+
+
+class ParameterPoolIterator(object):
+
+    def __init__(self, pool):
+        self.pool = pool
+        self.index = -1
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        self.index += 1
+        if self.index < self.pool.size():
+            return self.pool[self.index]
+        else:
+            raise StopIteration
+
+    def __next__(self):
+        return self.next()
+
+
+class FitParameterSetIterator(object):
+
+    def __init__(self, fitParameters):
+        self.fitParameters = fitParameters
+        self.index = -1
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        self.index += 1
+        if self.index < self.fitParameters.size():
+            return self.fitParameters[self.index]
+        else:
+            raise StopIteration
+
+    def __next__(self):
+        return self.next()
+
+
+class SimulationBuilderWrapper(PyBuilderCallback):
+    def __init__(self, f):
+        super(SimulationBuilderWrapper, self).__init__()
+        self.f_ = f
+    def build_simulation(self, obj):
+        return self.f_(obj)
+
+
 
 # This file is compatible with both classic and new-style classes.
 

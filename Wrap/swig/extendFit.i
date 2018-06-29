@@ -65,6 +65,7 @@ class CallableWrapper(PyCallback):
         return self.f_(obj)
     def call_residuals(self, obj):
         return self.f_(obj)
+
 %}
 
 namespace Fit {
@@ -88,6 +89,7 @@ namespace Fit {
             raise Exception("Wrong callable type")
 
 %}
+
 };
 
 }
