@@ -2,7 +2,7 @@
 set(CPACK_GENERATOR "DEB")
 
 # parameters to build a debian package
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Marina Ganeva <m.ganeva@fz-juelich.de>")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Juan M. Carmona Loaiza <j.carmona.loaiza@fz-juelich.de>")
 
 # Architecture: (mandatory)
 IF(NOT CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
@@ -19,12 +19,12 @@ IF(NOT CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
     )
 ENDIF(NOT CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
 
-
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 set(CPACK_DEBIAN_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
 set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
 set(CPACK_STRIP_FILES "TRUE")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgsl2, libboost-date-time${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-chrono${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-python${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-program-options${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-iostreams${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-regex${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-filesystem${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-thread${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libfftw3-3(>=3.3.1), python(>=2.7), libpython2.7, python-numpy, python-matplotlib, libc6(>= 2.7), libqt5widgets5(>=5.1.0), libtiffxx5(>=4.0.2)")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "build-essential, git, cmake(>=3.1), libgsl-dev(>=1.15), libboost-all-dev(>=1.48), libfftw3-dev(>=3.3.1), python3, python3-dev, python3-numpy, python3-matplotlib, libtiff5-dev(>=4.0.2), qt5-default(>=5.4), libqt5designercomponents5, qttools5-dev, libqt5svg5-dev")
 set(CPACK_DEBIAN_PACKAGE_DESCRIPTION    "${CPACK_PACKAGE_DESCRIPTION}")
 set(CPACK_DEBIAN_PACKAGE_VERSION ${BornAgain_VERSION_PATCH})
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_DEBIAN_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}-${CPACK_DEBIAN_PACKAGE_VERSION}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
@@ -33,7 +33,7 @@ set(CPACK_DEBIAN_PACKAGE_CONFLICTS "${CPACK_DEBIAN_PACKAGE_NAME}(<=${BORNAGAIN_V
 # set postinstall and preremove scripts for the debian package
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${BUILD_VAR_DIR}/postinst;${BUILD_VAR_DIR}/prerm;")
 
-# write copyrite file
+# write copyright file
 file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/copyright" INPUT "${CMAKE_SOURCE_DIR}/COPYING")
 
 install(FILES "${CMAKE_BINARY_DIR}/copyright"

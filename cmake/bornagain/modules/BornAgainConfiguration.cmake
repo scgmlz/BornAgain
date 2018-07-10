@@ -163,7 +163,7 @@ configure_file(${TEMPLATE_DIR}/thisbornagain.csh.in
 if(BUILD_DEBIAN)
     set(CMAKE_INSTALL_PREFIX "/usr")
     execute_process(COMMAND "${PYTHON_EXECUTABLE}" -c
-        "from distutils import sysconfig; print sysconfig.get_python_lib(1,0,prefix=None)"
+        "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=None))"
         OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
         OUTPUT_STRIP_TRAILING_WHITESPACE )
     configure_file(${TEMPLATE_DIR}/postinst.in ${BUILD_VAR_DIR}/postinst @ONLY)
