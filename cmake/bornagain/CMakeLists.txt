@@ -5,7 +5,7 @@ else()
 endif()
 
 # this script is a trick to print the message at the end of installation
-if(NOT WIN32 AND NOT BORNAGAIN_APPLE_BUNDLE)
+if(NOT WIN32 AND NOT BORNAGAIN_APPLE_BUNDLE AND NOT BUILD_DEBIAN)
 set(after_install_text "
 Installation done. Please read below.
 -------------------------------------------------------------------------------

@@ -25,7 +25,7 @@
 # -----------------------------------------------------------------------------
 
 # suppress qDebug() output for release build
-if(CMAKE_BUILD_TYPE STREQUAL Release)
+    if(CMAKE_BUILD_TYPE STREQUAL Release)
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif()
 
@@ -50,7 +50,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 set(BUILD_VAR_DIR ${CMAKE_BINARY_DIR}/var)
 set(BUILD_INC_DIR ${CMAKE_BINARY_DIR}/inc)
 set(BUILD_SRC_DIR ${CMAKE_BINARY_DIR}/src)
-configure_file("${TEMPLATE_DIR}/auto_README.in" "${CMAKE_SOURCE_DIR}/auto/README" @ONLY)
+    configure_file("${TEMPLATE_DIR}/auto_README.in" "${CMAKE_SOURCE_DIR}/auto/README" @ONLY)
 
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 file(MAKE_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/bornagain)
@@ -87,21 +87,10 @@ if(WIN32)
     set(destination_examples Examples)
     set(destination_images Images)
     set(destination_libexec python)
-else()
+elseif(APPLE)
     set(destination_suffix BornAgain-${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR})
-    if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
-        set(destination_bundle BornAgain.app)
-        set(destination_prefix ${destination_bundle}/Contents/)
-        set(destination_libexec ${destination_prefix}libexec/${destination_suffix})
-    else()
-        if(APPLE)
-            set(QTDIR $ENV{QTDIR})
-            message(STATUS "QTDIR is ${QTDIR}")
-            set(CMAKE_INSTALL_RPATH ${QTDIR}/lib)
-        endif()
-        set(destination_prefix "")
-        set(destination_libexec ${destination_prefix}lib/${destination_suffix})
-    endif()
+    set(destination_prefix "")
+    set(destination_libexec ${destination_prefix}lib/${destination_suffix})
     set(destination_bin ${destination_prefix}bin)
     set(destination_gui ${destination_libexec})
     set(destination_lib ${destination_prefix}lib/${destination_suffix})
@@ -109,30 +98,55 @@ else()
     set(destination_share ${destination_prefix}share/${destination_suffix}/)
     set(destination_examples ${destination_share}Examples)
     set(destination_images ${destination_share}Images)
+    if(BORNAGAIN_APPLE_BUNDLE)
+        set(destination_bundle BornAgain.app)
+        set(destination_prefix ${destination_bundle}/Contents/)
+        set(destination_libexec ${destination_prefix}libexec/${destination_suffix})
+    else()
+        set(QTDIR $ENV{QTDIR})
+        message(STATUS "QTDIR is ${QTDIR}")
+        set(CMAKE_INSTALL_RPATH ${QTDIR}/lib)
+    endif()
+else()
+    set(destination_prefix "")
+    if(BUILD_DEBIAN)
+        set(CMAKE_INSTALL_PREFIX "/usr")
+        set(destination_prefix ${CMAKE_INSTALL_PREFIX})
+	message("-- Getting ready to create a .deb package to be installed under ${CMAKE_INSTALL_PREFIX}")
+    endif()
+    set(destination_suffix BornAgain-${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR})
+    set(destination_libexec ${destination_prefix}/${destination_suffix})
+    set(destination_bin ${destination_libexec})
+    set(destination_gui ${destination_libexec})
+    set(destination_lib ${destination_prefix}/lib/${destination_suffix})
+    set(destination_include ${destination_prefix}/include/${destination_suffix})
+    set(destination_share ${destination_prefix}/share/${destination_suffix}/)
+    set(destination_examples ${destination_share}/Examples)
+    set(destination_images ${destination_share}/Images)
 endif()
 
 message(STATUS "Destination directories:
-    bin->${destination_bin},
-    lib->${destination_lib},
-    gui->${destination_gui},
-    include->${destination_include},
-    share->${destination_share},
-    examples->${destination_examples},
-    images->${destination_images},
-    libexec->${destination_libexec}")
+            bin->${destination_bin},
+            lib->${destination_lib},
+            gui->${destination_gui},
+            include->${destination_include},
+            share->${destination_share},
+            examples->${destination_examples},
+            images->${destination_images},
+            libexec->${destination_libexec}")
 
 # -----------------------------------------------------------------------------
 # configure files
 # -----------------------------------------------------------------------------
 
 if(BORNAGAIN_RELEASE)
-    # configure Doxyfile
+# configure Doxyfile
     configure_file(${CMAKE_SOURCE_DIR}/Doc/Doxygen/Doxyfile.in
-        ${CMAKE_SOURCE_DIR}/Doc/Doxygen/Doxyfile @ONLY)
+            ${CMAKE_SOURCE_DIR}/Doc/Doxygen/Doxyfile @ONLY)
 endif()
 
 if(NOT BORNAGAIN_BUILDBOT_SERVER)
-configure_file(${TEMPLATE_DIR}/CTestCustom.cmake.in ${CMAKE_BINARY_DIR}/CTestCustom.cmake)
+    configure_file(${TEMPLATE_DIR}/CTestCustom.cmake.in ${CMAKE_BINARY_DIR}/CTestCustom.cmake)
 endif()
 
 configure_file(${TEMPLATE_DIR}/BAVersion.h.in  ${BUILD_INC_DIR}/BAVersion.h @ONLY)
@@ -141,9 +155,9 @@ configure_file(${TEMPLATE_DIR}/BATesting.h.in  ${BUILD_INC_DIR}/BATesting.h @ONL
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${BUILD_INC_DIR}")
 
 configure_file(${CMAKE_SOURCE_DIR}/Examples/python/utils/plot_intensity_data.py
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/plot_intensity_data.py COPYONLY)
+         ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/plot_intensity_data.py COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/Examples/python/utils/plot_intensity_data_diff.py
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/plot_intensity_data_diff.py COPYONLY)
+            ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/plot_intensity_data_diff.py COPYONLY)
 
 # -----------------------------------------------------------------------------
 # configure BornAgain launch scripts
@@ -152,20 +166,19 @@ configure_file(${CMAKE_SOURCE_DIR}/Examples/python/utils/plot_intensity_data_dif
 set(this_bindir $BORNAGAINSYS/bin)
 set(this_libdir $BORNAGAINSYS/lib/${destination_suffix})
 configure_file(${TEMPLATE_DIR}/thisbornagain.sh.in
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.sh @ONLY)
+            ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.sh @ONLY)
 configure_file(${TEMPLATE_DIR}/thisbornagain.csh.in
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.csh @ONLY)
+            ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/thisbornagain.csh @ONLY)
 
 # -----------------------------------------------------------------------------
 # configure postinst and prerm for the debian package
 # -----------------------------------------------------------------------------
 
 if(BUILD_DEBIAN)
-    set(CMAKE_INSTALL_PREFIX "/usr")
     execute_process(COMMAND "${PYTHON_EXECUTABLE}" -c
-        "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=None))"
-        OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
-        OUTPUT_STRIP_TRAILING_WHITESPACE )
+            "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix=None))"
+            OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
+            OUTPUT_STRIP_TRAILING_WHITESPACE )
     configure_file(${TEMPLATE_DIR}/postinst.in ${BUILD_VAR_DIR}/postinst @ONLY)
     configure_file(${TEMPLATE_DIR}/prerm.in ${BUILD_VAR_DIR}/prerm @ONLY)
     set(CMAKE_INSTALL_RPATH \$ORIGIN/../../lib/${destination_suffix})

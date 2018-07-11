@@ -33,7 +33,7 @@ option(BORNAGAIN_GENERATE_PYTHON_DOCS "Generate python documentation from the do
 option(BORNAGAIN_GUI "Build a graphical user interface" ON)
 option(BORNAGAIN_USERMANUAL "Build the User Manual" OFF)
 option(BORNAGAIN_MANPAGE "Build Unix man page" OFF)
-option(BUILD_DEBIAN "Build a debian package" ON)
+option(BUILD_DEBIAN "Build a debian package" OFF)
 option(BORNAGAIN_APPLE_BUNDLE "Create a Mac OS X bundle" OFF)
 option(BORNAGAIN_MPI "Build with MPI support" OFF)
 option(BORNAGAIN_RELEASE "Special option for making release" OFF)
