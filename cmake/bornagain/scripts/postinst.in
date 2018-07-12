@@ -5,7 +5,22 @@
 set -e
 
 # creating link to BornAgain gui in bin directory
-ln -sf @CMAKE_INSTALL_PREFIX@/libexec/@destination_suffix@/BornAgain @CMAKE_INSTALL_PREFIX@/bin/bornagain
+echo "CREATING SYMBOLIC LINKS"
+
+COMMAND="ln -sf @CMAKE_INSTALL_PREFIX@/@destination_suffix@/exec/BornAgain @CMAKE_INSTALL_PREFIX@/bin/bornagain"
+echo ${COMMAND}
+${COMMAND}
 
 # creating links for python
-ln -sf @CMAKE_INSTALL_PREFIX@/lib/@destination_suffix@/* @PYTHON_SITE_PACKAGES@/
+COMMAND="mv @CMAKE_INSTALL_PREFIX@/@destination_suffix@/bornagain @PYTHON_SITE_PACKAGES@/"
+echo ${COMMAND}
+${COMMAND}
+
+COMMAND="ln -sf @CMAKE_INSTALL_PREFIX@/lib/@destination_suffix@/_libBornAgainCore.so @PYTHON_SITE_PACKAGES@/bornagain/"
+echo ${COMMAND}
+${COMMAND}
+
+COMMAND="ln -sf @CMAKE_INSTALL_PREFIX@/lib/@destination_suffix@/_libBornAgainFit.so @PYTHON_SITE_PACKAGES@/bornagain/"
+echo ${COMMAND}
+${COMMAND}
+
