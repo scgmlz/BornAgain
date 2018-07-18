@@ -61,6 +61,10 @@ ExternalProperty MaterialItemUtils::defaultMaterialProperty()
 std::unique_ptr<Material>
 MaterialItemUtils::createDomainMaterial(const ExternalProperty &material_property)
 {
+    if (!AppSvc::materialModel())
+        throw GUIHelpers::Error("MaterialItemUtils::createDomainMaterial() -> Error. "
+                                "Attempt to access non-existing material model");
+
     MaterialItem *materialItem
         = AppSvc::materialModel()->materialFromIdentifier(material_property.identifier());
 

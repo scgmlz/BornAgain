@@ -55,6 +55,64 @@ namespace
     }
 }
 
+Particle3DType::Particle3DType(const Particle3DType &p3D) :
+    m_cumulative_abundance(p3D.m_cumulative_abundance),
+    m_type(p3D.m_type)
+{
+    m_3Dparticles.resize(p3D.m_3Dparticles.size());
+    for (int i = 0; i < m_3Dparticles.size(); ++i)
+        m_3Dparticles[i] = new RealSpace::Particles::Particle(*p3D.m_3Dparticles[i]);
+}
+
+Particle3DType &Particle3DType::operator=(const Particle3DType &right)
+{
+    if (this == &right) return *this;
+
+    clear3Dparticles();
+
+    m_cumulative_abundance = right.m_cumulative_abundance;
+    m_type = right.m_type;
+
+    m_3Dparticles.resize(right.m_3Dparticles.size());
+    for (int i = 0; i < m_3Dparticles.size(); ++i)
+        m_3Dparticles[i] = new RealSpace::Particles::Particle(*right.m_3Dparticles[i]);
+    return *this;
+}
+
+Particle3DType::~Particle3DType()
+{
+    clear3Dparticles();
+}
+
+void Particle3DType::clear3Dparticles()
+{
+    for (auto it = m_3Dparticles.begin(); it != m_3Dparticles.end(); ++it)
+        delete(*it);
+
+    m_3Dparticles.clear();
+}
+
+void Particle3DType::add3DParticle(RealSpace::Particles::Particle *particle3D)
+{
+    m_3Dparticles.append(particle3D);
+}
+
+void Particle3DType::setCumulativeAbundance(double cumulative_abundance)
+{
+    m_cumulative_abundance = cumulative_abundance;
+}
+
+void Particle3DType::setType(QString type)
+{
+    m_type = type;
+}
+
+std::unique_ptr<RealSpace::Particles::Particle> Particle3DType::createParticle(const int &index) const
+{
+    auto particle = new RealSpace::Particles::Particle(*m_3Dparticles.at(index));
+    return std::unique_ptr<RealSpace::Particles::Particle>(particle);
+}
+
 // compute cumulative abundances of particles
 QVector<double> RealSpaceBuilderUtils::computeCumulativeAbundances(const SessionItem &layoutItem)
 {
@@ -74,15 +132,12 @@ QVector<double> RealSpaceBuilderUtils::computeCumulativeAbundances(const Session
 }
 
 void RealSpaceBuilderUtils::populateParticlesAtLatticePositions(
-        QVector<QVector<double>> lattice_positions, RealSpaceModel *model,
-        const SessionItem& layoutItem, const SceneGeometry& sceneGeometry,
-        const RealSpaceBuilder *builder3D)
+        QVector<QVector<double>> lattice_positions, const QVector<Particle3DType> &particle3DType_vector,
+        RealSpaceModel *model, const SceneGeometry& sceneGeometry, const RealSpaceBuilder *builder3D)
 {
     double layer_size = sceneGeometry.layer_size();
     double layer_thickness = std::max(sceneGeometry.layer_top_thickness(),
                                       sceneGeometry.layer_bottom_thickness());
-
-    QVector<double> cumulative_abundances = computeCumulativeAbundances(layoutItem);
 
     for (QVector<double> position : lattice_positions)
     {
@@ -90,62 +145,42 @@ void RealSpaceBuilderUtils::populateParticlesAtLatticePositions(
         double rand_num = (rand()/static_cast<double>(RAND_MAX)); // (between 0 and 1)
         int k = 0;
 
-        for (auto particle : layoutItem.getItems(ParticleLayoutItem::T_PARTICLES))
+        for (auto& particle3DType : particle3DType_vector)
         {
-            double x = 0.0, y = 0.0, z = 0.0;
-            if(particle->modelType() != Constants::ParticleDistributionType)
+            if (rand_num <= particle3DType.getCumulativeAbundance())
             {
-                // Retrieving local x,y,z offset from the lattice point for the current particle
-                // except for ParticleDistribution as it doesn't have an associated position
-                SessionItem* particle_position = particle->getItem(ParticleItem::P_POSITION);
-                x = particle_position->getItemValue(VectorItem::P_X).toDouble();
-                y = particle_position->getItemValue(VectorItem::P_Y).toDouble();
-                z = particle_position->getItemValue(VectorItem::P_Z).toDouble();
-            }
+                // lattice position + location (TO BE ADDED)
+                double pos_x = position[0];
+                double pos_y = position[1];
+                double pos_z = 0;
 
-            // lattice position + offset
-            double pos_x = position[0] + x;
-            double pos_y = position[1] + y;
-            double pos_z = z;
-
-            // Check if the position lies within the boundaries of the 3D model
-            if (std::abs(pos_x) <= layer_size && std::abs(pos_y) <= layer_size
-                    && std::abs(pos_z) <= layer_thickness)
-            {
-                // Randomly display a particle at the position, given its normalized abundance
-                if (rand_num <= cumulative_abundances.at(k)/cumulative_abundances.last())
+                if (std::abs(pos_x) <= layer_size && std::abs(pos_y) <= layer_size
+                        && std::abs(pos_z) <= layer_thickness)
                 {
-                    // pass only the lattice position as parameter and not the added offset
-                    // since populateParticle intrinsically adds the offset to the lattice position
-                    builder3D->populateParticle(model, *particle,
+                    builder3D->populateParticleFromParticle3DType(model, particle3DType,
                                                 QVector3D(static_cast<float>(position[0]),
                                                 static_cast<float>(position[1]),
-                                                static_cast<float>(0.0)));
-                    break;
+                                                static_cast<float>(0)));
                 }
-                else
-                    ++k;
+                break;
             }
+            else
+                ++k;
         }
-    }
-
-    cumulative_abundances.clear();
+     }
 }
 
 // No interference - random distribution of particles
 void RealSpaceBuilderUtils::populateRandomDistribution(
-        RealSpaceModel *model, const SessionItem &layoutItem, const SceneGeometry &sceneGeometry,
+        RealSpaceModel* model, const SessionItem& layoutItem,
+        const QVector<Particle3DType> &particle3DType_vector, const SceneGeometry& sceneGeometry,
         const RealSpaceBuilder *builder3D)
 {
-    // If there is no particle to populate
-    if(!layoutItem.getItem(ParticleLayoutItem::T_PARTICLES))
-        return;
-
     // get the lattice positions at which to populate the particles
     QVector<QVector<double>> lattice_positions =
             computeRandomDistributionLatticePositions(layoutItem, sceneGeometry);
 
-    populateParticlesAtLatticePositions(lattice_positions, model, layoutItem,
+    populateParticlesAtLatticePositions(lattice_positions, particle3DType_vector, model,
                                         sceneGeometry, builder3D);
 }
 
@@ -179,7 +214,7 @@ QVector<QVector<double> > RealSpaceBuilderUtils::computeRandomDistributionLattic
 // InterferenceFunction2DLatticeType
 void RealSpaceBuilderUtils::populateInterference2DLatticeType(
         const IInterferenceFunction *interference, RealSpaceModel *model,
-        const SessionItem& layoutItem, const SceneGeometry& sceneGeometry,
+        const QVector<Particle3DType> &particle3DType_vector, const SceneGeometry& sceneGeometry,
         const RealSpaceBuilder *builder3D)
 {
     auto interference2D = dynamic_cast<const InterferenceFunction2DLattice*>(interference);
@@ -190,9 +225,11 @@ void RealSpaceBuilderUtils::populateInterference2DLatticeType(
                                                   lattice2D.latticeAngle(), lattice2D.rotationAngle(),
                                                   sceneGeometry);
 
-    populateParticlesAtLatticePositions(lattice_positions, model, layoutItem,
-                                        sceneGeometry, builder3D);
+    populateParticlesAtLatticePositions(
+                lattice_positions, particle3DType_vector, model, sceneGeometry, builder3D);
 }
+
+
 
 QVector<QVector<double>> RealSpaceBuilderUtils::computeInterference2DLatticePositions(
         double l1, double l2, double l_alpha, double l_xi, const SceneGeometry &sceneGeometry)
@@ -237,10 +274,9 @@ QVector<QVector<double>> RealSpaceBuilderUtils::computeInterference2DLatticePosi
     return lattice_positions;
 }
 
-// InterferenceFunction1DLatticeType
 void RealSpaceBuilderUtils::populateInterference1DLatticeType(
         const IInterferenceFunction *interference, RealSpaceModel *model,
-        const SessionItem &layoutItem, const SceneGeometry &sceneGeometry,
+        const QVector<Particle3DType> &particle3DType_vector, const SceneGeometry &sceneGeometry,
         const RealSpaceBuilder *builder3D)
 {
     auto interference1D = dynamic_cast<const InterferenceFunction1DLattice *>(interference);
@@ -252,8 +288,8 @@ void RealSpaceBuilderUtils::populateInterference1DLatticeType(
             computeInterference2DLatticePositions(interference1DParameters.m_length, 0.0, 0.0,
                                                   interference1DParameters.m_xi, sceneGeometry);
 
-    populateParticlesAtLatticePositions(lattice_positions, model, layoutItem,
-                                        sceneGeometry, builder3D);
+    populateParticlesAtLatticePositions(
+                lattice_positions, particle3DType_vector, model, sceneGeometry, builder3D);
 }
 
 // Implement Rotation of a 3D particle using parameters from IRotation Object
@@ -305,7 +341,7 @@ void RealSpaceBuilderUtils::applyParticleTransformations(const Particle* particl
         // translation and rotation (if present) of the particle composition as the
         // particleComposition's decompose() method already does this
 
-        particle3D->transform(particle_rotate, position);
+        particle3D->addTransform(particle_rotate, position);
     }
 
     else
@@ -473,6 +509,7 @@ void RealSpaceBuilderUtils::populateSingleParticle(
 {
     std::unique_ptr<const IFormFactor> particleff(particle->createFormFactor());
     auto ff = getUnderlyingFormFactor(particleff.get());
+
     auto particle3D = TransformTo3D::createParticlefromIFormFactor(ff);
 
     applyParticleTransformations(particle, particle3D.get(), origin);
@@ -480,4 +517,54 @@ void RealSpaceBuilderUtils::populateSingleParticle(
 
     if (particle3D)
         model->add(particle3D.release());
+}
+
+QVector<Particle3DType> RealSpaceBuilderUtils::getParticle3DTypeVector(const SessionItem &layoutItem)
+{
+    QVector<Particle3DType> particle3DType_vector;
+
+    double total_abundance = computeCumulativeAbundances(layoutItem).last();
+
+    double cumulative_abundance = 0;
+
+    for (auto particleItem : layoutItem.getItems(ParticleLayoutItem::T_PARTICLES))
+    {
+        if(particleItem->modelType() == Constants::ParticleType)
+        {
+            auto singleParticle3DType =
+                    getSingleParticle3DType(particleItem, total_abundance);
+
+            cumulative_abundance += singleParticle3DType.getCumulativeAbundance();
+
+            singleParticle3DType.setCumulativeAbundance(cumulative_abundance);
+
+            particle3DType_vector.append(singleParticle3DType);
+        }
+    }
+
+    return particle3DType_vector;
+}
+
+Particle3DType RealSpaceBuilderUtils::getSingleParticle3DType(const SessionItem* particleItem,
+                                                             double total_abundance)
+{
+    auto pItem = dynamic_cast<const ParticleItem*>(particleItem);
+    auto particle = pItem->createParticle();
+    std::unique_ptr<const IFormFactor> particleff(particle->createFormFactor());
+    auto ff = getUnderlyingFormFactor(particleff.get());
+
+    auto particle3D = TransformTo3D::createParticlefromIFormFactor(ff);
+
+    const auto origin =  QVector3D();
+
+    applyParticleTransformations(particle.get(), particle3D.get(), origin);
+    applyParticleColor(particle.get(), particle3D.get());
+
+    Particle3DType singleParticle3DType;
+
+    singleParticle3DType.add3DParticle(particle3D.release());
+    singleParticle3DType.setCumulativeAbundance(particle->abundance()/total_abundance);
+    singleParticle3DType.setType(Constants::ParticleType);
+
+    return singleParticle3DType;
 }

@@ -52,6 +52,16 @@ void Particle::fancy(Vector3D rotate, float r)
     Object::transform(turn, scale*r, rotate, offset + translate);
 }
 
+void Particle::addTransform(Vector3D rotate_, Vector3D translate_)
+{
+    Object::transform(turn, scale, (rotate = rotate + rotate_), offset + (translate = translate + translate_));
+}
+
+void Particle::addTranslation(Vector3D translate_)
+{
+    Object::transform(turn, scale, rotate, offset + (translate = translate + translate_));
+}
+
 //------------------------------------------------------------------------------
 
 static float const pi   = float(M_PI);

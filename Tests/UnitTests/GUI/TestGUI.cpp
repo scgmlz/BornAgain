@@ -35,6 +35,7 @@
 #include "TestProjectUtils.h"
 #include "TestPropertyRepeater.h"
 #include "TestProxyModelStrategy.h"
+#include "TestRealSpaceBuilderUtils.h"
 #include "TestSaveService.h"
 #include "TestSessionItemController.h"
 #include "TestSessionItem.h"

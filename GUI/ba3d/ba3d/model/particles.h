@@ -48,6 +48,9 @@ public:
 
     void transform(Vector3D rotate, Vector3D translate);
     void fancy(Vector3D rotate, float r);
+
+    void addTransform(Vector3D rotate, Vector3D translate);
+    void addTranslation(Vector3D translate_);
 };
 
 //------------------------------------------------------------------------------
