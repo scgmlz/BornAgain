@@ -19,7 +19,15 @@
 #include "Macros.h"
 #include "MathConstants.h"
 #include "RealParameter.h"
+#include <algorithm>
 
+
+namespace {
+// maximum value for qx*Lambdax and qy*lambday
+static const int nmax = 20;
+// minimum number of neighboring reciprocal lattice points to use
+static const int min_points = 4;
+}
 
 InterferenceFunction2DLattice::InterferenceFunction2DLattice(const Lattice2D& lattice)
     : m_integrate_xi(false)
@@ -151,13 +159,12 @@ void InterferenceFunction2DLattice::init_parameters()
 double InterferenceFunction2DLattice::interferenceForXi(double xi) const
 {
     double result = 0.0;
-    double qx_frac, qy_frac;
-    calculateReciprocalVectorFraction(m_qx, m_qy, xi, qx_frac, qy_frac);
+    auto q_frac = calculateReciprocalVectorFraction(m_qx, m_qy, xi);
 
     for (int i = -m_na - 1; i < m_na + 2; ++i) {
         for (int j = -m_nb - 1; j < m_nb + 2; ++j) {
-            double qx = qx_frac + i * m_sbase.m_asx + j * m_sbase.m_bsx;
-            double qy = qy_frac + i * m_sbase.m_asy + j * m_sbase.m_bsy;
+            double qx = q_frac.first + i * m_sbase.m_asx + j * m_sbase.m_bsx;
+            double qy = q_frac.second + i * m_sbase.m_asy + j * m_sbase.m_bsy;
             result += interferenceAtOneRecLatticePoint(qx, qy);
         }
     }
@@ -170,34 +177,42 @@ double InterferenceFunction2DLattice::interferenceAtOneRecLatticePoint(double qx
         throw Exceptions::NullPointerException(
             "InterferenceFunction2DLattice::interferenceAtOneRecLatticePoint"
             " -> Error! No decay function defined.");
-    double qp1, qp2;
     double gamma = m_decay->gamma();
-    double delta = m_decay->delta();
-    transformToPrincipalAxes(qx, qy, gamma, delta, qp1, qp2);
-    return m_decay->evaluate(qp1, qp2);
+    auto qXY = rotateOrthonormal(qx, qy, gamma);
+    return m_decay->evaluate(qXY.first, qXY.second);
 }
 
-void InterferenceFunction2DLattice::transformToPrincipalAxes(
-    double qx, double qy, double gamma, double delta, double &q_pa_1, double &q_pa_2) const
+// Rotate by angle gamma between orthonormal systems
+std::pair<double, double>
+InterferenceFunction2DLattice::rotateOrthonormal(double qx, double qy, double gamma) const
 {
-    q_pa_1 = qx * std::cos(gamma) + qy * std::sin(gamma);
-    q_pa_2 = qx * std::cos(gamma + delta) + qy * std::sin(gamma + delta);
+    double q_X = qx * std::cos(gamma) + qy * std::sin(gamma);
+    double q_Y = -qx * std::sin(gamma) + qy * std::cos(gamma);
+    return {q_X, q_Y};
 }
 
-void InterferenceFunction2DLattice::calculateReciprocalVectorFraction(
-    double qx, double qy, double xi, double &qx_frac, double &qy_frac) const
+// (qx, qy) are in the global reciprocal reference frame
+// the returned values (qx_frac, qy_frac) are in the rotated frame with first lattice basis
+// vector aligned with the real-space x-axis (same frame as the one stored in m_sbase)
+std::pair<double, double>
+InterferenceFunction2DLattice::calculateReciprocalVectorFraction(double qx, double qy,
+                                                                 double xi) const
 {
     double a = m_lattice->length1();
     double b = m_lattice->length2();
     double alpha = m_lattice->latticeAngle();
-    double qx_rot =  qx*std::cos(xi) + qy*std::sin(xi);
-    double qy_rot = -qx*std::sin(xi) + qy*std::cos(xi);
+    // first rotate the input to the system of m_sbase:
+    double qx_rot = qx * std::cos(xi) + qy * std::sin(xi);
+    double qy_rot = -qx * std::sin(xi) + qy * std::cos(xi);
 
-    int qa_int = static_cast<int>(std::lround(a*qx_rot / M_TWOPI));
-    int qb_int = static_cast<int>(
-                     std::lround(b*(qx*std::cos(alpha) + qy*std::sin(alpha)) / M_TWOPI));
-    qx_frac = qx_rot - qa_int * m_sbase.m_asx - qb_int * m_sbase.m_bsx;
-    qy_frac = qy_rot - qa_int * m_sbase.m_asy - qb_int * m_sbase.m_bsy;
+    // find the reciprocal lattice coordinates of (qx_rot, qy_rot):
+    int qa_int = static_cast<int>(std::lround(a * qx_rot));
+    int qb_int =
+        static_cast<int>(std::lround(b * (qx_rot * std::cos(alpha) + qy_rot * std::sin(alpha))));
+    // take the fractional part only (in m_sbase coordinates)
+    double qx_frac = qx_rot - qa_int * m_sbase.m_asx - qb_int * m_sbase.m_bsx;
+    double qy_frac = qy_rot - qa_int * m_sbase.m_asy - qb_int * m_sbase.m_bsy;
+    return {qx_frac, qy_frac};
 }
 
 void InterferenceFunction2DLattice::initialize_rec_vectors()
@@ -219,12 +234,11 @@ void InterferenceFunction2DLattice::initialize_calc_factors()
             " -> Error! No decay function defined.");
 
     // number of reciprocal lattice points to use
-    double qa_max(0.0), qb_max(0.0);
-
-    m_decay->transformToStarBasis(nmax / m_decay->decayLengthX(),
-                                  nmax / m_decay->decayLengthY(),
-                                  m_lattice->latticeAngle(), m_lattice->length1(),
-                                  m_lattice->length2(), qa_max, qb_max);
-    m_na = static_cast<int>(std::lround(std::abs(qa_max)));
-    m_nb = static_cast<int>(std::lround(std::abs(qb_max)));
+    auto q_bounds = m_decay->boundingReciprocalLatticeCoordinates(
+                nmax / m_decay->decayLengthX(), nmax / m_decay->decayLengthY(),
+                m_lattice->latticeAngle(), m_lattice->length1(), m_lattice->length2());
+    m_na = static_cast<int>(std::lround(q_bounds.first + 0.5));
+    m_nb = static_cast<int>(std::lround(q_bounds.second + 0.5));
+    m_na = std::max(m_na, min_points);
+    m_nb = std::max(m_nb, min_points);
 }

@@ -18,6 +18,7 @@
 #include "ICloneable.h"
 #include "INode.h"
 #include "MathConstants.h"
+#include <utility>
 
 //! Interface for a one-dimensional decay function,
 //!   with evaluate(q) returning the Fourier transform,
@@ -117,9 +118,6 @@ public:
     //! get angle between first lattice vector and X-axis of distribution (both in direct space)
     double gamma() const { return m_gamma; }
 
-    //! get angle between X- and Y-axis of distribution (in direct space)
-    double delta() const { return m_delta; }
-
     //! get decay length in distribution's X-direction
     double decayLengthX() const { return m_decay_length_x; }
 
@@ -130,8 +128,8 @@ public:
     virtual double evaluate(double qx, double qy) const=0;
 
     //! transform back to a*, b* basis:
-    void transformToStarBasis(double qX, double qY,
-            double alpha, double a, double b, double& qa, double& qb) const;
+    std::pair<double, double>  boundingReciprocalLatticeCoordinates(double qX, double qY,
+            double alpha, double a, double b) const;
 
 protected:
     void register_decay_lengths();
@@ -140,7 +138,12 @@ protected:
     double m_decay_length_x;
     double m_decay_length_y;
     double m_gamma;
-    double m_delta;
+
+private:
+    //! transform reciprocal coordinate system of this decay function to the reciprocal
+    //! lattice system
+    std::pair<double, double> transformToRecLatticeCoordinates(
+            double qX, double qY, double a, double b, double alpha) const;
 };
 
 

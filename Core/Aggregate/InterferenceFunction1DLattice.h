@@ -48,8 +48,6 @@ private:
     Lattice1DParameters m_lattice_params;
     std::unique_ptr<IFTDecayFunction1D> m_decay;
     int m_na; //!< determines the number of reciprocal lattice points to use
-
-    static const int nmax = 20; //!< maximum value for qx*Lambdax and qy*lambday
 };
 
 #endif // INTERFERENCEFUNCTION1DLATTICE_H

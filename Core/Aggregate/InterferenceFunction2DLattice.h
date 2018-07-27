@@ -64,14 +64,13 @@ private:
     //! Returns interference from a single reciprocal lattice vector
     double interferenceAtOneRecLatticePoint(double qx, double qy) const;
 
-    //! Returns reciprocal coordinates in the principal axis system
-    void transformToPrincipalAxes(double qx, double qy, double gamma,
-                                  double delta, double& q_pa_1, double& q_pa_2) const;
+    //! Returns reciprocal coordinates in the coordinate system rotated by the angle gamma
+    std::pair<double, double> rotateOrthonormal(double qx, double qy, double gamma) const;
 
     //! Returns qx,qy coordinates of q - qint, where qint is a reciprocal lattice vector
     //! bounding the reciprocal unit cell to which q belongs
-    void calculateReciprocalVectorFraction(double qx, double qy, double xi,
-                                           double& qx_frac, double& qy_frac) const;
+    std::pair<double, double> calculateReciprocalVectorFraction(
+            double qx, double qy, double xi) const;
 
     //! Initializes the x,y coordinates of the a*,b* reciprocal bases
     void initialize_rec_vectors();
@@ -82,8 +81,7 @@ private:
     bool m_integrate_xi; //!< Integrate over the orientation xi
     std::unique_ptr<IFTDecayFunction2D> m_decay;
     std::unique_ptr<Lattice2D> m_lattice;
-    Lattice2D::ReciprocalBases m_sbase;
-    static const int nmax = 20; //!< maximum value for qx*Lambdax and qy*lambday
+    Lattice2D::ReciprocalBases m_sbase;  //!< reciprocal lattice is stored without xi
     int m_na, m_nb; //!< determines the number of reciprocal lattice points to use
     mutable double m_qx;
     mutable double m_qy;

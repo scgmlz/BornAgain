@@ -10340,18 +10340,6 @@ class IFTDecayFunction2D(ICloneable, INode):
         return _libBornAgainCore.IFTDecayFunction2D_gamma(self)
 
 
-    def delta(self):
-        """
-        delta(IFTDecayFunction2D self) -> double
-
-        double IFTDecayFunction2D::delta() const
-
-        get angle between X- and Y-axis of distribution (in direct space) 
-
-        """
-        return _libBornAgainCore.IFTDecayFunction2D_delta(self)
-
-
     def decayLengthX(self):
         """
         decayLengthX(IFTDecayFunction2D self) -> double
@@ -10388,16 +10376,9 @@ class IFTDecayFunction2D(ICloneable, INode):
         return _libBornAgainCore.IFTDecayFunction2D_evaluate(self, qx, qy)
 
 
-    def transformToStarBasis(self, qX, qY, alpha, a, b, qa, qb):
-        """
-        transformToStarBasis(IFTDecayFunction2D self, double qX, double qY, double alpha, double a, double b, double & qa, double & qb)
-
-        void IFTDecayFunction2D::transformToStarBasis(double qX, double qY, double alpha, double a, double b, double &qa, double &qb) const
-
-        transform back to a*, b* basis: 
-
-        """
-        return _libBornAgainCore.IFTDecayFunction2D_transformToStarBasis(self, qX, qY, alpha, a, b, qa, qb)
+    def boundingReciprocalLatticeCoordinates(self, qX, qY, alpha, a, b):
+        """boundingReciprocalLatticeCoordinates(IFTDecayFunction2D self, double qX, double qY, double alpha, double a, double b) -> std::pair< double,double >"""
+        return _libBornAgainCore.IFTDecayFunction2D_boundingReciprocalLatticeCoordinates(self, qX, qY, alpha, a, b)
 
     __swig_destroy__ = _libBornAgainCore.delete_IFTDecayFunction2D
     __del__ = lambda self: None

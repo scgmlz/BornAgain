@@ -18,6 +18,7 @@
 #include "ParameterPool.h"
 #include "MathConstants.h"
 #include "RealParameter.h"
+#include <algorithm>
 
 //===============1D======================
 
@@ -144,19 +145,20 @@ double FTDecayFunction1DCosine::evaluate(double q) const
 //! @param gamma: distribution orientation with respect to the corresponding lattice vector
 //! in radians
 IFTDecayFunction2D::IFTDecayFunction2D(double decay_length_x, double decay_length_y, double gamma)
-    : m_decay_length_x(decay_length_x), m_decay_length_y(decay_length_y), m_gamma(gamma),
-      m_delta(M_PI_2)
-{
-}
+    : m_decay_length_x(decay_length_x), m_decay_length_y(decay_length_y), m_gamma(gamma)
+{}
 
-void IFTDecayFunction2D::transformToStarBasis(double qX, double qY, double alpha, double a,
-                                              double b, double& qa, double& qb) const
+//! Calculates bounding values of reciprocal lattice coordinates that contain the centered
+//! rectangle with a corner defined by qX and qY
+std::pair<double, double>
+IFTDecayFunction2D::boundingReciprocalLatticeCoordinates(double qX, double qY, double alpha,
+                                                         double a, double b) const
 {
-    double prefactor = 1.0 / M_TWOPI; // divide by sin(m_delta)
-                                      // for unnormalized X*,Y* basis
-    qa = a * prefactor * (std::sin(m_gamma + m_delta) * qX - std::sin(m_gamma) * qY);
-    qb = b * prefactor
-         * (-std::sin(alpha - m_gamma - m_delta) * qX + std::sin(alpha - m_gamma) * qY);
+    auto q_bounds_1 = transformToRecLatticeCoordinates(qX, qY, a, b, alpha);
+    auto q_bounds_2 = transformToRecLatticeCoordinates(qX, -qY, a, b, alpha);
+    double qa_max = std::max(std::abs(q_bounds_1.first), std::abs(q_bounds_2.first));
+    double qb_max = std::max(std::abs(q_bounds_1.second), std::abs(q_bounds_2.second));
+    return {qa_max, qb_max};
 }
 
 void IFTDecayFunction2D::register_decay_lengths()
@@ -177,6 +179,14 @@ void IFTDecayFunction2D::init_parameters()
 {
     register_decay_lengths();
     register_gamma();
+}
+
+std::pair<double, double> IFTDecayFunction2D::transformToRecLatticeCoordinates(
+        double qX, double qY, double a, double b, double alpha) const
+{
+    double qa = a * qX * std::cos(m_gamma) - a * qY * std::sin(m_gamma);
+    double qb = b * qX * std::cos(alpha - m_gamma) + b * qY * std::sin(alpha - m_gamma);
+    return {qa, qb};
 }
 
 FTDecayFunction2DCauchy::FTDecayFunction2DCauchy(double decay_length_x, double decay_length_y,
