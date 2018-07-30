@@ -87,6 +87,18 @@ Histogram2D* SimulationResult::histogram2d(AxesUnits units) const
     return new Histogram2D(*P_data);
 }
 
+IHistogram* SimulationResult::histogram(AxesUnits units) const
+{
+    const std::unique_ptr<OutputData<double>> P_data(data(units));
+    if (mP_data->getRank() == 1 && mP_unit_converter->dimension() == 1)
+        return new Histogram1D(*P_data);
+    else if (mP_data->getRank() == 2 && mP_unit_converter->dimension() == 2)
+        return new Histogram2D(*P_data);
+    else
+        throw std::runtime_error("Error in SimulationResult::histogram: "
+                                 "cannot create output data histogram");
+}
+
 std::vector<AxisInfo> SimulationResult::axisInfo(AxesUnits units) const
 {
     if (!mP_unit_converter) return {};
