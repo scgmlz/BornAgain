@@ -19086,17 +19086,6 @@ class SimulationResult(_object):
         except __builtin__.Exception:
             self.this = this
 
-    def data(self, *args):
-        """
-        data(SimulationResult self, AxesUnits units) -> IntensityData
-        data(SimulationResult self) -> IntensityData
-
-        OutputData< double > * SimulationResult::data(AxesUnits units=AxesUnits::DEFAULT) const 
-
-        """
-        return _libBornAgainCore.SimulationResult_data(self, *args)
-
-
     def histogram1d(self, *args):
         """
         histogram1d(SimulationResult self, AxesUnits units) -> Histogram1D

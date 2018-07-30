@@ -51,7 +51,9 @@ public:
     SimulationResult& operator=(const SimulationResult& other);
     SimulationResult& operator=(SimulationResult&& other);
 
+#ifndef SWIG
     OutputData<double>* data(AxesUnits units = AxesUnits::DEFAULT) const;
+#endif //SWIG
     Histogram1D* histogram1d(AxesUnits units = AxesUnits::DEFAULT) const;
     Histogram2D* histogram2d(AxesUnits units = AxesUnits::DEFAULT) const;
     IHistogram* histogram(AxesUnits units = AxesUnits::DEFAULT) const;
