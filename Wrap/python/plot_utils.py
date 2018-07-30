@@ -166,9 +166,8 @@ def plot_specular_simulation_result(result, ymin=None, ymax=None, units=ba.AxesU
     :param units: units on the x-axis
     """
 
-    data = result.data(units)
-    intensity = data.getArray()
-    x_axis = data.getAxis(0).getBinCenters()
+    intensity = result.array()
+    x_axis = result.histogram1d(units).getBinCenters()
     ymax = np.amax(intensity) * 2.0 if ymax is None else ymax
     ymin = max(np.amin(intensity) * 0.5, 1e-18 * ymax) if ymin is None else ymin
 
@@ -200,7 +199,7 @@ def plot_simulation_result(result, intensity_min=None, intensity_max=None, units
     :param postpone_show: postpone showing the plot for later tuning (False by default)
     """
     if len(result.array().shape) == 1:  # 1D data, specular simulation assumed
-        plot_specular_simulation_result(result, intensity_min, intensity_max)
+        plot_specular_simulation_result(result, intensity_min, intensity_max, units)
     else:
         plot_colormap(result, intensity_min, intensity_max, units)
     plt.tight_layout()
@@ -389,12 +388,12 @@ class PlotterSpecular(Plotter):
 
     def plot_graph(self, fit_objective):
         # retrieving data from fit suite
-        real_data = fit_objective.experimentalData().data()
-        sim_data = fit_objective.simulationResult().data()
+        real_data = fit_objective.experimentalData()
+        sim_data = fit_objective.simulationResult()
 
         # data values
-        sim_values = sim_data.getArray()
-        real_values = real_data.getArray()
+        sim_values = sim_data.array()
+        real_values = real_data.array()
 
         # default font properties dictionary to use
         font = {'family': 'serif',
@@ -402,11 +401,11 @@ class PlotterSpecular(Plotter):
                 'size': label_fontsize}
 
         plt.subplot(self.gs[0])
-        plt.semilogy(sim_data.getAxis(0).getBinCenters(), sim_values, 'b',
-                     real_data.getAxis(0).getBinCenters(), real_values, 'k--')
-        plt.ylim((0.5 * np.min(real_values), 5 * np.max(real_values)))
+        plt.semilogy(sim_data.histogram1d().getBinCenters(), sim_values, 'b',
+                     real_data.histogram1d().getBinCenters(), real_values, 'k--')
+        plt.ylim((0.5 * real_values.min(), 5 * real_values.max()))
 
-        xlabel = get_axes_labels(fit_objective.experimentalData(), ba.AxesUnits.DEFAULT)[0]
+        xlabel = get_axes_labels(real_data, ba.AxesUnits.DEFAULT)[0]
         plt.legend(['BornAgain', 'Reference'], loc='upper right', prop=font)
         plt.xlabel(xlabel, fontdict=font)
         plt.ylabel("Intensity", fontdict=font)

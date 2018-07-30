@@ -162,9 +162,9 @@ def check_result(result, example_name):
         raise Exception("Absent reference file")
 
     print("Loading reference file '{}'".format(reffile))
-    reference = ba.IntensityDataIOFactory.readOutputData(reffile)
+    reference = ba.IntensityDataIOFactory.readIntensityData(reffile)
 
-    diff = ba.getRelativeDifference(result.data(), reference)
+    diff = ba.getRelativeDifference(result.histogram(), reference)
 
     if diff > TOLERANCE:
         print("Failure - Difference {0} is above tolerance level {1}".format(diff, TOLERANCE))

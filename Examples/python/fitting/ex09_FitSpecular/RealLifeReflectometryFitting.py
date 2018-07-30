@@ -191,9 +191,8 @@ def objective_primary(args):
     arg_dict = create_par_dict(*args)
 
     sim_result = run_simulation(arg_dict, bin_start, bin_end)
-    sim_data = sim_result.data().getArray()
     return chi_2(get_real_data_values(bin_start, bin_end),
-                 sim_data, get_weights(bin_start, bin_end))
+                 sim_result.array(), get_weights(bin_start, bin_end))
 
 
 def objective_fine(args, intensity, footprint_factor, divergence):
@@ -206,9 +205,8 @@ def objective_fine(args, intensity, footprint_factor, divergence):
     arg_dict = create_par_dict(intensity, footprint_factor, divergence, *args)
 
     sim_result = run_simulation(arg_dict, bin_start, bin_end)
-    sim_data = sim_result.data().getArray()
     return chi_2(get_real_data_values(bin_start, bin_end),
-                 sim_data, get_weights(bin_start, bin_end))
+                 sim_result.array(), get_weights(bin_start, bin_end))
 
 
 def run_fitting():
@@ -257,13 +255,11 @@ def plot_result(sim_result, ref_result, bin_start=0, bin_end=-1):
     """
     Plots the graphs of obtained simulation data
     """
-    sim_data = sim_result.data()
-    ref_data = ref_result.data()
 
     plt.semilogy(get_real_data_axis(bin_start, bin_end) * 180 / np.pi,
                  get_real_data_values(bin_start, bin_end),
-                 sim_data.getAxis(0).getBinCenters(), sim_data.getArray(),
-                 ref_data.getAxis(0).getBinCenters(), ref_data.getArray())
+                 sim_result.histogram1d().getBinCenters(), sim_result.array(),
+                 ref_result.histogram1d().getBinCenters(), ref_result.array())
 
     xlabel = ba.get_axes_labels(sim_result, ba.AxesUnits.DEFAULT)[0]
     ylabel = "Intensity"
