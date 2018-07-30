@@ -19119,6 +19119,14 @@ class SimulationResult(_object):
         return _libBornAgainCore.SimulationResult_histogram2d(self, *args)
 
 
+    def histogram(self, *args):
+        """
+        histogram(SimulationResult self, AxesUnits units) -> IHistogram
+        histogram(SimulationResult self) -> IHistogram
+        """
+        return _libBornAgainCore.SimulationResult_histogram(self, *args)
+
+
     def axisInfo(self, *args):
         """
         axisInfo(SimulationResult self, AxesUnits units) -> swig_dummy_type_axisinfo_vector
