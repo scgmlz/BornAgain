@@ -56,7 +56,7 @@ void FitObjective::addSimulationAndData(PyBuilderCallback& callback,
                                         const std::vector<double>& data,
                                         double weight)
 {
-    auto output_data = ArrayUtils::createData1D(data);
+    auto output_data = std::unique_ptr<OutputData<double>>(ArrayUtils::createData1D(data));
     addSimulationAndData(simulationBuilder(callback), *output_data, weight);
 }
 
