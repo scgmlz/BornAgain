@@ -14,11 +14,14 @@
 
 #include "Exceptions.h"
 #include "ArrayUtils.h"
+#include "OutputData.h"
 
 #ifdef BORNAGAIN_PYTHON
 #define PY_ARRAY_UNIQUE_SYMBOL BORNAGAIN_PYTHONAPI_ARRAY
 #define NO_IMPORT_ARRAY
+#include <memory>
 #include <numpy/arrayobject.h>
+#include <stdexcept>
 
 PyObject* ArrayUtils::createNumpyArray(const std::vector<double>& data)
 {
@@ -41,6 +44,53 @@ PyObject* ArrayUtils::createNumpyArray(const std::vector<double>& data)
         *array_buffer++ = data[index];
 
     return pyarray;
+}
+
+std::pair<size_t, size_t> ArrayUtils::getShape(const std::vector<std::vector<double>>& data)
+{
+    size_t nrows = data.size();
+    size_t ncols(0);
+    if(nrows) ncols = data[0].size();
+    for(size_t row=0; row<nrows; row++)
+        if(data[row].size() != ncols)
+            throw std::runtime_error("Util::getShape() -> Error. "
+                                     "Number of elements is different from row to row.");
+    return std::make_pair(nrows, ncols);
+}
+
+OutputData<double>* ArrayUtils::createData1D(const std::vector<double>& vec)
+{
+    std::unique_ptr<OutputData<double>> result(new OutputData<double>());
+    const size_t length = vec.size();
+    result->addAxis(FixedBinAxis("axis0", length, 0.0, static_cast<double>(length)));
+    result->setRawDataVector(vec);
+    return result.release();
+}
+
+OutputData<double>* ArrayUtils::createData2D(const std::vector<std::vector<double>>& vec)
+{
+    std::unique_ptr<OutputData<double>> result(new OutputData<double>());
+
+    auto shape = ArrayUtils::getShape(vec);
+    const size_t nrows = shape.first;
+    const size_t ncols = shape.second;
+
+    if(nrows == 0 || ncols == 0)
+        throw Exceptions::LogicErrorException("ArrayUtils::createData2D() -> Error. "
+                                              "Not a two-dimensional array");
+
+    result->addAxis(FixedBinAxis("axis0", ncols, 0.0, static_cast<double>(ncols)));
+    result->addAxis(FixedBinAxis("axis1", nrows, 0.0, static_cast<double>(nrows)));
+
+    // filling the data
+    for(size_t row=0; row<nrows; ++row) {
+        for(size_t col=0; col<ncols; ++col) {
+            size_t globalbin = nrows - row - 1 + col*nrows;
+            (*result)[globalbin] = vec[row][col];
+        }
+    }
+
+    return result.release();
 }
 
 #endif // BORNAGAIN_PYTHON

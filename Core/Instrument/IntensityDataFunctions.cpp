@@ -321,6 +321,6 @@ SimulationResult IntensityDataFunctions::ConvertData(const Simulation& simulatio
                                                      const std::vector<std::vector<double>>& data,
                                                      bool put_masked_areas_to_zero)
 {
-    auto output_data = ArrayUtils::createData2D(data);
+    auto output_data = std::unique_ptr<OutputData<double>>(ArrayUtils::createData2D(data));
     return IntensityDataFunctions::ConvertData(simulation, *output_data, put_masked_areas_to_zero);
 }

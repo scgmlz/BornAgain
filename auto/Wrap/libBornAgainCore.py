@@ -26196,6 +26196,44 @@ class IntensityData(_object):
 IntensityData_swigregister = _libBornAgainCore.IntensityData_swigregister
 IntensityData_swigregister(IntensityData)
 
+
+def createData1D(vec):
+    """
+    createData1D(vdouble1d_t vec) -> IntensityData
+
+    decltype(auto) ArrayUtils::createData1D(const T &vec)
+
+    Creates  OutputData from 1D vector.
+
+    Parameters:
+    -----------
+
+    vec: 
+    std::vector<double>
+
+    std::unique_ptr< OutputData<double>> 
+
+    """
+    return _libBornAgainCore.createData1D(vec)
+
+def createData2D(vec):
+    """
+    createData2D(vdouble2d_t vec) -> IntensityData
+
+    decltype(auto) ArrayUtils::createData2D(const T &vec)
+
+    Creates  OutputData from 2D vector.
+
+    Parameters:
+    -----------
+
+    vec: 
+    std::vector<std::vector<double>>
+
+    std::unique_ptr< OutputData<double>> 
+
+    """
+    return _libBornAgainCore.createData2D(vec)
 class ParameterDistribution(IParameterized):
     """Proxy of C++ ParameterDistribution class."""
 
