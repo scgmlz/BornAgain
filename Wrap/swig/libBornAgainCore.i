@@ -71,6 +71,7 @@
 %import "WinDllMacros.h"
 
 %{
+#include "ArrayUtils.h"
 #include "BAVersion.h"
 #include "BasicVector3D.h"
 #include "Beam.h"
@@ -236,6 +237,8 @@
 %}
 
 // ownership
+%newobject ArrayUtils::createData1D;
+%newobject ArrayUtils::createData2D;
 
 %newobject SimulationResult::data(AxesUnits units_type = AxesUnits::DEFAULT) const;
 %newobject SimulationResult::histogram1d(AxesUnits units_type = AxesUnits::DEFAULT) const;
@@ -446,6 +449,7 @@
 %include "IIntensityFunction.h"
 %include "OutputData.h"
 %template(IntensityData) OutputData<double>;
+%include "ArrayUtils.h"
 %include "ParameterDistribution.h"
 %include "ParameterPool.h"
 %include "ParameterSample.h"
