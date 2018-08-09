@@ -57,7 +57,7 @@ ParticleLayoutItem::ParticleLayoutItem() : SessionGraphicsItem(Constants::Partic
     ComboProperty approx = ComboProperty() << Constants::LAYOUT_DA << Constants::LAYOUT_SSCA;
     addProperty(P_APPROX, approx.variant())
         ->setToolTip(QStringLiteral("Approximation used to distribute the particles"));
-    addProperty(P_TOTAL_DENSITY, 1.0)->setToolTip(density_tooltip);
+    addProperty(P_TOTAL_DENSITY, 0.01)->setToolTip(density_tooltip);
     getItem(P_TOTAL_DENSITY)->setDecimals(10);
     addProperty(P_WEIGHT, 1.0)->setToolTip(weight_tooltip);
 

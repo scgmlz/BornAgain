@@ -38,7 +38,7 @@ bool particleDensityIsProvidedByInterference(const IInterferenceFunction& iff)
 
 ParticleLayout::ParticleLayout()
     : mP_interference_function {nullptr}
-    , m_total_particle_density {1.0}
+    , m_total_particle_density {0.01}
 {
     setName(BornAgain::ParticleLayoutType);
     registerParticleDensity();
@@ -49,7 +49,7 @@ ParticleLayout::~ParticleLayout() {} // needs member class definitions => don't 
 
 ParticleLayout::ParticleLayout(const IAbstractParticle& particle, double abundance)
     : mP_interference_function {nullptr}
-    , m_total_particle_density {1.0}
+    , m_total_particle_density {0.01}
 {
     setName(BornAgain::ParticleLayoutType);
     addParticle(particle, abundance);
