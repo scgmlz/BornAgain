@@ -63,8 +63,8 @@ TEST_F(TestParticleLayoutItem, densityValue)
     auto layout
         = dynamic_cast<ParticleLayoutItem*>(model.insertNewItem(Constants::ParticleLayoutType));
 
-    // empty layout should have TotalDensity 1.0
-    EXPECT_EQ(layout->getItemValue(ParticleLayoutItem::P_TOTAL_DENSITY).toDouble(), 1.0);
+    // empty layout should have TotalDensity 0.01
+    EXPECT_EQ(layout->getItemValue(ParticleLayoutItem::P_TOTAL_DENSITY).toDouble(), 0.01);
 
     // adding 2d interference with default hexagonal lattice
     auto interference

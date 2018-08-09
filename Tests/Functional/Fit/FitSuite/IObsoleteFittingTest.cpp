@@ -95,7 +95,9 @@ std::unique_ptr<MultiLayer> IObsoleteFittingTest::createSample()
 std::unique_ptr<Simulation> IObsoleteFittingTest::createSimulation()
 {
     SimulationFactory simRegistry;
-    return simRegistry.create(m_simulation_name);
+    auto P_sim = simRegistry.create(m_simulation_name);
+    P_sim->setBeamIntensity(1e2);
+    return P_sim;
 }
 
 std::unique_ptr<OutputData<double> > IObsoleteFittingTest::createOutputData(

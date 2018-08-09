@@ -51,7 +51,7 @@ GISASSimulation* StandardSimulations::PolarizedDWBAMagCylinders2()
     result->setDetectorParameters(100, -1.0*Units::degree, 1.0*Units::degree,
                                   100, 0.0*Units::degree, 2.0*Units::degree);
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
-    result->setBeamIntensity(1e7);
+    result->setBeamIntensity(1e9);
     result->setSampleBuilder( builder );
     return result;
 }

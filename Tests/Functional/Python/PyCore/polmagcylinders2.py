@@ -46,7 +46,7 @@ def getSimulationIntensity(rho_beam, efficiency):
     simulation.setBeamParameters(1.0*angstrom, 0.2*degree, 0.0*degree)
     simulation.setBeamPolarization(rho_beam)
     simulation.setSample(multi_layer)
-    simulation.setBeamIntensity(1e7)
+    simulation.setBeamIntensity(1e9)
     simulation.runSimulation()
     return simulation.result()
 
