@@ -21,6 +21,7 @@
 #include "IntensityDataIOFactory.h"
 #include "IntensityDataItem.h"
 #include "RealDataItem.h"
+#include "CsvImportAssistant.h"
 #include "projectmanager.h"
 #include <QFileDialog>
 #include <QFileInfo>
@@ -47,27 +48,46 @@ std::unique_ptr<OutputData<double>> ImportDataUtils::ImportData(QString& baseNam
     QString fileName = QFileDialog::getOpenFileName(0, QStringLiteral("Open Intensity File"),
                                                     dirname, filter_string);
 
-    if (fileName.isEmpty())
-        return nullptr;
 
-    QFileInfo info(fileName);
-    baseNameOfLoadedFile = info.baseName();
-
-    QString newImportDir = GUIHelpers::fileDir(fileName);
-    if (newImportDir != dirname)
-        AppSvc::projectManager()->setImportDir(newImportDir);
 
     std::unique_ptr<OutputData<double>> result;
 
+    bool goodResult = false;
+    while(!goodResult){
+        QString newImportDir = GUIHelpers::fileDir(fileName);
+        if (newImportDir != dirname)
+            AppSvc::projectManager()->setImportDir(newImportDir);
+
+        if (fileName.isEmpty())
+            return nullptr;
+
+        QFileInfo info(fileName);
+        baseNameOfLoadedFile = info.baseName();
     try {
         std::unique_ptr<OutputData<double>> data(
             IntensityDataIOFactory::readOutputData(fileName.toStdString()));
         result = CreateSimplifiedOutputData(*data.get());
+        goodResult = true;
     } catch (std::exception& ex) {
-        QString message = QString("Error while trying to read file\n\n'%1'\n\n%2")
+        goodResult = false;
+        QString message = QString("Error while trying to read file\n\n'%1'\n\n%2\n\nOpening the import assistant...")
                               .arg(fileName)
                               .arg(QString::fromStdString(std::string(ex.what())));
         QMessageBox::warning(0, "IO Problem", message);
+
+        CsvImportAssistant assistant(dirname,fileName);
+        int res = assistant.exec();
+        if(res == assistant.Accepted){
+            fileName = assistant.filepath();
+            QString message = QString("New file created:\n\n'%1'\n\nImporting data from it.")
+                                  .arg(fileName);
+            QMessageBox::information(0, "New file created", message);
+        }
+        else{
+            break;
+        }
+
+    }
     }
 
     return result;
