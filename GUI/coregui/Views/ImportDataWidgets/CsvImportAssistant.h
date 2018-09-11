@@ -17,6 +17,7 @@
 
 #include "WinDllMacros.h"
 #include "CsvReader.h"
+#include "OutputData.h"
 #include <QDialog>
 #include <QTableWidget>
 #include <QLineEdit>
@@ -41,6 +42,7 @@ public:
     unsigned firstLine() const;
     unsigned lastLine() const;
     unsigned singleColumnImport() const;
+    OutputData<double>* getData();
 
 
 public slots:
@@ -60,6 +62,7 @@ private:
     void convert_table();
     void remove_unwanted();
     void setRowNumbering();
+    void importToOutputData();
     bool cell_is_blank(int iRow, int jCol);
 
 
@@ -73,9 +76,7 @@ private:
     QSpinBox* m_firstDataRowSpinBox;
     QSpinBox* m_lastDataRowSpinBox;
     QSpinBox* m_singleDataColSpinBox;
-
-
-
+    OutputData<double>* m_data;
 
 };
 
