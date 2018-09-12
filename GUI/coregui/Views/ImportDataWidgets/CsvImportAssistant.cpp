@@ -27,6 +27,7 @@
 #include <algorithm>    // std::reverse
 #include <vector>       // std::vector
 #include <string>
+#include "WinDllMacros.h"
 
 namespace
 {
