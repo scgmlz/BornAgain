@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "DataFormatUtils.h"
+#include "../Core/InputOutput/DataFormatUtils.h"
 #include "CsvImportAssistant.h"
 #include "mainwindow_constants.h"
 #include "StyleUtils.h"
