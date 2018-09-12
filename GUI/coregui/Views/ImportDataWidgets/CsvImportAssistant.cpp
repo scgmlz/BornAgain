@@ -12,6 +12,7 @@
 //
 // ************************************************************************** //
 
+#include "DataFormatUtils.h"
 #include "CsvImportAssistant.h"
 #include "mainwindow_constants.h"
 #include "StyleUtils.h"
@@ -22,14 +23,25 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <iostream>     // std::cout
+#include <algorithm>    // std::reverse
+#include <vector>       // std::vector
 
 namespace
 {
 const QSize default_dialog_size(600, 800);
 }
 
-CsvImportAssistant::CsvImportAssistant(QString dir, QString file, QWidget* parent)
-    : QDialog(parent), m_dirName(dir), m_fileName(file)
+CsvImportAssistant::CsvImportAssistant(QString dir, QString file, QWidget* parent):
+QDialog(parent),
+m_dirName(dir),
+m_fileName(file),
+m_tableWidget(nullptr),
+m_filePathField(nullptr),
+m_separatorField(nullptr),
+m_firstDataRowSpinBox(nullptr),
+m_lastDataRowSpinBox(nullptr),
+m_singleDataColSpinBox(nullptr)
 {
     setWindowTitle("Data Importer");
     setMinimumSize(128, 128);
@@ -221,33 +233,71 @@ void CsvImportAssistant::onRejectButton(){
 
 void CsvImportAssistant::onImportButton()
 {
+    try {
+        auto data = getData();
+        accept();
+    } catch(std::exception& e){
+        QString message = QString("Unable to import, check that the table contains only numerical values");
+        QMessageBox::warning(nullptr, "Wrong data format", message);
+    }
+}
+
+
+std::unique_ptr<OutputData<double>> CsvImportAssistant::getData()
+{
     using namespace std;
 
-    int nRows = m_tableWidget->rowCount();
-    int nCols = m_tableWidget->columnCount();
-    vector<vector<string>> A;
-    vector<string> B;
+    int nTableRows = m_tableWidget->rowCount();
+    int nTableCols = m_tableWidget->columnCount();
+    vector<vector<string>> StringVectorVector;
+    vector<string> StringVector;
 
     //save the values of the array
-    for(int i = 0; i < nRows; i++){
-        B.clear();
-        for(int j = 0; j < nCols; j++){
-            B.push_back( m_tableWidget->item(i,j) != nullptr ? m_tableWidget->item(i,j)->text().toStdString() : "");
+    std::size_t nDataCols = 0;
+    std::size_t nDataRows = 0;
+    for(int i = 0; i < nTableRows; i++){
+        StringVector.clear();
+        nDataCols = 0;
+        for(int j = 0; j < nTableCols; j++){
+            auto tableElement = m_tableWidget->item(i,j);
+            if(tableElement != nullptr){
+                StringVector.push_back(tableElement->text().toStdString());
+                nDataCols++;
+            }
         }
-        A.push_back(B);
+        StringVectorVector.push_back(StringVector);
+        nDataRows++;
     }
 
-    setFilepath(filepath()+"-ba-imported.txt");
-    ofstream output_file(filepath().toStdString());
-    for(int i = 0; i < nRows; i++){
-        for(int j = 0; j < nCols - 1; j++){
-            std::string a = A[unsigned(i)][unsigned(j)];
-            output_file << a << " ";
+    std::unique_ptr<OutputData<double>> result, result1d; //= new OutputData<double>;
+    result.reset(new OutputData<double>());
+    result1d.reset(new OutputData<double>());
+    result->addAxis("x", nDataCols, 0.0, double(nDataCols));
+    result->addAxis("y", nDataRows, 0.0, double(nDataRows));
+    std::vector<unsigned> axes_indices(2);
+    for(unsigned row=0; row<nDataRows; row++) {
+        for(unsigned col=0; col<nDataCols; col++) {
+            axes_indices[0] = col;
+            axes_indices[1] = static_cast<unsigned>(nDataRows) - 1 - row;
+            size_t global_index = result->toGlobalIndex(axes_indices);
+            vector<double> parsed_doubles(DataFormatUtils::parse_doubles(StringVectorVector[row][col]));
+            (*result)[global_index] = parsed_doubles[0];
         }
-        std::string a = A[unsigned(i)][unsigned(nCols) - 1];
-        output_file << a << '\n';
     }
-    accept();
+
+
+    if( (nDataCols < 2) || (nDataRows < 2) ){
+        size_t nelem = std::max(nDataCols,nDataRows);
+        result1d->addAxis("intensity",nelem, 0.0, double(nelem));
+        std::vector<double> vector1d(result->getRawDataVector());
+
+        if(nDataRows > nDataCols)
+            std::reverse(vector1d.begin(),vector1d.end());
+
+        result1d->setRawDataVector(vector1d);
+        std::swap(result,result1d);
+    }
+    return result;
 }
 
 
@@ -300,8 +350,8 @@ void CsvImportAssistant::remove_unwanted(){
 
     int nRows = m_tableWidget->rowCount();
     int nCols = m_tableWidget->columnCount();
-    vector<vector<string>> A;
-    vector<string> B;
+    vector<vector<string>> StringVectorVector;
+    vector<string> StringVector;
     vector<int> to_be_removed;
 
     //save the inices of blank cols
@@ -327,24 +377,24 @@ void CsvImportAssistant::remove_unwanted(){
 
     //save the values of the array
     for(int i = 0; i < nRows; i++){
-        B.clear();
+        StringVector.clear();
         for(int j = 0; j < nCols; j++){
             string contents = m_tableWidget->item(i,j) != nullptr ? m_tableWidget->item(i,j)->text().toStdString() : "";
-            B.push_back(contents);
+            StringVector.push_back(contents);
         }
         //Skip last row if it is an empty line:
         if(i == nRows - 1)
-            if(QString::fromStdString(std::accumulate(B.begin(), B.end(), std::string(""))).trimmed() == "")
+            if(QString::fromStdString(std::accumulate(StringVector.begin(), StringVector.end(), std::string(""))).trimmed() == "")
                 continue;
 
-        A.push_back(B);
+        StringVectorVector.push_back(StringVector);
     }
 
     //correct the size of the table
     m_tableWidget->clearContents();
     m_tableWidget->setRowCount(0);
     m_tableWidget->setColumnCount(nCols-int(to_be_removed.size()));
-    nRows = int(A.size());
+    nRows = int(StringVectorVector.size());
 
     //put values into a new table
     for(int i = 0; i < nRows; i++){
@@ -352,8 +402,8 @@ void CsvImportAssistant::remove_unwanted(){
         int J = 0;
         for(int j = 0; j < nCols; j++){
             if( std::find(to_be_removed.begin(), to_be_removed.end(), j) == to_be_removed.end()){
-                std::string a = A[unsigned(i)][unsigned(j)];
-                m_tableWidget->setItem(i,J,new QTableWidgetItem(QString::fromStdString(a)));
+                std::string retrievedString = StringVectorVector[unsigned(i)][unsigned(j)];
+                m_tableWidget->setItem(i,J,new QTableWidgetItem(QString::fromStdString(retrievedString)));
                 J++;
             }
         }
@@ -446,7 +496,7 @@ char CsvImportAssistant::guessSeparator() const{
     char c;
     std::ifstream is(m_fileName.toStdString());
     while (is.get(c))
-      frequencies[int(c)]++;
+        frequencies[int(c)]++;
     is.close();
 
     //set the guessed separator as the most frequent among the
