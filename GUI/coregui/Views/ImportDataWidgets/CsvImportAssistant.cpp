@@ -12,6 +12,7 @@
 //
 // ************************************************************************** //
 
+#include "DataFormatUtils.h"
 #include "CsvImportAssistant.h"
 #include "mainwindow_constants.h"
 #include "StyleUtils.h"
@@ -221,6 +222,18 @@ void CsvImportAssistant::onRejectButton(){
 
 void CsvImportAssistant::onImportButton()
 {
+    try {
+        importToOutputData();
+    } catch(std::exception& e){
+        QString message = QString("Unable to import, check that the table contains only numerical values");
+        QMessageBox::warning(nullptr, "Wrong data format", message);
+        m_data = nullptr;
+    }
+}
+
+
+void CsvImportAssistant::importToOutputData()
+{
     using namespace std;
 
     int nRows = m_tableWidget->rowCount();
@@ -229,24 +242,47 @@ void CsvImportAssistant::onImportButton()
     vector<string> B;
 
     //save the values of the array
+    std::size_t ncols = 0;
+    std::size_t nrows = 0;
     for(int i = 0; i < nRows; i++){
         B.clear();
+        ncols = 0;
         for(int j = 0; j < nCols; j++){
-            B.push_back( m_tableWidget->item(i,j) != nullptr ? m_tableWidget->item(i,j)->text().toStdString() : "");
+            auto b = m_tableWidget->item(i,j);
+            if(b != nullptr){
+                B.push_back(b->text().toStdString());
+                ncols++;
+            }
         }
         A.push_back(B);
+        nrows++;
     }
 
-    setFilepath(filepath()+"-ba-imported.txt");
-    ofstream output_file(filepath().toStdString());
-    for(int i = 0; i < nRows; i++){
-        for(int j = 0; j < nCols - 1; j++){
-            std::string a = A[unsigned(i)][unsigned(j)];
-            output_file << a << " ";
+    std::unique_ptr<OutputData<double>> result, result1d; //= new OutputData<double>;
+    result.reset(new OutputData<double>());
+    result1d.reset(new OutputData<double>());
+    result->addAxis("x", ncols, 0.0, double(ncols));
+    result->addAxis("y", nrows, 0.0, double(nrows));
+    std::vector<unsigned> axes_indices(2);
+    for(unsigned row=0; row<nrows; row++) {
+        for(unsigned col=0; col<ncols; col++) {
+            axes_indices[0] = col;
+            axes_indices[1] = static_cast<unsigned>(nrows) - 1 - row;
+            size_t global_index = result->toGlobalIndex(axes_indices);
+            (*result)[global_index] = DataFormatUtils::parse_doubles(A[row][col])[0];
+            //std::cout << (*result)[global_index] << std::endl;
         }
-        std::string a = A[unsigned(i)][unsigned(nCols) - 1];
-        output_file << a << '\n';
     }
+
+
+    if((ncols < 2) || (nrows < 2)){
+            size_t nelem = std::max(ncols,nrows);
+            result1d->addAxis("intensity",nelem, 0.0, double(nelem));
+            result1d->setRawDataVector(result->getRawDataVector());
+            std::swap(result,result1d);
+    }
+
+    m_data = result.release();
     accept();
 }
 
@@ -484,4 +520,11 @@ unsigned CsvImportAssistant::lastLine() const{
 
 unsigned CsvImportAssistant::singleColumnImport() const{
     return unsigned(m_singleDataColSpinBox->value());
+}
+
+OutputData<double> *CsvImportAssistant::getData()
+{    
+     auto x = m_data->clone();
+     delete(m_data);
+     return x;
 }
