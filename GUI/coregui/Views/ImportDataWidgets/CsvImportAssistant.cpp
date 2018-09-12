@@ -280,7 +280,7 @@ std::unique_ptr<OutputData<double>> CsvImportAssistant::getData()
             axes_indices[0] = col;
             axes_indices[1] = static_cast<unsigned>(nDataRows) - 1 - row;
             size_t global_index = result->toGlobalIndex(axes_indices);
-            auto parsed_doubles = DataFormatUtils::parse_doubles(StringVectorVector[row][col]);
+            vector<double> parsed_doubles(DataFormatUtils::parse_doubles(StringVectorVector[row][col]));
             (*result)[global_index] = parsed_doubles[0];
         }
     }
