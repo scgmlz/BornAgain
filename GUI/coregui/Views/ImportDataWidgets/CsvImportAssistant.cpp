@@ -26,6 +26,7 @@
 #include <iostream>     // std::cout
 #include <algorithm>    // std::reverse
 #include <vector>       // std::vector
+#include <string>
 
 namespace
 {
