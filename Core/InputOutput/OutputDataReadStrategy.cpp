@@ -37,60 +37,6 @@ OutputData<double>* OutputDataReadINTStrategy::readOutputData(std::istream& inpu
     return result;
 }
 
-
-OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream& input_stream)
-{
-    std::string line;
-    std::vector<std::vector<double>> data;
-
-    while( std::getline(input_stream, line) ) {
-        if(line.empty() || line[0] == '#')
-            continue;
-        std::vector<double> data_in_row = DataFormatUtils::parse_doubles(line);
-        data.push_back(data_in_row);
-    }
-    // validating
-    size_t nrows = data.size();
-    size_t ncols(0);
-    if(nrows) ncols = data[0].size();
-
-    if (ncols == 0)
-        throw std::runtime_error("OutputDataReadNumpyTXTStrategy::readOutputData() -> Error. "
-                                 "Can't parse file");
-
-    for(size_t row=0; row<nrows; row++) {
-        if(data[row].size() != ncols)
-            throw std::runtime_error("OutputDataReadNumpyTXTStrategy::readOutputData() -> Error. "
-                                     "Number of elements is different from row to row.");
-    }
-
-    std::unique_ptr<OutputData<double>> result, result1d; //= new OutputData<double>;
-    result.reset(new OutputData<double>());
-    result1d.reset(new OutputData<double>());
-    result->addAxis("x", ncols, 0.0, double(ncols));
-    result->addAxis("y", nrows, 0.0, double(nrows));
-    std::vector<unsigned> axes_indices(2);
-    for(unsigned row=0; row<nrows; row++) {
-        for(unsigned col=0; col<ncols; col++) {
-            axes_indices[0] = col;
-            axes_indices[1] = static_cast<unsigned>(nrows) - 1 - row;
-            size_t global_index = result->toGlobalIndex(axes_indices);
-            (*result)[global_index] = data[row][col];
-        }
-    }
-
-
-    if((ncols < 2) || (nrows < 2)){
-            size_t nelem = std::max(ncols,nrows);
-            result1d->addAxis("intensity",nelem, 0.0, double(nelem));
-            result1d->setRawDataVector(result->getRawDataVector());
-            std::swap(result,result1d);
-    }
-
-    return result.release();
-}
-
-
 #ifdef BORNAGAIN_TIFF_SUPPORT
 
 OutputDataReadTiffStrategy::OutputDataReadTiffStrategy()
