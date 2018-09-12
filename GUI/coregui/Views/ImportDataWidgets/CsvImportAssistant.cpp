@@ -23,6 +23,9 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <iostream>     // std::cout
+#include <algorithm>    // std::reverse
+#include <vector>       // std::vector
 
 namespace
 {
@@ -283,10 +286,15 @@ std::unique_ptr<OutputData<double>> CsvImportAssistant::getData()
     }
 
 
-    if((nDataCols < 2) || (nDataRows < 2)){
+    if( (nDataCols < 2) || (nDataRows < 2) ){
         size_t nelem = std::max(nDataCols,nDataRows);
         result1d->addAxis("intensity",nelem, 0.0, double(nelem));
-        result1d->setRawDataVector(result->getRawDataVector());
+        std::vector<double> vector1d(result->getRawDataVector());
+
+        if(nDataRows > nDataCols)
+            std::reverse(vector1d.begin(),vector1d.end());
+
+        result1d->setRawDataVector(vector1d);
         std::swap(result,result1d);
     }
     return result;
