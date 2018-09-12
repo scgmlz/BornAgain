@@ -45,8 +45,9 @@ int getRank(const InstrumentItem& item) {
 std::unique_ptr<OutputData<double>> ImportDataUtils::ImportData(QString& baseNameOfLoadedFile)
 {
     QString dirname = AppSvc::projectManager()->userImportDir();
-    QString fileName = QFileDialog::getOpenFileName(nullptr, QStringLiteral("Open Intensity File"),
+    QString fileName = QFileDialog::getOpenFileName(Q_NULLPTR, QStringLiteral("Open Intensity File"),
                                                     dirname, filter_string);
+
     std::unique_ptr<OutputData<double>> result;
 
     QString newImportDir = GUIHelpers::fileDir(fileName);
@@ -82,7 +83,7 @@ bool ImportDataUtils::UseImportAssistant(QString& dirname, QString& fileName, st
         CsvImportAssistant assistant(dirname,fileName);
         int res = assistant.exec();
         if(res == assistant.Accepted){
-            result.reset(assistant.getData());
+            result = assistant.getData();
             return true;
         }
     }catch(std::exception& e){

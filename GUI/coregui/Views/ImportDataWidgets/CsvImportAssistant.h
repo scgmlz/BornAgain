@@ -42,8 +42,7 @@ public:
     unsigned firstLine() const;
     unsigned lastLine() const;
     unsigned singleColumnImport() const;
-    OutputData<double>* getData();
-
+    std::unique_ptr<OutputData<double>> getData();
 
 public slots:
     void onImportButton();
@@ -62,8 +61,8 @@ private:
     void convert_table();
     void remove_unwanted();
     void setRowNumbering();
-    void importToOutputData();
     bool cell_is_blank(int iRow, int jCol);
+
 
 
     QString m_dirName;
@@ -76,8 +75,6 @@ private:
     QSpinBox* m_firstDataRowSpinBox;
     QSpinBox* m_lastDataRowSpinBox;
     QSpinBox* m_singleDataColSpinBox;
-    OutputData<double>* m_data;
-
 };
 
 #endif // MATERIALEDITORDIALOG_H
