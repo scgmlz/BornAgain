@@ -28,8 +28,6 @@ IOutputDataReadStrategy* OutputDataReadFactory::getReadStrategy(const std::strin
     IOutputDataReadStrategy* result(nullptr);
     if(DataFormatUtils::isIntFile(file_name))
         result = new OutputDataReadINTStrategy();
-    else if(DataFormatUtils::isTxtFile(file_name))
-        result = new OutputDataReadNumpyTXTStrategy();
 #ifdef BORNAGAIN_TIFF_SUPPORT
     else if(DataFormatUtils::isTiffFile(file_name))
        result = new OutputDataReadTiffStrategy();

@@ -39,16 +39,6 @@ public:
     OutputData<double>* readOutputData(std::istream& input_stream);
 };
 
-//! Strategy to read OutputData from simple ASCII file with the layout as in numpy.savetxt.
-//! @ingroup input_output_internal
-
-class OutputDataReadNumpyTXTStrategy : public IOutputDataReadStrategy
-{
-public:
-    OutputData<double>* readOutputData(std::istream& input_stream);
-};
-
-
 #ifdef BORNAGAIN_TIFF_SUPPORT
 
 class TiffHandler;
