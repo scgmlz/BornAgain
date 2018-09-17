@@ -150,6 +150,6 @@ void RealDataItem::updateIntensityDataFileName()
 
 void RealDataItem::updateToInstrument()
 {
-    DataItem* item = dataItem();
-    JobItemUtils::setIntensityItemAxesUnits(item, m_linkedInstrument);
+    if (DataItem* item = dataItem())
+        JobItemUtils::setIntensityItemAxesUnits(item, m_linkedInstrument);
 }
