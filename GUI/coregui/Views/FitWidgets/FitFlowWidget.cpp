@@ -35,12 +35,11 @@ void FitFlowWidget::subscribeToItem()
 {
     fitSuiteItem()->mapper()->setOnPropertyChange(
         [this](const QString& name) {
-            if (name == FitSuiteItem::P_CHI2) {
+            if (name == FitSuiteItem::P_ITERATION_COUNT) {
                 int iter = fitSuiteItem()->getItemValue(FitSuiteItem::P_ITERATION_COUNT).toInt();
                 double chi = fitSuiteItem()->getItemValue(FitSuiteItem::P_CHI2).toDouble();
-                if (iter == 0) {
+                if (iter == 1)
                     m_histPlot->clearData();
-                }
                 m_histPlot->addData(static_cast<double>(iter), chi);
             }
         },

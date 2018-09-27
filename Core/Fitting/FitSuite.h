@@ -127,6 +127,9 @@ public:
     //! Returns reference to fit parameters
     FitSuiteStrategies* fitStrategies();
 
+    //! temporary method to check if it is first iteration
+    bool isFirstIteration() const;
+
     //! if the last iteration is done (used by observers to print summary)
     bool isLastIteration() const;
 

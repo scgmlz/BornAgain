@@ -18,7 +18,6 @@
 #include "FitSuite.h"
 #include "GUIHelpers.h"
 #include "MinimizerUtils.h"
-#include <QDebug>
 
 GUIFitObserver::GUIFitObserver(QObject* parent)
     : QObject(parent)
@@ -34,27 +33,18 @@ GUIFitObserver::~GUIFitObserver()
 
 void GUIFitObserver::update(FitSuite* subject)
 {
-    // discard data after interruption
-    if (subject->isInterrupted())
-        return;
-
-    if (subject->numberOfIterations() % m_update_interval == 0) {
-        if (m_block_update_plots) {
-            qDebug() << "GUI is busy with plotting, skipping iteration "
-                     << subject->numberOfIterations();
-        }
-    }
-
-    if (subject->numberOfIterations() == 0)
-        emit logInfoUpdate(QString::fromStdString(subject->setupToString()));
-
-    if (!canUpdatePlots(subject))
+    if (!is_suitable_iteration(subject))
         return;
 
     std::unique_lock<std::mutex> lock(m_update_plot_mutex);
+    if (m_block_update_plots && !is_obligatory_iteration(subject))
+        return; // plotting still works, will skip iteration
+
     if (m_block_update_plots)
         m_on_finish_notifier.wait(lock, [this]() { return m_block_update_plots; });
-    m_block_update_plots = true;
+
+    if (subject->isFirstIteration())
+        emit logInfoUpdate(QString::fromStdString(subject->setupToString()));
 
     FitProgressInfo info;
     info.m_chi2 = subject->getChi2();
@@ -63,25 +53,37 @@ void GUIFitObserver::update(FitSuite* subject)
 
     emit progressInfoUpdate(info);
 
+    if (subject->isLastIteration())
+        emit logInfoUpdate(reportToString(subject));
+
     m_simData.reset(subject->simulationResult().data());
     emit plotsUpdate();
 
-    if (subject->isLastIteration())
-        emit logInfoUpdate(reportToString(subject));
+}
+
+//! Returns true if data could be plotted, when there are resources for it.
+
+bool GUIFitObserver::is_suitable_iteration(FitSuite* fitSuite)
+{
+    if (fitSuite->isInterrupted())
+        return false;
+
+    int n_iter = static_cast<int>(fitSuite->numberOfIterations());
+    return n_iter == fitSuite->isFirstIteration() ||
+           n_iter % m_update_interval == 0 ||
+           fitSuite->isLastIteration();
+}
+
+//! Returns true if given iteration should be obligary plotted.
+
+bool GUIFitObserver::is_obligatory_iteration(FitSuite* fitSuite)
+{
+    return fitSuite->isLastIteration();
 }
 
 void GUIFitObserver::setInterval(int val)
 {
     m_update_interval = val;
-}
-
-//! Returns true if it is time to update plots.
-
-bool GUIFitObserver::canUpdatePlots(FitSuite* fitSuite)
-{
-    if (fitSuite->isLastIteration())
-        return true;
-    return !m_block_update_plots && fitSuite->numberOfIterations() % m_update_interval == 0;
 }
 
 //! Return string representing results of the minimization.
@@ -95,6 +97,7 @@ QString GUIFitObserver::reportToString(FitSuite* fitSuite)
 }
 
 //! Informs observer that FitSuiteWidget has finished plotting and is ready for next plot
+
 void GUIFitObserver::finishedPlotting()
 {
     std::unique_lock<std::mutex> lock(m_update_plot_mutex);
@@ -103,7 +106,11 @@ void GUIFitObserver::finishedPlotting()
     m_on_finish_notifier.notify_one();
 }
 
-const OutputData<double>* GUIFitObserver::simulationData() const
+//! Returns data to the user and blocks possible data update.
+
+const OutputData<double>* GUIFitObserver::simulationData()
 {
+    std::unique_lock<std::mutex> lock(m_update_plot_mutex);
+    m_block_update_plots = true;
     return m_simData.get();
 }

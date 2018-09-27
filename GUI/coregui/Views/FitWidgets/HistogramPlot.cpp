@@ -45,21 +45,21 @@ HistogramPlot::HistogramPlot(QWidget* parent) : QWidget(parent), m_customPlot(ne
 void HistogramPlot::addData(double x, double y)
 {
     m_customPlot->graph()->addData(x, y);
-    m_customPlot->graph(0)->rescaleAxes();
+    m_customPlot->graph()->rescaleAxes();
     m_customPlot->replot();
 }
 
 void HistogramPlot::addData(const QVector<double>& x, const QVector<double>& y)
 {
     m_customPlot->graph()->addData(x, y);
-    m_customPlot->graph(0)->rescaleAxes();
+    m_customPlot->graph()->rescaleAxes();
     m_customPlot->replot();
 }
 
 void HistogramPlot::setData(const QVector<double>& x, const QVector<double>& y)
 {
     m_customPlot->graph()->setData(x, y);
-    m_customPlot->graph(0)->rescaleAxes();
+    m_customPlot->graph()->rescaleAxes();
     m_customPlot->replot();
 }
 

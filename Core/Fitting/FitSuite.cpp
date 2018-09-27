@@ -156,6 +156,12 @@ FitSuiteStrategies* FitSuite::fitStrategies()
     return m_impl->fitStrategies();
 }
 
+bool FitSuite::isFirstIteration() const
+{
+    // FIXME temporary method: before refactoring first iteration had index 0
+    return m_impl->numberOfIterations() == 1;
+}
+
 bool FitSuite::isLastIteration() const
 {
     return m_impl->isLastIteration();

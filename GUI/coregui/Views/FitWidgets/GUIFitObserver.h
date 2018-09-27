@@ -40,7 +40,7 @@ public:
 
     void finishedPlotting();
 
-    const OutputData<double>* simulationData() const;
+    const OutputData<double>* simulationData();
 
 public slots:
     void setInterval(int val);
@@ -51,8 +51,8 @@ signals:
     void progressInfoUpdate(const FitProgressInfo& info);
 
 private:
-    bool canUpdatePlots(FitSuite* fitSuite);
-    bool canUpdateProgressInfo(FitSuite* fitSuite);
+    bool is_suitable_iteration(FitSuite* fitSuite);
+    bool is_obligatory_iteration(FitSuite* fitSuite);
     QString reportToString(FitSuite* fitSuite);
 
     bool m_block_update_plots;
