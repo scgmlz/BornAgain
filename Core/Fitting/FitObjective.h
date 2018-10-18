@@ -82,6 +82,10 @@ public:
     //! @param i_item: the index of fit pair
     SimulationResult relativeDifference(size_t i_item = 0) const;
 
+    //! Returns absolute value of difference between simulation and experimental data.
+    //! @param i_item: the index of fit pair
+    SimulationResult absoluteDifference(size_t i_item = 0) const;
+
     //! Initializes printing to standard output during the fitting.
     //! @param every_nth: Print every n'th iteration.
     void initPrint(int every_nth);

@@ -126,6 +126,11 @@ SimulationResult FitObjective::relativeDifference(size_t i_item) const
     return m_fit_objects[check_index(i_item)]->relativeDifference();
 }
 
+SimulationResult FitObjective::absoluteDifference(size_t i_item) const
+{
+    return m_fit_objects[check_index(i_item)]->absoluteDifference();
+}
+
 void FitObjective::initPrint(int every_nth)
 {
     m_fit_status->initPrint(every_nth);

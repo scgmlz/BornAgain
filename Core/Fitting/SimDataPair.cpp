@@ -87,6 +87,20 @@ SimulationResult SimDataPair::relativeDifference() const
     return SimulationResult(*roi_data, *converter);
 }
 
+SimulationResult SimDataPair::absoluteDifference() const
+{
+    auto converter = UnitConverterUtils::createConverter(*m_simulation);
+    auto roi_data = UnitConverterUtils::createOutputData(*converter.get(), converter->defaultUnits());
+    auto detector = m_simulation->getInstrument().getDetector();
+
+    detector->iterate([&](IDetector::const_iterator it){
+        const size_t index = it.roiIndex();
+        (*roi_data)[index] = std::abs(m_simulation_result[index] - m_experimental_data[index]);
+    });
+
+    return SimulationResult(*roi_data, *converter);
+}
+
 SimDataPair::~SimDataPair() = default;
 
 void SimDataPair::runSimulation(const Fit::Parameters& params)

@@ -41,6 +41,8 @@ public:
 
     SimulationResult relativeDifference() const;
 
+    SimulationResult absoluteDifference() const;
+
     void runSimulation(const Fit::Parameters& params);
 
     std::vector<double> experimental_array() const;
