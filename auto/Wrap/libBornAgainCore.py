@@ -6514,6 +6514,14 @@ class FitObjective(_object):
         return _libBornAgainCore.FitObjective_relativeDifference(self, i_item)
 
 
+    def absoluteDifference(self, i_item=0):
+        """
+        absoluteDifference(FitObjective self, size_t i_item=0) -> SimulationResult
+        absoluteDifference(FitObjective self) -> SimulationResult
+        """
+        return _libBornAgainCore.FitObjective_absoluteDifference(self, i_item)
+
+
     def initPrint(self, every_nth):
         """
         initPrint(FitObjective self, int every_nth)
@@ -19369,18 +19377,6 @@ class IPeakShape(ISample):
         """
         return _libBornAgainCore.IPeakShape_evaluate(self, q)
 
-
-    def thickness_z(self):
-        """
-        thickness_z(IPeakShape self) -> double
-
-        virtual double IPeakShape::thickness_z() const =0
-
-        Returns the thickness in the z-direction. 
-
-        """
-        return _libBornAgainCore.IPeakShape_thickness_z(self)
-
 IPeakShape_swigregister = _libBornAgainCore.IPeakShape_swigregister
 IPeakShape_swigregister(IPeakShape)
 
@@ -19404,14 +19400,14 @@ class GaussPeakShape(IPeakShape):
     __getattr__ = lambda self, name: _swig_getattr(self, GaussPeakShape, name)
     __repr__ = _swig_repr
 
-    def __init__(self, domainsize):
+    def __init__(self, max_intensity, domainsize):
         """
-        __init__(GaussPeakShape self, double domainsize) -> GaussPeakShape
+        __init__(GaussPeakShape self, double max_intensity, double domainsize) -> GaussPeakShape
 
         GaussPeakShape::GaussPeakShape(double domainsize)
 
         """
-        this = _libBornAgainCore.new_GaussPeakShape(domainsize)
+        this = _libBornAgainCore.new_GaussPeakShape(max_intensity, domainsize)
         try:
             self.this.append(this)
         except __builtin__.Exception:
@@ -19454,20 +19450,69 @@ class GaussPeakShape(IPeakShape):
         """
         return _libBornAgainCore.GaussPeakShape_evaluate(self, q)
 
-
-    def thickness_z(self):
-        """
-        thickness_z(GaussPeakShape self) -> double
-
-        double GaussPeakShape::thickness_z() const override
-
-        Returns the thickness in the z-direction. 
-
-        """
-        return _libBornAgainCore.GaussPeakShape_thickness_z(self)
-
 GaussPeakShape_swigregister = _libBornAgainCore.GaussPeakShape_swigregister
 GaussPeakShape_swigregister(GaussPeakShape)
+
+class LorentzPeakShape(IPeakShape):
+    """Proxy of C++ LorentzPeakShape class."""
+
+    __swig_setmethods__ = {}
+    for _s in [IPeakShape]:
+        __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LorentzPeakShape, name, value)
+    __swig_getmethods__ = {}
+    for _s in [IPeakShape]:
+        __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LorentzPeakShape, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, max_intensity, domainsize):
+        """__init__(LorentzPeakShape self, double max_intensity, double domainsize) -> LorentzPeakShape"""
+        this = _libBornAgainCore.new_LorentzPeakShape(max_intensity, domainsize)
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _libBornAgainCore.delete_LorentzPeakShape
+    __del__ = lambda self: None
+
+    def clone(self):
+        """
+        clone(LorentzPeakShape self) -> LorentzPeakShape
+
+        virtual IPeakShape* IPeakShape::clone() const =0
+
+        Returns a clone of this  ISample object. 
+
+        """
+        return _libBornAgainCore.LorentzPeakShape_clone(self)
+
+
+    def accept(self, visitor):
+        """
+        accept(LorentzPeakShape self, INodeVisitor visitor)
+
+        virtual void INode::accept(INodeVisitor *visitor) const =0
+
+        Calls the  INodeVisitor's visit method. 
+
+        """
+        return _libBornAgainCore.LorentzPeakShape_accept(self, visitor)
+
+
+    def evaluate(self, q):
+        """
+        evaluate(LorentzPeakShape self, kvector_t q) -> double
+
+        virtual double IPeakShape::evaluate(const kvector_t q) const =0
+
+        Evaluates the peak shape at displacement q from the center at 0. 
+
+        """
+        return _libBornAgainCore.LorentzPeakShape_evaluate(self, q)
+
+LorentzPeakShape_swigregister = _libBornAgainCore.LorentzPeakShape_swigregister
+LorentzPeakShape_swigregister(LorentzPeakShape)
 
 class IResolutionFunction2D(ICloneable, INode):
     """
@@ -21309,18 +21354,6 @@ class InterferenceFunction3DLattice(IInterferenceFunction):
 
         """
         return _libBornAgainCore.InterferenceFunction3DLattice_lattice(self)
-
-
-    def getParticleDensity(self):
-        """
-        getParticleDensity(InterferenceFunction3DLattice self) -> double
-
-        double InterferenceFunction3DLattice::getParticleDensity() const final
-
-        If defined by this interference function's parameters, returns the particle density (per area). Otherwise, returns zero or a user-defined value 
-
-        """
-        return _libBornAgainCore.InterferenceFunction3DLattice_getParticleDensity(self)
 
 
     def supportsMultilayer(self):

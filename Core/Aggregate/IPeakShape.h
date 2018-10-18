@@ -31,9 +31,6 @@ public:
 
     //! Evaluates the peak shape at displacement q from the center at 0
     virtual double evaluate(const kvector_t q) const=0;
-
-    //! Returns the thickness in the z-direction
-    virtual double thickness_z() const=0;
 };
 
 
@@ -44,7 +41,7 @@ public:
 class BA_CORE_API_ GaussPeakShape : public IPeakShape
 {
 public:
-    GaussPeakShape(double domainsize);
+    GaussPeakShape(double max_intensity, double domainsize);
     ~GaussPeakShape() override;
 
     GaussPeakShape* clone() const override;
@@ -52,9 +49,28 @@ public:
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
     double evaluate(const kvector_t q) const override;
-
-    double thickness_z() const override;
 private:
+    double m_max_intensity;
+    double m_domainsize;
+};
+
+//! Class that implements a Lorentzian peak shape of a Bragg peak.
+//!
+//! @ingroup samples_internal
+
+class BA_CORE_API_ LorentzPeakShape : public IPeakShape
+{
+public:
+    LorentzPeakShape(double max_intensity, double domainsize);
+    ~LorentzPeakShape() override;
+
+    LorentzPeakShape* clone() const override;
+
+    void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
+
+    double evaluate(const kvector_t q) const override;
+private:
+    double m_max_intensity;
     double m_domainsize;
 };
 

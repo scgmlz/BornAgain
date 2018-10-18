@@ -41,8 +41,6 @@ public:
 
     const Lattice& lattice() const;
 
-    double getParticleDensity() const final;
-
     bool supportsMultilayer() const override { return false; }
 
     std::vector<const INode*> getChildren() const override;

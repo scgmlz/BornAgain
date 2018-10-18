@@ -17,25 +17,40 @@
 
 IPeakShape::~IPeakShape() =default;
 
-GaussPeakShape::GaussPeakShape(double domainsize)
-    : m_domainsize(domainsize)
+GaussPeakShape::GaussPeakShape(double max_intensity, double domainsize)
+    : m_max_intensity(max_intensity)
+    , m_domainsize(domainsize)
 {}
 
 GaussPeakShape::~GaussPeakShape() =default;
 
 GaussPeakShape* GaussPeakShape::clone() const
 {
-    return new GaussPeakShape(m_domainsize);
+    return new GaussPeakShape(m_max_intensity, m_domainsize);
 }
 
 double GaussPeakShape::evaluate(const kvector_t q) const
 {
     double q_norm = q.mag2();
     double exponent = -q_norm*m_domainsize*m_domainsize/2.0;
-    return m_domainsize * std::sqrt(M_TWOPI) * std::exp(exponent);
+    return m_max_intensity * std::exp(exponent);
 }
 
-double GaussPeakShape::thickness_z() const
+LorentzPeakShape::LorentzPeakShape(double max_intensity, double domainsize)
+    : m_max_intensity(max_intensity)
+    , m_domainsize(domainsize)
+{}
+
+LorentzPeakShape::~LorentzPeakShape() =default;
+
+LorentzPeakShape *LorentzPeakShape::clone() const
 {
-    return m_domainsize;
+    return new LorentzPeakShape(m_max_intensity, m_domainsize);
+}
+
+double LorentzPeakShape::evaluate(const kvector_t q) const
+{
+    double q_norm = q.mag2();
+    double lorentz = 1.0 / (1.0 + m_domainsize*m_domainsize*q_norm);
+    return m_max_intensity * lorentz * lorentz;
 }
