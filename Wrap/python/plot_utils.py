@@ -281,14 +281,14 @@ class PlotterGISASV2(Plotter):
 
         real_data = fit_objective.experimentalData()
         sim_data = fit_objective.simulationResult()
-        diff = fit_objective.relativeDifference()
+        diff = fit_objective.absoluteDifference()
 
         self.make_subplot(1)
 
         # same limits for both plots
         arr = real_data.array()
         zmax = np.amax(arr)
-        zmin = zmax*1e-6
+        zmin = zmax*1e-3
 
         ba.plot_colormap(real_data, title="Experimental data", zmin=zmin, zmax=zmax,
                       xlabel='', ylabel='', zlabel='')
