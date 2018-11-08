@@ -47,10 +47,14 @@ const OutputData<double> *TiffHandler::getOutputData() const
 
 void TiffHandler::write(const OutputData<double> &data, std::ostream &output_stream)
 {
-    m_tiff = TIFFStreamOpen("MemTIFF", &output_stream);
     m_data.reset(data.clone());
+    if(m_data->getRank() != 2)
+        throw Exceptions::LogicErrorException(
+            "TiffHandler::write -> Error. "
+            "Only 2-dim arrays supported");
+    m_tiff = TIFFStreamOpen("MemTIFF", &output_stream);
     m_width = m_data->getAxis(BornAgain::X_AXIS_INDEX).size();
-    m_height = m_data->getAxis(BornAgain::Y_AXIS_INDEX).size();
+    m_height = m_data->getAxis(BornAgain::Y_AXIS_INDEX).size(); //this does not exist for 1d data
     write_header();
     write_data();
     close();

@@ -34,8 +34,8 @@ public:
     void setSelectionModel(QItemSelectionModel* selectionModel);
 
 public slots:
-    void onImport2dDataAction();
     void onImport1dDataAction();
+    void onImport2dDataAction();
     void onRemoveDataAction();
     void onRotateDataRequest();
     void onContextMenuRequest(const QPoint &point, const QModelIndex &indexAtPoint);

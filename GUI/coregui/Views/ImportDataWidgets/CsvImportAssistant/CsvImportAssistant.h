@@ -26,10 +26,10 @@
 namespace csv{
 typedef std::vector<std::vector<std::string>> DataArray ;
 typedef std::vector<std::string> DataRow;
+bool isAscii(QString filename);
 }
 
 //! Logic for importing intensity data from csv files
-
 class BA_CORE_API_ CsvImportAssistant: public QObject
 {
     Q_OBJECT

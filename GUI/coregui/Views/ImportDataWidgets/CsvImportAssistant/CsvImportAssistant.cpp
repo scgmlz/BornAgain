@@ -27,6 +27,27 @@
 #include <QMenu>
 #include <QFormLayout>
 
+bool csv::isAscii(QString filename)
+{
+    return true;
+    // TODO
+    // This function needs to be defined properly;
+    // motivation: ° and Å characters are problematic.
+    char c;
+    unsigned count = 0;
+    unsigned count_bad = 0;
+    std::ifstream is(filename.toStdString());
+    while (is.get(c) && count < 1000){
+        count++;
+        if(unsigned(c) > 255)
+            count_bad++;
+    }
+    is.close();
+    double acceptance_threshold = 0.1f * double(count);
+    //std::cout << count << "; " << count_bad << std::endl;
+    return static_cast<double>(count_bad) <= acceptance_threshold;
+}
+
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent):
       m_fileName(file)
       ,m_csvFile(nullptr)
