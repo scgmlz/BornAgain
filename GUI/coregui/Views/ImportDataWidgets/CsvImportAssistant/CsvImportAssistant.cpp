@@ -137,6 +137,7 @@ bool CsvImportAssistant::loadCsvFile(){
     while(QString::fromStdString(accumulate(csvArray[lastRow-1].begin(), csvArray[lastRow-1].end(), std::string(""))).trimmed() == ""){
         lastRow--;
         if (lastRow < 1) {
+            CsvImportAssistant::showErrorMessage("The file exist but it seems to be empty");
             return false;
         }
     }
