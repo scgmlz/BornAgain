@@ -27,10 +27,25 @@ protected:
     const QString testFilename(){return QString::fromStdString(m_testFilename);}
 
     void writeTestFile(){
+        remove(m_testFilename.c_str());
         OutputDataWriter* writer = OutputDataWriteFactory::getWriter(m_testFilename);
         OutputData<double>* data = ArrayUtils::createData2D(m_testVector).release();
         writer->writeOutputData(*data);
     }
+
+    void writeTestFile(int nRows, int nCols){
+        remove(m_testFilename.c_str());
+        std::ofstream myfile;
+        myfile.open (m_testFilename);
+        for(auto i = 0 ; i < nRows; i++){
+            for(auto j = 0 ; j < nCols; j++){
+                myfile << nCols*i+j << " ";
+            }
+            myfile << "\n";
+        }
+        myfile.close();
+    }
+
 
     OutputData<double>* readTestFile(){
         OutputDataReader* reader = OutputDataReadFactory::getReader(m_testFilename);
@@ -88,4 +103,49 @@ Separator: >>> <<<
     EXPECT_EQ(UnitsLabel, JobItemUtils::nameFromAxesUnits(AxesUnits::DEGREES));
     EXPECT_EQ(AxisLabel0, QString::fromStdString(AxisNames::InitSpecAxis()[AxesUnits::DEGREES]));
     EXPECT_EQ(AxisLabel1, SpecularDataAxesNames::y_axis_default_name);
+}
+
+TEST_F(TestCsvImportAssistant, test_speedReadFile)
+{
+    unsigned maxRows = 1000;
+    unsigned maxCols = 1000;
+    double_t millisec_tolerance = 2000.0;
+    bool isTimeShort = true;
+
+    for(auto nRows = 10 ; nRows <= maxRows; nRows*=10){
+        for(auto nCols = 10 ; nCols <= maxCols; nCols*=10){
+
+            //Write test file
+            writeTestFile(nRows,nCols);
+
+            //Time the process of reading and importing data:
+            std::clock_t c_start = std::clock();
+
+            //Reading and setting data to import:
+            CsvImportAssistant assistant(testFilename());
+            assistant.setIntensityColumn(1);
+            assistant.setCoordinateColumn(9,AxesUnits::DEGREES);
+            assistant.setFirstRow(5);
+            assistant.setLastRow(7);
+
+            //Importing of data:
+            auto DataRank = assistant.getData().dataRank();
+            auto AllocSize = assistant.getData().intensityData()->getAllocatedSize();
+            auto RawDataVec = assistant.getData().intensityData()->getRawDataVector();
+            auto UnitsLabel = assistant.getData().unitsLabel();
+            auto AxisLabel0= assistant.getData().axisLabel(0);
+            auto AxisLabel1= assistant.getData().axisLabel(1);
+
+            std::clock_t c_end = std::clock();
+            //The test fails if the time was not short:
+            double_t time_spent = 1000.0 * double_t(c_end-c_start) / double_t(CLOCKS_PER_SEC);
+            isTimeShort = millisec_tolerance - time_spent > 0;
+            //std::cout << "nRows: " << nRows << "; nCols: " << nCols << "; time: " << time_spent << " ms\n" << std::flush;
+            if(!isTimeShort)
+                break;
+        }
+        if(!isTimeShort)
+            break;
+    }
+    EXPECT_TRUE(isTimeShort);
 }
