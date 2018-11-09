@@ -50,7 +50,8 @@ bool csv::isAscii(QString filename)
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
     : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(0),
-      m_coordinateColNum(0), m_firstRow(0), m_lastRow(0), m_units(AxesUnits::NBINS),
+      m_intensityMultiplier(1.0),
+      m_coordinateColNum(0), m_coordinateMultiplier(1.0), m_firstRow(0), m_lastRow(0), m_units(AxesUnits::NBINS),
       m_dataAvailable(false)
 {
     if (!loadCsvFile()) {
@@ -87,7 +88,9 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
 
     if (res == selector.Accepted) {
         m_intensityColNum = selector.intensityColumn();
+        m_intensityMultiplier = selector.intensityMultiplier();
         m_coordinateColNum = selector.coordinateColumn();
+        m_coordinateMultiplier = selector.coordinateMultiplier();
         m_units = selector.units();
         m_firstRow = selector.firstLine();
         m_lastRow = selector.lastLine();
@@ -174,10 +177,10 @@ ImportDataInfo CsvImportAssistant::fillData()
     std::vector<double> intensityValues;
     std::vector<double> coordinateValues;
     if (m_intensityColNum > 0)
-        intensityValues = getValuesFromColumn(m_intensityColNum - 1);
+        intensityValues = getValuesFromColumn(m_intensityColNum - 1, m_intensityMultiplier);
 
     if (m_coordinateColNum > 0) {
-        coordinateValues = getValuesFromColumn(m_coordinateColNum - 1);
+        coordinateValues = getValuesFromColumn(m_coordinateColNum - 1, m_coordinateMultiplier);
     } else {
         const size_t size = intensityValues.size();
         for (size_t i = 0; i < size; i++)
@@ -193,14 +196,14 @@ ImportDataInfo CsvImportAssistant::fillData()
     return result;
 }
 
-std::vector<double> CsvImportAssistant::getValuesFromColumn(size_t jCol)
+std::vector<double> CsvImportAssistant::getValuesFromColumn(size_t jCol, double multiplier)
 {
     std::vector<double> result;
     auto firstRow = m_firstRow - 1;
     auto lastRow = m_lastRow;
 
     for (auto row = firstRow; row < lastRow; row++)
-        result.push_back(stringToDouble(m_csvArray[row][jCol]));
+        result.push_back(multiplier*stringToDouble(m_csvArray[row][jCol]));
 
     return result;
 }

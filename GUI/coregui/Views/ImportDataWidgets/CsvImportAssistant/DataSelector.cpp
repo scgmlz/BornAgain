@@ -186,6 +186,7 @@ void DataSelector::updateSelection()
         m_coordinateUnitsComboBox->clear();
         m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
     }
+    applyMultipliers();
 
 
 }
@@ -242,9 +243,10 @@ void DataSelector::setColumnAs(int col, ColumnType coordOrInt){
 
     if(coordOrInt == _intensity_) {
         //restore order before changing column:
-        m_columnTypeComboBox->setCurrentIndex(_intensity_);
+        m_intensityMultiplier = 1.0;
+        m_columnTypeComboBox->setCurrentIndex(coordOrInt);
         m_multiplierField->setText(QString::number(m_intensityMultiplier));
-        m_intensityMultiplier = multiplier();
+        m_intensityMultiplier = currentMultiplier();
         applyMultipliers();
 
         //ok, change column:
@@ -260,7 +262,7 @@ void DataSelector::setColumnAs(int col, ColumnType coordOrInt){
         m_coordinateMultiplier = 1.0;
         m_columnTypeComboBox->setCurrentIndex(coordOrInt);
         m_multiplierField->setText(QString::number(m_coordinateMultiplier));
-        m_coordinateMultiplier = multiplier();
+        m_coordinateMultiplier = currentMultiplier();
         applyMultipliers();
 
         //ok, change column:
@@ -383,7 +385,7 @@ ColumnType DataSelector::currentColumnType() const{
     return defaultColumnType;
 }
 
-double DataSelector::multiplier() const{
+double DataSelector::currentMultiplier() const{
     return std::atof(m_multiplierField->text().toStdString().c_str());
 }
 
@@ -539,10 +541,10 @@ QBoxLayout* DataSelector::createLayout()
             [this]()
             {
         if(currentColumnType() == _intensity_){
-                m_intensityMultiplier = multiplier();
+                m_intensityMultiplier = currentMultiplier();
         }
         else{
-                m_coordinateMultiplier = multiplier();
+                m_coordinateMultiplier = currentMultiplier();
         }
         applyMultipliers();
             }
