@@ -249,6 +249,7 @@ void DataSelector::setColumnAs(int col, ColumnType coordOrInt){
 
         //ok, change column:
         m_intensityCol = unsigned(col + 1);
+        m_columnNumberSpinBox->setValue(int(m_intensityCol));
         if (m_coordinateCol == m_intensityCol) {
             m_coordinateCol = 0;
             populateUnitsComboBox(coordOrInt);
@@ -264,6 +265,7 @@ void DataSelector::setColumnAs(int col, ColumnType coordOrInt){
 
         //ok, change column:
         m_coordinateCol = unsigned(col+1);
+        m_columnNumberSpinBox->setValue(int(m_coordinateCol));
         m_coordinateName = HeaderLabels[coordOrInt];
         populateUnitsComboBox(coordOrInt);
         if(m_coordinateCol == m_intensityCol){
