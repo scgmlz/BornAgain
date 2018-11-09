@@ -40,9 +40,10 @@ public:
     unsigned lastLine() const;
     unsigned intensityColumn() const { return m_intensityCol; }
     unsigned coordinateColumn() const { return m_coordinateCol; }
+    double intensityMultiplier() const { return m_intensityMultiplier; }
+    double coordinateMultiplier() const { return m_coordinateMultiplier; }
     AxesUnits units() const;
     ColumnType currentColumnType() const;
-    double multiplier() const;
     void setDataArray(csv::DataArray csvArray)
     {
         m_data = csvArray;
@@ -75,6 +76,7 @@ private:
     bool updateData();
     QBoxLayout* createLayout();
     void setTableData();
+    double currentMultiplier() const;
     void applyMultipliers();
     void populateUnitsComboBox(int coordinate);
     void greyoutTableRegions();
