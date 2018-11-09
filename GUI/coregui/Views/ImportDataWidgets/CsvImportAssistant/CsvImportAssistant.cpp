@@ -53,8 +53,8 @@ CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, Q
       ,m_csvFile(nullptr)
       ,m_csvArray()
       ,m_separator('\0')
-      ,m_intensityCol(0)
-      ,m_coordinateCol(0)
+      ,m_intensityColNum(0)
+      ,m_coordinateColNum(0)
       ,m_firstRow(0)
       ,m_lastRow(0)
       ,m_units(AxesUnits::NBINS)
@@ -68,8 +68,8 @@ CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, Q
         runDataSelector(parent);
     }
     else{
-        m_intensityCol = 1;
-        m_coordinateCol = 0; //zero in this context means "unavailable"
+        m_intensityColNum = 1;
+        m_coordinateColNum = 0; //zero in this context means "unavailable"
         m_units = AxesUnits::NBINS;
         m_firstRow = 1;
         m_lastRow = unsigned(m_csvFile->NumberOfRows());
@@ -98,8 +98,8 @@ void CsvImportAssistant::runDataSelector(QWidget* parent){
     int res = selector.exec();
 
     if(res == selector.Accepted){
-        m_intensityCol = selector.intensityColumn();
-        m_coordinateCol = selector.coordinateColumn();
+        m_intensityColNum = selector.intensityColumn();
+        m_coordinateColNum = selector.coordinateColumn();
         m_units = selector.units();
         m_firstRow = selector.firstLine();
         m_lastRow = selector.lastLine();
@@ -158,19 +158,19 @@ ImportDataInfo CsvImportAssistant::fillData()
     // In case a 2d import is needed in the future
     // Use ArrayUtils::Create2dData(vector<vector<double>>)
     // ArrayUtils::Create2d
-
     std::unique_ptr<OutputData<double>> resultOutputData;
     resultOutputData = std::make_unique<OutputData<double>>();
     std::vector<double> intensityValues;
     std::vector<double> coordinateValues;
-    if(m_intensityCol > 0)
-        intensityValues = getValuesFromColumn(m_intensityCol-1);
+    if(m_intensityColNum > 0)
+        intensityValues = getValuesFromColumn(m_intensityColNum-1);
 
-    if(m_coordinateCol > 0){
-        coordinateValues = getValuesFromColumn(m_coordinateCol-1);
+    if(m_coordinateColNum > 0){
+        coordinateValues = getValuesFromColumn(m_coordinateColNum-1);
     }
     else{
-        for(size_t i = 0; i < intensityValues.size(); i++)
+        const size_t size = intensityValues.size();
+        for(size_t i = 0; i < size ; i++)
             coordinateValues.push_back(double(i));
     }
 
@@ -310,8 +310,8 @@ void CsvImportAssistant::showErrorMessage(std::string message){
 
 void CsvImportAssistant::resetSelection(){
     m_csvArray.clear();
-    m_intensityCol = 0;
-    m_coordinateCol = 0;
+    m_intensityColNum = 0;
+    m_coordinateColNum = 0;
     m_firstRow = 0;
     m_lastRow = 0;
     m_units = AxesUnits::NBINS;
@@ -321,4 +321,3 @@ void CsvImportAssistant::resetSelection(){
 double CsvImportAssistant::stringToDouble(std::string stringToParse){
             return DataFormatUtils::parse_doubles(stringToParse)[0];
 }
-

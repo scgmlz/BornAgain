@@ -15,6 +15,7 @@
 #ifndef CSVIMPORTASSISTANT_H
 #define CSVIMPORTASSISTANT_H
 
+#include "CsvDataColumn.h"
 #include "WinDllMacros.h"
 #include "CsvReader.h"
 #include "ImportDataInfo.h"
@@ -22,13 +23,6 @@
 #include <QStringList>
 #include <QWidget>
 #include <memory>
-
-namespace csv{
-typedef std::vector<std::vector<std::string>> DataArray ;
-typedef std::vector<std::string> DataRow;
-bool isAscii(QString filename);
-}
-
 //! Logic for importing intensity data from csv files
 class BA_CORE_API_ CsvImportAssistant: public QObject
 {
@@ -38,8 +32,8 @@ public:
     ImportDataInfo getData(){return m_dataAvailable ? fillData() : ImportDataInfo();}
     static void showErrorMessage(std::string message);
     static double stringToDouble(std::string string_to_parse);
-    void setIntensityColumn(unsigned iCol){m_intensityCol = iCol;}
-    void setCoordinateColumn(unsigned iCol, AxesUnits units){m_coordinateCol = iCol; m_units = units;}
+    void setIntensityColumn(unsigned iCol){m_intensityColNum = iCol;}
+    void setCoordinateColumn(unsigned iCol, AxesUnits units){m_coordinateColNum = iCol; m_units = units;}
     void setFirstRow(unsigned iRow){m_firstRow = iRow;}
     void setLastRow(unsigned iRow){m_lastRow = iRow;}
     unsigned columnCount(){return unsigned(m_csvArray[0].size());}
@@ -56,13 +50,12 @@ private:
     void resetSelection();
     void resetAssistant();
 
-
     QString m_fileName;
     std::unique_ptr<CSVFile> m_csvFile;
     csv::DataArray m_csvArray;
     char m_separator;
-    unsigned m_intensityCol;
-    unsigned m_coordinateCol;
+    unsigned m_intensityColNum;
+    unsigned m_coordinateColNum;
     unsigned m_firstRow;
     unsigned m_lastRow;
     AxesUnits m_units;
