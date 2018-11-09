@@ -46,7 +46,7 @@ private:
     char guessSeparator() const;
     void removeBlankColumns();
     void runDataSelector(QWidget* parent);
-    std::vector<double> getValuesFromColumn(size_t jcol);
+    std::vector<double> getValuesFromColumn(size_t jcol, double multiplier = 1.0);
     void resetSelection();
     void resetAssistant();
 
