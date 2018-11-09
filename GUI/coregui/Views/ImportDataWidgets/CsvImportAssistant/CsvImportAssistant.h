@@ -16,33 +16,33 @@
 #define CSVIMPORTASSISTANT_H
 
 #include "CsvDataColumn.h"
-#include "WinDllMacros.h"
 #include "CsvReader.h"
-#include "ImportDataInfo.h"
 #include "DataFormatUtils.h"
+#include "ImportDataInfo.h"
+#include "WinDllMacros.h"
 #include <QStringList>
 #include <QWidget>
 #include <memory>
 //! Logic for importing intensity data from csv files
-class BA_CORE_API_ CsvImportAssistant: public QObject
+class BA_CORE_API_ CsvImportAssistant : public QObject
 {
     Q_OBJECT
 public:
     CsvImportAssistant(const QString& file, const bool useGUI = false, QWidget* parent = nullptr);
-    ImportDataInfo getData(){return m_dataAvailable ? fillData() : ImportDataInfo();}
+    ImportDataInfo getData() { return m_dataAvailable ? fillData() : ImportDataInfo(); }
     static void showErrorMessage(std::string message);
     static double stringToDouble(std::string string_to_parse);
-    void setIntensityColumn(unsigned iCol){m_intensityColNum = iCol;}
-    void setCoordinateColumn(unsigned iCol, AxesUnits units){m_coordinateColNum = iCol; m_units = units;}
-    void setFirstRow(unsigned iRow){m_firstRow = iRow;}
-    void setLastRow(unsigned iRow){m_lastRow = iRow;}
-    unsigned columnCount(){return unsigned(m_csvArray[0].size());}
-    char separator(){return m_separator;}
+    void setIntensityColumn(unsigned iCol, double multiplier = 1.0);
+    void setCoordinateColumn(unsigned iCol, AxesUnits units, double multiplier = 1.0);
+    void setFirstRow(unsigned iRow);
+    void setLastRow(unsigned iRow);
+    unsigned columnCount() { return unsigned(m_csvArray[0].size()); }
+    char separator() { return m_separator; }
 
 private:
     bool loadCsvFile();
     ImportDataInfo fillData();
-    bool hasEqualLengthLines(csv::DataArray &dataArray);
+    bool hasEqualLengthLines(csv::DataArray& dataArray);
     char guessSeparator() const;
     void removeBlankColumns();
     void runDataSelector(QWidget* parent);
@@ -55,7 +55,9 @@ private:
     csv::DataArray m_csvArray;
     char m_separator;
     unsigned m_intensityColNum;
+    double m_intensityMultiplier;
     unsigned m_coordinateColNum;
+    double m_coordinateMultiplier;
     unsigned m_firstRow;
     unsigned m_lastRow;
     AxesUnits m_units;
