@@ -35,21 +35,23 @@ DataSelector::DataSelector(csv::DataArray csvArray, QWidget* parent):
       ,m_data(csvArray)
       ,m_intensityCol(0)
       ,m_coordinateCol(0)
+      ,m_intensityMultiplier(1.0)
+      ,m_coordinateMultiplier(1.0)
       ,m_coordinateName("")
       ,m_tableWidget(nullptr)
       ,m_separatorField(nullptr)
       ,m_firstDataRowSpinBox(nullptr)
       ,m_lastDataRowSpinBox(nullptr)
+      ,m_columnNumberSpinBox(nullptr)
+      ,m_columnTypeComboBox(nullptr)
+      ,m_coordinateUnitsComboBox(nullptr)
+      ,m_multiplierField(nullptr)
       ,m_importButton(nullptr)
-      ,m_coordinateUnitsSelector(nullptr)
+      ,m_cancelButton(nullptr)
       ,m_setAsTheta(new QAction(HeaderLabels[_theta_],nullptr))
-      ,m_setAs2Theta(new QAction(HeaderLabels[_2theta_],nullptr))
       ,m_setAsQ(new QAction(HeaderLabels[_q_],nullptr))
       ,m_setAsIntensity(new QAction("Set as " + HeaderLabels[_intensity_] + " column",nullptr))
 {
-    // TODO: add machinery to handle 2theta
-    m_setAs2Theta->setDisabled(true);
-
     setWindowTitle("Data Importer");
     setMinimumSize(default_dialog_size);
     resize(600, 600);
@@ -73,6 +75,7 @@ bool DataSelector::updateData(){
     m_firstDataRowSpinBox->setMaximum(int(lastRow));
     m_lastDataRowSpinBox->setMaximum(int(lastRow));
     m_lastDataRowSpinBox->setValue(int(lastRow));
+    m_columnNumberSpinBox->setMaximum(int(m_data[firstLine()].size()));
     setTableData();
 
     return true;
@@ -97,6 +100,24 @@ void DataSelector::setTableData(){
         unsigned I = unsigned(m_tableWidget->rowCount()) - 1;
         for(unsigned j = 0; j < m_data[i].size(); j++){
             m_tableWidget->setItem(int(I),int(j),new QTableWidgetItem(QString::fromStdString(m_data[i][j])));
+        }
+    }
+}
+
+void DataSelector::applyMultipliers(){
+    if(m_intensityCol > 0){
+        int col = int(m_intensityCol - 1);
+        for(unsigned i = firstLine()-1; i < lastLine() ; i++){
+            double number = m_intensityMultiplier * std::atof(m_data[i][col].c_str());
+            m_tableWidget->setItem(int(i),int(col),new QTableWidgetItem(QString::number(number)));
+        }
+    }
+
+    if(m_coordinateCol > 0){
+        int col = int(m_coordinateCol - 1);
+        for(unsigned i = firstLine()-1; i < lastLine() ; i++){
+            double number = m_coordinateMultiplier * std::atof(m_data[i][col].c_str());
+            m_tableWidget->setItem(int(i),int(col),new QTableWidgetItem(QString::number(number)));
         }
     }
 }
@@ -134,10 +155,6 @@ void DataSelector::onColumnRightClick(const QPoint position)
     coordMenu->addAction(m_setAsTheta);
     connect(m_setAsTheta,&QAction::triggered,this, [this](){setColumnAs(_theta_);});
 
-    //Set column as "2Theta".
-    coordMenu->addAction(m_setAs2Theta);
-    connect(m_setAs2Theta,&QAction::triggered,this, [this](){setColumnAs(_2theta_);});
-
     //Set column as "q".
     coordMenu->addAction(m_setAsQ);
     connect(m_setAsQ,&QAction::triggered,this, [this](){setColumnAs(_q_);});
@@ -155,7 +172,7 @@ void DataSelector::onColumnRightClick(const QPoint position)
 void DataSelector::updateSelection()
 {
     m_importButton->setEnabled(false);
-    m_coordinateUnitsSelector->setEnabled(false);
+    m_coordinateUnitsComboBox->setEnabled(false);
     greyoutTableRegions();
 
     //Enable import button only if the user has selected its columns for 1d import
@@ -163,8 +180,14 @@ void DataSelector::updateSelection()
         m_importButton->setEnabled(true);
 
     //Enable Coordinate Selector
-    if( m_coordinateCol > 0 )
-        m_coordinateUnitsSelector->setEnabled(true);
+    if( m_coordinateCol > 0 ){
+        m_coordinateUnitsComboBox->setEnabled(true);
+    }else{
+        m_coordinateUnitsComboBox->clear();
+        m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
+    }
+
+
 }
 
 void DataSelector::greyoutTableRegions(){
@@ -205,22 +228,44 @@ bool DataSelector::needsGreyout(int iRow, int jCol){
     return greyTop || greyBott || greyCol;
 }
 
-void DataSelector::setColumnAs(DataColumn coordOrInt){
+void DataSelector::setColumnAs(ColumnType coordOrInt){
     auto selectedRanges = m_tableWidget->selectedRanges();
     if (selectedRanges.empty())
         return;
     auto front = selectedRanges.front();
     auto col = front.leftColumn();
+    setColumnAs(col,coordOrInt);
+}
 
+
+void DataSelector::setColumnAs(int col, ColumnType coordOrInt){
 
     if(coordOrInt == _intensity_) {
+        //restore order before changing column:
+        m_columnTypeComboBox->setCurrentIndex(_intensity_);
+        m_multiplierField->setText(QString::number(m_intensityMultiplier));
+        m_intensityMultiplier = multiplier();
+        applyMultipliers();
+
+        //ok, change column:
         m_intensityCol = unsigned(col + 1);
+        m_columnNumberSpinBox->setValue(int(m_intensityCol));
         if (m_coordinateCol == m_intensityCol) {
             m_coordinateCol = 0;
+            populateUnitsComboBox(coordOrInt);
         }
     }
     else{
+        //restore order before changing column:
+        m_coordinateMultiplier = 1.0;
+        m_columnTypeComboBox->setCurrentIndex(coordOrInt);
+        m_multiplierField->setText(QString::number(m_coordinateMultiplier));
+        m_coordinateMultiplier = multiplier();
+        applyMultipliers();
+
+        //ok, change column:
         m_coordinateCol = unsigned(col+1);
+        m_columnNumberSpinBox->setValue(int(m_coordinateCol));
         m_coordinateName = HeaderLabels[coordOrInt];
         populateUnitsComboBox(coordOrInt);
         if(m_coordinateCol == m_intensityCol){
@@ -232,25 +277,20 @@ void DataSelector::setColumnAs(DataColumn coordOrInt){
 }
 
 void DataSelector::populateUnitsComboBox(int coord){
-    m_coordinateUnitsSelector->clear();
+    m_coordinateUnitsComboBox->clear();
     switch(coord){
 
     case _theta_:
-        m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::DEGREES]);
-        m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::RADIANS]);
-        break;
-
-    case _2theta_:
-        m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::DEGREES]);
-        m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::RADIANS]);
+        m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::DEGREES]);
+        m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::RADIANS]);
         break;
 
     case _q_:
-        m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::QSPACE]);
+        m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::QSPACE]);
         break;
 
     default:
-        m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::NBINS]);
+        m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
         break;
     }
 }
@@ -292,8 +332,8 @@ void DataSelector::resetSelection(){
     m_firstDataRowSpinBox->setValue(0);
     m_lastDataRowSpinBox->setValue(int(maxLines()));
     setHeaders();
-    m_coordinateUnitsSelector->clear();
-    m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::NBINS]);
+    m_coordinateUnitsComboBox->clear();
+    m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
 }
 
 void DataSelector::setHeaders(){
@@ -330,9 +370,21 @@ unsigned DataSelector::maxLines() const{
 AxesUnits DataSelector::units() const{
     AxesUnits defaultUnits = AxesUnits::NBINS;
     for(auto i = 0; i < UnitsLabels.size(); i++)
-        if(m_coordinateUnitsSelector->currentText() == UnitsLabels[i])
+        if(m_coordinateUnitsComboBox->currentText() == UnitsLabels[i])
             return AxesUnits(i);
     return defaultUnits;
+}
+
+ColumnType DataSelector::currentColumnType() const{
+    ColumnType defaultColumnType = ColumnType::_intensity_;
+    for(auto i = 0; i < HeaderLabels.size(); i++)
+        if(m_columnTypeComboBox->currentText() == HeaderLabels[i])
+            return ColumnType(i);
+    return defaultColumnType;
+}
+
+double DataSelector::multiplier() const{
+    return std::atof(m_multiplierField->text().toStdString().c_str());
 }
 
 char DataSelector::separator() const{
@@ -367,12 +419,13 @@ bool DataSelector::dataLooksGood(){
             CsvImportAssistant::stringToDouble(
                                     m_tableWidget->item(i,iCol)->text().toStdString()
                                     );
-            if(m_coordinateCol > 0)
+        }
+        if(m_coordinateCol > 0)
+            for(int i = int(firstLine()) - 1; i < int(lastLine()); i++){
                 CsvImportAssistant::stringToDouble(
                                         m_tableWidget->item(i,cCol)->text().toStdString()
                                         );
-        }
-
+            }
     } catch(std::exception& e){
         QString message = QString("Unable to import, the following exception was thrown:\n") + QString::fromStdString(e.what());
         QMessageBox::warning(nullptr, "Wrong data format", message);
@@ -437,11 +490,64 @@ QBoxLayout* DataSelector::createLayout()
             }
     );
 
-    //Column type selector
-    m_coordinateUnitsSelector = new QComboBox();
-    m_coordinateUnitsSelector->setMaximumWidth(100);
-    m_coordinateUnitsSelector->addItem(UnitsLabels[AxesUnits::NBINS]);
+    //Coordinate units selector:
+    m_coordinateUnitsComboBox = new QComboBox();
+    m_coordinateUnitsComboBox->setMaximumWidth(100);
+    m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
 
+    //Column number selector:
+    m_columnNumberSpinBox = new QSpinBox();
+    m_columnNumberSpinBox->setMinimum(0);
+    m_columnNumberSpinBox->setMaximum(0);
+    m_columnNumberSpinBox->setValue(0);
+    m_columnNumberSpinBox->setMaximumWidth(100);
+    connect(m_columnNumberSpinBox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this,
+            [this]()
+            {
+                auto col = m_columnNumberSpinBox->value();
+                if(int(m_intensityCol) != col)
+                    if(int(m_coordinateCol) != col)
+                        setColumnAs(col-1, currentColumnType());
+            }
+    );
+
+
+
+    //Column type (Intensity / Data / ...) selector:
+    m_columnTypeComboBox = new QComboBox();
+    m_columnTypeComboBox ->setMaximumWidth(100);
+    m_columnTypeComboBox ->addItems(HeaderLabels);
+    connect(m_columnTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+            [this](int columnType)
+    {
+        if(columnType == _intensity_){
+            m_columnNumberSpinBox->setValue(int(m_intensityCol));
+            m_multiplierField->setText(QString::number(m_intensityMultiplier));
+        }
+        else{
+            m_columnNumberSpinBox->setValue(int(m_coordinateCol));
+            m_multiplierField->setText(QString::number(m_coordinateMultiplier));
+        }
+    }
+            );
+
+    m_multiplierField = new QLineEdit();
+    m_multiplierField = new QLineEdit(QString("1.0"));
+    m_multiplierField ->setMaxLength(16);
+    m_multiplierField ->setMaximumWidth(100);
+    connect(m_multiplierField, &QLineEdit::editingFinished, this,
+            [this]()
+            {
+        if(currentColumnType() == _intensity_){
+                m_intensityMultiplier = multiplier();
+        }
+        else{
+                m_coordinateMultiplier = multiplier();
+        }
+        applyMultipliers();
+            }
+
+    );
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
@@ -452,12 +558,18 @@ QBoxLayout* DataSelector::createLayout()
     tableLayout->addWidget(new QLabel("Right click on the table to select what will be imported"));
     tableLayout->addWidget(m_tableWidget);
 
-    //place separator_field and first_row:
+    //place separator_field, first and last data rows:
     auto controlsLayout = new QFormLayout;
-    controlsLayout->addRow(tr("&Corodinate Units: "), m_coordinateUnitsSelector);
     controlsLayout->addRow(tr("&Separator: "), m_separatorField);
     controlsLayout->addRow(tr("&From row: "), m_firstDataRowSpinBox);
     controlsLayout->addRow(tr("&To row: "), m_lastDataRowSpinBox);
+
+    //Column handling controls:
+    auto columnSelectionLayout = new QFormLayout;
+    columnSelectionLayout->addRow(tr("&Import "), m_columnTypeComboBox);
+    columnSelectionLayout->addRow(tr("&from column "), m_columnNumberSpinBox);
+    columnSelectionLayout->addRow(tr("&Coordinate units "), m_coordinateUnitsComboBox);
+    columnSelectionLayout->addRow(tr("&Multiply by "), m_multiplierField);
 
     //buttons layout
     auto buttonsLayout = new QHBoxLayout;
@@ -469,7 +581,8 @@ QBoxLayout* DataSelector::createLayout()
     controlsAndButtonsGrid->setMargin(10);
     controlsAndButtonsGrid->addItem(new QSpacerItem(10000,1),1,1,2,1);
     controlsAndButtonsGrid->addLayout(controlsLayout, 1, 2, 1, 1, Qt::AlignRight);
-    controlsAndButtonsGrid->addLayout(buttonsLayout, 2, 2, 1, 1, Qt::AlignLeft);
+    controlsAndButtonsGrid->addLayout(columnSelectionLayout,1,1, Qt::AlignLeft);
+    controlsAndButtonsGrid->addLayout(buttonsLayout, 3, 2, 1, 1, Qt::AlignLeft);
 
     //build all the layout
     layout->addLayout(tableLayout);
