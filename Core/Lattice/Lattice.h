@@ -54,7 +54,7 @@ public:
     void resetBasis(const kvector_t a1, const kvector_t a2, const kvector_t a3);
 
     //! Returns normalized direction corresponding to the given Miller indices
-    kvector_t getMillerDirection(int h, int k, int l) const;
+    kvector_t getMillerDirection(double h, double k, double l) const;
 
     //! Returns the volume of the unit cell
     double volume() const;

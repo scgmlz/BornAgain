@@ -30,7 +30,7 @@ void FillVectorInRow(Eigen::Matrix3d& matrix, kvector_t vec,
 
 ILatticeOrientation::~ILatticeOrientation() =default;
 
-MillerIndex::MillerIndex(int h_, int k_, int l_)
+MillerIndex::MillerIndex(double h_, double k_, double l_)
     : h(h_), k(k_), l(l_)
 {}
 
@@ -91,20 +91,20 @@ bool MillerIndexOrientation::checkAlignment() const
 namespace {
 bool ValidMillerIndex(MillerIndex index)
 {
-    return (index.h != 0 || index.k != 0 || index.l != 0);
+    return (index.h != 0.0 || index.k != 0.0 || index.l != 0.0);
 }
 bool ParallelMillerIndices(MillerIndex index1,
                            MillerIndex index2)
 {
-    int ratio = 0;
-    if (index2.h != 0) {
+    double ratio = 0.0;
+    if (index2.h != 0.0) {
         ratio = index1.h / index2.h;
-    } else if (index2.k != 0) {
+    } else if (index2.k != 0.0) {
         ratio = index1.k / index2.k;
-    } else if (index2.l != 0) {
+    } else if (index2.l != 0.0) {
         ratio = index1.l / index2.l;
     }
-    if (ratio == 0) return false;
+    if (ratio == 0.0) return false;
     return (index1.h == ratio*index2.h && index1.k == ratio*index2.k && index1.l == ratio*index2.l);
 }
 double SignForCrossProduct(MillerIndexOrientation::QComponent q1,

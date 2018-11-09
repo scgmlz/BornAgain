@@ -30,9 +30,11 @@ public:
     virtual Transform3D transformationMatrix() const=0;
 };
 
+//! MillerIndex represents arbitrary directions in reciprocal space by allowing floating point
+//! index values
 struct BA_CORE_API_ MillerIndex {
-    MillerIndex(int h_, int k_, int l_);
-    int h, k, l;
+    MillerIndex(double h_, double k_, double l_);
+    double h, k, l;
 };
 
 class BA_CORE_API_ MillerIndexOrientation : public ILatticeOrientation

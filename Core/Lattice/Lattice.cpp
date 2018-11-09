@@ -86,7 +86,7 @@ void Lattice::resetBasis(const kvector_t a1, const kvector_t a2, const kvector_t
     onChange();
 }
 
-kvector_t Lattice::getMillerDirection(int h, int k, int l) const
+kvector_t Lattice::getMillerDirection(double h, double k, double l) const
 {
     kvector_t b1, b2, b3;
     getReciprocalLatticeBasis(b1, b2, b3);

@@ -22520,7 +22520,7 @@ class MillerIndex(_object):
 
     def __init__(self, h_, k_, l_):
         """
-        __init__(MillerIndex self, int h_, int k_, int l_) -> MillerIndex
+        __init__(MillerIndex self, double h_, double k_, double l_) -> MillerIndex
 
         MillerIndex::MillerIndex(int h_, int k_, int l_)
 
@@ -22733,7 +22733,7 @@ class Lattice(INode):
 
     def getMillerDirection(self, h, k, l):
         """
-        getMillerDirection(Lattice self, int h, int k, int l) -> kvector_t
+        getMillerDirection(Lattice self, double h, double k, double l) -> kvector_t
 
         kvector_t Lattice::getMillerDirection(int h, int k, int l) const
 
