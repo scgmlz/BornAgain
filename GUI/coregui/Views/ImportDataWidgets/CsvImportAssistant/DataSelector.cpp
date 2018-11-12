@@ -24,6 +24,7 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QFormLayout>
+#include <QGroupBox>
 
 namespace
 {
@@ -519,7 +520,7 @@ QBoxLayout* DataSelector::createLayout()
     m_columnTypeComboBox = new QComboBox();
     m_columnTypeComboBox ->setMaximumWidth(100);
     m_columnTypeComboBox ->addItems(HeaderLabels);
-    connect(m_columnTypeComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+    connect(m_columnTypeComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
             [this](int columnType)
     {
         if(columnType == _intensity_){
@@ -551,27 +552,40 @@ QBoxLayout* DataSelector::createLayout()
 
     );
 
+
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
 
-    //place table Widget
+
+    //Separator:
+    auto separatorFieldLayout = new QFormLayout;
+    separatorFieldLayout->addRow(tr("&Separator: "), m_separatorField);
+
+
+    //Place table Widget:
     auto tableLayout = new QVBoxLayout;
     tableLayout->setMargin(10);
     tableLayout->addWidget(new QLabel("Right click on the table to select what will be imported"));
     tableLayout->addWidget(m_tableWidget);
+    tableLayout->addLayout(separatorFieldLayout);
 
-    //place separator_field, first and last data rows:
-    auto controlsLayout = new QFormLayout;
-    controlsLayout->addRow(tr("&Separator: "), m_separatorField);
-    controlsLayout->addRow(tr("&From row: "), m_firstDataRowSpinBox);
-    controlsLayout->addRow(tr("&To row: "), m_lastDataRowSpinBox);
+    //First and last data rows:
+    auto rowControlsLayout = new QFormLayout;
+    auto *rowControlsGroupBox = new QGroupBox;
+    rowControlsLayout->addRow(tr("&From row: "), m_firstDataRowSpinBox);
+    rowControlsLayout->addRow(tr("&To row: "), m_lastDataRowSpinBox);
+    rowControlsGroupBox->setTitle(tr("&Data rows:"));
+    rowControlsGroupBox->setLayout(rowControlsLayout);
 
     //Column handling controls:
+    auto *columnControlsGroupBox = new QGroupBox;
     auto columnSelectionLayout = new QFormLayout;
     columnSelectionLayout->addRow(tr("&Import "), m_columnTypeComboBox);
     columnSelectionLayout->addRow(tr("&from column "), m_columnNumberSpinBox);
     columnSelectionLayout->addRow(tr("&Coordinate units "), m_coordinateUnitsComboBox);
     columnSelectionLayout->addRow(tr("&Multiply by "), m_multiplierField);
+    columnControlsGroupBox->setTitle(tr("&Data Columns:"));
+    columnControlsGroupBox->setLayout(columnSelectionLayout);
 
     //buttons layout
     auto buttonsLayout = new QHBoxLayout;
@@ -582,11 +596,12 @@ QBoxLayout* DataSelector::createLayout()
     auto controlsAndButtonsGrid = new QGridLayout;
     controlsAndButtonsGrid->setMargin(10);
     controlsAndButtonsGrid->addItem(new QSpacerItem(10000,1),1,1,2,1);
-    controlsAndButtonsGrid->addLayout(controlsLayout, 1, 2, 1, 1, Qt::AlignRight);
-    controlsAndButtonsGrid->addLayout(columnSelectionLayout,1,1, Qt::AlignLeft);
-    controlsAndButtonsGrid->addLayout(buttonsLayout, 3, 2, 1, 1, Qt::AlignLeft);
+    controlsAndButtonsGrid->addWidget(rowControlsGroupBox, 1, 2, 1, 1, Qt::AlignRight);
+    controlsAndButtonsGrid->addWidget(columnControlsGroupBox,1, 1, 1, 1, Qt::AlignRight);
+    controlsAndButtonsGrid->addLayout(buttonsLayout, 3, 2, 1, 1, Qt::AlignRight);
 
     //build all the layout
+    layout->addLayout(separatorFieldLayout);
     layout->addLayout(tableLayout);
     layout->addLayout(controlsAndButtonsGrid);
 
