@@ -78,11 +78,14 @@ private:
     void setTableData();
     double currentMultiplier() const;
     void applyMultipliers();
+    void multiplyColumn(size_t col, double multiplier);
     void populateUnitsComboBox(int coordinate);
     void greyoutTableRegions();
     bool dataLooksGood();
     bool needsGreyout(int iRow, int jCol);
     void greyoutCell(int i, int j, bool yes);
+    void startContextMenu(const QPoint point);
+    void populateContextMenu(QMenu &menu);
 
     csv::DataArray m_data;
     unsigned m_intensityCol;

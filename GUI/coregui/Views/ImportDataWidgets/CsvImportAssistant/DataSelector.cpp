@@ -16,6 +16,8 @@
 #include "ImportDataInfo.h"
 #include "mainwindow_constants.h"
 #include "StyleUtils.h"
+#include "sstream"
+#include "locale"
 #include <QPushButton>
 #include <QTableWidget>
 #include <QSettings>
@@ -107,19 +109,21 @@ void DataSelector::setTableData(){
 
 void DataSelector::applyMultipliers(){
     if(m_intensityCol > 0){
-        int col = int(m_intensityCol - 1);
-        for(unsigned i = firstLine()-1; i < lastLine() ; i++){
-            double number = m_intensityMultiplier * std::atof(m_data[i][col].c_str());
-            m_tableWidget->setItem(int(i),int(col),new QTableWidgetItem(QString::number(number)));
-        }
+        multiplyColumn(size_t(m_intensityCol - 1), m_intensityMultiplier);
     }
 
     if(m_coordinateCol > 0){
-        int col = int(m_coordinateCol - 1);
-        for(unsigned i = firstLine()-1; i < lastLine() ; i++){
-            double number = m_coordinateMultiplier * std::atof(m_data[i][col].c_str());
-            m_tableWidget->setItem(int(i),int(col),new QTableWidgetItem(QString::number(number)));
-        }
+        multiplyColumn(size_t(m_coordinateCol - 1), m_coordinateMultiplier);
+    }
+}
+
+void DataSelector::multiplyColumn(size_t col, double multiplier){
+    for(unsigned i = firstLine()-1; i < lastLine() ; i++){
+        double number = multiplier * csv::atof(m_data[i][col]);
+        QString cellText = 0.0 == number ?
+                    m_tableWidget->item(int(i),int(col))->text() :
+                    QString::number(number);
+        m_tableWidget->setItem(int(i),int(col),new QTableWidgetItem(cellText));
     }
 }
 
@@ -130,18 +134,27 @@ void DataSelector::onColumnRightClick(const QPoint position)
     auto row = item->row();
     auto col = item->column();
     if(row*col < 0) return;
+    startContextMenu(position);
+}
 
+void DataSelector::startContextMenu(const QPoint position)
+{
     QMenu menu;
+    populateContextMenu(menu);
+    menu.exec(m_tableWidget->mapToGlobal(position));
+}
 
+void DataSelector::populateContextMenu(QMenu &menu)
+{
     //Action "select from this row"
-    QAction selectFromThisRowOn("Set as first data row",nullptr);
-    menu.addAction(&selectFromThisRowOn);
-    connect(&selectFromThisRowOn,&QAction::triggered,this,[this](){setFirstRow();});
+    QAction* selectFromThisRowOn = new QAction("Set as first data row",nullptr);
+    menu.addAction(selectFromThisRowOn);
+    connect(selectFromThisRowOn,&QAction::triggered,this,[this](){setFirstRow();});
 
     //Action "select until this row"
-    QAction selectUntilThisRow("Set as last data row",nullptr);
-    menu.addAction(&selectUntilThisRow);
-    connect(&selectUntilThisRow,&QAction::triggered,this,[this](){setLastRow();});
+    QAction* selectUntilThisRow = new QAction("Set as last data row",nullptr);
+    menu.addAction(selectUntilThisRow);
+    connect(selectUntilThisRow,&QAction::triggered,this,[this](){setLastRow();});
 
     menu.addSeparator();
 
@@ -163,11 +176,9 @@ void DataSelector::onColumnRightClick(const QPoint position)
     menu.addSeparator();
 
     //Action "reset"
-    QAction resetAction("reset",nullptr);
-    menu.addAction(&resetAction);
-    connect(&resetAction,&QAction::triggered, this, [this](){resetSelection(); updateSelection();});
-
-    menu.exec(m_tableWidget->mapToGlobal(position));
+    QAction* resetAction = new QAction("reset",nullptr);
+    menu.addAction(resetAction);
+    connect(resetAction,&QAction::triggered, this, [this](){resetSelection(); updateSelection();});
 }
 
 void DataSelector::updateSelection()
@@ -188,8 +199,6 @@ void DataSelector::updateSelection()
         m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
     }
     applyMultipliers();
-
-
 }
 
 void DataSelector::greyoutTableRegions(){
@@ -329,14 +338,11 @@ void DataSelector::setLastRow(){
 }
 
 void DataSelector::resetSelection(){
-    m_intensityCol = 0;
-    m_coordinateCol = 0;
-    m_coordinateName = "";
+    setColumnAs(-1,_theta_);
+    setColumnAs(-1,_q_);
+    setColumnAs(-1,_intensity_);
     m_firstDataRowSpinBox->setValue(0);
     m_lastDataRowSpinBox->setValue(int(maxLines()));
-    setHeaders();
-    m_coordinateUnitsComboBox->clear();
-    m_coordinateUnitsComboBox->addItem(UnitsLabels[AxesUnits::NBINS]);
 }
 
 void DataSelector::setHeaders(){
