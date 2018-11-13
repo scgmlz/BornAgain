@@ -200,7 +200,7 @@ ImportDataInfo CsvImportAssistant::fillData()
             coordinateValues.push_back(double(i));
     }
 
-    auto axisName = UnitsLabels[m_units].toStdString();
+    auto axisName = csv::UnitsLabels[m_units].toStdString();
     PointwiseAxis coordAxis(axisName, coordinateValues);
     resultOutputData->addAxis(coordAxis);
     resultOutputData->setRawDataVector(intensityValues);
