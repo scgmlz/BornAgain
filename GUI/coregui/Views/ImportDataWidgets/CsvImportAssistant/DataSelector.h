@@ -43,7 +43,7 @@ public:
     double intensityMultiplier() const { return m_intensityMultiplier; }
     double coordinateMultiplier() const { return m_coordinateMultiplier; }
     AxesUnits units() const;
-    ColumnType currentColumnType() const;
+    csv::ColumnType currentColumnType() const;
     void setDataArray(csv::DataArray csvArray)
     {
         m_data = csvArray;
@@ -58,7 +58,8 @@ public:
 public slots:
     void onImportButton();
     void onCancelButton();
-    void onColumnRightClick(QPoint position);
+    void onColumnRightClick(const QPoint &position );
+    void setColumnSlot(csv::ColumnType ct);
 
 signals:
     void separatorChanged(char newSeparator);
@@ -67,8 +68,8 @@ private:
     unsigned maxLines() const;
     char separator() const;
     void setHeaders();
-    void setColumnAs(ColumnType coordOrInt);
-    void setColumnAs(int col, ColumnType coordOrInt);
+    void setColumnAs(csv::ColumnType coordOrInt);
+    void setColumnAs(int col, csv::ColumnType coordOrInt);
     void setFirstRow();
     void setLastRow();
     void resetSelection();
@@ -79,8 +80,9 @@ private:
     double currentMultiplier() const;
     void applyMultipliers();
     void multiplyColumn(size_t col, double multiplier);
-    void populateUnitsComboBox(int coordinate);
+    void populateUnitsComboBox(csv::ColumnType coordinate);
     void greyoutTableRegions();
+    bool isInsideTable(QPoint point);
     bool dataLooksGood();
     bool needsGreyout(int iRow, int jCol);
     void greyoutCell(int i, int j, bool yes);
@@ -105,8 +107,5 @@ private:
 
     QPushButton* m_importButton;
     QPushButton* m_cancelButton;
-    QAction* m_setAsTheta;
-    QAction* m_setAsQ;
-    QAction* m_setAsIntensity;
 };
 #endif // DATASELECTOR_H
