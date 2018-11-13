@@ -133,19 +133,6 @@ void DataSelector::setColumnSlot(csv::ColumnType ct){
    setColumnAs(ct);
 }
 
-void DataSelector::onColumnRightClick(const QPoint position)
-{
-    if(!isInsideTable(position))
-        return;
-
-    TableContextMenu contextMenu(position);
-    connect(&contextMenu, &TableContextMenu::setFirstRow, this, [this](){setFirstRow();});
-    connect(&contextMenu, &TableContextMenu::setLastRow, this, [this](){setLastRow();});
-    connect(&contextMenu, &TableContextMenu::setColumnAs, this, &DataSelector::setColumnSlot);
-    connect(&contextMenu, &TableContextMenu::resetTable, this, [this](){resetSelection(); updateSelection();});
-    contextMenu.exec();
-}
-
 bool DataSelector::isInsideTable(const QPoint position){
     auto item = m_tableWidget->itemAt(position);
 
@@ -158,6 +145,21 @@ bool DataSelector::isInsideTable(const QPoint position){
         return false;
 
     return true;
+}
+
+void DataSelector::onColumnRightClick(const QPoint &position)
+{
+    if(!isInsideTable(position))
+        return;
+
+    auto globalPos = m_tableWidget->mapToGlobal(position);
+
+    TableContextMenu contextMenu(this);
+    connect(&contextMenu, &TableContextMenu::setFirstRow, this, [this](){setFirstRow();});
+    connect(&contextMenu, &TableContextMenu::setLastRow, this, [this](){setLastRow();});
+    connect(&contextMenu, &TableContextMenu::setColumnAs, this, &DataSelector::setColumnSlot);
+    connect(&contextMenu, &TableContextMenu::resetTable, this, [this](){resetSelection(); updateSelection();});
+    contextMenu.exec(globalPos);
 }
 
 void DataSelector::updateSelection()
