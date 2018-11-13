@@ -48,11 +48,13 @@ bool csv::isAscii(QString filename)
     return static_cast<double>(count_bad) <= acceptance_threshold;
 }
 
-double csv::atof(QString str){
+double csv::atof(QString str)
+{
     return csv::atof(str.toStdString());
 }
 
-double csv::atof(std::string str){
+double csv::atof(std::string str)
+{
     std::istringstream istr(str);
     istr.imbue(std::locale::classic());
     double number = 0.0;
@@ -62,9 +64,8 @@ double csv::atof(std::string str){
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
     : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(0),
-      m_intensityMultiplier(1.0),
-      m_coordinateColNum(0), m_coordinateMultiplier(1.0), m_firstRow(0), m_lastRow(0), m_units(AxesUnits::NBINS),
-      m_dataAvailable(false)
+      m_intensityMultiplier(1.0), m_coordinateColNum(0), m_coordinateMultiplier(1.0), m_firstRow(0),
+      m_lastRow(0), m_units(AxesUnits::NBINS), m_dataAvailable(false)
 {
     if (!loadCsvFile()) {
         return;
@@ -215,7 +216,7 @@ std::vector<double> CsvImportAssistant::getValuesFromColumn(size_t jCol, double 
     auto lastRow = m_lastRow;
 
     for (auto row = firstRow; row < lastRow; row++)
-        result.push_back(multiplier*csv::atof(m_csvArray[row][jCol]));
+        result.push_back(multiplier * csv::atof(m_csvArray[row][jCol]));
 
     return result;
 }
