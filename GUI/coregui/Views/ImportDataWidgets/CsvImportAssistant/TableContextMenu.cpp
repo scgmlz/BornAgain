@@ -1,6 +1,6 @@
 #include "TableContextMenu.h"
 
-TableContextMenu::TableContextMenu(const QPoint point, QWidget* parent)
+TableContextMenu::TableContextMenu(QWidget* parent)
         : QMenu(parent)
         , m_coordSubMenu(nullptr)
         , m_selectFromThisRowOn(new QAction("Set as first data row", nullptr))

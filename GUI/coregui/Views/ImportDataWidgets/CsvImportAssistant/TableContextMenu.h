@@ -11,7 +11,7 @@ class TableContextMenu: public QMenu
 {
     Q_OBJECT
 public:
-    TableContextMenu(const QPoint point, QWidget* parent = nullptr);
+    TableContextMenu(QWidget* parent = nullptr);
 
 signals:
     void setFirstRow();
