@@ -68,6 +68,8 @@ private:
     unsigned maxLines() const;
     char separator() const;
     void setHeaders();
+    int selectedRow();
+    int selectedColumn();
     void setColumnAs(csv::ColumnType coordOrInt);
     void setColumnAs(int col, csv::ColumnType coordOrInt);
     void setFirstRow();
