@@ -211,10 +211,13 @@ def plot_simulation_result(result, intensity_min=None, intensity_max=None, units
 
 
 class Plotter:
-    def __init__(self):
+    def __init__(self, zmin=None, zmax=None, aspect=None):
 
         self._fig = plt.figure(figsize=(10.25, 7.69))
         self._fig.canvas.draw()
+        self._zmin = zmin
+        self._zmax = zmax
+        self._aspect = aspect
 
     def reset(self):
         self._fig.clf()
@@ -225,54 +228,8 @@ class Plotter:
 
 
 class PlotterGISAS(Plotter):
-    def __init__(self):
-        Plotter.__init__(self)
-
-    @staticmethod
-    def make_subplot(nplot):
-        plt.subplot(2, 2, nplot)
-        plt.subplots_adjust(wspace=0.2, hspace=0.2)
-
-    def plot(self, fit_suite):
-        Plotter.reset(self)
-
-        real_data = fit_suite.experimentalData()
-        sim_data = fit_suite.simulationResult()
-        diff = fit_suite.relativeDifference()
-
-        self.make_subplot(1)
-
-        # same limits for both plots
-        arr = real_data.array()
-        zmax = np.amax(arr)
-        zmin = zmax*1e-6
-
-        plot_colormap(real_data, title="Experimental data", zmin=zmin, zmax=zmax,
-                      xlabel='', ylabel='', zlabel='')
-
-        self.make_subplot(2)
-        plot_colormap(sim_data, title="Simulated data", zmin=zmin, zmax=zmax,
-                      xlabel='', ylabel='', zlabel='')
-
-        self.make_subplot(3)
-        plot_colormap(diff, title="Relative difference", zmin=0.001, zmax=10.0,
-                       xlabel='', ylabel='', zlabel='')
-
-        self.make_subplot(4)
-        plt.title('Parameters')
-        plt.axis('off')
-        plt.text(0.01, 0.85, "Iterations  " + '{:d}     {:s}'.
-                 format(fit_suite.numberOfIterations(), fit_suite.minimizerName()))
-        plt.text(0.01, 0.75, "Chi2       " + '{:8.4f}'.format(fit_suite.getChi2()))
-        for index, fitPar in enumerate(fit_suite.fitParameters()):
-            plt.text(0.01, 0.55 - index * 0.1, '{:30.30s}: {:6.3f}'.format(fitPar.name(), fitPar.value()))
-
-        Plotter.plot(self)
-
-
-class PlotterGISASV2(Plotter):
-    def __init__(self):
-        Plotter.__init__(self)
+    def __init__(self, zmin=None, zmax=None, aspect=None):
+        Plotter.__init__(self, zmin=zmin, zmax=zmax, aspect=aspect)
 
     @staticmethod
     def make_subplot(nplot):
@@ -290,19 +247,19 @@ class PlotterGISASV2(Plotter):
 
         # same limits for both plots
         arr = real_data.array()
-        zmax = np.amax(arr)
-        zmin = zmax*1e-6
+        zmax = np.amax(arr) if self._zmax is None else self._zmax
+        zmin = zmax*1e-6 if self._zmin is None else self._zmin
 
         ba.plot_colormap(real_data, title="Experimental data", zmin=zmin, zmax=zmax,
-                      xlabel='', ylabel='', zlabel='')
+                      xlabel='', ylabel='', zlabel='', aspect=self._aspect)
 
         self.make_subplot(2)
         ba.plot_colormap(sim_data, title="Simulated data", zmin=zmin, zmax=zmax,
-                      xlabel='', ylabel='', zlabel='')
+                      xlabel='', ylabel='', zlabel='', aspect=self._aspect)
 
         self.make_subplot(3)
         ba.plot_colormap(diff, title="Relative difference", zmin=0.001, zmax=10.0,
-                       xlabel='', ylabel='', zlabel='')
+                       xlabel='', ylabel='', zlabel='', aspect=self._aspect)
 
         self.make_subplot(4)
         plt.title('Parameters')

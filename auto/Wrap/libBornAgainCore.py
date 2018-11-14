@@ -6666,7 +6666,7 @@ class FitObjective(_object):
 
     def create_default_plotter(self):
         import plot_utils
-        self.m_plotter = plot_utils.PlotterGISASV2()
+        self.m_plotter = plot_utils.PlotterGISAS()
         return self.m_plotter.plot
 
     def initPlot(self, every_nth, callback = None):
