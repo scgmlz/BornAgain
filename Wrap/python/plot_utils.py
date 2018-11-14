@@ -212,12 +212,16 @@ def plot_simulation_result(result, intensity_min=None, intensity_max=None, units
 
 
 class Plotter:
-    def __init__(self, zmin=None, zmax=None, aspect=None):
+    def __init__(self, zmin=None, zmax=None, xlabel=None, ylabel=None,
+                 units=ba.AxesUnits.DEFAULT, aspect=None):
 
         self._fig = plt.figure(figsize=(10.25, 7.69))
         self._fig.canvas.draw()
         self._zmin = zmin
         self._zmax = zmax
+        self._xlabel = xlabel
+        self._ylabel = ylabel
+        self._units = units
         self._aspect = aspect
 
     def reset(self):
@@ -229,8 +233,9 @@ class Plotter:
 
 
 class PlotterGISAS(Plotter):
-    def __init__(self, zmin=None, zmax=None, aspect=None):
-        Plotter.__init__(self, zmin=zmin, zmax=zmax, aspect=aspect)
+    def __init__(self, zmin=None, zmax=None, xlabel=None, ylabel=None,
+                 units=ba.AxesUnits.DEFAULT, aspect=None):
+        Plotter.__init__(self, zmin, zmax, xlabel, ylabel, units, aspect)
 
     @staticmethod
     def make_subplot(nplot):
@@ -252,15 +257,18 @@ class PlotterGISAS(Plotter):
         zmin = zmax*1e-6 if self._zmin is None else self._zmin
 
         ba.plot_colormap(real_data, title="Experimental data", zmin=zmin, zmax=zmax,
-                      xlabel='', ylabel='', zlabel='', aspect=self._aspect)
+                         units=self._units, xlabel=self._xlabel, ylabel=self._ylabel,
+                         zlabel='', aspect=self._aspect)
 
         self.make_subplot(2)
         ba.plot_colormap(sim_data, title="Simulated data", zmin=zmin, zmax=zmax,
-                      xlabel='', ylabel='', zlabel='', aspect=self._aspect)
+                         units=self._units, xlabel=self._xlabel, ylabel=self._ylabel,
+                         zlabel='', aspect=self._aspect)
 
         self.make_subplot(3)
         ba.plot_colormap(diff, title="Relative difference", zmin=0.001, zmax=10.0,
-                       xlabel='', ylabel='', zlabel='', aspect=self._aspect)
+                         units=self._units, xlabel=self._xlabel, ylabel=self._ylabel,
+                         zlabel='', aspect=self._aspect)
 
         self.make_subplot(4)
         plt.title('Parameters')
