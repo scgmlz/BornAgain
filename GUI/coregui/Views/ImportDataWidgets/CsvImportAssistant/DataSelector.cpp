@@ -17,6 +17,7 @@
 #include "StyleUtils.h"
 #include "locale"
 #include "TableContextMenu.h"
+#include "CsvImportTable.h"
 #include "mainwindow_constants.h"
 #include "sstream"
 #include <QFileDialog>
@@ -222,16 +223,6 @@ bool DataSelector::needsGreyout(int iRow, int jCol)
     return greyTop || greyBott || greyCol;
 }
 
-void DataSelector::setColumnAs(csv::ColumnType coordOrInt)
-{
-    auto selectedRanges = m_tableWidget->selectedRanges();
-    if (selectedRanges.empty())
-        return;
-    auto front = selectedRanges.front();
-    auto col = front.leftColumn();
-    setColumnAs(col, coordOrInt);
-}
-
 void DataSelector::setColumnAs(int col, csv::ColumnType coordOrInt)
 {
 
@@ -291,14 +282,39 @@ void DataSelector::populateUnitsComboBox(csv::ColumnType coord)
     }
 }
 
-void DataSelector::setFirstRow()
-{
-    // get selected column
+int DataSelector::selectedRow(){
     auto selectedRanges = m_tableWidget->selectedRanges();
     if (selectedRanges.empty())
-        return;
+        return -1;
     auto front = selectedRanges.front();
     auto row = front.topRow();
+    return row;
+}
+
+int DataSelector::selectedColumn(){
+    auto selectedRanges = m_tableWidget->selectedRanges();
+    if (selectedRanges.empty())
+        return -1;
+    auto front = selectedRanges.front();
+    auto col = front.leftColumn();
+    return col;
+}
+
+void DataSelector::setColumnAs(csv::ColumnType coordOrInt)
+{
+    auto col = selectedColumn();
+    if(col < 0)
+        return;
+
+    setColumnAs(col, coordOrInt);
+}
+
+void DataSelector::setFirstRow()
+{
+    auto row = selectedRow();
+    if(row < 0)
+        return;
+
     auto currentMax = m_firstDataRowSpinBox->maximum();
     auto desiredVal = row + 1;
     auto newMax = std::max(currentMax, desiredVal);
@@ -308,12 +324,10 @@ void DataSelector::setFirstRow()
 
 void DataSelector::setLastRow()
 {
-    // get selected column
-    auto selectedRanges = m_tableWidget->selectedRanges();
-    if (selectedRanges.empty())
+    auto row = selectedRow();
+    if(row < 0)
         return;
-    auto front = selectedRanges.front();
-    auto row = front.topRow();
+
     auto currentMin = m_firstDataRowSpinBox->minimum();
     auto desiredVal = row + 1;
     auto newMin = std::min(currentMin, desiredVal);
@@ -438,7 +452,7 @@ bool DataSelector::dataLooksGood()
 QBoxLayout* DataSelector::createLayout()
 {
     // table Widget
-    m_tableWidget = new QTableWidget();
+    m_tableWidget = new CsvImportTable();
     m_tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     m_tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(m_tableWidget, &QTableWidget::customContextMenuRequested, this,
