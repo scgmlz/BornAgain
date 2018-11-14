@@ -191,7 +191,7 @@ def plot_specular_simulation_result(result, ymin=None, ymax=None, units=ba.AxesU
 
 
 def plot_simulation_result(result, intensity_min=None, intensity_max=None, units=ba.AxesUnits.DEFAULT,
-                           postpone_show=False, aspect=None):
+                           xlabel=None, ylabel=None, postpone_show=False, title=None, aspect=None):
     """
     Draws simulation result and (optionally) shows the plot.
     :param result_: SimulationResult object obtained from GISAS/OffSpec/SpecularSimulation
@@ -204,7 +204,8 @@ def plot_simulation_result(result, intensity_min=None, intensity_max=None, units
     if len(result.array().shape) == 1:  # 1D data, specular simulation assumed
         plot_specular_simulation_result(result, intensity_min, intensity_max, units)
     else:
-        plot_colormap(result, intensity_min, intensity_max, units, aspect=aspect)
+        plot_colormap(result, intensity_min, intensity_max, units, xlabel, ylabel,
+                      title=title, aspect=aspect)
     plt.tight_layout()
     if not postpone_show:
         plt.show()
