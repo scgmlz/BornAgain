@@ -60,7 +60,7 @@ public:
 public slots:
     void onImportButton();
     void onCancelButton();
-    void onColumnRightClick(const QPoint &position );
+    void onColumnRightClick(const QPoint& position);
     void setColumnSlot(csv::ColumnType ct);
 
 signals:
@@ -77,7 +77,6 @@ private:
     void updateSelection();
     bool updateData();
     QBoxLayout* createLayout();
-    double currentMultiplier() const;
     void populateUnitsComboBox(csv::ColumnType coordinate);
     bool isInsideTable(QPoint point);
     bool dataLooksGood();
@@ -91,18 +90,8 @@ private:
     QSpinBox* m_columnNumberSpinBox;
     QComboBox* m_columnTypeComboBox;
     QComboBox* m_coordinateUnitsComboBox;
-    QLineEdit* m_multiplierField;
 
     QPushButton* m_importButton;
     QPushButton* m_cancelButton;
-
-    int m_firstRow;
-    int m_lastRow;
-    int m_intensityColumn;
-    int m_coordinateColumn;
-    int m_intensityMultiplier;
-    int m_coordinateMultiplier;
-    AxesUnits m_units;
-    csv::ColumnType m_columnType;
 };
 #endif // DATASELECTOR_H

@@ -13,11 +13,11 @@
 // ************************************************************************** //
 
 #include "DataSelector.h"
+#include "CsvImportTable.h"
 #include "ImportDataInfo.h"
 #include "StyleUtils.h"
-#include "locale"
 #include "TableContextMenu.h"
-#include "CsvImportTable.h"
+#include "locale"
 #include "mainwindow_constants.h"
 #include "sstream"
 #include <QFileDialog>
@@ -36,18 +36,10 @@ const QSize default_dialog_size(300, 400);
 }
 
 DataSelector::DataSelector(csv::DataArray csvArray, QWidget* parent)
-    : QDialog(parent)
-    , m_data(csvArray)
-    , m_tableWidget(nullptr)
-    , m_separatorField(nullptr)
-    , m_firstDataRowSpinBox(nullptr)
-    , m_lastDataRowSpinBox(nullptr)
-    , m_columnNumberSpinBox(nullptr)
-    , m_columnTypeComboBox(nullptr)
-    , m_coordinateUnitsComboBox(nullptr)
-    , m_multiplierField(nullptr)
-    , m_importButton(nullptr)
-    , m_cancelButton(nullptr)
+    : QDialog(parent), m_data(csvArray), m_tableWidget(nullptr), m_separatorField(nullptr),
+      m_firstDataRowSpinBox(nullptr), m_lastDataRowSpinBox(nullptr), m_columnNumberSpinBox(nullptr),
+      m_columnTypeComboBox(nullptr), m_coordinateUnitsComboBox(nullptr), m_importButton(nullptr),
+      m_cancelButton(nullptr)
 {
     setWindowTitle("Data Importer");
     setMinimumSize(default_dialog_size);
@@ -79,11 +71,13 @@ bool DataSelector::updateData()
     return true;
 }
 
-void DataSelector::setColumnSlot(csv::ColumnType ct){
-   setColumnAs(ct);
+void DataSelector::setColumnSlot(csv::ColumnType ct)
+{
+    setColumnAs(ct);
 }
 
-bool DataSelector::isInsideTable(const QPoint position){
+bool DataSelector::isInsideTable(const QPoint position)
+{
     auto item = m_tableWidget->itemAt(position);
 
     if (!item)
@@ -97,18 +91,21 @@ bool DataSelector::isInsideTable(const QPoint position){
     return true;
 }
 
-void DataSelector::onColumnRightClick(const QPoint &position)
+void DataSelector::onColumnRightClick(const QPoint& position)
 {
-    if(!isInsideTable(position))
+    if (!isInsideTable(position))
         return;
 
     auto globalPos = m_tableWidget->mapToGlobal(position);
 
     TableContextMenu contextMenu(this);
-    connect(&contextMenu, &TableContextMenu::setFirstRow, this, [this](){setFirstRow();});
-    connect(&contextMenu, &TableContextMenu::setLastRow, this, [this](){setLastRow();});
+    connect(&contextMenu, &TableContextMenu::setFirstRow, this, [this]() { setFirstRow(); });
+    connect(&contextMenu, &TableContextMenu::setLastRow, this, [this]() { setLastRow(); });
     connect(&contextMenu, &TableContextMenu::setColumnAs, this, &DataSelector::setColumnSlot);
-    connect(&contextMenu, &TableContextMenu::resetTable, this, [this](){resetSelection(); updateSelection();});
+    connect(&contextMenu, &TableContextMenu::resetTable, this, [this]() {
+        resetSelection();
+        updateSelection();
+    });
     contextMenu.exec(globalPos);
 }
 
@@ -116,8 +113,8 @@ void DataSelector::updateSelection()
 {
     m_importButton->setEnabled(false);
     m_coordinateUnitsComboBox->setEnabled(false);
-    m_tableWidget->setFirstRow(firstLine()-1);
-    m_tableWidget->setLastRow(lastLine()-1);
+    m_tableWidget->setFirstRow(firstLine() - 1);
+    m_tableWidget->setLastRow(lastLine() - 1);
 
     // Enable import button only if the user has selected its columns for 1d
     if (m_tableWidget->intensityColumn() > -1)
@@ -135,10 +132,8 @@ void DataSelector::updateSelection()
 void DataSelector::setColumnAs(int col, csv::ColumnType coordOrInt)
 {
     m_tableWidget->setColumnAs(col, coordOrInt);
-    m_columnNumberSpinBox->setValue(col+1);
+    m_columnNumberSpinBox->setValue(col + 1);
     m_columnTypeComboBox->setCurrentIndex(coordOrInt);
-    m_multiplierField->setText(QString::number(1.0));
-    populateUnitsComboBox(coordOrInt);
     updateSelection();
 }
 
@@ -165,7 +160,7 @@ void DataSelector::populateUnitsComboBox(csv::ColumnType coord)
 void DataSelector::setColumnAs(csv::ColumnType coordOrInt)
 {
     auto col = m_tableWidget->selectedColumn();
-    if(col < 0)
+    if (col < 0)
         return;
 
     setColumnAs(col, coordOrInt);
@@ -174,7 +169,7 @@ void DataSelector::setColumnAs(csv::ColumnType coordOrInt)
 void DataSelector::setFirstRow()
 {
     auto row = m_tableWidget->selectedRow();
-    if(row < 0)
+    if (row < 0)
         return;
 
     auto currentMax = m_firstDataRowSpinBox->maximum();
@@ -188,7 +183,7 @@ void DataSelector::setFirstRow()
 void DataSelector::setLastRow()
 {
     auto row = m_tableWidget->selectedRow();
-    if(row < 0)
+    if (row < 0)
         return;
 
     auto currentMin = m_firstDataRowSpinBox->minimum();
@@ -241,11 +236,6 @@ csv::ColumnType DataSelector::currentColumnType() const
     return defaultColumnType;
 }
 
-double DataSelector::currentMultiplier() const
-{
-    return csv::atof(m_multiplierField->text().toStdString());
-}
-
 char DataSelector::separator() const
 {
     char separator;
@@ -274,14 +264,15 @@ bool DataSelector::dataLooksGood()
 {
     int iCol = m_tableWidget->intensityColumn();
     int cCol = m_tableWidget->coordinateColumn();
+    auto firstLine = m_tableWidget->firstRow();
+    auto lastLine = m_tableWidget->lastRow();
     try {
-        for (int i = int(firstLine()) - 1; i < int(lastLine()); i++) {
+        for (int i = firstLine; i < lastLine + 1; i++) {
             csv::atof(m_tableWidget->item(i, iCol)->text().toStdString());
         }
-        if (cCol > 0)
-            for (int i = int(firstLine()) - 1; i < int(lastLine()); i++) {
-                csv::atof(
-                    m_tableWidget->item(i, cCol)->text().toStdString());
+        if (cCol > -1)
+            for (int i = firstLine; i < lastLine + 1; i++) {
+                csv::atof(m_tableWidget->item(i, cCol)->text().toStdString());
             }
     } catch (std::exception& e) {
         QString message = QString("Unable to import, the following exception was thrown:\n")
@@ -304,10 +295,13 @@ QBoxLayout* DataSelector::createLayout()
     // Import button
     m_importButton = new QPushButton("Import");
     m_importButton->setDefault(false);
+    m_importButton->setAutoDefault(false);
     connect(m_importButton, &QPushButton::clicked, this, &DataSelector::onImportButton);
 
     // Reject button
     m_cancelButton = new QPushButton("Cancel");
+    m_cancelButton->setDefault(false);
+    m_cancelButton->setAutoDefault(false);
     connect(m_cancelButton, &QPushButton::clicked, this, [this]() { reject(); });
 
     // Separator field -- This needs to communicate with importAssistant
@@ -354,7 +348,7 @@ QBoxLayout* DataSelector::createLayout()
     m_columnNumberSpinBox->setMaximumWidth(100);
     connect(m_columnNumberSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
             this, [this]() {
-                auto col = m_columnNumberSpinBox->value()-1;
+                auto col = m_columnNumberSpinBox->value() - 1;
                 if (int(m_tableWidget->intensityColumn()) != col)
                     if (int(m_tableWidget->coordinateColumn()) != col)
                         setColumnAs(col, currentColumnType());
@@ -368,30 +362,13 @@ QBoxLayout* DataSelector::createLayout()
             static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
             [this](int columnType) {
                 if (columnType == csv::_intensity_) {
-                    m_columnNumberSpinBox->setValue(m_tableWidget->intensityColumn()+1);
-                    m_multiplierField->setText(QString::number(m_tableWidget->intensityMultiplier()));
+                    m_columnNumberSpinBox->setValue(m_tableWidget->intensityColumn() + 1);
                 } else {
-                    m_columnNumberSpinBox->setValue(m_tableWidget->coordinateColumn()+1);
-                    m_multiplierField->setText(QString::number(m_tableWidget->coordinateMultiplier()));
+                    m_columnNumberSpinBox->setValue(m_tableWidget->coordinateColumn() + 1);
                     populateUnitsComboBox(currentColumnType());
                     m_tableWidget->setCoordinateName(csv::HeaderLabels[columnType]);
                 }
             });
-
-    m_multiplierField = new QLineEdit();
-    m_multiplierField = new QLineEdit(QString("1.0"));
-    m_multiplierField->setMaxLength(16);
-    m_multiplierField->setMaximumWidth(100);
-    connect(m_multiplierField, &QLineEdit::editingFinished, this,
-            [this]() {
-                    auto column = m_columnNumberSpinBox->value() - 1;
-                    auto typeCol = currentColumnType();
-                    auto multiplier = currentMultiplier();
-                    m_tableWidget->setColumnAs(column,typeCol,multiplier);
-                    updateSelection();
-            }
-
-            );
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
@@ -421,7 +398,6 @@ QBoxLayout* DataSelector::createLayout()
     columnSelectionLayout->addRow(tr("&Import "), m_columnTypeComboBox);
     columnSelectionLayout->addRow(tr("&from column "), m_columnNumberSpinBox);
     columnSelectionLayout->addRow(tr("&Coordinate units "), m_coordinateUnitsComboBox);
-    columnSelectionLayout->addRow(tr("&Multiply by "), m_multiplierField);
     columnControlsGroupBox->setTitle(tr("&Data Columns:"));
     columnControlsGroupBox->setLayout(columnSelectionLayout);
 
