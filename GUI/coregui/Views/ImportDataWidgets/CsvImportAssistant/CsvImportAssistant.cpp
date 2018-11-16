@@ -34,16 +34,16 @@ bool csv::isAscii(QString filename)
     // This function needs to be defined properly;
     // motivation: ° and Å characters are problematic.
     char c;
-    unsigned count = 0;
-    unsigned count_bad = 0;
+    size_t count = 0;
+    size_t count_bad = 0;
     std::ifstream is(filename.toStdString());
     while (is.get(c) && count < 1000) {
         count++;
-        if (unsigned(c) > 255)
+        if (size_t(c) > 255)
             count_bad++;
     }
     is.close();
-    double acceptance_threshold = 0.1f * double(count);
+    double acceptance_threshold = 0.1 * double(count);
     // std::cout << count << "; " << count_bad << std::endl;
     return static_cast<double>(count_bad) <= acceptance_threshold;
 }
@@ -78,7 +78,7 @@ CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, Q
         m_coordinateColNum = 0; // zero in this context means "unavailable"
         m_units = AxesUnits::NBINS;
         m_firstRow = 1;
-        m_lastRow = unsigned(m_csvFile->NumberOfRows());
+        m_lastRow = size_t(m_csvFile->NumberOfRows());
         m_dataAvailable = true;
     }
 }
@@ -114,22 +114,22 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
     }
 }
 
-void CsvImportAssistant::setIntensityColumn(unsigned iCol, double multiplier)
+void CsvImportAssistant::setIntensityColumn(size_t iCol, double multiplier)
 {
     m_intensityColNum = iCol;
     m_intensityMultiplier = multiplier;
 }
-void CsvImportAssistant::setCoordinateColumn(unsigned iCol, AxesUnits units, double multiplier)
+void CsvImportAssistant::setCoordinateColumn(size_t iCol, AxesUnits units, double multiplier)
 {
     m_coordinateColNum = iCol;
     m_units = units;
     m_coordinateMultiplier = multiplier;
 }
-void CsvImportAssistant::setFirstRow(unsigned iRow)
+void CsvImportAssistant::setFirstRow(size_t iRow)
 {
     m_firstRow = iRow;
 }
-void CsvImportAssistant::setLastRow(unsigned iRow)
+void CsvImportAssistant::setLastRow(size_t iRow)
 {
     m_lastRow = iRow;
 }
@@ -297,8 +297,8 @@ char CsvImportAssistant::guessSeparator() const
     char c;
     std::ifstream is(m_fileName.toStdString());
     while (is.get(c)) {
-        if (unsigned(c) < 127)
-            frequencies[unsigned(c)]++;
+        if (size_t(c) < 127)
+            frequencies[size_t(c)]++;
     }
     is.close();
 
@@ -349,9 +349,4 @@ void CsvImportAssistant::resetSelection()
     m_lastRow = 0;
     m_units = AxesUnits::NBINS;
     m_dataAvailable = false;
-}
-
-double CsvImportAssistant::stringToDouble(std::string stringToParse)
-{
-    return DataFormatUtils::parse_doubles(stringToParse)[0];
 }

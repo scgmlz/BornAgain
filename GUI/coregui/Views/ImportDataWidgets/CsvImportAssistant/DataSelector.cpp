@@ -38,11 +38,6 @@ const QSize default_dialog_size(300, 400);
 DataSelector::DataSelector(csv::DataArray csvArray, QWidget* parent)
     : QDialog(parent)
     , m_data(csvArray)
-    , m_intensityCol(0)
-    , m_coordinateCol(0)
-    , m_intensityMultiplier(1.0)
-    , m_coordinateMultiplier(1.0)
-    , m_coordinateName("")
     , m_tableWidget(nullptr)
     , m_separatorField(nullptr)
     , m_firstDataRowSpinBox(nullptr)
@@ -75,59 +70,13 @@ bool DataSelector::updateData()
         return false;
     }
 
+    m_tableWidget->setData(m_data);
     m_firstDataRowSpinBox->setMaximum(int(lastRow));
     m_lastDataRowSpinBox->setMaximum(int(lastRow));
     m_lastDataRowSpinBox->setValue(int(lastRow));
     m_columnNumberSpinBox->setMaximum(int(m_data[firstLine()].size()));
-    setTableData();
 
     return true;
-}
-
-void DataSelector::setTableData()
-{
-
-    if (m_data.empty()) {
-        m_tableWidget->clearContents();
-        m_tableWidget->setRowCount(0);
-        return;
-    }
-
-    size_t nRows = m_data.size();
-    size_t nCols = m_data[0].size();
-    m_tableWidget->clearContents();
-    m_tableWidget->setColumnCount(int(nCols));
-    m_tableWidget->setRowCount(0);
-
-    for (unsigned i = 0; i < nRows; i++) {
-        m_tableWidget->insertRow(m_tableWidget->rowCount());
-        unsigned I = unsigned(m_tableWidget->rowCount()) - 1;
-        for (unsigned j = 0; j < m_data[i].size(); j++) {
-            m_tableWidget->setItem(int(I), int(j),
-                                   new QTableWidgetItem(QString::fromStdString(m_data[i][j])));
-        }
-    }
-}
-
-void DataSelector::applyMultipliers()
-{
-    if (m_intensityCol > 0) {
-        multiplyColumn(size_t(m_intensityCol - 1), m_intensityMultiplier);
-    }
-
-    if (m_coordinateCol > 0) {
-        multiplyColumn(size_t(m_coordinateCol - 1), m_coordinateMultiplier);
-    }
-}
-
-void DataSelector::multiplyColumn(size_t col, double multiplier)
-{
-    for (unsigned i = firstLine() - 1; i < lastLine(); i++) {
-        double number = multiplier * csv::atof(m_data[i][col]);
-        QString cellText =
-            0.0 == number ? m_tableWidget->item(int(i), int(col))->text() : QString::number(number);
-        m_tableWidget->setItem(int(i), int(col), new QTableWidgetItem(cellText));
-    }
 }
 
 void DataSelector::setColumnSlot(csv::ColumnType ct){
@@ -167,99 +116,30 @@ void DataSelector::updateSelection()
 {
     m_importButton->setEnabled(false);
     m_coordinateUnitsComboBox->setEnabled(false);
-    greyoutTableRegions();
+    m_tableWidget->setFirstRow(firstLine()-1);
+    m_tableWidget->setLastRow(lastLine()-1);
 
     // Enable import button only if the user has selected its columns for 1d
-    // import
-    if (m_intensityCol > 0)
+    if (m_tableWidget->intensityColumn() > -1)
         m_importButton->setEnabled(true);
 
     // Enable Coordinate Selector
-    if (m_coordinateCol > 0) {
+    if (m_tableWidget->coordinateColumn() > -1) {
         m_coordinateUnitsComboBox->setEnabled(true);
     } else {
         m_coordinateUnitsComboBox->clear();
         m_coordinateUnitsComboBox->addItem(csv::UnitsLabels[AxesUnits::NBINS]);
     }
-    applyMultipliers();
-}
-
-void DataSelector::greyoutTableRegions()
-{
-    int nRows = m_tableWidget->rowCount();
-    int nCols = m_tableWidget->columnCount();
-
-    // Grey out columns
-    for (int i = 0; i < nRows; i++)
-        for (int j = 0; j < nCols; j++)
-            greyoutCell(i, j, needsGreyout(i, j));
-}
-
-void DataSelector::greyoutCell(int i, int j, bool yes)
-{
-    if (yes) {
-        QFont italicFont;
-        italicFont.setItalic(true);
-        italicFont.setStrikeOut(true);
-        m_tableWidget->item(i, j)->setBackground(Qt::gray);
-        m_tableWidget->item(i, j)->setFont(italicFont);
-    } else {
-        QFont standardFont;
-        standardFont.setItalic(false);
-        standardFont.setStrikeOut(false);
-        m_tableWidget->item(i, j)->setBackground(Qt::white);
-        m_tableWidget->item(i, j)->setFont(standardFont);
-    }
-}
-
-bool DataSelector::needsGreyout(int iRow, int jCol)
-{
-
-    bool greyTop = iRow < int(firstLine() - 1);
-    bool greyBott = iRow > int(lastLine() - 1);
-    bool greyCol =
-        jCol + 1 != int(m_coordinateCol) && jCol + 1 != int(m_intensityCol) && m_intensityCol > 0;
-
-    return greyTop || greyBott || greyCol;
 }
 
 void DataSelector::setColumnAs(int col, csv::ColumnType coordOrInt)
 {
-
-    if (coordOrInt == csv::_intensity_) {
-        // restore order before changing column:
-        m_intensityMultiplier = 1.0;
-        m_columnTypeComboBox->setCurrentIndex(coordOrInt);
-        m_multiplierField->setText(QString::number(m_intensityMultiplier));
-        m_intensityMultiplier = currentMultiplier();
-        applyMultipliers();
-
-        // ok, change column:
-        m_intensityCol = unsigned(col + 1);
-        m_columnNumberSpinBox->setValue(int(m_intensityCol));
-        if (m_coordinateCol == m_intensityCol) {
-            m_coordinateCol = 0;
-            populateUnitsComboBox(coordOrInt);
-        }
-    } else {
-        // restore order before changing column:
-        m_coordinateMultiplier = 1.0;
-        m_columnTypeComboBox->setCurrentIndex(coordOrInt);
-        m_multiplierField->setText(QString::number(m_coordinateMultiplier));
-        m_coordinateMultiplier = currentMultiplier();
-        applyMultipliers();
-
-        // ok, change column:
-        m_coordinateCol = unsigned(col + 1);
-        m_columnNumberSpinBox->setValue(int(m_coordinateCol));
-        m_coordinateName = csv::HeaderLabels[coordOrInt];
-        populateUnitsComboBox(coordOrInt);
-        if (m_coordinateCol == m_intensityCol) {
-            m_intensityCol = 0;
-        }
-    }
+    m_tableWidget->setColumnAs(col, coordOrInt);
+    m_columnNumberSpinBox->setValue(col+1);
+    m_columnTypeComboBox->setCurrentIndex(coordOrInt);
+    m_multiplierField->setText(QString::number(1.0));
+    populateUnitsComboBox(coordOrInt);
     updateSelection();
-    setHeaders();
 }
 
 void DataSelector::populateUnitsComboBox(csv::ColumnType coord)
@@ -282,27 +162,9 @@ void DataSelector::populateUnitsComboBox(csv::ColumnType coord)
     }
 }
 
-int DataSelector::selectedRow(){
-    auto selectedRanges = m_tableWidget->selectedRanges();
-    if (selectedRanges.empty())
-        return -1;
-    auto front = selectedRanges.front();
-    auto row = front.topRow();
-    return row;
-}
-
-int DataSelector::selectedColumn(){
-    auto selectedRanges = m_tableWidget->selectedRanges();
-    if (selectedRanges.empty())
-        return -1;
-    auto front = selectedRanges.front();
-    auto col = front.leftColumn();
-    return col;
-}
-
 void DataSelector::setColumnAs(csv::ColumnType coordOrInt)
 {
-    auto col = selectedColumn();
+    auto col = m_tableWidget->selectedColumn();
     if(col < 0)
         return;
 
@@ -311,7 +173,7 @@ void DataSelector::setColumnAs(csv::ColumnType coordOrInt)
 
 void DataSelector::setFirstRow()
 {
-    auto row = selectedRow();
+    auto row = m_tableWidget->selectedRow();
     if(row < 0)
         return;
 
@@ -320,11 +182,12 @@ void DataSelector::setFirstRow()
     auto newMax = std::max(currentMax, desiredVal);
     m_firstDataRowSpinBox->setMaximum(newMax);
     m_firstDataRowSpinBox->setValue(desiredVal);
+    m_tableWidget->setFirstRow(size_t(row));
 }
 
 void DataSelector::setLastRow()
 {
-    auto row = selectedRow();
+    auto row = m_tableWidget->selectedRow();
     if(row < 0)
         return;
 
@@ -333,6 +196,7 @@ void DataSelector::setLastRow()
     auto newMin = std::min(currentMin, desiredVal);
     m_lastDataRowSpinBox->setMinimum(newMin);
     m_lastDataRowSpinBox->setValue(desiredVal);
+    m_tableWidget->setLastRow(size_t(row));
 }
 
 void DataSelector::resetSelection()
@@ -344,40 +208,19 @@ void DataSelector::resetSelection()
     m_lastDataRowSpinBox->setValue(int(maxLines()));
 }
 
-void DataSelector::setHeaders()
+size_t DataSelector::firstLine() const
 {
-    // Reset header labels
-    QStringList headers;
-
-    for (int j = 0; j < m_tableWidget->columnCount(); j++)
-        headers.append(QString::number(j + 1));
-
-    m_tableWidget->setHorizontalHeaderLabels(headers);
-
-    if (m_intensityCol > 0) {
-        int intCol = int(m_intensityCol) - 1;
-        m_tableWidget->setHorizontalHeaderItem(intCol,
-                                               new QTableWidgetItem(csv::HeaderLabels[csv::_intensity_]));
-    }
-    if (m_coordinateCol > 0) {
-        int coordCol = int(m_coordinateCol) - 1;
-        m_tableWidget->setHorizontalHeaderItem(coordCol, new QTableWidgetItem(m_coordinateName));
-    }
+    return size_t(m_firstDataRowSpinBox->value());
 }
 
-unsigned DataSelector::firstLine() const
+size_t DataSelector::lastLine() const
 {
-    return unsigned(m_firstDataRowSpinBox->value());
+    return size_t(m_lastDataRowSpinBox->value());
 }
 
-unsigned DataSelector::lastLine() const
+size_t DataSelector::maxLines() const
 {
-    return unsigned(m_lastDataRowSpinBox->value());
-}
-
-unsigned DataSelector::maxLines() const
-{
-    return unsigned(m_lastDataRowSpinBox->maximum());
+    return size_t(m_lastDataRowSpinBox->maximum());
 }
 
 AxesUnits DataSelector::units() const
@@ -400,7 +243,7 @@ csv::ColumnType DataSelector::currentColumnType() const
 
 double DataSelector::currentMultiplier() const
 {
-    return std::atof(m_multiplierField->text().toStdString().c_str());
+    return csv::atof(m_multiplierField->text().toStdString());
 }
 
 char DataSelector::separator() const
@@ -429,15 +272,15 @@ void DataSelector::onImportButton()
 
 bool DataSelector::dataLooksGood()
 {
-    int iCol = int(m_intensityCol) - 1;
-    int cCol = int(m_coordinateCol) - 1;
+    int iCol = m_tableWidget->intensityColumn();
+    int cCol = m_tableWidget->coordinateColumn();
     try {
         for (int i = int(firstLine()) - 1; i < int(lastLine()); i++) {
-            CsvImportAssistant::stringToDouble(m_tableWidget->item(i, iCol)->text().toStdString());
+            csv::atof(m_tableWidget->item(i, iCol)->text().toStdString());
         }
-        if (m_coordinateCol > 0)
+        if (cCol > 0)
             for (int i = int(firstLine()) - 1; i < int(lastLine()); i++) {
-                CsvImportAssistant::stringToDouble(
+                csv::atof(
                     m_tableWidget->item(i, cCol)->text().toStdString());
             }
     } catch (std::exception& e) {
@@ -460,7 +303,7 @@ QBoxLayout* DataSelector::createLayout()
 
     // Import button
     m_importButton = new QPushButton("Import");
-    m_importButton->setDefault(true);
+    m_importButton->setDefault(false);
     connect(m_importButton, &QPushButton::clicked, this, &DataSelector::onImportButton);
 
     // Reject button
@@ -511,10 +354,10 @@ QBoxLayout* DataSelector::createLayout()
     m_columnNumberSpinBox->setMaximumWidth(100);
     connect(m_columnNumberSpinBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
             this, [this]() {
-                auto col = m_columnNumberSpinBox->value();
-                if (int(m_intensityCol) != col)
-                    if (int(m_coordinateCol) != col)
-                        setColumnAs(col - 1, currentColumnType());
+                auto col = m_columnNumberSpinBox->value()-1;
+                if (int(m_tableWidget->intensityColumn()) != col)
+                    if (int(m_tableWidget->coordinateColumn()) != col)
+                        setColumnAs(col, currentColumnType());
             });
 
     // Column type (Intensity / Data / ...) selector:
@@ -525,11 +368,13 @@ QBoxLayout* DataSelector::createLayout()
             static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
             [this](int columnType) {
                 if (columnType == csv::_intensity_) {
-                    m_columnNumberSpinBox->setValue(int(m_intensityCol));
-                    m_multiplierField->setText(QString::number(m_intensityMultiplier));
+                    m_columnNumberSpinBox->setValue(m_tableWidget->intensityColumn()+1);
+                    m_multiplierField->setText(QString::number(m_tableWidget->intensityMultiplier()));
                 } else {
-                    m_columnNumberSpinBox->setValue(int(m_coordinateCol));
-                    m_multiplierField->setText(QString::number(m_coordinateMultiplier));
+                    m_columnNumberSpinBox->setValue(m_tableWidget->coordinateColumn()+1);
+                    m_multiplierField->setText(QString::number(m_tableWidget->coordinateMultiplier()));
+                    populateUnitsComboBox(currentColumnType());
+                    m_tableWidget->setCoordinateName(csv::HeaderLabels[columnType]);
                 }
             });
 
@@ -539,12 +384,11 @@ QBoxLayout* DataSelector::createLayout()
     m_multiplierField->setMaximumWidth(100);
     connect(m_multiplierField, &QLineEdit::editingFinished, this,
             [this]() {
-                if (currentColumnType() == csv::_intensity_) {
-                    m_intensityMultiplier = currentMultiplier();
-                } else {
-                    m_coordinateMultiplier = currentMultiplier();
-                }
-                applyMultipliers();
+                    auto column = m_columnNumberSpinBox->value() - 1;
+                    auto typeCol = currentColumnType();
+                    auto multiplier = currentMultiplier();
+                    m_tableWidget->setColumnAs(column,typeCol,multiplier);
+                    updateSelection();
             }
 
             );
