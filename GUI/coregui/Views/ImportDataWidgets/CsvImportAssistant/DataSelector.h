@@ -79,13 +79,8 @@ private:
     QBoxLayout* createLayout();
     double currentMultiplier() const;
     void populateUnitsComboBox(csv::ColumnType coordinate);
-    void greyoutTableRegions();
     bool isInsideTable(QPoint point);
     bool dataLooksGood();
-    bool needsGreyout(int iRow, int jCol);
-    void greyoutCell(int i, int j, bool yes);
-    void startContextMenu(const QPoint point);
-    void populateContextMenu(QMenu &menu);
 
     csv::DataArray m_data;
     CsvImportTable* m_tableWidget;
@@ -100,5 +95,14 @@ private:
 
     QPushButton* m_importButton;
     QPushButton* m_cancelButton;
+
+    int m_firstRow;
+    int m_lastRow;
+    int m_intensityColumn;
+    int m_coordinateColumn;
+    int m_intensityMultiplier;
+    int m_coordinateMultiplier;
+    AxesUnits m_units;
+    csv::ColumnType m_columnType;
 };
 #endif // DATASELECTOR_H

@@ -63,9 +63,9 @@ double csv::atof(std::string str)
 }
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
-    : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(0),
-      m_intensityMultiplier(1.0), m_coordinateColNum(0), m_coordinateMultiplier(1.0), m_firstRow(0),
-      m_lastRow(0), m_units(AxesUnits::NBINS), m_dataAvailable(false)
+    : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(-1),
+      m_intensityMultiplier(1.0), m_coordinateColNum(-1), m_coordinateMultiplier(1.0), m_firstRow(-1),
+      m_lastRow(-1), m_units(AxesUnits::NBINS), m_dataAvailable(false)
 {
     if (!loadCsvFile()) {
         return;
@@ -74,11 +74,11 @@ CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, Q
     if (useGUI) {
         runDataSelector(parent);
     } else {
-        m_intensityColNum = 1;
-        m_coordinateColNum = 0; // zero in this context means "unavailable"
+        m_intensityColNum = 0;
+        m_coordinateColNum = -1;
         m_units = AxesUnits::NBINS;
-        m_firstRow = 1;
-        m_lastRow = size_t(m_csvFile->NumberOfRows());
+        m_firstRow = 0;
+        m_lastRow = int(m_csvFile->NumberOfRows() - 1);
         m_dataAvailable = true;
     }
 }
@@ -105,8 +105,8 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
         m_coordinateColNum = selector.coordinateColumn();
         m_coordinateMultiplier = selector.coordinateMultiplier();
         m_units = selector.units();
-        m_firstRow = selector.firstLine();
-        m_lastRow = selector.lastLine();
+        m_firstRow = int(selector.firstLine()-1);
+        m_lastRow = int(selector.lastLine()-1);
         m_dataAvailable = true;
     } else if (res == selector.Rejected) {
         m_dataAvailable = false;
@@ -114,24 +114,24 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
     }
 }
 
-void CsvImportAssistant::setIntensityColumn(size_t iCol, double multiplier)
+void CsvImportAssistant::setIntensityColumn(int iCol, double multiplier)
 {
-    m_intensityColNum = iCol;
+    m_intensityColNum = iCol - 1;
     m_intensityMultiplier = multiplier;
 }
-void CsvImportAssistant::setCoordinateColumn(size_t iCol, AxesUnits units, double multiplier)
+void CsvImportAssistant::setCoordinateColumn(int iCol, AxesUnits units, double multiplier)
 {
-    m_coordinateColNum = iCol;
+    m_coordinateColNum = iCol - 1;
     m_units = units;
     m_coordinateMultiplier = multiplier;
 }
-void CsvImportAssistant::setFirstRow(size_t iRow)
+void CsvImportAssistant::setFirstRow(int iRow)
 {
-    m_firstRow = iRow;
+    m_firstRow = iRow - 1;
 }
-void CsvImportAssistant::setLastRow(size_t iRow)
+void CsvImportAssistant::setLastRow(int iRow)
 {
-    m_lastRow = iRow;
+    m_lastRow = iRow - 1;
 }
 
 bool CsvImportAssistant::loadCsvFile()
@@ -189,11 +189,11 @@ ImportDataInfo CsvImportAssistant::fillData()
     resultOutputData = std::make_unique<OutputData<double>>();
     std::vector<double> intensityValues;
     std::vector<double> coordinateValues;
-    if (m_intensityColNum > 0)
-        intensityValues = getValuesFromColumn(m_intensityColNum - 1, m_intensityMultiplier);
+    if (m_intensityColNum > -1)
+        intensityValues = getValuesFromColumn(m_intensityColNum, m_intensityMultiplier);
 
-    if (m_coordinateColNum > 0) {
-        coordinateValues = getValuesFromColumn(m_coordinateColNum - 1, m_coordinateMultiplier);
+    if (m_coordinateColNum > -1) {
+        coordinateValues = getValuesFromColumn(m_coordinateColNum, m_coordinateMultiplier);
     } else {
         const size_t size = intensityValues.size();
         for (size_t i = 0; i < size; i++)
@@ -209,14 +209,17 @@ ImportDataInfo CsvImportAssistant::fillData()
     return result;
 }
 
-std::vector<double> CsvImportAssistant::getValuesFromColumn(size_t jCol, double multiplier)
+std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double multiplier)
 {
+    if(jCol < 0)
+        return {};
     std::vector<double> result;
-    auto firstRow = m_firstRow - 1;
-    auto lastRow = m_lastRow;
+    auto firstRow = size_t(m_firstRow);
+    auto lastRow = size_t(m_lastRow)+1;
 
-    for (auto row = firstRow; row < lastRow; row++)
-        result.push_back(multiplier * csv::atof(m_csvArray[row][jCol]));
+    for (size_t row = firstRow; row < lastRow; row++){
+        result.push_back(multiplier * csv::atof(m_csvArray[row][size_t(jCol)]));
+    }
 
     return result;
 }
@@ -343,10 +346,10 @@ void CsvImportAssistant::showErrorMessage(std::string message)
 void CsvImportAssistant::resetSelection()
 {
     m_csvArray.clear();
-    m_intensityColNum = 0;
-    m_coordinateColNum = 0;
-    m_firstRow = 0;
-    m_lastRow = 0;
+    m_intensityColNum = -1;
+    m_coordinateColNum = -1;
+    m_firstRow = -1;
+    m_lastRow = -1;
     m_units = AxesUnits::NBINS;
     m_dataAvailable = false;
 }

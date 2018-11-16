@@ -23,6 +23,30 @@
 #include <QStringList>
 #include <QWidget>
 #include <memory>
+
+class csvSelectionState
+{
+public:
+    csvSelectionState()
+        : m_intensityColNum(-1)
+        , m_intensityMultiplier(1.)
+        , m_coordinateColNum(-1)
+        , m_coordinateMultiplier(1.)
+        , m_firstRow(-1)
+        , m_lastRow(-1)
+        , m_units(AxesUnits::NBINS){}
+
+    int m_intensityColNum;
+    double m_intensityMultiplier;
+    int m_coordinateColNum;
+    double m_coordinateMultiplier;
+    int m_firstRow;
+    int m_lastRow;
+    AxesUnits m_units;
+
+    bool availableData(){return m_intensityColNum > -1;}
+};
+
 //! Logic for importing intensity data from csv files
 class BA_CORE_API_ CsvImportAssistant : public QObject
 {
@@ -31,11 +55,11 @@ public:
     CsvImportAssistant(const QString& file, const bool useGUI = false, QWidget* parent = nullptr);
     ImportDataInfo getData() { return m_dataAvailable ? fillData() : ImportDataInfo(); }
     static void showErrorMessage(std::string message);
-    void setIntensityColumn(size_t iCol, double multiplier = 1.0);
-    void setCoordinateColumn(size_t iCol, AxesUnits units, double multiplier = 1.0);
-    void setFirstRow(size_t iRow);
-    void setLastRow(size_t iRow);
-    size_t columnCount() { return size_t(m_csvArray[0].size()); }
+    void setIntensityColumn(int iCol, double multiplier = 1.0);
+    void setCoordinateColumn(int iCol, AxesUnits units, double multiplier = 1.0);
+    void setFirstRow(int iRow);
+    void setLastRow(int iRow);
+    size_t columnCount() { return m_csvArray[0].size(); }
     char separator() { return m_separator; }
 
 private:
@@ -45,7 +69,7 @@ private:
     char guessSeparator() const;
     void removeBlankColumns();
     void runDataSelector(QWidget* parent);
-    std::vector<double> getValuesFromColumn(size_t jcol, double multiplier = 1.0);
+    std::vector<double> getValuesFromColumn(int jcol, double multiplier = 1.0);
     void resetSelection();
     void resetAssistant();
 
@@ -53,12 +77,12 @@ private:
     std::unique_ptr<CSVFile> m_csvFile;
     csv::DataArray m_csvArray;
     char m_separator;
-    size_t m_intensityColNum;
+    int m_intensityColNum;
     double m_intensityMultiplier;
-    size_t m_coordinateColNum;
+    int m_coordinateColNum;
     double m_coordinateMultiplier;
-    size_t m_firstRow;
-    size_t m_lastRow;
+    int m_firstRow;
+    int m_lastRow;
     AxesUnits m_units;
     bool m_dataAvailable;
 };
