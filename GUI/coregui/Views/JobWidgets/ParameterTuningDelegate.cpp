@@ -16,6 +16,7 @@
 #include "ModelPath.h"
 #include "ParameterTreeItems.h"
 #include "ParameterTuningModel.h"
+#include "ScientificSpinBox.h"
 #include "SessionModel.h"
 #include "SessionItemUtils.h"
 #include <QAbstractItemModel>
@@ -155,10 +156,10 @@ QWidget *ParameterTuningDelegate::createEditor(QWidget *parent,
         RealLimits limits = m_currentItem->linkedItem()->limits();
 
         // initializing value box
-        m_valueBox = new QDoubleSpinBox();
+        m_valueBox = new ScientificSpinBox();
         m_valueBox->setKeyboardTracking(false);
         m_valueBox->setFixedWidth(80);
-        m_valueBox->setDecimals(m_currentItem->linkedItem()->decimals());
+        m_valueBox->setDecimalPoints(m_currentItem->linkedItem()->decimals());
         m_valueBox->setSingleStep(1./std::pow(10.,m_currentItem->linkedItem()->decimals()-1));
 
         if(limits.hasLowerLimit()) {

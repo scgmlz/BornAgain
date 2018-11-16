@@ -22,6 +22,7 @@
 class QDoubleSpinBox;
 class QHBoxLayout;
 class ParameterItem;
+class ScientificSpinBox;
 class SessionItem;
 
 class BA_CORE_API_ ParameterTuningDelegate : public QItemDelegate
@@ -80,7 +81,7 @@ private:
 
     int m_valueColumn;
     mutable QSlider *m_slider;
-    mutable QDoubleSpinBox *m_valueBox;
+    mutable ScientificSpinBox* m_valueBox;
     mutable QWidget *m_contentWidget;
     mutable QHBoxLayout * m_contentLayout;
     mutable ParameterItem *m_currentItem;
