@@ -91,7 +91,7 @@ private:
     QSpinBox* m_columnNumberSpinBox;
     QComboBox* m_columnTypeComboBox;
     QComboBox* m_coordinateUnitsComboBox;
-    QLineEdit* m_multiplierField;
+    //QLineEdit* m_multiplierField;
 
     QPushButton* m_importButton;
     QPushButton* m_cancelButton;
