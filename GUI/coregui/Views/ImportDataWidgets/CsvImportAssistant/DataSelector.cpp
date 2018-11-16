@@ -274,12 +274,14 @@ bool DataSelector::dataLooksGood()
 {
     int iCol = m_tableWidget->intensityColumn();
     int cCol = m_tableWidget->coordinateColumn();
+    auto firstLine = m_tableWidget->firstRow();
+    auto lastLine = m_tableWidget->lastRow();
     try {
-        for (int i = int(firstLine()) - 1; i < int(lastLine()); i++) {
+        for (int i = firstLine; i < lastLine+1; i++) {
             csv::atof(m_tableWidget->item(i, iCol)->text().toStdString());
         }
-        if (cCol > 0)
-            for (int i = int(firstLine()) - 1; i < int(lastLine()); i++) {
+        if (cCol > -1)
+            for (int i = firstLine; i < lastLine+1; i++) {
                 csv::atof(
                     m_tableWidget->item(i, cCol)->text().toStdString());
             }
