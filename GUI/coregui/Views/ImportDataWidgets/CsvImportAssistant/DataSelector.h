@@ -17,6 +17,8 @@
 
 #include "CsvDataColumn.h"
 #include "CsvImportAssistant.h"
+#include "CsvImportTable.h"
+#include "CsvNamespace.h"
 #include "ImportDataInfo.h"
 #include "WinDllMacros.h"
 #include <QAction>
@@ -36,12 +38,12 @@ class DataSelector : public QDialog
     Q_OBJECT
 public:
     DataSelector(csv::DataArray csvArray, QWidget* parent = nullptr);
-    unsigned firstLine() const;
-    unsigned lastLine() const;
-    unsigned intensityColumn() const { return m_intensityCol; }
-    unsigned coordinateColumn() const { return m_coordinateCol; }
-    double intensityMultiplier() const { return m_intensityMultiplier; }
-    double coordinateMultiplier() const { return m_coordinateMultiplier; }
+    size_t firstLine() const;
+    size_t lastLine() const;
+    int intensityColumn() const { return m_tableWidget->intensityColumn(); }
+    int coordinateColumn() const { return m_tableWidget->coordinateColumn(); }
+    double intensityMultiplier() const { return m_tableWidget->intensityMultiplier(); }
+    double coordinateMultiplier() const { return m_tableWidget->coordinateMultiplier(); }
     AxesUnits units() const;
     csv::ColumnType currentColumnType() const;
     void setDataArray(csv::DataArray csvArray)
@@ -65,11 +67,8 @@ signals:
     void separatorChanged(char newSeparator);
 
 private:
-    unsigned maxLines() const;
+    size_t maxLines() const;
     char separator() const;
-    void setHeaders();
-    int selectedRow();
-    int selectedColumn();
     void setColumnAs(csv::ColumnType coordOrInt);
     void setColumnAs(int col, csv::ColumnType coordOrInt);
     void setFirstRow();
@@ -78,10 +77,7 @@ private:
     void updateSelection();
     bool updateData();
     QBoxLayout* createLayout();
-    void setTableData();
     double currentMultiplier() const;
-    void applyMultipliers();
-    void multiplyColumn(size_t col, double multiplier);
     void populateUnitsComboBox(csv::ColumnType coordinate);
     void greyoutTableRegions();
     bool isInsideTable(QPoint point);
@@ -92,12 +88,7 @@ private:
     void populateContextMenu(QMenu &menu);
 
     csv::DataArray m_data;
-    unsigned m_intensityCol;
-    unsigned m_coordinateCol;
-    double m_intensityMultiplier;
-    double m_coordinateMultiplier;
-    QString m_coordinateName;
-    QTableWidget* m_tableWidget;
+    CsvImportTable* m_tableWidget;
     QLineEdit* m_separatorField;
     QSpinBox* m_firstDataRowSpinBox;
     QSpinBox* m_lastDataRowSpinBox;

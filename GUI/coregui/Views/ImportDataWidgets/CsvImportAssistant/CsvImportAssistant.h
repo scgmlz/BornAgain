@@ -31,12 +31,11 @@ public:
     CsvImportAssistant(const QString& file, const bool useGUI = false, QWidget* parent = nullptr);
     ImportDataInfo getData() { return m_dataAvailable ? fillData() : ImportDataInfo(); }
     static void showErrorMessage(std::string message);
-    static double stringToDouble(std::string string_to_parse);
-    void setIntensityColumn(unsigned iCol, double multiplier = 1.0);
-    void setCoordinateColumn(unsigned iCol, AxesUnits units, double multiplier = 1.0);
-    void setFirstRow(unsigned iRow);
-    void setLastRow(unsigned iRow);
-    unsigned columnCount() { return unsigned(m_csvArray[0].size()); }
+    void setIntensityColumn(size_t iCol, double multiplier = 1.0);
+    void setCoordinateColumn(size_t iCol, AxesUnits units, double multiplier = 1.0);
+    void setFirstRow(size_t iRow);
+    void setLastRow(size_t iRow);
+    size_t columnCount() { return size_t(m_csvArray[0].size()); }
     char separator() { return m_separator; }
 
 private:
@@ -54,12 +53,12 @@ private:
     std::unique_ptr<CSVFile> m_csvFile;
     csv::DataArray m_csvArray;
     char m_separator;
-    unsigned m_intensityColNum;
+    size_t m_intensityColNum;
     double m_intensityMultiplier;
-    unsigned m_coordinateColNum;
+    size_t m_coordinateColNum;
     double m_coordinateMultiplier;
-    unsigned m_firstRow;
-    unsigned m_lastRow;
+    size_t m_firstRow;
+    size_t m_lastRow;
     AxesUnits m_units;
     bool m_dataAvailable;
 };
