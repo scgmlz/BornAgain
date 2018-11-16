@@ -55,8 +55,8 @@ void CsvImportTable::setMultiplierFields(){
     auto ncols = this->columnCount();
     auto intCol = m_intensityCol->columnNumber();
     auto intMult = m_intensityCol->multiplier();
-    auto coordCol = m_intensityCol->columnNumber();
-    auto coordMult = m_intensityCol->multiplier();
+    auto coordCol = m_coordinateCol->columnNumber();
+    auto coordMult = m_coordinateCol->multiplier();
 
     for(auto n = 0; n < ncols; ++n){
         //QWidget *multiplierField =
@@ -75,7 +75,7 @@ void CsvImportTable::setMultiplierFields(){
     int nRows = this->rowCount();
 
     QStringList vhlabels;
-    vhlabels << "";
+    vhlabels << "Multiplier: ";
     for (int i = rowOffset() ; i < nRows; i++)
         vhlabels << QString::number(i);
 
@@ -210,6 +210,8 @@ void CsvImportTable::setColumnAs(int col, csv::ColumnType coordOrInt, double mul
         m_intensityCol->setColNum(col);
         m_intensityCol->setMultiplier(multiplier);
         m_intensityCol->setValues(buffer);
+        if(col == m_coordinateCol->columnNumber())
+            m_coordinateCol->resetColumn();
     }
     else{
         restoreColumnValues(m_coordinateCol->columnNumber(),m_coordinateCol->values());
@@ -217,6 +219,8 @@ void CsvImportTable::setColumnAs(int col, csv::ColumnType coordOrInt, double mul
         m_coordinateCol->setMultiplier(multiplier);
         m_coordinateCol->setValues(buffer);
         m_coordinateCol->setName(csv::HeaderLabels[coordOrInt]);
+        if(col == m_intensityCol->columnNumber())
+            m_intensityCol->resetColumn();
     }
     updateSelection();
 }
