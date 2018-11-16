@@ -53,8 +53,6 @@ TEST_F(IOStrategyTest, TestNumpyTXTStrategies)
     OutputDataWriteNumpyTXTStrategy write_txt_strategy;
     write_txt_strategy.writeOutputData(m_model_data, ss);
 
-    std::cout << std::endl << ss.str() << std::endl;
-
     OutputDataReadNumpyTXTStrategy read_txt_strategy;
     auto result = std::unique_ptr<OutputData<double>>(read_txt_strategy.readOutputData(ss));
     EXPECT_EQ(m_model_data.getRank(), result->getRank());
