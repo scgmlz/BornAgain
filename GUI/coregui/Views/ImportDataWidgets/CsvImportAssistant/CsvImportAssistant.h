@@ -28,13 +28,10 @@ class csvSelectionState
 {
 public:
     csvSelectionState()
-        : m_intensityColNum(-1)
-        , m_intensityMultiplier(1.)
-        , m_coordinateColNum(-1)
-        , m_coordinateMultiplier(1.)
-        , m_firstRow(-1)
-        , m_lastRow(-1)
-        , m_units(AxesUnits::NBINS){}
+        : m_intensityColNum(-1), m_intensityMultiplier(1.), m_coordinateColNum(-1),
+          m_coordinateMultiplier(1.), m_firstRow(-1), m_lastRow(-1), m_units(AxesUnits::NBINS)
+    {
+    }
 
     int m_intensityColNum;
     double m_intensityMultiplier;
@@ -44,7 +41,7 @@ public:
     int m_lastRow;
     AxesUnits m_units;
 
-    bool availableData(){return m_intensityColNum > -1;}
+    bool availableData() { return m_intensityColNum > -1; }
 };
 
 //! Logic for importing intensity data from csv files
