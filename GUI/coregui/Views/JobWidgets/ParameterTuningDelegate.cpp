@@ -89,11 +89,11 @@ double ParameterTuningDelegate::SliderData::slider_to_value(int slider)
 ParameterTuningDelegate::ParameterTuningDelegate(QObject *parent)
     : QItemDelegate(parent)
     , m_valueColumn(1)
-    , m_slider(0)
-    , m_valueBox(0)
-    , m_contentWidget(0)
-    , m_contentLayout(0)
-    , m_currentItem(0)
+    , m_slider(nullptr)
+    , m_valueBox(nullptr)
+    , m_contentWidget(nullptr)
+    , m_contentLayout(nullptr)
+    , m_currentItem(nullptr)
     , m_isReadOnly(false)
 {
 
@@ -141,78 +141,61 @@ QWidget *ParameterTuningDelegate::createEditor(QWidget *parent,
     if(m_isReadOnly)
         return nullptr;
 
-    if (index.column() == m_valueColumn) {
-        if(index.parent().isValid() == false) return nullptr;
-
-        QVariant data = index.model()->data(index, Qt::EditRole);
-        if(!data.isValid()) return nullptr;
-
-        double value = data.toDouble();
-
-        m_currentItem = static_cast<ParameterItem*>(ParameterTuningModel::toSourceIndex(index).internalPointer());
-        if(!m_currentItem)
-            return nullptr;
-
-        RealLimits limits = m_currentItem->linkedItem()->limits();
-
-        // initializing value box
-        m_valueBox = new ScientificSpinBox();
-        m_valueBox->setKeyboardTracking(false);
-        m_valueBox->setFixedWidth(80);
-        m_valueBox->setDecimalPoints(m_currentItem->linkedItem()->decimals());
-        m_valueBox->setSingleStep(1./std::pow(10.,m_currentItem->linkedItem()->decimals()-1));
-
-        if(limits.hasLowerLimit()) {
-            m_valueBox->setMinimum(limits.lowerLimit());
-        } else {
-            m_valueBox->setMinimum(minimum_doublespin_value);
-        }
-
-        if(limits.hasUpperLimit()) {
-           m_valueBox->setMaximum(limits.upperLimit());
-        } else {
-            m_valueBox->setMaximum(maximum_doublespin_value);
-        }
-
-        m_valueBox->setValue(value);
-        connect(m_valueBox, SIGNAL(valueChanged(double)),this, SLOT(editorValueChanged(double)));
-
-        // initializing slider
-        m_slider = new QSlider(Qt::Horizontal);
-        m_slider->setFocusPolicy(Qt::StrongFocus);
-        m_slider->setTickPosition(QSlider::NoTicks);
-        m_slider->setTickInterval(1);
-        m_slider->setSingleStep(1);
-        m_slider_data.setItemLimits(limits);
-        m_slider->setRange(m_slider_data.m_smin, m_slider_data.m_smax);
-
-        updateSlider(value);
-
-        m_contentWidget = new QWidget(parent);
-        m_contentLayout = new QHBoxLayout(parent);
-        m_contentLayout->setMargin(0);
-        m_contentLayout->setSpacing(0);
-        m_contentLayout->addWidget(m_valueBox);
-        m_contentLayout->addWidget(m_slider);
-
-        // FIXME there is an issue with time of life of editor .vs. item
-//        m_currentItem->mapper()->setOnValueChange(
-//                      [this](){
-//            if(m_valueBox && m_currentItem)
-//              m_valueBox->setValue(m_currentItem->value().toDouble());
-//        }, this);
-
-//        m_currentItem->mapper()->setOnItemDestroy(
-//                    [this](SessionItem *) {
-//            m_currentItem = 0;
-//        }, this);
-
-        m_contentWidget->setLayout(m_contentLayout);
-
-        return m_contentWidget;
-    } else {
+    if (index.column() != m_valueColumn)
         return QItemDelegate::createEditor(parent, option, index);
-    }
+
+    if (!index.parent().isValid())
+        return nullptr;
+
+    QVariant data = index.model()->data(index, Qt::EditRole);
+    if (!data.isValid())
+        return nullptr;
+
+    double value = data.toDouble();
+
+    m_currentItem =
+        static_cast<ParameterItem*>(ParameterTuningModel::toSourceIndex(index).internalPointer());
+    if (!m_currentItem)
+        return nullptr;
+
+    RealLimits limits = m_currentItem->linkedItem()->limits();
+
+    // initializing value box
+    m_valueBox = new ScientificSpinBox();
+    m_valueBox->setKeyboardTracking(false);
+    m_valueBox->setFixedWidth(80);
+    m_valueBox->setDecimalPoints(m_currentItem->linkedItem()->decimals());
+    m_valueBox->setSingleStep(1. / std::pow(10., m_currentItem->linkedItem()->decimals() - 1));
+
+    m_valueBox->setMinimum(limits.hasLowerLimit() ? limits.lowerLimit() : minimum_doublespin_value);
+    m_valueBox->setMaximum(limits.hasUpperLimit() ? limits.upperLimit() : maximum_doublespin_value);
+
+    m_valueBox->setValue(value);
+    connect(m_valueBox,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&ScientificSpinBox::valueChanged),
+            this, &ParameterTuningDelegate::editorValueChanged);
+
+    // initializing slider
+    m_slider = new QSlider(Qt::Horizontal);
+    m_slider->setFocusPolicy(Qt::StrongFocus);
+    m_slider->setTickPosition(QSlider::NoTicks);
+    m_slider->setTickInterval(1);
+    m_slider->setSingleStep(1);
+    m_slider_data.setItemLimits(limits);
+    m_slider->setRange(m_slider_data.m_smin, m_slider_data.m_smax);
+
+    updateSlider(value);
+
+    m_contentWidget = new QWidget(parent);
+    m_contentLayout = new QHBoxLayout(parent);
+    m_contentLayout->setMargin(0);
+    m_contentLayout->setSpacing(0);
+    m_contentLayout->addWidget(m_valueBox);
+    m_contentLayout->addWidget(m_slider);
+
+    m_contentWidget->setLayout(m_contentLayout);
+
+    return m_contentWidget;
 }
 
 
@@ -228,12 +211,16 @@ void ParameterTuningDelegate::updateSlider(double value) const
 
 void ParameterTuningDelegate::sliderValueChanged(int position)
 {
-    disconnect(m_valueBox, SIGNAL(valueChanged(double)),this, SLOT(editorValueChanged(double)));
+    disconnect(m_valueBox,
+               static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+               this, &ParameterTuningDelegate::editorValueChanged);
 
     double value = m_slider_data.slider_to_value(position);
     m_valueBox->setValue(value);
 
-    connect(m_valueBox, SIGNAL(valueChanged(double)),this, SLOT(editorValueChanged(double)));
+    connect(m_valueBox,
+            static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this, &ParameterTuningDelegate::editorValueChanged);
     emitSignals(value);
 }
 
