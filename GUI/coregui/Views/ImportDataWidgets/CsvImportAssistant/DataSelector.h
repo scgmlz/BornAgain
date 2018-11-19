@@ -60,7 +60,7 @@ public:
 public slots:
     void onImportButton();
     void onCancelButton();
-    void onColumnRightClick(const QPoint &position );
+    void onColumnRightClick(const QPoint& position);
     void setColumnSlot(csv::ColumnType ct);
 
 signals:

@@ -64,8 +64,8 @@ double csv::atof(std::string str)
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
     : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(-1),
-      m_intensityMultiplier(1.0), m_coordinateColNum(-1), m_coordinateMultiplier(1.0), m_firstRow(-1),
-      m_lastRow(-1), m_units(AxesUnits::NBINS), m_dataAvailable(false)
+      m_intensityMultiplier(1.0), m_coordinateColNum(-1), m_coordinateMultiplier(1.0),
+      m_firstRow(-1), m_lastRow(-1), m_units(AxesUnits::NBINS), m_dataAvailable(false)
 {
     if (!loadCsvFile()) {
         return;
@@ -105,8 +105,8 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
         m_coordinateColNum = selector.coordinateColumn();
         m_coordinateMultiplier = selector.coordinateMultiplier();
         m_units = selector.units();
-        m_firstRow = int(selector.firstLine()-1);
-        m_lastRow = int(selector.lastLine()-1);
+        m_firstRow = int(selector.firstLine() - 1);
+        m_lastRow = int(selector.lastLine() - 1);
         m_dataAvailable = true;
     } else if (res == selector.Rejected) {
         m_dataAvailable = false;
@@ -211,13 +211,13 @@ ImportDataInfo CsvImportAssistant::fillData()
 
 std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double multiplier)
 {
-    if(jCol < 0)
+    if (jCol < 0)
         return {};
     std::vector<double> result;
     auto firstRow = size_t(m_firstRow);
-    auto lastRow = size_t(m_lastRow)+1;
+    auto lastRow = size_t(m_lastRow) + 1;
 
-    for (size_t row = firstRow; row < lastRow; row++){
+    for (size_t row = firstRow; row < lastRow; row++) {
         result.push_back(multiplier * csv::atof(m_csvArray[row][size_t(jCol)]));
     }
 

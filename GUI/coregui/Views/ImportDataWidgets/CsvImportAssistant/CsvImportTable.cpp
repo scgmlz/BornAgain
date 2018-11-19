@@ -1,7 +1,6 @@
 #include "CsvImportTable.h"
 #include "QDoubleSpinBox"
 
-
 CsvImportTable::CsvImportTable(QWidget* parent) : QTableWidget(parent)
 {
     m_coordinateCol = new CsvCoordinateColumn();
@@ -51,51 +50,46 @@ void CsvImportTable::setHeaders()
     }
 }
 
-void CsvImportTable::setMultiplierFields(){
+void CsvImportTable::setMultiplierFields()
+{
     auto ncols = this->columnCount();
     auto intCol = m_intensityCol->columnNumber();
     auto intMult = m_intensityCol->multiplier();
     auto coordCol = m_coordinateCol->columnNumber();
     auto coordMult = m_coordinateCol->multiplier();
 
-    for(auto n = 0; n < ncols; ++n){
-        //QWidget *multiplierField =
-        QDoubleSpinBox *currentField = new QDoubleSpinBox();
+    for (auto n = 0; n < ncols; ++n) {
+        // QWidget *multiplierField =
+        QDoubleSpinBox* currentField = new QDoubleSpinBox();
         currentField->setValue(1.0);
         currentField->setDisabled(true);
 
-        if(n == intCol){
+        if (n == intCol) {
             currentField->setValue(intMult);
             currentField->setEnabled(true);
-            connect(currentField,&QDoubleSpinBox::editingFinished, this,
-                    [this,currentField]()
-            {
+            connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
                 m_intensityCol->setMultiplier(currentField->value());
                 applyMultipliers();
-            }
-            );
+            });
         }
 
-        if(n == coordCol){
+        if (n == coordCol) {
             currentField->setValue(coordMult);
             currentField->setEnabled(true);
-            connect(currentField,&QDoubleSpinBox::editingFinished, this,
-                    [this,currentField]()
-            {
+            connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
                 m_coordinateCol->setMultiplier(currentField->value());
                 applyMultipliers();
-            }
-            );
+            });
         }
 
-        this->setCellWidget(0,n,currentField );
+        this->setCellWidget(0, n, currentField);
     }
 
     int nRows = this->rowCount();
 
     QStringList vhlabels;
     vhlabels << "Multiplier: ";
-    for (int i = rowOffset() ; i < nRows; i++)
+    for (int i = rowOffset(); i < nRows; i++)
         vhlabels << QString::number(i);
 
     this->setVerticalHeaderLabels(vhlabels);
@@ -122,8 +116,7 @@ void CsvImportTable::setData(const csv::DataArray data)
         this->insertRow(this->rowCount());
         size_t I = size_t(this->rowCount()) - 1;
         for (size_t j = 0; j < data[i].size(); j++) {
-            this->setItem(int(I), int(j),
-                                   new QTableWidgetItem(QString::fromStdString(data[i][j])));
+            this->setItem(int(I), int(j), new QTableWidgetItem(QString::fromStdString(data[i][j])));
         }
     }
 
@@ -141,7 +134,6 @@ void CsvImportTable::setLastRow(size_t row)
     m_lastRow = row;
     greyoutDataToDiscard();
 }
-
 
 void CsvImportTable::updateSelection()
 {
@@ -188,10 +180,11 @@ void CsvImportTable::greyoutCell(int i, int j, bool yes)
 
 bool CsvImportTable::needsGreyout(const int iRow, const int jCol) const
 {
-    bool greyTop = iRow < int(m_firstRow)+rowOffset();
-    bool greyBott = iRow > int(m_lastRow)+rowOffset();
-    bool greyCol =
-        jCol != int(m_coordinateCol->columnNumber()) && jCol != int(m_intensityCol->columnNumber()) && int(m_intensityCol->columnNumber()) > 0;
+    bool greyTop = iRow < int(m_firstRow) + rowOffset();
+    bool greyBott = iRow > int(m_lastRow) + rowOffset();
+    bool greyCol = jCol != int(m_coordinateCol->columnNumber())
+                   && jCol != int(m_intensityCol->columnNumber())
+                   && int(m_intensityCol->columnNumber()) > 0;
 
     return greyTop || greyBott || greyCol;
 }
@@ -207,10 +200,10 @@ void CsvImportTable::applyMultipliers()
     }
 }
 
-void CsvImportTable::multiplyColumn(CsvIntensityColumn *col)
+void CsvImportTable::multiplyColumn(CsvIntensityColumn* col)
 {
     auto colNum = col->columnNumber();
-    if(colNum < 0)
+    if (colNum < 0)
         return;
 
     auto multiplier = col->multiplier();
@@ -219,45 +212,42 @@ void CsvImportTable::multiplyColumn(CsvIntensityColumn *col)
     for (size_t i = 0; i < size; i++) {
         auto currentText = QString::fromStdString(values[i]);
         double number = multiplier * csv::atof(currentText);
-        QString cellText =
-            0.0 == number ? currentText : QString::number(number);
+        QString cellText = 0.0 == number ? currentText : QString::number(number);
         this->setItem(int(i), colNum, new QTableWidgetItem(cellText));
     }
 }
 
-void CsvImportTable::setColumnAs(int col, csv::ColumnType coordOrInt, double multiplier){
+void CsvImportTable::setColumnAs(int col, csv::ColumnType coordOrInt, double multiplier)
+{
     csv::DataColumn buffer = valuesFromColumn(col);
-    if(coordOrInt == csv::_intensity_){
-        restoreColumnValues(m_intensityCol->columnNumber(),m_intensityCol->values());
+    if (coordOrInt == csv::_intensity_) {
+        restoreColumnValues(m_intensityCol->columnNumber(), m_intensityCol->values());
         m_intensityCol->setColNum(col);
         m_intensityCol->setMultiplier(multiplier);
         m_intensityCol->setValues(buffer);
-        if(col == m_coordinateCol->columnNumber())
+        if (col == m_coordinateCol->columnNumber())
             m_coordinateCol->resetColumn();
-    }
-    else{
-        restoreColumnValues(m_coordinateCol->columnNumber(),m_coordinateCol->values());
+    } else {
+        restoreColumnValues(m_coordinateCol->columnNumber(), m_coordinateCol->values());
         m_coordinateCol->setColNum(col);
         m_coordinateCol->setMultiplier(multiplier);
         m_coordinateCol->setValues(buffer);
         m_coordinateCol->setName(csv::HeaderLabels[coordOrInt]);
-        if(col == m_intensityCol->columnNumber())
+        if (col == m_intensityCol->columnNumber())
             m_intensityCol->resetColumn();
     }
     updateSelection();
 }
 
-csv::DataColumn CsvImportTable::valuesFromColumn(int col){
-    if(col < 0){
+csv::DataColumn CsvImportTable::valuesFromColumn(int col)
+{
+    if (col < 0) {
         return {};
-    }
-    else if(m_intensityCol->columnNumber() == col){
+    } else if (m_intensityCol->columnNumber() == col) {
         return m_intensityCol->values();
-    }
-    else if(m_coordinateCol->columnNumber() == col){
-       return m_coordinateCol->values();
-    }
-    else{
+    } else if (m_coordinateCol->columnNumber() == col) {
+        return m_coordinateCol->values();
+    } else {
         csv::DataColumn result;
         size_t rowCount = size_t(this->rowCount());
         result = csv::DataColumn(rowCount);
