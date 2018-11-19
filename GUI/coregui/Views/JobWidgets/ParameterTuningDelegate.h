@@ -30,9 +30,9 @@ class BA_CORE_API_ ParameterTuningDelegate : public QItemDelegate
     Q_OBJECT
 
 public:
-    class SliderData {
+    class TuningData {
     public:
-        SliderData();
+        TuningData();
         void setRangeFactor(double range_factor);
         void setItemLimits(const RealLimits &item_limits);
         int value_to_slider(double value);
@@ -85,7 +85,7 @@ private:
     mutable QWidget *m_contentWidget;
     mutable QHBoxLayout * m_contentLayout;
     mutable ParameterItem *m_currentItem;
-    mutable SliderData m_slider_data;
+    mutable TuningData m_slider_data;
     bool m_isReadOnly;
 };
 
