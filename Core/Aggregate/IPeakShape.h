@@ -81,17 +81,17 @@ private:
 };
 
 //! Class that implements a peak shape that is Gaussian in the radial direction and
-//! uses the Kent distribution in the angular direction.
+//! uses the von Mises-Fisher distribution in the angular direction.
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ GaussKentPeakShape : public IPeakShape
+class BA_CORE_API_ GaussFisherPeakShape : public IPeakShape
 {
 public:
-    GaussKentPeakShape(double max_intensity, double radial_size, double kappa);
-    ~GaussKentPeakShape() override;
+    GaussFisherPeakShape(double max_intensity, double radial_size, double kappa);
+    ~GaussFisherPeakShape() override;
 
-    GaussKentPeakShape* clone() const override;
+    GaussFisherPeakShape* clone() const override;
 
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
@@ -105,17 +105,17 @@ private:
 };
 
 //! Class that implements a peak shape that is Lorentzian in the radial direction and
-//! uses the Kent distribution in the angular direction.
+//! uses the von Mises-Fisher distribution in the angular direction.
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ LorentzKentPeakShape : public IPeakShape
+class BA_CORE_API_ LorentzFisherPeakShape : public IPeakShape
 {
 public:
-    LorentzKentPeakShape(double max_intensity, double radial_size, double kappa);
-    ~LorentzKentPeakShape() override;
+    LorentzFisherPeakShape(double max_intensity, double radial_size, double kappa);
+    ~LorentzFisherPeakShape() override;
 
-    LorentzKentPeakShape* clone() const override;
+    LorentzFisherPeakShape* clone() const override;
 
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
