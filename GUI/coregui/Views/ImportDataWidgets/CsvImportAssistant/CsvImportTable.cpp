@@ -62,12 +62,31 @@ void CsvImportTable::setMultiplierFields(){
         //QWidget *multiplierField =
         QDoubleSpinBox *currentField = new QDoubleSpinBox();
         currentField->setValue(1.0);
+        currentField->setDisabled(true);
 
-        if(n == intCol)
+        if(n == intCol){
             currentField->setValue(intMult);
+            currentField->setEnabled(true);
+            connect(currentField,&QDoubleSpinBox::editingFinished, this,
+                    [this,currentField]()
+            {
+                m_intensityCol->setMultiplier(currentField->value());
+                applyMultipliers();
+            }
+            );
+        }
 
-        if(n == coordCol)
+        if(n == coordCol){
             currentField->setValue(coordMult);
+            currentField->setEnabled(true);
+            connect(currentField,&QDoubleSpinBox::editingFinished, this,
+                    [this,currentField]()
+            {
+                m_coordinateCol->setMultiplier(currentField->value());
+                applyMultipliers();
+            }
+            );
+        }
 
         this->setCellWidget(0,n,currentField );
     }
@@ -80,6 +99,7 @@ void CsvImportTable::setMultiplierFields(){
         vhlabels << QString::number(i);
 
     this->setVerticalHeaderLabels(vhlabels);
+    applyMultipliers();
 }
 
 void CsvImportTable::setData(const csv::DataArray data)
@@ -97,7 +117,6 @@ void CsvImportTable::setData(const csv::DataArray data)
     this->setRowCount(0);
 
     this->insertRow(this->rowCount());
-    setMultiplierFields();
 
     for (size_t i = 0; i < nRows; i++) {
         this->insertRow(this->rowCount());
@@ -107,22 +126,25 @@ void CsvImportTable::setData(const csv::DataArray data)
                                    new QTableWidgetItem(QString::fromStdString(data[i][j])));
         }
     }
+
+    setMultiplierFields();
 }
-    void CsvImportTable::setFirstRow(size_t row)
-    {
-        m_firstRow = row;
-        greyoutDataToDiscard();
-    }
-    void CsvImportTable::setLastRow(size_t row)
-    {
-        m_lastRow = row;
-        greyoutDataToDiscard();
-    }
+
+void CsvImportTable::setFirstRow(size_t row)
+{
+    m_firstRow = row;
+    greyoutDataToDiscard();
+}
+
+void CsvImportTable::setLastRow(size_t row)
+{
+    m_lastRow = row;
+    greyoutDataToDiscard();
+}
 
 
 void CsvImportTable::updateSelection()
 {
-    applyMultipliers();
     greyoutDataToDiscard();
     setHeaders();
     setMultiplierFields();

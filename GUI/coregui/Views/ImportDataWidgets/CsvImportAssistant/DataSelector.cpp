@@ -45,7 +45,6 @@ DataSelector::DataSelector(csv::DataArray csvArray, QWidget* parent)
     , m_columnNumberSpinBox(nullptr)
     , m_columnTypeComboBox(nullptr)
     , m_coordinateUnitsComboBox(nullptr)
-    , m_multiplierField(nullptr)
     , m_importButton(nullptr)
     , m_cancelButton(nullptr)
 {
@@ -137,7 +136,6 @@ void DataSelector::setColumnAs(int col, csv::ColumnType coordOrInt)
     m_tableWidget->setColumnAs(col, coordOrInt);
     m_columnNumberSpinBox->setValue(col+1);
     m_columnTypeComboBox->setCurrentIndex(coordOrInt);
-    m_multiplierField->setText(QString::number(1.0));
     populateUnitsComboBox(coordOrInt);
     updateSelection();
 }
@@ -241,11 +239,6 @@ csv::ColumnType DataSelector::currentColumnType() const
     return defaultColumnType;
 }
 
-double DataSelector::currentMultiplier() const
-{
-    return csv::atof(m_multiplierField->text().toStdString());
-}
-
 char DataSelector::separator() const
 {
     char separator;
@@ -306,10 +299,13 @@ QBoxLayout* DataSelector::createLayout()
     // Import button
     m_importButton = new QPushButton("Import");
     m_importButton->setDefault(false);
+    m_importButton->setAutoDefault(false);
     connect(m_importButton, &QPushButton::clicked, this, &DataSelector::onImportButton);
 
     // Reject button
     m_cancelButton = new QPushButton("Cancel");
+    m_cancelButton->setDefault(false);
+    m_cancelButton->setAutoDefault(false);
     connect(m_cancelButton, &QPushButton::clicked, this, [this]() { reject(); });
 
     // Separator field -- This needs to communicate with importAssistant
@@ -371,29 +367,12 @@ QBoxLayout* DataSelector::createLayout()
             [this](int columnType) {
                 if (columnType == csv::_intensity_) {
                     m_columnNumberSpinBox->setValue(m_tableWidget->intensityColumn()+1);
-                    m_multiplierField->setText(QString::number(m_tableWidget->intensityMultiplier()));
                 } else {
                     m_columnNumberSpinBox->setValue(m_tableWidget->coordinateColumn()+1);
-                    m_multiplierField->setText(QString::number(m_tableWidget->coordinateMultiplier()));
                     populateUnitsComboBox(currentColumnType());
                     m_tableWidget->setCoordinateName(csv::HeaderLabels[columnType]);
                 }
             });
-
-    m_multiplierField = new QLineEdit();
-    m_multiplierField = new QLineEdit(QString("1.0"));
-    m_multiplierField->setMaxLength(16);
-    m_multiplierField->setMaximumWidth(100);
-    connect(m_multiplierField, &QLineEdit::editingFinished, this,
-            [this]() {
-                    auto column = m_columnNumberSpinBox->value() - 1;
-                    auto typeCol = currentColumnType();
-                    auto multiplier = currentMultiplier();
-                    m_tableWidget->setColumnAs(column,typeCol,multiplier);
-                    updateSelection();
-            }
-
-            );
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
@@ -423,7 +402,6 @@ QBoxLayout* DataSelector::createLayout()
     columnSelectionLayout->addRow(tr("&Import "), m_columnTypeComboBox);
     columnSelectionLayout->addRow(tr("&from column "), m_columnNumberSpinBox);
     columnSelectionLayout->addRow(tr("&Coordinate units "), m_coordinateUnitsComboBox);
-    columnSelectionLayout->addRow(tr("&Multiply by "), m_multiplierField);
     columnControlsGroupBox->setTitle(tr("&Data Columns:"));
     columnControlsGroupBox->setLayout(columnSelectionLayout);
 
