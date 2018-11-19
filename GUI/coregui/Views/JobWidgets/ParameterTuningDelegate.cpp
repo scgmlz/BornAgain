@@ -38,6 +38,7 @@
 namespace {
 const double maximum_doublespin_value = std::numeric_limits<double>::max();
 const double minimum_doublespin_value = std::numeric_limits<double>::lowest();
+const double double_quant = std::numeric_limits<double>::min();
 }
 
 ParameterTuningDelegate::TuningData::TuningData()
@@ -60,14 +61,11 @@ void ParameterTuningDelegate::TuningData::setItemLimits(const RealLimits &item_l
     m_item_limits = item_limits;
 }
 
-int ParameterTuningDelegate::TuningData::value_to_slider(double value)
+void ParameterTuningDelegate::TuningData::updateRealLimits(double value)
 {
-    double dr(0);
-    if(value == 0.0) {
-        dr = 1.0*m_range_factor/100.;
-    } else {
-        dr = std::abs(value)*m_range_factor/100.;
-    }
+    const double abs_value = std::abs(value);
+    const double dr =
+        abs_value <= double_quant ? m_range_factor / 100. : abs_value * m_range_factor / 100.;
     m_rmin = value - dr;
     m_rmax = value + dr;
 
@@ -76,13 +74,17 @@ int ParameterTuningDelegate::TuningData::value_to_slider(double value)
 
     if(m_item_limits.hasUpperLimit() && m_rmax > m_item_limits.upperLimit())
         m_rmax = m_item_limits.upperLimit();
-
-    return m_smin + (value - m_rmin)*(m_smax-m_smin)/(m_rmax-m_rmin);
 }
 
-double ParameterTuningDelegate::TuningData::slider_to_value(int slider)
+int ParameterTuningDelegate::TuningData::sliderPosition(double value)
 {
-    return m_rmin + (slider - m_smin)*(m_rmax-m_rmin)/(m_smax - m_smin);
+    updateRealLimits(value);
+    return m_smin + static_cast<int>((value - m_rmin) / step());
+}
+
+double ParameterTuningDelegate::TuningData::value(int slider_pos)
+{
+    return m_rmin + (slider_pos - m_smin) * step();
 }
 
 double ParameterTuningDelegate::TuningData::step() const
@@ -162,15 +164,15 @@ QWidget *ParameterTuningDelegate::createEditor(QWidget *parent,
 
     double value = data.toDouble();
     RealLimits limits = m_currentItem->linkedItem()->limits();
-    m_slider_data.setItemLimits(limits);
-    m_slider_data.value_to_slider(value);
+    m_tuning_info.setItemLimits(limits);
+    m_tuning_info.updateRealLimits(value);
 
     // initializing value box
     m_valueBox = new ScientificSpinBox();
     m_valueBox->setKeyboardTracking(false);
     m_valueBox->setFixedWidth(80);
     m_valueBox->setDecimalPoints(m_currentItem->linkedItem()->decimals());
-    m_valueBox->setSingleStep(m_slider_data.step());
+    m_valueBox->setSingleStep(m_tuning_info.step());
     m_valueBox->setMinimum(limits.hasLowerLimit() ? limits.lowerLimit() : minimum_doublespin_value);
     m_valueBox->setMaximum(limits.hasUpperLimit() ? limits.upperLimit() : maximum_doublespin_value);
 
@@ -185,7 +187,7 @@ QWidget *ParameterTuningDelegate::createEditor(QWidget *parent,
     m_slider->setTickPosition(QSlider::NoTicks);
     m_slider->setTickInterval(1);
     m_slider->setSingleStep(1);
-    m_slider->setRange(m_slider_data.m_smin, m_slider_data.m_smax);
+    m_slider->setRange(m_tuning_info.m_smin, m_tuning_info.m_smax);
 
     updateSlider(value);
 
@@ -206,7 +208,7 @@ void ParameterTuningDelegate::updateSlider(double value) const
 {
     disconnect(m_slider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
 
-    m_slider->setValue(m_slider_data.value_to_slider(value));
+    m_slider->setValue(m_tuning_info.sliderPosition(value));
 
     connect(m_slider, SIGNAL(valueChanged(int)),this, SLOT(sliderValueChanged(int)));
 }
@@ -218,7 +220,7 @@ void ParameterTuningDelegate::sliderValueChanged(int position)
                static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
                this, &ParameterTuningDelegate::editorValueChanged);
 
-    double value = m_slider_data.slider_to_value(position);
+    double value = m_tuning_info.value(position);
     m_valueBox->setValue(value);
 
     connect(m_valueBox,
@@ -274,7 +276,7 @@ void ParameterTuningDelegate::emitSignals(double value)
 
 void ParameterTuningDelegate::setSliderRangeFactor(double value)
 {
-    m_slider_data.setRangeFactor(value);
+    m_tuning_info.setRangeFactor(value);
 }
 
 void ParameterTuningDelegate::setReadOnly(bool isReadOnly)

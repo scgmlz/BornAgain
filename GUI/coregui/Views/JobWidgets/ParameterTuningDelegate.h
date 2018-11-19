@@ -35,8 +35,9 @@ public:
         TuningData();
         void setRangeFactor(double range_factor);
         void setItemLimits(const RealLimits &item_limits);
-        int value_to_slider(double value);
-        double slider_to_value(int slider);
+        void updateRealLimits(double value);
+        int sliderPosition(double value);
+        double value(int slider_pos);
         double step() const;
         int m_smin;
         int m_smax;
@@ -86,7 +87,7 @@ private:
     mutable QWidget *m_contentWidget;
     mutable QHBoxLayout * m_contentLayout;
     mutable ParameterItem *m_currentItem;
-    mutable TuningData m_slider_data;
+    mutable TuningData m_tuning_info;
     bool m_isReadOnly;
 };
 
