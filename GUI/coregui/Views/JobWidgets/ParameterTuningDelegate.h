@@ -37,6 +37,7 @@ public:
         void setItemLimits(const RealLimits &item_limits);
         int value_to_slider(double value);
         double slider_to_value(int slider);
+        double step() const;
         int m_smin;
         int m_smax;
         double m_rmin;
