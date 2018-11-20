@@ -68,7 +68,7 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     auto to_string = [&decimals](double val){return ScientificSpinBox::toString(val, decimals);};
 
     EXPECT_EQ(std::string("-1.235e+2"), to_string(-123.45).toStdString());
-    EXPECT_EQ(std::string("-1e+2"), to_string(-99.9999).toStdString());
+    EXPECT_EQ(std::string("-100"), to_string(-99.9999).toStdString());
     EXPECT_EQ(std::string("-99.999"), to_string(-99.9994).toStdString());
     EXPECT_EQ(std::string("-10.123"), to_string(-10.12345).toStdString());
     EXPECT_EQ(std::string("-1"), to_string(-1.).toStdString());
@@ -84,7 +84,7 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     EXPECT_EQ(std::string("1.5e-2"), to_string(1.5e-2).toStdString());
     EXPECT_EQ(std::string("1.523e-2"), to_string(1.5234e-2).toStdString());
     EXPECT_EQ(std::string("9.99e-2"), to_string(9.99e-2).toStdString());
-    EXPECT_EQ(std::string("0.1"), to_string(9.9999e-2).toStdString());
+    EXPECT_EQ(std::string("1e-1"), to_string(9.9999e-2).toStdString());
     EXPECT_EQ(std::string("0.1"), to_string(0.1).toStdString());
     EXPECT_EQ(std::string("1"), to_string(1.).toStdString());
     EXPECT_EQ(std::string("1.1"), to_string(1.1).toStdString());
@@ -92,7 +92,7 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     EXPECT_EQ(std::string("10.123"), to_string(10.12345).toStdString());
     EXPECT_EQ(std::string("99.9"), to_string(99.9).toStdString());
     EXPECT_EQ(std::string("99.999"), to_string(99.9994).toStdString());
-    EXPECT_EQ(std::string("1e+2"), to_string(99.9999).toStdString());
+    EXPECT_EQ(std::string("100"), to_string(99.9999).toStdString());
     EXPECT_EQ(std::string("1.235e+2"), to_string(123.45).toStdString());
     EXPECT_EQ(std::string("1e+4"), to_string(1.e+4).toStdString());
     EXPECT_EQ(std::string("1.265e+12"), to_string(1.265e+12).toStdString());
@@ -101,11 +101,11 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     decimals = 5;
     EXPECT_EQ(std::string("1.23e-12"), to_string(1.23e-12).toStdString());
     EXPECT_EQ(std::string("1.52346e-2"), to_string(1.523456e-2).toStdString());
-    EXPECT_EQ(std::string("0.1"), to_string(9.999999e-2).toStdString());
+    EXPECT_EQ(std::string("1e-1"), to_string(9.999999e-2).toStdString());
     EXPECT_EQ(std::string("1.12346"), to_string(1.123455).toStdString());
     EXPECT_EQ(std::string("10.12346"), to_string(10.123456).toStdString());
     EXPECT_EQ(std::string("99.9"), to_string(99.9).toStdString());
-    EXPECT_EQ(std::string("1e+2"), to_string(99.999999).toStdString());
+    EXPECT_EQ(std::string("100"), to_string(99.999999).toStdString());
     EXPECT_EQ(std::string("1.2345e+2"), to_string(123.45).toStdString());
     EXPECT_EQ(std::string("1.26556e+12"), to_string(1.265556e+12).toStdString());
 }
