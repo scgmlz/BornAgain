@@ -170,7 +170,7 @@ QWidget *ParameterTuningDelegate::createEditor(QWidget *parent,
     // initializing value box
     m_valueBox = new ScientificSpinBox();
     m_valueBox->setKeyboardTracking(false);
-    m_valueBox->setFixedWidth(80);
+    m_valueBox->setFixedWidth(105);
     m_valueBox->setDecimalPoints(m_currentItem->linkedItem()->decimals());
     m_valueBox->setSingleStep(m_tuning_info.step());
     m_valueBox->setMinimum(limits.hasLowerLimit() ? limits.lowerLimit() : minimum_doublespin_value);
