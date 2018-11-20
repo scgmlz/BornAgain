@@ -134,7 +134,6 @@ void DataSelector::setColumnAs(int col, csv::ColumnType coordOrInt)
     m_tableWidget->setColumnAs(col, coordOrInt);
     m_columnNumberSpinBox->setValue(col + 1);
     m_columnTypeComboBox->setCurrentIndex(coordOrInt);
-    populateUnitsComboBox(coordOrInt);
     updateSelection();
 }
 
