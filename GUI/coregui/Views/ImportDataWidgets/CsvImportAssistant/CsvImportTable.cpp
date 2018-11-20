@@ -1,3 +1,18 @@
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.cpp
+//! @brief     Implements class CsvImportTable
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
+
 #include "CsvImportTable.h"
 #include "QDoubleSpinBox"
 
@@ -59,13 +74,13 @@ void CsvImportTable::setMultiplierFields()
     auto coordMult = m_coordinateCol->multiplier();
 
     for (auto n = 0; n < ncols; ++n) {
-        // QWidget *multiplierField =
         QDoubleSpinBox* currentField = new QDoubleSpinBox();
         currentField->setValue(1.0);
         currentField->setDisabled(true);
 
         if (n == intCol) {
             currentField->setValue(intMult);
+            currentField->setDecimals(8);
             currentField->setEnabled(true);
             connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
                 m_intensityCol->setMultiplier(currentField->value());
@@ -76,6 +91,7 @@ void CsvImportTable::setMultiplierFields()
 
         if (n == coordCol) {
             currentField->setValue(coordMult);
+            currentField->setDecimals(8);
             currentField->setEnabled(true);
             connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
                 m_coordinateCol->setMultiplier(currentField->value());
