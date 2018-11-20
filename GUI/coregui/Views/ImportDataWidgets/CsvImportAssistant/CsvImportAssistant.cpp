@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant.cpp
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.cpp
 //! @brief     Implements class CsvImportAssistant
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -26,41 +26,6 @@
 #include <QSettings>
 #include <QTableWidget>
 #include <QVBoxLayout>
-
-bool csv::isAscii(QString filename)
-{
-    return true;
-    // TODO
-    // This function needs to be defined properly;
-    // motivation: ° and Å characters are problematic.
-    char c;
-    size_t count = 0;
-    size_t count_bad = 0;
-    std::ifstream is(filename.toStdString());
-    while (is.get(c) && count < 1000) {
-        count++;
-        if (size_t(c) > 255)
-            count_bad++;
-    }
-    is.close();
-    double acceptance_threshold = 0.1 * double(count);
-    // std::cout << count << "; " << count_bad << std::endl;
-    return static_cast<double>(count_bad) <= acceptance_threshold;
-}
-
-double csv::atof(QString str)
-{
-    return csv::atof(str.toStdString());
-}
-
-double csv::atof(std::string str)
-{
-    std::istringstream istr(str);
-    istr.imbue(std::locale::classic());
-    double number = 0.0;
-    istr >> number;
-    return number;
-}
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
     : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(-1),
@@ -218,7 +183,9 @@ std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double mul
     auto lastRow = size_t(m_lastRow) + 1;
 
     for (size_t row = firstRow; row < lastRow; row++) {
-        result.push_back(multiplier * csv::atof(m_csvArray[row][size_t(jCol)]));
+        QString currentText = QString::fromStdString(m_csvArray[row][size_t(jCol)]);
+        double number = currentText.toDouble();
+        result.push_back(multiplier * number);
     }
 
     return result;

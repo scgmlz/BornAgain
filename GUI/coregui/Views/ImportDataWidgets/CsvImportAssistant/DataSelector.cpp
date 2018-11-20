@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/ImportDataWidgets/DataSelector.cpp
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/DataSelector.cpp
 //! @brief     Implements class DataSelector
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -17,9 +17,9 @@
 #include "ImportDataInfo.h"
 #include "StyleUtils.h"
 #include "TableContextMenu.h"
-#include "locale"
+#include <locale>
 #include "mainwindow_constants.h"
-#include "sstream"
+#include <sstream>
 #include <QFileDialog>
 #include <QFormLayout>
 #include <QGroupBox>
@@ -268,11 +268,11 @@ bool DataSelector::dataLooksGood()
     auto lastLine = m_tableWidget->lastRow();
     try {
         for (int i = firstLine; i < lastLine + 1; i++) {
-            csv::atof(m_tableWidget->item(i, iCol)->text().toStdString());
+            m_tableWidget->item(i, iCol)->text().toDouble();
         }
         if (cCol > -1)
             for (int i = firstLine; i < lastLine + 1; i++) {
-                csv::atof(m_tableWidget->item(i, cCol)->text().toStdString());
+                m_tableWidget->item(i, cCol)->text().toDouble();
             }
     } catch (std::exception& e) {
         QString message = QString("Unable to import, the following exception was thrown:\n")

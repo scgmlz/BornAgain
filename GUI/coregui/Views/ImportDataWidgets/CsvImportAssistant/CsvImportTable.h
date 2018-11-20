@@ -1,3 +1,18 @@
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h
+//! @brief     Defines class CsvImportTable
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
+
 #ifndef CSVIMPORTTABLE_H
 #define CSVIMPORTTABLE_H
 
@@ -36,12 +51,6 @@ public:
         setHeaders();
     }
     void setMultiplierFields();
-
-public slots:
-    // void setFirstRowSlot();
-    // void setLastRowSlot();
-    // void setColumnSlot(csv::ColumnType);
-    // void resetTableSlot();
 
 private:
     void greyoutDataToDiscard();
