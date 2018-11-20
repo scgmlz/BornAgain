@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/ImportDataWidgets/DataSelector.cpp
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/DataSelector.cpp
 //! @brief     Implements class DataSelector
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -17,9 +17,9 @@
 #include "ImportDataInfo.h"
 #include "StyleUtils.h"
 #include "TableContextMenu.h"
-#include "locale"
+#include <locale>
 #include "mainwindow_constants.h"
-#include "sstream"
+#include <sstream>
 #include <QFileDialog>
 #include <QFormLayout>
 #include <QGroupBox>

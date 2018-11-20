@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/ImportDataWidgets/DataSelector.h
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/DataSelector.h
 //! @brief     Defines class DataSelector
 //!
 //! @homepage  http://www.bornagainproject.org
