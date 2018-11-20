@@ -70,6 +70,7 @@ void CsvImportTable::setMultiplierFields()
             connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
                 m_intensityCol->setMultiplier(currentField->value());
                 applyMultipliers();
+                greyoutDataToDiscard();
             });
         }
 
@@ -79,6 +80,7 @@ void CsvImportTable::setMultiplierFields()
             connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
                 m_coordinateCol->setMultiplier(currentField->value());
                 applyMultipliers();
+                greyoutDataToDiscard();
             });
         }
 
@@ -137,9 +139,9 @@ void CsvImportTable::setLastRow(size_t row)
 
 void CsvImportTable::updateSelection()
 {
-    greyoutDataToDiscard();
     setHeaders();
     setMultiplierFields();
+    greyoutDataToDiscard();
 }
 
 void CsvImportTable::restoreColumnValues(int col, csv::DataColumn colvals)
