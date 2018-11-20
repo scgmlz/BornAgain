@@ -12,6 +12,7 @@
 %feature("director") PyCallback;
 %feature("director") PyBuilderCallback;
 %feature("director") PyObserverCallback;
+%feature("director") FitObjective;
 
 // Propagate python exceptions
 // taken from

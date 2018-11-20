@@ -6382,7 +6382,11 @@ class FitObjective(_object):
         FitObjective::FitObjective()
 
         """
-        this = _libBornAgainCore.new_FitObjective()
+        if self.__class__ == FitObjective:
+            _self = None
+        else:
+            _self = self
+        this = _libBornAgainCore.new_FitObjective(_self, )
         try:
             self.this.append(this)
         except __builtin__.Exception:
@@ -6625,6 +6629,11 @@ class FitObjective(_object):
         return _libBornAgainCore.FitObjective_isFirstIteration(self)
 
 
+    def run_simulations(self, params):
+        """run_simulations(FitObjective self, Parameters params)"""
+        return _libBornAgainCore.FitObjective_run_simulations(self, params)
+
+
     def addSimulationAndData(self, callback, data, weight):
         if not hasattr(self, 'callback_container'):
             self.callback_container = []
@@ -6677,6 +6686,10 @@ class FitObjective(_object):
         return self.initPlot_cpp(every_nth, self.wrp_plot_observer)
 
 
+    def __disown__(self):
+        self.this.disown()
+        _libBornAgainCore.disown_FitObjective(self)
+        return weakref_proxy(self)
 FitObjective_swigregister = _libBornAgainCore.FitObjective_swigregister
 FitObjective_swigregister(FitObjective)
 

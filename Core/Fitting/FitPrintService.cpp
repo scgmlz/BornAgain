@@ -41,7 +41,7 @@ void FitPrintService::print(const FitObjective& objective)
 {
     std::ostringstream ostr;
 
-    if (objective.iterationInfo().iterationCount() == 0) {
+    if (objective.isFirstIteration()) {
         m_run_time.start();
         m_last_call_time.start();
     }

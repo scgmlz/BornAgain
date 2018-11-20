@@ -114,8 +114,9 @@ public:
 
     bool isFirstIteration() const;
 
-private:
     void run_simulations(const Fit::Parameters& params);
+
+private:
     double residual(double a, double b, double weight) const;
     double evaluate_chi2(const std::vector<double>& residuals, const Fit::Parameters& params);
     size_t check_index(size_t index) const;

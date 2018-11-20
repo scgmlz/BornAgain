@@ -65,4 +65,4 @@ test_example("simulation/ex07_Miscellaneous/DepthProbe" 2e-10)
 test_example("simulation/ex07_Miscellaneous/HalfSpheresInAverageTopLayer" 2e-10)
 test_example("simulation/ex07_Miscellaneous/MagneticSpheres" 2e-10)
 
-test_example("fitting/ex01_SampleParametersIntro/SampleParametersIntro" 2e-10)
+test_example("simulation/ex07_Miscellaneous/SimulationParameters" 2e-10)
