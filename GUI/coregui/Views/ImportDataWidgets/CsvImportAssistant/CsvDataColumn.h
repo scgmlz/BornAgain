@@ -1,49 +1,43 @@
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvDataColumn.h
+//! @brief     Defines classes CsvIntensityColumn and CsvCoordinateColumn
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
+
 #ifndef CSVDATACOLUMN_H
 #define CSVDATACOLUMN_H
 
 #include "CsvNamespace.h"
 #include "IUnitConverter.h"
-#include <QStringList>
 
 class CsvIntensityColumn
 {
 public:
     // Constructors:
-    CsvIntensityColumn() : m_colNum(-1), m_multiplier(1.0), m_values({}) {}
-
-    CsvIntensityColumn(CsvIntensityColumn& toCopy)
-        : m_colNum(toCopy.columnNumber()), m_multiplier(toCopy.multiplier()),
-          m_values(toCopy.values())
-    {
-    }
-
-    CsvIntensityColumn(int colNum, double multiplier, csv::DataColumn values)
-        : m_colNum(colNum), m_multiplier(multiplier), m_values(values)
-    {
-    }
+    CsvIntensityColumn();
+    CsvIntensityColumn(const CsvIntensityColumn& toCopy);
+    CsvIntensityColumn(int colNum, double multiplier, csv::DataColumn values);
 
     // Getters:
-    int columnNumber() const { return m_colNum; }
-    double multiplier() const { return m_multiplier; }
-    csv::DataColumn values() const { return m_values; }
+    int columnNumber() const;
+    double multiplier() const;
+    csv::DataColumn values() const;
 
     // Setters:
-    void setColNum(int const colNum) { m_colNum = colNum; }
-    void setMultiplier(double const multiplier) { m_multiplier = multiplier; }
-    void setValues(csv::DataColumn const values) { m_values = values; }
-    void resetColumn(int colNum = -1, double multiplier = 1., csv::DataColumn values = {})
-    {
-        m_colNum = colNum;
-        m_multiplier = multiplier;
-        m_values = values;
-    }
-    CsvIntensityColumn& operator=(const CsvIntensityColumn colToRep)
-    {
-        m_colNum = colToRep.columnNumber();
-        m_multiplier = colToRep.multiplier();
-        m_values = colToRep.values();
-        return *this;
-    }
+    void setColNum(int const colNum);
+    void setMultiplier(double const multiplier);
+    void setValues(csv::DataColumn const values);
+    void resetColumn(int colNum = -1, double multiplier = 1., csv::DataColumn values = {});
+    CsvIntensityColumn& operator=(const CsvIntensityColumn colToRep);
 
 private:
     int m_colNum;
@@ -55,37 +49,20 @@ class CsvCoordinateColumn : public CsvIntensityColumn
 {
 public:
     // Constructors:
-    CsvCoordinateColumn() : CsvIntensityColumn(), m_units(AxesUnits::NBINS) {}
+    CsvCoordinateColumn();
+    CsvCoordinateColumn(const CsvCoordinateColumn& toCopy);
+    CsvCoordinateColumn(int colNum, double multiplier, csv::DataColumn values, AxesUnits units);
 
-    CsvCoordinateColumn(CsvCoordinateColumn& toCopy)
-        : CsvIntensityColumn(toCopy), m_units(toCopy.units())
-    {
-    }
-
-    CsvCoordinateColumn(int colNum, double multiplier, csv::DataColumn values, AxesUnits units)
-
-        : CsvIntensityColumn(colNum, multiplier, values), m_units(units)
-    {
-    }
     // Getters:
-    AxesUnits units() const { return m_units; }
-    QString name() const { return m_name; }
+    AxesUnits units() const;
+    QString name() const;
+
     // Setters:
-    void setUnits(AxesUnits const units) { m_units = units; }
-    void setName(QString const name) { m_name = name; }
+    void setUnits(AxesUnits const units);
+    void setName(QString const name);
     void resetColumn(int colNum = -1, double multiplier = 1., csv::DataColumn values = {},
-                     AxesUnits units = AxesUnits::NBINS, QString name = "")
-    {
-        CsvIntensityColumn::resetColumn(colNum, multiplier, values);
-        m_units = units;
-        m_name = name;
-    }
-    CsvCoordinateColumn& operator=(const CsvCoordinateColumn colToRep)
-    {
-        m_units = colToRep.units();
-        m_name = colToRep.name();
-        return *this;
-    }
+                     AxesUnits units = AxesUnits::NBINS, QString name = "");
+    CsvCoordinateColumn& operator=(const CsvCoordinateColumn colToRep);
 
 private:
     AxesUnits m_units;
