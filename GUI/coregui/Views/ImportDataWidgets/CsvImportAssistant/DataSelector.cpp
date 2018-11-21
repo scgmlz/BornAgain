@@ -277,7 +277,7 @@ bool DataSelector::dataLooksGood()
     } catch (std::exception& e) {
         QString message = QString("Unable to import, the following exception was thrown:\n")
                           + QString::fromStdString(e.what());
-        QMessageBox::warning(nullptr, "Wrong data format", message);
+        QMessageBox::warning(this, "Wrong data format", message);
         return false;
     }
     return true;

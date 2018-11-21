@@ -15,14 +15,14 @@
 #include "TableContextMenu.h"
 
 TableContextMenu::TableContextMenu(QWidget* parent)
-    : QMenu(parent), m_coordSubMenu(nullptr),
-      m_selectFromThisRowOn(new QAction("Set as first data row", nullptr)),
-      m_selectUntilThisRow(new QAction("Set as last data row", nullptr)),
-      m_resetAction(new QAction("reset", nullptr)),
-      m_setAsTheta(new QAction(csv::HeaderLabels[csv::_theta_], nullptr)),
-      m_setAsQ(new QAction(csv::HeaderLabels[csv::_q_], nullptr)),
+    : QMenu(parent), m_coordSubMenu(this),
+      m_selectFromThisRowOn(new QAction("Set as first data row", this)),
+      m_selectUntilThisRow(new QAction("Set as last data row", this)),
+      m_resetAction(new QAction("reset", this)),
+      m_setAsTheta(new QAction(csv::HeaderLabels[csv::_theta_], this)),
+      m_setAsQ(new QAction(csv::HeaderLabels[csv::_q_], this)),
       m_setAsIntensity(
-          new QAction("Set as " + csv::HeaderLabels[csv::_intensity_] + " column", nullptr))
+          new QAction("Set as " + csv::HeaderLabels[csv::_intensity_] + " column", this))
 {
     this->addAction(m_selectFromThisRowOn);
     this->addAction(m_selectUntilThisRow);

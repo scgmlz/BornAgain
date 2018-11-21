@@ -56,14 +56,14 @@ private:
     void greyoutDataToDiscard();
     void greyoutCell(int i, int j, bool yes);
     bool needsGreyout(const int iRow, const int jCol) const;
-    void multiplyColumn(CsvIntensityColumn* col);
+    void multiplyColumn(const CsvIntensityColumn& col);
     void restoreColumnValues(int col, csv::DataColumn colvals);
     csv::DataColumn valuesFromColumn(int col);
     void setHeaders();
     int rowOffset() const { return 1; } // this comes from the multipliers in the first row
 
-    CsvIntensityColumn* m_intensityCol;
-    CsvCoordinateColumn* m_coordinateCol;
+    std::unique_ptr<CsvIntensityColumn> m_intensityCol;
+    std::unique_ptr<CsvCoordinateColumn> m_coordinateCol;
     size_t m_firstRow;
     size_t m_lastRow;
 };

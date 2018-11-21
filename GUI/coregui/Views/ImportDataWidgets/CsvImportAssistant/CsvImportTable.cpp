@@ -16,8 +16,8 @@
 
 CsvImportTable::CsvImportTable(QWidget* parent) : QTableWidget(parent)
 {
-    m_coordinateCol = new CsvCoordinateColumn();
-    m_intensityCol = new CsvIntensityColumn();
+    m_coordinateCol = std::make_unique<CsvCoordinateColumn>();
+    m_intensityCol = std::make_unique<CsvCoordinateColumn>();
     m_firstRow = 0;
     m_lastRow = 0;
 }
@@ -202,23 +202,23 @@ bool CsvImportTable::needsGreyout(const int iRow, const int jCol) const
 void CsvImportTable::applyMultipliers()
 {
     if (m_intensityCol->columnNumber() > -1) {
-        multiplyColumn(m_intensityCol);
+        multiplyColumn(*m_intensityCol);
     }
 
     if (m_coordinateCol->columnNumber() > -1) {
-        multiplyColumn(m_coordinateCol);
+        multiplyColumn(*m_coordinateCol);
     }
 }
 
-void CsvImportTable::multiplyColumn(CsvIntensityColumn* col)
+void CsvImportTable::multiplyColumn(const CsvIntensityColumn& col)
 {
-    auto colNum = col->columnNumber();
+    auto colNum = col.columnNumber();
     if (colNum < 0)
         return;
 
-    auto multiplier = col->multiplier();
-    auto values = col->values();
-    auto size = col->values().size();
+    auto multiplier = col.multiplier();
+    auto values = col.values();
+    auto size = col.values().size();
     for (size_t i = 0; i < size; i++) {
         auto currentText = QString::fromStdString(values[i]);
         double number = multiplier * currentText.toDouble();
