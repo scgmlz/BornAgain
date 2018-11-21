@@ -51,6 +51,7 @@ class FormFactorFullSpheroid;
 class FormFactorGauss;
 class FormFactorHemiEllipsoid;
 class FormFactorIcosahedron;
+class FormFactorLongBox;
 class FormFactorLongBoxGauss;
 class FormFactorLongBoxLorentz;
 class FormFactorLorentz;
@@ -180,6 +181,7 @@ public:
     virtual void visit(const FormFactorGauss*) {}
     virtual void visit(const FormFactorHemiEllipsoid*) {}
     virtual void visit(const FormFactorIcosahedron*) {}
+    virtual void visit(const FormFactorLongBox*) {}
     virtual void visit(const FormFactorLongBoxGauss*) {}
     virtual void visit(const FormFactorLongBoxLorentz*) {}
     virtual void visit(const FormFactorLorentz*) {}

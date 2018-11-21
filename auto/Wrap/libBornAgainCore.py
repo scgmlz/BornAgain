@@ -7095,6 +7095,7 @@ class INodeVisitor(_object):
         visit(INodeVisitor self, FormFactorGauss arg2)
         visit(INodeVisitor self, FormFactorHemiEllipsoid arg2)
         visit(INodeVisitor self, FormFactorIcosahedron arg2)
+        visit(INodeVisitor self, FormFactorLongBox arg2)
         visit(INodeVisitor self, FormFactorLongBoxGauss arg2)
         visit(INodeVisitor self, FormFactorLongBoxLorentz arg2)
         visit(INodeVisitor self, FormFactorLorentz arg2)
@@ -13584,6 +13585,94 @@ class FormFactorIcosahedron(FormFactorPolyhedron):
     __del__ = lambda self: None
 FormFactorIcosahedron_swigregister = _libBornAgainCore.FormFactorIcosahedron_swigregister
 FormFactorIcosahedron_swigregister(FormFactorIcosahedron)
+
+class FormFactorLongBox(IFormFactorBorn):
+    """Proxy of C++ FormFactorLongBox class."""
+
+    __swig_setmethods__ = {}
+    for _s in [IFormFactorBorn]:
+        __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FormFactorLongBox, name, value)
+    __swig_getmethods__ = {}
+    for _s in [IFormFactorBorn]:
+        __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
+    __getattr__ = lambda self, name: _swig_getattr(self, FormFactorLongBox, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, length, width, height):
+        """__init__(FormFactorLongBox self, double length, double width, double height) -> FormFactorLongBox"""
+        this = _libBornAgainCore.new_FormFactorLongBox(length, width, height)
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+
+    def clone(self):
+        """
+        clone(FormFactorLongBox self) -> FormFactorLongBox
+
+        IFormFactorBorn* IFormFactorBorn::clone() const override=0
+
+        Returns a clone of this  ISample object. 
+
+        """
+        return _libBornAgainCore.FormFactorLongBox_clone(self)
+
+
+    def accept(self, visitor):
+        """
+        accept(FormFactorLongBox self, INodeVisitor visitor)
+
+        virtual void INode::accept(INodeVisitor *visitor) const =0
+
+        Calls the  INodeVisitor's visit method. 
+
+        """
+        return _libBornAgainCore.FormFactorLongBox_accept(self, visitor)
+
+
+    def getLength(self):
+        """getLength(FormFactorLongBox self) -> double"""
+        return _libBornAgainCore.FormFactorLongBox_getLength(self)
+
+
+    def getHeight(self):
+        """getHeight(FormFactorLongBox self) -> double"""
+        return _libBornAgainCore.FormFactorLongBox_getHeight(self)
+
+
+    def getWidth(self):
+        """getWidth(FormFactorLongBox self) -> double"""
+        return _libBornAgainCore.FormFactorLongBox_getWidth(self)
+
+
+    def radialExtension(self):
+        """
+        radialExtension(FormFactorLongBox self) -> double
+
+        virtual double IFormFactor::radialExtension() const =0
+
+        Returns the (approximate in some cases) radial size of the particle of this form factor's shape. This is used for SSCA calculations 
+
+        """
+        return _libBornAgainCore.FormFactorLongBox_radialExtension(self)
+
+
+    def evaluate_for_q(self, q):
+        """
+        evaluate_for_q(FormFactorLongBox self, cvector_t q) -> complex_t
+
+        virtual complex_t IFormFactorBorn::evaluate_for_q(cvector_t q) const =0
+
+        Returns scattering amplitude for complex scattering wavevector q=k_i-k_f. This method is public only for convenience of plotting form factors in Python. 
+
+        """
+        return _libBornAgainCore.FormFactorLongBox_evaluate_for_q(self, q)
+
+    __swig_destroy__ = _libBornAgainCore.delete_FormFactorLongBox
+    __del__ = lambda self: None
+FormFactorLongBox_swigregister = _libBornAgainCore.FormFactorLongBox_swigregister
+FormFactorLongBox_swigregister(FormFactorLongBox)
 
 class FormFactorLongBoxGauss(IFormFactorBorn):
     """
