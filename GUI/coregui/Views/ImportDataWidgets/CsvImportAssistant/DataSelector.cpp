@@ -221,7 +221,7 @@ size_t DataSelector::maxLines() const
 AxesUnits DataSelector::units() const
 {
     AxesUnits defaultUnits = AxesUnits::NBINS;
-    for (auto i = 0; i < csv::UnitsLabels.size(); i++)
+    for (int i = 0; i < csv::UnitsLabels.size(); i++)
         if (m_coordinateUnitsComboBox->currentText() == csv::UnitsLabels[i])
             return AxesUnits(i);
     return defaultUnits;
@@ -230,7 +230,7 @@ AxesUnits DataSelector::units() const
 csv::ColumnType DataSelector::currentColumnType() const
 {
     csv::ColumnType defaultColumnType = csv::_intensity_;
-    for (auto i = 0; i < csv::HeaderLabels.size(); i++)
+    for (int i = 0; i < csv::HeaderLabels.size(); i++)
         if (m_columnTypeComboBox->currentText() == csv::HeaderLabels[i])
             return csv::ColumnType(i);
     return defaultColumnType;

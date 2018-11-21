@@ -71,7 +71,7 @@ void CsvImportTable::setMultiplierFields()
     auto coordCol = m_coordinateCol->columnNumber();
     auto coordMult = m_coordinateCol->multiplier();
 
-    for (auto n = 0; n < ncols; ++n) {
+    for (int n = 0; n < ncols; ++n) {
         CsvMultiplierField* currentField;
         if (n == intCol) {
             currentField = new CsvMultiplierField(intMult, true);

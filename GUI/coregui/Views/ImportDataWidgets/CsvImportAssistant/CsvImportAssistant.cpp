@@ -133,6 +133,10 @@ bool CsvImportAssistant::loadCsvFile()
         }
     }
 
+    // TODO: If separator is white space, ignore consecutive spaces...
+    // {
+    // }
+
     csv::DataArray tmp(csvArray.begin(), csvArray.begin() + int(lastRow));
     m_csvArray.swap(tmp);
     removeBlankColumns();

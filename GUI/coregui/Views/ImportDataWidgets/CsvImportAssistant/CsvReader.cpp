@@ -31,18 +31,18 @@ void CSVRow::readNextRow(std::istream& str)
     std::string line;
     std::getline(str, line);
     std::replace(std::begin(line), std::end(line), '\t', ' ');
-
     std::stringstream lineStream(line);
     std::string cell;
 
     m_data.clear();
+
     while (std::getline(lineStream, cell, separator)) {
-        m_data.push_back(cell);
+        addCell(cell);
     }
     // This checks for a trailing comma with no data after it.
     if (!lineStream && cell.empty()) {
         // If there was a trailing comma then add an empty element.
-        m_data.push_back("");
+        addCell("");
     }
 }
 

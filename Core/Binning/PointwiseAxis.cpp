@@ -141,5 +141,5 @@ void PointwiseAxis::sanityCheck() const
 
     if (std::adjacent_find(begin, end) != end)
         throw std::runtime_error("Error in PointwiseAxis::PointwiseAxis: passed coordinate vector "
-                                 "containes repeating values");
+                                 "contains repeating values");
 }
