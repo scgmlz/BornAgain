@@ -183,7 +183,9 @@ std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double mul
     auto lastRow = size_t(m_lastRow) + 1;
 
     for (size_t row = firstRow; row < lastRow; row++) {
-        result.push_back(multiplier * csv::atof(m_csvArray[row][size_t(jCol)]));
+        QString currentText = QString::fromStdString(m_csvArray[row][size_t(jCol)]);
+        double number = currentText.toDouble();
+        result.push_back(multiplier * number);
     }
 
     return result;

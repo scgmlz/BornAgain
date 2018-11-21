@@ -36,18 +36,3 @@ bool csv::isAscii(QString filename)
     // std::cout << count << "; " << count_bad << std::endl;
     return static_cast<double>(count_bad) <= acceptance_threshold;
 }
-
-double csv::atof(QString str)
-{
-    return csv::atof(str.toStdString());
-}
-
-double csv::atof(std::string str)
-{
-    std::istringstream istr(str);
-    istr.imbue(std::locale::classic());
-    double number = 0.0;
-    istr >> number;
-    return number;
-}
-

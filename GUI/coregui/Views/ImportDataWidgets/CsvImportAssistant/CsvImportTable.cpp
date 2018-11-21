@@ -229,7 +229,7 @@ void CsvImportTable::multiplyColumn(CsvIntensityColumn* col)
     auto size = col->values().size();
     for (size_t i = 0; i < size; i++) {
         auto currentText = QString::fromStdString(values[i]);
-        double number = multiplier * csv::atof(currentText);
+        double number = multiplier * currentText.toDouble();
         QString cellText = 0.0 == number ? currentText : QString::number(number);
         this->setItem(int(i), colNum, new QTableWidgetItem(cellText));
     }

@@ -58,13 +58,13 @@ void CsvIntensityColumn::setMultiplier(double const multiplier)
 }
 void CsvIntensityColumn::setValues(csv::DataColumn const values)
 {
-    m_values = values;
+    m_values = std::move(values);
 }
 void CsvIntensityColumn::resetColumn(int colNum, double multiplier, csv::DataColumn values)
 {
     m_colNum = colNum;
     m_multiplier = multiplier;
-    m_values = values;
+    m_values = std::move(values);
 }
 CsvIntensityColumn& CsvIntensityColumn::operator=(const CsvIntensityColumn colToRep)
 {

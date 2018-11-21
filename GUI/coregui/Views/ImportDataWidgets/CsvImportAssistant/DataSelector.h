@@ -48,7 +48,7 @@ public:
     csv::ColumnType currentColumnType() const;
     void setDataArray(csv::DataArray csvArray)
     {
-        m_data = csvArray;
+        m_data = std::move(csvArray);
         updateData();
         resetSelection();
     }
