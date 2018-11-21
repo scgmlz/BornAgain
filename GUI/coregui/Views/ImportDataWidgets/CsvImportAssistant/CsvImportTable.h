@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-
 #ifndef CSVIMPORTTABLE_H
 #define CSVIMPORTTABLE_H
 
 #include "CsvDataColumn.h"
 #include "CsvNamespace.h"
 #include "IUnitConverter.h"
+#include <QDoubleSpinBox>
 #include <QMenu>
 #include <QStringList>
 #include <QTableWidget>
@@ -66,6 +66,21 @@ private:
     CsvCoordinateColumn* m_coordinateCol;
     size_t m_firstRow;
     size_t m_lastRow;
+};
+
+class CsvMultiplierField : public QDoubleSpinBox
+{
+    Q_OBJECT
+public:
+    CsvMultiplierField(double multiplier = 1.0, bool enabled = false, QWidget* parent = nullptr)
+        : QDoubleSpinBox(parent)
+    {
+        this->setValue(multiplier);
+        this->setDecimals(8);
+        this->setMaximum(1e10);
+        this->setMinimum(1e-8);
+        this->setEnabled(enabled);
+    }
 };
 
 #endif // CSVIMPORTTABLE_H
