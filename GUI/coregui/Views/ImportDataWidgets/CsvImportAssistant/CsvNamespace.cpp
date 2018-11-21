@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "CsvNamespace.h"
-#include <sstream>
 #include <fstream>
+#include <sstream>
 
 bool csv::isAscii(QString filename)
 {

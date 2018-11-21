@@ -74,22 +74,22 @@ void CsvImportTable::setMultiplierFields()
     for (auto n = 0; n < ncols; ++n) {
         CsvMultiplierField* currentField;
         if (n == intCol) {
-            currentField = new CsvMultiplierField(intMult,true);
-            connect(currentField, &CsvMultiplierField::editingFinished, this, [this, currentField]() {
-                m_intensityCol->setMultiplier(currentField->value());
-                applyMultipliers();
-                greyoutDataToDiscard();
-            });
-        }
-        else if (n == coordCol) {
-            currentField = new CsvMultiplierField(coordMult,true);
-            connect(currentField, &CsvMultiplierField::editingFinished, this, [this, currentField]() {
-                m_coordinateCol->setMultiplier(currentField->value());
-                applyMultipliers();
-                greyoutDataToDiscard();
-            });
-        }
-        else{
+            currentField = new CsvMultiplierField(intMult, true);
+            connect(currentField, &CsvMultiplierField::editingFinished, this,
+                    [this, currentField]() {
+                        m_intensityCol->setMultiplier(currentField->value());
+                        applyMultipliers();
+                        greyoutDataToDiscard();
+                    });
+        } else if (n == coordCol) {
+            currentField = new CsvMultiplierField(coordMult, true);
+            connect(currentField, &CsvMultiplierField::editingFinished, this,
+                    [this, currentField]() {
+                        m_coordinateCol->setMultiplier(currentField->value());
+                        applyMultipliers();
+                        greyoutDataToDiscard();
+                    });
+        } else {
             currentField = new CsvMultiplierField();
         }
         this->setCellWidget(0, n, currentField);

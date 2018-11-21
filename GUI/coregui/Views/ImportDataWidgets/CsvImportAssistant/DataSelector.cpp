@@ -17,9 +17,7 @@
 #include "ImportDataInfo.h"
 #include "StyleUtils.h"
 #include "TableContextMenu.h"
-#include <locale>
 #include "mainwindow_constants.h"
-#include <sstream>
 #include <QFileDialog>
 #include <QFormLayout>
 #include <QGroupBox>
@@ -29,6 +27,8 @@
 #include <QSettings>
 #include <QTableWidget>
 #include <QVBoxLayout>
+#include <locale>
+#include <sstream>
 
 namespace
 {

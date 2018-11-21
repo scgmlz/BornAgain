@@ -12,17 +12,16 @@
 //
 // ************************************************************************** //
 
-
 #ifndef TABLECONTEXTMENU_H
 #define TABLECONTEXTMENU_H
 
-#include "IUnitConverter.h"
 #include "CsvNamespace.h"
-#include <QStringList>
+#include "IUnitConverter.h"
 #include <QMenu>
+#include <QStringList>
 #include <QTableWidget>
 
-class TableContextMenu: public QMenu
+class TableContextMenu : public QMenu
 {
     Q_OBJECT
 public:
@@ -34,8 +33,6 @@ signals:
     void setColumnAs(csv::ColumnType);
     void resetTable();
 
-
-
 private:
     int m_row;
     int m_col;
@@ -46,7 +43,6 @@ private:
     QAction* m_setAsTheta;
     QAction* m_setAsQ;
     QAction* m_setAsIntensity;
-
 };
 
 #endif // TABLECONTEXTMENU_H
