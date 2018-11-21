@@ -12,9 +12,7 @@
 //
 // ************************************************************************** //
 
-
 #include "CsvDataColumn.h"
-
 
 /*Csv Intensity Column*/
 
@@ -73,7 +71,6 @@ CsvIntensityColumn& CsvIntensityColumn::operator=(const CsvIntensityColumn colTo
     m_values = colToRep.values();
     return *this;
 }
-
 
 /*Csv Coordinate Column*/
 

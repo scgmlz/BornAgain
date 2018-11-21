@@ -12,7 +12,6 @@
 //
 // ************************************************************************** //
 
-
 #include "CsvReader.h"
 #include <fstream>
 #include <iostream>

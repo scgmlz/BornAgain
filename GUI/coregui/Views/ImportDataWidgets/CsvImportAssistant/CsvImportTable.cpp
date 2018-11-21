@@ -12,9 +12,7 @@
 //
 // ************************************************************************** //
 
-
 #include "CsvImportTable.h"
-#include "QDoubleSpinBox"
 
 CsvImportTable::CsvImportTable(QWidget* parent) : QTableWidget(parent)
 {
@@ -74,32 +72,26 @@ void CsvImportTable::setMultiplierFields()
     auto coordMult = m_coordinateCol->multiplier();
 
     for (auto n = 0; n < ncols; ++n) {
-        QDoubleSpinBox* currentField = new QDoubleSpinBox();
-        currentField->setValue(1.0);
-        currentField->setDisabled(true);
-
+        CsvMultiplierField* currentField;
         if (n == intCol) {
-            currentField->setValue(intMult);
-            currentField->setDecimals(8);
-            currentField->setEnabled(true);
-            connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
-                m_intensityCol->setMultiplier(currentField->value());
-                applyMultipliers();
-                greyoutDataToDiscard();
-            });
+            currentField = new CsvMultiplierField(intMult, true);
+            connect(currentField, &CsvMultiplierField::editingFinished, this,
+                    [this, currentField]() {
+                        m_intensityCol->setMultiplier(currentField->value());
+                        applyMultipliers();
+                        greyoutDataToDiscard();
+                    });
+        } else if (n == coordCol) {
+            currentField = new CsvMultiplierField(coordMult, true);
+            connect(currentField, &CsvMultiplierField::editingFinished, this,
+                    [this, currentField]() {
+                        m_coordinateCol->setMultiplier(currentField->value());
+                        applyMultipliers();
+                        greyoutDataToDiscard();
+                    });
+        } else {
+            currentField = new CsvMultiplierField();
         }
-
-        if (n == coordCol) {
-            currentField->setValue(coordMult);
-            currentField->setDecimals(8);
-            currentField->setEnabled(true);
-            connect(currentField, &QDoubleSpinBox::editingFinished, this, [this, currentField]() {
-                m_coordinateCol->setMultiplier(currentField->value());
-                applyMultipliers();
-                greyoutDataToDiscard();
-            });
-        }
-
         this->setCellWidget(0, n, currentField);
     }
 
