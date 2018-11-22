@@ -56,6 +56,7 @@ public:
 private:
     void greyoutDataToDiscard();
     void greyoutCell(int i, int j, bool yes);
+    void runSanityChecks();
     bool needsGreyout(const int iRow, const int jCol) const;
     void multiplyColumn(const CsvIntensityColumn& col);
     void restoreColumnValues(int col, csv::DataColumn colvals);
@@ -74,13 +75,21 @@ class CsvMultiplierField : public QDoubleSpinBox
     Q_OBJECT
 public:
     CsvMultiplierField(double multiplier = 1.0, bool enabled = false, QWidget* parent = nullptr)
-        : QDoubleSpinBox(parent)
+            : QDoubleSpinBox(parent)
     {
-        this->setValue(multiplier);
-        this->setDecimals(8);
-        this->setMaximum(1e10);
-        this->setMinimum(1e-8);
-        this->setEnabled(enabled);
+        if(enabled){
+            setMaximum(1e10);
+            setMinimum(1e-10);
+            setDecimals(10);
+            setValue(multiplier);
+        }
+        else{
+            setMaximum(1);
+            setMinimum(1);
+            setDecimals(1);
+            setValue(multiplier);
+        }
+        setEnabled(enabled);
     }
 };
 
