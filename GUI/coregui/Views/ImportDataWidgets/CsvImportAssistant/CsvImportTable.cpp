@@ -79,16 +79,14 @@ void CsvImportTable::setMultiplierFields()
             connect(currentField, &CsvMultiplierField::editingFinished, this,
                     [this, currentField]() {
                         m_intensityCol->setMultiplier(currentField->value());
-                        applyMultipliers();
-                        greyoutDataToDiscard();
+                        updateSelection();
                     });
         } else if (n == coordCol) {
             currentField = new CsvMultiplierField(coordMult, true);
             connect(currentField, &CsvMultiplierField::editingFinished, this,
                     [this, currentField]() {
                         m_coordinateCol->setMultiplier(currentField->value());
-                        applyMultipliers();
-                        greyoutDataToDiscard();
+                        updateSelection();
                     });
         } else {
             currentField = new CsvMultiplierField();
@@ -104,7 +102,6 @@ void CsvImportTable::setMultiplierFields()
         vhlabels << QString::number(i);
 
     this->setVerticalHeaderLabels(vhlabels);
-    applyMultipliers();
 }
 
 void CsvImportTable::setData(const csv::DataArray data)
@@ -150,14 +147,16 @@ void CsvImportTable::updateSelection()
 {
     setHeaders();
     setMultiplierFields();
+    applyMultipliers();
     greyoutDataToDiscard();
+    runSanityChecks();
 }
 
 void CsvImportTable::restoreColumnValues(int col, csv::DataColumn colvals)
 {
-    for (size_t i = size_t(rowOffset()); i < colvals.size(); i++) {
-        QString cellText = QString::fromStdString(colvals[i]);
-        this->setItem(int(i), int(col), new QTableWidgetItem(cellText));
+    for (size_t i = 0; i < colvals.size(); i++) {
+        QString originalText = QString::fromStdString(colvals[i]);
+        this->setItem(int(i)+rowOffset(), int(col), new QTableWidgetItem(originalText));
     }
 }
 
@@ -170,6 +169,27 @@ void CsvImportTable::greyoutDataToDiscard()
     for (int i = rowOffset(); i < nRows; i++)
         for (int j = 0; j < nCols; j++)
             greyoutCell(i, j, needsGreyout(i, j));
+}
+
+void CsvImportTable::runSanityChecks()
+{
+    int nCols = this->columnCount();
+
+    auto values = m_coordinateCol->values();
+    auto size = m_coordinateCol->values().size();
+    for (int i = 0; i < int(size)-1; i++) {
+        size_t I = size_t(i);
+        auto cellText = QString::fromStdString(values[I]);
+        auto nextCellText = QString::fromStdString(values[I+1]);
+        double number = cellText.toDouble();
+        double nextNumber = nextCellText.toDouble();
+
+        //if two coordinate values are equal:
+        if(fabs(number - nextNumber) < 1e-8){
+            for(int j = 0; j < nCols ; ++j)
+                greyoutCell(i+rowOffset(),j,true);
+        }
+    }
 }
 
 void CsvImportTable::greyoutCell(int i, int j, bool yes)
@@ -217,14 +237,15 @@ void CsvImportTable::multiplyColumn(const CsvIntensityColumn& col)
     if (colNum < 0)
         return;
 
-    auto multiplier = col.multiplier();
-    auto values = col.values();
-    auto size = col.values().size();
+    double multiplier = col.multiplier();
+    csv::DataColumn values = col.values();
+    size_t size = col.values().size();
+    int idx0 = rowOffset();
     for (size_t i = 0; i < size; i++) {
         auto currentText = QString::fromStdString(values[i]);
         double number = multiplier * currentText.toDouble();
-        QString cellText = 0.0 == number ? currentText : QString::number(number);
-        this->setItem(int(i), colNum, new QTableWidgetItem(cellText));
+        QString textToWrite = 0.0 == number ? currentText : QString::number(number);
+        this->setItem(int(i)+idx0, colNum, new QTableWidgetItem(textToWrite));
     }
 }
 
@@ -260,10 +281,12 @@ csv::DataColumn CsvImportTable::valuesFromColumn(int col)
         return m_coordinateCol->values();
     } else {
         csv::DataColumn result;
-        size_t rowCount = size_t(this->rowCount());
+        size_t rowCount = size_t(this->rowCount() - rowOffset());
         result = csv::DataColumn(rowCount);
-        for (size_t i = size_t(rowOffset()); i < rowCount; ++i) {
-            auto currentText = this->item(int(i), int(col))->text();
+        int idx0 = rowOffset();
+        for (size_t i = 0; i < rowCount; ++i) {
+            int I = int(i) + idx0;
+            auto currentText = this->item(I, int(col))->text();
             result[i] = currentText.toStdString();
         }
         return result;
