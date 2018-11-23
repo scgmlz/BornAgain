@@ -90,5 +90,6 @@ private:
     QComboBox* m_coordinateUnitsComboBox;
     QPushButton* m_importButton;
     QPushButton* m_cancelButton;
+    QLabel* m_errorLabel;
 };
 #endif // DATASELECTOR_H

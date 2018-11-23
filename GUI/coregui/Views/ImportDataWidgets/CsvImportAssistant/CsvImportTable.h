@@ -42,6 +42,7 @@ public:
     std::set<int> rowsToDiscard() const { return m_rowsToDiscard; }
     csv::ColumnType coordinateName() const { return m_coordinateCol->name(); }
     AxesUnits coordinateUnits() const { return m_coordinateCol->units(); }
+    bool dataLooksGood() const { return m_dataLooksGood; }
 
     void setData(const csv::DataArray data);
     void updateSelection();
@@ -56,12 +57,15 @@ public:
         setHeaders();
     }
     void setMultiplierFields();
-    void resetSelection();
+
+signals:
+    void dataSanityChanged();
 
 private:
+    bool isRowDiscarded(const int row) const ;
+    void runSanityChecks();
     void greyoutDataToDiscard();
     void greyoutCell(int i, int j, bool yes, Qt::GlobalColor color = Qt::white);
-    void runSanityChecks();
     bool needsGreyout(const int iRow, const int jCol) const;
     void multiplyColumn(const CsvIntensityColumn& col);
     void restoreColumnValues(int col, csv::DataColumn colvals);
