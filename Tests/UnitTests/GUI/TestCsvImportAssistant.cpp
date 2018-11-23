@@ -61,12 +61,9 @@ TEST_F(TestCsvImportAssistant, test_readFile)
 {
 /*
  * The file to read looks like this ['-' symbols added to clarify what is going on].
- * It has ten columns, not four. While this way of counting the columns is desired
- * in the GUI importer (The separator is a space! AND we want to show the headers),
- * it's odd when a GUI is not available. Keeping this way of counting columns in
- * mind, we build a test setting the first column (0,4,8,12...) as intensity and the
- * 9th one (2,6,10,14...) as a coordinate with "degrees" as units.
- *
+ * It has originaly ten columns, not four (The separator is a space).
+ * When the separator is a space, repeated spaces will be merged into one.
+ * Thus, the ImportAssistant will read this file as a four-column file.
 # - BornAgain - Intensity - Data -  -  -  -  -  -  -
 # - Simple - 2D - array - suitable - for - numpy, - matlab - etc. -  -
 # - [nrows=6, - ncols=4] -  -  -  -  -  -  -  -
@@ -84,7 +81,7 @@ Separator: >>> <<<
     CsvImportAssistant assistant(testFilename());
 
     assistant.setIntensityColumn(1);
-    assistant.setCoordinateColumn(9,AxesUnits::DEGREES);
+    assistant.setCoordinateColumn(3,AxesUnits::DEGREES);
     assistant.setFirstRow(5);
     assistant.setLastRow(7);
 
