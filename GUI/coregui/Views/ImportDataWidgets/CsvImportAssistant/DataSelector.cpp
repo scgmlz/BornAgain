@@ -38,7 +38,8 @@ const QSize default_dialog_size(300, 400);
 DataSelector::DataSelector(csv::DataArray csvArray, QWidget* parent)
     : QDialog(parent), m_data(csvArray), m_tableWidget(nullptr), m_separatorField(nullptr),
       m_firstDataRowSpinBox(nullptr), m_lastDataRowSpinBox(nullptr),
-      m_coordinateUnitsComboBox(nullptr), m_importButton(nullptr), m_cancelButton(nullptr)
+      m_coordinateUnitsComboBox(nullptr), m_importButton(nullptr), m_cancelButton(nullptr),
+      m_errorLabel(nullptr)
 {
     setWindowTitle("Data Importer");
     setMinimumSize(default_dialog_size);
@@ -115,9 +116,23 @@ void DataSelector::updateSelection()
     m_tableWidget->setFirstRow(firstLine() - 1);
     m_tableWidget->setLastRow(lastLine() - 1);
 
+    if (!m_tableWidget->dataLooksGood()) {
+        m_errorLabel->setText("\n\n"
+                              "Coordinate data does not look good!\n\n"
+                              "Make sure that:\n"
+                              "    1. There are no repeated values\n"
+                              "    2. The coordinate value at row N is larger than it is at row N - 1\n\n"
+                              "Use the context menu of the table to manually discard some rows;\n"
+                              "Alternatively, modify the file in an external editor."
+                              );
+    } else {
+        m_errorLabel->clear();
+    }
+
     // Enable import button only if the user has selected its columns for 1d
     if (m_tableWidget->intensityColumn() > -1)
-        m_importButton->setEnabled(true);
+        if (m_tableWidget->dataLooksGood())
+            m_importButton->setEnabled(true);
 
     // Enable Coordinate Selector
     if (m_tableWidget->coordinateColumn() > -1) {
@@ -289,6 +304,13 @@ QBoxLayout* DataSelector::createLayout()
     m_tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(m_tableWidget, &QTableWidget::customContextMenuRequested, this,
             &DataSelector::onColumnRightClick);
+    connect(m_tableWidget, &CsvImportTable::dataSanityChanged, this,
+            [this]() { updateSelection(); });
+
+    // Error label
+    m_errorLabel = new QLabel();
+    m_errorLabel->setStyleSheet("QLabel { color : red; }");
+    m_errorLabel->setText("");
 
     // Import button
     m_importButton = new QPushButton("Import");
@@ -355,6 +377,8 @@ QBoxLayout* DataSelector::createLayout()
     tableLayout->addWidget(new QLabel("Right click on the table to select what will be imported"));
     tableLayout->addWidget(m_tableWidget);
     tableLayout->addLayout(separatorFieldLayout);
+    tableLayout->addLayout(separatorFieldLayout);
+    tableLayout->addWidget(m_errorLabel);
 
     // First and last data rows:
     auto rowControlsLayout = new QFormLayout;

@@ -20,6 +20,7 @@ CsvImportTable::CsvImportTable(QWidget* parent) : QTableWidget(parent)
     m_intensityCol = std::make_unique<CsvCoordinateColumn>();
     m_firstRow = 0;
     m_lastRow = 0;
+    m_dataLooksGood = false;
 }
 
 int CsvImportTable::selectedRow() const
@@ -41,7 +42,7 @@ std::set<int> CsvImportTable::selectedRows() const
         return {};
 
     int size = selection.size();
-    for(int rangenumber = 0; rangenumber < size  ; ++rangenumber){
+    for (int rangenumber = 0; rangenumber < size; ++rangenumber) {
         int row0 = selectedRanges()[rangenumber].topRow() - rowOffset();
         int rowN = selectedRanges()[rangenumber].bottomRow() - rowOffset();
         for (int r = row0; r <= rowN; ++r) {
@@ -152,14 +153,18 @@ void CsvImportTable::setData(const csv::DataArray data)
 
 void CsvImportTable::setFirstRow(size_t row)
 {
-    m_firstRow = row;
-    updateSelection();
+    if (row != m_firstRow) {
+        m_firstRow = row;
+        updateSelection();
+    }
 }
 
 void CsvImportTable::setLastRow(size_t row)
 {
-    m_lastRow = row;
-    updateSelection();
+    if (m_lastRow != row) {
+        m_lastRow = row;
+        updateSelection();
+    }
 }
 
 void CsvImportTable::discardRows(std::set<int> rows)
@@ -173,7 +178,7 @@ void CsvImportTable::discardRows(std::set<int> rows)
             } else {
                 m_rowsToDiscard.insert(row);
             }
-        }
+       }
     }
     updateSelection();
 }
@@ -208,16 +213,13 @@ void CsvImportTable::greyoutDataToDiscard()
 
 void CsvImportTable::runSanityChecks()
 {
-    int nCols = this->columnCount();
-
-    auto values = m_coordinateCol->values();
-    auto size = m_coordinateCol->values().size();
+    bool dataLooksGood = true;
+    int jCol = m_coordinateCol->columnNumber();
+    csv::DataRow values = m_coordinateCol->values();
+    size_t size = m_coordinateCol->values().size();
     double greatestNumber = 0;
     for (int i = 0; i < int(size) - 1; i++) {
-
-        bool userDiscard =
-            std::find(m_rowsToDiscard.begin(), m_rowsToDiscard.end(), i) != m_rowsToDiscard.end();
-
+        bool userDiscard = isRowDiscarded(i);
         if (i < firstRow() - rowOffset() || i > lastRow() || userDiscard)
             continue;
 
@@ -231,14 +233,23 @@ void CsvImportTable::runSanityChecks()
 
         // if two consecutive values are non-increasing:
         if (number - greatestNumber < 0) {
-            for (int j = 0; j < nCols; ++j)
-                greyoutCell(i + rowOffset(), j, needsGreyout(i + rowOffset(), j), Qt::red);
+            bool alreadyDiscarded = needsGreyout(i + rowOffset(), jCol);
+            greyoutCell(i + rowOffset(), jCol, alreadyDiscarded, Qt::red);
+            if (!alreadyDiscarded)
+                dataLooksGood = false;
         }
 
-        if(nextNumber - number < 1e-14){
-            for (int j = 0; j < nCols; ++j)
-                greyoutCell(i + 1 + rowOffset(), j, needsGreyout(i + 1 + rowOffset(), j), Qt::red);
+        if (nextNumber - number < 1e-14) {
+            bool alreadyDiscarded = needsGreyout(i + 1 + rowOffset(), jCol);
+            greyoutCell(i + 1 + rowOffset(), jCol, alreadyDiscarded, Qt::red);
+            if (!alreadyDiscarded)
+                dataLooksGood = false;
         }
+    }
+
+    if (dataLooksGood != m_dataLooksGood) {
+        m_dataLooksGood = dataLooksGood;
+        emit dataSanityChanged();
     }
 }
 
@@ -261,10 +272,10 @@ void CsvImportTable::greyoutCell(int i, int j, bool yes, Qt::GlobalColor color)
 
 bool CsvImportTable::needsGreyout(const int iRow, const int jCol) const
 {
-    bool userDiscard = std::find(m_rowsToDiscard.begin(), m_rowsToDiscard.end(), iRow - rowOffset())
-                       != m_rowsToDiscard.end();
-    bool greyTop = iRow < int(m_firstRow) + rowOffset();
-    bool greyBott = iRow > int(m_lastRow) + rowOffset();
+    int vecRow = iRow - rowOffset();
+    bool userDiscard = isRowDiscarded(vecRow);
+    bool greyTop = vecRow < int(m_firstRow);
+    bool greyBott = vecRow > int(m_lastRow);
     bool greyCol = jCol != int(m_coordinateCol->columnNumber())
                    && jCol != int(m_intensityCol->columnNumber())
                    && int(m_intensityCol->columnNumber()) > 0;
@@ -343,4 +354,9 @@ csv::DataColumn CsvImportTable::valuesFromColumn(int col)
         }
         return result;
     }
+}
+
+bool CsvImportTable::isRowDiscarded(const int row) const
+{
+    return std::find(m_rowsToDiscard.begin(), m_rowsToDiscard.end(), row) != m_rowsToDiscard.end();
 }
