@@ -140,6 +140,9 @@ bool CsvImportAssistant::loadCsvFile()
     csv::DataArray tmp(csvArray.begin(), csvArray.begin() + int(lastRow));
     m_csvArray.swap(tmp);
     removeBlankColumns();
+    if(m_separator == ' ')
+        removeMultipleWhiteSpaces();
+
     return true;
 }
 
@@ -193,6 +196,43 @@ std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double mul
     }
 
     return result;
+}
+void CsvImportAssistant::removeMultipleWhiteSpaces(){
+    if (m_csvArray.empty())
+        return;
+
+    csv::DataArray buffer2d;
+    csv::DataRow buffer1d;
+    size_t nRows = m_csvArray.size();
+    size_t nCols = m_csvArray[0].size();
+    size_t newNcols = 0;
+
+    for (size_t i = 0; i < nRows; i++) {
+        buffer1d.clear();
+        for (size_t j = 0; j < nCols; j++) {
+            QString text = QString::fromStdString(m_csvArray[i][j]).trimmed();
+            if(text != "")
+            buffer1d.push_back(text.toStdString());
+        }
+        newNcols = std::max(buffer1d.size(),newNcols);
+        buffer2d.push_back(buffer1d);
+    }
+
+    if (buffer2d.empty()) {
+        m_csvArray.clear();
+        return;
+    }
+
+    for (size_t i = 0; i < nRows; i++)
+        while(buffer2d[i].size() < newNcols)
+            buffer2d[i].push_back("");
+
+
+    // now buffer2d has the original array, without empty cells
+    nRows = buffer2d.size();
+    nCols = buffer2d[0].size();
+
+    m_csvArray.swap(buffer2d);
 }
 
 void CsvImportAssistant::removeBlankColumns()
