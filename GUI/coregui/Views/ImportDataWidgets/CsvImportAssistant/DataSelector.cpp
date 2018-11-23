@@ -100,6 +100,7 @@ void DataSelector::onColumnRightClick(const QPoint& position)
     connect(&contextMenu, &TableContextMenu::setFirstRow, this, [this]() { setFirstRow(); });
     connect(&contextMenu, &TableContextMenu::setLastRow, this, [this]() { setLastRow(); });
     connect(&contextMenu, &TableContextMenu::setColumnAs, this, &DataSelector::setColumnSlot);
+    connect(&contextMenu, &TableContextMenu::discardRow, this, [this]() { discardRow(); });
     connect(&contextMenu, &TableContextMenu::resetTable, this, [this]() {
         resetSelection();
         updateSelection();
@@ -192,13 +193,21 @@ void DataSelector::setLastRow()
     m_tableWidget->setLastRow(size_t(row));
 }
 
+void DataSelector::discardRow()
+{
+    std::vector<int> selection = m_tableWidget->selectedRows();
+    m_tableWidget->discardRows(selection);
+}
+
 void DataSelector::resetSelection()
 {
     setColumnAs(-1, csv::_theta_);
     setColumnAs(-1, csv::_q_);
     setColumnAs(-1, csv::_intensity_);
+
     m_firstDataRowSpinBox->setValue(0);
     m_lastDataRowSpinBox->setValue(int(maxLines()));
+    m_tableWidget->discardRows({});
 }
 
 size_t DataSelector::firstLine() const

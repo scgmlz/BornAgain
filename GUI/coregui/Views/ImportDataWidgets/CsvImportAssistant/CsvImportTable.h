@@ -30,6 +30,7 @@ public:
     CsvImportTable(QWidget* parent = nullptr);
 
     int selectedRow() const;
+    std::vector<int> selectedRows() const;
     int selectedColumn() const;
     int intensityColumn() const { return m_intensityCol->columnNumber(); }
     int coordinateColumn() const { return m_coordinateCol->columnNumber(); }
@@ -37,6 +38,7 @@ public:
     int lastRow() { return int(m_lastRow) + rowOffset(); }
     double intensityMultiplier() const { return m_intensityCol->multiplier(); }
     double coordinateMultiplier() const { return m_coordinateCol->multiplier(); }
+    std::vector<int> rowsToDiscard() const { return m_rowsToDiscard;}
     csv::ColumnType coordinateName() const { return m_coordinateCol->name(); }
     AxesUnits coordinateUnits() const { return m_coordinateCol->units(); }
 
@@ -46,16 +48,18 @@ public:
     void setColumnAs(int col, csv::ColumnType CoordOrInt, double multiplier = 1.0);
     void setFirstRow(size_t row);
     void setLastRow(size_t row);
+    void discardRows(std::vector<int> rows);
     void setCoordinateName(const csv::ColumnType coordName)
     {
         m_coordinateCol->setName(coordName);
         setHeaders();
     }
     void setMultiplierFields();
+    void resetSelection();
 
 private:
     void greyoutDataToDiscard();
-    void greyoutCell(int i, int j, bool yes);
+    void greyoutCell(int i, int j, bool yes, Qt::GlobalColor color = Qt::white);
     void runSanityChecks();
     bool needsGreyout(const int iRow, const int jCol) const;
     void multiplyColumn(const CsvIntensityColumn& col);
@@ -68,6 +72,7 @@ private:
     std::unique_ptr<CsvCoordinateColumn> m_coordinateCol;
     size_t m_firstRow;
     size_t m_lastRow;
+    std::vector<int> m_rowsToDiscard;
 };
 
 class CsvMultiplierField : public QDoubleSpinBox

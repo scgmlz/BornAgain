@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QTableWidget>
 #include <QVBoxLayout>
+#include <algorithm>
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
     : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(-1),
@@ -72,6 +73,7 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
         m_units = selector.units();
         m_firstRow = int(selector.firstLine() - 1);
         m_lastRow = int(selector.lastLine() - 1);
+        m_rowsToDiscard = selector.rowsToDiscard();
         m_dataAvailable = true;
     } else if (res == selector.Rejected) {
         m_dataAvailable = false;
@@ -188,13 +190,13 @@ std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double mul
     std::vector<double> result;
     auto firstRow = size_t(m_firstRow);
     auto lastRow = size_t(m_lastRow) + 1;
-
     for (size_t row = firstRow; row < lastRow; row++) {
-        QString currentText = QString::fromStdString(m_csvArray[row][size_t(jCol)]);
-        double number = currentText.toDouble();
-        result.push_back(multiplier * number);
+        if(std::find(m_rowsToDiscard.begin(),m_rowsToDiscard.end(),int(row)) == m_rowsToDiscard.end()){
+            QString currentText = QString::fromStdString(m_csvArray[row][size_t(jCol)]);
+            double number = currentText.toDouble();
+            result.push_back(multiplier * number);
+        }
     }
-
     return result;
 }
 void CsvImportAssistant::removeMultipleWhiteSpaces(){
