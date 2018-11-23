@@ -32,6 +32,7 @@ signals:
     void setLastRow();
     void setColumnAs(csv::ColumnType);
     void resetTable();
+    void discardRow();
 
 private:
     int m_row;
@@ -43,6 +44,7 @@ private:
     QAction* m_setAsTheta;
     QAction* m_setAsQ;
     QAction* m_setAsIntensity;
+    QAction* m_discardRow;
 };
 
 #endif // TABLECONTEXTMENU_H

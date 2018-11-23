@@ -81,6 +81,7 @@ private:
     double m_coordinateMultiplier;
     int m_firstRow;
     int m_lastRow;
+    std::vector<int> m_rowsToDiscard;
     AxesUnits m_units;
     bool m_dataAvailable;
 };
