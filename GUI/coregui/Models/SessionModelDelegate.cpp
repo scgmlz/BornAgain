@@ -29,21 +29,6 @@ bool isDoubleProperty(const QModelIndex& index, Qt::ItemDataRole role = Qt::Disp
     return index.data(role).type() == QVariant::Double;
 }
 
-//! Returns text representation of double value depending on user defined editor type.
-QString doubleToString(const SessionItem& item)
-{
-    QString result;
-
-    Q_ASSERT(item.value().type() == QVariant::Double);
-    if (item.editorType() == Constants::ScientificEditorType) {
-        result = QString::number(item.value().toDouble(), 'g');
-    } else {
-        auto locale = QLocale::system();
-        result = locale.toString(item.value().toDouble(), 'f', item.decimals());
-    }
-    return result;
-}
-
 QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent) {
     if (index.column() == SessionFlags::ITEM_VALUE && index.internalPointer()) {
         auto item = static_cast<SessionItem*>(index.internalPointer());
@@ -66,7 +51,8 @@ void SessionModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
         paintCustomLabel(painter, option, index, text);
     } else if (isDoubleProperty(index)) {
         auto item = static_cast<SessionItem*>(index.internalPointer());
-        paintCustomLabel(painter, option, index, doubleToString(*item));
+        paintCustomLabel(painter, option, index,
+                         ScientificSpinBox::toString(item->value().toDouble(), item->decimals()));
     } else {
         QStyledItemDelegate::paint(painter, option, index);
     }
