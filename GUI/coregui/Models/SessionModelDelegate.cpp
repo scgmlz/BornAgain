@@ -13,19 +13,20 @@
 // ************************************************************************** //
 
 #include "SessionModelDelegate.h"
-#include "SessionItem.h"
-#include "PropertyEditorFactory.h"
 #include "CustomEditors.h"
-#include "SessionFlags.h"
 #include "CustomEventFilters.h"
+#include "PropertyEditorFactory.h"
+#include "ScientificSpinBox.h"
+#include "SessionFlags.h"
+#include "SessionItem.h"
 #include <QApplication>
 #include <QLocale>
 
 namespace {
 
-bool isDoubleProperty(const QModelIndex& index)
+bool isDoubleProperty(const QModelIndex& index, Qt::ItemDataRole role = Qt::DisplayRole)
 {
-    return index.data().type() == QVariant::Double;
+    return index.data(role).type() == QVariant::Double;
 }
 
 //! Returns text representation of double value depending on user defined editor type.
@@ -83,9 +84,11 @@ QWidget* SessionModelDelegate::createEditor(QWidget* parent, const QStyleOptionV
             connect(customEditor, &CustomEditor::dataChanged,
                     this, &SessionModelDelegate::onCustomEditorDataChanged);
         }
-    } else {
+    } else if (isDoubleProperty(index, Qt::EditRole)) {
+        //compatible with default QStyledItemDelegate machinery
+        result = new ScientificSpinBox(parent);
+    } else
         result = QStyledItemDelegate::createEditor(parent, option, index);
-    }
     return result;
 }
 
