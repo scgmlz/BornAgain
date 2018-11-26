@@ -24,24 +24,32 @@
 #include "InstrumentItems.h"
 #include "JobItem.h"
 #include "JobModel.h"
+#include "MaterialItem.h"
 #include "ModelPath.h"
 #include "MultiLayer.h"
 #include "MultiLayerItem.h"
 #include "ParameterPool.h"
 #include "ParameterTreeItems.h"
 #include "ParameterTreeUtils.h"
+#include "RectangularDetectorItem.h"
 #include "SampleBuilderFactory.h"
 #include "SampleModel.h"
 #include "SimulationFactory.h"
+#include "SphericalDetectorItem.h"
 #include "StringUtils.h"
 #include <QStack>
 
 namespace {
     std::string header(size_t width=80) { return std::string(width, '-'); }
+
+    //! Returns true, if it makes sence to look for GUI translation for given domain name.
+    //! Intended to supress warnings about not-yet implemented translations.
+    bool requiresTranslation(ParameterItem* parItem);
+    bool containsNames(const QString& text, const QStringList& names);
 }
 
 GUITranslationTest::GUITranslationTest(const std::string& simName, const std::string& sampleName)
-    : m_models(new ApplicationModels(0))
+    : m_models(new ApplicationModels(nullptr))
     , m_simulationName(simName)
     , m_sampleName(sampleName)
 {
@@ -92,13 +100,13 @@ void GUITranslationTest::processParameterTree()
     JobItem *jobItem = m_models->jobModel()->addJob(
                 m_models->sampleModel()->multiLayerItem(),
                 m_models->instrumentModel()->instrumentItem(),
-                0,
+                nullptr,
                 m_models->documentModel()->simulationOptionsItem());
 
     SessionItem *container = jobItem->parameterContainerItem();
 
     ParameterTreeUtils::visitParameterContainer(container, [&](ParameterItem *parItem){
-        if(parItem->isFittable()) {
+        if(requiresTranslation(parItem)) {
             std::string sampleParLink =
                     parItem->getItemValue(ParameterItem::P_LINK).toString().toStdString();
 
@@ -139,9 +147,6 @@ std::string GUITranslationTest::translationResultsToString() const
     }
     return ostr.str();
 }
-
-//! Returns true, if it makes sence to look for GUI translation for given domain name.
-//! Intended to supress warnings about not-yet implemented translations.
 
 bool GUITranslationTest::isValidDomainName(const std::string& domainName) const
 {
@@ -248,4 +253,76 @@ bool GUITranslationTest::checkMissedTranslations()
 
     bool isSuccess = (missedNames.empty() ? true : false);
     return isSuccess;
+}
+
+namespace {
+const QVector<QPair<QStringList, QStringList>> black_list {
+    {// Global scope
+        {
+            QString()
+        },
+        {
+            Constants::DistributionSigmaFactor,
+            Constants::MaterialRefractiveDataType,
+            Constants::MaterialSLDDataType,
+            MaterialItem::P_MAGNETIZATION
+        }
+    },
+    {// Instrument scope
+        {
+            Constants::GISASInstrumentType,
+            Constants::OffSpecInstrumentType,
+            Constants::SpecularInstrumentType
+        },
+        {// Distribution types
+            Constants::DistributionGateType, Constants::DistributionLorentzType,
+            Constants::DistributionGaussianType, Constants::DistributionLogNormalType,
+            Constants::DistributionCosineType, Constants::DistributionTrapezoidType,
+
+            // Detector axes
+            SphericalDetectorItem::P_PHI_AXIS, SphericalDetectorItem::P_ALPHA_AXIS,
+            RectangularDetectorItem::P_X_AXIS, RectangularDetectorItem::P_Y_AXIS,
+            OffSpecInstrumentItem::P_ALPHA_AXIS,
+
+            // Rectangular detector positioning
+            RectangularDetectorItem::P_ALIGNMENT, RectangularDetectorItem::P_NORMAL,
+            RectangularDetectorItem::P_DIRECTION, RectangularDetectorItem::P_U0,
+            RectangularDetectorItem::P_V0, RectangularDetectorItem::P_DBEAM_U0,
+            RectangularDetectorItem::P_DBEAM_V0, RectangularDetectorItem::P_DISTANCE,
+
+            // Detector resolution
+            Constants::ResolutionFunction2DGaussianType,
+
+            // Beam angle parameters
+            BeamItem::P_INCLINATION_ANGLE, BeamItem::P_AZIMUTHAL_ANGLE
+        }
+    }
+};
+
+bool requiresTranslation(ParameterItem* parItem)
+{
+    if (!parItem)
+        return false;
+
+    const QString& par_path = FitParameterHelper::getParameterItemPath(parItem);
+
+    for (const auto& item : black_list) {
+        if (item.first.size() == 1 && item.first[0].isNull()) { // checking global scope
+            if (containsNames(par_path, item.second))
+                return false;
+        } else { // checking everything else
+            if (containsNames(par_path, item.first) && containsNames(par_path, item.second))
+                return false;
+        }
+    }
+    return true;
+}
+
+bool containsNames(const QString& text, const QStringList& names)
+{
+    for (const auto& name : names)
+        if (text.contains(name))
+            return true;
+    return false;
+}
 }

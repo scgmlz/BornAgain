@@ -43,8 +43,6 @@ public:
     SessionItem *linkedItem();
 
     void restoreFromBackup();
-
-    bool isFittable() const;
 };
 
 //! The ParameterContainerItem is a top item to hold all ParameterItem, represents an entry
