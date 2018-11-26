@@ -21,6 +21,8 @@
 class BA_CORE_API_ ScientificSpinBox : public QAbstractSpinBox
 {
     Q_OBJECT
+
+    Q_PROPERTY(double value MEMBER m_value READ value WRITE setValue NOTIFY valueChanged USER true)
 public:
     ScientificSpinBox(QWidget* parent = nullptr);
     ~ScientificSpinBox() override;
