@@ -65,6 +65,8 @@ signals:
 private:
     bool isRowDiscarded(const int row) const ;
     void runSanityChecks();
+    bool runIntensitySanityChecks();
+    bool runCoordinateSanityChecks();
     void greyoutDataToDiscard();
     void greyoutCell(int i, int j, bool yes, Qt::GlobalColor color = Qt::white);
     bool needsGreyout(const int iRow, const int jCol) const;

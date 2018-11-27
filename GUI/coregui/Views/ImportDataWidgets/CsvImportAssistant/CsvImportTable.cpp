@@ -178,7 +178,7 @@ void CsvImportTable::discardRows(std::set<int> rows)
             } else {
                 m_rowsToDiscard.insert(row);
             }
-       }
+        }
     }
     updateSelection();
 }
@@ -213,11 +213,23 @@ void CsvImportTable::greyoutDataToDiscard()
 
 void CsvImportTable::runSanityChecks()
 {
+    bool intensitiesLookGood = runIntensitySanityChecks();
+    bool coordinatesLookGood = runCoordinateSanityChecks();
+    bool dataLooksGood = intensitiesLookGood && coordinatesLookGood;
+    if (dataLooksGood != m_dataLooksGood) {
+        m_dataLooksGood = dataLooksGood;
+        emit dataSanityChanged();
+    }
+}
+
+bool CsvImportTable::runCoordinateSanityChecks()
+{
     bool dataLooksGood = true;
     int jCol = m_coordinateCol->columnNumber();
     csv::DataRow values = m_coordinateCol->values();
     size_t size = m_coordinateCol->values().size();
     double greatestNumber = 0;
+
     for (int i = 0; i < int(size) - 1; i++) {
         bool userDiscard = isRowDiscarded(i);
         if (i < firstRow() - rowOffset() || i > lastRow() || userDiscard)
@@ -226,31 +238,54 @@ void CsvImportTable::runSanityChecks()
         size_t I = size_t(i);
         auto cellText = QString::fromStdString(values[I]);
         auto nextCellText = QString::fromStdString(values[I + 1]);
-        double number = cellText.toDouble();
-
-        double nextNumber = nextCellText.toDouble();
+        bool correctDoubleFormat;
+        double number = cellText.toDouble(&correctDoubleFormat);
         greatestNumber = std::max(number, greatestNumber);
 
         // if two consecutive values are non-increasing:
-        if (number - greatestNumber < 0) {
+        if (!correctDoubleFormat || (number - greatestNumber < 0)) {
             bool alreadyDiscarded = needsGreyout(i + rowOffset(), jCol);
             greyoutCell(i + rowOffset(), jCol, alreadyDiscarded, Qt::red);
             if (!alreadyDiscarded)
                 dataLooksGood = false;
         }
 
-        if (nextNumber - number < 1e-14) {
+        double nextNumber = nextCellText.toDouble(&correctDoubleFormat);
+        if (!correctDoubleFormat || (nextNumber - number < 1e-14)) {
             bool alreadyDiscarded = needsGreyout(i + 1 + rowOffset(), jCol);
             greyoutCell(i + 1 + rowOffset(), jCol, alreadyDiscarded, Qt::red);
             if (!alreadyDiscarded)
                 dataLooksGood = false;
         }
     }
+    return dataLooksGood;
+}
 
-    if (dataLooksGood != m_dataLooksGood) {
-        m_dataLooksGood = dataLooksGood;
-        emit dataSanityChanged();
+bool CsvImportTable::runIntensitySanityChecks()
+{
+    bool dataLooksGood = true;
+    int jCol = m_intensityCol->columnNumber();
+    csv::DataRow values = m_intensityCol->values();
+    size_t size = m_intensityCol->values().size();
+
+    for (int i = 0; i < int(size) - 1; i++) {
+        bool userDiscard = isRowDiscarded(i);
+        if (i < firstRow() - rowOffset() || i > lastRow() || userDiscard)
+            continue;
+
+        size_t I = size_t(i);
+        auto cellText = QString::fromStdString(values[I]);
+        bool correctDoubleFormat;
+        cellText.toDouble(&correctDoubleFormat);
+        // if two consecutive values are non-increasing:
+        if (!correctDoubleFormat) {
+            bool alreadyDiscarded = needsGreyout(i + rowOffset(), jCol);
+            greyoutCell(i + rowOffset(), jCol, alreadyDiscarded, Qt::red);
+            if (!alreadyDiscarded)
+                dataLooksGood = false;
+        }
     }
+    return dataLooksGood;
 }
 
 void CsvImportTable::greyoutCell(int i, int j, bool yes, Qt::GlobalColor color)

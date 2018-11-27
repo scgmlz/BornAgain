@@ -117,14 +117,15 @@ void DataSelector::updateSelection()
     m_tableWidget->setLastRow(lastLine() - 1);
 
     if (!m_tableWidget->dataLooksGood()) {
-        m_errorLabel->setText("\n\n"
-                              "Coordinate data does not look good!\n\n"
-                              "Make sure that:\n"
-                              "    1. There are no repeated values\n"
-                              "    2. The coordinate value at row N is larger than it is at row N - 1\n\n"
-                              "Use the context menu of the table to manually discard some rows;\n"
-                              "Alternatively, modify the file in an external editor."
-                              );
+        m_errorLabel->setText(
+            "\n\n"
+            "Data selected for importing does not look good!\n\n"
+            "Make sure that:\n"
+            "    1. There are no repeated values in the coordinate column.\n"
+            "    2. The coordinate values are ascendingly sorted.\n"
+            "    3. Intensity and coordinate values are valid numbers.\n\n"
+            "Use the context menu of the table to manually discard some rows;\n"
+            "Alternatively, modify the file in an external editor.");
     } else {
         m_errorLabel->clear();
     }
@@ -268,32 +269,9 @@ void DataSelector::onCancelButton()
 
 void DataSelector::onImportButton()
 {
-    if (dataLooksGood()) {
+    //We shouldn't be here if the data is
+    //not previously sanitised.
         accept();
-    }
-}
-
-bool DataSelector::dataLooksGood()
-{
-    int iCol = m_tableWidget->intensityColumn();
-    int cCol = m_tableWidget->coordinateColumn();
-    auto firstLine = m_tableWidget->firstRow();
-    auto lastLine = m_tableWidget->lastRow();
-    try {
-        for (int i = firstLine; i < lastLine + 1; i++) {
-            m_tableWidget->item(i, iCol)->text().toDouble();
-        }
-        if (cCol > -1)
-            for (int i = firstLine; i < lastLine + 1; i++) {
-                m_tableWidget->item(i, cCol)->text().toDouble();
-            }
-    } catch (std::exception& e) {
-        QString message = QString("Unable to import, the following exception was thrown:\n")
-                          + QString::fromStdString(e.what());
-        QMessageBox::warning(this, "Wrong data format", message);
-        return false;
-    }
-    return true;
 }
 
 QBoxLayout* DataSelector::createLayout()

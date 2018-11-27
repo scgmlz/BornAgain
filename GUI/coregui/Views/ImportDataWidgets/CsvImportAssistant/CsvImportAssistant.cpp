@@ -142,7 +142,7 @@ bool CsvImportAssistant::loadCsvFile()
     csv::DataArray tmp(csvArray.begin(), csvArray.begin() + int(lastRow));
     m_csvArray.swap(tmp);
     removeBlankColumns();
-    if(m_separator == ' ')
+    if (m_separator == ' ')
         removeMultipleWhiteSpaces();
 
     return true;
@@ -163,16 +163,8 @@ ImportDataInfo CsvImportAssistant::fillData()
     resultOutputData = std::make_unique<OutputData<double>>();
     std::vector<double> intensityValues;
     std::vector<double> coordinateValues;
-    if (m_intensityColNum > -1)
-        intensityValues = getValuesFromColumn(m_intensityColNum, m_intensityMultiplier);
 
-    if (m_coordinateColNum > -1) {
-        coordinateValues = getValuesFromColumn(m_coordinateColNum, m_coordinateMultiplier);
-    } else {
-        const size_t size = intensityValues.size();
-        for (size_t i = 0; i < size; i++)
-            coordinateValues.push_back(double(i));
-    }
+    getValuesFromColumns(intensityValues,coordinateValues);
 
     auto axisName = csv::UnitsLabels[m_units].toStdString();
     PointwiseAxis coordAxis(axisName, coordinateValues);
@@ -183,23 +175,45 @@ ImportDataInfo CsvImportAssistant::fillData()
     return result;
 }
 
-std::vector<double> CsvImportAssistant::getValuesFromColumn(int jCol, double multiplier)
+void CsvImportAssistant::getValuesFromColumns(std::vector<double>& intensityValues,
+                                              std::vector<double>& coordinateValues)
 {
-    if (jCol < 0)
-        return {};
-    std::vector<double> result;
+    bool intensityOk = true;
+    bool coordinateOk = true;
     auto firstRow = size_t(m_firstRow);
     auto lastRow = size_t(m_lastRow) + 1;
+    bool isCoordinateNeeded = m_coordinateColNum > -1;
+    double intensityValue = 0.;
+    double coordinateValue = 0.;
+
     for (size_t row = firstRow; row < lastRow; row++) {
-        if(std::find(m_rowsToDiscard.begin(),m_rowsToDiscard.end(),int(row)) == m_rowsToDiscard.end()){
-            QString currentText = QString::fromStdString(m_csvArray[row][size_t(jCol)]);
-            double number = currentText.toDouble();
-            result.push_back(multiplier * number);
+        if (std::find(m_rowsToDiscard.begin(), m_rowsToDiscard.end(), int(row))
+            == m_rowsToDiscard.end()) {
+            // Intensity Values:
+            QString intensityText =
+                QString::fromStdString(m_csvArray[row][size_t(m_intensityColNum)]);
+            intensityValue = intensityText.toDouble(&intensityOk);
+
+            // Coordinate Values:
+            if (isCoordinateNeeded) {
+                QString coordinateText =
+                    QString::fromStdString(m_csvArray[row][size_t(m_coordinateColNum)]);
+                coordinateValue = coordinateText.toDouble(&coordinateOk);
+            } else {
+                coordinateValue = row - firstRow;
+            }
+
+            // Add them if they are both ok:
+            if (intensityOk && coordinateOk) {
+                intensityValues.push_back(m_intensityMultiplier * intensityValue);
+                coordinateValues.push_back(m_coordinateMultiplier * coordinateValue);
+            }
         }
     }
-    return result;
 }
-void CsvImportAssistant::removeMultipleWhiteSpaces(){
+
+void CsvImportAssistant::removeMultipleWhiteSpaces()
+{
     if (m_csvArray.empty())
         return;
 
@@ -213,10 +227,10 @@ void CsvImportAssistant::removeMultipleWhiteSpaces(){
         buffer1d.clear();
         for (size_t j = 0; j < nCols; j++) {
             QString text = QString::fromStdString(m_csvArray[i][j]).trimmed();
-            if(text != "")
-            buffer1d.push_back(text.toStdString());
+            if (text != "")
+                buffer1d.push_back(text.toStdString());
         }
-        newNcols = std::max(buffer1d.size(),newNcols);
+        newNcols = std::max(buffer1d.size(), newNcols);
         buffer2d.push_back(buffer1d);
     }
 
@@ -226,9 +240,8 @@ void CsvImportAssistant::removeMultipleWhiteSpaces(){
     }
 
     for (size_t i = 0; i < nRows; i++)
-        while(buffer2d[i].size() < newNcols)
+        while (buffer2d[i].size() < newNcols)
             buffer2d[i].push_back("");
-
 
     // now buffer2d has the original array, without empty cells
     nRows = buffer2d.size();
@@ -303,9 +316,9 @@ char CsvImportAssistant::guessSeparator() const
     preferredSeparators.push_back('|');
     preferredSeparators.push_back(':');
     preferredSeparators.push_back('\t');
-    //preferredSeparators.push_back('/');
-    //preferredSeparators.push_back('\\');
-    //preferredSeparators.push_back('_');
+    // preferredSeparators.push_back('/');
+    // preferredSeparators.push_back('\\');
+    // preferredSeparators.push_back('_');
     preferredSeparators.push_back('\'');
     preferredSeparators.push_back('\"');
 

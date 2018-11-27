@@ -20,10 +20,10 @@
 #include "DataFormatUtils.h"
 #include "ImportDataInfo.h"
 #include "WinDllMacros.h"
-#include <set>
 #include <QStringList>
 #include <QWidget>
 #include <memory>
+#include <set>
 
 class csvSelectionState
 {
@@ -68,7 +68,8 @@ private:
     void removeBlankColumns();
     void removeMultipleWhiteSpaces();
     void runDataSelector(QWidget* parent);
-    std::vector<double> getValuesFromColumn(int jcol, double multiplier = 1.0);
+    void getValuesFromColumns(std::vector<double>& intensityVals,
+                                            std::vector<double>& coordVals);
     void resetSelection();
     void resetAssistant();
 

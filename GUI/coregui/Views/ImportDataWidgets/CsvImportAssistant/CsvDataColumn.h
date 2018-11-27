@@ -54,7 +54,7 @@ public:
 
     // Getters:
     AxesUnits units() const;
-    csv::ColumnType name() const {return m_name;}
+    csv::ColumnType name() const { return m_name; }
 
     // Setters:
     void setUnits(AxesUnits const units);
