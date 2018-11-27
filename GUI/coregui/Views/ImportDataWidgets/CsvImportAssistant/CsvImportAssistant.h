@@ -20,6 +20,7 @@
 #include "DataFormatUtils.h"
 #include "ImportDataInfo.h"
 #include "WinDllMacros.h"
+#include <set>
 #include <QStringList>
 #include <QWidget>
 #include <memory>
@@ -81,7 +82,7 @@ private:
     double m_coordinateMultiplier;
     int m_firstRow;
     int m_lastRow;
-    std::vector<int> m_rowsToDiscard;
+    std::set<int> m_rowsToDiscard;
     AxesUnits m_units;
     bool m_dataAvailable;
 };

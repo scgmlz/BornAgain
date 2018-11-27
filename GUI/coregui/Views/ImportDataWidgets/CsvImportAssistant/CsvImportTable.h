@@ -22,6 +22,7 @@
 #include <QMenu>
 #include <QStringList>
 #include <QTableWidget>
+#include <set>
 
 class CsvImportTable : public QTableWidget
 {
@@ -30,7 +31,7 @@ public:
     CsvImportTable(QWidget* parent = nullptr);
 
     int selectedRow() const;
-    std::vector<int> selectedRows() const;
+    std::set<int> selectedRows() const;
     int selectedColumn() const;
     int intensityColumn() const { return m_intensityCol->columnNumber(); }
     int coordinateColumn() const { return m_coordinateCol->columnNumber(); }
@@ -38,7 +39,7 @@ public:
     int lastRow() { return int(m_lastRow) + rowOffset(); }
     double intensityMultiplier() const { return m_intensityCol->multiplier(); }
     double coordinateMultiplier() const { return m_coordinateCol->multiplier(); }
-    std::vector<int> rowsToDiscard() const { return m_rowsToDiscard;}
+    std::set<int> rowsToDiscard() const { return m_rowsToDiscard; }
     csv::ColumnType coordinateName() const { return m_coordinateCol->name(); }
     AxesUnits coordinateUnits() const { return m_coordinateCol->units(); }
 
@@ -48,7 +49,7 @@ public:
     void setColumnAs(int col, csv::ColumnType CoordOrInt, double multiplier = 1.0);
     void setFirstRow(size_t row);
     void setLastRow(size_t row);
-    void discardRows(std::vector<int> rows);
+    void discardRows(std::set<int> rows);
     void setCoordinateName(const csv::ColumnType coordName)
     {
         m_coordinateCol->setName(coordName);
@@ -72,7 +73,8 @@ private:
     std::unique_ptr<CsvCoordinateColumn> m_coordinateCol;
     size_t m_firstRow;
     size_t m_lastRow;
-    std::vector<int> m_rowsToDiscard;
+    std::set<int> m_rowsToDiscard;
+    bool m_dataLooksGood;
 };
 
 class CsvMultiplierField : public QDoubleSpinBox
@@ -80,15 +82,14 @@ class CsvMultiplierField : public QDoubleSpinBox
     Q_OBJECT
 public:
     CsvMultiplierField(double multiplier = 1.0, bool enabled = false, QWidget* parent = nullptr)
-            : QDoubleSpinBox(parent)
+        : QDoubleSpinBox(parent)
     {
-        if(enabled){
+        if (enabled) {
             setMaximum(1e10);
             setMinimum(1e-10);
             setDecimals(10);
             setValue(multiplier);
-        }
-        else{
+        } else {
             setMaximum(1);
             setMinimum(1);
             setDecimals(1);
