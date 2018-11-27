@@ -301,9 +301,9 @@ char CsvImportAssistant::guessSeparator() const
     preferredSeparators.push_back('|');
     preferredSeparators.push_back(':');
     preferredSeparators.push_back('\t');
-    preferredSeparators.push_back('/');
-    preferredSeparators.push_back('\\');
-    preferredSeparators.push_back('_');
+    //preferredSeparators.push_back('/');
+    //preferredSeparators.push_back('\\');
+    //preferredSeparators.push_back('_');
     preferredSeparators.push_back('\'');
     preferredSeparators.push_back('\"');
 
