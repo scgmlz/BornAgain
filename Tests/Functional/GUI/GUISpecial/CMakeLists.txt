@@ -17,6 +17,7 @@ set(test_cases
     RoughnessTranslation
     TwoLayerRoughnessTranslation
     SaveLoadProject
+    CsvImportAssistantPerformanceTest
 #    GUIPerformanceTest  # too heavy, call manually when necessary
 )
 

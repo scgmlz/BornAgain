@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "GUISpecialTestFactory.h"
+#include "CsvImportAssistantPerformanceTest.h"
 #include "TranslationCases.h"
 #include "GUIPerformanceTest.h"
 #include "GUISaveLoadProject.h"
@@ -86,4 +87,7 @@ GUISpecialTestFactory::GUISpecialTestFactory()
     registerItem("SaveLoadProject",
                  create_new<GUISaveLoadProject>,
                  "Save/load project test");
+    registerItem("CsvImportAssistant",
+                 create_new<CsvImportAssistantPerformanceTest>,
+                 "Measuring performance of loading ascii files");
 }
