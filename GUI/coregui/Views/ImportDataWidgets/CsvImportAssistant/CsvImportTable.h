@@ -19,6 +19,7 @@
 #include "CsvNamespace.h"
 #include "IUnitConverter.h"
 #include <QDoubleSpinBox>
+#include "ScientificSpinBox.h"
 #include <QMenu>
 #include <QStringList>
 #include <QTableWidget>
@@ -81,12 +82,12 @@ private:
     bool m_dataLooksGood;
 };
 
-class CsvMultiplierField : public QDoubleSpinBox
+class CsvMultiplierField : public ScientificSpinBox
 {
     Q_OBJECT
 public:
     CsvMultiplierField(double multiplier = 1.0, bool enabled = false, QWidget* parent = nullptr)
-        : QDoubleSpinBox(parent)
+        : ScientificSpinBox(parent)
     {
         if (enabled) {
             setMaximum(1e10);
