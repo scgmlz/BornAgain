@@ -32,9 +32,9 @@ int CsvImportTable::selectedRow() const
     return row - rowOffset();
 }
 
-std::vector<int> CsvImportTable::selectedRows() const
+std::set<int> CsvImportTable::selectedRows() const
 {
-    std::vector<int> accumulator;
+    std::set<int> accumulator;
 
     auto selection = selectedRanges();
     if (selection.empty())
@@ -44,8 +44,8 @@ std::vector<int> CsvImportTable::selectedRows() const
     for(int rangenumber = 0; rangenumber < size  ; ++rangenumber){
         int row0 = selectedRanges()[rangenumber].topRow() - rowOffset();
         int rowN = selectedRanges()[rangenumber].bottomRow() - rowOffset();
-        for(int r = row0; r <= rowN ; ++r){
-            accumulator.push_back(r);
+        for (int r = row0; r <= rowN; ++r) {
+            accumulator.insert(r);
         }
     }
     return accumulator;
@@ -162,19 +162,16 @@ void CsvImportTable::setLastRow(size_t row)
     updateSelection();
 }
 
-void CsvImportTable::discardRows(std::vector<int> rows)
+void CsvImportTable::discardRows(std::set<int> rows)
 {
     if (rows.empty()) {
         m_rowsToDiscard.clear();
     } else {
         for (auto row : rows) {
-            bool userDiscard = isRowDiscarded(row);
-            if (!userDiscard) {
-                m_rowsToDiscard.push_back(row);
+            if (isRowDiscarded(row)) {
+                m_rowsToDiscard.erase(row);
             } else {
-                m_rowsToDiscard.erase(
-                    std::remove(m_rowsToDiscard.begin(), m_rowsToDiscard.end(), row),
-                    m_rowsToDiscard.end());
+                m_rowsToDiscard.insert(row);
             }
         }
     }

@@ -195,7 +195,7 @@ void DataSelector::setLastRow()
 
 void DataSelector::discardRow()
 {
-    std::vector<int> selection = m_tableWidget->selectedRows();
+    std::set<int> selection = m_tableWidget->selectedRows();
     m_tableWidget->discardRows(selection);
 }
 
