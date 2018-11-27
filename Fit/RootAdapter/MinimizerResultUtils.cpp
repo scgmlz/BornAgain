@@ -58,10 +58,11 @@ std::string MinimizerResultUtils::reportParameters(const Fit::Parameters& parame
 
     result << MinimizerUtils::sectionString("FitParameters");
 
-    result << "Name       StartValue  Limits                FitValue  Error" << std::endl;
+    result << "Name       StartValue  Limits                        FitValue     Error"
+           << std::endl;
 
     for (const auto& par : parameters) {
-        result << boost::format("# %-8s %-7.4f     %-20s  %-6.4f    %5.4f \n") % par.name()
+        result << boost::format("# %-8s %-8.3e   %-28s  %-8.3e    %8.3e \n") % par.name()
                       % par.startValue() % par.limits().toString() % par.value() % par.error();
     }
 

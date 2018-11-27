@@ -111,12 +111,12 @@ std::string AttLimits::toString() const
     else if (isLimitless())
         result << "free";
     else if (isLowerLimited())
-        result << "lowerLimited(" << std::fixed << std::setprecision(2) << lowerLimit() << ")";
+        result << "lowerLimited(" << std::scientific << std::setprecision(2) << lowerLimit() << ")";
     else if (isUpperLimited())
-        result << "upperLimited(" << std::fixed << std::setprecision(2) << upperLimit() << ")";
+        result << "upperLimited(" << std::scientific << std::setprecision(2) << upperLimit() << ")";
     else if (isLimited())
-        result << "limited(" << std::fixed << std::setprecision(2) << lowerLimit() << ","
-               << std::fixed << std::setprecision(2) << upperLimit() << ")";
+        result << "limited(" << std::scientific << std::setprecision(2) << lowerLimit() << ","
+               << std::scientific << std::setprecision(2) << upperLimit() << ")";
 
     return result.str();
 }
