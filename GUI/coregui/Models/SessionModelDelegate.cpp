@@ -24,18 +24,9 @@
 
 namespace {
 
-bool isDoubleProperty(const QModelIndex& index, Qt::ItemDataRole role = Qt::DisplayRole)
-{
-    return index.data(role).type() == QVariant::Double;
-}
-
-QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent) {
-    if (index.column() == SessionFlags::ITEM_VALUE && index.internalPointer()) {
-        auto item = static_cast<SessionItem*>(index.internalPointer());
-        return PropertyEditorFactory::CreateEditor(*item, parent);
-    }
-    return nullptr;
-}
+bool isDoubleProperty(const QModelIndex& index, Qt::ItemDataRole role = Qt::DisplayRole);
+QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent);
+double getStep(double val);
 }  // unnamed namespace
 
 SessionModelDelegate::SessionModelDelegate(QObject* parent)
@@ -95,10 +86,14 @@ void SessionModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* mod
 void SessionModelDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
     auto customEditor = dynamic_cast<CustomEditor*>(editor);
-    if (index.column() == SessionFlags::ITEM_VALUE && customEditor)
+    if (index.column() == SessionFlags::ITEM_VALUE && customEditor) {
         customEditor->setData(index.data());
-    else
-        QStyledItemDelegate::setEditorData(editor, index);
+        return;
+    }
+
+    if (auto spin_box = dynamic_cast<ScientificSpinBox*>(editor))
+        spin_box->setSingleStep(getStep(index.data(Qt::EditRole).toDouble()));
+    QStyledItemDelegate::setEditorData(editor, index);
 }
 
 //! Increases height of the row by 20% wrt the default.
@@ -143,3 +138,24 @@ void SessionModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptio
     QStyle* style = widget ? widget->style() : QApplication::style();
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 }
+
+namespace {
+
+bool isDoubleProperty(const QModelIndex& index, Qt::ItemDataRole role)
+{
+    return index.data(role).type() == QVariant::Double;
+}
+
+QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent) {
+    if (index.column() == SessionFlags::ITEM_VALUE && index.internalPointer()) {
+        auto item = static_cast<SessionItem*>(index.internalPointer());
+        return PropertyEditorFactory::CreateEditor(*item, parent);
+    }
+    return nullptr;
+}
+
+double getStep(double val)
+{
+    return val == 0.0 ? 1.0 : val / 100.;
+}
+}  // unnamed namespace
