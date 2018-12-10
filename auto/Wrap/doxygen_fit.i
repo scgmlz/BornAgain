@@ -12,31 +12,31 @@ C++ includes: AttLimits.h
 %feature("docstring")  AttLimits::AttLimits "AttLimits::AttLimits()
 ";
 
-%feature("docstring")  AttLimits::isFixed "bool AttLimits::isFixed() const
+%feature("docstring")  AttLimits::isFixed "bool AttLimits::isFixed() const 
 ";
 
-%feature("docstring")  AttLimits::isLimited "bool AttLimits::isLimited() const
+%feature("docstring")  AttLimits::isLimited "bool AttLimits::isLimited() const 
 ";
 
-%feature("docstring")  AttLimits::isUpperLimited "bool AttLimits::isUpperLimited() const
+%feature("docstring")  AttLimits::isUpperLimited "bool AttLimits::isUpperLimited() const 
 ";
 
-%feature("docstring")  AttLimits::isLowerLimited "bool AttLimits::isLowerLimited() const
+%feature("docstring")  AttLimits::isLowerLimited "bool AttLimits::isLowerLimited() const 
 ";
 
-%feature("docstring")  AttLimits::isLimitless "bool AttLimits::isLimitless() const
+%feature("docstring")  AttLimits::isLimitless "bool AttLimits::isLimitless() const 
 ";
 
-%feature("docstring")  AttLimits::lowerLimit "double AttLimits::lowerLimit() const
+%feature("docstring")  AttLimits::lowerLimit "double AttLimits::lowerLimit() const 
 ";
 
-%feature("docstring")  AttLimits::upperLimit "double AttLimits::upperLimit() const
+%feature("docstring")  AttLimits::upperLimit "double AttLimits::upperLimit() const 
 ";
 
 %feature("docstring")  AttLimits::setFixed "void AttLimits::setFixed(bool isFixed)
 ";
 
-%feature("docstring")  AttLimits::toString "std::string AttLimits::toString() const
+%feature("docstring")  AttLimits::toString "std::string AttLimits::toString() const 
 ";
 
 
@@ -54,10 +54,10 @@ C++ includes: Attributes.h
 %feature("docstring")  Attributes::setFixed "void Attributes::setFixed(bool is_fixed)
 ";
 
-%feature("docstring")  Attributes::isFixed "bool Attributes::isFixed() const
+%feature("docstring")  Attributes::isFixed "bool Attributes::isFixed() const 
 ";
 
-%feature("docstring")  Attributes::isFree "bool Attributes::isFree() const
+%feature("docstring")  Attributes::isFree "bool Attributes::isFree() const 
 ";
 
 
@@ -72,13 +72,13 @@ C++ includes: FitOptions.h
 %feature("docstring")  FitOptions::FitOptions "FitOptions::FitOptions()
 ";
 
-%feature("docstring")  FitOptions::derivEpsilon "double FitOptions::derivEpsilon() const
+%feature("docstring")  FitOptions::derivEpsilon "double FitOptions::derivEpsilon() const 
 ";
 
 %feature("docstring")  FitOptions::setDerivEpsilon "void FitOptions::setDerivEpsilon(double deriv_epsilon)
 ";
 
-%feature("docstring")  FitOptions::stepFactor "double FitOptions::stepFactor() const
+%feature("docstring")  FitOptions::stepFactor "double FitOptions::stepFactor() const 
 ";
 
 %feature("docstring")  FitOptions::setStepFactor "void FitOptions::setStepFactor(double step_factor)
@@ -104,7 +104,7 @@ Sets tolerance on the function value at the minimum. Minimization will stop when
 %feature("docstring")  GeneticMinimizer::setTolerance "void GeneticMinimizer::setTolerance(double value)
 ";
 
-%feature("docstring")  GeneticMinimizer::tolerance "double GeneticMinimizer::tolerance() const
+%feature("docstring")  GeneticMinimizer::tolerance "double GeneticMinimizer::tolerance() const 
 ";
 
 %feature("docstring")  GeneticMinimizer::setPrintLevel "void GeneticMinimizer::setPrintLevel(int value)
@@ -112,7 +112,7 @@ Sets tolerance on the function value at the minimum. Minimization will stop when
 Sets minimizer internal print level. 
 ";
 
-%feature("docstring")  GeneticMinimizer::printLevel "int GeneticMinimizer::printLevel() const
+%feature("docstring")  GeneticMinimizer::printLevel "int GeneticMinimizer::printLevel() const 
 ";
 
 %feature("docstring")  GeneticMinimizer::setMaxIterations "void GeneticMinimizer::setMaxIterations(int value)
@@ -120,7 +120,7 @@ Sets minimizer internal print level.
 Sets maximum number of iterations to try at each step. 
 ";
 
-%feature("docstring")  GeneticMinimizer::maxIterations "int GeneticMinimizer::maxIterations() const
+%feature("docstring")  GeneticMinimizer::maxIterations "int GeneticMinimizer::maxIterations() const 
 ";
 
 %feature("docstring")  GeneticMinimizer::setPopulationSize "void GeneticMinimizer::setPopulationSize(int value)
@@ -128,7 +128,7 @@ Sets maximum number of iterations to try at each step.
 Sets population size. 
 ";
 
-%feature("docstring")  GeneticMinimizer::populationSize "int GeneticMinimizer::populationSize() const
+%feature("docstring")  GeneticMinimizer::populationSize "int GeneticMinimizer::populationSize() const 
 ";
 
 %feature("docstring")  GeneticMinimizer::setRandomSeed "void GeneticMinimizer::setRandomSeed(int value)
@@ -136,7 +136,7 @@ Sets population size.
 Sets random seed. 
 ";
 
-%feature("docstring")  GeneticMinimizer::randomSeed "int GeneticMinimizer::randomSeed() const
+%feature("docstring")  GeneticMinimizer::randomSeed "int GeneticMinimizer::randomSeed() const 
 ";
 
 %feature("docstring")  GeneticMinimizer::statusToString "std::string GeneticMinimizer::statusToString() const override
@@ -169,7 +169,7 @@ Sets tolerance on the function value at the minimum.
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::setTolerance "void GSLLevenbergMarquardtMinimizer::setTolerance(double value)
 ";
 
-%feature("docstring")  GSLLevenbergMarquardtMinimizer::tolerance "double GSLLevenbergMarquardtMinimizer::tolerance() const
+%feature("docstring")  GSLLevenbergMarquardtMinimizer::tolerance "double GSLLevenbergMarquardtMinimizer::tolerance() const 
 ";
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::setPrintLevel "void GSLLevenbergMarquardtMinimizer::setPrintLevel(int value)
@@ -177,7 +177,7 @@ Sets tolerance on the function value at the minimum.
 Sets minimizer internal print level. 
 ";
 
-%feature("docstring")  GSLLevenbergMarquardtMinimizer::printLevel "int GSLLevenbergMarquardtMinimizer::printLevel() const
+%feature("docstring")  GSLLevenbergMarquardtMinimizer::printLevel "int GSLLevenbergMarquardtMinimizer::printLevel() const 
 ";
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::setMaxIterations "void GSLLevenbergMarquardtMinimizer::setMaxIterations(int value)
@@ -185,7 +185,7 @@ Sets minimizer internal print level.
 Sets maximum number of iterations. This is an internal minimizer setting which has no direct relation to the number of objective function calls (e.g. numberOfIteraction=5 might correspond to ~100 objective function calls). 
 ";
 
-%feature("docstring")  GSLLevenbergMarquardtMinimizer::maxIterations "int GSLLevenbergMarquardtMinimizer::maxIterations() const
+%feature("docstring")  GSLLevenbergMarquardtMinimizer::maxIterations "int GSLLevenbergMarquardtMinimizer::maxIterations() const 
 ";
 
 %feature("docstring")  GSLLevenbergMarquardtMinimizer::statusToString "std::string GSLLevenbergMarquardtMinimizer::statusToString() const override
@@ -218,7 +218,7 @@ C++ includes: GSLMultiMinimizer.h
 Sets minimizer internal print level. 
 ";
 
-%feature("docstring")  GSLMultiMinimizer::printLevel "int GSLMultiMinimizer::printLevel() const
+%feature("docstring")  GSLMultiMinimizer::printLevel "int GSLMultiMinimizer::printLevel() const 
 ";
 
 %feature("docstring")  GSLMultiMinimizer::setMaxIterations "void GSLMultiMinimizer::setMaxIterations(int value)
@@ -226,7 +226,7 @@ Sets minimizer internal print level.
 Sets maximum number of iterations. This is an internal minimizer setting which has no direct relation to the number of objective function calls (e.g. numberOfIteraction=5 might correspond to ~100 objective function calls). 
 ";
 
-%feature("docstring")  GSLMultiMinimizer::maxIterations "int GSLMultiMinimizer::maxIterations() const
+%feature("docstring")  GSLMultiMinimizer::maxIterations "int GSLMultiMinimizer::maxIterations() const 
 ";
 
 %feature("docstring")  GSLMultiMinimizer::statusToString "std::string GSLMultiMinimizer::statusToString() const override
@@ -249,10 +249,10 @@ C++ includes: IFunctionAdapter.h
 %feature("docstring")  Fit::IFunctionAdapter::~IFunctionAdapter "IFunctionAdapter::~IFunctionAdapter()
 ";
 
-%feature("docstring")  Fit::IFunctionAdapter::numberOfCalls "int IFunctionAdapter::numberOfCalls() const
+%feature("docstring")  Fit::IFunctionAdapter::numberOfCalls "int IFunctionAdapter::numberOfCalls() const 
 ";
 
-%feature("docstring")  Fit::IFunctionAdapter::numberOfGradientCalls "int IFunctionAdapter::numberOfGradientCalls() const
+%feature("docstring")  Fit::IFunctionAdapter::numberOfGradientCalls "int IFunctionAdapter::numberOfGradientCalls() const 
 ";
 
 
@@ -321,10 +321,10 @@ C++ includes: MinimizerInfo.h
 %feature("docstring")  InfoItem::InfoItem "InfoItem::InfoItem(const std::string &itemName, const std::string &itemDescription)
 ";
 
-%feature("docstring")  InfoItem::name "std::string InfoItem::name() const
+%feature("docstring")  InfoItem::name "std::string InfoItem::name() const 
 ";
 
-%feature("docstring")  InfoItem::description "std::string InfoItem::description() const
+%feature("docstring")  InfoItem::description "std::string InfoItem::description() const 
 ";
 
 
@@ -403,7 +403,7 @@ C++ includes: MinimizerCatalogue.h
 Returns multiline string representing catalogue content. 
 ";
 
-%feature("docstring")  MinimizerCatalogue::minimizerNames "std::vector< std::string > MinimizerCatalogue::minimizerNames() const
+%feature("docstring")  MinimizerCatalogue::minimizerNames "std::vector< std::string > MinimizerCatalogue::minimizerNames() const 
 ";
 
 %feature("docstring")  MinimizerCatalogue::algorithmNames "std::vector< std::string > MinimizerCatalogue::algorithmNames(const std::string &minimizerName) const
@@ -450,7 +450,7 @@ C++ includes: MinimizerInfo.h
 Sets currently active algorithm. 
 ";
 
-%feature("docstring")  MinimizerInfo::algorithmName "std::string MinimizerInfo::algorithmName() const
+%feature("docstring")  MinimizerInfo::algorithmName "std::string MinimizerInfo::algorithmName() const 
 ";
 
 %feature("docstring")  MinimizerInfo::algorithmNames "std::vector< std::string > MinimizerInfo::algorithmNames() const
@@ -497,7 +497,7 @@ C++ includes: MinimizerResult.h
 %feature("docstring")  Fit::MinimizerResult::setParameters "void MinimizerResult::setParameters(const Parameters &parameters)
 ";
 
-%feature("docstring")  Fit::MinimizerResult::parameters "Parameters MinimizerResult::parameters() const
+%feature("docstring")  Fit::MinimizerResult::parameters "Parameters MinimizerResult::parameters() const 
 ";
 
 %feature("docstring")  Fit::MinimizerResult::setMinValue "void MinimizerResult::setMinValue(double value)
@@ -545,7 +545,7 @@ C++ includes: Minuit2Minimizer.h
 Sets minimization strategy (0-low, 1-medium, 2-high minimization quality). At low quality number of function calls will be economized. 
 ";
 
-%feature("docstring")  Minuit2Minimizer::strategy "int Minuit2Minimizer::strategy() const
+%feature("docstring")  Minuit2Minimizer::strategy "int Minuit2Minimizer::strategy() const 
 ";
 
 %feature("docstring")  Minuit2Minimizer::setErrorDefinition "void Minuit2Minimizer::setErrorDefinition(double value)
@@ -569,7 +569,7 @@ Sets relative floating point arithmetic precision. Should be adjusted when the u
 %feature("docstring")  Minuit2Minimizer::setPrecision "void Minuit2Minimizer::setPrecision(double value)
 ";
 
-%feature("docstring")  Minuit2Minimizer::precision "double Minuit2Minimizer::precision() const
+%feature("docstring")  Minuit2Minimizer::precision "double Minuit2Minimizer::precision() const 
 ";
 
 %feature("docstring")  Minuit2Minimizer::setPrintLevel "void Minuit2Minimizer::setPrintLevel(int value)
@@ -577,7 +577,7 @@ Sets relative floating point arithmetic precision. Should be adjusted when the u
 Sets minimizer internal print level. Default value is 0 (silent). 
 ";
 
-%feature("docstring")  Minuit2Minimizer::printLevel "int Minuit2Minimizer::printLevel() const
+%feature("docstring")  Minuit2Minimizer::printLevel "int Minuit2Minimizer::printLevel() const 
 ";
 
 %feature("docstring")  Minuit2Minimizer::setMaxFunctionCalls "void Minuit2Minimizer::setMaxFunctionCalls(int value)
@@ -585,7 +585,7 @@ Sets minimizer internal print level. Default value is 0 (silent).
 Sets maximum number of objective function calls. 
 ";
 
-%feature("docstring")  Minuit2Minimizer::maxFunctionCalls "int Minuit2Minimizer::maxFunctionCalls() const
+%feature("docstring")  Minuit2Minimizer::maxFunctionCalls "int Minuit2Minimizer::maxFunctionCalls() const 
 ";
 
 %feature("docstring")  Minuit2Minimizer::statusToString "std::string Minuit2Minimizer::statusToString() const override
@@ -613,10 +613,10 @@ C++ includes: MultiOption.h
 %feature("docstring")  MultiOption::MultiOption "MultiOption::MultiOption(const std::string &name, const T &t, const std::string &descripion=std::string())
 ";
 
-%feature("docstring")  MultiOption::name "std::string MultiOption::name() const
+%feature("docstring")  MultiOption::name "std::string MultiOption::name() const 
 ";
 
-%feature("docstring")  MultiOption::description "std::string MultiOption::description() const
+%feature("docstring")  MultiOption::description "std::string MultiOption::description() const 
 ";
 
 %feature("docstring")  MultiOption::setDescription "void MultiOption::setDescription(const std::string &description)
@@ -664,10 +664,10 @@ C++ includes: ObjectiveFunctionAdapter.h
 %feature("docstring")  Fit::ObjectiveFunctionAdapter::rootResidualFunction "const RootResidualFunction * ObjectiveFunctionAdapter::rootResidualFunction(fcn_residual_t fcn, const Parameters &parameters)
 ";
 
-%feature("docstring")  Fit::ObjectiveFunctionAdapter::numberOfCalls "int ObjectiveFunctionAdapter::numberOfCalls() const
+%feature("docstring")  Fit::ObjectiveFunctionAdapter::numberOfCalls "int ObjectiveFunctionAdapter::numberOfCalls() const 
 ";
 
-%feature("docstring")  Fit::ObjectiveFunctionAdapter::numberOfGradientCalls "int ObjectiveFunctionAdapter::numberOfGradientCalls() const
+%feature("docstring")  Fit::ObjectiveFunctionAdapter::numberOfGradientCalls "int ObjectiveFunctionAdapter::numberOfGradientCalls() const 
 ";
 
 
@@ -693,10 +693,10 @@ Returns true if option with such name already exists.
 %feature("docstring")  OptionContainer::option "OptionContainer::option_t OptionContainer::option(const std::string &optionName)
 ";
 
-%feature("docstring")  OptionContainer::option "const OptionContainer::option_t OptionContainer::option(const std::string &optionName) const
+%feature("docstring")  OptionContainer::option "const OptionContainer::option_t OptionContainer::option(const std::string &optionName) const 
 ";
 
-%feature("docstring")  OptionContainer::optionValue "T OptionContainer::optionValue(const std::string &optionName) const
+%feature("docstring")  OptionContainer::optionValue "T OptionContainer::optionValue(const std::string &optionName) const 
 ";
 
 %feature("docstring")  OptionContainer::setOptionValue "void OptionContainer::setOptionValue(const std::string &optionName, T value)
@@ -707,16 +707,16 @@ Sets the value of option. Option should hold same value type already.
 %feature("docstring")  OptionContainer::begin "iterator OptionContainer::begin()
 ";
 
-%feature("docstring")  OptionContainer::begin "const_iterator OptionContainer::begin() const
+%feature("docstring")  OptionContainer::begin "const_iterator OptionContainer::begin() const 
 ";
 
 %feature("docstring")  OptionContainer::end "iterator OptionContainer::end()
 ";
 
-%feature("docstring")  OptionContainer::end "const_iterator OptionContainer::end() const
+%feature("docstring")  OptionContainer::end "const_iterator OptionContainer::end() const 
 ";
 
-%feature("docstring")  OptionContainer::size "size_t OptionContainer::size() const
+%feature("docstring")  OptionContainer::size "size_t OptionContainer::size() const 
 ";
 
 
@@ -751,25 +751,25 @@ step:
 initial step of fit parameter during the minimization, will be calculated automatically, if zero. 
 ";
 
-%feature("docstring")  Fit::Parameter::name "std::string Parameter::name() const
+%feature("docstring")  Fit::Parameter::name "std::string Parameter::name() const 
 ";
 
-%feature("docstring")  Fit::Parameter::startValue "double Parameter::startValue() const
+%feature("docstring")  Fit::Parameter::startValue "double Parameter::startValue() const 
 ";
 
-%feature("docstring")  Fit::Parameter::limits "AttLimits Parameter::limits() const
+%feature("docstring")  Fit::Parameter::limits "AttLimits Parameter::limits() const 
 ";
 
-%feature("docstring")  Fit::Parameter::value "double Parameter::value() const
+%feature("docstring")  Fit::Parameter::value "double Parameter::value() const 
 ";
 
 %feature("docstring")  Fit::Parameter::setValue "void Parameter::setValue(double value)
 ";
 
-%feature("docstring")  Fit::Parameter::step "double Parameter::step() const
+%feature("docstring")  Fit::Parameter::step "double Parameter::step() const 
 ";
 
-%feature("docstring")  Fit::Parameter::error "double Parameter::error() const
+%feature("docstring")  Fit::Parameter::error "double Parameter::error() const 
 ";
 
 %feature("docstring")  Fit::Parameter::setError "void Parameter::setError(double value)
@@ -790,10 +790,10 @@ C++ includes: Parameters.h
 %feature("docstring")  Fit::Parameters::add "void Parameters::add(const Parameter &par)
 ";
 
-%feature("docstring")  Fit::Parameters::begin "Parameters::const_iterator Parameters::begin() const
+%feature("docstring")  Fit::Parameters::begin "Parameters::const_iterator Parameters::begin() const 
 ";
 
-%feature("docstring")  Fit::Parameters::end "Parameters::const_iterator Parameters::end() const
+%feature("docstring")  Fit::Parameters::end "Parameters::const_iterator Parameters::end() const 
 ";
 
 %feature("docstring")  Fit::Parameters::begin "Parameters::iterator Parameters::begin()
@@ -802,22 +802,22 @@ C++ includes: Parameters.h
 %feature("docstring")  Fit::Parameters::end "Parameters::iterator Parameters::end()
 ";
 
-%feature("docstring")  Fit::Parameters::size "size_t Parameters::size() const
+%feature("docstring")  Fit::Parameters::size "size_t Parameters::size() const 
 ";
 
-%feature("docstring")  Fit::Parameters::values "std::vector< double > Parameters::values() const
+%feature("docstring")  Fit::Parameters::values "std::vector< double > Parameters::values() const 
 ";
 
 %feature("docstring")  Fit::Parameters::setValues "void Parameters::setValues(const std::vector< double > &values)
 ";
 
-%feature("docstring")  Fit::Parameters::errors "std::vector< double > Parameters::errors() const
+%feature("docstring")  Fit::Parameters::errors "std::vector< double > Parameters::errors() const 
 ";
 
 %feature("docstring")  Fit::Parameters::setErrors "void Parameters::setErrors(const std::vector< double > &errors)
 ";
 
-%feature("docstring")  Fit::Parameters::correlationMatrix "Parameters::corr_matrix_t Parameters::correlationMatrix() const
+%feature("docstring")  Fit::Parameters::correlationMatrix "Parameters::corr_matrix_t Parameters::correlationMatrix() const 
 ";
 
 %feature("docstring")  Fit::Parameters::setCorrelationMatrix "void Parameters::setCorrelationMatrix(const corr_matrix_t &matrix)
@@ -843,7 +843,7 @@ C++ includes: PyCallback.h
 %feature("docstring")  PyCallback::~PyCallback "PyCallback::~PyCallback()
 ";
 
-%feature("docstring")  PyCallback::callback_type "PyCallback::CallbackType PyCallback::callback_type() const
+%feature("docstring")  PyCallback::callback_type "PyCallback::CallbackType PyCallback::callback_type() const 
 ";
 
 %feature("docstring")  PyCallback::call_scalar "double PyCallback::call_scalar(Fit::Parameters pars)
@@ -944,25 +944,25 @@ remove limits
 returns true if proposed value is in limits range 
 ";
 
-%feature("docstring")  RealLimits::toString "std::string RealLimits::toString() const
+%feature("docstring")  RealLimits::toString "std::string RealLimits::toString() const 
 ";
 
-%feature("docstring")  RealLimits::isLimitless "bool RealLimits::isLimitless() const
+%feature("docstring")  RealLimits::isLimitless "bool RealLimits::isLimitless() const 
 ";
 
-%feature("docstring")  RealLimits::isPositive "bool RealLimits::isPositive() const
+%feature("docstring")  RealLimits::isPositive "bool RealLimits::isPositive() const 
 ";
 
-%feature("docstring")  RealLimits::isNonnegative "bool RealLimits::isNonnegative() const
+%feature("docstring")  RealLimits::isNonnegative "bool RealLimits::isNonnegative() const 
 ";
 
-%feature("docstring")  RealLimits::isLowerLimited "bool RealLimits::isLowerLimited() const
+%feature("docstring")  RealLimits::isLowerLimited "bool RealLimits::isLowerLimited() const 
 ";
 
-%feature("docstring")  RealLimits::isUpperLimited "bool RealLimits::isUpperLimited() const
+%feature("docstring")  RealLimits::isUpperLimited "bool RealLimits::isUpperLimited() const 
 ";
 
-%feature("docstring")  RealLimits::isLimited "bool RealLimits::isLimited() const
+%feature("docstring")  RealLimits::isLimited "bool RealLimits::isLimited() const 
 ";
 
 
@@ -989,7 +989,7 @@ Pure virtual interface that adapts the CERN ROOT minimizer to our  IMinimizer.
 C++ includes: RootMinimizerAdapter.h
 ";
 
-%feature("docstring")  RootMinimizerAdapter::~RootMinimizerAdapter "RootMinimizerAdapter::~RootMinimizerAdapter()
+%feature("docstring")  RootMinimizerAdapter::~RootMinimizerAdapter "RootMinimizerAdapter::~RootMinimizerAdapter() override
 ";
 
 %feature("docstring")  RootMinimizerAdapter::minimize_scalar "MinimizerResult RootMinimizerAdapter::minimize_scalar(fcn_scalar_t fcn, Fit::Parameters parameters) override
@@ -1000,12 +1000,12 @@ run minimization
 %feature("docstring")  RootMinimizerAdapter::minimize_residual "MinimizerResult RootMinimizerAdapter::minimize_residual(fcn_residual_t fcn, Fit::Parameters parameters) override
 ";
 
-%feature("docstring")  RootMinimizerAdapter::minimizerName "std::string RootMinimizerAdapter::minimizerName() const override final
+%feature("docstring")  RootMinimizerAdapter::minimizerName "std::string RootMinimizerAdapter::minimizerName() const overridefinal
 
 Returns name of the minimizer. 
 ";
 
-%feature("docstring")  RootMinimizerAdapter::algorithmName "std::string RootMinimizerAdapter::algorithmName() const override final
+%feature("docstring")  RootMinimizerAdapter::algorithmName "std::string RootMinimizerAdapter::algorithmName() const overridefinal
 
 Returns name of the minimization algorithm. 
 ";
@@ -1013,7 +1013,7 @@ Returns name of the minimization algorithm.
 %feature("docstring")  RootMinimizerAdapter::setParameters "void RootMinimizerAdapter::setParameters(const Fit::Parameters &parameters)
 ";
 
-%feature("docstring")  RootMinimizerAdapter::minValue "double RootMinimizerAdapter::minValue() const override final
+%feature("docstring")  RootMinimizerAdapter::minValue "double RootMinimizerAdapter::minValue() const overridefinal
 
 Returns minimum function value. 
 ";
@@ -1021,7 +1021,7 @@ Returns minimum function value.
 %feature("docstring")  RootMinimizerAdapter::options "MinimizerOptions& RootMinimizerAdapter::options()
 ";
 
-%feature("docstring")  RootMinimizerAdapter::options "const MinimizerOptions& RootMinimizerAdapter::options() const
+%feature("docstring")  RootMinimizerAdapter::options "const MinimizerOptions& RootMinimizerAdapter::options() const 
 ";
 
 %feature("docstring")  RootMinimizerAdapter::statusToString "std::string RootMinimizerAdapter::statusToString() const
@@ -1039,7 +1039,7 @@ Returns true if minimizer provides error and error matrix.
 Returns map of string representing different minimizer statuses. 
 ";
 
-%feature("docstring")  RootMinimizerAdapter::setOptions "void RootMinimizerAdapter::setOptions(const std::string &optionString) override final
+%feature("docstring")  RootMinimizerAdapter::setOptions "void RootMinimizerAdapter::setOptions(const std::string &optionString) overridefinal
 
 Sets option string to the minimizer. 
 ";
@@ -1146,7 +1146,7 @@ C++ includes: SimAnMinimizer.h
 Sets minimizer internal print level. Default value is 0 (silent). 
 ";
 
-%feature("docstring")  SimAnMinimizer::printLevel "int SimAnMinimizer::printLevel() const
+%feature("docstring")  SimAnMinimizer::printLevel "int SimAnMinimizer::printLevel() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setMaxIterations "void SimAnMinimizer::setMaxIterations(int value)
@@ -1154,7 +1154,7 @@ Sets minimizer internal print level. Default value is 0 (silent).
 Sets maximum number of iterations to try at each step. 
 ";
 
-%feature("docstring")  SimAnMinimizer::maxIterations "int SimAnMinimizer::maxIterations() const
+%feature("docstring")  SimAnMinimizer::maxIterations "int SimAnMinimizer::maxIterations() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setIterationsAtEachTemp "void SimAnMinimizer::setIterationsAtEachTemp(int value)
@@ -1162,7 +1162,7 @@ Sets maximum number of iterations to try at each step.
 Sets number of iterations at each temperature. 
 ";
 
-%feature("docstring")  SimAnMinimizer::iterationsAtEachTemp "int SimAnMinimizer::iterationsAtEachTemp() const
+%feature("docstring")  SimAnMinimizer::iterationsAtEachTemp "int SimAnMinimizer::iterationsAtEachTemp() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setStepSize "void SimAnMinimizer::setStepSize(double value)
@@ -1170,7 +1170,7 @@ Sets number of iterations at each temperature.
 Sets max step size used in random walk. 
 ";
 
-%feature("docstring")  SimAnMinimizer::stepSize "double SimAnMinimizer::stepSize() const
+%feature("docstring")  SimAnMinimizer::stepSize "double SimAnMinimizer::stepSize() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannK "void SimAnMinimizer::setBoltzmannK(double value)
@@ -1178,7 +1178,7 @@ Sets max step size used in random walk.
 Sets Boltzmann distribution parameter: k. 
 ";
 
-%feature("docstring")  SimAnMinimizer::boltzmannK "double SimAnMinimizer::boltzmannK() const
+%feature("docstring")  SimAnMinimizer::boltzmannK "double SimAnMinimizer::boltzmannK() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannInitialTemp "void SimAnMinimizer::setBoltzmannInitialTemp(double value)
@@ -1186,7 +1186,7 @@ Sets Boltzmann distribution parameter: k.
 Sets Boltzmann distribution parameter: initial temperature. 
 ";
 
-%feature("docstring")  SimAnMinimizer::boltzmannInitialTemp "double SimAnMinimizer::boltzmannInitialTemp() const
+%feature("docstring")  SimAnMinimizer::boltzmannInitialTemp "double SimAnMinimizer::boltzmannInitialTemp() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannMu "void SimAnMinimizer::setBoltzmannMu(double value)
@@ -1194,7 +1194,7 @@ Sets Boltzmann distribution parameter: initial temperature.
 Sets Boltzmann distribution parameter: mu. 
 ";
 
-%feature("docstring")  SimAnMinimizer::boltzmannMu "double SimAnMinimizer::boltzmannMu() const
+%feature("docstring")  SimAnMinimizer::boltzmannMu "double SimAnMinimizer::boltzmannMu() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::setBoltzmannMinTemp "void SimAnMinimizer::setBoltzmannMinTemp(double value)
@@ -1202,7 +1202,7 @@ Sets Boltzmann distribution parameter: mu.
 Sets Boltzmann distribution parameter: minimal temperature. 
 ";
 
-%feature("docstring")  SimAnMinimizer::boltzmannMinTemp "double SimAnMinimizer::boltzmannMinTemp() const
+%feature("docstring")  SimAnMinimizer::boltzmannMinTemp "double SimAnMinimizer::boltzmannMinTemp() const 
 ";
 
 %feature("docstring")  SimAnMinimizer::statusMap "std::map< std::string, std::string > SimAnMinimizer::statusMap() const override
