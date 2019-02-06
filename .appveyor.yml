@@ -19,53 +19,66 @@ environment:
 build:
   parallel: true
 
-init:  
-- echo "BornAgain init" %CD% 
+init:
+- echo "BornAgain init" %CD%
 - echo %PATH%
 
 install:
 - git submodule -q update --init
-  
+
 before_build:
-- echo "BornAgain before_build" %CD% 
+- echo "BornAgain before_build" %CD%
 - python -m pip install --upgrade pip
 - python -m pip install numpy
 - mkdir C:\projects\deps
-- C:\cygwin\bin\wget -q http://apps.jcns.fz-juelich.de/redmine/attachments/download/456/bornagaindeps_v1.zip -O %temp%\bornagaindeps.zip
-- 7z x %temp%\bornagaindeps.zip -oC:\projects\deps > null
+- C:\cygwin\bin\wget -q http://apps.jcns.fz-juelich.de/src/WinLibs/libgsl.win64.zip -O %temp%\libgsl.zip
+- 7z x %temp%\libgsl.zip -oC:\projects\deps
+- dir C:\projects\deps
+- dir C:\projects\deps\include
+- C:\cygwin\bin\wget -q http://apps.jcns.fz-juelich.de/src/WinLibs/libtiff.win64.zip -O %temp%\libtiff.zip
+- 7z x %temp%\libtiff.zip -oC:\projects\deps
+- dir C:\projects\deps
+- dir C:\projects\deps\include
+- C:\cygwin\bin\wget -q http://apps.jcns.fz-juelich.de/src/WinLibs/libcblas.win64.zip -O %temp%\libcblas.zip
+- 7z x %temp%\libcblas.zip -oC:\projects\deps
+- dir C:\projects\deps
+- dir C:\projects\deps\include
+- C:\cygwin\bin\wget -q http://apps.jcns.fz-juelich.de/src/WinLibs/libfftw3.win64.zip -O %temp%\libfftw3.zip
+- 7z x %temp%\libfftw3.zip -oC:\projects\deps
+- dir C:\projects\deps
+- dir C:\projects\deps\include
 - set CMAKE_URL="https://cmake.org/files/v3.12/cmake-3.12.4-win64-x64.zip"
 - appveyor DownloadFile %CMAKE_URL% -FileName %temp%\cmake.zip
 - 7z x %temp%\cmake.zip -oC:\projects\deps > nul
 - move C:\projects\deps\cmake-* C:\projects\deps\cmake # Move to a version-agnostic directory
-- set PATH=C:\projects\deps\bornagaindeps\lib;C:\projects\deps\cmake\bin;%PATH%
+- set PATH=C:\projects\deps\lib;C:\projects\deps\cmake\bin;%PATH%
 
 build_script:
-- echo "BornAgain build_script" %CD% 
+- echo "BornAgain build_script" %CD%
 - echo %PATH%
 - echo "PYEXE" %PYEXE% "PYLIB" %PYLIB%
 - mkdir build
 - cd build
 - cmake --version
-- cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT=%BOOSTDIR% -DPYTHON_LIBRARY=%PYLIB% -DPYTHON_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/bornagaindeps/include ..
+- cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT=%BOOSTDIR% -DPYTHON_LIBRARY=%PYLIB% -DPYTHON_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
 - cmake --build . --config Release
 
 test_script:
-- echo "BornAgain test_script" %CD% 
+- echo "BornAgain test_script" %CD%
 - echo %PATH%
 - echo %PYTHONPATH%
 - echo %PYTHONHOME%
 - ps: >-
     ctest -LE Fullcheck --output-on-failure
 
-    if (-not $?) { 
+    if (-not $?) {
 
         type Testing/Temporary/LastTest.log
 
-        throw "tests failed" 
+        throw "tests failed"
 
     }
 
 on_failure:
 - appveyor PushArtifact Testing/Temporary/LastTest.log
 #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-    
