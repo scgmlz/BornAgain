@@ -18,6 +18,7 @@
 #include "ICloneable.h"
 
 #include <memory>
+#include <string>
 #include <vector>
 
 class IAxis;
