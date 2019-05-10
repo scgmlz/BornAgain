@@ -1,6 +1,5 @@
 # Functional test: Magnetic cylinders in DWBA with zero magnetic field
 
-from __future__ import print_function
 import gzip, numpy, os, sys, utils
 import libBornAgainCore as ba
 from libBornAgainCore import nanometer, angstrom, degree

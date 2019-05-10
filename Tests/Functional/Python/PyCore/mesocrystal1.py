@@ -1,7 +1,6 @@
 # Functional test: functional test: mesocrystal simulation
 #
 
-from __future__ import print_function
 import ctypes, math, numpy, os, sys, time
 
 import utils

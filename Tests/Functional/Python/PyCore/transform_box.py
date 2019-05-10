@@ -4,7 +4,6 @@ FormFactorBox(50, 20, 10), is rotated around Z, then around Y, then shifted up a
 compared with FormFactorBox(10, 50, 20)
 """
 
-from __future__ import print_function
 import os, sys, unittest
 
 import utils

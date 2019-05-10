@@ -3,13 +3,13 @@ Installs BornAgain libraries into user Python (Mac only).
 
 Usage: python bornagain_python_install.py
 
-The script generates BornAgain python package in temporary directory and then 
+The script generates BornAgain python package in temporary directory and then
 installs it into user's Python site_packages.
 
 Requirements: BornAgain.app has to be installed on the system using .dmg installer.
 
 During generation of Python package
-1) The script copies BornAgain libraries from the GUI installation directory (normally 
+1) The script copies BornAgain libraries from the GUI installation directory (normally
    it is /Applications/BornAgain.app) into temporary bundle directory
 2) Adjusts libraries using Mac's install_name_tool to rely on Python's own libpython2.7.dylib.
    The exact site-packages library location is deduced from the interpreter itself.
@@ -19,7 +19,6 @@ During installation of Python package
 1) The script just runs standard 'python setup.py install' command from the temporary bundle directory
 """
 
-from __future__ import print_function
 import os
 import sys
 import sysconfig
@@ -34,14 +33,14 @@ from distutils.sysconfig import get_python_lib
 
 BORNAGAIN_VERSION = "0.0"
 
-def is_python3():
-    if (sys.version_info > (3, 0)):
-        return True
-    else:
-        return False
-
 def python_version_string():
-    return str(sys.version_info[0]) + "." + str(sys.version_info[1])
+    return str(sys.version_info.major) + "." + str(sys.version_info.minor)
+
+if sys.version_info < (3,0):
+    sys.stderr.write("Fatal error: running wrong Python version "
+                     + python_version_string()
+                     + "; Python3 is required.\n")
+    sys.exit(1)
 
 
 def add_rpath(newpath, filename):
@@ -107,16 +106,16 @@ def get_application_dir():
     else:
         script_dir = get_script_path()
         app_dir = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
-        
+
     # getting version number
     lib_dir = glob.glob( os.path.join(app_dir, "Contents", "lib", "BornAgain-*"))
     if len(lib_dir) != 1:
         exit("Can't find BornAgain libraries in "+app_dir)
-    
+
     BORNAGAIN_VERSION = lib_dir[0].split("BornAgain-")[1]
     return app_dir
 
-    
+
 def create_bundle_temp_dir():
     """
     Creates temporary directory for BornAgain package bundle
@@ -151,7 +150,7 @@ def generate_setup_py(destination_dir):
     Generates setup.py file in BornAgain's bundle directory
     """
     text = '''\
-# BornAgain setup.py to install BornAgain libraries into Python's site-packages             
+# BornAgain setup.py to install BornAgain libraries into Python's site-packages
 # Usage: python setup.py install
 
 import os
@@ -185,12 +184,12 @@ setup(name='bornagain',
 
 def prepare_init_module(app_dir, bundle_dir):
     source_dir = os.path.join(app_dir, "Contents", "libexec")
-    libexec_dir = os.path.join(source_dir, "BornAgain-"+BORNAGAIN_VERSION, "bornagain")    
+    libexec_dir = os.path.join(source_dir, "BornAgain-"+BORNAGAIN_VERSION, "bornagain")
     package_dir = os.path.join(bundle_dir, "bornagain")
     print("--> Copying modules from '{0}' to '{1}'".format(libexec_dir, package_dir))
     shutil.copytree(libexec_dir, package_dir)
     return package_dir
-    
+
 
 def copy_libraries(app_dir, destination_dir):
     """
@@ -242,7 +241,7 @@ def patch_libraries(dir_name):
 
     pass
 
-    
+
 def create_bundle(app_dir):
     """
     Creates ready to install BornAgain Python bundle package
@@ -253,20 +252,20 @@ def create_bundle(app_dir):
     print('-'*80)
 
     print("--> Generating bundle setup files")
-    
+
     generate_setup_py(bundle_dir)
-    
+
     package_dir = prepare_init_module(app_dir, bundle_dir)
-    
+
     library_dir = create_library_dir(package_dir)
     copy_libraries(app_dir, library_dir)
-    
+
     patch_libraries(library_dir)
-    
+
     print("\nBornAgain Python bundle is successfully created in temporary directory '{0}'".format(bundle_dir))
     print("Run 'python setup.py install' from there to install it into your Python's site-packages")
     return bundle_dir
-        
+
 
 def install_bundle(dir_name):
     """
@@ -275,20 +274,20 @@ def install_bundle(dir_name):
     print('-'*80)
     print("Installing bundle in Python site-packages '{0}'".format(get_python_lib()))
     print('-'*80)
-    
+
     os.chdir(bundle_dir)
     sys.argv = ['setup.py', 'install']
     exec_full('setup.py')
     print("\nBornAgain Python bundle is successfully installed in '{0}'".format(get_python_lib()))
     print("Congratulations!")
-    
-    
+
+
 if __name__ == '__main__':
     if not platform.system() == 'Darwin':
         exit("This script is intended for MacOs systems. Exiting...")
-        
+
     app_dir = get_application_dir()
-    
+
     print('-'*80)
     print("Installation of BornAgain-{0} libraries into site-packages of your Python".format(BORNAGAIN_VERSION))
     print('-'*80)
@@ -300,11 +299,7 @@ if __name__ == '__main__':
     print("[1] - Generate bundle and install it into site-packages of your Python.")
     print("[2] - Exit")
 
-    var = 0
-    if is_python3():
-        var = int(input("Enter your choice [1]: ") or "1")
-    else:
-        var = int(raw_input("Enter your choice [1]: ") or "1")
+    var = int(input("Enter your choice [1]: ") or "1")
 
     if var == 0:
         create_bundle(app_dir)
@@ -313,7 +308,3 @@ if __name__ == '__main__':
         install_bundle(bundle_dir)
     else:
         exit("Good bye")
-        
-
-
-

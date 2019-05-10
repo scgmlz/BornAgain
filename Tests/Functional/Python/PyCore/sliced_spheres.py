@@ -3,7 +3,6 @@ Functional test to check slicing mechanism for spherical particles
 when they are crossing an interface.
 """
 
-from __future__ import print_function
 import os, sys, unittest
 
 import utils

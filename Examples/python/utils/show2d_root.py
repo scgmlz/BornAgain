@@ -1,8 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Draws two dimensional numpy array using ROOT
 # Usage: python show2d.py file_name
 
-from __future__ import print_function
 import argparse
 import os
 import numpy
@@ -63,5 +62,3 @@ if __name__ == '__main__':
     print('Maximum value of data: ', a.flatten().max())
 
     PlotNumpyArrayWithROOT(a, zmin, zmax)
-
-        

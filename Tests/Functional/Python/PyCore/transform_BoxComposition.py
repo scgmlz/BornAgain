@@ -7,7 +7,6 @@ Composition might be rotated to get reference shape.
 Both, reference box and composition are placed in the center of middle layer of 3 layers system.
 """
 
-from __future__ import print_function
 import os, sys, unittest
 
 import utils

@@ -6,7 +6,6 @@ which has different dimensions but rotated/translated to be like the reference o
 Particles are placed in the center of middle layer.
 """
 
-from __future__ import print_function
 import os, sys, unittest
 
 import utils

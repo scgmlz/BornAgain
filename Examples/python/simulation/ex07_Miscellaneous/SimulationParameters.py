@@ -5,7 +5,6 @@ This example shows how to create a simulation with fixed parameters, and then ch
 these parameters on the fly during runtime.
 """
 
-from __future__ import print_function
 import bornagain as ba
 from bornagain import deg, angstrom, nm
 

@@ -1,6 +1,5 @@
 # this script is used to manually tweak swig-generated wrapper
 
-from __future__ import print_function
 import sys
 import os
 import string

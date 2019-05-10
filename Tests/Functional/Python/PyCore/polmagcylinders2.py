@@ -1,5 +1,5 @@
 # Functional test: Magnetic cylinders in DWBA with zero magnetic field
-from __future__ import print_function
+
 import sys
 import os
 import numpy
