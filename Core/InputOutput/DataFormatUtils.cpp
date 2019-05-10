@@ -41,7 +41,6 @@ const std::vector<std::pair<std::string, createAxisFun>> type_map = {
 const std::string GzipExtension = ".gz";
 const std::string BzipExtension = ".bz2";
 const std::string IntExtension = ".int";
-const std::string TxtExtension = ".txt";
 const std::string TiffExtension = ".tif";
 const std::string TiffExtension2 = ".tiff";
 }
@@ -77,25 +76,9 @@ std::string DataFormatUtils::GetFileMainExtension(const std::string& name)
     return FileSystemUtils::extension(stripped_name);
 }
 
-bool DataFormatUtils::isBinaryFile(const std::string& file_name)
-{
-    // all compressed files are always binary.
-    if(isCompressed(file_name)) return true;
-    // uncompressed "int" or "txt" files are ascii
-    if(isIntFile(file_name)) return false;
-    if(isTxtFile(file_name)) return false;
-    // the rest (e.g. tif) is also binary
-    return true;
-}
-
 bool DataFormatUtils::isIntFile(const std::string& file_name)
 {
     return GetFileMainExtension(file_name) == IntExtension;
-}
-
-bool DataFormatUtils::isTxtFile(const std::string& file_name)
-{
-    return GetFileMainExtension(file_name) == TxtExtension;
 }
 
 bool DataFormatUtils::isTiffFile(const std::string& file_name)

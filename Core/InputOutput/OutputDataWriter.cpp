@@ -32,13 +32,15 @@ OutputDataWriter::OutputDataWriter(const std::string& file_name)
 
 void OutputDataWriter::writeOutputData(const OutputData<double>& data)
 {
+    using namespace DataFormatUtils;
     if(!m_write_strategy)
         throw Exceptions::NullPointerException("OutputDataWriter::getOutputData() ->"
                                                " Error! No read strategy defined");
     std::ofstream fout;
     std::ios_base::openmode openmode = std::ios::out;
-    if(DataFormatUtils::isBinaryFile(m_file_name))
+    if(isTiffFile(m_file_name) || isCompressed(m_file_name))
         openmode = std::ios::out | std::ios_base::binary;
+
 
     fout.open(m_file_name.c_str(), openmode );
     if(!fout.is_open())

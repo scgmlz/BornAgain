@@ -38,14 +38,8 @@ BA_CORE_API_ bool isBZipped(const std::string& name);
 //! Returns file extension after stripping '.gz' if any
 BA_CORE_API_ std::string GetFileMainExtension(const std::string& name);
 
-//! returns true if file name corresponds to a binary file
-BA_CORE_API_ bool isBinaryFile(const std::string& file_name);
-
 //! returns true if file name corresponds to BornAgain native format (compressed or not)
 BA_CORE_API_ bool isIntFile(const std::string& file_name);
-
-//! returns true if file name corresponds to simple numpy-style ASCII file
-BA_CORE_API_ bool isTxtFile(const std::string& file_name);
 
 //! returns true if file name corresponds to tiff file (can be also compressed)
 BA_CORE_API_ bool isTiffFile(const std::string& file_name);
