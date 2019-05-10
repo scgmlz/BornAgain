@@ -190,8 +190,9 @@ def plot_specular_simulation_result(result, ymin=None, ymax=None, units=ba.AxesU
         plt.title(title)
 
 
-def plot_simulation_result(result, intensity_min=None, intensity_max=None, units=ba.AxesUnits.DEFAULT,
-                           xlabel=None, ylabel=None, postpone_show=False, title=None, aspect=None):
+def plot_simulation_result(
+        result, intensity_min=None, intensity_max=None, units=ba.AxesUnits.DEFAULT,
+        xlabel=None, ylabel=None, postpone_show=False, title=None, aspect=None):
     """
     Draws simulation result and (optionally) shows the plot.
     :param result_: SimulationResult object obtained from GISAS/OffSpec/SpecularSimulation

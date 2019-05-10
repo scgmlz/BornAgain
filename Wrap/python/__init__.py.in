@@ -1,6 +1,12 @@
 import sys
 import os
 
+if sys.version_info < (3,0):
+    sys.stderr.write("Fatal error: running wrong Python version "
+                     + str(sys.version_info.major) + "." + str(sys.version_info.minor)
+                     + "; Python3 is required.\n")
+    sys.exit(1)
+
 sys.path.append(os.path.abspath(
                 os.path.join(os.path.split(__file__)[0], '@BA_MODULES_IMPORT_PATH@')))
 
@@ -14,4 +20,3 @@ from .libBornAgainCore import *
 # To prevent inclusion of plotting tools during functional tests:
 if not "NOPLOT" in os.environ:
     from .plot_utils import *
-
