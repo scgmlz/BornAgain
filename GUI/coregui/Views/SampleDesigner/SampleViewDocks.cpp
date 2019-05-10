@@ -85,7 +85,7 @@ void SampleViewDocks::onResetLayout()
     findDock(INFO)->hide();
 }
 
-void SampleViewDocks::togleDock(int id)
+void SampleViewDocks::toggleDock(int id)
 {
     auto dock = findDock(id);
     dock->setHidden(!dock->isHidden());

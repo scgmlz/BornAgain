@@ -44,5 +44,5 @@ QItemSelectionModel* SampleViewActions::selectionModel()
 
 void SampleViewActions::onToggleRealSpaceView()
 {
-    m_sampleView->docks()->togleDock(SampleViewDocks::REALSPACEPANEL);
+    m_sampleView->docks()->toggleDock(SampleViewDocks::REALSPACEPANEL);
 }

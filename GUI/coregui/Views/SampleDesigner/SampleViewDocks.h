@@ -45,7 +45,7 @@ public:
 
     void onResetLayout() override;
 
-    void togleDock(int id);
+    void toggleDock(int id);
 
 private:
     SampleDesigner* m_sampleDesigner;
