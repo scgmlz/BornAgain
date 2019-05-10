@@ -33,9 +33,9 @@ public:
     void draw();
 
 private:
-    int vertexCount;
-    QOpenGLVertexArrayObject vao;
-    QOpenGLBuffer glBuffer;
+    int m_vertexCount;
+    QOpenGLVertexArrayObject m_vao;
+    QOpenGLBuffer m_glBuffer;
 };
 
 // Buffer for drawing 3D Coordinate Axes on canvas
@@ -46,9 +46,9 @@ public:
     void draw3DAxes();
 
 private:
-    int vertexCount3DAxes;
-    QOpenGLVertexArrayObject vao3DAxes;
-    QOpenGLBuffer glBuffer3DAxes;
+    int m_vertexCount3DAxes;
+    QOpenGLVertexArrayObject m_vao3DAxes;
+    QOpenGLBuffer m_glBuffer3DAxes;
 };
 
 } // namespace RealSpace

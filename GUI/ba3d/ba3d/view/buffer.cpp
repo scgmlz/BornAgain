@@ -27,13 +27,13 @@ Buffer::Buffer(Geometry const& geometry) {
     initializeOpenGLFunctions();
 
     auto &mesh  = geometry.m_mesh;
-    vertexCount = mesh.count();
+    m_vertexCount = mesh.count();
 
-    QOpenGLVertexArrayObject::Binder __(&vao);
+    QOpenGLVertexArrayObject::Binder __(&m_vao);
 
-    glBuffer.create();
-    glBuffer.bind();
-    glBuffer.allocate(mesh.constData(), vertexCount * int(sizeof(Geometry::Vert_Normal)));
+    m_glBuffer.create();
+    m_glBuffer.bind();
+    m_glBuffer.allocate(mesh.constData(), m_vertexCount * int(sizeof(Geometry::Vert_Normal)));
 
     glEnableVertexAttribArray(0); // vertices
     glEnableVertexAttribArray(1); // normals
@@ -43,14 +43,14 @@ Buffer::Buffer(Geometry const& geometry) {
 }
 
 void Buffer::draw() {
-    QOpenGLVertexArrayObject::Binder __(&vao);
-    glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+    QOpenGLVertexArrayObject::Binder __(&m_vao);
+    glDrawArrays(GL_TRIANGLES, 0, m_vertexCount);
 }
 
 Buffer3DAxes::Buffer3DAxes() {
     initializeOpenGLFunctions();
 
-     QOpenGLVertexArrayObject::Binder __(&vao3DAxes);
+     QOpenGLVertexArrayObject::Binder __(&m_vao3DAxes);
 
     // vertices (xyz) and colors (rgb) for drawing each line (also arrows) in the 3D axes
     const GLfloat vertices3DAxes[] = {
@@ -88,11 +88,11 @@ Buffer3DAxes::Buffer3DAxes() {
         cz*-0.05f, cz*-0.05f,  cz*0.95f, 0.0f, 0.0f, 1.0f,
     };
 
-    vertexCount3DAxes = 30;
+    m_vertexCount3DAxes = 30;
 
-    glBuffer3DAxes.create();
-    glBuffer3DAxes.bind();
-    glBuffer3DAxes.allocate(vertices3DAxes, int(sizeof (vertices3DAxes)));
+    m_glBuffer3DAxes.create();
+    m_glBuffer3DAxes.bind();
+    m_glBuffer3DAxes.allocate(vertices3DAxes, int(sizeof (vertices3DAxes)));
 
     glEnableVertexAttribArray(0); // 3D axes vertices
     glEnableVertexAttribArray(2); // 3D axes colors
@@ -102,9 +102,9 @@ Buffer3DAxes::Buffer3DAxes() {
 }
 
 void Buffer3DAxes::draw3DAxes() {
-    QOpenGLVertexArrayObject::Binder __(&vao3DAxes);
+    QOpenGLVertexArrayObject::Binder __(&m_vao3DAxes);
     glLineWidth(1.4f);
-    glDrawArrays(GL_LINES, 0, vertexCount3DAxes);
+    glDrawArrays(GL_LINES, 0, m_vertexCount3DAxes);
 }
 
 }  // namespace RealSpace
