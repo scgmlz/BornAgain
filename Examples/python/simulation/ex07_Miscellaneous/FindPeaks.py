@@ -78,6 +78,7 @@ def run_simulation():
 
 if __name__ == '__main__':
     result = run_simulation().histogram2d()
+    ba.mpl_settings()
     ba.plot_histogram(result)
 
     peaks = ba.FindPeaks(result, 2, "nomarkov", 0.001)
@@ -87,4 +88,3 @@ if __name__ == '__main__':
     plt.plot(xpeaks, ypeaks, linestyle='None', marker='x', color='white',
              markersize=10)
     plt.show()
-

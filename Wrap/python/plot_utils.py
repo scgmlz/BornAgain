@@ -25,6 +25,21 @@ except Exception as e:
 
 label_fontsize = 16
 
+def mpl_settings(cmap=None):
+    """
+    Overwrites MatPlotLib default settings either by BornAgain specific settings,
+    or by settings passed as argument.
+    This function should be called before plotting any results.
+    It should _not_ be called if the user's own matplotlibrc settings are to be respected.
+    Affected settings are:
+    - the color map, to be used in 2D plots.
+    """
+    if not cmap:
+        cmap = 'jet'
+    if not isinstance(cmap, str):
+        raise Exception("mpl_settings: invalid cmap argument, must be a string")
+    import matplotlib
+    matplotlib.rc('image', cmap=cmap)
 
 def get_axes_limits(result, units):
     """

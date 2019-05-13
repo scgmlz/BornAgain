@@ -112,7 +112,6 @@ def plot(results):
     plt.legend(['BornAgain',
                 'GenX'],
                loc='upper right')
-
     plt.show()
 
 

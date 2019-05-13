@@ -92,4 +92,5 @@ def run_simulation():
 
 if __name__ == '__main__':
     result = run_simulation()
+    ba.mpl_settings()
     ba.plot_simulation_result(result, intensity_min=1e-03)

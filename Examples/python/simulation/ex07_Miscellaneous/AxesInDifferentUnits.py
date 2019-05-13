@@ -103,4 +103,5 @@ def plot(result):
 
 if __name__ == '__main__':
     result = run_simulation()
+    ba.mpl_settings()
     plot(result)

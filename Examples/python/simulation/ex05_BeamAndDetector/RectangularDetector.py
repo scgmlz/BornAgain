@@ -135,4 +135,5 @@ def run_simulation():
 
 if __name__ == '__main__':
     results = run_simulation()
+    ba.mpl_settings()
     plot(results)

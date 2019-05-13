@@ -102,5 +102,6 @@ def run_simulation():
 
 
 if __name__ == '__main__':
+    ba.mpl_settings()
     run_simulation()
     plt.show()
