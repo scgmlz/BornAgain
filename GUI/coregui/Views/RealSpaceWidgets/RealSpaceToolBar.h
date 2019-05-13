@@ -35,6 +35,7 @@ signals:
     void topViewAction();
     void lockViewAction(bool);
     void changeLayerSizeAction(double);
+    void savePictureAction();
 
 private:
     QToolButton* m_defaultViewButton;
@@ -44,6 +45,7 @@ private:
 
     QToolButton* m_increaseLayerSizeButton;
     QToolButton* m_decreaseLayerSizeButton;
+    QToolButton* m_savePictureButton;
 };
 
 #endif // REALSPACETOOLBAR_H

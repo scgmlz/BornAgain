@@ -58,6 +58,9 @@ RealSpaceWidget::RealSpaceWidget(SampleModel *sampleModel,
     connect(m_toolBar, &RealSpaceToolBar::changeLayerSizeAction,
             m_canvas, &RealSpaceCanvas::onChangeLayerSizeAction);
 
+    connect(m_toolBar, &RealSpaceToolBar::savePictureAction,
+            m_canvas, &RealSpaceCanvas::onSavePictureAction);
+
 }
 
 void RealSpaceWidget::showEvent(QShowEvent*)

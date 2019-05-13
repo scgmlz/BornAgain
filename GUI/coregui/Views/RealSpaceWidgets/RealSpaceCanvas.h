@@ -97,6 +97,7 @@ public slots:
     void onTopViewAction();
     void onLockViewAction(bool view_locked);
     void onChangeLayerSizeAction(double layer_size_scale);
+    void onSavePictureAction();
 
 private slots:
     void onDataChanged(const QModelIndex& index);

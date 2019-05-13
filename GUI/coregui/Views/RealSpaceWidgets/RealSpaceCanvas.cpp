@@ -120,6 +120,13 @@ void RealSpaceCanvas::onChangeLayerSizeAction(double layerSizeChangeScale)
     updateScene();
 }
 
+void RealSpaceCanvas::onSavePictureAction()
+{
+    QPixmap pixmap(this->size());
+    this->render(&pixmap, QPoint(), childrenRegion());
+    //pixmap.save("path/to/save/file.png");
+}
+
 void RealSpaceCanvas::onDataChanged(const QModelIndex& index)
 {
     auto item = m_sampleModel->itemForIndex(index);
