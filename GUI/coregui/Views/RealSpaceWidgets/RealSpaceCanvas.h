@@ -119,6 +119,7 @@ private:
     bool m_view_locked;
     std::unique_ptr<SceneGeometry> m_sceneGeometry;
     WarningSign* m_warningSign;
+    void savePicture(const QPixmap &pixmap);
 };
 
 #endif // REALSPACESCENE_H
