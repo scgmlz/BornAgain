@@ -22,12 +22,31 @@
 #include <stdexcept> // need overlooked by g++ 5.4
 #include <map>
 
+namespace{
+inline std::string trim(const std::string& str,
+                        const std::string& whitespace = " \t")
+{
+    const auto strBegin = str.find_first_not_of(whitespace);
+
+    if (strBegin == std::string::npos)
+        return "";
+
+    const auto strEnd = str.find_last_not_of(whitespace);
+    const auto strRange = strEnd - strBegin + 1;
+
+    return str.substr(strBegin, strRange);
+}
+}
+
+
+
 OutputData<double>* OutputDataReadINTStrategy::readOutputData(std::istream& input_stream)
 {
     OutputData<double>* result = new OutputData<double>;
     std::string line;
 
     while( std::getline(input_stream, line) ) {
+        line = trim(line);
         if (line.find("axis") != std::string::npos) {
             std::unique_ptr<IAxis> axis = DataFormatUtils::createAxis(input_stream);
             result->addAxis(*axis);
@@ -51,6 +70,7 @@ OutputData<double>* OutputDataReadReflectometryStrategy::readOutputData(std::ist
 
     //Read numbers from file:
     while( std::getline(fin, line) ) {
+        line = trim(line);
         try {
             std::vector<double> rowVec = DataFormatUtils::parse_doubles(line);
             vecVec.push_back(rowVec);
@@ -112,20 +132,26 @@ OutputData<double>* OutputDataReadReflectometryStrategy::readOutputData(std::ist
     return oData;
 }
 
-
-
 OutputData<double>* OutputDataReadNumpyTXTStrategy::readOutputData(std::istream& input_stream)
 {
     std::string line;
     std::vector<std::vector<double>> data;
 
+    //Read numbers from input stream:
     while( std::getline(input_stream, line) ) {
-        if(line.empty() || line[0] == '#')
+        line = trim(line);
+        if(line.empty() || !isdigit(line[0]))
             continue;
-        std::vector<double> data_in_row = DataFormatUtils::parse_doubles(line);
-        data.push_back(data_in_row);
+
+        try {
+            std::vector<double> dataInRow = DataFormatUtils::parse_doubles(line);
+            data.push_back(dataInRow);
+        } catch (...) {
+            continue;
+        }
     }
-    // validating
+
+   // validating
     size_t nrows = data.size();
     size_t ncols(0);
     if(nrows) ncols = data[0].size();

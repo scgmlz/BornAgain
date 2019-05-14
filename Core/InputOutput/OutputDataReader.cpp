@@ -31,13 +31,14 @@ OutputDataReader::OutputDataReader(const std::string& file_name)
 
 OutputData<double>* OutputDataReader::getOutputData()
 {
+    using namespace DataFormatUtils;
     if(!m_read_strategy)
         throw Exceptions::NullPointerException(
             "OutputDataReader::getOutputData() -> Error! No read strategy defined");
 
     std::ifstream fin;
     std::ios_base::openmode openmode = std::ios::in;
-    if (DataFormatUtils::isBinaryFile(m_file_name))
+    if(isTiffFile(m_file_name) || isCompressed(m_file_name))
         openmode = std::ios::in | std::ios_base::binary;
 
     fin.open(m_file_name.c_str(), openmode );

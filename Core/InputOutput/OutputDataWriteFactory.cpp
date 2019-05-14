@@ -25,14 +25,11 @@ OutputDataWriter *OutputDataWriteFactory::getWriter(const std::string &file_name
 
 IOutputDataWriteStrategy *OutputDataWriteFactory::getWriteStrategy(const std::string &file_name)
 {
-    IOutputDataWriteStrategy *result(0);
+    IOutputDataWriteStrategy *result(nullptr);
     if(DataFormatUtils::isIntFile(file_name)) {
         result = new OutputDataWriteINTStrategy();
     }
 
-    else if(DataFormatUtils::isTxtFile(file_name)) {
-        result = new OutputDataWriteNumpyTXTStrategy();
-    }
 
 #ifdef BORNAGAIN_TIFF_SUPPORT
     else if(DataFormatUtils::isTiffFile(file_name)) {
@@ -40,10 +37,10 @@ IOutputDataWriteStrategy *OutputDataWriteFactory::getWriteStrategy(const std::st
     }
 #endif // BORNAGAIN_TIFF_SUPPORT
 
-    else {
-        throw Exceptions::LogicErrorException("OutputDataWriteFactory::getWriter() -> Error. "
-                "Don't know how to write file '" + file_name+std::string("'"));
+    else{
+        result = new OutputDataWriteNumpyTXTStrategy();
     }
+
 
     return result;
 }

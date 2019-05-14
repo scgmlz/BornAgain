@@ -30,21 +30,19 @@ OutputDataReader* OutputDataReadFactory::getReflectometryReader(const std::strin
     return result;
 }
 
-
 IOutputDataReadStrategy* OutputDataReadFactory::getReadStrategy(const std::string& file_name)
 {
     IOutputDataReadStrategy* result(nullptr);
     if(DataFormatUtils::isIntFile(file_name))
         result = new OutputDataReadINTStrategy();
-    else if(DataFormatUtils::isTxtFile(file_name))
-        result = new OutputDataReadNumpyTXTStrategy();
 #ifdef BORNAGAIN_TIFF_SUPPORT
     else if(DataFormatUtils::isTiffFile(file_name))
        result = new OutputDataReadTiffStrategy();
 #endif // BORNAGAIN_TIFF_SUPPORT
     else
-        throw Exceptions::LogicErrorException(
-            "OutputDataReadFactory::getReader() -> Error. Don't know how to read file '"
-            + file_name+"'");
+        //Try to read ASCII by default. Binary maps to ASCII.
+        //If the file is not actually a matrix of numbers,
+        //the error will be thrown during the reading.
+        result = new OutputDataReadNumpyTXTStrategy();
     return result;
 }
