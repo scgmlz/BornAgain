@@ -86,6 +86,40 @@ void ILayerView::updateColor()
     }
 }
 
+void ILayerView::updateLabel()
+{
+    if(getInputPorts().size() < 1)
+        return;
+
+    NodeEditorPort *port = getInputPorts()[0];
+
+    QString material = "" ;
+    if(m_item->isTag(LayerItem::P_MATERIAL)){
+        QVariant v = m_item->getItemValue(LayerItem::P_MATERIAL);
+        if (v.isValid()) {
+            ExternalProperty mp = v.value<ExternalProperty>();
+            material = mp.text();
+        }
+    }
+
+/* Thickness and roughness can be added, but the length of the string
+ * becomes prohibitive.
+    QString thickness = "" ;
+    if(m_item->isTag(LayerItem::P_THICKNESS))
+        thickness = m_item->getItemValue(LayerItem::P_THICKNESS).toString();
+
+    QString roughness = "" ;
+    if(m_item->isTag(LayerItem::P_ROUGHNESS)){
+        QVariant x = m_item->getItemValue(LayerItem::P_ROUGHNESS);
+        {...}
+    }
+*/
+    QString infoToDisplay = material;
+    port->setLabel(infoToDisplay);
+}
+
+
+
 //! Detects movement of the ILayerView and sends possible drop areas to GraphicsScene
 //! for visualization.
 QVariant ILayerView::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -179,6 +213,7 @@ void ILayerView::update_appearance()
 {
     updateHeight();
     updateColor();
+    updateLabel();
     ConnectableView::update_appearance();
 }
 

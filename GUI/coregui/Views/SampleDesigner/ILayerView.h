@@ -35,6 +35,8 @@ public:
 
     virtual QString getLabel() const { return QString(); }
 
+    void updateLabel();
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
