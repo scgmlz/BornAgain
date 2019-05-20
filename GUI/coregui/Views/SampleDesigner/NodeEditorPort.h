@@ -62,6 +62,8 @@ public:
 
     static QColor getPortTypeColor(NodeEditorPort::EPortType port_type);
 
+    void setLabel(QString name);
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
@@ -73,6 +75,7 @@ private:
     int m_radius;
     int m_margin;
     QVector<NodeEditorConnection *> m_connections;
+    QGraphicsTextItem *m_label;
 };
 
 inline const QString &NodeEditorPort::portName() const

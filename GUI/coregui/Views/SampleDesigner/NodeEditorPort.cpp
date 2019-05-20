@@ -22,7 +22,7 @@ NodeEditorPort::NodeEditorPort(QGraphicsItem *parent, const QString &name,
                                NodeEditorPort::EPortDirection direction,
                                NodeEditorPort::EPortType port_type)
     : QGraphicsPathItem(parent), m_name(name), m_direction(direction), m_port_type(port_type),
-      m_radius(5), m_margin(2)
+      m_radius(5), m_margin(2), m_label(nullptr)
 {
     m_color = getPortTypeColor(port_type);
 
@@ -36,17 +36,7 @@ NodeEditorPort::NodeEditorPort(QGraphicsItem *parent, const QString &name,
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
 
     if (!m_name.isEmpty()) {
-        QGraphicsTextItem *label = new QGraphicsTextItem(this);
-        label->setPlainText(m_name);
-        QFont serifFont("Monospace", DesignerHelper::getPortFontSize(), QFont::Normal);
-        label->setFont(serifFont);
-
-        if (isOutput()) {
-            label->setPos(-m_radius - m_margin - label->boundingRect().width(),
-                          -label->boundingRect().height() / 2);
-        } else {
-            label->setPos(m_radius + m_margin, -label->boundingRect().height() / 2);
-        }
+        setLabel(m_name);
     }
 }
 
@@ -117,3 +107,21 @@ QVariant NodeEditorPort::itemChange(GraphicsItemChange change, const QVariant &v
     }
     return value;
 }
+
+void NodeEditorPort::setLabel(QString name)
+{
+    if(!m_label)
+        m_label = new QGraphicsTextItem(this);
+    m_label->setPlainText(name);
+    QFont serifFont("Monospace", DesignerHelper::getPortFontSize(), QFont::Normal);
+    m_label->setFont(serifFont);
+
+    if (isOutput()) {
+        m_label->setPos(-m_radius - m_margin - m_label->boundingRect().width(),
+                      -m_label->boundingRect().height() / 2);
+    } else {
+        m_label->setPos(m_radius + m_margin, -m_label->boundingRect().height() / 2);
+    }
+}
+
+
