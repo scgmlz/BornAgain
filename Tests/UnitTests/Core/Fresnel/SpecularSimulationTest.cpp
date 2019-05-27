@@ -89,15 +89,13 @@ TEST_F(SpecularSimulationTest, CloneOfEmpty)
 TEST_F(SpecularSimulationTest, SetAngularScan)
 {
     SpecularSimulation sim;
-
-    AngularSpecScan scan(1.0, std::vector<double>{1.0, 3.0});
+    AngularSpecScan scan(1.0, std::vector<double>{1.0 * Units::deg, 3.0 * Units::deg});
     sim.setScan(scan);
-
     const auto& beam = sim.getInstrument().getBeam();
 
     EXPECT_EQ(2u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0, sim.coordinateAxis()->getMin());
-    EXPECT_EQ(3.0, sim.coordinateAxis()->getMax());
+    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->getMin());
+    EXPECT_EQ(3.0 * Units::deg, sim.coordinateAxis()->getMax());
     EXPECT_EQ(1.0, beam.getIntensity());
     EXPECT_EQ(1.0, beam.getWavelength());
     EXPECT_EQ(0.0, beam.getAlpha());
