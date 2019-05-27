@@ -178,7 +178,7 @@ bool AngularSpecScan::isWithinValidRange() const
     double min = coordinateAxis()->getMin();
     double max =  coordinateAxis()->getMax();
 
-    if (min < 0.0 || max >= 90)
+    if (min < 0.0 || Units::rad2deg(max) >= 90)
         return false;
 
     return true;
