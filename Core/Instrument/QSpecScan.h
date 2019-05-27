@@ -64,6 +64,10 @@ public:
 
     //! Print scan definition in python format
     std::string print() const override;
+
+    //! Checks whether the coordinate range is Within valid limits.
+    //! In particular, if the scan is non-negataive.
+    bool isWithinValidRange() const override;
 #endif //SWIG
 
     //! Sets q resolution values via ScanResolution object.

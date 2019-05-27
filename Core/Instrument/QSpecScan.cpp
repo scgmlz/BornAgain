@@ -194,3 +194,11 @@ std::vector<std::vector<ParameterSample> > QSpecScan::applyQResolution() const
         m_q_res_cache = m_resolution->generateSamples(m_qs->getBinCenters());
     return m_q_res_cache;
 }
+
+bool QSpecScan::isWithinValidRange() const
+{
+    if (coordinateAxis()->getMin() < 0.0)
+        return false;
+
+    return true;
+}

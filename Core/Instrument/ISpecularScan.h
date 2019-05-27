@@ -57,6 +57,9 @@ public:
 
     //! Print scan definition in python format
     virtual std::string print() const = 0;
+
+    //! Checks whether the coordinates of the scan are within the validity range.
+    virtual bool isWithinValidRange() const = 0;
 #endif //SWIG
 
     SPECULAR_DATA_TYPE dataType() const {return m_data_type;}
