@@ -67,6 +67,11 @@ public:
     // TODO: remove these getters after transition to the new resolution machinery is finished
     const ScanResolution* wavelengthResolution() const { return m_wl_resolution.get(); }
     const ScanResolution* angleResolution() const { return m_inc_resolution.get(); }
+
+    //! Checks whether the coordinate range is Within valid limits.
+    //! In particular, if the scan angle lays between 0 and 90 degrees.
+    bool isWithinValidRange() const override;
+
 #endif // SWIG
 
     //! Sets footprint correction factor

@@ -93,9 +93,10 @@ SimulationResult SpecularSimulation::result() const
 void SpecularSimulation::setScan(const ISpecularScan& scan)
 {
     // TODO: move inside AngularSpecScan when pointwise resolution is implemented
-    if (scan.coordinateAxis()->getMin() < 0.0)
+    if (!scan.isWithinValidRange())
         throw std::runtime_error(
-            "Error in SpecularSimulation::setScan: minimum value on coordinate axis is negative.");
+            "Error in SpecularSimulation::setScan: invalid coordinate axis; Coordinataes must be positive.\n"
+            "In case of angular coordinates, they must also be smaller than 90 degrees.");
 
     m_data_handler.reset(scan.clone());
 

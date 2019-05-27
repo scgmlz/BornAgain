@@ -22,6 +22,7 @@
 #include "RealLimits.h"
 #include "ScanResolution.h"
 #include "SpecularSimulationElement.h"
+#include "Units.h"
 
 namespace {
 std::vector<std::vector<double>>
@@ -170,6 +171,17 @@ void AngularSpecScan::setAbsoluteAngularResolution(const RangedDistribution& dis
     std::unique_ptr<ScanResolution> resolution(
         ScanResolution::scanAbsoluteResolution(distr, std_dev));
     setAngleResolution(*resolution);
+}
+
+bool AngularSpecScan::isWithinValidRange() const
+{
+    double min = coordinateAxis()->getMin();
+    double max =  coordinateAxis()->getMax();
+
+    if (min < 0.0 || max >= 90)
+        return false;
+
+    return true;
 }
 
 std::vector<double> AngularSpecScan::footprint(size_t start, size_t n_elements) const
