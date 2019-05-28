@@ -15,7 +15,7 @@
 #include "UnitConverterUtils.h"
 #include "Instrument.h"
 #include "OutputData.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "SimpleUnitConverters.h"
 #include "SphericalDetector.h"
 #include "UnitConverter1D.h"
@@ -41,7 +41,7 @@ UnitConverterUtils::createConverterForGISAS(const Instrument& instrument)
 
     if (const auto spher_detector = dynamic_cast<const SphericalDetector*>(detector))
         return std::make_unique<SphericalConverter>(*spher_detector, instrument.getBeam());
-    else if (const auto rect_detector = dynamic_cast<const RectangularDetector*>(detector))
+    else if (const auto rect_detector = dynamic_cast<const FlatDetector*>(detector))
         return std::make_unique<RectangularConverter>(*rect_detector, instrument.getBeam());
 
     throw std::runtime_error(

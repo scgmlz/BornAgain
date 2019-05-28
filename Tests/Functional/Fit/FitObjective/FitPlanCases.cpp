@@ -24,7 +24,7 @@
 #include "Particle.h"
 #include "ParticleLayout.h"
 #include "Rectangle.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "FTDecayFunctions.h"
 #include "Units.h"
 
@@ -82,7 +82,7 @@ std::unique_ptr<Simulation> RectDetPlan::createSimulation(const Parameters&) con
 
     double detector_distance(500.0);
     double width(20.0), height(18.0);
-    RectangularDetector detector(20u, width, 18u, height);
+    FlatDetector detector(20u, width, 18u, height);
     detector.setPerpendicularToSampleX(detector_distance, width/2., 0.0);
 
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);

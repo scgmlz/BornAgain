@@ -56,7 +56,7 @@
 #include "PropertyItem.h"
 #include "RealDataItem.h"
 #include "RealLimitsItems.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorItem.h"
 #include "ResolutionFunctionItems.h"
 #include "RotationItems.h"
 #include "SimulationOptionsItem.h"
@@ -137,7 +137,7 @@ ItemCatalogue::ItemCatalogue()
     add(Constants::LayerZeroRoughnessType, create_new<LayerZeroRoughnessItem>);
 
     add(Constants::SphericalDetectorType, create_new<SphericalDetectorItem>);
-    add(Constants::RectangularDetectorType, create_new<RectangularDetectorItem>);
+    add(Constants::FlatDetectorType, create_new<FlatDetectorItem>);
 
     add(Constants::DistributionNoneType, create_new<DistributionNoneItem>);
     add(Constants::DistributionGateType, create_new<DistributionGateItem>);

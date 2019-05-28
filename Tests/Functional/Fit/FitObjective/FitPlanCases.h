@@ -44,7 +44,7 @@ public:
 };
 
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
-//! Rectangular detector.
+//! Flat detector.
 
 class RectDetPlan : public FitPlan
 {

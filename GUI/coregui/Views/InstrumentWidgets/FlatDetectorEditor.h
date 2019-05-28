@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/InstrumentWidgets/RectangularDetectorEditor.h
-//! @brief     Defines class RectangularDetectorEditor
+//! @file      GUI/coregui/Views/InstrumentWidgets/FlatDetectorEditor.h
+//! @brief     Defines class FlatDetectorEditor
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,20 +12,20 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGULARDETECTOREDITOR_H
-#define RECTANGULARDETECTOREDITOR_H
+#ifndef FLATDETECTOREDITOR_H
+#define FLATDETECTOREDITOR_H
 
 #include "SessionItemWidget.h"
-class RectangularDetectorItem;
+class FlatDetectorItem;
 class ComponentEditor;
 class QGridLayout;
 
-class BA_CORE_API_ RectangularDetectorEditor : public SessionItemWidget
+class BA_CORE_API_ FlatDetectorEditor : public SessionItemWidget
 {
     Q_OBJECT
 
 public:
-    RectangularDetectorEditor(QWidget* parent = nullptr);
+    FlatDetectorEditor(QWidget* parent = nullptr);
 
 public slots:
     void onPropertyChanged(const QString& propertyName);
@@ -33,7 +33,7 @@ public slots:
 protected:
     void subscribeToItem();
     void unsubscribeFromItem();
-    RectangularDetectorItem* detectorItem();
+    FlatDetectorItem* detectorItem();
 
 private:
     void create_editors();
@@ -50,4 +50,4 @@ private:
     QGridLayout* m_gridLayout;
 };
 
-#endif  // RECTANGULARDETECTOREDITOR_H
+#endif  // FLATDETECTOREDITOR_H

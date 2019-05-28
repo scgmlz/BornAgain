@@ -22,7 +22,7 @@ def create_detector():
     """
     u0 = beam_xpos*pilatus_pixel_size  # in mm
     v0 = beam_ypos*pilatus_pixel_size  # in mm
-    detector = ba.RectangularDetector(pilatus_npx, pilatus_npx*pilatus_pixel_size,
+    detector = ba.FlatDetector(pilatus_npx, pilatus_npx*pilatus_pixel_size,
                                       pilatus_npy, pilatus_npy*pilatus_pixel_size)
     detector.setPerpendicularToDirectBeam(detector_distance, u0, v0)
     return detector

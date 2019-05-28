@@ -60,7 +60,7 @@ GroupInfoCatalogue::GroupInfoCatalogue()
 
     info = GroupInfo(Constants::DetectorGroup);
     info.add(Constants::SphericalDetectorType, "Spherical detector");
-    info.add(Constants::RectangularDetectorType, "Rectangular detector");
+    info.add(Constants::FlatDetectorType, "Flat detector");
     info.setDefaultType(Constants::SphericalDetectorType);
     addInfo(info);
 

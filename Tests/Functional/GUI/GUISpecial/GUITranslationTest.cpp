@@ -31,7 +31,7 @@
 #include "ParameterPool.h"
 #include "ParameterTreeItems.h"
 #include "ParameterTreeUtils.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorItem.h"
 #include "SampleBuilderFactory.h"
 #include "SampleModel.h"
 #include "SimulationFactory.h"
@@ -281,14 +281,14 @@ const QVector<QPair<QStringList, QStringList>> black_list {
 
             // Detector axes
             SphericalDetectorItem::P_PHI_AXIS, SphericalDetectorItem::P_ALPHA_AXIS,
-            RectangularDetectorItem::P_X_AXIS, RectangularDetectorItem::P_Y_AXIS,
+            FlatDetectorItem::P_X_AXIS, FlatDetectorItem::P_Y_AXIS,
             OffSpecInstrumentItem::P_ALPHA_AXIS,
 
-            // Rectangular detector positioning
-            RectangularDetectorItem::P_ALIGNMENT, RectangularDetectorItem::P_NORMAL,
-            RectangularDetectorItem::P_DIRECTION, RectangularDetectorItem::P_U0,
-            RectangularDetectorItem::P_V0, RectangularDetectorItem::P_DBEAM_U0,
-            RectangularDetectorItem::P_DBEAM_V0, RectangularDetectorItem::P_DISTANCE,
+            // Flat detector positioning
+            FlatDetectorItem::P_ALIGNMENT, FlatDetectorItem::P_NORMAL,
+            FlatDetectorItem::P_DIRECTION, FlatDetectorItem::P_U0,
+            FlatDetectorItem::P_V0, FlatDetectorItem::P_DBEAM_U0,
+            FlatDetectorItem::P_DBEAM_V0, FlatDetectorItem::P_DISTANCE,
 
             // Detector resolution
             Constants::ResolutionFunction2DGaussianType,

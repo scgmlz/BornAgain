@@ -88,31 +88,31 @@ SimulationFactory::SimulationFactory()
         "polmagcylinders2", StandardSimulations::PolarizedDWBAMagCylinders2,
         "Polarized DWBA with non-zero magnetic field");
 
-    // rectangular detectors
+    // flat detectors
 
     registerItem("RectDetectorGeneric",
                  StandardSimulations::RectDetectorGeneric,
-                 "Rectangular detector with generic alignment");
+                 "Flat detector with generic alignment");
 
     registerItem("RectDetectorPerpToSample",
                  StandardSimulations::RectDetectorPerpToSample,
-                 "Rectangular detector with generic alignment");
+                 "Flat detector with generic alignment");
 
     registerItem("RectDetectorPerpToDirectBeam",
                  StandardSimulations::RectDetectorPerpToDirectBeam,
-                 "Rectangular detector with generic alignment");
+                 "Flat detector with generic alignment");
 
     registerItem("RectDetectorPerpToReflectedBeam",
                  StandardSimulations::RectDetectorPerpToReflectedBeam,
-                 "Rectangular detector with generic alignment");
+                 "Flat detector with generic alignment");
 
     registerItem("RectDetectorPerpToReflectedBeamDpos",
                  StandardSimulations::RectDetectorPerpToReflectedBeamDpos,
-                 "Rectangular detector with generic alignment");
+                 "Flat detector with generic alignment");
 
     registerItem("ExtraLongWavelengthGISAS",
                  StandardSimulations::ExtraLongWavelengthGISAS,
-                 "GISAS with rectangular detector and extra long wavelentgh");
+                 "GISAS with flat detector and extra long wavelentgh");
 
     // Monte-Carlo
     registerItem("MiniGISASMonteCarlo",
@@ -127,7 +127,7 @@ SimulationFactory::SimulationFactory()
                  "Spherical detector with ROI and mask");
     registerItem("RectDetWithRoi",
                  StandardSimulations::RectDetWithRoi,
-                 "Rectangular detector with ROI and mask");
+                 "Flat detector with ROI and mask");
 
     // background
 

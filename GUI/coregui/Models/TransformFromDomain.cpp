@@ -56,8 +56,8 @@
 #include "PoissonNoiseBackground.h"
 #include "Polygon.h"
 #include "Rectangle.h"
-#include "RectangularDetector.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetector.h"
+#include "FlatDetectorItem.h"
 #include "RegionOfInterest.h"
 #include "ResolutionFunction2DGaussian.h"
 #include "ResolutionFunctionItems.h"
@@ -326,10 +326,10 @@ void TransformFromDomain::setDetectorGeometry(Instrument2DItem* instrument_item,
         instrument_item->setDetectorGroup(Constants::SphericalDetectorType);
         auto item = dynamic_cast<SphericalDetectorItem*>(instrument_item->detectorItem());
         setSphericalDetector(item, *det);
-    } else if (auto det = dynamic_cast<const RectangularDetector*>(&detector)) {
-        instrument_item->setDetectorGroup(Constants::RectangularDetectorType);
-        auto item = dynamic_cast<RectangularDetectorItem*>(instrument_item->detectorItem());
-        setRectangularDetector(item, *det);
+    } else if (auto det = dynamic_cast<const FlatDetector*>(&detector)) {
+        instrument_item->setDetectorGroup(Constants::FlatDetectorType);
+        auto item = dynamic_cast<FlatDetectorItem*>(instrument_item->detectorItem());
+        setFlatDetector(item, *det);
     } else {
         throw GUIHelpers::Error(
             "TransformFromDomain::setDetectorGeometry() -> Unknown detector type.");
@@ -402,67 +402,67 @@ void TransformFromDomain::setSphericalDetector(SphericalDetectorItem* detector_i
     alphaAxisItem->setItemValue(BasicAxisItem::P_MAX, Units::rad2deg(alpha_axis.getMax()));
 }
 
-void TransformFromDomain::setRectangularDetector(RectangularDetectorItem* detector_item,
-                                                 const RectangularDetector& detector)
+void TransformFromDomain::setFlatDetector(FlatDetectorItem* detector_item,
+                                                 const FlatDetector& detector)
 {
     // Axes
     BasicAxisItem* xAxisItem =
-        dynamic_cast<BasicAxisItem*>(detector_item->getItem(RectangularDetectorItem::P_X_AXIS));
+        dynamic_cast<BasicAxisItem*>(detector_item->getItem(FlatDetectorItem::P_X_AXIS));
     Q_ASSERT(xAxisItem);
     xAxisItem->setItemValue(BasicAxisItem::P_NBINS, (int)detector.getNbinsX());
     xAxisItem->setItemValue(BasicAxisItem::P_MAX, detector.getWidth());
 
     BasicAxisItem* yAxisItem =
-        dynamic_cast<BasicAxisItem*>(detector_item->getItem(RectangularDetectorItem::P_Y_AXIS));
+        dynamic_cast<BasicAxisItem*>(detector_item->getItem(FlatDetectorItem::P_Y_AXIS));
     Q_ASSERT(yAxisItem);
     yAxisItem->setItemValue(BasicAxisItem::P_NBINS, (int)detector.getNbinsY());
     yAxisItem->setItemValue(BasicAxisItem::P_MAX, detector.getHeight());
 
-    if (detector.getDetectorArrangment() == RectangularDetector::GENERIC) {
+    if (detector.getDetectorArrangment() == FlatDetector::GENERIC) {
         detector_item->setDetectorAlignment(Constants::ALIGNMENT_GENERIC);
 
         kvector_t normal = detector.getNormalVector();
-        SetVectorItem(*detector_item, RectangularDetectorItem::P_NORMAL, normal);
+        SetVectorItem(*detector_item, FlatDetectorItem::P_NORMAL, normal);
 
         kvector_t direction = detector.getDirectionVector();
-        SetVectorItem(*detector_item, RectangularDetectorItem::P_DIRECTION, direction);
+        SetVectorItem(*detector_item, FlatDetectorItem::P_DIRECTION, direction);
 
-        detector_item->setItemValue(RectangularDetectorItem::P_U0, detector.getU0());
-        detector_item->setItemValue(RectangularDetectorItem::P_V0, detector.getV0());
+        detector_item->setItemValue(FlatDetectorItem::P_U0, detector.getU0());
+        detector_item->setItemValue(FlatDetectorItem::P_V0, detector.getV0());
     }
 
-    else if (detector.getDetectorArrangment() == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
+    else if (detector.getDetectorArrangment() == FlatDetector::PERPENDICULAR_TO_SAMPLE) {
         detector_item->setDetectorAlignment(Constants::ALIGNMENT_TO_SAMPLE);
-        detector_item->setItemValue(RectangularDetectorItem::P_DISTANCE, detector.getDistance());
-        detector_item->setItemValue(RectangularDetectorItem::P_U0, detector.getU0());
-        detector_item->setItemValue(RectangularDetectorItem::P_V0, detector.getV0());
+        detector_item->setItemValue(FlatDetectorItem::P_DISTANCE, detector.getDistance());
+        detector_item->setItemValue(FlatDetectorItem::P_U0, detector.getU0());
+        detector_item->setItemValue(FlatDetectorItem::P_V0, detector.getV0());
 
     } else if (detector.getDetectorArrangment()
-               == RectangularDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
+               == FlatDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
         detector_item->setDetectorAlignment(Constants::ALIGNMENT_TO_DIRECT_BEAM);
-        detector_item->setItemValue(RectangularDetectorItem::P_DISTANCE, detector.getDistance());
-        detector_item->setItemValue(RectangularDetectorItem::P_DBEAM_U0, detector.getU0());
-        detector_item->setItemValue(RectangularDetectorItem::P_DBEAM_V0, detector.getV0());
+        detector_item->setItemValue(FlatDetectorItem::P_DISTANCE, detector.getDistance());
+        detector_item->setItemValue(FlatDetectorItem::P_DBEAM_U0, detector.getU0());
+        detector_item->setItemValue(FlatDetectorItem::P_DBEAM_V0, detector.getV0());
 
     } else if (detector.getDetectorArrangment()
-               == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
+               == FlatDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
         detector_item->setDetectorAlignment(Constants::ALIGNMENT_TO_REFLECTED_BEAM);
-        detector_item->setItemValue(RectangularDetectorItem::P_DISTANCE, detector.getDistance());
-        detector_item->setItemValue(RectangularDetectorItem::P_U0, detector.getU0());
-        detector_item->setItemValue(RectangularDetectorItem::P_V0, detector.getV0());
+        detector_item->setItemValue(FlatDetectorItem::P_DISTANCE, detector.getDistance());
+        detector_item->setItemValue(FlatDetectorItem::P_U0, detector.getU0());
+        detector_item->setItemValue(FlatDetectorItem::P_V0, detector.getV0());
 
     } else if (detector.getDetectorArrangment()
-               == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
+               == FlatDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
         detector_item->setDetectorAlignment(Constants::ALIGNMENT_TO_REFLECTED_BEAM_DPOS);
-        detector_item->setItemValue(RectangularDetectorItem::P_DISTANCE, detector.getDistance());
-        detector_item->setItemValue(RectangularDetectorItem::P_DBEAM_U0,
+        detector_item->setItemValue(FlatDetectorItem::P_DISTANCE, detector.getDistance());
+        detector_item->setItemValue(FlatDetectorItem::P_DBEAM_U0,
                                     detector.getDirectBeamU0());
-        detector_item->setItemValue(RectangularDetectorItem::P_DBEAM_V0,
+        detector_item->setItemValue(FlatDetectorItem::P_DBEAM_V0,
                                     detector.getDirectBeamV0());
 
     } else {
         throw GUIHelpers::Error(
-            "TransformFromDomain::setItemFromSample(RectangularDetectorItem* detectorItem "
+            "TransformFromDomain::setItemFromSample(FlatDetectorItem* detectorItem "
             "Error. Unknown detector arrangement");
     }
 }

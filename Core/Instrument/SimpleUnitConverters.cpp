@@ -20,7 +20,7 @@
 #include "Beam.h"
 #include "BornAgainNamespace.h"
 #include "MathConstants.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "RegionOfInterest.h"
 #include "SimpleUnitConverters.h"
 #include "SphericalDetector.h"
@@ -200,7 +200,7 @@ std::vector<std::map<AxesUnits, std::string> > SphericalConverter::createNameMap
 
 /* RectangularConverter **********************************************/
 
-RectangularConverter::RectangularConverter(const RectangularDetector& detector, const Beam& beam)
+RectangularConverter::RectangularConverter(const FlatDetector& detector, const Beam& beam)
     : UnitConverterSimple(beam)
 {
     if (detector.dimension() != 2)
@@ -370,7 +370,7 @@ void OffSpecularConverter::addDetectorYAxis(const IDetector2D& detector)
     if (!P_new_axis)
         throw std::runtime_error("Error in OffSpecularConverter::addDetectorYAxis: "
                                  "could not retrieve the y-axis of the detector");
-    if (auto P_rect_det = dynamic_cast<const RectangularDetector*>(&detector)) {
+    if (auto P_rect_det = dynamic_cast<const FlatDetector*>(&detector)) {
         std::unique_ptr<RectangularPixel> P_det_pixel(P_rect_det->regionOfInterestPixel());
         auto k00 = P_det_pixel->getPosition(0.0, 0.0);
         auto k01 = P_det_pixel->getPosition(0.0, 1.0);

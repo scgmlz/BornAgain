@@ -32,9 +32,9 @@ def get_sample():
     return multi_layer
 
 
-def get_rectangular_detector():
+def get_flat_detector():
     """
-    Returns rectangular detector representing our PILATUS detector
+    Returns flat detector representing our PILATUS detector
     """
 
     detector_distance = 2000.0  # in mm
@@ -43,7 +43,7 @@ def get_rectangular_detector():
 
     width = pilatus_npx*pilatus_pixel_size
     height = pilatus_npy*pilatus_pixel_size
-    detector = ba.RectangularDetector(pilatus_npx, width, pilatus_npy, height)
+    detector = ba.FlatDetector(pilatus_npx, width, pilatus_npy, height)
     detector.setPerpendicularToSampleX(detector_distance, width/2., 0.0)
     return detector
 
@@ -54,7 +54,7 @@ def get_simulation():
     """
     simulation = ba.GISASSimulation()
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
-    simulation.setDetector(get_rectangular_detector())
+    simulation.setDetector(get_flat_detector())
     return simulation
 
 
@@ -79,7 +79,7 @@ def plot(result):
     fig = plt.figure(figsize=(12.80, 10.24))
 
     plt.subplot(2, 2, 1)
-    # default units for rectangular detector are millimeters
+    # default units for flat detector are millimeters
 
     ba.plot_colormap(result, title="In default units",
                      xlabel=r'$X_{mm}$', ylabel=r'$Y_{mm}$', zlabel=None)

@@ -1,6 +1,6 @@
 #include "google_test.h"
 #include "Beam.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "SimpleUnitConverters.h"
 #include "Units.h"
 #include "Vectors3D.h"
@@ -20,7 +20,7 @@ public:
     RectangularConverterTest();
     ~RectangularConverterTest();
 protected:
-    RectangularDetector m_detector;
+    FlatDetector m_detector;
     Beam m_beam;
     double m_phi, m_alpha;
     double m_kiz, m_kfy, m_kfz;

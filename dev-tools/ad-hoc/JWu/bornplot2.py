@@ -138,7 +138,7 @@ def get_simulation(detPars, ff, trafo=None):
     :param sample
     """
     simulation = ba.GISASSimulation()
-    detector = ba.RectangularDetector(detPars.y.n, detPars.y.range(), detPars.z.n, detPars.z.range())
+    detector = ba.FlatDetector(detPars.y.n, detPars.y.range(), detPars.z.n, detPars.z.range())
     detector.setPerpendicularToSampleX(1., -detPars.y.vmin, -detPars.z.vmin)
     simulation.setDetector(detector)
     simulation.setBeamParameters(1.0*nanometer, 0, 0)

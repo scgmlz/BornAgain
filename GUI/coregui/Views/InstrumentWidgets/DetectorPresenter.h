@@ -18,7 +18,7 @@
 #include "ItemComboWidget.h"
 
 //! Contains stack of detector editors and the logic to show proper editor for certain type
-//! of detector item (SphericalDetectorEditor or RectangularDetectorEditor).
+//! of detector item (SphericalDetectorEditor or FlatDetectorEditor).
 //! Main component of GISASDetectorEditor.
 
 class BA_CORE_API_ DetectorPresenter : public ItemComboWidget

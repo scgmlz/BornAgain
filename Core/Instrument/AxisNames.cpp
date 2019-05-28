@@ -38,7 +38,7 @@ std::map<AxesUnits, std::string> InitSphericalAxis1()
     result[AxesUnits::QXQY] = "Qy [1/nm]";
     return result;
 }
-// For rectangular detectors in GISAS simulations
+// For flat detectors in GISAS simulations
 std::map<AxesUnits, std::string> InitRectangularAxis0()
 {
     std::map<AxesUnits, std::string> result;
@@ -61,7 +61,7 @@ std::map<AxesUnits, std::string> InitRectangularAxis1()
     result[AxesUnits::QXQY] = "Qy [1/nm]";
     return result;
 }
-// For off-specular simulations (both spherical and rectangular detectors)
+// For off-specular simulations (both spherical and flat detectors)
 // Currently 'mm' is not supported for the y-axis
 std::map<AxesUnits, std::string> InitOffSpecAxis0()
 {

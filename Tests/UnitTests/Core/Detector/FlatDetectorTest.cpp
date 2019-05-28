@@ -1,16 +1,16 @@
 #include "GISASSimulation.h"
 #include "Numeric.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "DetectorElement.h"
 #include "Units.h"
 #include "google_test.h"
 #include <iostream>
 #include <memory>
 
-class RectangularDetectorTest : public ::testing::Test
+class FlatDetectorTest : public ::testing::Test
 {
 protected:
-    ~RectangularDetectorTest();
+    ~FlatDetectorTest();
 
     double phi(DetectorElement& element, double wavelength);
     double alpha(DetectorElement& element, double wavelength);
@@ -28,11 +28,11 @@ protected:
     }
 };
 
-RectangularDetectorTest::~RectangularDetectorTest() = default;
+FlatDetectorTest::~FlatDetectorTest() = default;
 
-TEST_F(RectangularDetectorTest, InitialState)
+TEST_F(FlatDetectorTest, InitialState)
 {
-    RectangularDetector det(50u, 10.0, 60u, 20.0);
+    FlatDetector det(50u, 10.0, 60u, 20.0);
     EXPECT_EQ(50u, det.getNbinsX());
     EXPECT_EQ(10.0, det.getWidth());
     EXPECT_EQ(60u, det.getNbinsY());
@@ -45,26 +45,26 @@ TEST_F(RectangularDetectorTest, InitialState)
     EXPECT_TRUE(kvector_t() == det.getNormalVector());
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
 
-    EXPECT_EQ(RectangularDetector::GENERIC, det.getDetectorArrangment());
+    EXPECT_EQ(FlatDetector::GENERIC, det.getDetectorArrangment());
 }
 
-TEST_F(RectangularDetectorTest, Clone)
+TEST_F(FlatDetectorTest, Clone)
 {
-    RectangularDetector det(50u, 10.0, 60u, 20.0);
+    FlatDetector det(50u, 10.0, 60u, 20.0);
     kvector_t normal(10.0, 20.0, 30.0);
     kvector_t direction(1.0, 2.0, 3.0);
     double u0(88.0), v0(99.0);
     det.setPosition(normal, u0, v0, direction);
 
-    std::unique_ptr<RectangularDetector> clone(det.clone());
+    std::unique_ptr<FlatDetector> clone(det.clone());
     EXPECT_EQ(u0, clone->getU0());
     EXPECT_EQ(v0, clone->getV0());
     EXPECT_TRUE(normal == clone->getNormalVector());
     EXPECT_TRUE(direction == clone->getDirectionVector());
-    EXPECT_EQ(RectangularDetector::GENERIC, clone->getDetectorArrangment());
+    EXPECT_EQ(FlatDetector::GENERIC, clone->getDetectorArrangment());
 }
 
-TEST_F(RectangularDetectorTest, PerpToSample)
+TEST_F(FlatDetectorTest, PerpToSample)
 {
     size_t nbinsx(5u), nbinsy(4u);
     double width(50.0), height(40.0);
@@ -72,7 +72,7 @@ TEST_F(RectangularDetectorTest, PerpToSample)
     double dx = width / nbinsx;
     double dy = height / nbinsy;
 
-    RectangularDetector det(nbinsx, width, nbinsy, height);
+    FlatDetector det(nbinsx, width, nbinsy, height);
 
     // detector perpendicular to sample
     det.setPerpendicularToSampleX(distance, u0, v0);
@@ -81,7 +81,7 @@ TEST_F(RectangularDetectorTest, PerpToSample)
     EXPECT_EQ(v0, det.getV0());
     EXPECT_TRUE(kvector_t() == det.getNormalVector());
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
-    EXPECT_EQ(RectangularDetector::PERPENDICULAR_TO_SAMPLE, det.getDetectorArrangment());
+    EXPECT_EQ(FlatDetector::PERPENDICULAR_TO_SAMPLE, det.getDetectorArrangment());
 
     // initializing with the simulation
     GISASSimulation simulation;
@@ -116,7 +116,7 @@ TEST_F(RectangularDetectorTest, PerpToSample)
     EXPECT_NEAR(alpha(k), alpha(elements[19], wavelength), 1e-10 * std::abs(alpha(k)));
 }
 
-TEST_F(RectangularDetectorTest, PerpToDirectBeam)
+TEST_F(FlatDetectorTest, PerpToDirectBeam)
 {
     size_t nbinsx(5u), nbinsy(4u);
     double width(50.0), height(40.0);
@@ -125,7 +125,7 @@ TEST_F(RectangularDetectorTest, PerpToDirectBeam)
     double dy = height / nbinsy;
     double alpha_i(10.0 * Units::degree);
 
-    RectangularDetector det(nbinsx, width, nbinsy, height);
+    FlatDetector det(nbinsx, width, nbinsy, height);
 
     // detector perpendicular to direct beam
     det.setPerpendicularToDirectBeam(distance, u0, v0);
@@ -134,7 +134,7 @@ TEST_F(RectangularDetectorTest, PerpToDirectBeam)
     EXPECT_EQ(v0, det.getV0());
     EXPECT_TRUE(kvector_t() == det.getNormalVector());
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
-    EXPECT_EQ(RectangularDetector::PERPENDICULAR_TO_DIRECT_BEAM, det.getDetectorArrangment());
+    EXPECT_EQ(FlatDetector::PERPENDICULAR_TO_DIRECT_BEAM, det.getDetectorArrangment());
 
     // initializing with the simulation
     GISASSimulation simulation;
@@ -159,7 +159,7 @@ TEST_F(RectangularDetectorTest, PerpToDirectBeam)
     EXPECT_NEAR(alpha(k), alpha(elements[0], wavelength), 1e-10 * std::abs(alpha(k)));
 }
 
-TEST_F(RectangularDetectorTest, PerpToReflectedBeam)
+TEST_F(FlatDetectorTest, PerpToReflectedBeam)
 {
     size_t nbinsx(5u), nbinsy(4u);
     double width(50.0), height(40.0);
@@ -168,7 +168,7 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeam)
     double dy = height / nbinsy;
     double alpha_i(10.0 * Units::degree);
 
-    RectangularDetector det(nbinsx, width, nbinsy, height);
+    FlatDetector det(nbinsx, width, nbinsy, height);
 
     // detector perpendicular to reflected beam
     det.setPerpendicularToReflectedBeam(distance, u0, v0);
@@ -177,7 +177,7 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeam)
     EXPECT_EQ(v0, det.getV0());
     EXPECT_TRUE(kvector_t() == det.getNormalVector());
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
-    EXPECT_EQ(RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM, det.getDetectorArrangment());
+    EXPECT_EQ(FlatDetector::PERPENDICULAR_TO_REFLECTED_BEAM, det.getDetectorArrangment());
 
     // initializing with the simulation
     GISASSimulation simulation;
@@ -204,7 +204,7 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeam)
 }
 
 // detector perpendicular to reflected beam, when direct beam position is known
-TEST_F(RectangularDetectorTest, PerpToReflectedBeamDpos)
+TEST_F(FlatDetectorTest, PerpToReflectedBeamDpos)
 {
     size_t nbinsx(5u), nbinsy(4u);
     double width(50.0), height(40.0);
@@ -213,7 +213,7 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeamDpos)
     double dy = height / nbinsy;
     double alpha_i(10.0 * Units::degree);
 
-    RectangularDetector det(nbinsx, width, nbinsy, height);
+    FlatDetector det(nbinsx, width, nbinsy, height);
 
     // detector perpendicular to reflected beam
     det.setPerpendicularToReflectedBeam(distance);
@@ -231,7 +231,7 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeamDpos)
     EXPECT_EQ(dbeam_v0, det.getDirectBeamV0());
     EXPECT_TRUE(kvector_t() == det.getNormalVector());
     EXPECT_TRUE(kvector_t(0.0, -1.0, 0.0) == det.getDirectionVector());
-    EXPECT_EQ(RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS,
+    EXPECT_EQ(FlatDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS,
               det.getDetectorArrangment());
 
     // initializing with the simulation
@@ -262,9 +262,9 @@ TEST_F(RectangularDetectorTest, PerpToReflectedBeamDpos)
 }
 
 // Test retrieval of analyzer properties
-TEST_F(RectangularDetectorTest, AnalyzerProperties)
+TEST_F(FlatDetectorTest, AnalyzerProperties)
 {
-    RectangularDetector detector(50u, 10.0, 60u, 20.0);
+    FlatDetector detector(50u, 10.0, 60u, 20.0);
 
     kvector_t direction;
     double efficiency = 0.0;
@@ -345,14 +345,14 @@ TEST_F(RectangularDetectorTest, AnalyzerProperties)
     EXPECT_NEAR(detect_properties5.analyzerDirection().z(), unit_direction.z(), 1e-8);
 }
 
-double RectangularDetectorTest::phi(DetectorElement& element, double wavelength)
+double FlatDetectorTest::phi(DetectorElement& element, double wavelength)
 {
     auto pixel = element.pixel();
     auto k_f = pixel->getK(0.5, 0.5, wavelength);
     return k_f.phi() / Units::degree;
 }
 
-double RectangularDetectorTest::alpha(DetectorElement& element, double wavelength)
+double FlatDetectorTest::alpha(DetectorElement& element, double wavelength)
 {
     auto pixel = element.pixel();
     auto k_f = pixel->getK(0.5, 0.5, wavelength);

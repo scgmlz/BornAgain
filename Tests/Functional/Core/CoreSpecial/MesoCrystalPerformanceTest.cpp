@@ -15,7 +15,7 @@
 #include "MesoCrystalPerformanceTest.h"
 #include "GISASSimulation.h"
 #include "MesoCrystalPerformanceBuilder.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "Units.h"
 #include <iostream>
 
@@ -28,13 +28,13 @@ const int m_ny = 1024;
 const double m_center_x = 108.2;
 const double m_center_y = 942.0;
 
-std::unique_ptr<RectangularDetector> create_detector()
+std::unique_ptr<FlatDetector> create_detector()
 {
     double width = m_nx*m_pixel_size;
     double height = m_ny*m_pixel_size;
     double u0 = m_center_x*m_pixel_size;
     double v0 = (m_ny - m_center_y)*m_pixel_size;
-    std::unique_ptr<RectangularDetector> result = std::make_unique<RectangularDetector>(m_nx, width, m_ny, height);
+    std::unique_ptr<FlatDetector> result = std::make_unique<FlatDetector>(m_nx, width, m_ny, height);
     result->setPerpendicularToDirectBeam(m_distance, u0, v0);
     return result;
 }

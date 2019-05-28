@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorItem.h"
 #include "InstrumentModel.h"
 #include "ComboProperty.h"
 #include "InstrumentItems.h"
@@ -20,21 +20,21 @@ TestDetectorItems::~TestDetectorItems() = default;
 TEST_F(TestDetectorItems, test_detectorAlignment)
 {
     InstrumentModel model;
-    SessionItem* detector = model.insertNewItem(Constants::RectangularDetectorType);
+    SessionItem* detector = model.insertNewItem(Constants::FlatDetectorType);
 
     ComboProperty alignment
-        = detector->getItemValue(RectangularDetectorItem::P_ALIGNMENT).value<ComboProperty>();
+        = detector->getItemValue(FlatDetectorItem::P_ALIGNMENT).value<ComboProperty>();
     // generic has some more items visible
     alignment.setValue(Constants::ALIGNMENT_GENERIC);
-    detector->setItemValue(RectangularDetectorItem::P_ALIGNMENT,
+    detector->setItemValue(FlatDetectorItem::P_ALIGNMENT,
                            QVariant::fromValue<ComboProperty>(alignment));
-    EXPECT_TRUE(detector->getItem(RectangularDetectorItem::P_NORMAL)->isVisible());
+    EXPECT_TRUE(detector->getItem(FlatDetectorItem::P_NORMAL)->isVisible());
 
     // should be disabled if we switch
     alignment.setValue(Constants::ALIGNMENT_TO_REFLECTED_BEAM);
-    detector->setItemValue(RectangularDetectorItem::P_ALIGNMENT,
+    detector->setItemValue(FlatDetectorItem::P_ALIGNMENT,
                            QVariant::fromValue<ComboProperty>(alignment));
-    EXPECT_FALSE(detector->getItem(RectangularDetectorItem::P_NORMAL)->isVisible());
+    EXPECT_FALSE(detector->getItem(FlatDetectorItem::P_NORMAL)->isVisible());
 }
 
 TEST_F(TestDetectorItems, test_resolutionFunction)

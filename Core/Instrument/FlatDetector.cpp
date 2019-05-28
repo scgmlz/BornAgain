@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Instrument/RectangularDetector.cpp
-//! @brief     Implements class RectangularDetector.
+//! @file      Core/Instrument/FlatDetector.cpp
+//! @brief     Implements class FlatDetector.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "Beam.h"
 #include "BornAgainNamespace.h"
 #include "IDetectorResolution.h"
@@ -21,7 +21,7 @@
 #include "MathConstants.h"
 #include "Units.h"
 
-RectangularDetector::RectangularDetector(size_t nxbins, double width, size_t nybins, double height)
+FlatDetector::FlatDetector(size_t nxbins, double width, size_t nybins, double height)
     : m_u0(0.0)
     , m_v0(0.0)
     , m_direction(kvector_t(0.0, -1.0, 0.0))
@@ -31,10 +31,10 @@ RectangularDetector::RectangularDetector(size_t nxbins, double width, size_t nyb
     , m_detector_arrangement(GENERIC)
 {
     setDetectorParameters(nxbins, 0.0, width, nybins, 0.0, height);
-    setName(BornAgain::RectangularDetectorType);
+    setName(BornAgain::FlatDetectorType);
 }
 
-RectangularDetector::RectangularDetector(const RectangularDetector& other)
+FlatDetector::FlatDetector(const FlatDetector& other)
     : IDetector2D(other)
     , m_normal_to_detector(other.m_normal_to_detector)
     , m_u0(other.m_u0)
@@ -47,17 +47,17 @@ RectangularDetector::RectangularDetector(const RectangularDetector& other)
     , m_u_unit(other.m_u_unit)
     , m_v_unit(other.m_v_unit)
 {
-    setName(BornAgain::RectangularDetectorType);
+    setName(BornAgain::FlatDetectorType);
 }
 
-RectangularDetector::~RectangularDetector() {}
+FlatDetector::~FlatDetector() {}
 
-RectangularDetector* RectangularDetector::clone() const
+FlatDetector* FlatDetector::clone() const
 {
-    return new RectangularDetector(*this);
+    return new FlatDetector(*this);
 }
 
-void RectangularDetector::init(const Beam& beam)
+void FlatDetector::init(const Beam& beam)
 {
     double alpha_i = beam.getAlpha();
     kvector_t central_k = beam.getCentralK();
@@ -65,7 +65,7 @@ void RectangularDetector::init(const Beam& beam)
     initUandV(alpha_i);
 }
 
-void RectangularDetector::setPosition(const kvector_t normal_to_detector,
+void FlatDetector::setPosition(const kvector_t normal_to_detector,
                                       double u0, double v0, const kvector_t direction)
 {
     m_detector_arrangement = GENERIC;
@@ -75,99 +75,99 @@ void RectangularDetector::setPosition(const kvector_t normal_to_detector,
     m_direction = direction;
 }
 
-void RectangularDetector::setPerpendicularToSampleX(double distance, double u0, double v0)
+void FlatDetector::setPerpendicularToSampleX(double distance, double u0, double v0)
 {
     m_detector_arrangement = PERPENDICULAR_TO_SAMPLE;
     setDistanceAndOffset(distance, u0, v0);
 }
 
-void RectangularDetector::setPerpendicularToDirectBeam(double distance, double u0, double v0)
+void FlatDetector::setPerpendicularToDirectBeam(double distance, double u0, double v0)
 {
     m_detector_arrangement = PERPENDICULAR_TO_DIRECT_BEAM;
     setDistanceAndOffset(distance, u0, v0);
 }
 
-void RectangularDetector::setPerpendicularToReflectedBeam(double distance, double u0, double v0)
+void FlatDetector::setPerpendicularToReflectedBeam(double distance, double u0, double v0)
 {
     m_detector_arrangement = PERPENDICULAR_TO_REFLECTED_BEAM;
     setDistanceAndOffset(distance, u0, v0);
 }
 
-void RectangularDetector::setDirectBeamPosition(double u0, double v0)
+void FlatDetector::setDirectBeamPosition(double u0, double v0)
 {
     m_detector_arrangement = PERPENDICULAR_TO_REFLECTED_BEAM_DPOS;
     m_dbeam_u0 = u0;
     m_dbeam_v0 = v0;
 }
 
-double RectangularDetector::getWidth() const
+double FlatDetector::getWidth() const
 {
     const IAxis& axis = getAxis(BornAgain::X_AXIS_INDEX);
     return axis.getMax() - axis.getMin();
 }
 
-double RectangularDetector::getHeight() const
+double FlatDetector::getHeight() const
 {
     const IAxis& axis = getAxis(BornAgain::Y_AXIS_INDEX);
     return axis.getMax() - axis.getMin();
 }
 
-size_t RectangularDetector::getNbinsX() const
+size_t FlatDetector::getNbinsX() const
 {
     return getAxis(BornAgain::X_AXIS_INDEX).size();
 }
 
-size_t RectangularDetector::getNbinsY() const
+size_t FlatDetector::getNbinsY() const
 {
     return getAxis(BornAgain::Y_AXIS_INDEX).size();
 }
 
-kvector_t RectangularDetector::getNormalVector() const
+kvector_t FlatDetector::getNormalVector() const
 {
     return m_normal_to_detector;
 }
 
-double RectangularDetector::getU0() const
+double FlatDetector::getU0() const
 {
     return m_u0;
 }
 
-double RectangularDetector::getV0() const
+double FlatDetector::getV0() const
 {
     return m_v0;
 }
 
-kvector_t RectangularDetector::getDirectionVector() const
+kvector_t FlatDetector::getDirectionVector() const
 {
     return m_direction;
 }
 
-double RectangularDetector::getDistance() const
+double FlatDetector::getDistance() const
 {
     return m_distance;
 }
 
-double RectangularDetector::getDirectBeamU0() const
+double FlatDetector::getDirectBeamU0() const
 {
     return m_dbeam_u0;
 }
 
-double RectangularDetector::getDirectBeamV0() const
+double FlatDetector::getDirectBeamV0() const
 {
     return m_dbeam_v0;
 }
 
-RectangularDetector::EDetectorArrangement RectangularDetector::getDetectorArrangment() const
+FlatDetector::EDetectorArrangement FlatDetector::getDetectorArrangment() const
 {
     return m_detector_arrangement;
 }
 
-AxesUnits RectangularDetector::defaultAxesUnits() const
+AxesUnits FlatDetector::defaultAxesUnits() const
 {
     return AxesUnits::MM;
 }
 
-RectangularPixel* RectangularDetector::regionOfInterestPixel() const
+RectangularPixel* FlatDetector::regionOfInterestPixel() const
 {
     const IAxis& u_axis = getAxis(BornAgain::X_AXIS_INDEX);
     const IAxis& v_axis = getAxis(BornAgain::Y_AXIS_INDEX);
@@ -191,7 +191,7 @@ RectangularPixel* RectangularDetector::regionOfInterestPixel() const
     return new RectangularPixel(corner_position, uaxis_vector, vaxis_vector);
 }
 
-IPixel* RectangularDetector::createPixel(size_t index) const
+IPixel* FlatDetector::createPixel(size_t index) const
 {
     const IAxis& u_axis = getAxis(BornAgain::X_AXIS_INDEX);
     const IAxis& v_axis = getAxis(BornAgain::Y_AXIS_INDEX);
@@ -207,7 +207,7 @@ IPixel* RectangularDetector::createPixel(size_t index) const
     return new RectangularPixel(corner_position, width, height);
 }
 
-std::string RectangularDetector::axisName(size_t index) const
+std::string FlatDetector::axisName(size_t index) const
 {
     switch (index) {
     case 0:
@@ -216,11 +216,11 @@ std::string RectangularDetector::axisName(size_t index) const
         return BornAgain::V_AXIS_NAME;
     default:
         throw Exceptions::LogicErrorException(
-            "RectangularDetector::getAxisName(size_t index) -> Error! index > 1");
+            "FlatDetector::getAxisName(size_t index) -> Error! index > 1");
     }
 }
 
-size_t RectangularDetector::getIndexOfSpecular(const Beam& beam) const
+size_t FlatDetector::getIndexOfSpecular(const Beam& beam) const
 {
     if (dimension()!=2) return totalSize();
     double alpha = beam.getAlpha();
@@ -239,11 +239,11 @@ size_t RectangularDetector::getIndexOfSpecular(const Beam& beam) const
     return totalSize();
 }
 
-void RectangularDetector::setDistanceAndOffset(double distance, double u0, double v0)
+void FlatDetector::setDistanceAndOffset(double distance, double u0, double v0)
 {
     if(distance <= 0.0) {
         std::ostringstream message;
-        message << "RectangularDetector::setPerpendicularToSample() -> Error. "
+        message << "FlatDetector::setPerpendicularToSample() -> Error. "
                 << "Distance to sample can't be negative or zero";
         throw Exceptions::LogicErrorException(message.str());
     }
@@ -252,7 +252,7 @@ void RectangularDetector::setDistanceAndOffset(double distance, double u0, doubl
     m_v0 = v0;
 }
 
-void RectangularDetector::initNormalVector(const kvector_t central_k)
+void FlatDetector::initNormalVector(const kvector_t central_k)
 {
     kvector_t central_k_unit = central_k.unit();
 
@@ -280,11 +280,11 @@ void RectangularDetector::initNormalVector(const kvector_t central_k)
 
     else {
         throw Exceptions::LogicErrorException(
-            "RectangularDetector::init() -> Unknown detector arrangement");
+            "FlatDetector::init() -> Unknown detector arrangement");
     }
 }
 
-void RectangularDetector::initUandV(double alpha_i)
+void FlatDetector::initUandV(double alpha_i)
 {
     double d2 = m_normal_to_detector.dot(m_normal_to_detector);
     kvector_t u_direction =

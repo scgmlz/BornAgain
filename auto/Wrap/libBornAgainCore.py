@@ -7209,7 +7209,7 @@ class INodeVisitor(_object):
         visit(INodeVisitor self, ParticleDistribution arg2)
         visit(INodeVisitor self, ParticleLayout arg2)
         visit(INodeVisitor self, PoissonNoiseBackground arg2)
-        visit(INodeVisitor self, RectangularDetector arg2)
+        visit(INodeVisitor self, FlatDetector arg2)
         visit(INodeVisitor self, ResolutionFunction2DGaussian arg2)
         visit(INodeVisitor self, RotationEuler arg2)
         visit(INodeVisitor self, RotationX arg2)
@@ -28252,40 +28252,40 @@ class Rectangle(IShape2D):
 Rectangle_swigregister = _libBornAgainCore.Rectangle_swigregister
 Rectangle_swigregister(Rectangle)
 
-class RectangularDetector(IDetector2D):
+class FlatDetector(IDetector2D):
     """
 
 
-    A flat rectangular detector with axes and resolution function.
+    A flat flat detector with axes and resolution function.
 
-    C++ includes: RectangularDetector.h
+    C++ includes: FlatDetector.h
 
     """
 
     __swig_setmethods__ = {}
     for _s in [IDetector2D]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, RectangularDetector, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FlatDetector, name, value)
     __swig_getmethods__ = {}
     for _s in [IDetector2D]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
-    __getattr__ = lambda self, name: _swig_getattr(self, RectangularDetector, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, FlatDetector, name)
     __repr__ = _swig_repr
-    GENERIC = _libBornAgainCore.RectangularDetector_GENERIC
-    PERPENDICULAR_TO_SAMPLE = _libBornAgainCore.RectangularDetector_PERPENDICULAR_TO_SAMPLE
-    PERPENDICULAR_TO_DIRECT_BEAM = _libBornAgainCore.RectangularDetector_PERPENDICULAR_TO_DIRECT_BEAM
-    PERPENDICULAR_TO_REFLECTED_BEAM = _libBornAgainCore.RectangularDetector_PERPENDICULAR_TO_REFLECTED_BEAM
-    PERPENDICULAR_TO_REFLECTED_BEAM_DPOS = _libBornAgainCore.RectangularDetector_PERPENDICULAR_TO_REFLECTED_BEAM_DPOS
+    GENERIC = _libBornAgainCore.FlatDetector_GENERIC
+    PERPENDICULAR_TO_SAMPLE = _libBornAgainCore.FlatDetector_PERPENDICULAR_TO_SAMPLE
+    PERPENDICULAR_TO_DIRECT_BEAM = _libBornAgainCore.FlatDetector_PERPENDICULAR_TO_DIRECT_BEAM
+    PERPENDICULAR_TO_REFLECTED_BEAM = _libBornAgainCore.FlatDetector_PERPENDICULAR_TO_REFLECTED_BEAM
+    PERPENDICULAR_TO_REFLECTED_BEAM_DPOS = _libBornAgainCore.FlatDetector_PERPENDICULAR_TO_REFLECTED_BEAM_DPOS
 
     def __init__(self, *args):
         """
-        __init__(RectangularDetector self, size_t nxbins, double width, size_t nybins, double height) -> RectangularDetector
-        __init__(RectangularDetector self, RectangularDetector other) -> RectangularDetector
+        __init__(FlatDetector self, size_t nxbins, double width, size_t nybins, double height) -> FlatDetector
+        __init__(FlatDetector self, FlatDetector other) -> FlatDetector
 
-        RectangularDetector::RectangularDetector(const RectangularDetector &other)
+        FlatDetector::FlatDetector(const FlatDetector &other)
 
         """
-        this = _libBornAgainCore.new_RectangularDetector(*args)
+        this = _libBornAgainCore.new_FlatDetector(*args)
         try:
             self.this.append(this)
         except __builtin__.Exception:
@@ -28293,236 +28293,236 @@ class RectangularDetector(IDetector2D):
 
     def clone(self):
         """
-        clone(RectangularDetector self) -> RectangularDetector
+        clone(FlatDetector self) -> FlatDetector
 
-        RectangularDetector * RectangularDetector::clone() const override
+        FlatDetector * FlatDetector::clone() const override
 
         """
-        return _libBornAgainCore.RectangularDetector_clone(self)
+        return _libBornAgainCore.FlatDetector_clone(self)
 
 
     def accept(self, visitor):
         """
-        accept(RectangularDetector self, INodeVisitor visitor)
+        accept(FlatDetector self, INodeVisitor visitor)
 
-        void RectangularDetector::accept(INodeVisitor *visitor) const final
+        void FlatDetector::accept(INodeVisitor *visitor) const final
 
         Calls the  INodeVisitor's visit method. 
 
         """
-        return _libBornAgainCore.RectangularDetector_accept(self, visitor)
+        return _libBornAgainCore.FlatDetector_accept(self, visitor)
 
-    __swig_destroy__ = _libBornAgainCore.delete_RectangularDetector
+    __swig_destroy__ = _libBornAgainCore.delete_FlatDetector
     __del__ = lambda self: None
 
     def init(self, beam):
         """
-        init(RectangularDetector self, Beam beam)
+        init(FlatDetector self, Beam beam)
 
-        void RectangularDetector::init(const Beam &beam) override
+        void FlatDetector::init(const Beam &beam) override
 
         Inits detector with the beam settings. 
 
         """
-        return _libBornAgainCore.RectangularDetector_init(self, beam)
+        return _libBornAgainCore.FlatDetector_init(self, beam)
 
 
     def setPosition(self, *args):
         """
-        setPosition(RectangularDetector self, kvector_t normal_to_detector, double u0, double v0, kvector_t direction)
-        setPosition(RectangularDetector self, kvector_t normal_to_detector, double u0, double v0)
+        setPosition(FlatDetector self, kvector_t normal_to_detector, double u0, double v0, kvector_t direction)
+        setPosition(FlatDetector self, kvector_t normal_to_detector, double u0, double v0)
 
-        void RectangularDetector::setPosition(const kvector_t normal_to_detector, double u0, double v0, const kvector_t direction=kvector_t(0.0, -1.0, 0.0))
+        void FlatDetector::setPosition(const kvector_t normal_to_detector, double u0, double v0, const kvector_t direction=kvector_t(0.0, -1.0, 0.0))
 
         """
-        return _libBornAgainCore.RectangularDetector_setPosition(self, *args)
+        return _libBornAgainCore.FlatDetector_setPosition(self, *args)
 
 
     def setPerpendicularToSampleX(self, distance, u0, v0):
         """
-        setPerpendicularToSampleX(RectangularDetector self, double distance, double u0, double v0)
+        setPerpendicularToSampleX(FlatDetector self, double distance, double u0, double v0)
 
-        void RectangularDetector::setPerpendicularToSampleX(double distance, double u0, double v0)
+        void FlatDetector::setPerpendicularToSampleX(double distance, double u0, double v0)
 
         """
-        return _libBornAgainCore.RectangularDetector_setPerpendicularToSampleX(self, distance, u0, v0)
+        return _libBornAgainCore.FlatDetector_setPerpendicularToSampleX(self, distance, u0, v0)
 
 
     def setPerpendicularToDirectBeam(self, distance, u0, v0):
         """
-        setPerpendicularToDirectBeam(RectangularDetector self, double distance, double u0, double v0)
+        setPerpendicularToDirectBeam(FlatDetector self, double distance, double u0, double v0)
 
-        void RectangularDetector::setPerpendicularToDirectBeam(double distance, double u0, double v0)
+        void FlatDetector::setPerpendicularToDirectBeam(double distance, double u0, double v0)
 
         """
-        return _libBornAgainCore.RectangularDetector_setPerpendicularToDirectBeam(self, distance, u0, v0)
+        return _libBornAgainCore.FlatDetector_setPerpendicularToDirectBeam(self, distance, u0, v0)
 
 
     def setPerpendicularToReflectedBeam(self, distance, u0=0.0, v0=0.0):
         """
-        setPerpendicularToReflectedBeam(RectangularDetector self, double distance, double u0=0.0, double v0=0.0)
-        setPerpendicularToReflectedBeam(RectangularDetector self, double distance, double u0=0.0)
-        setPerpendicularToReflectedBeam(RectangularDetector self, double distance)
+        setPerpendicularToReflectedBeam(FlatDetector self, double distance, double u0=0.0, double v0=0.0)
+        setPerpendicularToReflectedBeam(FlatDetector self, double distance, double u0=0.0)
+        setPerpendicularToReflectedBeam(FlatDetector self, double distance)
 
-        void RectangularDetector::setPerpendicularToReflectedBeam(double distance, double u0=0.0, double v0=0.0)
+        void FlatDetector::setPerpendicularToReflectedBeam(double distance, double u0=0.0, double v0=0.0)
 
         """
-        return _libBornAgainCore.RectangularDetector_setPerpendicularToReflectedBeam(self, distance, u0, v0)
+        return _libBornAgainCore.FlatDetector_setPerpendicularToReflectedBeam(self, distance, u0, v0)
 
 
     def setDirectBeamPosition(self, u0, v0):
         """
-        setDirectBeamPosition(RectangularDetector self, double u0, double v0)
+        setDirectBeamPosition(FlatDetector self, double u0, double v0)
 
-        void RectangularDetector::setDirectBeamPosition(double u0, double v0)
+        void FlatDetector::setDirectBeamPosition(double u0, double v0)
 
         """
-        return _libBornAgainCore.RectangularDetector_setDirectBeamPosition(self, u0, v0)
+        return _libBornAgainCore.FlatDetector_setDirectBeamPosition(self, u0, v0)
 
 
     def getWidth(self):
         """
-        getWidth(RectangularDetector self) -> double
+        getWidth(FlatDetector self) -> double
 
-        double RectangularDetector::getWidth() const
+        double FlatDetector::getWidth() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getWidth(self)
+        return _libBornAgainCore.FlatDetector_getWidth(self)
 
 
     def getHeight(self):
         """
-        getHeight(RectangularDetector self) -> double
+        getHeight(FlatDetector self) -> double
 
-        double RectangularDetector::getHeight() const
+        double FlatDetector::getHeight() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getHeight(self)
+        return _libBornAgainCore.FlatDetector_getHeight(self)
 
 
     def getNbinsX(self):
         """
-        getNbinsX(RectangularDetector self) -> size_t
+        getNbinsX(FlatDetector self) -> size_t
 
-        size_t RectangularDetector::getNbinsX() const
+        size_t FlatDetector::getNbinsX() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getNbinsX(self)
+        return _libBornAgainCore.FlatDetector_getNbinsX(self)
 
 
     def getNbinsY(self):
         """
-        getNbinsY(RectangularDetector self) -> size_t
+        getNbinsY(FlatDetector self) -> size_t
 
-        size_t RectangularDetector::getNbinsY() const
+        size_t FlatDetector::getNbinsY() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getNbinsY(self)
+        return _libBornAgainCore.FlatDetector_getNbinsY(self)
 
 
     def getNormalVector(self):
         """
-        getNormalVector(RectangularDetector self) -> kvector_t
+        getNormalVector(FlatDetector self) -> kvector_t
 
-        kvector_t RectangularDetector::getNormalVector() const
+        kvector_t FlatDetector::getNormalVector() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getNormalVector(self)
+        return _libBornAgainCore.FlatDetector_getNormalVector(self)
 
 
     def getU0(self):
         """
-        getU0(RectangularDetector self) -> double
+        getU0(FlatDetector self) -> double
 
-        double RectangularDetector::getU0() const
+        double FlatDetector::getU0() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getU0(self)
+        return _libBornAgainCore.FlatDetector_getU0(self)
 
 
     def getV0(self):
         """
-        getV0(RectangularDetector self) -> double
+        getV0(FlatDetector self) -> double
 
-        double RectangularDetector::getV0() const
+        double FlatDetector::getV0() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getV0(self)
+        return _libBornAgainCore.FlatDetector_getV0(self)
 
 
     def getDirectionVector(self):
         """
-        getDirectionVector(RectangularDetector self) -> kvector_t
+        getDirectionVector(FlatDetector self) -> kvector_t
 
-        kvector_t RectangularDetector::getDirectionVector() const
+        kvector_t FlatDetector::getDirectionVector() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getDirectionVector(self)
+        return _libBornAgainCore.FlatDetector_getDirectionVector(self)
 
 
     def getDistance(self):
         """
-        getDistance(RectangularDetector self) -> double
+        getDistance(FlatDetector self) -> double
 
-        double RectangularDetector::getDistance() const
+        double FlatDetector::getDistance() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getDistance(self)
+        return _libBornAgainCore.FlatDetector_getDistance(self)
 
 
     def getDirectBeamU0(self):
         """
-        getDirectBeamU0(RectangularDetector self) -> double
+        getDirectBeamU0(FlatDetector self) -> double
 
-        double RectangularDetector::getDirectBeamU0() const
+        double FlatDetector::getDirectBeamU0() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getDirectBeamU0(self)
+        return _libBornAgainCore.FlatDetector_getDirectBeamU0(self)
 
 
     def getDirectBeamV0(self):
         """
-        getDirectBeamV0(RectangularDetector self) -> double
+        getDirectBeamV0(FlatDetector self) -> double
 
-        double RectangularDetector::getDirectBeamV0() const
+        double FlatDetector::getDirectBeamV0() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getDirectBeamV0(self)
+        return _libBornAgainCore.FlatDetector_getDirectBeamV0(self)
 
 
     def getDetectorArrangment(self):
         """
-        getDetectorArrangment(RectangularDetector self) -> RectangularDetector::EDetectorArrangement
+        getDetectorArrangment(FlatDetector self) -> FlatDetector::EDetectorArrangement
 
-        RectangularDetector::EDetectorArrangement RectangularDetector::getDetectorArrangment() const
+        FlatDetector::EDetectorArrangement FlatDetector::getDetectorArrangment() const
 
         """
-        return _libBornAgainCore.RectangularDetector_getDetectorArrangment(self)
+        return _libBornAgainCore.FlatDetector_getDetectorArrangment(self)
 
 
     def defaultAxesUnits(self):
         """
-        defaultAxesUnits(RectangularDetector self) -> AxesUnits
+        defaultAxesUnits(FlatDetector self) -> AxesUnits
 
-        AxesUnits RectangularDetector::defaultAxesUnits() const override
+        AxesUnits FlatDetector::defaultAxesUnits() const override
 
         return default axes units 
 
         """
-        return _libBornAgainCore.RectangularDetector_defaultAxesUnits(self)
+        return _libBornAgainCore.FlatDetector_defaultAxesUnits(self)
 
 
     def regionOfInterestPixel(self):
         """
-        regionOfInterestPixel(RectangularDetector self) -> RectangularPixel
+        regionOfInterestPixel(FlatDetector self) -> RectangularPixel
 
-        RectangularPixel * RectangularDetector::regionOfInterestPixel() const
+        RectangularPixel * FlatDetector::regionOfInterestPixel() const
 
         """
-        return _libBornAgainCore.RectangularDetector_regionOfInterestPixel(self)
+        return _libBornAgainCore.FlatDetector_regionOfInterestPixel(self)
 
-RectangularDetector_swigregister = _libBornAgainCore.RectangularDetector_swigregister
-RectangularDetector_swigregister(RectangularDetector)
+FlatDetector_swigregister = _libBornAgainCore.FlatDetector_swigregister
+FlatDetector_swigregister(FlatDetector)
 
 class RectangularPixel(IPixel):
     """Proxy of C++ RectangularPixel class."""

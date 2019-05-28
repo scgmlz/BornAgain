@@ -14,20 +14,20 @@
 
 #include "DetectorPresenter.h"
 #include "SphericalDetectorEditor.h"
-#include "RectangularDetectorEditor.h"
+#include "FlatDetectorEditor.h"
 #include "SessionItem.h"
 #include "GUIHelpers.h"
 
 namespace {
 const QString SphericalDetectorPresentation = "Spherical";
-const QString RectangularDetectorPresentation = "Rectangular";
+const QString FlatDetectorPresentation = "Flat";
 }
 
 DetectorPresenter::DetectorPresenter(QWidget* parent)
     : ItemComboWidget(parent)
 {
     registerWidget(SphericalDetectorPresentation, create_new<SphericalDetectorEditor>);
-    registerWidget(RectangularDetectorPresentation, create_new<RectangularDetectorEditor>);
+    registerWidget(FlatDetectorPresentation, create_new<FlatDetectorEditor>);
     setToolBarVisible(false);
 }
 
@@ -38,8 +38,8 @@ QString DetectorPresenter::itemPresentation() const
 
     if (currentItem()->modelType() == Constants::SphericalDetectorType)
         return SphericalDetectorPresentation;
-    else if (currentItem()->modelType() == Constants::RectangularDetectorType)
-        return RectangularDetectorPresentation;
+    else if (currentItem()->modelType() == Constants::FlatDetectorType)
+        return FlatDetectorPresentation;
     else
         throw GUIHelpers::Error("DetectorPresenter::itemPresentation() -> Error. Wrong item "
                                 "type '"+currentItem()->modelType()+"'");
@@ -48,5 +48,5 @@ QString DetectorPresenter::itemPresentation() const
 QStringList DetectorPresenter::activePresentationList(SessionItem* item)
 {
     Q_UNUSED(item);
-    return QStringList() << SphericalDetectorPresentation << RectangularDetectorPresentation;
+    return QStringList() << SphericalDetectorPresentation << FlatDetectorPresentation;
 }

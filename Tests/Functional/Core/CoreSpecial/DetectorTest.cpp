@@ -15,7 +15,7 @@
 #include "Benchmark.h"
 #include "DetectorTest.h"
 #include "GISASSimulation.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "SampleBuilderFactory.h"
 #include "DetectorElement.h"
 #include "SphericalDetector.h"
@@ -25,7 +25,7 @@
 namespace
 {
 // functions for setting up and running simulations
-RectangularDetector rectangularDetector(size_t size);
+FlatDetector flatDetector(size_t size);
 SphericalDetector sphericalDetector(size_t size);
 std::unique_ptr<Instrument> createInstrument(const IDetector& detector);
 std::unique_ptr<GISASSimulation> createSimulation(const Instrument& instr);
@@ -71,9 +71,9 @@ std::unique_ptr<Benchmark> DetectorTest::runSingleSizeDetectorTest(size_t size,
     std::unique_ptr<Benchmark> bench(new Benchmark);
 
     bench->test_method("elements_rect",
-                       [size]() { test_det_elements(rectangularDetector(size)); }, run_n_times);
+                       [size]() { test_det_elements(flatDetector(size)); }, run_n_times);
     bench->test_method("run_rect",
-                       [size]() { test_run_simulation(rectangularDetector(size)); }, run_n_times);
+                       [size]() { test_run_simulation(flatDetector(size)); }, run_n_times);
     bench->test_method("elements_spher",
                        [size]() { test_det_elements(sphericalDetector(size)); }, run_n_times);
     bench->test_method("run_spher",
@@ -127,12 +127,12 @@ void test_run_simulation(const IDetector& detector)
     simulation->runSimulation();
 }
 
-RectangularDetector rectangularDetector(size_t size)
+FlatDetector flatDetector(size_t size)
 {
     const double width_mm = 10;
     const double height_mm = 10;
     const double distance_mm = 10;
-    RectangularDetector detector(size, width_mm, size, height_mm);
+    FlatDetector detector(size, width_mm, size, height_mm);
     detector.setPerpendicularToReflectedBeam(distance_mm);
     return detector;
 }

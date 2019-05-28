@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Instrument/RectangularDetector.cpp
-//! @brief     Defines class RectangularDetector.
+//! @file      Core/Instrument/FlatDetector.cpp
+//! @brief     Defines class FlatDetector.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,18 +12,18 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGULARDETECTOR_H
-#define RECTANGULARDETECTOR_H
+#ifndef FLATDETECTOR_H
+#define FLATDETECTOR_H
 
 #include "IDetector2D.h"
 #include "IPixel.h"
 
 class RectangularPixel;
 
-//! A flat rectangular detector with axes and resolution function.
+//! A flat flat detector with axes and resolution function.
 //! @ingroup simulation
 
-class BA_CORE_API_ RectangularDetector : public IDetector2D
+class BA_CORE_API_ FlatDetector : public IDetector2D
 {
 public:
     enum EDetectorArrangement {
@@ -34,20 +34,20 @@ public:
         PERPENDICULAR_TO_REFLECTED_BEAM_DPOS
     };
 
-    //! Rectangular detector constructor
+    //! Flat detector constructor
     //! @param nxbins Number of bins (pixels) in x-direction
     //! @param width Width of the detector in mm along x-direction
     //! @param nybins Number of bins (pixels) in y-direction
     //! @param height Height of the detector in mm along y-direction
-    RectangularDetector(size_t nxbins, double width, size_t nybins, double height);
+    FlatDetector(size_t nxbins, double width, size_t nybins, double height);
 
-    RectangularDetector(const RectangularDetector& other);
+    FlatDetector(const FlatDetector& other);
 
-    RectangularDetector* clone() const override;
+    FlatDetector* clone() const override;
 
     void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-    ~RectangularDetector();
+    ~FlatDetector();
 
     void init(const Beam& beam) override;
 
@@ -91,7 +91,7 @@ protected:
     size_t getIndexOfSpecular(const Beam& beam) const override;
 
     //! swap function
-    void swapContent(RectangularDetector& other);
+    void swapContent(FlatDetector& other);
 private:
     void setDistanceAndOffset(double distance, double u0, double v0);
     void initNormalVector(const kvector_t central_k);
@@ -129,4 +129,4 @@ private:
     kvector_t m_normal;
 };
 
-#endif // RECTANGULARDETECTOR_H
+#endif // FLATDETECTOR_H

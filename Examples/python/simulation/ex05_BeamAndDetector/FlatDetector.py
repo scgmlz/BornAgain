@@ -1,5 +1,5 @@
 """
-Simulation with rectangular detector. Pilatus3-1M detector is used as an example.
+Simulation with flat detector. Pilatus3-1M detector is used as an example.
 Results will be compared against simulation with spherical detector.
 """
 import numpy
@@ -55,13 +55,13 @@ def get_spherical_detector():
         n_phi, phi_min, phi_max, n_alpha, alpha_min, alpha_max)
 
 
-def get_rectangular_detector():
+def get_flat_detector():
     """
-    Returns a rectangular detector representing our PILATUS detector
+    Returns a flat detector representing our PILATUS detector
     """
     width = pilatus_npx*pilatus_pixel_size
     height = pilatus_npy*pilatus_pixel_size
-    detector = ba.RectangularDetector(pilatus_npx, width, pilatus_npy, height)
+    detector = ba.FlatDetector(pilatus_npx, width, pilatus_npy, height)
     detector.setPerpendicularToSampleX(detector_distance, width/2., 0.0)
     return detector
 
@@ -88,9 +88,9 @@ def plot(results):
                      xlabel=r'$\phi_f ^{\circ}$', ylabel=r'$\alpha_f ^{\circ}$',
                      zlabel="")
 
-    # showing  result of rectangular detector simulation
+    # showing  result of flat detector simulation
     plt.subplot(1, 3, 2)
-    ba.plot_colormap(results['rectangular'], title="Rectangular detector",
+    ba.plot_colormap(results['rectangular'], title="Flat detector",
                      xlabel='X, mm', ylabel='Y, mm', zlabel="")
 
     # show relative difference between two plots (sph[i]-rect[i])/rect[i]
@@ -125,8 +125,8 @@ def run_simulation():
     simulation.runSimulation()
     results['spherical'] = simulation.result()
 
-    # runs simulation for rectangular detector
-    simulation.setDetector(get_rectangular_detector())
+    # runs simulation for flat detector
+    simulation.setDetector(get_flat_detector())
     simulation.runSimulation()
     results['rectangular'] = simulation.result()
 

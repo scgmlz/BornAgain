@@ -34,8 +34,8 @@ class LayerInterface;
 class LayerRoughness;
 class ParameterDistribution;
 class ParticleDistribution;
-class RectangularDetector;
-class RectangularDetectorItem;
+class FlatDetector;
+class FlatDetectorItem;
 class SessionItem;
 class SpecularBeamItem;
 class SpecularSimulation;
@@ -97,8 +97,8 @@ BA_CORE_API_ void setDetectorProperties(DetectorItem* detector_item, const IDete
 BA_CORE_API_ void setSphericalDetector(SphericalDetectorItem* detector_item,
                                        const SphericalDetector& detector);
 
-BA_CORE_API_ void setRectangularDetector(RectangularDetectorItem* detector_item,
-                                         const RectangularDetector& detector);
+BA_CORE_API_ void setFlatDetector(FlatDetectorItem* detector_item,
+                                         const FlatDetector& detector);
 
 BA_CORE_API_ void setDetectorMasks(DetectorItem* detector_item, const Simulation& simulation);
 

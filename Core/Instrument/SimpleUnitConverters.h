@@ -21,7 +21,7 @@
 class Beam;
 class IDetector;
 class IDetector2D;
-class RectangularDetector;
+class FlatDetector;
 class RectangularPixel;
 class SphericalDetector;
 
@@ -93,14 +93,14 @@ private:
     std::vector<std::map<AxesUnits, std::string>> createNameMaps() const override;
 };
 
-//! IUnitConverter class that handles the unit translations for rectangular detectors
+//! IUnitConverter class that handles the unit translations for flat detectors
 //! Its default units are mm for both axes
 //! @ingroup simulation_internal
 
 class BA_CORE_API_ RectangularConverter : public UnitConverterSimple
 {
 public:
-    RectangularConverter(const RectangularDetector& detector, const Beam& beam);
+    RectangularConverter(const FlatDetector& detector, const Beam& beam);
     ~RectangularConverter() override;
 
     RectangularConverter* clone() const override;

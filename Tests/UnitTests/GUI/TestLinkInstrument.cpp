@@ -7,7 +7,7 @@
 #include "LinkInstrumentManager.h"
 #include "RealDataItem.h"
 #include "RealDataModel.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorItem.h"
 #include "test_utils.h"
 #include <QSignalSpy>
 #include <QTest>
@@ -76,12 +76,12 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector type and checking that link remain
-    instrument->setDetectorGroup(Constants::RectangularDetectorType);
+    instrument->setDetectorGroup(Constants::FlatDetectorType);
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector binning and checking that link is destroyed
     DetectorItem* detectorItem = instrument->detectorItem();
-    auto& x_axis = detectorItem->item<BasicAxisItem>(RectangularDetectorItem::P_X_AXIS);
+    auto& x_axis = detectorItem->item<BasicAxisItem>(FlatDetectorItem::P_X_AXIS);
     x_axis.setItemValue(BasicAxisItem::P_NBINS, 10);
 
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>());

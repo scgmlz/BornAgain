@@ -23,7 +23,7 @@
 #include "ParameterUtils.h"
 #include "PoissonNoiseBackground.h"
 #include "PythonFormatting.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "RegionOfInterest.h"
 #include "ResolutionFunction2DGaussian.h"
 #include "SampleToPython.h"
@@ -152,12 +152,12 @@ std::string SimulationToPython::defineDetector(const Simulation* simulation) con
                    << printDegrees(detector->getAxis(index).getMax());
         }
         result << ")\n";
-    } else if (auto detector = dynamic_cast<const RectangularDetector*>(iDetector)) {
+    } else if (auto detector = dynamic_cast<const FlatDetector*>(iDetector)) {
         result << indent() << "\n";
-        result << indent() << "detector = ba.RectangularDetector(" << detector->getNbinsX() << ", "
+        result << indent() << "detector = ba.FlatDetector(" << detector->getNbinsX() << ", "
                << printDouble(detector->getWidth()) << ", " << detector->getNbinsY() << ", "
                << printDouble(detector->getHeight()) << ")\n";
-        if (detector->getDetectorArrangment() == RectangularDetector::GENERIC) {
+        if (detector->getDetectorArrangment() == FlatDetector::GENERIC) {
             result << indent() << "detector.setPosition("
                    << printKvector(detector->getNormalVector()) << ", "
                    << printDouble(detector->getU0()) << ", " << printDouble(detector->getV0());
@@ -165,22 +165,22 @@ std::string SimulationToPython::defineDetector(const Simulation* simulation) con
                 result << ", " << printKvector(detector->getDirectionVector());
             result << ")\n";
         } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
+                   == FlatDetector::PERPENDICULAR_TO_SAMPLE) {
             result << indent() << "detector.setPerpendicularToSampleX("
                    << printDouble(detector->getDistance()) << ", " << printDouble(detector->getU0())
                    << ", " << printDouble(detector->getV0()) << ")\n";
         } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
+                   == FlatDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
             result << indent() << "detector.setPerpendicularToDirectBeam("
                    << printDouble(detector->getDistance()) << ", " << printDouble(detector->getU0())
                    << ", " << printDouble(detector->getV0()) << ")\n";
         } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
+                   == FlatDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
             result << indent() << "detector.setPerpendicularToReflectedBeam("
                    << printDouble(detector->getDistance()) << ", " << printDouble(detector->getU0())
                    << ", " << printDouble(detector->getV0()) << ")\n";
         } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
+                   == FlatDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
             result << indent() << "detector.setPerpendicularToReflectedBeam("
                    << printDouble(detector->getDistance()) << ")\n";
             result << indent() << "detector.setDirectBeamPosition("

@@ -8347,7 +8347,7 @@ C++ includes: INodeVisitor.h
 %feature("docstring")  INodeVisitor::visit "virtual void INodeVisitor::visit(const PoissonNoiseBackground *)
 ";
 
-%feature("docstring")  INodeVisitor::visit "virtual void INodeVisitor::visit(const RectangularDetector *)
+%feature("docstring")  INodeVisitor::visit "virtual void INodeVisitor::visit(const FlatDetector *)
 ";
 
 %feature("docstring")  INodeVisitor::visit "virtual void INodeVisitor::visit(const ResolutionFunction2DGaussian *)
@@ -13552,12 +13552,12 @@ Returns true if area defined by two bins is inside or on border of polygon (more
 // File: classRectangularConverter.xml
 %feature("docstring") RectangularConverter "
 
-IUnitConverter class that handles the unit translations for rectangular detectors Its default units are mm for both axes
+IUnitConverter class that handles the unit translations for flat detectors Its default units are mm for both axes
 
 C++ includes: SimpleUnitConverters.h
 ";
 
-%feature("docstring")  RectangularConverter::RectangularConverter "RectangularConverter::RectangularConverter(const RectangularDetector &detector, const Beam &beam)
+%feature("docstring")  RectangularConverter::RectangularConverter "RectangularConverter::RectangularConverter(const FlatDetector &detector, const Beam &beam)
 ";
 
 %feature("docstring")  RectangularConverter::~RectangularConverter "RectangularConverter::~RectangularConverter() override
@@ -13575,17 +13575,17 @@ Returns the list of all available units.
 ";
 
 
-// File: classRectangularDetector.xml
-%feature("docstring") RectangularDetector "
+// File: classFlatDetector.xml
+%feature("docstring") FlatDetector "
 
-A flat rectangular detector with axes and resolution function.
+A flat flat detector with axes and resolution function.
 
-C++ includes: RectangularDetector.h
+C++ includes: FlatDetector.h
 ";
 
-%feature("docstring")  RectangularDetector::RectangularDetector "RectangularDetector::RectangularDetector(size_t nxbins, double width, size_t nybins, double height)
+%feature("docstring")  FlatDetector::FlatDetector "FlatDetector::FlatDetector(size_t nxbins, double width, size_t nybins, double height)
 
-Rectangular detector constructor
+Flat detector constructor
 
 Parameters:
 -----------
@@ -13603,82 +13603,82 @@ height:
 Height of the detector in mm along y-direction 
 ";
 
-%feature("docstring")  RectangularDetector::RectangularDetector "RectangularDetector::RectangularDetector(const RectangularDetector &other)
+%feature("docstring")  FlatDetector::FlatDetector "FlatDetector::FlatDetector(const FlatDetector &other)
 ";
 
-%feature("docstring")  RectangularDetector::clone "RectangularDetector * RectangularDetector::clone() const override
+%feature("docstring")  FlatDetector::clone "FlatDetector * FlatDetector::clone() const override
 ";
 
-%feature("docstring")  RectangularDetector::accept "void RectangularDetector::accept(INodeVisitor *visitor) const final
+%feature("docstring")  FlatDetector::accept "void FlatDetector::accept(INodeVisitor *visitor) const final
 
 Calls the  INodeVisitor's visit method. 
 ";
 
-%feature("docstring")  RectangularDetector::~RectangularDetector "RectangularDetector::~RectangularDetector()
+%feature("docstring")  FlatDetector::~FlatDetector "FlatDetector::~FlatDetector()
 ";
 
-%feature("docstring")  RectangularDetector::init "void RectangularDetector::init(const Beam &beam) override
+%feature("docstring")  FlatDetector::init "void FlatDetector::init(const Beam &beam) override
 
 Inits detector with the beam settings. 
 ";
 
-%feature("docstring")  RectangularDetector::setPosition "void RectangularDetector::setPosition(const kvector_t normal_to_detector, double u0, double v0, const kvector_t direction=kvector_t(0.0, -1.0, 0.0))
+%feature("docstring")  FlatDetector::setPosition "void FlatDetector::setPosition(const kvector_t normal_to_detector, double u0, double v0, const kvector_t direction=kvector_t(0.0, -1.0, 0.0))
 ";
 
-%feature("docstring")  RectangularDetector::setPerpendicularToSampleX "void RectangularDetector::setPerpendicularToSampleX(double distance, double u0, double v0)
+%feature("docstring")  FlatDetector::setPerpendicularToSampleX "void FlatDetector::setPerpendicularToSampleX(double distance, double u0, double v0)
 ";
 
-%feature("docstring")  RectangularDetector::setPerpendicularToDirectBeam "void RectangularDetector::setPerpendicularToDirectBeam(double distance, double u0, double v0)
+%feature("docstring")  FlatDetector::setPerpendicularToDirectBeam "void FlatDetector::setPerpendicularToDirectBeam(double distance, double u0, double v0)
 ";
 
-%feature("docstring")  RectangularDetector::setPerpendicularToReflectedBeam "void RectangularDetector::setPerpendicularToReflectedBeam(double distance, double u0=0.0, double v0=0.0)
+%feature("docstring")  FlatDetector::setPerpendicularToReflectedBeam "void FlatDetector::setPerpendicularToReflectedBeam(double distance, double u0=0.0, double v0=0.0)
 ";
 
-%feature("docstring")  RectangularDetector::setDirectBeamPosition "void RectangularDetector::setDirectBeamPosition(double u0, double v0)
+%feature("docstring")  FlatDetector::setDirectBeamPosition "void FlatDetector::setDirectBeamPosition(double u0, double v0)
 ";
 
-%feature("docstring")  RectangularDetector::getWidth "double RectangularDetector::getWidth() const
+%feature("docstring")  FlatDetector::getWidth "double FlatDetector::getWidth() const
 ";
 
-%feature("docstring")  RectangularDetector::getHeight "double RectangularDetector::getHeight() const
+%feature("docstring")  FlatDetector::getHeight "double FlatDetector::getHeight() const
 ";
 
-%feature("docstring")  RectangularDetector::getNbinsX "size_t RectangularDetector::getNbinsX() const
+%feature("docstring")  FlatDetector::getNbinsX "size_t FlatDetector::getNbinsX() const
 ";
 
-%feature("docstring")  RectangularDetector::getNbinsY "size_t RectangularDetector::getNbinsY() const
+%feature("docstring")  FlatDetector::getNbinsY "size_t FlatDetector::getNbinsY() const
 ";
 
-%feature("docstring")  RectangularDetector::getNormalVector "kvector_t RectangularDetector::getNormalVector() const
+%feature("docstring")  FlatDetector::getNormalVector "kvector_t FlatDetector::getNormalVector() const
 ";
 
-%feature("docstring")  RectangularDetector::getU0 "double RectangularDetector::getU0() const
+%feature("docstring")  FlatDetector::getU0 "double FlatDetector::getU0() const
 ";
 
-%feature("docstring")  RectangularDetector::getV0 "double RectangularDetector::getV0() const
+%feature("docstring")  FlatDetector::getV0 "double FlatDetector::getV0() const
 ";
 
-%feature("docstring")  RectangularDetector::getDirectionVector "kvector_t RectangularDetector::getDirectionVector() const
+%feature("docstring")  FlatDetector::getDirectionVector "kvector_t FlatDetector::getDirectionVector() const
 ";
 
-%feature("docstring")  RectangularDetector::getDistance "double RectangularDetector::getDistance() const
+%feature("docstring")  FlatDetector::getDistance "double FlatDetector::getDistance() const
 ";
 
-%feature("docstring")  RectangularDetector::getDirectBeamU0 "double RectangularDetector::getDirectBeamU0() const
+%feature("docstring")  FlatDetector::getDirectBeamU0 "double FlatDetector::getDirectBeamU0() const
 ";
 
-%feature("docstring")  RectangularDetector::getDirectBeamV0 "double RectangularDetector::getDirectBeamV0() const
+%feature("docstring")  FlatDetector::getDirectBeamV0 "double FlatDetector::getDirectBeamV0() const
 ";
 
-%feature("docstring")  RectangularDetector::getDetectorArrangment "RectangularDetector::EDetectorArrangement RectangularDetector::getDetectorArrangment() const
+%feature("docstring")  FlatDetector::getDetectorArrangment "FlatDetector::EDetectorArrangement FlatDetector::getDetectorArrangment() const
 ";
 
-%feature("docstring")  RectangularDetector::defaultAxesUnits "AxesUnits RectangularDetector::defaultAxesUnits() const override
+%feature("docstring")  FlatDetector::defaultAxesUnits "AxesUnits FlatDetector::defaultAxesUnits() const override
 
 return default axes units 
 ";
 
-%feature("docstring")  RectangularDetector::regionOfInterestPixel "RectangularPixel * RectangularDetector::regionOfInterestPixel() const
+%feature("docstring")  FlatDetector::regionOfInterestPixel "RectangularPixel * FlatDetector::regionOfInterestPixel() const
 ";
 
 
@@ -17462,27 +17462,27 @@ Typical IsGISAXS simulation with the detector phi[0,2], theta[0,2].
 
 %feature("docstring")  StandardSimulations::RectDetectorGeneric "GISASSimulation * StandardSimulations::RectDetectorGeneric()
 
-GISAS simulation with generic rectangular detector. 
+GISAS simulation with generic flat detector. 
 ";
 
 %feature("docstring")  StandardSimulations::RectDetectorPerpToSample "GISASSimulation * StandardSimulations::RectDetectorPerpToSample()
 
-GISAS simulation with the rectangular detector perpendicular to the sample. 
+GISAS simulation with the flat detector perpendicular to the sample. 
 ";
 
 %feature("docstring")  StandardSimulations::RectDetectorPerpToDirectBeam "GISASSimulation * StandardSimulations::RectDetectorPerpToDirectBeam()
 
-GISAS simulation with the rectangular detector perpendicular to the direct beam. 
+GISAS simulation with the flat detector perpendicular to the direct beam. 
 ";
 
 %feature("docstring")  StandardSimulations::RectDetectorPerpToReflectedBeam "GISASSimulation * StandardSimulations::RectDetectorPerpToReflectedBeam()
 
-GISAS simulation with the rectangular detector perpendicular to the reflected beam. 
+GISAS simulation with the flat detector perpendicular to the reflected beam. 
 ";
 
 %feature("docstring")  StandardSimulations::RectDetectorPerpToReflectedBeamDpos "GISASSimulation * StandardSimulations::RectDetectorPerpToReflectedBeamDpos()
 
-GISAS simulation with the rectangular detector perpendicular to the reflected beam when the coordinates of direct beam are known. 
+GISAS simulation with the flat detector perpendicular to the reflected beam when the coordinates of direct beam are known. 
 ";
 
 %feature("docstring")  StandardSimulations::MiniGISASMonteCarlo "GISASSimulation * StandardSimulations::MiniGISASMonteCarlo()
@@ -17497,7 +17497,7 @@ GISAS simulation with spherical detector, region of interest and mask.
 
 %feature("docstring")  StandardSimulations::RectDetWithRoi "GISASSimulation * StandardSimulations::RectDetWithRoi()
 
-GISAS simulation with rectangular detector, region of interest and mask. 
+GISAS simulation with flat detector, region of interest and mask. 
 ";
 
 %feature("docstring")  StandardSimulations::ConstantBackgroundGISAS "GISASSimulation * StandardSimulations::ConstantBackgroundGISAS()
@@ -18502,10 +18502,10 @@ make Swappable
 // File: QSpecScan_8h.xml
 
 
-// File: RectangularDetector_8cpp.xml
+// File: FlatDetector_8cpp.xml
 
 
-// File: RectangularDetector_8h.xml
+// File: FlatDetector_8h.xml
 
 
 // File: RegionOfInterest_8cpp.xml

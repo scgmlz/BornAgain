@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/InstrumentWidgets/RectangularDetectorEditor.cpp
-//! @brief     Implements class RectangularDetectorEditor
+//! @file      GUI/coregui/Views/InstrumentWidgets/FlatDetectorEditor.cpp
+//! @brief     Implements class FlatDetectorEditor
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "RectangularDetectorEditor.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorEditor.h"
+#include "FlatDetectorItem.h"
 #include "ComponentEditor.h"
 #include "ComboProperty.h"
 #include <QGridLayout>
 
-RectangularDetectorEditor::RectangularDetectorEditor(QWidget* parent)
+FlatDetectorEditor::FlatDetectorEditor(QWidget* parent)
     : SessionItemWidget(parent)
     , m_xAxisEditor(nullptr)
     , m_yAxisEditor(nullptr)
@@ -38,13 +38,13 @@ RectangularDetectorEditor::RectangularDetectorEditor(QWidget* parent)
     setLayout(mainLayout);
 }
 
-void RectangularDetectorEditor::onPropertyChanged(const QString& propertyName)
+void FlatDetectorEditor::onPropertyChanged(const QString& propertyName)
 {
-    if (propertyName == RectangularDetectorItem::P_ALIGNMENT)
+    if (propertyName == FlatDetectorItem::P_ALIGNMENT)
         init_alignment_editors();
 }
 
-void RectangularDetectorEditor::subscribeToItem()
+void FlatDetectorEditor::subscribeToItem()
 {
     detectorItem()->mapper()->setOnPropertyChange(
         [this](const QString& name) { onPropertyChanged(name); }, this);
@@ -52,7 +52,7 @@ void RectangularDetectorEditor::subscribeToItem()
     init_editors();
 }
 
-void RectangularDetectorEditor::unsubscribeFromItem()
+void FlatDetectorEditor::unsubscribeFromItem()
 {
     m_xAxisEditor->clearEditor();
     m_yAxisEditor->clearEditor();
@@ -63,14 +63,14 @@ void RectangularDetectorEditor::unsubscribeFromItem()
     m_directionEditor->clearEditor();
 }
 
-RectangularDetectorItem* RectangularDetectorEditor::detectorItem()
+FlatDetectorItem* FlatDetectorEditor::detectorItem()
 {
-    auto result = dynamic_cast<RectangularDetectorItem*>(currentItem());
+    auto result = dynamic_cast<FlatDetectorItem*>(currentItem());
     Q_ASSERT(result);
     return result;
 }
 
-void RectangularDetectorEditor::create_editors()
+void FlatDetectorEditor::create_editors()
 {
     // axes and resolution function editors
     m_xAxisEditor = new ComponentEditor(ComponentEditor::GroupWidget, "X axis");
@@ -97,27 +97,27 @@ void RectangularDetectorEditor::create_editors()
     m_gridLayout->addWidget(m_directionEditor, 3, 2);
 }
 
-void RectangularDetectorEditor::init_editors()
+void FlatDetectorEditor::init_editors()
 {
     m_xAxisEditor->clearEditor();
-    auto xAxisItem = detectorItem()->getItem(RectangularDetectorItem::P_X_AXIS);
+    auto xAxisItem = detectorItem()->getItem(FlatDetectorItem::P_X_AXIS);
     m_xAxisEditor->setItem(xAxisItem);
 
     m_yAxisEditor->clearEditor();
-    auto yAxisItem = detectorItem()->getItem(RectangularDetectorItem::P_Y_AXIS);
+    auto yAxisItem = detectorItem()->getItem(FlatDetectorItem::P_Y_AXIS);
     m_yAxisEditor->setItem(yAxisItem);
 
     m_resolutionFunctionEditor->clearEditor();
-    auto resFuncGroup = detectorItem()->getItem(RectangularDetectorItem::P_RESOLUTION_FUNCTION);
+    auto resFuncGroup = detectorItem()->getItem(FlatDetectorItem::P_RESOLUTION_FUNCTION);
     m_resolutionFunctionEditor->setItem(resFuncGroup);
 
     m_alignmentEditor->clearEditor();
-    m_alignmentEditor->setItem(detectorItem()->getItem(RectangularDetectorItem::P_ALIGNMENT));
+    m_alignmentEditor->setItem(detectorItem()->getItem(FlatDetectorItem::P_ALIGNMENT));
 
     init_alignment_editors();
 }
 
-void RectangularDetectorEditor::init_alignment_editors()
+void FlatDetectorEditor::init_alignment_editors()
 {
     m_positionsEditor->clearEditor();
     m_positionsEditor->hide();
@@ -129,35 +129,35 @@ void RectangularDetectorEditor::init_alignment_editors()
     m_directionEditor->hide();
 
     ComboProperty alignment
-        = detectorItem()->getItemValue(RectangularDetectorItem::P_ALIGNMENT).value<ComboProperty>();
+        = detectorItem()->getItemValue(FlatDetectorItem::P_ALIGNMENT).value<ComboProperty>();
 
     if (alignment.getValue() == Constants::ALIGNMENT_GENERIC) {
         m_positionsEditor->show();
         m_normalEditor->show();
         m_directionEditor->show();
 
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_U0));
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_V0));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_U0));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_V0));
 
-        auto normalVectorItem = detectorItem()->getItem(RectangularDetectorItem::P_NORMAL);
+        auto normalVectorItem = detectorItem()->getItem(FlatDetectorItem::P_NORMAL);
         m_normalEditor->setItem(normalVectorItem);
 
-        auto directionVectorItem = detectorItem()->getItem(RectangularDetectorItem::P_DIRECTION);
+        auto directionVectorItem = detectorItem()->getItem(FlatDetectorItem::P_DIRECTION);
         m_directionEditor->setItem(directionVectorItem);
 
     } else if (alignment.getValue() == Constants::ALIGNMENT_TO_DIRECT_BEAM
                || alignment.getValue() == Constants::ALIGNMENT_TO_REFLECTED_BEAM_DPOS) {
         m_positionsEditor->show();
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DBEAM_U0));
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DBEAM_V0));
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DISTANCE));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_DBEAM_U0));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_DBEAM_V0));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_DISTANCE));
 
     } else if (alignment.getValue() == Constants::ALIGNMENT_TO_SAMPLE
                || alignment.getValue() == Constants::ALIGNMENT_TO_REFLECTED_BEAM) {
         m_positionsEditor->show();
 
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_U0));
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_V0));
-        m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DISTANCE));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_U0));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_V0));
+        m_positionsEditor->addItem(detectorItem()->getItem(FlatDetectorItem::P_DISTANCE));
     }
 }

@@ -31,7 +31,7 @@
 #include "RangedDistributions.h"
 #include "RealParameter.h"
 #include "Rectangle.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "ResolutionFunction2DGaussian.h"
 #include "SampleBuilderFactory.h"
 #include "ScanResolution.h"
@@ -268,14 +268,14 @@ GISASSimulation* StandardSimulations::IsGISAXSSimulation2()
     return result;
 }
 
-//! GISAS simulation with generic rectangular detector.
+//! GISAS simulation with generic flat detector.
 
 GISASSimulation* StandardSimulations::RectDetectorGeneric()
 {
     GISASSimulation* result = new GISASSimulation();
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
 
-    RectangularDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
+    FlatDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
     detector.setPosition(kvector_t(rdet_distance, 10.0, 5.0), rdet_width/2.,
                          1.0, kvector_t(0.1, -1.0, 0.2));
 
@@ -283,49 +283,49 @@ GISASSimulation* StandardSimulations::RectDetectorGeneric()
     return result;
 }
 
-//! GISAS simulation with the rectangular detector perpendicular to the sample.
+//! GISAS simulation with the flat detector perpendicular to the sample.
 
 GISASSimulation* StandardSimulations::RectDetectorPerpToSample()
 {
     GISASSimulation* result = new GISASSimulation();
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
 
-    RectangularDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
+    FlatDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
     detector.setPerpendicularToSampleX(rdet_distance, rdet_width/2., 1.0);
 
     result->setDetector(detector);
     return result;
 }
 
-//! GISAS simulation with the rectangular detector perpendicular to the direct beam.
+//! GISAS simulation with the flat detector perpendicular to the direct beam.
 
 GISASSimulation* StandardSimulations::RectDetectorPerpToDirectBeam()
 {
     GISASSimulation* result = new GISASSimulation();
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
 
-    RectangularDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
+    FlatDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
     detector.setPerpendicularToDirectBeam(rdet_distance, rdet_width/2., 1.0);
 
     result->setDetector(detector);
     return result;
 }
 
-//! GISAS simulation with the rectangular detector perpendicular to the reflected beam.
+//! GISAS simulation with the flat detector perpendicular to the reflected beam.
 
 GISASSimulation* StandardSimulations::RectDetectorPerpToReflectedBeam()
 {
     GISASSimulation* result = new GISASSimulation();
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
 
-    RectangularDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
+    FlatDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
     detector.setPerpendicularToReflectedBeam(rdet_distance, rdet_width/2., 1.0);
 
     result->setDetector(detector);
     return result;
 }
 
-//! GISAS simulation with the rectangular detector perpendicular to the reflected beam when
+//! GISAS simulation with the flat detector perpendicular to the reflected beam when
 //! the coordinates of direct beam are known.
 
 GISASSimulation* StandardSimulations::RectDetectorPerpToReflectedBeamDpos()
@@ -333,7 +333,7 @@ GISASSimulation* StandardSimulations::RectDetectorPerpToReflectedBeamDpos()
     GISASSimulation* result = new GISASSimulation();
     result->setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
 
-    RectangularDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
+    FlatDetector detector(rdet_nbinsx, rdet_width, rdet_nbinsy, rdet_height);
     detector.setPerpendicularToReflectedBeam(rdet_distance);
     detector.setDirectBeamPosition(rdet_width/2., 1.0);
 
@@ -366,7 +366,7 @@ GISASSimulation *StandardSimulations::SphericalDetWithRoi() {
   return result;
 }
 
-//! GISAS simulation with rectangular detector, region of interest and mask.
+//! GISAS simulation with flat detector, region of interest and mask.
 
 GISASSimulation* StandardSimulations::RectDetWithRoi()
 {

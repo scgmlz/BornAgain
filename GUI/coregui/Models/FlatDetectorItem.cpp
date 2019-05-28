@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Models/RectangularDetectorItem.cpp
-//! @brief     Implements class RectangularDetectorItem
+//! @file      GUI/coregui/Models/FlatDetectorItem.cpp
+//! @brief     Implements class FlatDetectorItem
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorItem.h"
 #include "AxesItems.h"
 #include "ComboProperty.h"
 #include "GUIHelpers.h"
-#include "RectangularDetector.h"
+#include "FlatDetector.h"
 #include "ResolutionFunctionItems.h"
 #include "VectorItem.h"
 
@@ -56,19 +56,19 @@ ComboProperty alignmentCombo()
 }
 }
 
-const QString RectangularDetectorItem::P_X_AXIS = "X axis";
-const QString RectangularDetectorItem::P_Y_AXIS = "Y axis";
-const QString RectangularDetectorItem::P_ALIGNMENT = "Alignment";
-const QString RectangularDetectorItem::P_NORMAL = "Normal vector";
-const QString RectangularDetectorItem::P_DIRECTION = "Direction vector";
-const QString RectangularDetectorItem::P_U0 = "u0";
-const QString RectangularDetectorItem::P_V0 = "v0";
-const QString RectangularDetectorItem::P_DBEAM_U0 = "u0 (dbeam)";
-const QString RectangularDetectorItem::P_DBEAM_V0 = "v0 (dbeam)";
-const QString RectangularDetectorItem::P_DISTANCE = "Distance";
+const QString FlatDetectorItem::P_X_AXIS = "X axis";
+const QString FlatDetectorItem::P_Y_AXIS = "Y axis";
+const QString FlatDetectorItem::P_ALIGNMENT = "Alignment";
+const QString FlatDetectorItem::P_NORMAL = "Normal vector";
+const QString FlatDetectorItem::P_DIRECTION = "Direction vector";
+const QString FlatDetectorItem::P_U0 = "u0";
+const QString FlatDetectorItem::P_V0 = "v0";
+const QString FlatDetectorItem::P_DBEAM_U0 = "u0 (dbeam)";
+const QString FlatDetectorItem::P_DBEAM_V0 = "v0 (dbeam)";
+const QString FlatDetectorItem::P_DISTANCE = "Distance";
 
-RectangularDetectorItem::RectangularDetectorItem()
-    : DetectorItem(Constants::RectangularDetectorType)
+FlatDetectorItem::FlatDetectorItem()
+    : DetectorItem(Constants::FlatDetectorType)
     , m_is_constructed(false)
 {
     // axes parameters
@@ -121,51 +121,51 @@ RectangularDetectorItem::RectangularDetectorItem()
     });
 }
 
-void RectangularDetectorItem::setDetectorAlignment(const QString& alignment)
+void FlatDetectorItem::setDetectorAlignment(const QString& alignment)
 {
     ComboProperty combo_property
-        = getItemValue(RectangularDetectorItem::P_ALIGNMENT).value<ComboProperty>();
+        = getItemValue(FlatDetectorItem::P_ALIGNMENT).value<ComboProperty>();
 
     if (!combo_property.getValues().contains(alignment))
         throw GUIHelpers::Error(
-            "RectangularDetectorItem::setDetectorAlignment -> Unexpected alignment");
+            "FlatDetectorItem::setDetectorAlignment -> Unexpected alignment");
 
     combo_property.setValue(alignment);
-    setItemValue(RectangularDetectorItem::P_ALIGNMENT, combo_property.variant());
+    setItemValue(FlatDetectorItem::P_ALIGNMENT, combo_property.variant());
 }
 
-int RectangularDetectorItem::xSize() const
+int FlatDetectorItem::xSize() const
 {
-    return getItem(RectangularDetectorItem::P_X_AXIS)->getItemValue(BasicAxisItem::P_NBINS).toInt();
+    return getItem(FlatDetectorItem::P_X_AXIS)->getItemValue(BasicAxisItem::P_NBINS).toInt();
 }
 
-int RectangularDetectorItem::ySize() const
+int FlatDetectorItem::ySize() const
 {
-    return getItem(RectangularDetectorItem::P_Y_AXIS)->getItemValue(BasicAxisItem::P_NBINS).toInt();
+    return getItem(FlatDetectorItem::P_Y_AXIS)->getItemValue(BasicAxisItem::P_NBINS).toInt();
 }
 
-void RectangularDetectorItem::setXSize(int nx)
+void FlatDetectorItem::setXSize(int nx)
 {
-    getItem(RectangularDetectorItem::P_X_AXIS)->setItemValue(BasicAxisItem::P_NBINS, nx);
+    getItem(FlatDetectorItem::P_X_AXIS)->setItemValue(BasicAxisItem::P_NBINS, nx);
 }
 
-void RectangularDetectorItem::setYSize(int ny)
+void FlatDetectorItem::setYSize(int ny)
 {
-    getItem(RectangularDetectorItem::P_Y_AXIS)->setItemValue(BasicAxisItem::P_NBINS, ny);
+    getItem(FlatDetectorItem::P_Y_AXIS)->setItemValue(BasicAxisItem::P_NBINS, ny);
 }
 
-std::unique_ptr<IDetector2D> RectangularDetectorItem::createDomainDetector() const
+std::unique_ptr<IDetector2D> FlatDetectorItem::createDomainDetector() const
 {
     // basic axes parameters
-    auto& x_axis = item<BasicAxisItem>(RectangularDetectorItem::P_X_AXIS);
+    auto& x_axis = item<BasicAxisItem>(FlatDetectorItem::P_X_AXIS);
     size_t n_x = x_axis.getItemValue(BasicAxisItem::P_NBINS).toUInt();
     double width = x_axis.getItemValue(BasicAxisItem::P_MAX).toDouble();
 
-    auto& y_axis = item<BasicAxisItem>(RectangularDetectorItem::P_Y_AXIS);
+    auto& y_axis = item<BasicAxisItem>(FlatDetectorItem::P_Y_AXIS);
     size_t n_y = y_axis.getItemValue(BasicAxisItem::P_NBINS).toUInt();
     double height = y_axis.getItemValue(BasicAxisItem::P_MAX).toDouble();
 
-    std::unique_ptr<RectangularDetector> result(new RectangularDetector(n_x, width, n_y, height));
+    std::unique_ptr<FlatDetector> result(new FlatDetector(n_x, width, n_y, height));
 
     // distance and alighnment
     double u0 = getItemValue(P_U0).toDouble();
@@ -192,7 +192,7 @@ std::unique_ptr<IDetector2D> RectangularDetectorItem::createDomainDetector() con
 }
 
 //! updates property tooltips and visibility flags, depending from type of alignment selected
-void RectangularDetectorItem::update_properties_appearance()
+void FlatDetectorItem::update_properties_appearance()
 {
     // hiding all alignment properties
     ComboProperty alignment = getItemValue(P_ALIGNMENT).value<ComboProperty>();
@@ -232,12 +232,12 @@ void RectangularDetectorItem::update_properties_appearance()
     }
 }
 
-kvector_t RectangularDetectorItem::normalVector() const
+kvector_t FlatDetectorItem::normalVector() const
 {
-    return item<VectorItem>(RectangularDetectorItem::P_NORMAL).getVector();
+    return item<VectorItem>(FlatDetectorItem::P_NORMAL).getVector();
 }
 
-kvector_t RectangularDetectorItem::directionVector() const
+kvector_t FlatDetectorItem::directionVector() const
 {
-    return item<VectorItem>(RectangularDetectorItem::P_DIRECTION).getVector();
+    return item<VectorItem>(FlatDetectorItem::P_DIRECTION).getVector();
 }

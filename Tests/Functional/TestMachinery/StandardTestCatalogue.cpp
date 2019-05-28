@@ -330,7 +330,7 @@ StandardTestCatalogue::StandardTestCatalogue()
         "CylindersAndPrismsBuilder",
         1e-10);
 
-    // Various rectangular detector alignment
+    // Various flat detector alignment
 
     add("RectDetectorGeneric",
         "Various masks are added to the simulation",
@@ -375,7 +375,7 @@ StandardTestCatalogue::StandardTestCatalogue()
         1e-10);
 
     add("RectDetWithRoi",
-        "Rectangular detector with ROI and mask defined",
+        "Flat detector with ROI and mask defined",
         "RectDetWithRoi",
         "CylindersAndPrismsBuilder",
         1e-10);

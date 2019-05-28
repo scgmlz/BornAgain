@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Models/RectangularDetectorItem.h
-//! @brief     Defines class RectangularDetectorItem
+//! @file      GUI/coregui/Models/FlatDetectorItem.h
+//! @brief     Defines class FlatDetectorItem
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGULARDETECTORITEM_H
-#define RECTANGULARDETECTORITEM_H
+#ifndef FLATDETECTORITEM_H
+#define FLATDETECTORITEM_H
 
 #include "DetectorItems.h"
 #include "Vectors3D.h"
 
-class BA_CORE_API_ RectangularDetectorItem : public DetectorItem
+class BA_CORE_API_ FlatDetectorItem : public DetectorItem
 {
 public:
     static const QString P_X_AXIS;
@@ -32,7 +32,7 @@ public:
     static const QString P_DBEAM_V0;
     static const QString P_DISTANCE;
 
-    RectangularDetectorItem();
+    FlatDetectorItem();
 
     void setDetectorAlignment(const QString& alignment);
 
@@ -50,4 +50,4 @@ private:
     bool m_is_constructed;
 };
 
-#endif // RECTANGULARDETECTORITEM_H
+#endif // FLATDETECTORITEM_H

@@ -128,7 +128,7 @@ class ParticleCoreShell;
 class ParticleDistribution;
 class ParticleLayout;
 class PoissonNoiseBackground;
-class RectangularDetector;
+class FlatDetector;
 class ResolutionFunction2DGaussian;
 class RotationEuler;
 class RotationX;
@@ -261,7 +261,7 @@ public:
     virtual void visit(const ParticleDistribution*) {}
     virtual void visit(const ParticleLayout*) {}
     virtual void visit(const PoissonNoiseBackground*) {}
-    virtual void visit(const RectangularDetector*) {}
+    virtual void visit(const FlatDetector*) {}
     virtual void visit(const ResolutionFunction2DGaussian*) {}
     virtual void visit(const RotationEuler*) {}
     virtual void visit(const RotationX*) {}

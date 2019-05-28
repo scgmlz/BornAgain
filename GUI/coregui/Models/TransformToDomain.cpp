@@ -20,7 +20,7 @@
 #include "ComboProperty.h"
 #include "DetectorItems.h"
 #include "SphericalDetectorItem.h"
-#include "RectangularDetectorItem.h"
+#include "FlatDetectorItem.h"
 #include "Distributions.h"
 #include "FTDecayFunctionItems.h"
 #include "FTDistributionItems.h"
