@@ -371,7 +371,7 @@ void OffSpecularConverter::addDetectorYAxis(const IDetector2D& detector)
         throw std::runtime_error("Error in OffSpecularConverter::addDetectorYAxis: "
                                  "could not retrieve the y-axis of the detector");
     if (auto P_rect_det = dynamic_cast<const FlatDetector*>(&detector)) {
-        std::unique_ptr<RectangularPixel> P_det_pixel(P_rect_det->regionOfInterestPixel());
+        std::unique_ptr<FlatPixel> P_det_pixel(P_rect_det->regionOfInterestPixel());
         auto k00 = P_det_pixel->getPosition(0.0, 0.0);
         auto k01 = P_det_pixel->getPosition(0.0, 1.0);
         double alpha_f_min = M_PI_2 - k00.theta();

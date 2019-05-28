@@ -167,7 +167,7 @@ AxesUnits FlatDetector::defaultAxesUnits() const
     return AxesUnits::MM;
 }
 
-RectangularPixel* FlatDetector::regionOfInterestPixel() const
+FlatPixel* FlatDetector::regionOfInterestPixel() const
 {
     const IAxis& u_axis = getAxis(BornAgain::X_AXIS_INDEX);
     const IAxis& v_axis = getAxis(BornAgain::Y_AXIS_INDEX);
@@ -188,7 +188,7 @@ RectangularPixel* FlatDetector::regionOfInterestPixel() const
                                     + (v_min - m_v0) * m_v_unit);
     const kvector_t uaxis_vector = width * m_u_unit;
     const kvector_t vaxis_vector = height * m_v_unit;
-    return new RectangularPixel(corner_position, uaxis_vector, vaxis_vector);
+    return new FlatPixel(corner_position, uaxis_vector, vaxis_vector);
 }
 
 IPixel* FlatDetector::createPixel(size_t index) const
@@ -204,7 +204,7 @@ IPixel* FlatDetector::createPixel(size_t index) const
                                     + (v_bin.m_lower - m_v0) * m_v_unit);
     const kvector_t width = u_bin.getBinSize() * m_u_unit;
     const kvector_t height = v_bin.getBinSize() * m_v_unit;
-    return new RectangularPixel(corner_position, width, height);
+    return new FlatPixel(corner_position, width, height);
 }
 
 std::string FlatDetector::axisName(size_t index) const
@@ -303,38 +303,38 @@ void FlatDetector::initUandV(double alpha_i)
     }
 }
 
-RectangularPixel::RectangularPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
+FlatPixel::FlatPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
     : m_corner_pos(corner_pos), m_width(width), m_height(height)
 {
     m_normal = m_width.cross(m_height);
     m_solid_angle = calculateSolidAngle();
 }
 
-RectangularPixel* RectangularPixel::clone() const
+FlatPixel* FlatPixel::clone() const
 {
-    return new RectangularPixel(m_corner_pos, m_width, m_height);
+    return new FlatPixel(m_corner_pos, m_width, m_height);
 }
 
-RectangularPixel* RectangularPixel::createZeroSizePixel(double x, double y) const
+FlatPixel* FlatPixel::createZeroSizePixel(double x, double y) const
 {
     kvector_t position = m_corner_pos + x*m_width + y*m_height;
     kvector_t null_vector;
-    return new RectangularPixel(position, null_vector, null_vector);
+    return new FlatPixel(position, null_vector, null_vector);
 }
 
-kvector_t RectangularPixel::getK(double x, double y, double wavelength) const
+kvector_t FlatPixel::getK(double x, double y, double wavelength) const
 {
     kvector_t direction = m_corner_pos + x*m_width + y*m_height;
     double length = M_TWOPI/wavelength;
     return normalizeLength(direction, length);
 }
 
-kvector_t RectangularPixel::getPosition(double x, double y) const
+kvector_t FlatPixel::getPosition(double x, double y) const
 {
     return m_corner_pos + x*m_width + y*m_height;
 }
 
-double RectangularPixel::getIntegrationFactor(double x, double y) const
+double FlatPixel::getIntegrationFactor(double x, double y) const
 {
     if (m_solid_angle==0.0) return 1.0;
     kvector_t position = m_corner_pos + x*m_width + y*m_height;
@@ -342,18 +342,18 @@ double RectangularPixel::getIntegrationFactor(double x, double y) const
     return std::abs(position.dot(m_normal))/std::pow(length, 3)/m_solid_angle;
 }
 
-double RectangularPixel::getSolidAngle() const
+double FlatPixel::getSolidAngle() const
 {
     if (m_solid_angle<=0.0) return 1.0;
     return m_solid_angle;
 }
 
-kvector_t RectangularPixel::normalizeLength(const kvector_t direction, double length) const
+kvector_t FlatPixel::normalizeLength(const kvector_t direction, double length) const
 {
     return direction.unit()*length;
 }
 
-double RectangularPixel::calculateSolidAngle() const
+double FlatPixel::calculateSolidAngle() const
 {
     kvector_t position = m_corner_pos + 0.5*m_width + 0.5*m_height;
     double length = position.mag();

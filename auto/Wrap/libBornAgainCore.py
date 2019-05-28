@@ -28514,9 +28514,9 @@ class FlatDetector(IDetector2D):
 
     def regionOfInterestPixel(self):
         """
-        regionOfInterestPixel(FlatDetector self) -> RectangularPixel
+        regionOfInterestPixel(FlatDetector self) -> FlatPixel
 
-        RectangularPixel * FlatDetector::regionOfInterestPixel() const
+        FlatPixel * FlatDetector::regionOfInterestPixel() const
 
         """
         return _libBornAgainCore.FlatDetector_regionOfInterestPixel(self)
@@ -28524,95 +28524,95 @@ class FlatDetector(IDetector2D):
 FlatDetector_swigregister = _libBornAgainCore.FlatDetector_swigregister
 FlatDetector_swigregister(FlatDetector)
 
-class RectangularPixel(IPixel):
-    """Proxy of C++ RectangularPixel class."""
+class FlatPixel(IPixel):
+    """Proxy of C++ FlatPixel class."""
 
     __swig_setmethods__ = {}
     for _s in [IPixel]:
         __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, RectangularPixel, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FlatPixel, name, value)
     __swig_getmethods__ = {}
     for _s in [IPixel]:
         __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
-    __getattr__ = lambda self, name: _swig_getattr(self, RectangularPixel, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, FlatPixel, name)
     __repr__ = _swig_repr
 
     def __init__(self, corner_pos, width, height):
         """
-        __init__(RectangularPixel self, kvector_t corner_pos, kvector_t width, kvector_t height) -> RectangularPixel
+        __init__(FlatPixel self, kvector_t corner_pos, kvector_t width, kvector_t height) -> FlatPixel
 
-        RectangularPixel::RectangularPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
+        FlatPixel::FlatPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
 
         """
-        this = _libBornAgainCore.new_RectangularPixel(corner_pos, width, height)
+        this = _libBornAgainCore.new_FlatPixel(corner_pos, width, height)
         try:
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
-    __swig_destroy__ = _libBornAgainCore.delete_RectangularPixel
+    __swig_destroy__ = _libBornAgainCore.delete_FlatPixel
     __del__ = lambda self: None
 
     def clone(self):
         """
-        clone(RectangularPixel self) -> RectangularPixel
+        clone(FlatPixel self) -> FlatPixel
 
-        RectangularPixel * RectangularPixel::clone() const override
+        FlatPixel * FlatPixel::clone() const override
 
         """
-        return _libBornAgainCore.RectangularPixel_clone(self)
+        return _libBornAgainCore.FlatPixel_clone(self)
 
 
     def createZeroSizePixel(self, x, y):
         """
-        createZeroSizePixel(RectangularPixel self, double x, double y) -> RectangularPixel
+        createZeroSizePixel(FlatPixel self, double x, double y) -> FlatPixel
 
-        RectangularPixel * RectangularPixel::createZeroSizePixel(double x, double y) const override
+        FlatPixel * FlatPixel::createZeroSizePixel(double x, double y) const override
 
         """
-        return _libBornAgainCore.RectangularPixel_createZeroSizePixel(self, x, y)
+        return _libBornAgainCore.FlatPixel_createZeroSizePixel(self, x, y)
 
 
     def getK(self, x, y, wavelength):
         """
-        getK(RectangularPixel self, double x, double y, double wavelength) -> kvector_t
+        getK(FlatPixel self, double x, double y, double wavelength) -> kvector_t
 
-        kvector_t RectangularPixel::getK(double x, double y, double wavelength) const override
+        kvector_t FlatPixel::getK(double x, double y, double wavelength) const override
 
         """
-        return _libBornAgainCore.RectangularPixel_getK(self, x, y, wavelength)
+        return _libBornAgainCore.FlatPixel_getK(self, x, y, wavelength)
 
 
     def getPosition(self, x, y):
         """
-        getPosition(RectangularPixel self, double x, double y) -> kvector_t
+        getPosition(FlatPixel self, double x, double y) -> kvector_t
 
-        kvector_t RectangularPixel::getPosition(double x, double y) const
+        kvector_t FlatPixel::getPosition(double x, double y) const
 
         """
-        return _libBornAgainCore.RectangularPixel_getPosition(self, x, y)
+        return _libBornAgainCore.FlatPixel_getPosition(self, x, y)
 
 
     def getIntegrationFactor(self, x, y):
         """
-        getIntegrationFactor(RectangularPixel self, double x, double y) -> double
+        getIntegrationFactor(FlatPixel self, double x, double y) -> double
 
-        double RectangularPixel::getIntegrationFactor(double x, double y) const override
+        double FlatPixel::getIntegrationFactor(double x, double y) const override
 
         """
-        return _libBornAgainCore.RectangularPixel_getIntegrationFactor(self, x, y)
+        return _libBornAgainCore.FlatPixel_getIntegrationFactor(self, x, y)
 
 
     def getSolidAngle(self):
         """
-        getSolidAngle(RectangularPixel self) -> double
+        getSolidAngle(FlatPixel self) -> double
 
-        double RectangularPixel::getSolidAngle() const override
+        double FlatPixel::getSolidAngle() const override
 
         """
-        return _libBornAgainCore.RectangularPixel_getSolidAngle(self)
+        return _libBornAgainCore.FlatPixel_getSolidAngle(self)
 
-RectangularPixel_swigregister = _libBornAgainCore.RectangularPixel_swigregister
-RectangularPixel_swigregister(RectangularPixel)
+FlatPixel_swigregister = _libBornAgainCore.FlatPixel_swigregister
+FlatPixel_swigregister(FlatPixel)
 
 class ResolutionFunction2DGaussian(IResolutionFunction2D):
     """

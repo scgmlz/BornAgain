@@ -22,7 +22,7 @@ class Beam;
 class IDetector;
 class IDetector2D;
 class FlatDetector;
-class RectangularPixel;
+class FlatPixel;
 class SphericalDetector;
 
 //! Interface for objects that provide axis translations to different units for IDetector objects
@@ -116,7 +116,7 @@ private:
     std::vector<std::map<AxesUnits, std::string>> createNameMaps() const override;
     kvector_t normalizeToWavelength(kvector_t vector) const;
     double axisAngle(size_t i_axis, kvector_t k_f) const;
-    std::unique_ptr<RectangularPixel> mP_detector_pixel;
+    std::unique_ptr<FlatPixel> mP_detector_pixel;
 };
 
 //! IUnitConverter class that handles the unit translations for off-specular simulations

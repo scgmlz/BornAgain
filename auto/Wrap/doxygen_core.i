@@ -13678,35 +13678,35 @@ Inits detector with the beam settings.
 return default axes units 
 ";
 
-%feature("docstring")  FlatDetector::regionOfInterestPixel "RectangularPixel * FlatDetector::regionOfInterestPixel() const
+%feature("docstring")  FlatDetector::regionOfInterestPixel "FlatPixel * FlatDetector::regionOfInterestPixel() const
 ";
 
 
-// File: classRectangularPixel.xml
-%feature("docstring") RectangularPixel "";
+// File: classFlatPixel.xml
+%feature("docstring") FlatPixel "";
 
-%feature("docstring")  RectangularPixel::RectangularPixel "RectangularPixel::RectangularPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
+%feature("docstring")  FlatPixel::FlatPixel "FlatPixel::FlatPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
 ";
 
-%feature("docstring")  RectangularPixel::~RectangularPixel "virtual RectangularPixel::~RectangularPixel()
+%feature("docstring")  FlatPixel::~FlatPixel "virtual FlatPixel::~FlatPixel()
 ";
 
-%feature("docstring")  RectangularPixel::clone "RectangularPixel * RectangularPixel::clone() const override
+%feature("docstring")  FlatPixel::clone "FlatPixel * FlatPixel::clone() const override
 ";
 
-%feature("docstring")  RectangularPixel::createZeroSizePixel "RectangularPixel * RectangularPixel::createZeroSizePixel(double x, double y) const override
+%feature("docstring")  FlatPixel::createZeroSizePixel "FlatPixel * FlatPixel::createZeroSizePixel(double x, double y) const override
 ";
 
-%feature("docstring")  RectangularPixel::getK "kvector_t RectangularPixel::getK(double x, double y, double wavelength) const override
+%feature("docstring")  FlatPixel::getK "kvector_t FlatPixel::getK(double x, double y, double wavelength) const override
 ";
 
-%feature("docstring")  RectangularPixel::getPosition "kvector_t RectangularPixel::getPosition(double x, double y) const
+%feature("docstring")  FlatPixel::getPosition "kvector_t FlatPixel::getPosition(double x, double y) const
 ";
 
-%feature("docstring")  RectangularPixel::getIntegrationFactor "double RectangularPixel::getIntegrationFactor(double x, double y) const override
+%feature("docstring")  FlatPixel::getIntegrationFactor "double FlatPixel::getIntegrationFactor(double x, double y) const override
 ";
 
-%feature("docstring")  RectangularPixel::getSolidAngle "double RectangularPixel::getSolidAngle() const override
+%feature("docstring")  FlatPixel::getSolidAngle "double FlatPixel::getSolidAngle() const override
 ";
 
 
