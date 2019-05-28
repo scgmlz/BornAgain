@@ -14,11 +14,11 @@ const size_t det_nx = 100u;
 const size_t det_ny = 70u;
 }
 
-class RectangularConverterTest : public ::testing::Test
+class FlatConverterTest : public ::testing::Test
 {
 public:
-    RectangularConverterTest();
-    ~RectangularConverterTest();
+    FlatConverterTest();
+    ~FlatConverterTest();
 protected:
     FlatDetector m_detector;
     Beam m_beam;
@@ -26,7 +26,7 @@ protected:
     double m_kiz, m_kfy, m_kfz;
 };
 
-RectangularConverterTest::RectangularConverterTest()
+FlatConverterTest::FlatConverterTest()
     : m_detector(det_nx, det_width, det_ny, det_height)
 {
     m_beam.setCentralK(1.0, 1.0*Units::deg, 0.0);
@@ -41,11 +41,11 @@ RectangularConverterTest::RectangularConverterTest()
     m_kfz = K*std::sin(m_alpha);
 }
 
-RectangularConverterTest::~RectangularConverterTest() = default;
+FlatConverterTest::~FlatConverterTest() = default;
 
-TEST_F(RectangularConverterTest, RectangularConverter)
+TEST_F(FlatConverterTest, FlatConverter)
 {
-    RectangularConverter converter(m_detector, m_beam);
+    FlatConverter converter(m_detector, m_beam);
 
     EXPECT_EQ(converter.dimension(), 2u);
 
@@ -103,10 +103,10 @@ TEST_F(RectangularConverterTest, RectangularConverter)
     EXPECT_THROW(converter.createConvertedAxis(2, AxesUnits::DEFAULT), std::runtime_error);
 }
 
-TEST_F(RectangularConverterTest, RectangularConverterClone)
+TEST_F(FlatConverterTest, FlatConverterClone)
 {
-    RectangularConverter converter(m_detector, m_beam);
-    std::unique_ptr<RectangularConverter> P_clone(converter.clone());
+    FlatConverter converter(m_detector, m_beam);
+    std::unique_ptr<FlatConverter> P_clone(converter.clone());
 
     EXPECT_EQ(P_clone->dimension(), 2u);
 
@@ -148,7 +148,7 @@ TEST_F(RectangularConverterTest, RectangularConverterClone)
     EXPECT_THROW(P_clone->calculateMax(2, AxesUnits::DEFAULT), std::runtime_error);
 }
 
-TEST_F(RectangularConverterTest, RectangularConverterWithROI)
+TEST_F(FlatConverterTest, FlatConverterWithROI)
 {
     const double roi_xmin = 100;
     const double roi_xmax = 150; // xmax in roi will be 152 due to binning
@@ -156,7 +156,7 @@ TEST_F(RectangularConverterTest, RectangularConverterWithROI)
     const double roi_ymax = 100; // ymax in roi will be 102 due to binning
 
     m_detector.setRegionOfInterest(roi_xmin, roi_ymin, roi_xmax, roi_ymax);
-    RectangularConverter converter(m_detector, m_beam);
+    FlatConverter converter(m_detector, m_beam);
 
     EXPECT_EQ(converter.calculateMin(0, AxesUnits::DEFAULT), 100);
     EXPECT_EQ(converter.calculateMax(0, AxesUnits::DEFAULT), 152);

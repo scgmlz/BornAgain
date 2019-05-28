@@ -198,13 +198,13 @@ std::vector<std::map<AxesUnits, std::string> > SphericalConverter::createNameMap
     return result;
 }
 
-/* RectangularConverter **********************************************/
+/* FlatConverter **********************************************/
 
-RectangularConverter::RectangularConverter(const FlatDetector& detector, const Beam& beam)
+FlatConverter::FlatConverter(const FlatDetector& detector, const Beam& beam)
     : UnitConverterSimple(beam)
 {
     if (detector.dimension() != 2)
-        throw std::runtime_error("Error in RectangularConverter constructor: "
+        throw std::runtime_error("Error in FlatConverter constructor: "
                                  "detector has wrong dimension: "
                                  + std::to_string(static_cast<int>(detector.dimension())));
     addDetectorAxis(detector, 0);
@@ -212,14 +212,14 @@ RectangularConverter::RectangularConverter(const FlatDetector& detector, const B
     mP_detector_pixel.reset(detector.regionOfInterestPixel());
 }
 
-RectangularConverter::~RectangularConverter() =default;
+FlatConverter::~FlatConverter() =default;
 
-RectangularConverter* RectangularConverter::clone() const
+FlatConverter* FlatConverter::clone() const
 {
-    return new RectangularConverter(*this);
+    return new FlatConverter(*this);
 }
 
-std::vector<AxesUnits> RectangularConverter::availableUnits() const
+std::vector<AxesUnits> FlatConverter::availableUnits() const
 {
     auto result = UnitConverterSimple::availableUnits();
     result.push_back(AxesUnits::QSPACE);
@@ -227,14 +227,14 @@ std::vector<AxesUnits> RectangularConverter::availableUnits() const
     return result;
 }
 
-AxesUnits RectangularConverter::defaultUnits() const { return AxesUnits::MM; }
+AxesUnits FlatConverter::defaultUnits() const { return AxesUnits::MM; }
 
-RectangularConverter::RectangularConverter(const RectangularConverter& other)
+FlatConverter::FlatConverter(const FlatConverter& other)
     : UnitConverterSimple(other)
     , mP_detector_pixel(other.mP_detector_pixel->clone())
 {}
 
-double RectangularConverter::calculateValue(size_t i_axis, AxesUnits units_type, double value) const
+double FlatConverter::calculateValue(size_t i_axis, AxesUnits units_type, double value) const
 {
     if (units_type == AxesUnits::MM)
         return value;
@@ -257,7 +257,7 @@ double RectangularConverter::calculateValue(size_t i_axis, AxesUnits units_type,
         } else if (i_axis == BornAgain::Y_AXIS_INDEX) {
             return (k_f - k_i).z();
         }
-        throw std::runtime_error("Error in RectangularConverter::calculateValue: "
+        throw std::runtime_error("Error in FlatConverter::calculateValue: "
                                  "incorrect axis index: "
                                  + std::to_string(static_cast<int>(i_axis)));
     }
@@ -269,16 +269,16 @@ double RectangularConverter::calculateValue(size_t i_axis, AxesUnits units_type,
         } else if (i_axis == BornAgain::Y_AXIS_INDEX) {
             return (k_f - k_i).x();
         }
-        throw std::runtime_error("Error in RectangularConverter::calculateValue: "
+        throw std::runtime_error("Error in FlatConverter::calculateValue: "
                                  "incorrect axis index: "
                                  + std::to_string(static_cast<int>(i_axis)));
     }
     default:
-        throwUnitsError("RectangularConverter::calculateValue", availableUnits());
+        throwUnitsError("FlatConverter::calculateValue", availableUnits());
     }
 }
 
-std::vector<std::map<AxesUnits, std::string>> RectangularConverter::createNameMaps() const
+std::vector<std::map<AxesUnits, std::string>> FlatConverter::createNameMaps() const
 {
     std::vector<std::map<AxesUnits, std::string>> result;
     result.push_back(AxisNames::InitRectangularAxis0());
@@ -286,23 +286,23 @@ std::vector<std::map<AxesUnits, std::string>> RectangularConverter::createNameMa
     return result;
 }
 
-kvector_t RectangularConverter::normalizeToWavelength(kvector_t vector) const
+kvector_t FlatConverter::normalizeToWavelength(kvector_t vector) const
 {
     if (m_wavelength <= 0.0)
-        throw std::runtime_error("Error in RectangularConverter::normalizeToWavelength: "
+        throw std::runtime_error("Error in FlatConverter::normalizeToWavelength: "
                                  "wavelength <= 0");
     double K = M_TWOPI/m_wavelength;
     return vector.unit()*K;
 }
 
-double RectangularConverter::axisAngle(size_t i_axis, kvector_t k_f) const
+double FlatConverter::axisAngle(size_t i_axis, kvector_t k_f) const
 {
     if (i_axis == BornAgain::X_AXIS_INDEX) {
         return k_f.phi();
     } else if (i_axis == BornAgain::Y_AXIS_INDEX) {
         return M_PI_2 - k_f.theta();
     }
-    throw std::runtime_error("Error in RectangularConverter::axisAngle: "
+    throw std::runtime_error("Error in FlatConverter::axisAngle: "
                              "incorrect axis index: "
                              + std::to_string(static_cast<int>(i_axis)));
 }

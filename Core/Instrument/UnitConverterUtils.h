@@ -36,7 +36,7 @@ BA_CORE_API_ std::unique_ptr<OutputData<double>> createOutputData(const IUnitCon
                                                                   AxesUnits units);
 
 //! Helper factory function to use in GISASSimulation. Depending on the type of detector,
-//! returns either RectangularConverter or SphericalConverter.
+//! returns either FlatConverter or SphericalConverter.
 BA_CORE_API_ std::unique_ptr<IUnitConverter> createConverterForGISAS(const Instrument& instrument);
 
 BA_CORE_API_ std::unique_ptr<IUnitConverter> createConverter(const Simulation& simulation);

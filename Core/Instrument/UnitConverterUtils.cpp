@@ -42,7 +42,7 @@ UnitConverterUtils::createConverterForGISAS(const Instrument& instrument)
     if (const auto spher_detector = dynamic_cast<const SphericalDetector*>(detector))
         return std::make_unique<SphericalConverter>(*spher_detector, instrument.getBeam());
     else if (const auto rect_detector = dynamic_cast<const FlatDetector*>(detector))
-        return std::make_unique<RectangularConverter>(*rect_detector, instrument.getBeam());
+        return std::make_unique<FlatConverter>(*rect_detector, instrument.getBeam());
 
     throw std::runtime_error(
         "Error in createConverterForGISAS: wrong or absent detector type");

@@ -13549,29 +13549,29 @@ Returns true if area defined by two bins is inside or on border of polygon (more
 ";
 
 
-// File: classRectangularConverter.xml
-%feature("docstring") RectangularConverter "
+// File: classFlatConverter.xml
+%feature("docstring") FlatConverter "
 
 IUnitConverter class that handles the unit translations for flat detectors Its default units are mm for both axes
 
 C++ includes: SimpleUnitConverters.h
 ";
 
-%feature("docstring")  RectangularConverter::RectangularConverter "RectangularConverter::RectangularConverter(const FlatDetector &detector, const Beam &beam)
+%feature("docstring")  FlatConverter::FlatConverter "FlatConverter::FlatConverter(const FlatDetector &detector, const Beam &beam)
 ";
 
-%feature("docstring")  RectangularConverter::~RectangularConverter "RectangularConverter::~RectangularConverter() override
+%feature("docstring")  FlatConverter::~FlatConverter "FlatConverter::~FlatConverter() override
 ";
 
-%feature("docstring")  RectangularConverter::clone "RectangularConverter * RectangularConverter::clone() const override
+%feature("docstring")  FlatConverter::clone "FlatConverter * FlatConverter::clone() const override
 ";
 
-%feature("docstring")  RectangularConverter::availableUnits "std::vector< AxesUnits > RectangularConverter::availableUnits() const override
+%feature("docstring")  FlatConverter::availableUnits "std::vector< AxesUnits > FlatConverter::availableUnits() const override
 
 Returns the list of all available units. 
 ";
 
-%feature("docstring")  RectangularConverter::defaultUnits "AxesUnits RectangularConverter::defaultUnits() const override
+%feature("docstring")  FlatConverter::defaultUnits "AxesUnits FlatConverter::defaultUnits() const override
 ";
 
 
@@ -17575,7 +17575,7 @@ Returns zero-valued output data array in specified units.
 
 %feature("docstring")  UnitConverterUtils::createConverterForGISAS "std::unique_ptr< IUnitConverter > UnitConverterUtils::createConverterForGISAS(const Instrument &instrument)
 
-Helper factory function to use in  GISASSimulation. Depending on the type of detector, returns either  RectangularConverter or  SphericalConverter. 
+Helper factory function to use in  GISASSimulation. Depending on the type of detector, returns either  FlatConverter or  SphericalConverter. 
 ";
 
 %feature("docstring")  UnitConverterUtils::createConverter "std::unique_ptr< IUnitConverter > UnitConverterUtils::createConverter(const Simulation &simulation)

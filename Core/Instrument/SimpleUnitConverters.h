@@ -97,13 +97,13 @@ private:
 //! Its default units are mm for both axes
 //! @ingroup simulation_internal
 
-class BA_CORE_API_ RectangularConverter : public UnitConverterSimple
+class BA_CORE_API_ FlatConverter : public UnitConverterSimple
 {
 public:
-    RectangularConverter(const FlatDetector& detector, const Beam& beam);
-    ~RectangularConverter() override;
+    FlatConverter(const FlatDetector& detector, const Beam& beam);
+    ~FlatConverter() override;
 
-    RectangularConverter* clone() const override;
+    FlatConverter* clone() const override;
 
     //! Returns the list of all available units
     std::vector<AxesUnits> availableUnits() const override;
@@ -111,7 +111,7 @@ public:
     AxesUnits defaultUnits() const override;
 
 private:
-    RectangularConverter(const RectangularConverter& other);
+    FlatConverter(const FlatConverter& other);
     double calculateValue(size_t i_axis, AxesUnits units_type, double value) const override;
     std::vector<std::map<AxesUnits, std::string>> createNameMaps() const override;
     kvector_t normalizeToWavelength(kvector_t vector) const;
