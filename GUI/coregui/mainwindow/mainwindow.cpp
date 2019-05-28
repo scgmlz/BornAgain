@@ -218,7 +218,7 @@ void MainWindow::initViews()
     m_tabWidget->setTabToolTip(SAMPLE, QStringLiteral("Build the sample"));
 
     m_tabWidget->insertTab(IMPORT, m_importDataView, QIcon(":/images/main_importview.svg"),
-                           "Import");
+                           "Data");
     m_tabWidget->setTabToolTip(IMPORT, QStringLiteral("Import intensity data to fit"));
 
     m_tabWidget->insertTab(SIMULATION, m_simulationView, QIcon(":/images/main_simulationview.svg"),
