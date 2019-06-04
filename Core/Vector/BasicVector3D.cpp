@@ -25,10 +25,23 @@ typedef std::complex<double> complex_t;
 BasicVector3D<double> vecOfLambdaAlphaPhi(double _lambda, double _alpha, double _phi)
 {
     double k = M_TWOPI/_lambda;
-    return BasicVector3D<double>(
-        k*std::cos(_alpha) * std::cos(_phi),
-        -k*std::cos(_alpha) * std::sin(_phi),
-        k*std::sin(_alpha) );
+    double vx(0);
+    double vy(0);
+    double vz(0);
+
+    if(fabs(fabs(_alpha) - M_PI_2) < 1.e-14){
+        _alpha = _alpha > 0 ? M_PI_2 - 1.e-14 : - M_PI_2 + 1.e-14;
+    }
+
+    if(fabs(fabs(_phi) - M_PI_2) < 1.e-14){
+        _phi = _phi > 0 ? M_PI_2 - 1.e-14 : - M_PI_2 + 1.e-14;
+    }
+
+    vx = k*std::cos(_alpha) * std::cos(_phi);
+    vy = -k*std::cos(_alpha) * std::sin(_phi);
+    vz = k*std::sin(_alpha);
+
+    return BasicVector3D<double>(vx,vy,vz);
 }
 
 // -----------------------------------------------------------------------------
