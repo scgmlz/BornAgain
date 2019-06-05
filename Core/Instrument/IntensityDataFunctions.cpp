@@ -26,6 +26,7 @@
 #include "SimulationResult.h"
 #include "UnitConverterUtils.h"
 #include <math.h>
+#include <limits.h>
 
 //! Returns sum of relative differences between each pair of elements:
 //! (a, b) -> 2*abs(a - b)/(|a| + |b|)      ( and zero if  a=b=0 within epsilon )
@@ -173,10 +174,29 @@ IntensityDataFunctions::createClippedDataSet(const OutputData<double>& origin, d
 
 double IntensityDataFunctions::coordinateToBinf(double coordinate, const IAxis& axis)
 {
+    double result(0);
     size_t index = axis.findClosestIndex(coordinate);
     Bin1D bin = axis.getBin(index);
-    double f = (coordinate - bin.m_lower) / bin.getBinSize();
-    return static_cast<double>(index) + f;
+    double binSize = bin.getBinSize();
+
+    double numerator = (coordinate - bin.m_lower);
+    double denominator = binSize;
+
+    double f(0);
+    if(fabs(numerator) <= std::numeric_limits<double>::epsilon()){
+        f = 0;
+    }else if(fabs(denominator) <= std::numeric_limits<double>::epsilon()){
+        throw Exceptions::DivisionByZeroException(
+            "IntensityDataFunctions::coordinateToBinf() -> "
+            "Error! division by zero bin size.");
+    }
+    else{
+        f = numerator / denominator;
+    }
+
+
+    result = static_cast<double>(index) + f;
+    return result;
 }
 
 double IntensityDataFunctions::coordinateFromBinf(double value, const IAxis& axis)
