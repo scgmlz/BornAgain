@@ -135,10 +135,11 @@ public:
     void setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric);
 #endif //SWIG
 
+    void setObjectiveMetric(const std::string& metric);
     //! Sets objective metric to the FitObjective.
     //! @param metric: metric name
-    //! @param norm: metric norm name (defaults to "l2")
-    void setObjectiveMetric(const std::string& metric, const std::string& norm = "L2");
+    //! @param norm: metric norm name (defaults to L2-norm)
+    void setObjectiveMetric(const std::string& metric, const std::string& norm);
 
 private:
     typedef std::vector<double> (SimDataPair::*DataPairAccessor)() const;

@@ -26,18 +26,6 @@ class SimDataPair;
 class BA_CORE_API_ ObjectiveMetric : public ICloneable
 {
 public:
-    //! Returns L1 normalization function.
-    static const std::function<double(double)> l1Norm();
-    //! Returns L2 normalization function.
-    static const std::function<double(double)> l2Norm();
-
-    //! Creates specified metric
-    static std::unique_ptr<ObjectiveMetric> createMetric(const std::string& metric,
-                                                         const std::string& norm);
-
-    static std::vector<std::string> normNames();
-    static std::vector<std::string> metricNames();
-
     ObjectiveMetric(std::function<double(double)> norm);
 
     ObjectiveMetric* clone() const override = 0;

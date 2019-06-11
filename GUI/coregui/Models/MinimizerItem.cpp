@@ -20,6 +20,7 @@
 #include "MinimizerItemCatalogue.h"
 #include "Minuit2Minimizer.h"
 #include "ObjectiveMetric.h"
+#include "ObjectiveMetricUtils.h"
 #include "SimAnMinimizer.h"
 #include "TestMinimizer.h"
 
@@ -40,14 +41,14 @@ MinimizerContainerItem::MinimizerContainerItem()
         ->setToolTip(QStringLiteral("Minimizer library"));
 
     ComboProperty metric_combo;
-    for (auto& item: ObjectiveMetric::metricNames())
+    for (auto& item: ObjectiveMetricUtils::metricNames())
         metric_combo << QString::fromStdString(item);
     addProperty(P_METRIC, metric_combo.variant())
         ->setToolTip("Objective metric to use for estimating distance between simulated and "
                      "experimental data.");
 
     ComboProperty norm_combo;
-    for (auto& item: ObjectiveMetric::normNames())
+    for (auto& item: ObjectiveMetricUtils::normNames())
         norm_combo << QString::fromStdString(item);
     addProperty(P_NORM, norm_combo.variant())
         ->setToolTip("Normalization to use for estimating distance between simulated and "
@@ -63,7 +64,7 @@ std::unique_ptr<ObjectiveMetric> MinimizerContainerItem::createMetric() const
 {
     QString metric = getItemValue(P_METRIC).value<ComboProperty>().getValue();
     QString norm = getItemValue(P_NORM).value<ComboProperty>().getValue();
-    return ObjectiveMetric::createMetric(metric.toStdString(), norm.toStdString());
+    return ObjectiveMetricUtils::createMetric(metric.toStdString(), norm.toStdString());
 }
 
 // ----------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "google_test.h"
 #include "ObjectiveMetric.h"
+#include "ObjectiveMetricUtils.h"
 #include <cmath>
 
 class ObjectiveMetricTest : public ::testing::Test
@@ -39,7 +40,7 @@ TEST_F(ObjectiveMetricTest, Chi2WellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, uncertainties_1, weight_factors),
                      204.0);
 
-    metric.setNorm(ObjectiveMetric::l1Norm());
+    metric.setNorm(ObjectiveMetricUtils::l1Norm());
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, uncertainties, weight_factors),
                      26.0);
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors), 5.0);
@@ -100,7 +101,7 @@ TEST_F(ObjectiveMetricTest, PoissionLikeWellFormed)
     sim_data_1[0] = 0.0;
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data_1, exp_data, weight_factors), 5.25);
 
-    metric.setNorm(ObjectiveMetric::l1Norm());
+    metric.setNorm(ObjectiveMetricUtils::l1Norm());
 
     std::vector<double> sim_data_2 = sim_data;
     sim_data_2[1] = 1.0;
@@ -163,7 +164,7 @@ TEST_F(ObjectiveMetricTest, LogWellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, uncertainties_1, weight_factors),
                      4.0101e+6 * std::log(10.0) * std::log(10.0));
 
-    metric.setNorm(ObjectiveMetric::l1Norm());
+    metric.setNorm(ObjectiveMetricUtils::l1Norm());
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, uncertainties, weight_factors),
                      4.0211e+5 * std::log(10.0));
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors), 5.0);
@@ -223,7 +224,7 @@ TEST_F(ObjectiveMetricTest, RelativeDifferenceWellFormed)
     exp_data_1[0] = 0.0;
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data_1, exp_data_1, weight_factors), 4.0 / 9.0);
 
-    metric.setNorm(ObjectiveMetric::l1Norm());
+    metric.setNorm(ObjectiveMetricUtils::l1Norm());
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors), 5.0 / 3.0);
 
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, uncertainties, weight_factors),
@@ -280,7 +281,7 @@ TEST_F(ObjectiveMetricTest, RQ4WellFormed)
     exp_data_1[0] = 0.0;
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data_1, exp_data_1, weight_factors), 13.0);
 
-    metric.setNorm(ObjectiveMetric::l1Norm());
+    metric.setNorm(ObjectiveMetricUtils::l1Norm());
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors), 8.0);
 
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, uncertainties, weight_factors),
