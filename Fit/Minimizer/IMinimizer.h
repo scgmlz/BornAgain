@@ -47,6 +47,11 @@ public:
     virtual Fit::MinimizerResult minimize_scalar(fcn_scalar_t, Fit::Parameters);
     virtual Fit::MinimizerResult minimize_residual(fcn_residual_t, Fit::Parameters);
 
+#ifndef SWIG
+    //! Signals if the minimizer requires residuals as input
+    virtual bool requiresResiduals() const { return false; }
+#endif //SWIG
+
     //! clear resources (parameters) for consecutives minimizations
     virtual void clear() {}
 

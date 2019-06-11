@@ -29,7 +29,9 @@ class BA_CORE_API_ Minuit2Minimizer : public RootMinimizerAdapter
 {
 public:
     Minuit2Minimizer(const std::string& algorithmName = AlgorithmNames::Migrad);
-    ~Minuit2Minimizer();
+    ~Minuit2Minimizer() override;
+
+    bool requiresResiduals() const override;
 
     //! Sets minimization strategy (0-low, 1-medium, 2-high minimization quality).
     //! At low quality number of function calls will be economized.

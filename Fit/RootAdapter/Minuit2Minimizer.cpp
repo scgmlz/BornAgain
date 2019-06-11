@@ -57,6 +57,11 @@ Minuit2Minimizer::Minuit2Minimizer(const std::string& algorithmName)
     addOption(OptionNames::MaxFunctionCalls, 0, "Maximum number of function calls");
 }
 
+bool Minuit2Minimizer::requiresResiduals() const
+{
+    return m_minuit2_minimizer->requiresResiduals();
+}
+
 Minuit2Minimizer::~Minuit2Minimizer() = default;
 
 void Minuit2Minimizer::setStrategy(int value)

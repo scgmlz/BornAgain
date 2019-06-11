@@ -71,6 +71,8 @@ public:
    */
    virtual ~Minuit2Minimizer ();
 
+   bool requiresResiduals() const { return fUseFumili; }
+
 private:
    // usually copying is non trivial, so we make this unaccessible
 
