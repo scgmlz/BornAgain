@@ -22,6 +22,8 @@ namespace {
 const double double_max = std::numeric_limits<double>::max();
 const double double_min = std::numeric_limits<double>::min();
 const double ln10 = std::log(10.0);
+const std::function<double(double)> l1_norm = [](double term) { return std::abs(term); };
+const std::function<double(double)> l2_norm = [](double term) { return term * term; };
 
 const std::map<std::string, std::function<std::unique_ptr<ObjectiveMetric>()>> metric_factory = {
     {"Chi2", []() { return std::make_unique<Chi2Metric>(); }},
@@ -31,9 +33,8 @@ const std::map<std::string, std::function<std::unique_ptr<ObjectiveMetric>()>> m
     {"RQ4", []() { return std::make_unique<RQ4Metric>(); }}
 };
 
-const std::map<std::string, std::function<double(double)>> norm_factory = {
-    {"l1", ObjectiveMetric::l1_norm}, {"l2", ObjectiveMetric::l2_norm}
-};
+const std::map<std::string, std::function<double(double)>> norm_factory = {{"L1", l1_norm},
+                                                                           {"L2", l2_norm}};
 
 template<class T>
 T* copyMetric(const T& metric)
@@ -69,13 +70,15 @@ void checkIntegrity(const std::vector<double>& sim_data, const std::vector<doubl
 }
 }
 
-const std::function<double(double)> ObjectiveMetric::l1_norm = [](double term) {
-    return std::abs(term);
-};
+const std::function<double(double)> ObjectiveMetric::l1Norm()
+{
+    return l1_norm;
+}
 
-const std::function<double(double)> ObjectiveMetric::l2_norm = [](double term) {
-    return term * term;
-};
+const std::function<double(double)> ObjectiveMetric::l2Norm()
+{
+    return l2_norm;
+}
 
 std::unique_ptr<ObjectiveMetric> ObjectiveMetric::createMetric(const std::string& metric,
                                                                const std::string& norm)

@@ -26,11 +26,12 @@ class SimDataPair;
 class BA_CORE_API_ ObjectiveMetric : public ICloneable
 {
 public:
-    //! L1 normalization function.
-    static const std::function<double(double)> l1_norm;
-    //! L2 normalization function.
-    static const std::function<double(double)> l2_norm;
+    //! Returns L1 normalization function.
+    static const std::function<double(double)> l1Norm();
+    //! Returns L2 normalization function.
+    static const std::function<double(double)> l2Norm();
 
+    //! Creates specified metric
     static std::unique_ptr<ObjectiveMetric> createMetric(const std::string& metric,
                                                          const std::string& norm);
 
