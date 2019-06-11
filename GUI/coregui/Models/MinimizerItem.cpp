@@ -13,17 +13,18 @@
 // ************************************************************************** //
 
 #include "MinimizerItem.h"
-#include "MinimizerItemCatalogue.h"
-#include "MinimizerConstants.h"
-#include "Minuit2Minimizer.h"
+#include "GSLLevenbergMarquardtMinimizer.h"
 #include "GSLMultiMinimizer.h"
 #include "GeneticMinimizer.h"
-#include "GSLLevenbergMarquardtMinimizer.h"
+#include "IIntensityFunction.h"
+#include "MinimizerConstants.h"
+#include "MinimizerItemCatalogue.h"
+#include "Minuit2Minimizer.h"
+#include "ObjectiveMetric.h"
 #include "SimAnMinimizer.h"
 #include "TestMinimizer.h"
-#include "IIntensityFunction.h"
-#include "VarianceFunctions.h"
 #include "VarianceFunctionItems.h"
+#include "VarianceFunctions.h"
 
 namespace  {
 const QString none_fun = "None";
@@ -40,22 +41,28 @@ MinimizerItem::MinimizerItem(const QString &model_type) : SessionItem(model_type
 // ----------------------------------------------------------------------------
 
 const QString MinimizerContainerItem::P_MINIMIZERS = "Minimizer";
-const QString MinimizerContainerItem::P_INTENSITY_FUNCTION = "Intensity function";
-const QString MinimizerContainerItem::P_VARIANCE_FUNCTIONS = "Variance";
+const QString MinimizerContainerItem::P_METRIC = "Objective metric";
+const QString MinimizerContainerItem::P_NORM = "Norm function";
 
-MinimizerContainerItem::MinimizerContainerItem() : MinimizerItem(Constants::MinimizerContainerType)
+MinimizerContainerItem::MinimizerContainerItem()
+    : MinimizerItem(Constants::MinimizerContainerType)
 {
     addGroupProperty(P_MINIMIZERS, Constants::MinimizerLibraryGroup)
         ->setToolTip(QStringLiteral("Minimizer library"));
 
-    ComboProperty combo = ComboProperty() << none_fun << sqrt_fun << log10_fun;
-    addProperty(P_INTENSITY_FUNCTION, combo.variant())->setToolTip(
-                "Function to apply for both simulated and experimental intensities \n"
-                "before calculating the value of residual.");
+    ComboProperty metric_combo;
+    for (auto& item: ObjectiveMetric::metricNames())
+        metric_combo << QString::fromStdString(item);
+    addProperty(P_METRIC, metric_combo.variant())
+        ->setToolTip("Objective metric to use for estimating distance between simulated and "
+                     "experimental data.");
 
-    addGroupProperty(P_VARIANCE_FUNCTIONS, Constants::VarianceFunctionGroup)
-        ->setToolTip(QStringLiteral("Variance functions for residual normalization"));
-
+    ComboProperty norm_combo;
+    for (auto& item: ObjectiveMetric::normNames())
+        norm_combo << QString::fromStdString(item);
+    addProperty(P_NORM, norm_combo.variant())
+        ->setToolTip("Normalization to use for estimating distance between simulated and "
+                     "experimental data.");
 }
 
 std::unique_ptr<IMinimizer> MinimizerContainerItem::createMinimizer() const
@@ -63,23 +70,11 @@ std::unique_ptr<IMinimizer> MinimizerContainerItem::createMinimizer() const
     return groupItem<MinimizerItem>(P_MINIMIZERS).createMinimizer();
 }
 
-std::unique_ptr<IIntensityFunction> MinimizerContainerItem::createIntensityFunction() const
+std::unique_ptr<ObjectiveMetric> MinimizerContainerItem::createMetric() const
 {
-    QString value = getItemValue(P_INTENSITY_FUNCTION).value<ComboProperty>().getValue();
-
-    if (value == sqrt_fun) {
-        return std::make_unique<IntensityFunctionSqrt>();
-    } else if(value == log10_fun) {
-        return std::make_unique<IntensityFunctionLog>();
-    } else {
-        return std::unique_ptr<IIntensityFunction>();
-    }
-}
-
-std::unique_ptr<IVarianceFunction> MinimizerContainerItem::createVarianceFunction() const
-{
-    auto& variance_item = groupItem<IVarianceFunctionItem>(P_VARIANCE_FUNCTIONS);
-    return variance_item.createVarianceFunction();
+    QString metric = getItemValue(P_METRIC).value<ComboProperty>().getValue();
+    QString norm = getItemValue(P_NORM).value<ComboProperty>().getValue();
+    return ObjectiveMetric::createMetric(metric.toStdString(), norm.toStdString());
 }
 
 // ----------------------------------------------------------------------------

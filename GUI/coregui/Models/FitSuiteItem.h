@@ -31,8 +31,8 @@ public:
     static const QString T_MINIMIZER;
     explicit FitSuiteItem();
 
-    FitParameterContainerItem *fitParameterContainerItem();
-    MinimizerContainerItem *minimizerContainerItem();
+    FitParameterContainerItem* fitParameterContainerItem();
+    MinimizerContainerItem* minimizerContainerItem();
 };
 
 #endif // FITSUITEITEM_H

@@ -34,12 +34,12 @@ FitSuiteItem::FitSuiteItem()
     registerTag(T_MINIMIZER, 1, 1, QStringList() << Constants::MinimizerContainerType);
 }
 
-FitParameterContainerItem *FitSuiteItem::fitParameterContainerItem()
+FitParameterContainerItem* FitSuiteItem::fitParameterContainerItem()
 {
     return dynamic_cast<FitParameterContainerItem *>(getItem(FitSuiteItem::T_FIT_PARAMETERS));
 }
 
-MinimizerContainerItem *FitSuiteItem::minimizerContainerItem()
+MinimizerContainerItem* FitSuiteItem::minimizerContainerItem()
 {
     return dynamic_cast<MinimizerContainerItem *>(getItem(FitSuiteItem::T_MINIMIZER));
 }
