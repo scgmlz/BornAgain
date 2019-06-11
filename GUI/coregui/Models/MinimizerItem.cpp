@@ -16,23 +16,12 @@
 #include "GSLLevenbergMarquardtMinimizer.h"
 #include "GSLMultiMinimizer.h"
 #include "GeneticMinimizer.h"
-#include "IIntensityFunction.h"
 #include "MinimizerConstants.h"
 #include "MinimizerItemCatalogue.h"
 #include "Minuit2Minimizer.h"
 #include "ObjectiveMetric.h"
 #include "SimAnMinimizer.h"
 #include "TestMinimizer.h"
-#include "VarianceFunctionItems.h"
-#include "VarianceFunctions.h"
-
-namespace  {
-const QString none_fun = "None";
-const QString sqrt_fun = "sqrt";
-const QString log10_fun = "log";
-}
-
-// ----------------------------------------------------------------------------
 
 MinimizerItem::MinimizerItem(const QString &model_type) : SessionItem(model_type)
 {

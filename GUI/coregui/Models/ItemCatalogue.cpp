@@ -64,7 +64,6 @@
 #include "SpecularDataItem.h"
 #include "SphericalDetectorItem.h"
 #include "TransformationItem.h"
-#include "VarianceFunctionItems.h"
 #include "VectorItem.h"
 
 ItemCatalogue::ItemCatalogue()
@@ -244,9 +243,6 @@ ItemCatalogue::ItemCatalogue()
     add(Constants::ProjectionContainerType, create_new<ProjectionContainerItem>);
 
     add(Constants::DepthProbeInstrumentType, create_new<DepthProbeInstrumentItem>);
-
-    add(Constants::VarianceConstantFunctionType, create_new<VarianceConstantFunctionItem>);
-    add(Constants::VarianceSimFunctionType, create_new<VarianceSimFunctionItem>);
 }
 
 bool ItemCatalogue::contains(const QString& modelType) const

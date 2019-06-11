@@ -18,8 +18,6 @@
 #include "SessionItem.h"
 
 class IMinimizer;
-class IIntensityFunction;
-class IVarianceFunction;
 class ObjectiveMetric;
 
 //! The MinimizerItem class is the base item to hold minimizer settings.
