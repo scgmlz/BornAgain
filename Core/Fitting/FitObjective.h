@@ -25,6 +25,7 @@
 class FitStatus;
 class IChiSquaredModule;
 class IMetricWrapper;
+class ObjectiveMetric;
 class PyBuilderCallback;
 class PyObserverCallback;
 
@@ -129,6 +130,10 @@ public:
     void run_simulations(const Fit::Parameters& params);
 
     void setChiSquaredModule(const IChiSquaredModule& module);
+
+#ifndef SWIG
+    void setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric);
+#endif //SWIG
 
     //! Sets objective metric to the FitObjective.
     //! @param metric: metric name

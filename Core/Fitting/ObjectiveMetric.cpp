@@ -90,16 +90,34 @@ std::unique_ptr<ObjectiveMetric> ObjectiveMetric::createMetric(const std::string
         ss << "Error in ObjectiveMetric::createMetric: either metric (" << metric << ") or norm ("
            << norm << ") name is unknown.\n";
         ss << "Available metrics:\n";
-        for (auto& item: metric_factory)
-            ss << "\t" << item.first << "\n";
+        for (auto& item: metricNames())
+            ss << "\t" << item << "\n";
         ss << "Available norms:\n";
-        for (auto& item: norm_factory)
-            ss << "\t" << item.first << "\n";
+        for (auto& item: normNames())
+            ss << "\t" << item << "\n";
         throw std::runtime_error(ss.str());
     }
 
     auto result = metric_iter->second();
     result->setNorm(norm_iter->second);
+    return result;
+}
+
+std::vector<std::string> ObjectiveMetric::normNames()
+{
+    std::vector<std::string> result;
+    result.reserve(norm_factory.size());
+    for (auto& item: norm_factory)
+        result.push_back(item.first);
+    return result;
+}
+
+std::vector<std::string> ObjectiveMetric::metricNames()
+{
+    std::vector<std::string> result;
+    result.reserve(metric_factory.size());
+    for (auto& item: metric_factory)
+        result.push_back(item.first);
     return result;
 }
 

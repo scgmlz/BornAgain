@@ -35,6 +35,9 @@ public:
     static std::unique_ptr<ObjectiveMetric> createMetric(const std::string& metric,
                                                          const std::string& norm);
 
+    static std::vector<std::string> normNames();
+    static std::vector<std::string> metricNames();
+
     ObjectiveMetric(std::function<double(double)> norm);
 
     ObjectiveMetric* clone() const override = 0;

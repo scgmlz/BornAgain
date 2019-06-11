@@ -209,6 +209,11 @@ void FitObjective::setChiSquaredModule(const IChiSquaredModule& module)
     m_metric_module = std::make_unique<ChiModuleWrapper>(std::move(chi_module));
 }
 
+void FitObjective::setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric)
+{
+    m_metric_module = std::make_unique<ObjectiveMetricWrapper>(std::move(metric));
+}
+
 void FitObjective::setObjectiveMetric(const std::string& metric, const std::string& norm)
 {
     m_metric_module =
