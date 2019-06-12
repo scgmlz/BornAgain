@@ -17,6 +17,7 @@
 #include "FixedBinAxis.h"
 #include "OutputData.h"
 
+SimulationResult::SimulationResult() = default;
 
 SimulationResult::SimulationResult(const OutputData<double>& data,
                                      const IUnitConverter& unit_converter)
@@ -39,6 +40,8 @@ SimulationResult::SimulationResult(SimulationResult&& other)
     : mP_data(std::move(other.mP_data))
     , mP_unit_converter(std::move(other.mP_unit_converter))
 {}
+
+SimulationResult::~SimulationResult() = default;
 
 SimulationResult& SimulationResult::operator=(const SimulationResult& other)
 {

@@ -13,15 +13,15 @@
 // ************************************************************************** //
 
 #include "FitObjective.h"
-#include "ArrayUtils.h"
 #include "ChiSquaredModule.h"
 #include "FitStatus.h"
 #include "MinimizerResult.h"
 #include "ObjectiveMetric.h"
 #include "ObjectiveMetricUtils.h"
+#include "OutputData.h"
 #include "Parameters.h"
-#include "PyFittingCallbacks.h"
-#include "Simulation.h"
+#include <algorithm>
+#include <iostream>
 #include <stdexcept>
 
 class IMetricWrapper
@@ -52,16 +52,6 @@ private:
     std::unique_ptr<ObjectiveMetric> m_module;
 };
 
-simulation_builder_t FitObjective::simulationBuilder(PyBuilderCallback& callback)
-{
-    return [&callback](const Fit::Parameters& params) {
-        auto simulation = callback.build_simulation(params);
-        std::unique_ptr<Simulation> clone(simulation->clone());
-        delete simulation; // deleting Python object
-        return clone;
-    };
-}
-
 FitObjective::FitObjective()
     : m_metric_module(
           std::make_unique<ObjectiveMetricWrapper>(std::make_unique<PoissonLikeMetric>()))
@@ -90,8 +80,9 @@ std::vector<double> FitObjective::evaluate_residuals(const Fit::Parameters& para
 {
     evaluate(params);
 
-    std::vector<double> result = experimental_array(); // init result with experimental data values
-    const std::vector<double> sim_values = simulation_array();
+    // init result with experimental data values
+    std::vector<double> result = composeArray(&SimDataPair::experimental_array);
+    const std::vector<double> sim_values = composeArray(&SimDataPair::simulation_array);
     std::transform(result.begin(), result.end(), sim_values.begin(), result.begin(),
                    [](double lhs, double rhs) { return lhs - rhs; });
     return result;
@@ -101,26 +92,6 @@ size_t FitObjective::numberOfFitElements() const
 {
     return std::accumulate(m_fit_objects.begin(), m_fit_objects.end(), 0u,
                            [](size_t acc, auto& obj) { return acc + obj.numberOfFitElements(); });
-}
-
-std::vector<double> FitObjective::experimental_array() const
-{
-    return composeArray(&SimDataPair::experimental_array);
-}
-
-std::vector<double> FitObjective::simulation_array() const
-{
-    return composeArray(&SimDataPair::simulation_array);
-}
-
-std::vector<double> FitObjective::uncertainties() const
-{
-    return composeArray(&SimDataPair::uncertainties_array);
-}
-
-std::vector<double> FitObjective::weights_array() const
-{
-    return composeArray(&SimDataPair::user_weights_array);
 }
 
 const SimDataPair& FitObjective::dataPair(size_t i_item) const
@@ -135,14 +106,6 @@ void FitObjective::initPrint(int every_nth)
 
 void FitObjective::initPlot(int every_nth, fit_observer_t observer)
 {
-    m_fit_status->addObserver(every_nth, observer);
-}
-
-void FitObjective::initPlot(int every_nth, PyObserverCallback& callback)
-{
-    fit_observer_t observer = [&](const FitObjective& objective) {
-        callback.update(objective);
-    };
     m_fit_status->addObserver(every_nth, observer);
 }
 
@@ -213,18 +176,6 @@ void FitObjective::setChiSquaredModule(const IChiSquaredModule& module)
 void FitObjective::setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric)
 {
     m_metric_module = std::make_unique<ObjectiveMetricWrapper>(std::move(metric));
-}
-
-void FitObjective::setObjectiveMetric(const std::string& metric)
-{
-    m_metric_module = std::make_unique<ObjectiveMetricWrapper>(
-        ObjectiveMetricUtils::createMetric(metric, ObjectiveMetricUtils::defaultNormName()));
-}
-
-void FitObjective::setObjectiveMetric(const std::string& metric, const std::string& norm)
-{
-    m_metric_module =
-        std::make_unique<ObjectiveMetricWrapper>(ObjectiveMetricUtils::createMetric(metric, norm));
 }
 
 std::vector<double> FitObjective::composeArray(DataPairAccessor getter) const

@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "Parameters.h"
 #include "FitObjective.h"
+#include "FitObjectiveInterfaceUtils.h"
 #include "FittingTestHelper.h"
 
 class FitObjectiveTest : public ::testing::Test
@@ -51,6 +52,6 @@ TEST_F(FitObjectiveTest, twoDatasets)
     std::vector<double> expected_exp2(helper2.size(), exp_value2);
     expected_exp1.insert(expected_exp1.end(), expected_exp2.begin(), expected_exp2.end());
 
-    EXPECT_EQ(expected_exp1, objective.experimental_array());
+    EXPECT_EQ(expected_exp1, FitObjectiveInterfaceUtils::experimental_array(objective));
 }
 

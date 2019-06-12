@@ -201,7 +201,7 @@ class ObserverCallbackWrapper(PyObserverCallback):
             self.callback_container = []
         wrp = SimulationBuilderWrapper(callback)
         self.callback_container.append(wrp)
-        return self.addSimulationAndData_cpp(wrp, data, *args, **kwargs)
+        return FitObjectiveInterface_cpp.addSimulationAndData(self, wrp, data, *args, **kwargs)
 
     def convert_params(self, params):
         """
@@ -245,37 +245,78 @@ class ObserverCallbackWrapper(PyObserverCallback):
             callback = self.create_default_plotter()
 
         self.wrp_plot_observer = ObserverCallbackWrapper(callback)
-        return self.initPlot_cpp(every_nth, self.wrp_plot_observer)
+        return FitObjectiveInterface_cpp.initPlot(self, every_nth, self.wrp_plot_observer)
 
     def simulationResult(self, i=0):
         """
         Returns simulated values for i-th simulation-data pair
         """
-        return self.dataPair(i).simulationResult();
+        return FitObjectiveInterface_cpp.simulationResult(self, i)
 
     def experimentalData(self, i=0):
         """
         Returns experimental values for i-th simulation-data pair
         """
-        return self.dataPair(i).experimentalData();
+        return FitObjectiveInterface_cpp.experimentalData(self, i)
 
     def uncertaintyData(self, i=0):
         """
-        Returns uncertainties for i-th simulation-data pair
+        Returns uncertainties for i-th simulation-data pair. If
+        no uncertainties are assigned to the data pair, returns
+        None
         """
-        return self.dataPair(i).uncertainties();
+        if FitObjectiveInterface_cpp.containsUncertainties(self, i):
+            return FitObjectiveInterface_cpp.uncertaintyData(self, i)
+        return None
 
     def relativeDifference(self, i=0):
         """
         Returns relative difference for i-th simulation-data pair
         """
-        return self.dataPair(i).relativeDifference();
+        return FitObjectiveInterface_cpp.relativeDifference(self, i)
 
     def absoluteDifference(self, i=0):
         """
         Returns absolute difference for i-th simulation-data pair
         """
-        return self.dataPair(i).absoluteDifference();
+        return FitObjectiveInterface_cpp.absoluteDifference(self, i)
+
+    def experimental_array(self):
+        """
+        Returns flattened array of experimental values
+        """
+        return FitObjectiveInterface_cpp.experimental_array(self)
+
+    def simulation_array(self):
+        """
+        Returns flattened array of simulated values
+        """
+        return FitObjectiveInterface_cpp.simulation_array(self)
+
+    def uncertainties(self):
+        """
+        Returns flattened array of data uncertainty values. If
+        some of the data pairs lack uncertainties, returns None.
+        """
+        if FitObjectiveInterface_cpp.allPairsHaveUncertainties(self):
+            return FitObjectiveInterface_cpp.uncertainties(self)
+        return None
+
+    def weights_array(self):
+        """
+        Returns flattened array of user weights
+        """
+        return FitObjectiveInterface_cpp.weights_array(self)
+
+    def setObjectiveMetric(self, metric_name, norm_name=None):
+        """
+        Sets objective metric with the given name and norm to the fit objective instance.
+        If norm is not specified, default one (L2) is used.
+        """
+        if norm_name is None:
+            FitObjectiveInterface_cpp.setObjectiveMetric(self, metric_name)
+        else:
+            FitObjectiveInterface_cpp.setObjectiveMetric(self, metric_name, norm_name)
 %}
 };
 

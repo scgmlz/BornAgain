@@ -42,10 +42,12 @@ struct AxisInfo
 class BA_CORE_API_ SimulationResult
 {
 public:
-    SimulationResult() =default;
+    SimulationResult();
     SimulationResult(const OutputData<double>& data, const IUnitConverter& unit_converter);
     SimulationResult(const SimulationResult& other);
     SimulationResult(SimulationResult&& other);
+
+    ~SimulationResult();
 
     SimulationResult& operator=(const SimulationResult& other);
     SimulationResult& operator=(SimulationResult&& other);

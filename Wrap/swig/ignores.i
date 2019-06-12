@@ -41,10 +41,6 @@
 // ignored to avoid error (todo: check whether this is really necessary)
 %ignore Crystal::getTransformedLattice(const IRotation*) const;
 
-// ignored to prevent SimDataPair non-const methods being exposed to python API
-%ignore SimDataPair::SimDataPair;
-%ignore SimDataPair::runSimulation;
-
 // extra ignores for types and methods that shouldn't be visible in Python
 %ignore FormFactorDWBAPol;
 %ignore ISampleVisitor::visit(const FormFactorDWBAPol*);

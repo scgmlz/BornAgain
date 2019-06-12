@@ -18,6 +18,7 @@
 #include "MinimizerUtils.h"
 #include "FitObjective.h"
 #include "MinimizerResult.h"
+#include "OutputData.h"
 
 GUIFitObserver::GUIFitObserver(QObject* parent)
     : QObject(parent)
