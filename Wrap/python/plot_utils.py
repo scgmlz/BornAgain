@@ -291,9 +291,10 @@ class PlotterSpecular(Plotter):
     specular data fit.
     """
 
-    def __init__(self):
+    def __init__(self, units=ba.AxesUnits.DEFAULT):
         Plotter.__init__(self)
         self.gs = gridspec.GridSpec(1, 2, width_ratios=[2.5, 1], wspace=0)
+        self.units = units
 
     def __call__(self, fit_objective):
         self.plot(fit_objective)
@@ -356,10 +357,12 @@ class PlotterSpecular(Plotter):
         # retrieving data from fit suite
         real_data = fit_objective.experimentalData()
         sim_data = fit_objective.simulationResult()
+        unc_data = fit_objective.uncertaintyData()
 
         # data values
-        sim_values = sim_data.array()
-        real_values = real_data.array()
+        sim_values = sim_data.array(self.units)
+        real_values = real_data.array(self.units)
+        unc_values = None if unc_data is None else unc_data.array(self.units)
 
         # default font properties dictionary to use
         font = {'family': 'serif',
@@ -369,10 +372,16 @@ class PlotterSpecular(Plotter):
         plt.subplot(self.gs[0])
         plt.semilogy(sim_data.axis(), sim_values, 'b',
                      real_data.axis(), real_values, 'k--')
+        if unc_values is not None:
+            plt.semilogy(real_data.axis(), real_values - unc_values, 'xkcd:grey', alpha=0.6)
+            plt.semilogy(real_data.axis(), real_values + unc_values, 'xkcd:grey', alpha=0.6)
         plt.ylim((0.5 * np.min(real_values), 5 * np.max(real_values)))
 
-        xlabel = get_axes_labels(real_data, ba.AxesUnits.DEFAULT)[0]
-        plt.legend(['BornAgain', 'Reference'], loc='upper right', prop=font)
+        xlabel = get_axes_labels(real_data, self.units)[0]
+        legend = ['BornAgain', 'Data']
+        if unc_values is not None:
+            legend = ['BornAgain', 'Data', r'Data $\pm \sigma$']
+        plt.legend(legend, loc='upper right', prop=font)
         plt.xlabel(xlabel, fontdict=font)
         plt.ylabel("Intensity", fontdict=font)
         plt.title("Specular data fitting", fontdict=font)
