@@ -43,6 +43,7 @@ MinimizerContainerItem::MinimizerContainerItem()
     ComboProperty metric_combo;
     for (auto& item: ObjectiveMetricUtils::metricNames())
         metric_combo << QString::fromStdString(item);
+    metric_combo.setValue(QString::fromStdString(ObjectiveMetricUtils::defaultMetricName()));
     addProperty(P_METRIC, metric_combo.variant())
         ->setToolTip("Objective metric to use for estimating distance between simulated and "
                      "experimental data.");
@@ -50,6 +51,7 @@ MinimizerContainerItem::MinimizerContainerItem()
     ComboProperty norm_combo;
     for (auto& item: ObjectiveMetricUtils::normNames())
         norm_combo << QString::fromStdString(item);
+    norm_combo.setValue(QString::fromStdString(ObjectiveMetricUtils::defaultNormName()));
     addProperty(P_NORM, norm_combo.variant())
         ->setToolTip("Normalization to use for estimating distance between simulated and "
                      "experimental data.");
