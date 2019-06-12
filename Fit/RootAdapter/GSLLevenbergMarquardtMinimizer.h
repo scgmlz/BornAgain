@@ -28,7 +28,7 @@ class BA_CORE_API_ GSLLevenbergMarquardtMinimizer : public RootMinimizerAdapter
 {
 public:
     GSLLevenbergMarquardtMinimizer();
-    ~GSLLevenbergMarquardtMinimizer();
+    ~GSLLevenbergMarquardtMinimizer() override;
 
     //!< Sets tolerance on the function value at the minimum.
     void setTolerance(double value);
@@ -46,6 +46,8 @@ public:
 
     std::string statusToString() const override;
     std::map<std::string, std::string> statusMap() const override;
+
+    bool requiresResiduals() const override { return true; }
 
 protected:
     virtual bool isGradientBasedAgorithm() override;
