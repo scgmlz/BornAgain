@@ -150,3 +150,9 @@ bool FitObjectiveInterfaceUtils::allPairsHaveUncertainties(const FitObjective& o
         result = result && objective.dataPair(i).containsUncertainties();
     return result;
 }
+
+//! Returns available objective metrics and norms
+std::string FitObjectiveInterfaceUtils::availableMetricOptions()
+{
+    return ObjectiveMetricUtils::availableMetricOptions();
+}

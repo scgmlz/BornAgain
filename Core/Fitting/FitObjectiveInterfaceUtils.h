@@ -71,6 +71,8 @@ struct BA_CORE_API_ FitObjectiveInterfaceUtils {
     static bool containsUncertainties(const FitObjective& objective, size_t i_item);
     static bool allPairsHaveUncertainties(const FitObjective& objective);
 
+    static std::string availableMetricOptions();
+
 private:
     static simulation_builder_t simulationBuilder(PyBuilderCallback& callback);
 };

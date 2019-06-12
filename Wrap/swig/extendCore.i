@@ -317,6 +317,13 @@ class ObserverCallbackWrapper(PyObserverCallback):
             FitObjectiveInterface_cpp.setObjectiveMetric(self, metric_name)
         else:
             FitObjectiveInterface_cpp.setObjectiveMetric(self, metric_name, norm_name)
+
+    @staticmethod
+    def availableMetricOptions():
+        """
+        Prints the names of available metrics and norms
+        """
+        return FitObjectiveInterface_cpp.availableMetricOptions()
 %}
 };
 
