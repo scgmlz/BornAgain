@@ -6403,55 +6403,6 @@ class FitObjective(_object):
         return _libBornAgainCore.FitObjective_numberOfFitElements(self)
 
 
-    def experimental_array(self):
-        """
-        experimental_array(FitObjective self) -> vdouble1d_t
-
-        std::vector< double > FitObjective::experimental_array() const
-
-        Returns one dimensional array representing experimental data. Masked areas and the area outside of region of interest are not included. Data from different datasets merged together. 
-
-        """
-        return _libBornAgainCore.FitObjective_experimental_array(self)
-
-
-    def simulation_array(self):
-        """
-        simulation_array(FitObjective self) -> vdouble1d_t
-
-        std::vector< double > FitObjective::simulation_array() const
-
-        Returns one dimensional array representing simulated intensities data. Masked areas and the area outside of region of interest are not included. Data from different datasets merged together. 
-
-        """
-        return _libBornAgainCore.FitObjective_simulation_array(self)
-
-
-    def uncertainties(self):
-        """uncertainties(FitObjective self) -> vdouble1d_t"""
-        return _libBornAgainCore.FitObjective_uncertainties(self)
-
-
-    def weights_array(self):
-        """
-        weights_array(FitObjective self) -> vdouble1d_t
-
-        std::vector< double > FitObjective::weights_array() const
-
-        Returns one dimensional array representing weights of bin intensity for residuals. 
-
-        """
-        return _libBornAgainCore.FitObjective_weights_array(self)
-
-
-    def dataPair(self, i_item=0):
-        """
-        dataPair(FitObjective self, size_t i_item=0) -> SimDataPair
-        dataPair(FitObjective self) -> SimDataPair
-        """
-        return _libBornAgainCore.FitObjective_dataPair(self, i_item)
-
-
     def initPrint(self, every_nth):
         """
         initPrint(FitObjective self, int every_nth)
@@ -6468,36 +6419,6 @@ class FitObjective(_object):
 
         """
         return _libBornAgainCore.FitObjective_initPrint(self, every_nth)
-
-
-    def initPlot_cpp(self, every_nth, callback):
-        """
-        initPlot_cpp(FitObjective self, int every_nth, PyObserverCallback callback)
-
-        void FitObjective::initPlot(int every_nth, PyObserverCallback &callback)
-
-        """
-        return _libBornAgainCore.FitObjective_initPlot_cpp(self, every_nth, callback)
-
-
-    def isCompleted(self):
-        """
-        isCompleted(FitObjective self) -> bool
-
-        bool FitObjective::isCompleted() const
-
-        """
-        return _libBornAgainCore.FitObjective_isCompleted(self)
-
-
-    def iterationInfo(self):
-        """
-        iterationInfo(FitObjective self) -> IterationInfo
-
-        IterationInfo FitObjective::iterationInfo() const
-
-        """
-        return _libBornAgainCore.FitObjective_iterationInfo(self)
 
 
     def minimizerResult(self):
@@ -6532,36 +6453,6 @@ class FitObjective(_object):
         return _libBornAgainCore.FitObjective_fitObjectCount(self)
 
 
-    def interruptFitting(self):
-        """
-        interruptFitting(FitObjective self)
-
-        void FitObjective::interruptFitting()
-
-        """
-        return _libBornAgainCore.FitObjective_interruptFitting(self)
-
-
-    def isInterrupted(self):
-        """
-        isInterrupted(FitObjective self) -> bool
-
-        bool FitObjective::isInterrupted() const
-
-        """
-        return _libBornAgainCore.FitObjective_isInterrupted(self)
-
-
-    def isFirstIteration(self):
-        """
-        isFirstIteration(FitObjective self) -> bool
-
-        bool FitObjective::isFirstIteration() const
-
-        """
-        return _libBornAgainCore.FitObjective_isFirstIteration(self)
-
-
     def run_simulations(self, params):
         """
         run_simulations(FitObjective self, Parameters params)
@@ -6572,6 +6463,16 @@ class FitObjective(_object):
         return _libBornAgainCore.FitObjective_run_simulations(self, params)
 
 
+    def iterationInfo(self):
+        """
+        iterationInfo(FitObjective self) -> IterationInfo
+
+        IterationInfo FitObjective::iterationInfo() const
+
+        """
+        return _libBornAgainCore.FitObjective_iterationInfo(self)
+
+
     def setChiSquaredModule(self, module):
         """
         setChiSquaredModule(FitObjective self, IChiSquaredModule module)
@@ -6580,31 +6481,6 @@ class FitObjective(_object):
 
         """
         return _libBornAgainCore.FitObjective_setChiSquaredModule(self, module)
-
-
-    def setObjectiveMetric(self, *args):
-        """
-        setObjectiveMetric(FitObjective self, std::string const & metric, std::string const & norm)
-        setObjectiveMetric(FitObjective self, std::string const & metric)
-        """
-        return _libBornAgainCore.FitObjective_setObjectiveMetric(self, *args)
-
-
-    def addSimulationAndData_cpp(self, *args):
-        """
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble1d_t data, double weight=1.0)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble1d_t data)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble1d_t data, vdouble1d_t uncertainties, double weight=1.0)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble1d_t data, vdouble1d_t uncertainties)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble2d_t data, double weight=1.0)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble2d_t data)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble2d_t data, vdouble2d_t uncertainties, double weight=1.0)
-        addSimulationAndData_cpp(FitObjective self, PyBuilderCallback callback, vdouble2d_t data, vdouble2d_t uncertainties)
-
-        void FitObjective::addSimulationAndData(PyBuilderCallback &callback, const std::vector< std::vector< double >> &data, double weight=1.0)
-
-        """
-        return _libBornAgainCore.FitObjective_addSimulationAndData_cpp(self, *args)
 
 
     def addSimulationAndData(self, callback, data, *args, **kwargs):
@@ -6629,7 +6505,7 @@ class FitObjective(_object):
             self.callback_container = []
         wrp = SimulationBuilderWrapper(callback)
         self.callback_container.append(wrp)
-        return self.addSimulationAndData_cpp(wrp, data, *args, **kwargs)
+        return FitObjectiveInterface_cpp.addSimulationAndData(self, wrp, data, *args, **kwargs)
 
     def convert_params(self, params):
         """
@@ -6673,37 +6549,85 @@ class FitObjective(_object):
             callback = self.create_default_plotter()
 
         self.wrp_plot_observer = ObserverCallbackWrapper(callback)
-        return self.initPlot_cpp(every_nth, self.wrp_plot_observer)
+        return FitObjectiveInterface_cpp.initPlot(self, every_nth, self.wrp_plot_observer)
 
     def simulationResult(self, i=0):
         """
         Returns simulated values for i-th simulation-data pair
         """
-        return self.dataPair(i).simulationResult();
+        return FitObjectiveInterface_cpp.simulationResult(self, i)
 
     def experimentalData(self, i=0):
         """
         Returns experimental values for i-th simulation-data pair
         """
-        return self.dataPair(i).experimentalData();
+        return FitObjectiveInterface_cpp.experimentalData(self, i)
 
     def uncertaintyData(self, i=0):
         """
-        Returns uncertainties for i-th simulation-data pair
+        Returns uncertainties for i-th simulation-data pair. If
+        no uncertainties are assigned to the data pair, returns
+        None
         """
-        return self.dataPair(i).uncertainties();
+        if FitObjectiveInterface_cpp.containsUncertainties(self, i):
+            return FitObjectiveInterface_cpp.uncertaintyData(self, i)
+        return None
 
     def relativeDifference(self, i=0):
         """
         Returns relative difference for i-th simulation-data pair
         """
-        return self.dataPair(i).relativeDifference();
+        return FitObjectiveInterface_cpp.relativeDifference(self, i)
 
     def absoluteDifference(self, i=0):
         """
         Returns absolute difference for i-th simulation-data pair
         """
-        return self.dataPair(i).absoluteDifference();
+        return FitObjectiveInterface_cpp.absoluteDifference(self, i)
+
+    def experimental_array(self):
+        """
+        Returns flattened array of experimental values
+        """
+        return FitObjectiveInterface_cpp.experimental_array(self)
+
+    def simulation_array(self):
+        """
+        Returns flattened array of simulated values
+        """
+        return FitObjectiveInterface_cpp.simulation_array(self)
+
+    def uncertainties(self):
+        """
+        Returns flattened array of data uncertainty values. If
+        some of the data pairs lack uncertainties, returns None.
+        """
+        if FitObjectiveInterface_cpp.allPairsHaveUncertainties(self):
+            return FitObjectiveInterface_cpp.uncertainties(self)
+        return None
+
+    def weights_array(self):
+        """
+        Returns flattened array of user weights
+        """
+        return FitObjectiveInterface_cpp.weights_array(self)
+
+    def setObjectiveMetric(self, metric_name, norm_name=None):
+        """
+        Sets objective metric with the given name and norm to the fit objective instance.
+        If norm is not specified, default one (L2) is used.
+        """
+        if norm_name is None:
+            FitObjectiveInterface_cpp.setObjectiveMetric(self, metric_name)
+        else:
+            FitObjectiveInterface_cpp.setObjectiveMetric(self, metric_name, norm_name)
+
+    @staticmethod
+    def availableMetricOptions():
+        """
+        Prints the names of available metrics and norms
+        """
+        return FitObjectiveInterface_cpp.availableMetricOptions()
 
     def __disown__(self):
         self.this.disown()
@@ -6711,6 +6635,201 @@ class FitObjective(_object):
         return weakref_proxy(self)
 FitObjective_swigregister = _libBornAgainCore.FitObjective_swigregister
 FitObjective_swigregister(FitObjective)
+
+class FitObjectiveInterface_cpp(_object):
+    """Proxy of C++ FitObjectiveInterfaceUtils class."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FitObjectiveInterface_cpp, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, FitObjectiveInterface_cpp, name)
+    __repr__ = _swig_repr
+
+    def experimental_array(objective):
+        """experimental_array(FitObjective objective) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_experimental_array(objective)
+
+    experimental_array = staticmethod(experimental_array)
+
+    def simulation_array(objective):
+        """simulation_array(FitObjective objective) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_simulation_array(objective)
+
+    simulation_array = staticmethod(simulation_array)
+
+    def uncertainties(objective):
+        """uncertainties(FitObjective objective) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_uncertainties(objective)
+
+    uncertainties = staticmethod(uncertainties)
+
+    def weights_array(objective):
+        """weights_array(FitObjective objective) -> vdouble1d_t"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_weights_array(objective)
+
+    weights_array = staticmethod(weights_array)
+
+    def simulationResult(objective, i_item):
+        """simulationResult(FitObjective objective, size_t i_item) -> SimulationResult"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_simulationResult(objective, i_item)
+
+    simulationResult = staticmethod(simulationResult)
+
+    def experimentalData(objective, i_item):
+        """experimentalData(FitObjective objective, size_t i_item) -> SimulationResult"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_experimentalData(objective, i_item)
+
+    experimentalData = staticmethod(experimentalData)
+
+    def uncertaintyData(objective, i_item):
+        """uncertaintyData(FitObjective objective, size_t i_item) -> SimulationResult"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_uncertaintyData(objective, i_item)
+
+    uncertaintyData = staticmethod(uncertaintyData)
+
+    def relativeDifference(objective, i_item):
+        """relativeDifference(FitObjective objective, size_t i_item) -> SimulationResult"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_relativeDifference(objective, i_item)
+
+    relativeDifference = staticmethod(relativeDifference)
+
+    def absoluteDifference(objective, i_item):
+        """absoluteDifference(FitObjective objective, size_t i_item) -> SimulationResult"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_absoluteDifference(objective, i_item)
+
+    absoluteDifference = staticmethod(absoluteDifference)
+
+    def initPlot(objective, every_nth, callback):
+        """initPlot(FitObjective objective, int every_nth, PyObserverCallback callback)"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_initPlot(objective, every_nth, callback)
+
+    initPlot = staticmethod(initPlot)
+
+    def setObjectiveMetric(*args):
+        """
+        setObjectiveMetric(FitObjective objective, std::string const & metric)
+        setObjectiveMetric(FitObjective objective, std::string const & metric, std::string const & norm)
+        """
+        return _libBornAgainCore.FitObjectiveInterface_cpp_setObjectiveMetric(*args)
+
+    setObjectiveMetric = staticmethod(setObjectiveMetric)
+
+    def containsUncertainties(objective, i_item):
+        """containsUncertainties(FitObjective objective, size_t i_item) -> bool"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_containsUncertainties(objective, i_item)
+
+    containsUncertainties = staticmethod(containsUncertainties)
+
+    def allPairsHaveUncertainties(objective):
+        """allPairsHaveUncertainties(FitObjective objective) -> bool"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_allPairsHaveUncertainties(objective)
+
+    allPairsHaveUncertainties = staticmethod(allPairsHaveUncertainties)
+
+    def availableMetricOptions():
+        """availableMetricOptions() -> std::string"""
+        return _libBornAgainCore.FitObjectiveInterface_cpp_availableMetricOptions()
+
+    availableMetricOptions = staticmethod(availableMetricOptions)
+
+    def addSimulationAndData(*args):
+        """
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data, double weight=1.0)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data, vdouble1d_t uncertainties, double weight=1.0)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data, vdouble1d_t uncertainties)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data, double weight=1.0)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data, vdouble2d_t uncertainties, double weight=1.0)
+        addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data, vdouble2d_t uncertainties)
+        """
+        return _libBornAgainCore.FitObjectiveInterface_cpp_addSimulationAndData(*args)
+
+    addSimulationAndData = staticmethod(addSimulationAndData)
+
+    def __init__(self):
+        """__init__(FitObjectiveInterfaceUtils self) -> FitObjectiveInterface_cpp"""
+        this = _libBornAgainCore.new_FitObjectiveInterface_cpp()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _libBornAgainCore.delete_FitObjectiveInterface_cpp
+    __del__ = lambda self: None
+FitObjectiveInterface_cpp_swigregister = _libBornAgainCore.FitObjectiveInterface_cpp_swigregister
+FitObjectiveInterface_cpp_swigregister(FitObjectiveInterface_cpp)
+
+def FitObjectiveInterface_cpp_experimental_array(objective):
+    """FitObjectiveInterface_cpp_experimental_array(FitObjective objective) -> vdouble1d_t"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_experimental_array(objective)
+
+def FitObjectiveInterface_cpp_simulation_array(objective):
+    """FitObjectiveInterface_cpp_simulation_array(FitObjective objective) -> vdouble1d_t"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_simulation_array(objective)
+
+def FitObjectiveInterface_cpp_uncertainties(objective):
+    """FitObjectiveInterface_cpp_uncertainties(FitObjective objective) -> vdouble1d_t"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_uncertainties(objective)
+
+def FitObjectiveInterface_cpp_weights_array(objective):
+    """FitObjectiveInterface_cpp_weights_array(FitObjective objective) -> vdouble1d_t"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_weights_array(objective)
+
+def FitObjectiveInterface_cpp_simulationResult(objective, i_item):
+    """FitObjectiveInterface_cpp_simulationResult(FitObjective objective, size_t i_item) -> SimulationResult"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_simulationResult(objective, i_item)
+
+def FitObjectiveInterface_cpp_experimentalData(objective, i_item):
+    """FitObjectiveInterface_cpp_experimentalData(FitObjective objective, size_t i_item) -> SimulationResult"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_experimentalData(objective, i_item)
+
+def FitObjectiveInterface_cpp_uncertaintyData(objective, i_item):
+    """FitObjectiveInterface_cpp_uncertaintyData(FitObjective objective, size_t i_item) -> SimulationResult"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_uncertaintyData(objective, i_item)
+
+def FitObjectiveInterface_cpp_relativeDifference(objective, i_item):
+    """FitObjectiveInterface_cpp_relativeDifference(FitObjective objective, size_t i_item) -> SimulationResult"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_relativeDifference(objective, i_item)
+
+def FitObjectiveInterface_cpp_absoluteDifference(objective, i_item):
+    """FitObjectiveInterface_cpp_absoluteDifference(FitObjective objective, size_t i_item) -> SimulationResult"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_absoluteDifference(objective, i_item)
+
+def FitObjectiveInterface_cpp_initPlot(objective, every_nth, callback):
+    """FitObjectiveInterface_cpp_initPlot(FitObjective objective, int every_nth, PyObserverCallback callback)"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_initPlot(objective, every_nth, callback)
+
+def FitObjectiveInterface_cpp_setObjectiveMetric(*args):
+    """
+    setObjectiveMetric(FitObjective objective, std::string const & metric)
+    FitObjectiveInterface_cpp_setObjectiveMetric(FitObjective objective, std::string const & metric, std::string const & norm)
+    """
+    return _libBornAgainCore.FitObjectiveInterface_cpp_setObjectiveMetric(*args)
+
+def FitObjectiveInterface_cpp_containsUncertainties(objective, i_item):
+    """FitObjectiveInterface_cpp_containsUncertainties(FitObjective objective, size_t i_item) -> bool"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_containsUncertainties(objective, i_item)
+
+def FitObjectiveInterface_cpp_allPairsHaveUncertainties(objective):
+    """FitObjectiveInterface_cpp_allPairsHaveUncertainties(FitObjective objective) -> bool"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_allPairsHaveUncertainties(objective)
+
+def FitObjectiveInterface_cpp_availableMetricOptions():
+    """FitObjectiveInterface_cpp_availableMetricOptions() -> std::string"""
+    return _libBornAgainCore.FitObjectiveInterface_cpp_availableMetricOptions()
+
+def FitObjectiveInterface_cpp_addSimulationAndData(*args):
+    """
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data, double weight=1.0)
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data)
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data, vdouble1d_t uncertainties, double weight=1.0)
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble1d_t data, vdouble1d_t uncertainties)
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data, double weight=1.0)
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data)
+    addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data, vdouble2d_t uncertainties, double weight=1.0)
+    FitObjectiveInterface_cpp_addSimulationAndData(FitObjective objective, PyBuilderCallback callback, vdouble2d_t data, vdouble2d_t uncertainties)
+    """
+    return _libBornAgainCore.FitObjectiveInterface_cpp_addSimulationAndData(*args)
 
 
 def StandardNormal(x):
@@ -18204,6 +18323,8 @@ class SimulationResult(_object):
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
+    __swig_destroy__ = _libBornAgainCore.delete_SimulationResult
+    __del__ = lambda self: None
 
     def data(self, *args):
         """
@@ -18299,8 +18420,6 @@ class SimulationResult(_object):
         """__setitem__(SimulationResult self, unsigned int i, double value) -> double"""
         return _libBornAgainCore.SimulationResult___setitem__(self, i, value)
 
-    __swig_destroy__ = _libBornAgainCore.delete_SimulationResult
-    __del__ = lambda self: None
 SimulationResult_swigregister = _libBornAgainCore.SimulationResult_swigregister
 SimulationResult_swigregister(SimulationResult)
 
@@ -28817,136 +28936,6 @@ class DepthProbeSimulation(Simulation):
 
 DepthProbeSimulation_swigregister = _libBornAgainCore.DepthProbeSimulation_swigregister
 DepthProbeSimulation_swigregister(DepthProbeSimulation)
-
-class SimDataPair(_object):
-    """
-
-
-    Holds pair of simulation/experimental data to fit.
-
-    C++ includes: SimDataPair.h
-
-    """
-
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, SimDataPair, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, SimDataPair, name)
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined")
-    __repr__ = _swig_repr
-    __swig_destroy__ = _libBornAgainCore.delete_SimDataPair
-    __del__ = lambda self: None
-
-    def containsUncertainties(self):
-        """containsUncertainties(SimDataPair self) -> bool"""
-        return _libBornAgainCore.SimDataPair_containsUncertainties(self)
-
-
-    def numberOfFitElements(self):
-        """
-        numberOfFitElements(SimDataPair self) -> size_t
-
-        size_t SimDataPair::numberOfFitElements() const
-
-        Returns the size of the data. It is equal to the number of non-masked detector channels which will participate in chi2 calculations. 
-
-        """
-        return _libBornAgainCore.SimDataPair_numberOfFitElements(self)
-
-
-    def simulationResult(self):
-        """
-        simulationResult(SimDataPair self) -> SimulationResult
-
-        SimulationResult SimDataPair::simulationResult() const
-
-        Returns simulation result. 
-
-        """
-        return _libBornAgainCore.SimDataPair_simulationResult(self)
-
-
-    def experimentalData(self):
-        """
-        experimentalData(SimDataPair self) -> SimulationResult
-
-        SimulationResult SimDataPair::experimentalData() const
-
-        Returns experimental data. 
-
-        """
-        return _libBornAgainCore.SimDataPair_experimentalData(self)
-
-
-    def uncertainties(self):
-        """uncertainties(SimDataPair self) -> SimulationResult"""
-        return _libBornAgainCore.SimDataPair_uncertainties(self)
-
-
-    def userWeights(self):
-        """userWeights(SimDataPair self) -> SimulationResult"""
-        return _libBornAgainCore.SimDataPair_userWeights(self)
-
-
-    def relativeDifference(self):
-        """
-        relativeDifference(SimDataPair self) -> SimulationResult
-
-        SimulationResult SimDataPair::relativeDifference() const
-
-        Returns relative difference between simulation and experimental data. 
-
-        """
-        return _libBornAgainCore.SimDataPair_relativeDifference(self)
-
-
-    def absoluteDifference(self):
-        """
-        absoluteDifference(SimDataPair self) -> SimulationResult
-
-        SimulationResult SimDataPair::absoluteDifference() const
-
-        """
-        return _libBornAgainCore.SimDataPair_absoluteDifference(self)
-
-
-    def simulation_array(self):
-        """
-        simulation_array(SimDataPair self) -> vdouble1d_t
-
-        std::vector< double > SimDataPair::simulation_array() const
-
-        Returns one dimensional array representing simulated intensities data. Masked areas and the area outside of region of interest are not included. 
-
-        """
-        return _libBornAgainCore.SimDataPair_simulation_array(self)
-
-
-    def experimental_array(self):
-        """
-        experimental_array(SimDataPair self) -> vdouble1d_t
-
-        std::vector< double > SimDataPair::experimental_array() const
-
-        Returns one dimensional array representing experimental data. Masked areas and the area outside of region of interest are not included. 
-
-        """
-        return _libBornAgainCore.SimDataPair_experimental_array(self)
-
-
-    def uncertainties_array(self):
-        """uncertainties_array(SimDataPair self) -> vdouble1d_t"""
-        return _libBornAgainCore.SimDataPair_uncertainties_array(self)
-
-
-    def user_weights_array(self):
-        """user_weights_array(SimDataPair self) -> vdouble1d_t"""
-        return _libBornAgainCore.SimDataPair_user_weights_array(self)
-
-SimDataPair_swigregister = _libBornAgainCore.SimDataPair_swigregister
-SimDataPair_swigregister(SimDataPair)
 
 class SpecularSimulation(Simulation):
     """
