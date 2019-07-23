@@ -47,22 +47,22 @@ def translate_axis_label(label):
     :return: LaTeX representation
     """
     label_dict = {
-                 'X [nbins]'     : r'$X \; (bins)$',
-                 'phi_f [rad]'   : r'$\varphi_f \; (rad)$',
-                 'phi_f [deg]'   : r'$\varphi_f \; (deg)$',
-                 'alpha_i [rad]' : r'$\alpha_i \; (rad)$',
-                 'alpha_i [deg]' : r'$\alpha_i \; (deg)$',
-                 'X [mm]'        : r'$X \; (mm)$',
-                 'Qx [1/nm]'     : r'$Q_x \; (nm^{-1})$',
-                 'Qy [1/nm]'     : r'$Q_y \; (nm^{-1})$',
-                 'Q [1/nm]'      : r'$Q \; (nm^{-1})$',
+                 'X [nbins]'     : r'$X \; $(bins)',
+                 'phi_f [rad]'   : r'$\varphi_f \; $(rad)',
+                 'phi_f [deg]'   : r'$\varphi_f \; $(deg)',
+                 'alpha_i [rad]' : r'$\alpha_i \; $(rad)',
+                 'alpha_i [deg]' : r'$\alpha_i \; $(deg)',
+                 'X [mm]'        : r'$X \; $(mm)',
+                 'Qx [1/nm]'     : r'$Q_x \; $(nm$^{-1}$)',
+                 'Qy [1/nm]'     : r'$Q_y \; $(nm$^{-1}$)',
+                 'Q [1/nm]'      : r'$Q \; $(nm$^{-1}$)',
 
-                 'Y [nbins]'     : r'$Y \; (bins)$',
-                 'alpha_f [rad]' : r'$\alpha_f \; (rad)$',
-                 'alpha_f [deg]' : r'$\alpha_f \; (deg)$',
-                 'Y [mm]'        : r'$Y \; (mm)$',
-                 'Qz [1/nm]'     : r'$Q_z \; (nm^{-1})$',
-                 'Position [nm]' : r'$Position \; (nm)$'
+                 'Y [nbins]'     : r'$Y \; $(bins)',
+                 'alpha_f [rad]' : r'$\alpha_f \; $(rad)',
+                 'alpha_f [deg]' : r'$\alpha_f \; $(deg)',
+                 'Y [mm]'        : r'$Y \; $(mm)',
+                 'Qz [1/nm]'     : r'$Q_z \; $(nm$^{-1}$)',
+                 'Position [nm]' : r'$Position \; $(nm)'
                  }
     if label in label_dict.keys():
         return label_dict[label]
