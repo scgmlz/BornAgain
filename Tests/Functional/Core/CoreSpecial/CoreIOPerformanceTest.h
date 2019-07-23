@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COREIOTEST_H
-#define COREIOTEST_H
+#ifndef COREIOPERFORMANCETEST_H
+#define COREIOPERFORMANCETEST_H
 
 #include "IFunctionalTest.h"
 #include "OutputData.h"
@@ -22,11 +22,11 @@
 
 //! Functional test to validate read/write of large data files.
 
-class CoreIOTest : public IFunctionalTest
+class CoreIOPerformanceTest : public IFunctionalTest
 {
 public:
-    CoreIOTest() {}
-    ~CoreIOTest() {}
+    CoreIOPerformanceTest() {}
+    ~CoreIOPerformanceTest() {}
 
     bool runTest();
 
@@ -52,4 +52,4 @@ private:
     std::vector<TestResults> m_test_results;
 };
 
-#endif // COREIOTEST_H
+#endif // COREIOPERFORMANCETEST_H

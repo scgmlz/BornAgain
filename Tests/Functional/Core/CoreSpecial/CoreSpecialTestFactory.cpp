@@ -16,7 +16,7 @@
 #include "BatchSimulation.h"
 #include "DetectorTest.h"
 #include "PolDWBAMagCylinders.h"
-#include "CoreIOTest.h"
+#include "CoreIOPerformanceTest.h"
 #include "FourierTransformationTest.h"
 #include "MesoCrystalPerformanceTest.h"
 
@@ -30,8 +30,8 @@ CoreSpecialTestFactory::CoreSpecialTestFactory()
                  create_new<PolDWBAMagCylinders>,
                  "Special test for polarized materials");
 
-    registerItem("CoreIO",
-                 create_new<CoreIOTest>,
+    registerItem("CoreIOPerformance",
+                 create_new<CoreIOPerformanceTest>,
                  "Input/output of heavy files");
 
     registerItem("DetectorTest",
