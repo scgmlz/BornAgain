@@ -25,7 +25,6 @@ public:
     CoreIOPathTest();
 
     bool runTest();
-
 };
 
 #endif // COREIOPATHTEST_H
