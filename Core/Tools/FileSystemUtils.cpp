@@ -18,6 +18,8 @@
 #include <regex>
 #include <cassert>
 #include <stdexcept>
+#include <codecvt>
+#include <locale>
 
 std::string FileSystemUtils::extension(const std::string& path)
 {
@@ -33,12 +35,22 @@ std::string FileSystemUtils::extensions(const std::string& path)
 
 bool FileSystemUtils::createDirectory(const std::string& dir_name)
 {
+#ifdef _WIN32
+    boost::filesystem::path path(convert_utf8_to_utf16(dir_name));
+#else
+    boost::filesystem::path path(dir_name);
+#endif
     return boost::filesystem::create_directory(dir_name);
 }
 
 bool FileSystemUtils::createDirectories(const std::string& dir_name)
 {
-    return boost::filesystem::create_directories(dir_name);
+#ifdef _WIN32
+    boost::filesystem::path path(convert_utf8_to_utf16(dir_name));
+#else
+    boost::filesystem::path path(dir_name);
+#endif
+    return boost::filesystem::create_directories(path);
 }
 
 std::vector<std::string> FileSystemUtils::filesInDirectory(const std::string& dir_name)
@@ -94,3 +106,19 @@ std::string FileSystemUtils::stem_ext(const std::string& path)
     return npos != std::string::npos ? name.substr(0, npos) : std::string();
 }
 
+
+std::wstring FileSystemUtils::convert_utf8_to_utf16(const std::string& str)
+{
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    return converter.from_bytes(str);
+}
+
+bool FileSystemUtils::IsFileExists(const std::string& str)
+{
+#ifdef _WIN32
+    boost::filesystem::path path(convert_utf8_to_utf16(str));
+#else
+    boost::filesystem::path path(str);
+#endif
+    return boost::filesystem::exists(path);
+}

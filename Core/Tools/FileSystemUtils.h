@@ -57,6 +57,12 @@ BA_CORE_API_ std::string stem_ext(const std::string& path);
 //! Returns file names that agree with a regex glob pattern.
 BA_CORE_API_ std::vector<std::string> glob(const std::string& dir, const std::string& pattern);
 
+//! Converts utf8 string represented by std::string to utf16 string represented by std::wstring.
+BA_CORE_API_ std::wstring convert_utf8_to_utf16(const std::string& str);
+
+//! Returns true if file with given name exists on disk.
+BA_CORE_API_ bool IsFileExists(const std::string& str);
+
 } // namespace FileSystemUtils
 
 #endif // FILESYSTEMUTILS_H
