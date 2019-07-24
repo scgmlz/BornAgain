@@ -7,6 +7,7 @@ set(test_cases
 #    CoreIOPerformance
 #    DetectorTest
 #    MesoPerformance
+#    CoreIOPath
 )
 
 # build executables for each test case

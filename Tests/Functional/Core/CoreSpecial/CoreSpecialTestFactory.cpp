@@ -17,6 +17,7 @@
 #include "DetectorTest.h"
 #include "PolDWBAMagCylinders.h"
 #include "CoreIOPerformanceTest.h"
+#include "CoreIOPathTest.h"
 #include "FourierTransformationTest.h"
 #include "MesoCrystalPerformanceTest.h"
 
@@ -33,6 +34,10 @@ CoreSpecialTestFactory::CoreSpecialTestFactory()
     registerItem("CoreIOPerformance",
                  create_new<CoreIOPerformanceTest>,
                  "Input/output of heavy files");
+
+    registerItem("CoreIOPath",
+                 create_new<CoreIOPathTest>,
+                 "Input/output to files containing non-ascii characters in a path");
 
     registerItem("DetectorTest",
                  create_new<DetectorTest>,
