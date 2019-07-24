@@ -24,6 +24,7 @@
 #include "boost_streams.h"
 #endif
 #include <fstream>
+#include "FileSystemUtils.h"
 
 OutputDataReader::OutputDataReader(const std::string& file_name)
     : m_file_name(file_name)
@@ -41,7 +42,12 @@ OutputData<double>* OutputDataReader::getOutputData()
     if(isTiffFile(m_file_name) || isCompressed(m_file_name))
         openmode = std::ios::in | std::ios_base::binary;
 
-    fin.open(m_file_name.c_str(), openmode );
+#ifdef _WIN32
+    fin.open(FileSystemUtils::convert_utf8_to_utf16(m_file_name), openmode);
+#else
+    fin.open(m_file_name, openmode);
+#endif
+
     if(!fin.is_open())
         throw Exceptions::FileNotIsOpenException(
             "OutputDataReader::getOutputData() -> Error. Can't open file '"

@@ -24,6 +24,7 @@
 #include "boost_streams.h"
 #endif
 #include <fstream>
+#include "FileSystemUtils.h"
 
 OutputDataWriter::OutputDataWriter(const std::string& file_name)
     : m_file_name(file_name)
@@ -36,13 +37,18 @@ void OutputDataWriter::writeOutputData(const OutputData<double>& data)
     if(!m_write_strategy)
         throw Exceptions::NullPointerException("OutputDataWriter::getOutputData() ->"
                                                " Error! No read strategy defined");
+
     std::ofstream fout;
     std::ios_base::openmode openmode = std::ios::out;
     if(isTiffFile(m_file_name) || isCompressed(m_file_name))
         openmode = std::ios::out | std::ios_base::binary;
 
+#ifdef _WIN32
+    fout.open(FileSystemUtils::convert_utf8_to_utf16(m_file_name), openmode);
+#else
+    fout.open(m_file_name, openmode);
+#endif
 
-    fout.open(m_file_name.c_str(), openmode );
     if(!fout.is_open())
         throw Exceptions::FileNotIsOpenException("OutputDataWriter::writeOutputData() -> Error. "
                                                  "Can't open file '"+m_file_name+"' for writing.");
