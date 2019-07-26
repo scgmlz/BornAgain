@@ -15,8 +15,14 @@ endif()
 # --- Looking for library -----
 
 set(FFTW_NAMES ${FFTW_NAMES} fftw3 fftw3-3 libfftw3-3)
+set( ba_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+if (NOT APPLE AND NOT WIN32)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES .so) # require shared version of library
+endif()
 
 find_library(FFTW_LIBRARY NAMES ${FFTW_NAMES} QUIET)
+set(CMAKE_FIND_LIBRARY_SUFFIXES ${ba_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES})
 
 if (WIN31)
     string( REPLACE ".lib" ".dll" FFTW_LIBRARY_DLL "${FFTW_LIBRARY}" )
