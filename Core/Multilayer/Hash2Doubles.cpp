@@ -17,5 +17,5 @@
 // Simple exclusive or of the std::hash<double> of its parts
 size_t Hash2Doubles::operator()(std::pair<double, double> doubles) const noexcept
 {
-    return m_double_hash(doubles.first) ^ m_double_hash(doubles.second);
+    return std::hash<double>{}(doubles.first) ^ std::hash<double>{}(doubles.second);
 }

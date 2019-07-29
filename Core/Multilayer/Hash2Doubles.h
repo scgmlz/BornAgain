@@ -22,12 +22,7 @@
 class Hash2Doubles
 {
 public:
-    Hash2Doubles() {}
-    ~Hash2Doubles() {}
-
     size_t operator()(std::pair<double, double> doubles) const noexcept;
-private:
-    std::hash<double> m_double_hash;
 };
 
 #endif // HASH2DOUBLES_H
