@@ -54,18 +54,6 @@ public:
     ClassInitializationException(const std::string& message);
 };
 
-class BA_CORE_API_ SelfReferenceException : public std::logic_error
-{
-public:
-    SelfReferenceException(const std::string& message);
-};
-
-class BA_CORE_API_ DeadReferenceException : public std::runtime_error
-{
-public:
-    DeadReferenceException(const std::string& message);
-};
-
 class BA_CORE_API_ UnknownClassRegistrationException : public std::runtime_error
 {
 public:

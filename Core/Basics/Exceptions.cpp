@@ -46,18 +46,6 @@ ClassInitializationException::ClassInitializationException(const std::string& me
      LogExceptionMessage(message);
 }
 
-SelfReferenceException::SelfReferenceException(const std::string& message)
-    : std::logic_error(message)
-{
-     LogExceptionMessage(message);
-}
-
-DeadReferenceException::DeadReferenceException(const std::string& message)
-    : std::runtime_error(message)
-{
-     LogExceptionMessage(message);
-}
-
 UnknownClassRegistrationException::UnknownClassRegistrationException(const std::string& message)
     : std::runtime_error(message)
 {
