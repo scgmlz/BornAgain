@@ -31,7 +31,7 @@ public:
     virtual double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const = 0;
 };
 
-// Metric wrapper for back-compaptibility with old scripts
+//! Metric wrapper for back-compaptibility with old scripts
 class ChiModuleWrapper : public IMetricWrapper
 {
 public:

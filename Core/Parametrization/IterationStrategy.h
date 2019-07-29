@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Parametrization/IterationStrategy.h
-//! @brief     Defines strategies for the class IterationStrategy.
+//! @brief     Defines class IterationStrategy and children.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -19,6 +19,7 @@
 
 class IteratorMemento;
 
+//! Abstract base class of PreorderStrategy and PostorderStrategy, for use in INodeVisitor.
 class BA_CORE_API_ IterationStrategy
 {
 public:

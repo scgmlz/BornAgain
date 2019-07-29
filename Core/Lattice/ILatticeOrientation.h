@@ -30,8 +30,7 @@ public:
     virtual Transform3D transformationMatrix() const=0;
 };
 
-//! MillerIndex represents arbitrary directions in reciprocal space by allowing floating point
-//! index values
+//! A direction in reciprocal space, specified by double-valued indices hkl.
 struct BA_CORE_API_ MillerIndex {
     MillerIndex(double h_, double k_, double l_);
     double h, k, l;

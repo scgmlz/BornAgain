@@ -23,7 +23,7 @@
 #include "ZLimits.h"
 #include <memory>
 
-
+//! Vertical extension of a particle, specified by bottom and top z coordinate.
 struct ParticleLimits
 {
     double m_bottom;
