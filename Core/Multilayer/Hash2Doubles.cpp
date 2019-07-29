@@ -14,7 +14,7 @@
 
 #include "Hash2Doubles.h"
 
-// Simple exclusive or of the std::hash<double> of its parts
+//! Returns hash value of a pair of doubles, computed by exclusive-or of the component hash values.
 size_t Hash2Doubles::operator()(std::pair<double, double> doubles) const noexcept
 {
     return std::hash<double>{}(doubles.first) ^ std::hash<double>{}(doubles.second);
