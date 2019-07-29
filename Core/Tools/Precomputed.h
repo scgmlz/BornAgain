@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Tools/Precomputed.h
-//! @brief     Defines classes Precomputed, providing precomputed constants
+//! @brief     Defines namespace Precomputed, providing precomputed constants
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -16,7 +16,6 @@
 #define PRECOMPUTED_H
 
 #include "WinDllMacros.h"
-#include "ISingleton.h"
 #include <array>
 #include <utility>
 #include <vector>

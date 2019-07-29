@@ -18,6 +18,7 @@
 #include <functional>
 #include <utility>
 
+//! Provides a hash function for a pair of doubles, for use in ScalarFresnelMap.
 class Hash2Doubles
 {
 public:
