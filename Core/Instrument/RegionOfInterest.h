@@ -70,9 +70,9 @@ private:
     void initFrom(const IAxis& x_axis, const IAxis& y_axis);
 
     std::unique_ptr<Rectangle> m_rectangle;
-    //!< Number of bins on detector axes corresponding to roi-rectangle.
+    //! Number of bins on detector axes corresponding to roi-rectangle.
     size_t m_ax1, m_ay1, m_ax2, m_ay2;
-    //!< Detector global index corresponding to the lower left corner of ROI
+    //! Detector global index corresponding to the lower left corner of ROI
     size_t m_glob_index0;
     std::vector<size_t> m_detector_dims;
     std::vector<size_t> m_roi_dims;

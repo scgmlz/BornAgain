@@ -30,7 +30,7 @@ public:
     GSLLevenbergMarquardtMinimizer();
     ~GSLLevenbergMarquardtMinimizer() override;
 
-    //!< Sets tolerance on the function value at the minimum.
+    //! Sets tolerance on the function value at the minimum.
     void setTolerance(double value);
     double tolerance() const;
 

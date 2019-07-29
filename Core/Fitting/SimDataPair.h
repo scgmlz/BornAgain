@@ -97,28 +97,27 @@ private:
     void initResultArrays();
     void validate() const;
 
-    //!< Simulation builder from the user to construct simulation for given set of parameters.
+    //! Simulation builder from the user to construct simulation for given set of parameters.
     simulation_builder_t m_simulation_builder;
 
-    //!< Current simulation for given set of parameters.
+    //! Current simulation for given set of parameters.
     std::unique_ptr<Simulation> m_simulation;
 
-    //!< Current simulation results. Masked areas are nullified.
+    //! Current simulation results. Masked areas are nullified.
     SimulationResult m_sim_data;
-    //!< Experimental data cut to the ROI. Masked areas are nullified.
+    //! Experimental data cut to the ROI. Masked areas are nullified.
     SimulationResult m_exp_data;
-    //!< Weights from experimental data uncertainties. Masked areas are nullified.
+    //! Weights from experimental data uncertainties. Masked areas are nullified.
     SimulationResult m_uncertainties;
-    //!< Manually defined (user) weights. Masked areas are nullified.
+    //! Manually defined (user) weights. Masked areas are nullified.
     SimulationResult m_user_weights;
 
-    //!< Raw experimental data as obtained from the user.
+    //! Raw experimental data as obtained from the user.
     std::unique_ptr<OutputData<double>> m_raw_data;
-    //!< Data uncertainties as provided by the user
+    //! Data uncertainties as provided by the user
     std::unique_ptr<OutputData<double>> m_raw_uncertainties;
-    //!< User-defined weights
+    //! User-defined weights
     std::unique_ptr<OutputData<double>> m_raw_user_weights;
 };
 
 #endif // SIMDATAPAIR_H
-

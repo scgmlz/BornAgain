@@ -47,7 +47,7 @@ private:
     //! Evaluate chi2
     double chi2(const std::vector<double>& pars);
 
-    //!< Length of vector with residuals, should stay the same during minimization.
+    //! Length of vector with residuals, should stay the same during minimization.
     size_t m_datasize;
     fcn_residual_t m_fcn; //!< user function to minimize
     Parameters m_parameters;
