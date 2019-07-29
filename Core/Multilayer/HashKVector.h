@@ -16,18 +16,13 @@
 #define HASHKVECTOR_H
 
 #include "Vectors3D.h"
-#include <functional>
 #include <utility>
 
+//! Provides a hash function for a 3-vector of doubles, for use in MatrixFresnelMap.
 class HashKVector
 {
 public:
-    HashKVector() {}
-    ~HashKVector() {}
-
-    size_t operator()(kvector_t kvec) const noexcept;
-private:
-    std::hash<double> m_double_hash;
+    size_t operator()(const kvector_t& kvec) const noexcept;
 };
 
 #endif // HASHKVECTOR_H

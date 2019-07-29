@@ -14,8 +14,10 @@
 
 #include "HashKVector.h"
 
-// Simple exclusive or of the std::hash<double> of its components
-size_t HashKVector::operator()(kvector_t kvec) const noexcept
+//! Returns hash value of a 3-vector, computed by exclusive-or of the component hash values.
+size_t HashKVector::operator()(const kvector_t& kvec) const noexcept
 {
-    return m_double_hash(kvec.x()) ^ m_double_hash(kvec.y()) ^ m_double_hash(kvec.z());
+    return std::hash<double>{}(kvec.x())
+         ^ std::hash<double>{}(kvec.y())
+         ^ std::hash<double>{}(kvec.z());
 }
