@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      unused/MPISimulation.cpp
+//! @file      Core/Simulation/MPISimulation.cpp
 //! @brief     Implements class MPISimulation.
 //!
 //! @homepage  http://www.bornagainproject.org

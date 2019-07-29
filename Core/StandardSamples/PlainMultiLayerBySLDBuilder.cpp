@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/StandardSamples/Core/StandardSamples/PlainMultiLayerBySLDBuilder.cpp
+//! @file      Core/StandardSamples/PlainMultiLayerBySLDBuilder.cpp
 //! @brief     Implements class PlainMultiLayerBySLDBuilder.
 //!
 //! @homepage  http://www.bornagainproject.org

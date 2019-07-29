@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Binning/DetectorElement.cpp
+//! @file      Core/Instrument/DetectorElement.cpp
 //! @brief     Implements class DetectorElement.
 //!
 //! @homepage  http://www.bornagainproject.org

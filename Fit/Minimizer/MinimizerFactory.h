@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/MinimizerFactory.h
+//! @file      Fit/Minimizer/MinimizerFactory.h
 //! @brief     Defines class MinimizerFactory.
 //!
 //! @homepage  http://www.bornagainproject.org

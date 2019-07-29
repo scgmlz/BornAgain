@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Computation/HashKVector.h
+//! @file      Core/Multilayer/HashKVector.h
 //! @brief     Defines class HashKVector.
 //!
 //! @homepage  http://www.bornagainproject.org

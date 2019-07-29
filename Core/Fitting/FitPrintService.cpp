@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Fitting/FitPrintService.h
+//! @file      Core/Fitting/FitPrintService.cpp
 //! @brief     Defines class FitPrintService.
 //!
 //! @homepage  http://www.bornagainproject.org

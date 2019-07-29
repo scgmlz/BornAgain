@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/StandardSamples/CylindersBuilder.h
+//! @file      Core/StandardSamples/SlicedCylindersBuilder.cpp
 //! @brief     Implements classes for testing slicing machinery.
 //!
 //! @homepage  http://www.bornagainproject.org

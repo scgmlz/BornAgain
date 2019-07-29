@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Parametrization/INodeUtils.h
+//! @file      Core/Export/INodeUtils.h
 //! @brief     Defines namespace INodeUtils.
 //!
 //! @homepage  http://www.bornagainproject.org

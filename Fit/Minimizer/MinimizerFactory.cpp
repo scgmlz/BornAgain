@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Kernel/MinimizerFactory.cpp
+//! @file      Fit/Minimizer/MinimizerFactory.cpp
 //! @brief     Implements class MinimizerFactory.
 //!
 //! @homepage  http://www.bornagainproject.org

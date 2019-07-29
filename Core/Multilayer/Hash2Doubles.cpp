@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Computation/Hash2Doubles.cpp
+//! @file      Core/Multilayer/Hash2Doubles.cpp
 //! @brief     Implements class Hash2Doubles.
 //!
 //! @homepage  http://www.bornagainproject.org

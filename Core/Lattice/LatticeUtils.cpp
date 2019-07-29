@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Multilayer/LatticeUtils.cpp
+//! @file      Core/Lattice/LatticeUtils.cpp
 //! @brief     Implements factory functions for different types of lattices and orientations.
 //!
 //! @homepage  http://www.bornagainproject.org

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Shapes/HomogeneousRegion.h
+//! @file      Core/Particle/HomogeneousRegion.h
 //! @brief     Defines struct HomogeneousRegion.
 //!
 //! @homepage  http://www.bornagainproject.org

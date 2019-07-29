@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Fitting/SimDataPair.h
+//! @file      Core/Fitting/SimDataPair.cpp
 //! @brief     Defines class SimDataPair.
 //!
 //! @homepage  http://www.bornagainproject.org

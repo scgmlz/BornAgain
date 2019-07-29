@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/NewKernel/Kernel.cpp
+//! @file      Fit/Kernel/Kernel.cpp
 //! @brief     Implements class Kernel.
 //!
 //! @homepage  http://www.bornagainproject.org
