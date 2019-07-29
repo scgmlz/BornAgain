@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Models/GroupInfo.h
+//! @file      GUI/coregui/Models/GroupInfo.cpp
 //! @brief     Defines class GroupInfo
 //!
 //! @homepage  http://www.bornagainproject.org

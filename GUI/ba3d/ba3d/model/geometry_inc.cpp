@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/ba3d/model/geometry_inc.cpp
+//! @file      GUI/ba3d/ba3d/model/geometry_inc.cpp
 //! @brief     Implements geometry namespace
 //!
 //! @homepage  http://www.bornagainproject.org

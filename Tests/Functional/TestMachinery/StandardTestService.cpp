@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/TestMachinery/StandardTestService.h
+//! @file      Tests/Functional/TestMachinery/StandardTestService.cpp
 //! @brief     Defines class StandardTestService.
 //!
 //! @homepage  http://www.bornagainproject.org

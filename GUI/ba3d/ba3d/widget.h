@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/ba3d/Widget.h
+//! @file      GUI/ba3d/ba3d/widget.h
 //! @brief     Defines Widget class
 //!
 //! @homepage  http://www.bornagainproject.org

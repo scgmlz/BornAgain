@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/GUI/GUISpecial/TranslationCases.h
+//! @file      Tests/Functional/GUI/GUISpecial/TranslationCases.cpp
 //! @brief     Defines classes from TranslationCases family.
 //!
 //! @homepage  http://www.bornagainproject.org

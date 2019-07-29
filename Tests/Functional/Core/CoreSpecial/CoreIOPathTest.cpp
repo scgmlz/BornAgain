@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Core/CoreIO/CoreIOTest.h
+//! @file      Tests/Functional/Core/CoreSpecial/CoreIOPathTest.cpp
 //! @brief     Defines CoreIOTest class
 //!
 //! @homepage  http://www.bornagainproject.org

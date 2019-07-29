@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/GUI/GUIPerformanceTest/GUIPerformanceTest.h
+//! @file      Tests/Functional/GUI/GUISpecial/CsvImportAssistantPerformanceTest.h
 //! @brief     Defines GUI performance functional test.
 //!
 //! @homepage  http://www.bornagainproject.org

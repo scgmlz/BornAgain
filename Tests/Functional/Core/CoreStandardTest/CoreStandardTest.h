@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Core/CoreStandardTest.h
+//! @file      Tests/Functional/Core/CoreStandardTest/CoreStandardTest.h
 //! @brief     Defines class CoreStandardTest.
 //!
 //! @homepage  http://www.bornagainproject.org

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/mainwindow/PyImportAssistant.h
+//! @file      GUI/coregui/mainwindow/PyImportAssistant.cpp
 //! @brief     Implements class PyImportAssistant
 //!
 //! @homepage  http://www.bornagainproject.org

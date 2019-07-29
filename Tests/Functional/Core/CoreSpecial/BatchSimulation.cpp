@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Core/CoreSpecial/BatchSimulation.h
+//! @file      Tests/Functional/Core/CoreSpecial/BatchSimulation.cpp
 //! @brief     Defines BatchSimulation class.
 //!
 //! @homepage  http://www.bornagainproject.org

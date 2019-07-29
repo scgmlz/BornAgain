@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilderUtils.h
+//! @file      GUI/coregui/Views/RealSpaceWidgets/RealSpaceMesoCrystalUtils.h
 //! @brief     Defines RealSpaceBuilderUtils namespace
 //!
 //! @homepage  http://www.bornagainproject.org

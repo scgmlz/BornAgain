@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/ba3d/model/geometry/truncbox.cpp
+//! @file      GUI/ba3d/ba3d/model/geometry/truncbox.cpp
 //! @brief     Implements utility functions in ba3d namespace
 //!
 //! @homepage  http://www.bornagainproject.org

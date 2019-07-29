@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/UnitTests/GUI/test_utils.h
+//! @file      Tests/UnitTests/GUI/test_utils.cpp
 //! @brief     Implements auxiliary test functions in a namespace.
 //!
 //! @homepage  http://www.bornagainproject.org

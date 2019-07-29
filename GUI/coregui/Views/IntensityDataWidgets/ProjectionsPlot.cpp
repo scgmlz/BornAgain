@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/IntensityDataWidgets/ProjectionCanvas.h
+//! @file      GUI/coregui/Views/IntensityDataWidgets/ProjectionsPlot.cpp
 //! @brief     Defines class ProjectionCanvas
 //!
 //! @homepage  http://www.bornagainproject.org

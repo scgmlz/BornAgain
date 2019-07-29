@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/RealSpaceWidgets/RealSpaceScene.cpp
+//! @file      GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.cpp
 //! @brief     Implements class RealSpaceScene
 //!
 //! @homepage  http://www.bornagainproject.org

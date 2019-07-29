@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Fit/FitObjective/FitPlan.h
+//! @file      Tests/Functional/Fit/FitObjective/FitPlan.cpp
 //! @brief     Defines class FitPlan
 //!
 //! @homepage  http://www.bornagainproject.org

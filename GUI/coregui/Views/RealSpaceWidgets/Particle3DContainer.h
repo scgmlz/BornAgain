@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.cpp
+//! @file      GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h
 //! @brief     Implements namespace TransformTo3D
 //!
 //! @homepage  http://www.bornagainproject.org

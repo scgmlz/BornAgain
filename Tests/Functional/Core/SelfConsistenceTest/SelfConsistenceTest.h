@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/SelfConsistenceTest/SelfConsistenceTest.h
+//! @file      Tests/Functional/Core/SelfConsistenceTest/SelfConsistenceTest.h
 //! @brief     Defines class SelfConsistenceTest.
 //!
 //! @homepage  http://www.bornagainproject.org

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Fit/FitObjective/FitObjectiveTestCases.h
+//! @file      Tests/Functional/Fit/FitObjective/FitObjectiveTestCases.cpp
 //! @brief     Defines classes from FitObjectiveTest family.
 //!
 //! @homepage  http://www.bornagainproject.org

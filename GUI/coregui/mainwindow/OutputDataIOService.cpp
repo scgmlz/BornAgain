@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/mainwindow/OutputDataIOService.h
+//! @file      GUI/coregui/mainwindow/OutputDataIOService.cpp
 //! @brief     Implements class OutputDataIOService
 //!
 //! @homepage  http://www.bornagainproject.org

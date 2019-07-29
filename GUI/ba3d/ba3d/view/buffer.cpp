@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/ba3d/model/buffer.cpp
+//! @file      GUI/ba3d/ba3d/view/buffer.cpp
 //! @brief     Implements Buffer class
 //!
 //! @homepage  http://www.bornagainproject.org

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Core/CoreSpecial/MesoCrystalPerformanceBuilder.h
+//! @file      Tests/Functional/Core/CoreSpecial/MesoCrystalPerformanceBuilder.cpp
 //! @brief     Defines MesoCrystalPerformanceBuilder class.
 //!
 //! @homepage  http://www.bornagainproject.org

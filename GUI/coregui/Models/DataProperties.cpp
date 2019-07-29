@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Models/DataPresentationProperties.cpp
+//! @file      GUI/coregui/Models/DataProperties.cpp
 //! @brief     Implements class DataPresentationProperties and its descendants
 //!
 //! @homepage  http://www.bornagainproject.org

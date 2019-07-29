@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/SpecularDataWidgets/Plot1D.h
+//! @file      GUI/coregui/Views/IntensityDataWidgets/Plot1D.h
 //! @brief     Defines class Plot1D
 //!
 //! @homepage  http://www.bornagainproject.org

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/mainwindow/SaveService.h
+//! @file      GUI/coregui/mainwindow/SaveService.cpp
 //! @brief     Implements class SaveService
 //!
 //! @homepage  http://www.bornagainproject.org

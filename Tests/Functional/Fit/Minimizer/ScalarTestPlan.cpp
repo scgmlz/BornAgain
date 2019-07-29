@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Tests/Functional/Fit/Minimizer/ScalarTestPlan.h
+//! @file      Tests/Functional/Fit/Minimizer/ScalarTestPlan.cpp
 //! @brief     Implements class ScalarTestPlan
 //!
 //! @homepage  http://www.bornagainproject.org

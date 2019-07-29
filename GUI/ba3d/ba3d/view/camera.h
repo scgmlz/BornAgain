@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/ba3d/model/camera.h
+//! @file      GUI/ba3d/ba3d/view/camera.h
 //! @brief     Defines Camera class
 //!
 //! @homepage  http://www.bornagainproject.org
