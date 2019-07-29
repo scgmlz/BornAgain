@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "HashKVector.h"
+#include <functional> // hash
 
 //! Returns hash value of a 3-vector, computed by exclusive-or of the component hash values.
 size_t HashKVector::operator()(const kvector_t& kvec) const noexcept

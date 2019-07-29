@@ -16,7 +16,7 @@
 #define HASHKVECTOR_H
 
 #include "Vectors3D.h"
-#include <utility>
+#include <cstddef> // size_t
 
 //! Provides a hash function for a 3-vector of doubles, for use in MatrixFresnelMap.
 class HashKVector

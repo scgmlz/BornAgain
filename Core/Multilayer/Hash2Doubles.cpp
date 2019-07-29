@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "Hash2Doubles.h"
+#include <functional> // hash
 
 //! Returns hash value of a pair of doubles, computed by exclusive-or of the component hash values.
 size_t Hash2Doubles::operator()(std::pair<double, double> doubles) const noexcept

@@ -15,8 +15,8 @@
 #ifndef HASH2DOUBLES_H
 #define HASH2DOUBLES_H
 
-#include <utility>
-#include <vector> // size_t
+#include <cstddef> // size_t
+#include <utility> // pair
 
 //! Provides a hash function for a pair of doubles, for use in ScalarFresnelMap.
 class Hash2Doubles
