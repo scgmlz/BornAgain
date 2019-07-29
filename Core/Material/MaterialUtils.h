@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Material/MaterialUtils.h
-//! @brief     materials-related global functions and utilities
+//! @brief     Declares functions in namespace MaterialUtils
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -20,7 +20,7 @@
 #include "EigenCore.h"
 #include "Material.h"
 
-//! A number of helper functions for internal use
+//! A number of materials-related helper functions for internal use
 //! @ingroup materials
 
 namespace MaterialUtils {
@@ -46,6 +46,7 @@ BA_CORE_API_ Eigen::Matrix2cd MagnetizationCorrection(complex_t unit_factor, dou
 //! If several types of materials are involved, InvalidMaterialType identifier is returned.
 
 BA_CORE_API_ MATERIAL_TYPES checkMaterialTypes(const std::vector<const Material*>& materials);
-}
+
+} // namespace MaterialUtils
 
 #endif /* MATERIALUTILS_H_ */

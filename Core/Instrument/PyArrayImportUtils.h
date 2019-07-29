@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Instrument/PyArrayImportUtils.h
-//! @brief     Defines various functions to interact from numpy on Python side
+//! @brief     Declares functions in namespace PyArrayImport.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -20,13 +20,16 @@
 
 template<class T> class OutputData;
 
-//! Set of functions for numpy array import to OutputData. Required solely
-//! as a shortcut to produce OutputData from numpy arrays of doubles
+//! Functions for numpy array import to OutputData.
+//! Required solely as a shortcut to produce OutputData from numpy arrays of doubles.
 
 namespace PyArrayImport {
-    //! Provides functionality for importing 1D or 2D arrays of doubles from python into OutputData
+
+    //! for importing 1D array of doubles from python into OutputData
     BA_CORE_API_ OutputData<double>* importArrayToOutputData(const std::vector<double>& vec);
+    //! for importing 2D array of doubles from python into OutputData
     BA_CORE_API_ OutputData<double>* importArrayToOutputData(const std::vector<std::vector<double>>& vec);
-}
+
+} // namespace PyArrayImport
 
 #endif // PYARRAYIMPORTUTILS_H
