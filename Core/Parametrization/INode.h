@@ -44,17 +44,23 @@ public:
     const INode* parent() const;
     INode* parent();
 
-    //! Returns copyNumber of child, which takes into account existence of children with same name.
-    int copyNumber(const INode* node) const;
-
     //! Returns display name, composed from the name of node and it's copy number.
     std::string displayName() const;
 
     //! Creates new parameter pool, with all local parameters and those of its children.
     ParameterPool* createParameterTree() const;
 
+    void setCopyNumber(int copy_num) { m_copy_number = copy_num; }
+    int copyNumber() const { return m_copy_number; }
+    bool hasCopyNumber() const { return m_copy_number >= 0; }
+
 private:
+    //! Determines the number of INode instance in the parent,
+    //! with takes the existence of children with same name into account.
+    int instanceNumber(const INode* node) const;
+
     const INode* m_parent;
+    int m_copy_number = -1;
 };
 
 template <class T>

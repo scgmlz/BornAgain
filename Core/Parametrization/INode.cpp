@@ -56,10 +56,13 @@ INode* INode::parent()
     return const_cast<INode*>(m_parent);
 }
 
-int INode::copyNumber(const INode* node) const
+int INode::instanceNumber(const INode* node) const
 {
     if(node->parent() != this)
         return -1;
+
+    if (node->hasCopyNumber())
+        return node->copyNumber();
 
     int result(-1), count(0);
     for (auto child : getChildren()) {
@@ -73,7 +76,6 @@ int INode::copyNumber(const INode* node) const
         if (child->getName() == node->getName())
             ++count;
     }
-
     return count > 1 ? result : -1;
 }
 
@@ -81,7 +83,7 @@ std::string INode::displayName() const
 {
     std::string result = getName();
     if (m_parent) {
-        int index = m_parent->copyNumber(this);
+        int index = m_parent->instanceNumber(this);
         if (index >= 0)
             result = result + std::to_string(index);
     }
