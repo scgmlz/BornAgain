@@ -2600,18 +2600,6 @@ class INode(IParameterized):
         return _libBornAgainCore.INode_parent(self, *args)
 
 
-    def copyNumber(self, node):
-        """
-        copyNumber(INode self, INode node) -> int
-
-        int INode::copyNumber(const INode *node) const
-
-        Returns copyNumber of child, which takes into account existence of children with same name. 
-
-        """
-        return _libBornAgainCore.INode_copyNumber(self, node)
-
-
     def displayName(self):
         """
         displayName(INode self) -> std::string
@@ -2634,6 +2622,28 @@ class INode(IParameterized):
 
         """
         return _libBornAgainCore.INode_createParameterTree(self)
+
+
+    def setCopyNumber(self, copy_num):
+        """setCopyNumber(INode self, int copy_num)"""
+        return _libBornAgainCore.INode_setCopyNumber(self, copy_num)
+
+
+    def copyNumber(self):
+        """
+        copyNumber(INode self) -> int
+
+        int INode::copyNumber(const INode *node) const
+
+        Returns copyNumber of child, which takes into account existence of children with same name. 
+
+        """
+        return _libBornAgainCore.INode_copyNumber(self)
+
+
+    def hasCopyNumber(self):
+        """hasCopyNumber(INode self) -> bool"""
+        return _libBornAgainCore.INode_hasCopyNumber(self)
 
     def __disown__(self):
         self.this.disown()
