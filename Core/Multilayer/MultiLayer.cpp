@@ -26,6 +26,20 @@
 #include "RealParameter.h"
 #include <iomanip>
 
+namespace {
+template<class T>
+void updateInstanceCounts(SafePointerVector<T>& container, INode* child)
+{
+    if (container.empty())
+        return;
+
+    size_t container_size = container.size();
+    if (container_size == 1)
+        container.back()->setCopyNumber(0);
+    child->setCopyNumber(static_cast<int>(container_size));
+}
+}
+
 MultiLayer::MultiLayer() : m_crossCorrLength(0)
 {
     setName(BornAgain::MultiLayerType);
@@ -128,6 +142,7 @@ void MultiLayer::init_parameters()
 
 void MultiLayer::addAndRegisterLayer(Layer* child)
 {
+    updateInstanceCounts(m_layers, child);
     m_layers.push_back(child);
     handleLayerThicknessRegistration();
     registerChild(child);
@@ -135,6 +150,7 @@ void MultiLayer::addAndRegisterLayer(Layer* child)
 
 void MultiLayer::addAndRegisterInterface(LayerInterface* child)
 {
+    updateInstanceCounts(m_interfaces, child);
     m_interfaces.push_back(child);
     registerChild(child);
 }
