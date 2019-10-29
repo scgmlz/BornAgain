@@ -1,0 +1,597 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Dmitry Yurov}
+\title{Polarized reflectometry}
+\begin{document}
+\maketitle
+\section{Helmholtz equation for a magnetized multilayer}
+
+First we will solve the equation for the propagation of stationary plane waves in a magnetized multilayer with homogeneous layers.
+Corresponding Helmholtz equation looks like
+\begin{equation} \label{eq:1}
+\left[ \Delta + k_0^2 - 4 \pi \check{\rho} \right]
+\left(
+	\begin{matrix}
+		\psi_{+} \\
+		\psi_{-}
+	\end{matrix}
+\right)
+= 0.
+\end{equation}
+
+Here $\psi_{+}$ and $\psi_{i}$ are the wave functions of neutrons in spin-up and spin-down states, $k_0$ is the wave vector in vacuum.
+$\check{\rho}$ is normalized matrix potential of interaction with media:
+\begin{equation}
+\check{\rho} = \rho_n \check{1} + \check{\rho}_M,
+\end{equation}
+\begin{equation}
+\check{\rho}_M = -\frac{m}{2 \pi \hbar^2} \boldsymbol{\check{\mu}} \boldsymbol{B}.
+\end{equation}
+$\check{1}$ denotes the unit 2$\times$2 matrix and $\boldsymbol{B}$ is magnetic induction vector. $\boldsymbol{\check{\mu}}$ is the neutron magnetic moment operator,
+\begin{equation}
+\boldsymbol{\check{\mu}} = \mu \boldsymbol{\check{\sigma}} = g_n \mu_N \boldsymbol{\check{\sigma}},
+\end{equation}
+with $\boldsymbol{\check{\sigma}}$ being the Pauli matrices, $g_n$ --- the neutron's gyromagnetic ratio, $\mu_N$ --- the nuclear magneton.
+
+Let us choose $z$ axis direction up from multilayer surface. We will also assume, that multilayer is infinite in $x$ and $y$ planes and thus solution does not depend on these coordinates. By substituting $\psi(\boldsymbol{r}) = \psi(z) \exp{i (k_x x + k_y y)}$ one can obtain from equation \ref{eq:1}
+\begin{equation} \label{eq:5}
+\left[ \frac{\partial^2}{\partial z^2} + k_{0z}^2 - 4 \pi \check{\rho} \right]
+\left(
+	\begin{matrix}
+		\psi_{+}(z) \\
+		\psi_{-}(z)
+	\end{matrix}
+\right)
+= 0.
+\end{equation}
+
+In the following text we will everywhere imply wave function dependency only on $z$ coordinate. Additionally we will introduce $z$-dependent $k_z$ projection of wave vector on $z$-axis:
+\begin{equation}
+k_z^2 = k_{0z}^2 - 4 \pi \rho_n,
+\end{equation}
+thus re-writing the equation \ref{eq:5} as
+\begin{equation} \label{eq:7}
+\left[ \frac{\partial^2}{\partial z^2} + k_z^2 - 4 \pi \check{\rho}_M \right]
+\left(
+	\begin{matrix}
+		\psi_{+} \\
+		\psi_{-}
+	\end{matrix}
+\right)
+= 0.
+\end{equation}
+
+Following the steps described in \cite{walter}, let us transform the equation \ref{eq:7} in a system of first-order differential equations with using $\varphi = \partial \psi / \partial z$:
+
+\begin{equation} \label{eq:8}
+\frac{\partial}{\partial z} W(z) = M(z) \cdot W(z),
+\end{equation}
+with
+\begin{equation}
+W(z) = \left(
+	\begin{matrix}
+	    \varphi_{+} \\
+	    \varphi_{-} \\
+		\psi_{+} \\
+		\psi_{-}
+	\end{matrix}
+\right)
+\end{equation}
+and
+\begin{equation}
+M(z) = 
+\left(
+	\begin{matrix}
+	    \check{0} & 4 \pi \check{\rho}_M - k_z^2 \check{1} \\
+	    \check{1} & \check{0}
+	\end{matrix}
+\right).
+\end{equation}
+For a homogeneous layer ($M = const$) the solution of the equation \ref{eq:8} looks like
+\begin{equation} \label{eq:11}
+W(z) = \exp{(M \cdot z)} W_{bot},
+\end{equation}
+where $W_{bot}$ denotes the layer bottom boundary value of $W$.
+The value of $W$ on top of the multilayer with $N$ layers can be found as a product of single-layer solutions (which is an equivalent of ``stitching'' them together on the layer boundaries):
+\begin{equation} \label{eq:12}
+W_0 = \left[ \prod_{i = 1}^N \exp{M_i d_i} \right] \cdot W_N,
+\end{equation}
+with $W_N$ being the $W$ value at the bottom of the multilayer.
+
+The equation \ref{eq:12} represents recurrent relation which enables one to compute solution from bottom of the multilayer to its top. It is easy to reformulate it in the more conventional form of computing wave function values from top to bottom. However, as it will be explained later, the given representation proves to be handier in real computations.
+
+\subsection{Magnetic field in the fronting medium}
+
+As previously described in \cite{majkrzak}, it is reasonable to assume, that beam penetrates the fronting medium of the sample assembly from a side. It results in $k_z$ being preserved even when there is non-zero magnetic field in the fronting medium. To account for that in the calculations, one needs to replace $k_{0z}^2$ with $k_{0z}^2 + 4 \pi \check{\rho}_{front}$ in the equation \ref{eq:5}, with
+$\check{\rho}_{front}$ being the effective SLD matrix for the fronting medium.
+
+\section{Matrix exponent decomposition}
+
+Following \cite{walter}, we will decompose the matrix exponent from the equation \ref{eq:11} with Sylvester's formula:
+
+\begin{equation} \label{eq:13}
+\exp{(M z)} = \sum_{i = 1}^{4} \exp{(\lambda_i z)} \cdot A_i,
+\end{equation}
+where $\lambda_i$ is a $i$th eigenvalue of the matrix $M$ and $A_i$ is $M$'s Frobenius matrix,
+\begin{equation}
+A_i(M) = \prod_{j \neq i} \frac{1}{\lambda_i - \lambda_j} (M - \lambda_j \check{1})
+\end{equation}
+
+Before deriving the explicit form of the eigenvalues and the Frobenius matrices, let us rewrite the expression $4 \pi \check{\rho}_M - k_z^2 \check{1}$ in the top right corner of the $M$ matrix, with expanding the Pauli matrices:
+\begin{equation} \label{eq:15}
+4 \pi \check{\rho}_M - k_z^2 \check{1}
+=
+\left(
+\begin{matrix}
+    a + b_z	&	b_x - i b_y \\
+	b_x + i b_y	&	a - b_z
+\end{matrix}
+\right),
+\end{equation}
+with $\boldsymbol{b} = -2 m g_n \mu_N \boldsymbol{B}/ \hbar^2$, $a = -k_z^2$.
+
+One can notice, that after introducing $a$ and $\boldsymbol{b}$, the form of $M$ is exactly the same as given in \cite{walter}. Thus one can directly use the eigenvalues and Frobenius matrices derived previously. For the sake of completeness we will reproduce the eigenvalues
+\begin{equation}
+\begin{matrix}
+\lambda_{1} = \sqrt{a - b}, & \lambda_{2} = \sqrt{a + b}, \\
+\lambda_{3} = -\sqrt{a - b}, & \lambda_{4} = -\sqrt{a + b},
+\end{matrix}
+\end{equation}
+and the Frobenius matrices
+\begin{equation*}
+A_1 = R_1
+= \frac{1}{4 b}
+\left(
+\begin{matrix}
+    b - b_z	&	-(b_x - i b_y)	&	(b - b_z) \lambda_1	&	-(b_x - i b_y) \lambda_1 \\
+    -(b_x + i b_y)	&	b + b_z	&	-(b_x + i b_y) \lambda_1	&	(b + b_z) \lambda_1 \\
+	\frac{b - b_z}{\lambda_1}	&	-\frac{b_x - i b_y}{\lambda_1}	&	b - b_z	&	-(b_x - i b_y) \\
+	-\frac{b_x + i b_y}{\lambda_1}	&	\frac{b + b_z}{\lambda_1}	&	-(b_x + i b_y)	&	b + b_z
+\end{matrix}
+\right),
+\end{equation*}
+\begin{equation*}
+A_2 = R_2
+= \frac{1}{4 b}
+\left(
+\begin{matrix}
+    b + b_z	&	b_x - i b_y	&	(b + b_z) \lambda_2	&	(b_x - i b_y) \lambda_2 \\
+    b_x + i b_y	&	b - b_z	&	(b_x + i b_y) \lambda_2	&	(b - b_z) \lambda_2 \\
+	\frac{b + b_z}{\lambda_2}	&	\frac{b_x - i b_y}{\lambda_2}	&	b + b_z	&	b_x - i b_y \\
+	\frac{b_x + i b_y}{\lambda_2}	&	\frac{b - b_z}{\lambda_2}	&	b_x + i b_y	&	b - b_z
+\end{matrix}
+\right),
+\end{equation*}
+\begin{equation*}
+A_3 = T_1
+= \frac{1}{4 b}
+\left(
+\begin{matrix}
+    b - b_z	&	-(b_x - i b_y)	&	-(b - b_z) \lambda_1	&	(b_x - i b_y) \lambda_1 \\
+    -(b_x + i b_y)	&	b + b_z	&	(b_x + i b_y) \lambda_1	&	-(b + b_z) \lambda_1 \\
+	-\frac{b - b_z}{\lambda_1}	&	\frac{b_x - i b_y}{\lambda_1}	&	b - b_z	&	-(b_x - i b_y) \\
+	\frac{b_x + i b_y}{\lambda_1}	&	-\frac{b + b_z}{\lambda_1}	&	-(b_x + i b_y)	&	b + b_z
+\end{matrix}
+\right),
+\end{equation*}
+\begin{equation}
+A_4 = T_2
+= \frac{1}{4 b}
+\left(
+\begin{matrix}
+    b + b_z	&	b_x - i b_y	&	-(b + b_z) \lambda_2	&	-(b_x - i b_y) \lambda_2 \\
+    b_x + i b_y	&	b - b_z	&	-(b_x + i b_y) \lambda_2	&	-(b - b_z) \lambda_2 \\
+	-\frac{b + b_z}{\lambda_2}	&	-\frac{b_x - i b_y}{\lambda_2}	&	b + b_z	&	b_x - i b_y \\
+	-\frac{b_x + i b_y}{\lambda_2}	&	-\frac{b - b_z}{\lambda_2}	&	b_x + i b_y	&	b - b_z
+\end{matrix}
+\right).
+\end{equation}
+Here $b = \sqrt{b_x^2 + b_y^2 + b_z^2}$; $\lambda_3, \lambda_4$ were replaced with their reciprocals $\lambda_1, \lambda_2$ in the Frobenius matrices. $R_1, R_2$ and $T_1, T_2$ correspond to the vector amplitudes of reflected and transmitted parts of the solution respectively.
+
+The relation between the Frobenius matrices and the reflection / transmission amplitudes can be established, since the exponential terms in the decomposition \ref{eq:13} represent just four plane waves propagating either from the top to the bottom of the multilayer (thus representing transmitted wave) or, vice versa, from the bottom to the top (thus representing reflected wave). For example, the phase in $\exp{(\lambda_1 z)} = \exp{(i z \sqrt{k_z^2 + b})}$ increases with $z$, that is in the direction from bottom to top of the multilayer. That means, that this wave is the reflected one. 
+
+\subsection{Degenerate cases}
+
+If the multiplicities of eigenvalues are greater than one, the decomposition \ref{eq:13} is no longer valid. It can happen in the following
+cases:
+
+\begin{itemize}
+\item Non-magnetized layers with $b = 0$.
+\item Cancelling terms in eigenvalues (that is, $a = -b$ and subsequently $\lambda_{2} = \lambda_{4} = 0$)
+\end{itemize}
+
+\subsubsection{Non-magnetized layers}
+
+In this case there is no exchange interaction between spin-up and spin-down wave functions in the layer. $M$ matrix
+stays diagonalizable (that is, representable as $M = S J S^{-1}$, where $J$ is diagonal), its eignevalues being $\pm \sqrt{a}$. The exponential can be then represented as
+\begin{equation*}
+\exp{(Mz)} = S \exp{(J z)} S^{-1} = (R_1 + R_2) \exp{(\sqrt{a} z)} + (T_1 + T_2) \exp{(-\sqrt{a} z)}.
+\end{equation*}
+with
+\begin{equation*}
+R_1
+=
+\left(
+\begin{matrix}
+	0	&	0	&	0	&	0 \\
+	0	&	1/2	&	0	&	\sqrt{a}/2 \\
+	0	&	0	&	0	&	0 \\
+	0	&	(2\sqrt{a})^{-1}	&	0	&	1/2
+\end{matrix}
+\right),
+R_2
+=
+\left(
+\begin{matrix}
+	1/2	&	0	&	\sqrt{a}/2	&	0 \\
+	0	&	0	&	0	&	0 \\
+	(2\sqrt{a})^{-1}	&	0	&	1/2	&	0 \\
+	0	&	0	&	0	&	0
+\end{matrix}
+\right),
+\end{equation*}
+\begin{equation*}
+T_1
+=
+\left(
+\begin{matrix}
+	0	&	0	&	0	&	0 \\
+	0	&	1/2	&	0	&	-\sqrt{a}/2 \\
+	0	&	0	&	0	&	0 \\
+	0	&	-(2\sqrt{a})^{-1}	&	0	&	1/2
+\end{matrix}
+\right),
+T_2
+=
+\left(
+\begin{matrix}
+	1/2	&	0	&	-\sqrt{a}/2	&	0 \\
+	0	&	0	&	0	&	0 \\
+	-(2\sqrt{a})^{-1}	&	0	&	1/2	&	0 \\
+	0	&	0	&	0	&	0
+\end{matrix}
+\right).
+\end{equation*}
+
+\subsubsection{Cancelling terms}
+
+Since $b \in \mathbb{R}$, cancelling can take place only if $a \in \mathbb{R}$. That means, that the considered layer has no absorption, which is physically unrealistic. Thus in practice the problem is solved by adding a negligibly small imaginary value to $a$. 
+
+\section{Boundary conditions}
+
+The overall solution of the equation \ref{eq:5} shall satisfy the following conditions:
+
+\begin{itemize}
+\item Transmission in the fronting medium coinsides with the incoming beam state;
+\item Reflection in the backing medium is zero.
+\end{itemize}
+
+These conditions shall hold true for both polarization states. In order to fulfil the latter one, we will find two independent vectors $W_{bot, 1}, W_{bot, 2}$ such that
+\begin{equation} \label{eq:18}
+R_{N, i} W_{bot, j} = 0
+\end{equation}
+for any combination of $i \in [1, 2], j \in [1, 2]$. $N$th layer is semi-infinite and corresponds to the backing medium.
+
+By direct substitution one can check that two solutions of the four matrix equations in \ref{eq:18} are
+\begin{equation} \label{eq:19}
+W_{bot, 1}
+=
+\left(
+\begin{matrix}
+\frac{(b_x - i b_y) (\lambda_1 - \lambda_2)}{2 b} \\
+\frac{b_z (\lambda_2 - \lambda_1)}{2 b} - \frac{\lambda_2 + \lambda_1}{2} \\
+0 \\
+1
+\end{matrix}
+\right),
+W_{bot, 2}
+=
+\left(
+\begin{matrix}
+-\frac{(a + b_z + \lambda_1 \lambda_2)}{\lambda_1 + \lambda_2} \\
+\frac{(b_x + i b_y) (\lambda_1 - \lambda_2)}{2 b} \\
+1 \\
+0
+\end{matrix}
+\right)
+\end{equation}
+if $\boldsymbol{b} \neq 0$ in the substrate and
+\begin{equation} \label{eq:20}
+W_{bot, 1}
+=
+\left(
+\begin{matrix}
+0 \\
+-\sqrt{a} \\
+0 \\
+1
+\end{matrix}
+\right),
+W_{bot, 2}
+=
+\left(
+\begin{matrix}
+-\sqrt{a} \\
+0 \\
+1 \\
+0
+\end{matrix}
+\right)
+\end{equation}
+otherwise.
+
+Starting with the boundary conditions specified by the expressions \ref{eq:19} and \ref{eq:20}, one can compute the boundary values at all the interfaces in the multilayer. After doing that, we will find a linear combination of the obtained solutions for spin-up and spin-down polarizations such that incoming beam (that is, the transmitted wave in the fronting medium) has unit intensity while intensity of the opposite polarization is zero.
+
+We will perform the computation only for the spin-up polarization. Spin-down is done in the same manner. Formally the fronting boundary condition reads
+\begin{equation} \label{eq:21}
+\check{P} \left( T_1 W_{0,+} + T_2 W_{0, +} \right)
+=
+\left(
+\begin{matrix}
+0 \\ 0 \\ 1 \\ 0
+\end{matrix}
+\right),
+\end{equation}
+where $\check{P}$ is projection operator nullifying the components of the solution related to the derivative of the wave
+\begin{equation}
+\check{P}
+=
+\left(
+\begin{matrix}
+0	&	0	&	0	&	0 \\
+0	&	0	&	0	&	0 \\
+0	&	0	&	1	&	0 \\
+0	&	0	&	0	&	1
+\end{matrix}
+\right),
+\end{equation}
+$W_{0, +}$ is the boundary condition on top of the multilayer for spin-up incoming plane wave
+\begin{equation}
+W_{0, +} = \alpha_{+} W_{0, A} + \beta_{+} W_{0, B}.
+\end{equation}
+In their turn, $W_{0, A}$ and $W_{0, B}$ are the independent solutions satisfying zero-transmission condition obtained at the previous step.
+By performing elementary matrix operations on the equality \ref{eq:21} one can obtain a simple algebraic relation
+\begin{equation}
+\check{S}
+\left(
+\begin{matrix}
+\alpha_{+} \\
+\beta_{+}
+\end{matrix}
+\right)
+=
+\left(
+\begin{matrix}
+1 \\
+0
+\end{matrix}
+\right),
+\end{equation}
+where $\check{S}$ is a $2 \times 2$ matrix composed of the appropriate elements of $T_1 W_{0,A}$, $T_2 W_{0,A}$, $T_1 W_{0,B}$, $T_2 W_{0,B}$ vectors. Obviously one can compose a similar relation for spin-down beam, which reads
+\begin{equation}
+\check{S}
+\left(
+\begin{matrix}
+\alpha_{-} \\
+\beta_{-}
+\end{matrix}
+\right)
+=
+\left(
+\begin{matrix}
+0 \\
+1
+\end{matrix}
+\right).
+\end{equation}
+
+Finally, we will write the coefficients explicitly:
+\begin{equation}
+\left(
+\begin{matrix}
+\alpha_{+} \\
+\beta_{+}
+\end{matrix}
+\right)
+=
+\left(
+\begin{matrix}
+s_{11} \\
+-s_{10}
+\end{matrix}
+\right) / \det{\check{S}},
+\left(
+\begin{matrix}
+\alpha_{-} \\
+\beta_{-}
+\end{matrix}
+\right)
+=
+\left(
+\begin{matrix}
+-s_{01} \\
+s_{00}
+\end{matrix}
+\right) / \det{\check{S}}.
+\end{equation}
+
+The found coefficients must be applied on each multilayer interface. As a result, one obtains the solution of the equation \ref{eq:8} for pure spin-up and spin-down incoming waves.
+
+\section{Reflectivity coefficient}
+
+It is easy to notice, that for an arbitrary (but pure) state of the incoming beam a reflected wave can be expressed with a reflection operator
+\begin{equation}
+\check{\mathcal{R}}
+=
+\left(
+\begin{matrix}
+r_{++} & r_{-+} \\
+r_{+-} & r_{--} \\
+\end{matrix}
+\right),
+\end{equation}
+with its non-diagonal elements cotributing to spin-flip reflections. Then the reflected plane wave can be written as
+\begin{equation}
+\Psi_{\mathcal{R}} = \left. \check{\mathcal{R}} | \Psi_i \right\rangle,
+\end{equation}
+where $\Psi_i$ is the incoming plane wave.
+
+The reflection coefficient as measured on the detector reads
+\begin{equation} \label{eq:29}
+I_R
+=
+\left| \left\langle \Psi_f | \check{\mathcal{R}} | \Psi_i \right\rangle \right|^2
+=
+\left\langle \Psi_f | \check{\mathcal{R}} | \Psi_i \right\rangle
+\cdot
+\left\langle \Psi_i | \check{\mathcal{R}}^{\dagger} | \Psi_f \right\rangle.
+\end{equation}
+In the expression above, $I_R$ is the measured reflected intensity normalized to unit incoming beam, $\Psi_f$ is the wave state passed through by an ideal polarization analyzer, and $\check{\mathcal{R}}^{\dagger}$ denotes hermitian conjugate of $\check{\mathcal{R}}$.
+
+Following \cite{toperverg}, we will introduce density matrix $\check{f}_i$ for an arbitrary mixed state of incoming beam and, correspondingly,
+$\check{f}_f$ for an arbitrary mixed state passed through non-ideal polarization analyzer:
+\begin{equation}
+\check{f}_i = \frac{1}{2} \left(
+\check{1} + \boldsymbol{\check{\sigma}} \cdot \boldsymbol{s}
+\right),
+\check{f}_f = \frac{1}{2} \left(
+\check{1} + \boldsymbol{\check{\sigma}} \cdot \boldsymbol{p}
+\right).
+\end{equation}
+Beam polarization as well as analyzer direction and efficiency are described by Bloch vectors $\boldsymbol{s}, \boldsymbol{p} \in \mathbb{R}^3$.  $|\boldsymbol{s}| = 1$ corresponds to some pure state of beam polarization, while $|\boldsymbol{s}| < 1$ is for a state mixture (partial polarization). It would be reasonable to assume, that the same can be said with respect to $|\boldsymbol{p}|$. However, it is not the case: only ideal polarization analyzers (that is, $|\boldsymbol{p}| = 1$) make sense. Treating analyzers with efficiency $|\boldsymbol{p}| < 1$ is considered in section \ref{ssec:nianalyzers}.
+
+In order to compute reflection coefficient for mixed-state beam and inideal analyzer, let us first reformulate the right-hand side of
+the expression \ref{eq:29}:
+\begin{equation} \label{eq:31}
+\left\langle \Psi_i | \check{\mathcal{R}}^{\dagger} | \Psi_f \right\rangle
+\cdot
+\left\langle \Psi_f | \check{\mathcal{R}} | \Psi_i \right\rangle
+=
+Tr \left(
+| \Psi_i \rangle \langle \Psi_i | \check{\mathcal{R}}^{\dagger} | \Psi_f \rangle
+\langle \Psi_f | \check{\mathcal{R}}
+\right).
+\end{equation}
+Here $Tr$ denotes trace operation. $| \left. \Psi_f \right\rangle \left\langle \Psi_f \right. |$ and $| \left. \Psi_i \right\rangle \left\langle \Psi_i \right. |$ are respective outer products for $\Psi_f$ and $\Psi_i$ pure states and coinside with corresponding density matrices. To generalize the expression \ref{eq:31} to mixed states of incoming beam and polarization analyzer, one has to replace explicit outer products with $\check{f}_i$, $\check{f}_f$ defined previously. It will automatically take into account the averaging over all possible initial and final pure states of the system. Therefore the final expression for $I_R$ reads
+\begin{equation} \label{eq:32}
+I_R
+=
+Tr \left(
+\check{f}_i \check{\mathcal{R}}^{\dagger} \check{f}_f \check{\mathcal{R}} 
+\right).
+\end{equation}
+
+\subsection{Analyzers with $|\boldsymbol{p}| \leq 1$} \label{ssec:nianalyzers}
+
+As it was mentioned before, $|\boldsymbol{p}| \leq 1$ can be treated as the analyzer efficiency, and analyzers with $|\boldsymbol{p}| < 1$ should be treated separately. The reason for that is the analyzer being independent on incoming waves. However, it should not be the case for $|\boldsymbol{p}| < 1$, since if analysis is not performed and the final state of the wave must coinside with the reflected wave. Thus the expression \ref{eq:29} gets an additional term:
+\begin{equation}
+I_R
+=
+(1 - |\boldsymbol{p}|)
+\left\langle \Psi_i | \check{\mathcal{R}}^{\dagger} \check{\mathcal{R}} | \Psi_i \right\rangle
++
+|\boldsymbol{p}|
+\left| \left\langle \Psi_f | \check{\mathcal{R}} | \Psi_i \right\rangle \right|^2.
+\end{equation}
+The first term is just the intensity of the reflected wave, $|\Psi_{\mathcal{R}}|^2$,
+multiplied by the attenuation factor $1 - |\boldsymbol{p}|$.
+
+Conducting the same transformations as before, one can obtain
+\begin{equation} \label{eq:34}
+I_R = (1 - |\boldsymbol{p}|) Tr(\check{f}_i \mathcal{R}^{\dagger} \mathcal{R})
++
+|\boldsymbol{p}| Tr(\check{f}_i \check{\mathcal{R}}^{\dagger} \check{f}'_f \check{\mathcal{R}}).
+\end{equation}
+Here $\check{f}'_f$ denotes the analyzer density matrix with normalized $\boldsymbol{p}$:
+\begin{equation}
+\check{f}'_f = \frac{1}{2} \left( \check{1} + \boldsymbol{\check{\sigma}} \cdot \frac{\boldsymbol{p}}{|\boldsymbol{p}|} \right).
+\end{equation}
+
+Using elementary matrix transformations and properties one can reduce the expression \ref{eq:34} to a more elegant form
+\begin{equation} \label{eq:36}
+I_R = Tr(\check{f}_i \check{\mathcal{R}}^{\dagger} \check{\mathcal{F}}_f \check{\mathcal{R}})
+\end{equation}
+with
+\begin{equation}
+\check{\mathcal{F}}_f = \frac{1}{2}
+\left[
+(2 - |\boldsymbol{p}|) \check{1} + \boldsymbol{\check{\sigma}} \boldsymbol{p}
+\right]
+\end{equation}
+
+\subsection{Examples} \label{ssec:examples}
+To make the calculations above clear, let us consider several special cases.
+
+\begin{enumerate}
+\item $\boldsymbol{s} = (0, 0, 1)$, $\boldsymbol{p} = (0, 0, 1)$.
+This case corresponds to pure spin-up incoming beam and an ideal analyzer selecting spin-up plane waves --- that is, pure non-spin-flip channel.
+Then both density matrices read
+\begin{equation*}
+\check{f}_i, \check{\mathcal{F}}_f
+=
+\left(
+\begin{matrix}
+1 & 0 \\
+0 & 0
+\end{matrix}
+\right),
+\end{equation*}
+and, according to the equation \ref{eq:36},
+\begin{equation*}
+I_R = |r_{++}|^2.
+\end{equation*}
+
+\item $\boldsymbol{s} = (0, 0, 1)$, $\boldsymbol{p} = (0, 0, -1)$. This beam / analyzer configuration provides pure spin-flip channel.
+Density matrices are represented as
+\begin{equation*}
+\check{f}_i
+=
+\left(
+\begin{matrix}
+1 & 0 \\
+0 & 0
+\end{matrix}
+\right),
+\check{\mathcal{F}}_f
+=
+\left(
+\begin{matrix}
+0 & 0 \\
+0 & 1
+\end{matrix}
+\right).
+\end{equation*}
+Then the measured reflectivity reads
+\begin{equation*}
+I_R = |r_{+-}|^2.
+\end{equation*}
+
+\item $\boldsymbol{s} = (0, 0, 0)$, $\boldsymbol{p} = (0, 0, 0)$. This case corresponds to the abscence of any polarization or spin state selection. Then
+\begin{equation*}
+\check{f}_i = \frac{1}{2} \check{1}, \check{\mathcal{F}}_f = \check{1}
+\end{equation*}
+and
+\begin{equation*}
+I_R = \frac{1}{2} \left( |r_{++}|^2 + |r_{+-}|^2 + |r_{-+}|^2 + |r_{--}|^2\right).
+\end{equation*}
+In case $\boldsymbol{b} = 0$ everywhere in the sample, the $I_R$ reduces to the usual specular reflectivity:
+\begin{equation*}
+I_R = |r|^2.
+\end{equation*}
+
+\end{enumerate}
+
+\begin{thebibliography}{1}
+
+\bibitem{majkrzak} C. F. Majkrzak et al., {\em Polarized Neutron Reflectometry}, Neutron scattering from magnetic materials, pp. 397--471, 2005.
+
+\bibitem{walter} Walter Van Herck {\em Polarized DWBA on nanoparticles}, internal report, 2016.
+
+\bibitem{toperverg} B. P. Toperverg, {\em Polarized neutron reflectometry of magnetic nanostructures}, The Physics of Metals and Metallography, v. 116, 2015.
+
+\end{thebibliography}
+
+\end{document}
