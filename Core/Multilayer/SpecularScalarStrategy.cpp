@@ -172,4 +172,3 @@ const LayerRoughness* SpecularScalarStrategy::GetBottomRoughness(const std::vect
         return slices[slice_index + 1].topRoughness();
     return nullptr;
 }
-//} // unnamed namespace

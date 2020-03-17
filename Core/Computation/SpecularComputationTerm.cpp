@@ -15,8 +15,6 @@
 #include "SpecularComputationTerm.h"
 #include "DelayedProgressCounter.h"
 #include "ScalarRTCoefficients.h"
-//#include "SpecularMatrix.h"
-//#include "SpecularMagnetic_v2.h"
 #include "SpecularSimulationElement.h"
 
 SpecularComputationTerm::SpecularComputationTerm() = default;
@@ -50,7 +48,6 @@ SpecularScalarTerm::~SpecularScalarTerm() = default;
 void SpecularScalarTerm::eval(SpecularSimulationElement& elem,
                               const std::vector<Slice>& slices) const
 {
-//    auto coeff = SpecularMatrix::Execute(slices, elem.produceKz(slices));
     auto coeff = m_Strategy->eval(slices, elem.produceKz(slices));
     elem.setIntensity(std::norm(coeff.front().getScalarR()));
 }

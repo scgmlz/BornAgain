@@ -24,15 +24,14 @@
 #include "ScalarFresnelMap.h"
 #include "SimulationOptions.h"
 #include "Slice.h"
-
 #include "SpecularStrategyBuilder.h"
+
 
 namespace
 {
 std::unique_ptr<IFresnelMap> CreateFresnelMap(const std::vector<Slice>& slices,
                                               const SimulationOptions& options,
                                               const MultiLayer& sample);
-//bool ContainsMagneticMaterial(const MultiLayer& sample);
 bool ContainsMagneticSlice(const std::vector<Slice>& slices);
 bool CheckRegions(const std::vector<HomogeneousRegion>& regions);
 std::vector<Slice>

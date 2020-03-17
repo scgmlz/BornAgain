@@ -15,7 +15,6 @@
 #ifndef SPECULARCOMPUTATIONTERM_H_
 #define SPECULARCOMPUTATIONTERM_H_
 
-//#include "ISpecularStrategy.h"
 #include "SpecularScalarStrategy.h"
 #include "SpecularMagneticStrategy.h"
 
@@ -46,7 +45,6 @@ protected:
 
 private:
     std::unique_ptr<DelayedProgressCounter> mP_progress_counter;
-//    ISpecularStrategy& m_Strategy;
 };
 
 class SpecularScalarTerm : public SpecularComputationTerm

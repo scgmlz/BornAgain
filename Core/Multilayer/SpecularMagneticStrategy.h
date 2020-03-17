@@ -66,15 +66,4 @@ private:
 
 };
 
-
-
-//class Slice;
-
-//class BA_CORE_API_ SpecularMagnetic_v2
-//{
-//public:
-
-
-//};
-
 #endif // SPECULARMAGNETICSTRATEGY_H

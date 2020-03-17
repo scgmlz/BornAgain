@@ -167,7 +167,8 @@ size_t MultiLayer::check_interface_index(size_t i_interface) const
 }
 
 // TODO: write test for this, rewrite in nice way
-void MultiLayer::setRoughnessModel(std::string strategy){
+void MultiLayer::setRoughnessModel(std::string strategy)
+{
     if( strategy != "" and
             strategy != "tanh" and
             strategy  != "nc" and

@@ -12,14 +12,18 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARMATRIX_H
-#define SPECULARMATRIX_H
+#ifndef SPECULARSCALARSTRATEGY_H
+#define SPECULARSCALARSTRATEGY_H
 
 #include "ISpecularStrategy.h"
 #include "ScalarRTCoefficients.h"
 #include "Vectors3D.h"
 #include <vector>
 
+//! Implements method 'eval' to compute refraction angles and transmission/reflection
+//! coefficients for coherent wave propagation in a multilayer.
+//! @ingroup algorithms_internal
+//!
 class SpecularScalarStrategy : public ISpecularStrategy
 {
 public:
@@ -56,12 +60,4 @@ private:
 
 };
 
-//class Slice;
-
-//! Implements method 'execute' to compute refraction angles and transmission/reflection
-//! coefficients for coherent wave propagation in a multilayer.
-//! @ingroup algorithms_internal
-
-
-
-#endif // SPECULARMATRIX_H
+#endif // SPECULARSCALARSTRATEGY_H
