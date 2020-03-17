@@ -1,34 +1,26 @@
-
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      Core/Computation/ProcessedSample.h
+//! @brief     Defines class ProcessedSample.
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
 
 #ifndef ISPECULARSTRATEGY_H
 #define ISPECULARSTRATEGY_H
 
-#include "ILayerRTCoefficients.h"
-//#include "ScalarRTCoefficients.h"
-//#include "MatrixRTCoefficients_v2.h"
 #include "Slice.h"
 
-//template<typename CoefficientsType>
 class ISpecularStrategy
 {
 public:
 
-//    virtual std::vector<ScalarRTCoefficients> eval(const std::vector<Slice>& slices,
-//                                                              kvector_t k) const = 0;
-
-//    virtual std::vector<ScalarRTCoefficients> eval(const std::vector<Slice>& slices,
-//                                                   const std::vector<complex_t>& kz) const = 0;
-
-//    virtual std::vector<MatrixRTCoefficients_v2> eval(const std::vector<Slice>& slices,
-//                                                              kvector_t k) const = 0;
-
-//    virtual std::vector<MatrixRTCoefficients_v2> eval(const std::vector<Slice>& slices,
-//                                                   const std::vector<complex_t>& kz) const = 0;
-
-//private:
-
-
 };
-
 
 #endif // ISPECULARSTRATEGY_H

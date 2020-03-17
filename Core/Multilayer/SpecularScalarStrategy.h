@@ -20,7 +20,6 @@
 #include "Vectors3D.h"
 #include <vector>
 
-
 class SpecularScalarStrategy : public ISpecularStrategy
 {
 public:

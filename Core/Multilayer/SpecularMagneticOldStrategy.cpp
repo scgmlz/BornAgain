@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SpecularMagnetic.h"
+#include "SpecularMagneticOldStrategy.h"
 #include "Layer.h"
 #include "LayerInterface.h"
 #include "MultiLayer.h"
@@ -31,8 +31,8 @@ complex_t GetImExponential(complex_t exponent);
 const complex_t I(0, 1);
 }
 
-std::vector<MatrixRTCoefficients> SpecularMagnetic::Execute(const std::vector<Slice>& slices,
-                                                            const kvector_t k)
+std::vector<MatrixRTCoefficients> SpecularMagneticOldStrategy::eval(const std::vector<Slice>& slices,
+                                                            const kvector_t k) const
 {
     std::vector<MatrixRTCoefficients> result(slices.size());
     CalculateEigenvalues(slices, k, result);

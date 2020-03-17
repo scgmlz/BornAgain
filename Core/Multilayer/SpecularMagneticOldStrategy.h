@@ -12,10 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARMAGNETIC_H
-#define SPECULARMAGNETIC_H
+#ifndef SPECULARMAGNETICOLDSTRATEGY_H
+#define SPECULARMAGNETICOLDSTRATEGY_H
 
 #include "MatrixRTCoefficients.h"
+#include "ISpecularStrategy.h"
 #include "Vectors3D.h"
 #include <vector>
 
@@ -25,12 +26,13 @@ class Slice;
 //! the coherent wave solution in a multilayer with magnetization.
 //! @ingroup algorithms_internal
 
-namespace SpecularMagnetic
+class SpecularMagneticOldStrategy : public ISpecularStrategy
 {
-//! Computes refraction angle reflection/transmission coefficients
-//! for given sliced multilayer and wavevector k
-BA_CORE_API_ std::vector<MatrixRTCoefficients> Execute(const std::vector<Slice>& slices,
-                                                       const kvector_t k);
-}; // namespace SpecularMagnetic
+public:
+    //! Computes refraction angle reflection/transmission coefficients
+    //! for given sliced multilayer and wavevector k
+    BA_CORE_API_ std::vector<MatrixRTCoefficients> eval(const std::vector<Slice>& slices,
+                                                           const kvector_t k) const;
+}; // class SpecularMagneticOldStrategy
 
-#endif // SPECULARMAGNETIC_H
+#endif // SPECULARMAGNETICOLDSTRATEGY_H
