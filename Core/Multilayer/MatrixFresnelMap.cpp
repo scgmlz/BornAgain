@@ -15,35 +15,16 @@
 #include "MatrixFresnelMap.h"
 #include "SimulationElement.h"
 #include "Slice.h"
-//#include "SpecularMagnetic.h"
-//#include "SpecularMagnetic_v2.h"
 
 #include <functional>
 
-//namespace {
-//template <class T> auto MatrixFresnelMap::computeRT(const std::vector<Slice>&, const kvector_t&) const
-//{
-//    constexpr bool value = std::is_same<T, MatrixRTCoefficients>::value
-//                           || std::is_same<T, MatrixRTCoefficients_v2>::value;
-//    static_assert(value, "Error in MatrixFresnelMap:computeRT: unknown coefficient type");
-//};
-
-//template <>
-//auto MatrixFresnelMap::computeRT<MatrixRTCoefficients>(const std::vector<Slice>& slices, const kvector_t& k) const
-//{
-//    return m_Strategy.eval(slices, k);
-//}
-
-//template <>
 std::vector<MatrixRTCoefficients_v2> MatrixFresnelMap::computeRT(const std::vector<Slice>& slices, const kvector_t& k) const
 {
     return m_Strategy->eval(slices, k);
 }
-//}
 
 MatrixFresnelMap::MatrixFresnelMap(std::unique_ptr<SpecularMagneticStrategy> strategy) : m_Strategy(std::move(strategy))
 {}
-//MatrixFresnelMap::MatrixFresnelMap(SpecularMagneticStrategy strategy) : m_Strategy(strategy) {}
 
 MatrixFresnelMap::~MatrixFresnelMap() = default;
 

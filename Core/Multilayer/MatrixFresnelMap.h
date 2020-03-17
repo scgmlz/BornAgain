@@ -16,7 +16,6 @@
 #define MATRIXFRESNELMAP_H
 
 #include "IFresnelMap.h"
-//#include "MatrixRTCoefficients.h"
 #include "MatrixRTCoefficients_v2.h"
 #include <cstddef>
 #include <memory>
@@ -50,12 +49,6 @@ public:
 
 private:
 
-//    template <class T> auto computeRT(const std::vector<Slice>&, const kvector_t&) const;
-
-//    template <>
-//    auto computeRT<MatrixRTCoefficients>(const std::vector<Slice>& slices, const kvector_t& k) const;
-
-//    template <>
     std::vector<MatrixRTCoefficients_v2> computeRT(const std::vector<Slice>& slices, const kvector_t& k) const;
 
     //! Provides a hash function for a 3-vector of doubles, for use in MatrixFresnelMap.
