@@ -80,6 +80,10 @@ public:
 
     std::vector<const INode*> getChildren() const final override;
 
+    void setRoughnessModel(std::string strategy);
+
+    std::string roughnessModel() const { return m_roughness_model; }
+
 private:
     //! Registers some class members for later access via parameter pool
     void init_parameters();
@@ -107,6 +111,8 @@ private:
     double m_crossCorrLength;
     //! external magnetic field (in A/m)
     kvector_t m_ext_field;
+
+    std::string m_roughness_model;
 };
 
 #endif // MULTILAYER_H

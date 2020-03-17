@@ -47,6 +47,12 @@ BA_CORE_API_ bool ContainsCompatibleMaterials(const MultiLayer& multilayer);
 
 //! Calculate z-regions occupied by particles
 BA_CORE_API_ std::vector<ZLimits> ParticleRegions(const MultiLayer& multilayer, bool use_slicing);
+
+//! checks if a sample contains magnetic materials
+BA_CORE_API_ bool ContainsMagneticMaterial(const MultiLayer& sample);
+
+BA_CORE_API_ bool hasRoughness(const MultiLayer& sample);
+
 } // namespace MultiLayerUtils
 
 #endif // MULTILAYERUTILS_H

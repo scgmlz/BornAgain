@@ -25390,6 +25390,16 @@ class MultiLayer(ISample):
         """
         return _libBornAgainCore.MultiLayer_getChildren(self)
 
+
+    def setRoughnessModel(self, strategy):
+        """setRoughnessModel(MultiLayer self, std::string strategy)"""
+        return _libBornAgainCore.MultiLayer_setRoughnessModel(self, strategy)
+
+
+    def roughnessModel(self):
+        """roughnessModel(MultiLayer self) -> std::string"""
+        return _libBornAgainCore.MultiLayer_roughnessModel(self)
+
 MultiLayer_swigregister = _libBornAgainCore.MultiLayer_swigregister
 MultiLayer_swigregister(MultiLayer)
 

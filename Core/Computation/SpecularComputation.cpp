@@ -12,11 +12,13 @@
 //
 // ************************************************************************** //
 
+#include "IFresnelMap.h"
 #include "SpecularComputation.h"
 #include "MultiLayer.h"
 #include "ProcessedSample.h"
 #include "ProgressHandler.h"
 #include "SpecularSimulationElement.h"
+
 
 static_assert(std::is_copy_constructible<SpecularComputation>::value == false,
               "SpecularComputation should not be copy constructible");
@@ -33,9 +35,11 @@ SpecularComputation::SpecularComputation(const MultiLayer& multilayer,
 {
     if (mP_processed_sample->containsMagneticMaterial()
         || mP_processed_sample->externalField() != kvector_t{})
-        m_computation_term.reset(new SpecularMatrixTerm);
+        m_computation_term.reset(new SpecularMatrixTerm{
+            static_cast<SpecularMagneticStrategy*>(this->mP_processed_sample->fresnelMap()->getStrategy()) });
     else
-        m_computation_term.reset(new SpecularScalarTerm);
+        m_computation_term.reset(new SpecularScalarTerm{
+            static_cast<SpecularScalarStrategy*>(this->mP_processed_sample->fresnelMap()->getStrategy()) });
 }
 
 SpecularComputation::~SpecularComputation() = default;

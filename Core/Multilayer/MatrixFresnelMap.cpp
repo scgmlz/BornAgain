@@ -15,32 +15,35 @@
 #include "MatrixFresnelMap.h"
 #include "SimulationElement.h"
 #include "Slice.h"
-#include "SpecularMagnetic.h"
-#include "SpecularMagnetic_v2.h"
+//#include "SpecularMagnetic.h"
+//#include "SpecularMagnetic_v2.h"
+
 #include <functional>
 
-namespace {
-template <class T> auto computeRT(const std::vector<Slice>&, const kvector_t&)
-{
-    constexpr bool value = std::is_same<T, MatrixRTCoefficients>::value
-                           || std::is_same<T, MatrixRTCoefficients_v2>::value;
-    static_assert(value, "Error in MatrixFresnelMap:computeRT: unknown coefficient type");
-};
+//namespace {
+//template <class T> auto MatrixFresnelMap::computeRT(const std::vector<Slice>&, const kvector_t&) const
+//{
+//    constexpr bool value = std::is_same<T, MatrixRTCoefficients>::value
+//                           || std::is_same<T, MatrixRTCoefficients_v2>::value;
+//    static_assert(value, "Error in MatrixFresnelMap:computeRT: unknown coefficient type");
+//};
 
-template <>
-auto computeRT<MatrixRTCoefficients>(const std::vector<Slice>& slices, const kvector_t& k)
-{
-    return SpecularMagnetic::Execute(slices, k);
-}
+//template <>
+//auto MatrixFresnelMap::computeRT<MatrixRTCoefficients>(const std::vector<Slice>& slices, const kvector_t& k) const
+//{
+//    return m_Strategy.eval(slices, k);
+//}
 
-template <>
-auto computeRT<MatrixRTCoefficients_v2>(const std::vector<Slice>& slices, const kvector_t& k)
+//template <>
+std::vector<MatrixRTCoefficients_v2> MatrixFresnelMap::computeRT(const std::vector<Slice>& slices, const kvector_t& k) const
 {
-    return SpecularMagnetic_v2::execute(slices, k);
+    return m_Strategy->eval(slices, k);
 }
-}
+//}
 
-MatrixFresnelMap::MatrixFresnelMap() = default;
+MatrixFresnelMap::MatrixFresnelMap(std::unique_ptr<SpecularMagneticStrategy> strategy) : m_Strategy(std::move(strategy))
+{}
+//MatrixFresnelMap::MatrixFresnelMap(SpecularMagneticStrategy strategy) : m_Strategy(strategy) {}
 
 MatrixFresnelMap::~MatrixFresnelMap() = default;
 
@@ -80,7 +83,7 @@ MatrixFresnelMap::getCoefficients(const kvector_t& kvec, size_t layer_index,
                                   const std::vector<Slice>& slices, CoefficientHash& hash_table) const
 {
     if (!m_use_cache) {
-        auto coeffs = computeRT<RTCoefficients>(slices, kvec);
+        auto coeffs = computeRT(slices, kvec);
         return std::make_unique<RTCoefficients>(coeffs[layer_index]);
     }
     const auto& coef_vector = getCoefficientsFromCache(kvec, slices, hash_table);
@@ -89,10 +92,16 @@ MatrixFresnelMap::getCoefficients(const kvector_t& kvec, size_t layer_index,
 
 const std::vector<MatrixFresnelMap::RTCoefficients>&
 MatrixFresnelMap::getCoefficientsFromCache(kvector_t kvec, const std::vector<Slice>& slices,
-                                           MatrixFresnelMap::CoefficientHash& hash_table)
+                                           MatrixFresnelMap::CoefficientHash& hash_table) const
 {
     auto it = hash_table.find(kvec);
     if (it == hash_table.end())
-        it = hash_table.insert({kvec, computeRT<RTCoefficients>(slices, kvec)}).first;
+        it = hash_table.insert({kvec, computeRT(slices, kvec)}).first;
     return it->second;
 }
+
+SpecularMagneticStrategy* MatrixFresnelMap::getStrategy() const
+{
+    return this->m_Strategy.get();
+}
+

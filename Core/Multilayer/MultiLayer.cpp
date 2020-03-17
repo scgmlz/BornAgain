@@ -39,6 +39,7 @@ MultiLayer* MultiLayer::clone() const
     std::unique_ptr<MultiLayer> P_result(new MultiLayer());
     P_result->setCrossCorrLength(crossCorrLength());
     P_result->setExternalField(externalField());
+    P_result->setRoughnessModel(roughnessModel());
     for (size_t i = 0; i < numberOfLayers(); ++i) {
         auto p_interface = i > 0 ? m_interfaces[i - 1] : nullptr;
         std::unique_ptr<Layer> P_layer(m_layers[i]->clone());
@@ -163,4 +164,15 @@ size_t MultiLayer::check_interface_index(size_t i_interface) const
     if (i_interface >= m_interfaces.size())
         throw Exceptions::OutOfBoundsException("Interface index is out of bounds");
     return i_interface;
+}
+
+// TODO: write test for this, rewrite in nice way
+void MultiLayer::setRoughnessModel(std::string strategy){
+    if( strategy != "" and
+            strategy != "tanh" and
+            strategy  != "nc" and
+            strategy  != "nevot-croce")
+        throw std::logic_error("Invalid Roughness Model");
+
+    m_roughness_model = strategy;
 }

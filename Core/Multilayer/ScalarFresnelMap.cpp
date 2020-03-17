@@ -16,11 +16,12 @@
 #include "ScalarRTCoefficients.h"
 #include "SimulationElement.h"
 #include "Slice.h"
-#include "SpecularMatrix.h"
+//#include "SpecularMatrix.h"
 #include "Vectors3D.h"
 #include <functional>
 
-ScalarFresnelMap::ScalarFresnelMap() {}
+ScalarFresnelMap::ScalarFresnelMap(std::unique_ptr<SpecularScalarStrategy> strategy) : m_Strategy(std::move(strategy))
+{}
 
 ScalarFresnelMap::~ScalarFresnelMap() = default;
 
@@ -40,7 +41,7 @@ std::unique_ptr<const ILayerRTCoefficients>
 ScalarFresnelMap::getCoefficients(const kvector_t& kvec, size_t layer_index) const
 {
     if (!m_use_cache) {
-        auto coeffs = SpecularMatrix::Execute(m_slices, kvec);
+        auto coeffs = m_Strategy->eval(m_slices, kvec);
         return std::make_unique<const ScalarRTCoefficients>(coeffs[layer_index]);
     }
     const auto& coef_vector = getCoefficientsFromCache(kvec);
@@ -53,7 +54,13 @@ ScalarFresnelMap::getCoefficientsFromCache(kvector_t kvec) const
     std::pair<double, double> k2_theta(kvec.mag2(), kvec.theta());
     auto it = m_cache.find(k2_theta);
     if (it == m_cache.end()) {
-        it = m_cache.insert({k2_theta, SpecularMatrix::Execute(m_slices, kvec)}).first;
+        it = m_cache.insert({k2_theta, m_Strategy->eval(m_slices, kvec)}).first;
     }
     return it->second;
+}
+
+SpecularScalarStrategy* ScalarFresnelMap::getStrategy() const
+{
+    return this->m_Strategy.get();
+
 }

@@ -21,6 +21,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include "ISpecularStrategy.h"
 
 struct HomogeneousRegion;
 class IFresnelMap;
@@ -77,6 +78,7 @@ private:
     double m_crossCorrLength;
     kvector_t m_ext_field;
     std::map<size_t, std::vector<HomogeneousRegion>> m_region_map;
+//    std::unique_ptr<ISpecularStrategy> m_Strategy;
 };
 
 #endif // PROCESSEDSAMPLE_H

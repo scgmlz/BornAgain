@@ -21,6 +21,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include "SpecularScalarStrategy.h"
 
 class ILayerRTCoefficients;
 class SimulationElement;
@@ -32,11 +33,13 @@ class Slice;
 class BA_CORE_API_ ScalarFresnelMap : public IFresnelMap
 {
 public:
-    ScalarFresnelMap();
+    ScalarFresnelMap(std::unique_ptr<SpecularScalarStrategy> strategy);
     ~ScalarFresnelMap() final;
 
     std::unique_ptr<const ILayerRTCoefficients>
     getOutCoefficients(const SimulationElement& sim_element, size_t layer_index) const override;
+
+    SpecularScalarStrategy* getStrategy() const override;
 
 private:
     //! Provides a hash function for a pair of doubles.
@@ -51,6 +54,9 @@ private:
     const std::vector<ScalarRTCoefficients>& getCoefficientsFromCache(kvector_t kvec) const;
     mutable std::unordered_map<std::pair<double, double>, std::vector<ScalarRTCoefficients>,
                                Hash2Doubles> m_cache;
+
+    std::unique_ptr<SpecularScalarStrategy> m_Strategy;
+
 };
 
 #endif // SCALARFRESNELMAP_H

@@ -25,11 +25,14 @@
 #include "SimulationOptions.h"
 #include "Slice.h"
 
+#include "SpecularStrategyBuilder.h"
+
 namespace
 {
 std::unique_ptr<IFresnelMap> CreateFresnelMap(const std::vector<Slice>& slices,
-                                              const SimulationOptions& options);
-bool ContainsMagneticMaterial(const MultiLayer& sample);
+                                              const SimulationOptions& options,
+                                              const MultiLayer& sample);
+//bool ContainsMagneticMaterial(const MultiLayer& sample);
 bool ContainsMagneticSlice(const std::vector<Slice>& slices);
 bool CheckRegions(const std::vector<HomogeneousRegion>& regions);
 std::vector<Slice>
@@ -42,7 +45,7 @@ ProcessedSample::ProcessedSample(const MultiLayer& sample, const SimulationOptio
       m_ext_field{sample.externalField()}
 {
     initSlices(sample, options);
-    mP_fresnel_map = CreateFresnelMap(m_slices, options);
+    mP_fresnel_map = CreateFresnelMap(m_slices, options, sample);
     initBFields();
     initLayouts(sample);
     initFresnelMap(options);
@@ -208,7 +211,7 @@ void ProcessedSample::initSlices(const MultiLayer& sample, const SimulationOptio
 void ProcessedSample::initLayouts(const MultiLayer& sample)
 {
     double z_ref = -m_top_z;
-    m_polarized = ContainsMagneticMaterial(sample);
+    m_polarized = MultiLayerUtils::ContainsMagneticMaterial(sample);
     for (size_t i = 0; i < sample.numberOfLayers(); ++i) {
         if (i > 1)
             z_ref -= MultiLayerUtils::LayerThickness(sample, i-1);
@@ -278,24 +281,22 @@ void ProcessedSample::initFresnelMap(const SimulationOptions& sim_options)
 namespace
 {
 std::unique_ptr<IFresnelMap> CreateFresnelMap(const std::vector<Slice>& slices,
-                                              const SimulationOptions& options)
+                                              const SimulationOptions& options,
+                                              const MultiLayer& sample)
 {
     std::unique_ptr<IFresnelMap> P_result;
-    if (ContainsMagneticSlice(slices))
-        P_result.reset(new MatrixFresnelMap());
-    else
-        P_result.reset(new ScalarFresnelMap());
+    if (ContainsMagneticSlice(slices)){
+        auto strategy = std::unique_ptr<SpecularMagneticStrategy>(
+                    static_cast<SpecularMagneticStrategy*>( SpecularStrategyBuilder::build(sample, true).release() ) );
+        P_result.reset(new MatrixFresnelMap{std::move(strategy)});
+    } else{
+        auto strategy = std::unique_ptr<SpecularScalarStrategy>(
+                    static_cast<SpecularScalarStrategy*>( SpecularStrategyBuilder::build(sample, false).release() ) );
+        P_result.reset(new ScalarFresnelMap{std::move(strategy)});
+    }
     if (options.isIntegrate())
         P_result->disableCaching();
     return P_result;
-}
-
-bool ContainsMagneticMaterial(const MultiLayer& sample)
-{
-    for (const Material* mat : sample.containedMaterials())
-        if (mat->isMagneticMaterial())
-            return true;
-    return false;
 }
 
 bool ContainsMagneticSlice(const std::vector<Slice>& slices)

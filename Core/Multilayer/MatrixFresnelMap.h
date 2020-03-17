@@ -16,13 +16,14 @@
 #define MATRIXFRESNELMAP_H
 
 #include "IFresnelMap.h"
-#include "MatrixRTCoefficients.h"
+//#include "MatrixRTCoefficients.h"
 #include "MatrixRTCoefficients_v2.h"
 #include <cstddef>
 #include <memory>
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include "SpecularMagneticStrategy.h"
 
 class ILayerRTCoefficients;
 class Slice;
@@ -36,7 +37,7 @@ class BA_CORE_API_ MatrixFresnelMap : public IFresnelMap
 public:
     using RTCoefficients = MatrixRTCoefficients_v2;
 
-    MatrixFresnelMap();
+    MatrixFresnelMap(std::unique_ptr<SpecularMagneticStrategy> strategy);
     ~MatrixFresnelMap() override;
 
     std::unique_ptr<const ILayerRTCoefficients>
@@ -45,7 +46,18 @@ public:
 
     void setSlices(const std::vector<Slice>& slices) final override;
 
+    SpecularMagneticStrategy* getStrategy() const override;
+
 private:
+
+//    template <class T> auto computeRT(const std::vector<Slice>&, const kvector_t&) const;
+
+//    template <>
+//    auto computeRT<MatrixRTCoefficients>(const std::vector<Slice>& slices, const kvector_t& k) const;
+
+//    template <>
+    std::vector<MatrixRTCoefficients_v2> computeRT(const std::vector<Slice>& slices, const kvector_t& k) const;
+
     //! Provides a hash function for a 3-vector of doubles, for use in MatrixFresnelMap.
     class HashKVector
     {
@@ -65,9 +77,11 @@ private:
     mutable CoefficientHash m_hash_table_out;
     mutable CoefficientHash m_hash_table_in;
 
-    static const std::vector<RTCoefficients>&
+    const std::vector<RTCoefficients>&
     getCoefficientsFromCache(kvector_t kvec, const std::vector<Slice>& slices,
-                             CoefficientHash& hash_table);
+                             CoefficientHash& hash_table) const;
+
+    std::unique_ptr<SpecularMagneticStrategy> m_Strategy;
 };
 
 #endif // MATRIXFRESNELMAP_H

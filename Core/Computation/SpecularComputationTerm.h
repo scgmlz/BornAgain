@@ -15,6 +15,10 @@
 #ifndef SPECULARCOMPUTATIONTERM_H_
 #define SPECULARCOMPUTATIONTERM_H_
 
+//#include "ISpecularStrategy.h"
+#include "SpecularScalarStrategy.h"
+#include "SpecularMagneticStrategy.h"
+
 #include <memory>
 #include <vector>
 
@@ -42,22 +46,33 @@ protected:
 
 private:
     std::unique_ptr<DelayedProgressCounter> mP_progress_counter;
+//    ISpecularStrategy& m_Strategy;
 };
 
 class SpecularScalarTerm : public SpecularComputationTerm
 {
+public:
+    SpecularScalarTerm(SpecularScalarStrategy* strategy);
+private:
     ~SpecularScalarTerm() override;
 protected:
     void eval(SpecularSimulationElement& elem, const std::vector<Slice>& slices) const override;
+
+    SpecularScalarStrategy* m_Strategy;
 };
 
 class SpecularMatrixTerm : public SpecularComputationTerm
 {
+public:
+    SpecularMatrixTerm(SpecularMagneticStrategy* strategy);
+private:
     ~SpecularMatrixTerm() override;
 protected:
     void eval(SpecularSimulationElement& elem, const std::vector<Slice>& slices) const override;
     double intensity(const SpecularSimulationElement& elem,
                      const MatrixRTCoefficients_v2& coeff) const;
+
+    SpecularMagneticStrategy* m_Strategy;
 };
 
 #endif /* SPECULARCOMPUTATIONTERM_H_ */

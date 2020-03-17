@@ -21,6 +21,7 @@
 #include "WinDllMacros.h"
 #include <memory>
 #include <vector>
+#include "ISpecularStrategy.h"
 
 class SimulationElement;
 
@@ -52,6 +53,8 @@ public:
 
     //! Disables caching of previously computed Fresnel coefficients
     void disableCaching();
+
+    virtual ISpecularStrategy* getStrategy() const = 0;
 
 protected:
     virtual std::unique_ptr<const ILayerRTCoefficients>
