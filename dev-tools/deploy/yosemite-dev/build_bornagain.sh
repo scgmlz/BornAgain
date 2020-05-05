@@ -34,7 +34,7 @@ do
     echo "PYEXE" $PYEXE
     echo "PYLIB" $PYLIB
 
-    cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DPython_ADDITIONAL_VERSIONS=$PYSHORT -DBORNAGAIN_APPLE_BUNDLE=ON  -DPYTHON_LIBRARY=$PYLIB -DPYTHON_EXECUTABLE=$PYEXE -DCMAKE_PREFIX_PATH=/usr/local ../BornAgain
+    cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ -DPython_ADDITIONAL_VERSIONS=$PYSHORT -DBORNAGAIN_APPLE_BUNDLE=ON  -DPython_LIBRARIES=$PYLIB -DPython_EXECUTABLE=$PYEXE -DCMAKE_PREFIX_PATH=/usr/local ../BornAgain
     make -j4
     cpack -V
     echo 'Copying dmg installer back to build server'
