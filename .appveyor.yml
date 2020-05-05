@@ -47,7 +47,7 @@ before_build:
 - 7z x %temp%\libfftw3.zip -oC:\projects\deps
 - dir C:\projects\deps
 - dir C:\projects\deps\include
-- set CMAKE_URL="https://cmake.org/files/v3.12/cmake-3.12.4-win64-x64.zip"
+- set CMAKE_URL="https://cmake.org/files/v3.17/cmake-3.17.2-win64-x64.zip"
 - appveyor DownloadFile %CMAKE_URL% -FileName %temp%\cmake.zip
 - 7z x %temp%\cmake.zip -oC:\projects\deps > nul
 - move C:\projects\deps\cmake-* C:\projects\deps\cmake # Move to a version-agnostic directory
@@ -60,7 +60,7 @@ build_script:
 - mkdir build
 - cd build
 - cmake --version
-- cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT=%BOOSTDIR% -DPYTHON_LIBRARY=%PYLIB% -DPYTHON_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
+- cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT=%BOOSTDIR% -DPython_LIBRARIES=%PYLIB% -DPython_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
 - cmake --build . --config Release
 
 test_script:
