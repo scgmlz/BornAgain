@@ -14,7 +14,7 @@ ${COMMAND}
 
 for item_to_link in bornagain libBornAgainCore.py _libBornAgainCore.so libBornAgainFit.py _libBornAgainFit.so _libBornAgainGUI.so
 do
- COMMAND="ln -sf @CMAKE_INSTALL_PREFIX@/lib/@destination_suffix@/${item_to_link} @PYTHON_SITE_PACKAGES@/"
+ COMMAND="ln -sf @CMAKE_INSTALL_PREFIX@/lib/@destination_suffix@/${item_to_link} @Python_SITELIB@/"
  echo ${COMMAND}
  ${COMMAND}
 done

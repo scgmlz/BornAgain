@@ -3,8 +3,8 @@
 # removes created symbolic links
 
 
-rm -rf @PYTHON_SITE_PACKAGES@/*bornagain*
-rm -rf @PYTHON_SITE_PACKAGES@/*BornAgain*
+rm -rf @Python_SITELIB@/*bornagain*
+rm -rf @Python_SITELIB@/*BornAgain*
 
 rm -rf @CMAKE_INSTALL_PREFIX@/bin/bornagain
 
