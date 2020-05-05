@@ -10,7 +10,7 @@ platform:
 environment:
   APPVEYOR_RDP_PASSWORD: 7bKajQWvq4uhfpvc!
   BOOSTDIR: C:\Libraries\boost_1_67_0
-  PYTHONDIR: C:\Python36-x64
+  PYTHONDIR: "C:\\Python36-x64"
   QTDIR: "C:\\Qt\\5.11\\msvc2017_64"
   PATH: "%QTDIR%\\bin;%PYTHONDIR%;%PYTHONDIR%\\Scripts;%BOOSTDIR%\\lib64-msvc-14.1;%PATH%"
   PYTHONPATH: "%PYTHONDIR%;%PYTHONDIR%\\Lib;%PYTHONDIR%\\Lib\\site-packages;%PYTHONDIR%\\DLLs"
