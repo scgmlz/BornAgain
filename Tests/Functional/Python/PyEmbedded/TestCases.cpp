@@ -33,10 +33,11 @@ bool SysPath::runTest()
 {
     // Python build info
     std::cout << "pythonExecutable(): " << BABuild::pythonExecutable() << std::endl;
+    std::cout << "pythonInterpreterID(): " << BABuild::pythonInterpreterID() << std::endl;
     std::cout << "pythonVersionString(): " << BABuild::pythonVersionString() << std::endl;
     std::cout << "pythonLibraries(): " << BABuild::pythonLibraries() << std::endl;
     std::cout << "pythonIncludeDirs(): " << BABuild::pythonIncludeDirs() << std::endl;
-    std::cout << "pythonLibsVersionString(): " << BABuild::pythonLibsVersionString() << std::endl;
+    std::cout << "pythonSiteLib(): " << BABuild::pythonSiteLib() << std::endl;
     std::cout << "numpyIncludeDir(): " << BABuild::numpyIncludeDir() << std::endl;
     std::cout << "numpyVersionString(): " << BABuild::numpyVersionString() << std::endl;
 

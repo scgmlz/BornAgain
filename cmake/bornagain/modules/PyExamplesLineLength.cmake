@@ -6,7 +6,7 @@ if(NOT MSVC)
 
 file(GLOB PY_EXAMPLES "${PY_EXAMPLES_DIR}/*/ex*/*.py")
 
-add_test(NAME "PyExamplesLineLength" COMMAND ${PYTHON_EXECUTABLE}
+add_test(NAME "PyExamplesLineLength" COMMAND ${Python_EXECUTABLE}
     ${CMAKE_SOURCE_DIR}/dev-tools/analyze/check-line-length.py ${WEB_LEN_LIM}
     ${PY_EXAMPLES})
 

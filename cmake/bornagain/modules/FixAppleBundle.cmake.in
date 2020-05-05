@@ -3,4 +3,4 @@
 ###############################################################################
 
 set(bundle ${CMAKE_INSTALL_PREFIX}/BornAgain.app )
-execute_process(COMMAND @PYTHON_EXECUTABLE@ @CMAKE_SOURCE_DIR@/cmake/bornagain/scripts/fix_apple_bundle.py ${bundle})
+execute_process(COMMAND @Python_EXECUTABLE@ @CMAKE_SOURCE_DIR@/cmake/bornagain/scripts/fix_apple_bundle.py ${bundle})

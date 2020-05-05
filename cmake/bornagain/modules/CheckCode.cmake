@@ -10,7 +10,7 @@ if(NOT MSVC)
 #   file(GLOB_RECURSE SRC2 "GUI/*.h")
 
     add_test(NAME "CodeLineLength"
-        COMMAND ${PYTHON_EXECUTABLE}
+        COMMAND ${Python_EXECUTABLE}
         ${CMAKE_SOURCE_DIR}/dev-tools/analyze/check-line-length.py ${SRC_LEN_LIM}
         ${SRC1} ${SRC2})
 endif()

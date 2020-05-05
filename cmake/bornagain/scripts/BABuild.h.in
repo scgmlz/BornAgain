@@ -27,14 +27,15 @@ inline std::string buildBinDir() { return "@CMAKE_BINARY_DIR@/bin"; }
 
 //! Methods to access info about Python used during the build.
 
-inline std::string pythonExecutable() { return "@PYTHON_EXECUTABLE@"; }
-inline std::string pythonVersionString() { return "@PYTHON_VERSION_STRING@"; }
-inline std::string pythonLibraries() { return "@PYTHON_LIBRARIES@"; }
-inline std::string pythonIncludeDirs() { return "@PYTHON_INCLUDE_DIRS@"; }
-inline std::string pythonLibsVersionString() { return "@PYTHONLIBS_VERSION_STRING@"; }
-inline std::string numpyIncludeDir() { return "@NUMPY_INCLUDE_DIR@"; }
-inline std::string numpyVersionString() { return "@NUMPY_VERSION_STRING@"; }
-
+inline std::string pythonExecutable() { return "@Python_EXECUTABLE@"; }
+inline std::string pythonInterpreterID() { return "@Python_INTERPRETER_ID@"; }
+inline std::string pythonVersionString() { return "@Python_VERSION@"; }
+inline std::string pythonLibraries() { return "@Python_LIBRARIES@"; }
+inline std::string pythonStdLib() { return "@Python_STDLIB@"; }
+inline std::string pythonIncludeDirs() { return "@Python_INCLUDE_DIRS@"; }
+inline std::string numpyIncludeDir() { return "@Python_NumPy_INCLUDE_DIRS@"; }
+inline std::string numpyVersionString() { return "@Python_NumPy_VERSION@"; }
+inline std::string pythonSiteLib() { return "@Python_SITELIB@"; }
 }
 
 #endif
