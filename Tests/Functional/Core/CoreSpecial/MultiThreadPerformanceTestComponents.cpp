@@ -92,7 +92,7 @@ std::unique_ptr<Simulation> CreateRealisticGISASSimulation()
     // define ROI and masks
     result->setRegionOfInterest(45.0, 35.0, 120.0, 120.0);
     result->addMask(Rectangle(100, 60, 110, 100));
-    return result;
+    return std::unique_ptr<Simulation>(result.release());
 }
 
 } // namespace
@@ -110,7 +110,7 @@ std::unique_ptr<Simulation> TestComponents::CreateSimpleGISAS()
 
     auto sample = std::unique_ptr<MultiLayer>(CylindersInDWBABuilder().buildSample());
     result->setSample(*sample);
-    return result;
+    return std::unique_ptr<Simulation>(result.release());
 }
 
 //! Creates simulation representing realistic GISAS.
@@ -151,7 +151,7 @@ std::unique_ptr<Simulation> TestComponents::CreateGiganticGISAS()
     result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
     auto sample = std::unique_ptr<MultiLayer>(CylindersInBABuilder().buildSample());
     result->setSample(*sample);
-    return result;
+    return std::unique_ptr<Simulation>(result.release());
 }
 
 //! Creates simulation representing GISAS with huge wavelength.
@@ -174,7 +174,7 @@ std::unique_ptr<Simulation> TestComponents::CreateWavelengthGISAS()
 
     auto sample = std::unique_ptr<MultiLayer>(CylindersInBABuilder().buildSample());
     result->setSample(*sample);
-    return result;
+    return std::unique_ptr<Simulation>(result.release());
 }
 
 //! Creates simulation representing simple GISAS with MonteCarlo ON.
@@ -191,5 +191,5 @@ std::unique_ptr<Simulation> TestComponents::CreateMCGISAS()
     auto sample = createSampleSpheresDistribution(10);
     result->setSample(*sample);
     result->getOptions().setMonteCarloIntegration(true, 50);
-    return result;
+    return std::unique_ptr<Simulation>(result.release());
 }
