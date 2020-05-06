@@ -136,9 +136,14 @@ configure_file(${TEMPLATE_DIR}/CTestCustom.cmake.in ${CMAKE_BINARY_DIR}/CTestCus
 endif()
 
 if (WIN32)
-    file(TO_NATIVE_PATH ${Python_EXECUTABLE} Python_EXECUTABLE)
-    file(TO_NATIVE_PATH ${Python_STDLIB} Python_STDLIB)
-    file(TO_NATIVE_PATH ${Python_SITELIB} Python_SITELIB)
+    # Necessary to provide correct slashes in BABuild.h
+    file(TO_CMAKE_PATH ${Python_EXECUTABLE} Python_EXECUTABLE)
+    file(TO_CMAKE_PATH ${Python_STDLIB} Python_STDLIB)
+    file(TO_CMAKE_PATH ${Python_LIBRARIES} Python_LIBRARIES)
+    file(TO_CMAKE_PATH ${Python_STDLIB} Python_STDLIB)
+    file(TO_CMAKE_PATH ${Python_INCLUDE_DIRS} Python_INCLUDE_DIRS)
+    file(TO_CMAKE_PATH ${Python_NumPy_INCLUDE_DIRS} Python_NumPy_INCLUDE_DIRS)
+    file(TO_CMAKE_PATH ${Python_SITELIB} Python_SITELIB)
 endif()
 
 configure_file(${TEMPLATE_DIR}/BAVersion.h.in  ${BUILD_INC_DIR}/BAVersion.h @ONLY)
