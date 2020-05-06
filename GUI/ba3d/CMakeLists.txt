@@ -19,6 +19,7 @@ set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${include_dirs})
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 add_subdirectory (ba3d)
 add_subdirectory (showcase)
