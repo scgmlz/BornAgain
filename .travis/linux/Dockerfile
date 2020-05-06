@@ -1,5 +1,3 @@
-FROM scgmlz/bornagain-dev:xenial
-RUN apt install libqt5svg5-dev
-
+FROM scgmlz/bornagain-dev:focal
 ADD . /source
 WORKDIR /source
