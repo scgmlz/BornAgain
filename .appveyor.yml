@@ -61,7 +61,7 @@ build_script:
 - mkdir build
 - cd build
 - cmake --version
-- cmake -G "Visual Studio 16 2019" -DBOOST_ROOT=%BOOSTDIR% -DPython_LIBRARIES=%PYLIB% -DPython_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
+- cmake -G "Visual Studio 16 2019" -DBOOST_ROOT=%BOOSTDIR% -DPython_LIBRARY=%PYLIB% -DPython_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
 - cmake --build . --config Release
 
 test_script:
