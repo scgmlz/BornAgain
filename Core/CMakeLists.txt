@@ -220,6 +220,10 @@ if(WIN32)
             DESTINATION ${destination_lib} COMPONENT Libraries)
     endforeach()
 
+    file(TO_CMAKE_PATH ${Python_LIBRARIES} Python_LIBRARIES_CMAKE)
+    file(TO_NATIVE_PATH ${Python_LIBRARIES} Python_LIBRARIES_NATIVE)
+    message(INFO "XXXXX ${Python_LIBRARIES} ${Python_LIBRARIES_CMAKE} ${Python_LIBRARIES_NATIVE}")
+
     get_filename_component(UTF_BASE_NAME ${Python_LIBRARIES} NAME_WE)
     get_filename_component(UTF_PATH ${Python_EXECUTABLE} PATH)
     message(STATUS "Python dll: ${UTF_PATH}/${UTF_BASE_NAME}.dll")
