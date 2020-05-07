@@ -16,7 +16,7 @@ environment:
   PYTHONPATH: "%PYTHONDIR%;%PYTHONDIR%\\Lib;%PYTHONDIR%\\Lib\\site-packages;%PYTHONDIR%\\DLLs"
   PYEXE: "%PYTHONDIR%\\python.exe"
   PYLIB: "%PYTHONDIR%\\libs\\python38.lib"
-build:
+build: C:/Python38-x64/libs/python38.lib
   parallel: true
 
 init:
@@ -28,6 +28,7 @@ install:
 
 before_build:
 - echo "BornAgain before_build" %CD%
+- dir  C:\Python38-x64\libs
 - python -m pip install --upgrade pip
 - python -m pip install numpy
 - mkdir C:\projects\deps
