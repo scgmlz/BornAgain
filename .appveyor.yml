@@ -1,4 +1,4 @@
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 matrix:
   fast_finish: true
@@ -11,7 +11,7 @@ environment:
   APPVEYOR_RDP_PASSWORD: 7bKajQWvq4uhfpvc!
   BOOSTDIR: C:\Libraries\boost_1_67_0
   PYTHONDIR: "C:\\Python36-x64"
-  QTDIR: "C:\\Qt\\5.11\\msvc2017_64"
+  QTDIR: "C:\\Qt\\5.14\\msvc2017_64"
   PATH: "%QTDIR%\\bin;%PYTHONDIR%;%PYTHONDIR%\\Scripts;%BOOSTDIR%\\lib64-msvc-14.1;%PATH%"
   PYTHONPATH: "%PYTHONDIR%;%PYTHONDIR%\\Lib;%PYTHONDIR%\\Lib\\site-packages;%PYTHONDIR%\\DLLs"
   PYEXE: "%PYTHONDIR%\\python.exe"
@@ -60,7 +60,7 @@ build_script:
 - mkdir build
 - cd build
 - cmake --version
-- cmake -G "Visual Studio 15 2017 Win64" -DBOOST_ROOT=%BOOSTDIR% -DPython_LIBRARIES=%PYLIB% -DPython_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
+- cmake -G "Visual Studio 16 2019" -DBOOST_ROOT=%BOOSTDIR% -DPython_LIBRARIES=%PYLIB% -DPython_EXECUTABLE=%PYEXE% -DCMAKE_INCLUDE_PATH=C:/projects/deps/include ..
 - cmake --build . --config Release
 
 test_script:
