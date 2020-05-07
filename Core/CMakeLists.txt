@@ -220,6 +220,7 @@ if(WIN32)
             DESTINATION ${destination_lib} COMPONENT Libraries)
     endforeach()
 
+    message(INFO "XXXXX000 ${Python_LIBRARIES}")
     file(TO_CMAKE_PATH ${Python_LIBRARIES} Python_LIBRARIES_CMAKE)
     file(TO_NATIVE_PATH ${Python_LIBRARIES} Python_LIBRARIES_NATIVE)
     message(INFO "XXXXX ${Python_LIBRARIES} ${Python_LIBRARIES_CMAKE} ${Python_LIBRARIES_NATIVE}")
