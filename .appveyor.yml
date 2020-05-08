@@ -11,7 +11,7 @@ environment:
   BOOSTDIR: C:\Libraries\boost_1_73_0
   PYTHONDIR: "C:\\Python38-x64"
   QTDIR: "C:\\Qt\\5.14\\msvc2017_64"
-  PATH: "%QTDIR%\\bin;%PYTHONDIR%;%PYTHONDIR%\\Scripts;%BOOSTDIR%\\lib64-msvc-16.0;%PATH%"
+  PATH: "%QTDIR%\\bin;%PYTHONDIR%;%PYTHONDIR%\\Scripts;%BOOSTDIR%\\lib64-msvc-14.2;%PATH%"
   PYTHONPATH: "%PYTHONDIR%;%PYTHONDIR%\\Lib;%PYTHONDIR%\\Lib\\site-packages;%PYTHONDIR%\\DLLs"
   PYEXE: "%PYTHONDIR%\\python.exe"
   PYLIB: "%PYTHONDIR%\\libs\\python38.lib"
