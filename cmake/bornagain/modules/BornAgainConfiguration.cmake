@@ -139,7 +139,6 @@ if (WIN32)
     # Necessary to provide correct slashes in BABuild.h
     file(TO_CMAKE_PATH ${Python_EXECUTABLE} Python_EXECUTABLE)
     file(TO_CMAKE_PATH ${Python_STDLIB} Python_STDLIB)
-    # file(TO_CMAKE_PATH ${Python_LIBRARIES} Python_LIBRARIES)
     file(TO_CMAKE_PATH ${Python_STDLIB} Python_STDLIB)
     file(TO_CMAKE_PATH ${Python_INCLUDE_DIRS} Python_INCLUDE_DIRS)
     file(TO_CMAKE_PATH ${Python_NumPy_INCLUDE_DIRS} Python_NumPy_INCLUDE_DIRS)
