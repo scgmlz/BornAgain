@@ -9,12 +9,12 @@ platform:
 # http://www.appveyor.com/docs/installed-software
 environment:
   BOOSTDIR: C:\Libraries\boost_1_73_0
-  PYTHONDIR: "C:\\Python38-x64"
+  PYTHONDIR: "C:\\Python37-x64"
   QTDIR: "C:\\Qt\\5.14\\msvc2017_64"
   PATH: "%QTDIR%\\bin;%PYTHONDIR%;%PYTHONDIR%\\Scripts;%BOOSTDIR%\\lib64-msvc-14.2;%PATH%"
   PYTHONPATH: "%PYTHONDIR%;%PYTHONDIR%\\Lib;%PYTHONDIR%\\Lib\\site-packages;%PYTHONDIR%\\DLLs"
   PYEXE: "%PYTHONDIR%\\python.exe"
-  PYLIB: "%PYTHONDIR%\\libs\\python38.lib"
+  PYLIB: "%PYTHONDIR%\\libs\\python37.lib"
 build:
   parallel: true
 
@@ -27,7 +27,7 @@ install:
 
 before_build:
 - echo "BornAgain before_build" %CD%
-- dir  C:\Python38-x64\libs
+- dir  C:\Python37-x64\libs
 - python -m pip install --upgrade pip
 - python -m pip install numpy
 - mkdir C:\projects\deps
