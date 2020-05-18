@@ -1,30 +1,32 @@
+#include "HardParticles.h"
 #include "FormFactorTest.h"
 #include "google_test.h"
 
-class FFSpecializationTest : public FormFactorTest
+
+//! Compare form factor for particle shapes A and B, where A is given special
+//! parameter values so that it coincides with the more symmetric B.
+
+class FFSpecializationTest : public testing::Test
 {
 protected:
-    ~FFSpecializationTest();
-
     void run_test(IFormFactorBorn* p0, IFormFactorBorn* p1, double eps, double qmag1, double qmag2)
     {
-        test_all(qmag1, qmag2, [&]() { test_ff_eq(p0, p1, eps); });
+        formFactorTest::run_test_for_many_q(
+            [&](cvector_t q) { test_ff_eq(q, p0, p1, eps); }, qmag1, qmag2);
     }
 
-    void test_ff_eq(IFormFactorBorn* p0, IFormFactorBorn* p1, double eps)
+private:
+    void test_ff_eq(cvector_t q, IFormFactorBorn* p0, IFormFactorBorn* p1, double eps)
     {
-        complex_t f0 = p0->evaluate_for_q(m_q);
-        complex_t f1 = p1->evaluate_for_q(m_q);
+        complex_t f0 = p0->evaluate_for_q(q);
+        complex_t f1 = p1->evaluate_for_q(q);
         double avge = (std::abs(f0) + std::abs(f1)) / 2;
-        EXPECT_NEAR(real(f0), real(f1), eps * avge);
-        EXPECT_NEAR(imag(f0), imag(f1), eps * avge);
+        EXPECT_NEAR(real(f0), real(f1), eps * avge) << "q=" << q;
+        EXPECT_NEAR(imag(f0), imag(f1), eps * avge) << "q=" << q;
     }
-
-    static double eps_polyh;
 };
 
-FFSpecializationTest::~FFSpecializationTest() = default;
-double FFSpecializationTest::eps_polyh = 7.5e-13;
+const double eps_polyh = 7.5e-13;
 
 TEST_F(FFSpecializationTest, TruncatedCubeAsBox)
 {
@@ -90,4 +92,12 @@ TEST_F(FFSpecializationTest, TruncatedSphereAsSphere)
     FormFactorTruncatedSphere p0(R, 2 * R);
     FormFactorFullSphere p1(R);
     run_test(&p0, &p1, 1e-12, .02, 5e1);
+}
+
+TEST_F(FFSpecializationTest, SpheroidAsSphere)
+{
+    const double R = 1.;
+    FormFactorFullSpheroid p0(R, 2 * R);
+    FormFactorFullSphere p1(R);
+    run_test(&p0, &p1, 1e-12, 1e-99, 5e3);
 }

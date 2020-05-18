@@ -1,31 +1,31 @@
-#include "FormFactorTest.h"
+#include "HardParticles.h"
 #include "MathConstants.h"
+#include "FormFactorTest.h"
 #include "google_test.h"
-#include <functional>
 
-class FFSymmetryTest : public FormFactorTest
+//! Check that form factors are invariant when q is transformed according to particle symmetry.
+
+class FFSymmetryTest : public testing::Test
 {
-public:
-    ~FFSymmetryTest();
-
+private:
     using transform_t = std::function<cvector_t(const cvector_t&)>;
 
-    void run_test(IFormFactorBorn* p, transform_t fun, double eps, double qmag1, double qmag2)
+    void test_qq_eq(cvector_t q, IFormFactorBorn* p, transform_t trafo, double eps = 1e-12)
     {
-        test_all(qmag1, qmag2, [&]() { test_qq_eq(p, fun, eps); });
+        complex_t f0 = p->evaluate_for_q(q);
+        complex_t f1 = p->evaluate_for_q(trafo(q));
+        double avge = (std::abs(f0) + std::abs(f1)) / 2;
+        EXPECT_NEAR(real(f0), real(f1), eps * avge) << "q=" << q;
+        EXPECT_NEAR(imag(f0), imag(f1), eps * avge) << "q=" << q;
     }
 
-    void test_qq_eq(IFormFactorBorn* p, transform_t fun, double eps = 1e-12)
+protected:
+    void run_test(IFormFactorBorn* p, transform_t trafo, double eps, double qmag1, double qmag2)
     {
-        complex_t f0 = p->evaluate_for_q(m_q);
-        complex_t f1 = p->evaluate_for_q(fun(m_q));
-        double avge = (std::abs(f0) + std::abs(f1)) / 2;
-        EXPECT_NEAR(real(f0), real(f1), eps * avge);
-        EXPECT_NEAR(imag(f0), imag(f1), eps * avge);
+        formFactorTest::run_test_for_many_q(
+            [&](cvector_t q) { test_qq_eq(q, p, trafo, eps); }, qmag1, qmag2);
     }
 };
-
-FFSymmetryTest::~FFSymmetryTest() = default;
 
 //*********** polyhedra ***************
 
@@ -92,6 +92,14 @@ TEST_F(FFSymmetryTest, TruncatedSphere)
     FormFactorTruncatedSphere p(.79, .34);
     run_test(
         &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(M_PI / 3.13698); }, 1e-10,
+        1e-99, 2e2);
+}
+
+TEST_F(FFSymmetryTest, FullSpheroid)
+{
+    FormFactorFullSpheroid p(.73, .36);
+    run_test(
+        &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(.123); }, 1e-13,
         1e-99, 2e2);
 }
 
