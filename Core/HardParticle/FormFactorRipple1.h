@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/HardParticle/FormFactorRipple1.h
-//! @brief     Defines class FormFactorRipple1.
+//! @brief     Defines classes FormFactorRipple1*.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -15,48 +15,42 @@
 #ifndef FORMFACTORRIPPLE1_H
 #define FORMFACTORRIPPLE1_H
 
-#include "IFormFactorBorn.h"
-#include "IntegratorComplex.h"
+#include "ProfileRipple1.h"
 
-//! The form factor for a cosine ripple.
+//! The form factor for a cosine ripple, with box profile in elongation direction.
 //! @ingroup legacyGrating
-
-class BA_CORE_API_ FormFactorRipple1 : public IFormFactorBorn
+class BA_CORE_API_ FormFactorRipple1Box : public ProfileRipple1
 {
 public:
-    FormFactorRipple1(double length, double width, double height);
-
-    FormFactorRipple1* clone() const override final
-    {
-        return new FormFactorRipple1(m_length, m_width, m_height);
-    }
-    void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
-
-    double getLength() const { return m_length; }
-    double getHeight() const { return m_height; }
-    double getWidth() const { return m_width; }
-
-    double radialExtension() const override final;
-
-    complex_t evaluate_for_q(cvector_t q) const override final;
-
-protected:
-    void onChange() override final;
-
+    FormFactorRipple1Box(double length, double width, double height);
+    FormFactorRipple1Box* clone() const override final;
+    void accept(INodeVisitor* visitor) const override final;
 private:
-    complex_t Integrand(double u) const;
-    bool check_initialization() const;
+    complex_t factor_x(complex_t qx) const override final;
+};
 
-    double m_length;
-    double m_width;
-    double m_height;
+//! The form factor for a cosine ripple, with Gaussian profile in elongation direction.
+//! @ingroup legacyGrating
+class BA_CORE_API_ FormFactorRipple1Gauss : public ProfileRipple1
+{
+public:
+    FormFactorRipple1Gauss(double length, double width, double height);
+    FormFactorRipple1Gauss* clone() const override final;
+    void accept(INodeVisitor* visitor) const override final;
+private:
+    complex_t factor_x(complex_t qx) const override final;
+};
 
-    mutable complex_t m_ay;
-    mutable complex_t m_az;
-
-#ifndef SWIG
-    std::unique_ptr<IntegratorComplex<FormFactorRipple1>> mP_integrator;
-#endif
+//! The form factor for a cosine ripple, with Lorentz form factor in elongation direction.
+//! @ingroup legacyGrating
+class BA_CORE_API_ FormFactorRipple1Lorentz : public ProfileRipple1
+{
+public:
+    FormFactorRipple1Lorentz(double length, double width, double height);
+    FormFactorRipple1Lorentz* clone() const override final;
+    void accept(INodeVisitor* visitor) const override final;
+private:
+    complex_t factor_x(complex_t qx) const override final;
 };
 
 #endif // FORMFACTORRIPPLE1_H

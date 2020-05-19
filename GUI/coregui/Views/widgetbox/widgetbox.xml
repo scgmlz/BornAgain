@@ -85,7 +85,7 @@
 
     </category>
 
-    <category name="Particles">
+    <category name="Hard particles">
 
         <categoryentry name="Anisotropic pyramid" icon="images/ff_AnisoPyramid_64x64.png">
             <widget class="FormFactorAnisoPyramid">
@@ -215,22 +215,6 @@
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple1" icon="images/ff_Ripple1_64x64.png">
-            <widget class="FormFactorRipple1">
-                <property name="objectName">
-                    <string notr="true">somestring</string>
-                </property>
-            </widget>
-        </categoryentry>
-
-        <categoryentry name="Ripple2" icon="images/ff_Ripple2_64x64.png">
-            <widget class="FormFactorRipple2">
-                <property name="objectName">
-                    <string notr="true">somestring</string>
-                </property>
-            </widget>
-        </categoryentry>
-
         <categoryentry name="Tetrahedron" icon="images/ff_Tetrahedron_64x64.png">
             <widget class="FormFactorTetrahedron">
                 <property name="objectName">
@@ -262,6 +246,46 @@
                 </property>
             </widget>
         </categoryentry>
+
+    </category>
+
+    <category name="Ripples">
+
+        <categoryentry name="Ripple1Box" icon="images/ff_Ripple1_64x64.png">
+            <widget class="FormFactorRipple1Box">
+                <property name="objectName">
+                    <string notr="true">somestring</string>
+                </property>
+            </widget>
+        </categoryentry>
+
+        <categoryentry name="Ripple1Gauss" icon="images/ff_Ripple1_64x64.png">
+            <widget class="FormFactorRipple1Gauss">
+                <property name="objectName">
+                    <string notr="true">somestring</string>
+                </property>
+            </widget>
+        </categoryentry>
+
+        <categoryentry name="Ripple1Lorentz" icon="images/ff_Ripple1_64x64.png">
+            <widget class="FormFactorRipple1Lorentz">
+                <property name="objectName">
+                    <string notr="true">somestring</string>
+                </property>
+            </widget>
+        </categoryentry>
+
+        <categoryentry name="Ripple2" icon="images/ff_Ripple2_64x64.png">
+            <widget class="FormFactorRipple2">
+                <property name="objectName">
+                    <string notr="true">somestring</string>
+                </property>
+            </widget>
+        </categoryentry>
+
+    </category>
+
+    <category name="Soft particles">
 
     </category>
 

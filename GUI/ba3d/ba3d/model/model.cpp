@@ -94,8 +94,12 @@ Particles::Particle* Model::newParticle(Particles::EShape k, float R)
         return new HemiEllipsoid(R, R, D);
     case EShape::Dot:
         return new Dot();
-    case EShape::Ripple1:
-        return new Ripple1(D, D, D);
+    case EShape::Ripple1Box:
+        return new Ripple1Box(D, D, D); // TODO ripples should be elongated
+    case EShape::Ripple1Gauss:
+        return new Ripple1Gauss(D, D, D); // TODO ripples should be elongated
+    case EShape::Ripple1Lorentz:
+        return new Ripple1Lorentz(D, D, D); // TODO ripples should be elongated
     case EShape::Ripple2:
         return new Ripple2(D, D, D, 0.3f);
     case EShape::AnisoPyramid:

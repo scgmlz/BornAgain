@@ -67,7 +67,7 @@ FormFactorComponents::FormFactorComponents()
 
     add(BornAgain::FFPyramidType, new FormFactorPyramid(10.0, 5.0, Units::deg2rad(54.73)));
 
-    add(BornAgain::FFRipple1Type, new FormFactorRipple1(100.0, 20.0, 4.0));
+    add(BornAgain::FFRipple1BoxType, new FormFactorRipple1Box(100.0, 20.0, 4.0));
 
     add(BornAgain::FFRipple2Type, new FormFactorRipple2(100.0, 20.0, 4.0, 0.0));
 

@@ -17,11 +17,11 @@ def get_sample():
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
-    ripple1_ff = ba.FormFactorRipple1(100*nm, 20*nm, 4*nm)
-    ripple = ba.Particle(m_particle, ripple1_ff)
+    ff = ba.FormFactorRipple1Box(100*nm, 20*nm, 4*nm)
+    particle = ba.Particle(m_particle, ff)
 
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(ripple, 1.0)
+    particle_layout.addParticle(particle, 1.0)
 
     interference = ba.InterferenceFunction2DLattice(
         200.0*nm, 50.0*nm, 90.0*deg, 0.0*deg)

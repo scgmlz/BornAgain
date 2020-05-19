@@ -43,7 +43,9 @@ enum class EShape {
     Box,
     HemiEllipsoid,
     Dot,
-    Ripple1,
+    Ripple1Box,
+    Ripple1Gauss,
+    Ripple1Lorentz,
     Ripple2,
     AnisoPyramid,
 };
@@ -192,10 +194,22 @@ public:
     HemiEllipsoid(float Ra, float Rb, float H);
 };
 
-class Ripple1 : public Particle
+class Ripple1Box : public Particle
 {
 public:
-    Ripple1(float L, float W, float H);
+    Ripple1Box(float L, float W, float H);
+};
+
+class Ripple1Gauss : public Particle
+{
+public:
+    Ripple1Gauss(float L, float W, float H);
+};
+
+class Ripple1Lorentz : public Particle
+{
+public:
+    Ripple1Lorentz(float L, float W, float H);
 };
 
 class Ripple2 : public Particle

@@ -35,7 +35,9 @@ GroupInfoCatalogue::GroupInfoCatalogue()
     info.add(Constants::Prism3Type, "Prism3");
     info.add(Constants::Prism6Type, "Prism6");
     info.add(Constants::PyramidType, "Pyramid");
-    info.add(Constants::Ripple1Type, "Ripple1");
+    info.add(Constants::Ripple1BoxType, "Ripple1Box");
+    info.add(Constants::Ripple1GaussType, "Ripple1Gauss");
+    info.add(Constants::Ripple1LorentzType, "Ripple1Lorentz");
     info.add(Constants::Ripple2Type, "Ripple2");
     info.add(Constants::TetrahedronType, "Tetrahedron");
     info.add(Constants::TruncatedCubeType, "Truncated Cube");

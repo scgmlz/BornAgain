@@ -139,10 +139,10 @@ TEST_F(TestGUICoreObjectCorrespondence, test_Pyramid)
     GUICoreObjectCorrespondence(gui_pyramid, core_pyramid);
 }
 
-TEST_F(TestGUICoreObjectCorrespondence, test_Ripple1)
+TEST_F(TestGUICoreObjectCorrespondence, test_Ripple1Box)
 {
-    Ripple1Item gui_ripple1;
-    FormFactorRipple1 core_ripple1(10.0, 2.0, 1.0);
+    Ripple1BoxItem gui_ripple1;
+    FormFactorRipple1Box core_ripple1(10.0, 2.0, 1.0);
     GUICoreObjectCorrespondence(gui_ripple1, core_ripple1);
 }
 

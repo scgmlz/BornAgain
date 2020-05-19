@@ -14,10 +14,17 @@
 
 #include "GUIStandardTest.h"
 #include "StandardTestService.h"
+#include <iostream>
 
 //! Runs GUIStandardTest on a standard simulation indicated by argv[1].
 
 int main(int argc, char** argv)
 {
-    return StandardTestService<GUIStandardTest>().execute(argc, argv) ? 0 : 1;
+    bool ok =  StandardTestService<GUIStandardTest>().execute(argc, argv);
+    if (!ok)
+        std::cout << "\n"
+                  << "hint: If this test fails while all other form-factor related tests\n"
+                  << "pass then a likely cause is a change in the form factor API that is\n"
+                  << "not correctly reflected in the GUIDomainSampleVisitor class.\n\n";
+    return ok ? 0 : 1;
 }

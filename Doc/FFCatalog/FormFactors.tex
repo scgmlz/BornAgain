@@ -25,6 +25,8 @@
 \makeatother
 
 \index{Cone|see{Frustum}}
+\index{Cuboid|see{Box}}
+\index{Prism!reactangular|see{Box}}
 \index{Tilt|see{Rotation}}
 \index{Truncation|seealso{Facetting}}
 \index{Truncation!cone|see{Frustum}}
@@ -343,8 +345,6 @@ and were found to fully agree.
 %===============================================================================
 \index{Box}
 \index{Cube}
-\index{Cuboid}
-\index{Prism!reactangular}
 \index{Platonic solid!cube}
 \index{FormFactorBox@\Code{FormFactorBox}}
 
@@ -408,7 +408,7 @@ except for factors $1/2$ in the definitions of parameters $L$, $W$, $H$.
 \item \ffref{AnisoPyramid} or \ffref{Pyramid}
   if sides are not vertical,
 \item \ffref{TruncatedCube} if $L=W=H$ and corners are facetted,
-\item \ffref{LongBox} if stretched in one horizontal direction
+\item Sect.~\ref{SElongatedBox} if elongated in one horizontal direction.
 \end{itemize}
 
 %===============================================================================
@@ -1890,9 +1890,10 @@ in \cref{SCylinder}.
 \chapter{Ripples}\label{SRipple}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \index{Ripple|(}
+\index{Particle!elongated|see{Ripple}}
 
-Gratings can be modelled
-as one-dimensional arrangement of elongated particles.
+Elongated particles, or ripples, are typically used to model lamellar cuts or man-made gratings.
+
 As everywhere else in BornAgain
 only single scattering in the DWBA is simulated.
 This can be insufficient for periodic gratings
@@ -1902,12 +1903,86 @@ it may be advisable to compute Bloch waves \cite{AsSW10}
 or use finite elements to solve the exact wave equation \cite{SoFP17}.
 For the foreseeable future, this is not in the scope of BornAgain.
 
+We choose ripples to be elongated in $x$ direction.
+Different profiles in the $yz$ plane can be chosen:
+box, sinusoidal [\ffref{Ripple1}], saw-tooth [\ffref{Ripple2}].
+
+For each of them, different profiles can also be chosen in the $xz$ plane,
+namely box, Gauss, and Lorentzian,
+each of them characterized by a single parameter \texttt{length},~$L$.
+The corresponding form factor along the elongation axis~$x$ is
+\begin{equation}\label{EFparallel}
+    f_\parallel(q_x) = \left\{\begin{array}{l@{\quad}l}
+    L\sinc(q_x L/2) &\text{box,}\\
+    L\exp(-(q_x L)^2/8) &\text{Gauss,}\\
+    L/(1+(q_x L)^2) &\text{Lorentz.}
+    \end{array}\right.
+\end{equation}
+Constant factors have been chosen so that the forward scattering is the same
+in all three cases, $f_\parallel(0)=L$.
+
+%===============================================================================
+\ffsection{Elongated box} \label{SElongatedBox}
+%===============================================================================
+\index{Box}
+\index{FormFactorBox@\Code{FormFactorBox}}
+\index{FormFactorLongBoxGauss@\Code{FormFactorLongBoxGauss}}
+\index{FormFactorLongBoxLorentz@\Code{FormFactorLongBoxLorentz}}
+
+\paragraph{Real-space geometry}\strut\\
+
+\begin{figure}[H]
+\hfill
+\subfigure[Perspective]{\includefinal{.24\TW}{fig/blue/Box3d.png}}
+\hfill
+\subfigure[Top view]{\includefinal{.3\TW}{fig/cuts/Box2dxy.pdf}}
+\hfill
+\subfigure[Side view]{\raisebox{2mm}{\includefinal{.3\TW}{fig/cuts/Box2dxz.pdf}}}
+\hfill
+\caption{A rectangular cuboid.}
+\end{figure}
+
+\FloatBarrier
+
+\paragraph{Syntax and parameters}\strut\\[-2ex plus .2ex minus .2ex]
+\begin{lstlisting}
+  FormFactorBox(
+     double length, double width, double height)
+  FormFactorLongBoxGauss(
+     double length, double width, double height)
+  FormFactorLongBoxLorentz(
+     double length, double width, double height)
+\end{lstlisting}
+with the parameters
+\begin{itemize}
+\item \texttt{length} of the base, $L$,
+\item \texttt{width} of the base, $W$,
+\item \texttt{height}, $H$.
+\end{itemize}
+
+\paragraph{Form factor, volume, horizontal section}
+
+\begin{equation*}
+F= f_\parallel(q_x) W H\exp\left(i q_z \frac{H}{2}\right)
+\sinc\left(q_y \frac{W}{2}\right) \sinc\left(q_z \frac{H}{2}\right)
+\end{equation*}
+with $f_\parallel$ as defined in~\cref{EFparallel},
+\begin{equation*}
+  V= LWH,
+\end{equation*}
+\begin{equation*}
+  S = LW.
+\end{equation*}
+
+
 %===============================================================================
 \ffsection{Ripple1 (sinusoidal)} \label{SRipple1}
 %===============================================================================
 \index{Ripple!sinusoidal}
 \index{Sinusoidal ripple}
-\index{FormFactorRipple1@\Code{FormFactorRipple1}}
+\index{FormFactorRipple1Box@\Code{FormFactorRipple1Box}}
+\index{FormFactorRipple1Gauss@\Code{FormFactorRipple1Gauss}}
+\index{FormFactorRipple1Lorentz@\Code{FormFactorRipple1Lorentz}}
 
 \paragraph{Real-space geometry}\strut\\
 
@@ -1924,7 +1999,12 @@ For the foreseeable future, this is not in the scope of BornAgain.
 
 \paragraph{Syntax and parameters}\strut\\[-2ex plus .2ex minus .2ex]
 \begin{lstlisting}
-  FormFactorRipple1(double length, double width, double height)
+  FormFactorRipple1Box(
+     double length, double width, double height)
+  FormFactorRipple1Gauss(
+     double length, double width, double height)
+  FormFactorRipple1Lorentz(
+     double length, double width, double height)
 \end{lstlisting}
 with the parameters
 \begin{itemize}
@@ -1944,9 +2024,10 @@ Using the inverse profile
 \end{equation*}
 the form factor is computed by numeric integration:
 \begin{equation*}
-F = L \sinc\left(\frac{q_xL}{2}\right)
-   \int_0^H\!\d z\,\e^{iq_zz}\, 2Y(z)\sinc\left(q_y Y(z)\right).
+F = f_\parallel(q_x)
+   \int_0^H\!\d z\,\e^{iq_zz}\, 2Y(z)\sinc\left(q_y Y(z)\right)
 \end{equation*}
+with $f_\parallel$ defined in~\cref{EFparallel}.
 The integration is substantially accelerated by the substitution
 $u=\text{arccos}( 2z/H-1)$.
 
@@ -1978,6 +2059,8 @@ Agrees with the \E{Ripple1} form factor of \FitGISAXS\ \cite{Bab13}.
 \index{Ripple!saw-tooth}
 \index{Saw-tooth ripple}
 \index{FormFactorRipple2@\Code{FormFactorRipple2}}
+\index{FormFactorLongRipple2Gauss@\Code{FormFactorLongRipple2Gauss}}
+\index{FormFactorLongRipple2Lorentz@\Code{FormFactorLongRipple2Lorentz}}
 
 \paragraph{Real-space geometry}\strut\\
 
@@ -1996,7 +2079,12 @@ Agrees with the \E{Ripple1} form factor of \FitGISAXS\ \cite{Bab13}.
 
 \paragraph{Syntax and parameters}\strut\\[-2ex plus .2ex minus .2ex]
 \begin{lstlisting}
-  FormFactorRipple2(double length, double width, double height, asymmetry)
+  FormFactorRipple2(
+     double length, double width, double height, asymmetry)
+  FormFactorLongRipple2Gauss(
+     double length, double width, double height)
+  FormFactorLongRipple2Lorentz(
+     double length, double width, double height)
 \end{lstlisting}
 with the parameters
 \begin{itemize}
@@ -2012,14 +2100,14 @@ They must fulfill
 
 \paragraph{Form factor, volume, horizontal section}\strut\\
 \begin{equation*}
-  F = \frac{L H}{q_y}
-  \sinc\left(\frac{q_xL}{2}\right)
+  F = f_\parallel(q_x)
   i\e^{-i q_y d}
   \left[
     \e^{i \alpha_{-}/2} \sinc\left( \frac{\alpha_{+}}{2} \right)
     - \e^{i \alpha_{+}/2} \sinc\left( \frac{\alpha_{-}}{2} \right)
   \right],
 \end{equation*}
+with $f_\parallel$ defined in~\cref{EFparallel}.
 \begin{equation*}
   \alpha_{+} = H q_z + \frac{q_y W}{2} + q_y d, \quad
   \alpha_{-} = H q_z - \frac{q_y W}{2} + q_y d,

@@ -394,16 +394,16 @@ TEST_F(FormFactorBasicTest, Tetrahedron)
     test_ff(&tetrahedron);
 }
 
-TEST_F(FormFactorBasicTest, Ripple1)
+TEST_F(FormFactorBasicTest, Ripple1Box)
 {
     double width = 20.;
     double height = 4.;
     double length = 100.0;
     double volume = 0.5 * height * width * length;
 
-    FormFactorRipple1 ripple1(length, width, height);
+    FormFactorRipple1Box ripple1(length, width, height);
 
-    EXPECT_EQ(BornAgain::FFRipple1Type, ripple1.getName());
+    EXPECT_EQ(BornAgain::FFRipple1BoxType, ripple1.getName());
     EXPECT_EQ(4., ripple1.getHeight());
     EXPECT_EQ(20., ripple1.getWidth());
     EXPECT_EQ(100., ripple1.getLength());

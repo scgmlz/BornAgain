@@ -43,7 +43,9 @@ QString const& name(EShape k)
         "Box",
         "HemiEllipsoid",
         "Dot",
-        "Ripple1",
+        "Ripple1Box",
+        "Ripple1Gauss",
+        "Ripple1Lorentz",
         "Ripple2",
         "AnisoPyramid",
     };
@@ -239,7 +241,25 @@ Pyramid::Pyramid(float L, float H, float alpha)
     set();
 }
 
-Ripple1::Ripple1(float L, float W, float H) : Particle(Key(BaseShape::Ripple, 0, 0))
+Ripple1Box::Ripple1Box(float L, float W, float H) : Particle(Key(BaseShape::Ripple, 0, 0))
+{
+    isNull = (L < 0 || W < 0 || H < 0) || (L <= 0 && W <= 0 && H <= 0);
+    turn = Vector3D(0, 0, 0);
+    scale = Vector3D(L, W, H);
+    offset = Vector3D(0, 0, 0);
+    set();
+}
+
+Ripple1Gauss::Ripple1Gauss(float L, float W, float H) : Particle(Key(BaseShape::Ripple, 0, 0))
+{
+    isNull = (L < 0 || W < 0 || H < 0) || (L <= 0 && W <= 0 && H <= 0);
+    turn = Vector3D(0, 0, 0);
+    scale = Vector3D(L, W, H);
+    offset = Vector3D(0, 0, 0);
+    set();
+}
+
+Ripple1Lorentz::Ripple1Lorentz(float L, float W, float H) : Particle(Key(BaseShape::Ripple, 0, 0))
 {
     isNull = (L < 0 || W < 0 || H < 0) || (L <= 0 && W <= 0 && H <= 0);
     turn = Vector3D(0, 0, 0);

@@ -36,7 +36,7 @@ MultiLayer* CosineRippleBuilder::buildSample() const
     Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
 
     Layer air_layer(air_material);
-    FormFactorRipple1 ff_ripple1(100.0, 20.0, 4.0);
+    FormFactorRipple1Box ff_ripple1(100.0, 20.0, 4.0);
     Particle ripple(particle_material, ff_ripple1);
 
     ParticleLayout particle_layout;
