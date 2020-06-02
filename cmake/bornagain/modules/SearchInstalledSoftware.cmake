@@ -12,18 +12,18 @@ if( NOT EXISTS "${EIGEN3_INCLUDE_DIR}/.git" )
 endif()
 
 # --- Boost ---
-set(Boost_NO_BOOST_CMAKE ON) # prevent shortcut
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-add_definitions(-DBOOST_ALL_DYN_LINK) # line is needed for MSVC
+#set(Boost_NO_BOOST_CMAKE ON) # prevent shortcut
+#set(Boost_USE_STATIC_LIBS OFF)
+#set(Boost_USE_MULTITHREADED ON)
+#set(Boost_USE_STATIC_RUNTIME OFF)
+#add_definitions(-DBOOST_ALL_DYN_LINK) # line is needed for MSVC
 #add_definitions(-DBOOST_LIB_DIAGNOSTIC) # shows during compilation auto-linked libraries
 set(boost_libraries_required program_options iostreams regex system filesystem)
-if(WIN32)
-    set(boost_libraries_required ${boost_libraries_required} zlib bzip2)
-endif()
+#if(WIN32)
+#    set(boost_libraries_required ${boost_libraries_required} zlib bzip2)
+#endif()
 
-find_package(Boost 1.48.0 COMPONENTS ${boost_libraries_required} REQUIRED)
+find_package(Boost 1.63.0 COMPONENTS ${boost_libraries_required} REQUIRED)
 # In spite of the "REQUIRED" flag, FindBoost will not terminate if some components are missing.
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Not all required Boost components were found")
