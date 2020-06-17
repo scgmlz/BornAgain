@@ -15,10 +15,12 @@ TODO: move the script under ctest control
 """
 import os
 import shutil
+import click
 
-WEBSITE_DIR = "/home/pospelov/development/BornAgain-website"
-BORNAGAIN_SOURCE = "/home/pospelov/development/BornAgainHub/BornAgain"
-EXAMPLE_IMAGES = "/home/pospelov/development/BornAgainHub/build/test_output/Functional/Python/PyExamples"
+
+WEBSITE_DIR = "~/development/BornAgain/BornAgain-website"
+BORNAGAIN_SOURCE = "~/development/BornAgain/BornAgain"
+BUILD_DIR = "~/development/BornAgain/build-release/"
 
 
 def copy_file_to_file(source, destination):
@@ -86,33 +88,48 @@ def copy_files(source_list, destination_list):
             print(f)
 
 
-def update_example_images():
+def update_example_images(website_dir, example_images):
     """
     Copies example intensity images from build directory to website directory
     """
-    website = os.path.join(WEBSITE_DIR, "content/documentation/sample-models")
-    source = EXAMPLE_IMAGES
+    website = os.path.join(website_dir, "content/documentation/examples")
+    source = example_images
     website_files = get_files(website, ".png")
     source_files = get_files(source, ".png")
 
     copy_files(source_files, website_files)
 
 
-def update_example_scripts():
+def update_example_scripts(website_dir, bornagain_source):
     """
     Copies example scripts from BornAgain directory to website directory
     """
-    website = os.path.join(WEBSITE_DIR, "static/files/python")
-    source = os.path.join(BORNAGAIN_SOURCE, "Examples/python")
+    website = os.path.join(website_dir, "static/files/python")
+    source = os.path.join(bornagain_source, "Examples/python")
     website_files = get_files(website, ".py")
     source_files = get_files(source, ".py")
+    print(website_files)
 
     copy_files(source_files, website_files)
 
 
-def update_website():
-    update_example_images()
-    update_example_scripts()
+@click.command()
+@click.argument("website_dir", required=False, type=str, default=WEBSITE_DIR)
+@click.argument("bornagain_source", required=False, type=str, default=BORNAGAIN_SOURCE)
+@click.argument("build_dir", required=False, type=str, default=BUILD_DIR)
+def update_website(website_dir, bornagain_source, build_dir):
+    user_website_dir = os.path.expanduser(website_dir)
+    user_bornagain_source = os.path.expanduser(bornagain_source)
+    user_build_dir = os.path.expanduser(build_dir)
+    user_example_images = os.path.join(user_build_dir, "test_output/Functional/Python/PyExamples")
+
+    print("website_dir      : '{}'".format(user_website_dir))
+    print("bornagain_source      : '{}'".format(user_bornagain_source))
+    print("build_dir      : '{}'".format(user_build_dir))
+    print("example_images      : '{}'".format(user_example_images))
+
+    update_example_images(user_website_dir, user_example_images)
+    update_example_scripts(user_website_dir, user_bornagain_source)
 
 
 if __name__ == '__main__':

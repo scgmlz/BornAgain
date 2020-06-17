@@ -66,7 +66,8 @@ def run_simulation(roughness_model=ba.RoughnessModel.TANH):
 
 def plot(result_tanh, result_nevot_croce):
     
-    plt.semilogy(result_nevot_croce.axis(), result_nevot_croce.array(), label="Névot-Croce")
+    plt.semilogy(result_nevot_croce.axis(), result_nevot_croce.array(),
+                 label="Névot-Croce")
     plt.semilogy(result_tanh.axis(), result_tanh.array(), label="Tanh")
     
     plt.xlabel(r'$\alpha_i \; (deg)$', fontsize=12)
@@ -74,13 +75,10 @@ def plot(result_tanh, result_nevot_croce):
     
     plt.legend()
     plt.show()
-    
-    
-    
+
+
 if __name__ == '__main__':
-    result_tanh         = run_simulation(roughness_model=ba.RoughnessModel.TANH)
-    result_nevot_croce  = run_simulation(roughness_model=ba.RoughnessModel.NEVOT_CROCE)
-    
+    result_tanh = run_simulation(roughness_model=ba.RoughnessModel.TANH)
+    result_nevot_croce  = run_simulation(
+        roughness_model=ba.RoughnessModel.NEVOT_CROCE)
     plot(result_tanh, result_nevot_croce)
-    
-    

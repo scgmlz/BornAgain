@@ -5,11 +5,11 @@ BornAgain-1.17.0, released 2020.06.16
     3) GUI: project compatibility with previous versions is partly broken.
   > Summary:
     1) Speed-up computations for samples with large number of layers
-    2) Add Nevot-Croce roughness model and possibility to switch between various models
-    3) Added support for polarized reflectometry
+    2) Add Nevot-Croce roughness model; support switching between models
+    3) Scripting support for polarized reflectometry
     4) Update physical constants to 2020 CODATA recommended values
     5) FormFactors: add CantellatedCube
-    6) FormFactors: speedup FormFactorFullSPheroid
+    6) FormFactors: speedup FormFactorFullSpheroid
     7) FormFactors: revise and extend ripple form factor family
     8) Fix HighDPI issues in GUI on various platforms
     9) Various bug fixes

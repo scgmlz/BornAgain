@@ -1,5 +1,19 @@
-Citing BornAgain
 
-J. Burle, C. Durniak, J. M. Fisher, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke, D. Yurov (2017)
-BornAgain - Software for simulating and fitting X-ray and neutron small-angle scattering
-at grazing incidence, http://www.bornagainproject.org, Version <version>.
+## Reference paper ##
+
+A comprehensive description of BornAgain has been published as an open-access
+article in the Journal of Applied Crystallography:
+
+  G. Pospelov, W. Van Herck, J. Burle, J. M. Carmona Loaiza, C. Durniak,
+    J. M. Fisher, M. Ganeva, D. Yurov and J. Wuttke
+  BornAgain: software for simulating and fitting grazing-incidence
+    small-angle scattering.
+  J. Appl. Cryst. 53, 262-276 (2020)
+  http://scripts.iucr.org/cgi-bin/paper?S1600576719016789
+  https://doi.org/10.1107/S1600576719016789
+
+This is intended to be the canonical reference for many years to come;
+please cite this article whenever refering to the BornAgain project.
+Additionally, please continue to document the use of a specific software
+version by an appropriate citation as suggested at
+  https://www.bornagainproject.org/documentation/howto/cite.

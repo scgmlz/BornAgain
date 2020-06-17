@@ -1,3 +1,22 @@
+## ************************************************************************** ##
+##
+##  BornAgain: simulate and fit scattering at grazing incidence
+##
+##! @file      .github/workflows/ba-windows.yml
+##! @brief     GitHub runner configuration for building BornAgain under Windows
+##!
+##! @homepage  http://www.bornagainproject.org
+##! @license   GNU General Public License v3 or higher (see COPYING)
+##! @copyright Forschungszentrum Jülich GmbH 2020
+##! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+##
+## ************************************************************************** ##
+
+##! Build scripts for GitHub Actions were introduced with BornAgain-1.17.
+##! This script incorporates code by
+##! - Andrew Nelson (https://github.com/reflectivity/analysis)
+##! - Cristian Adam (https://cristianadam.eu/20200113/speeding-up-c-plus-plus-github-actions-using-ccache/)
+
 name: Windows
 
 env:
