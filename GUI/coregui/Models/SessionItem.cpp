@@ -289,10 +289,9 @@ SessionItem* SessionItem::addProperty(const QString& name, const QVariant& varia
         throw GUIHelpers::Error(
             "ParameterizedItem::registerProperty() -> Error. Already existing property " + name);
 
-    const QString property_type = Constants::PropertyType;
-    SessionItem* property = ItemFactory::CreateItem(property_type);
+    SessionItem* property = ItemFactory::CreateItem(Constants::PropertyType);
     property->setDisplayName(name);
-    registerTag(name, 1, 1, QStringList() << property_type);
+    registerTag(name, 1, 1, QStringList() << Constants::PropertyType);
     if (!insertItem(0, property, name))
         throw GUIHelpers::Error("SessionItem::addProperty -> Error. Can't insert item");
 
