@@ -98,6 +98,12 @@ protected:
     DescriptionMap_t m_descriptions; //!< map of correspondence of objectsId and description
 };
 
+//! Returns new instance of class T.
+//!
+//! This templated function is used in catalogues in form of a function pointer
+//! 'create_new<T>', with no function arguments supplied. Equivalently, we could
+//! use a lambda function '[](){return new T;}'.
+
 template <class T> T* create_new()
 {
     return new T();
