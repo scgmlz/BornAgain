@@ -15,6 +15,7 @@
 #include "GroupItemController.h"
 #include "ComboProperty.h"
 #include "ItemFactory.h"
+#include "SessionItem.h"
 
 GroupItemController::GroupItemController(SessionItem* groupItem, GroupInfo groupInfo)
     : m_groupItem(groupItem), m_groupInfo(groupInfo)

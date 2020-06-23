@@ -15,7 +15,9 @@
 #ifndef ITEMFACTORY_H
 #define ITEMFACTORY_H
 
-#include "SessionItem.h"
+#include <QString>
+
+class SessionItem;
 
 namespace ItemFactory
 {

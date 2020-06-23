@@ -15,6 +15,7 @@
 #include "ItemFactory.h"
 #include "GUIHelpers.h"
 #include "ItemCatalogue.h"
+#include "SessionItem.h"
 
 namespace
 {
