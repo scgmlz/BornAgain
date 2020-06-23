@@ -48,7 +48,7 @@ using SessionItemUtils::SetVectorItem;
 
 namespace
 {
-SessionItem* AddFormFactorItem(SessionItem* p_parent, Constants::ModelType model_type);
+SessionItem* AddFormFactorItem(SessionItem* p_parent, const QString& model_type);
 }
 
 GUIDomainSampleVisitor::GUIDomainSampleVisitor() : m_sampleModel(nullptr), m_materialModel(nullptr)
@@ -655,7 +655,7 @@ SessionItem* GUIDomainSampleVisitor::InsertIParticle(const IParticle* p_particle
 
 namespace
 {
-SessionItem* AddFormFactorItem(SessionItem* p_parent, Constants::ModelType model_type)
+SessionItem* AddFormFactorItem(SessionItem* p_parent, const QString& model_type)
 {
     auto parent_type = p_parent->modelType();
     QString property_name;

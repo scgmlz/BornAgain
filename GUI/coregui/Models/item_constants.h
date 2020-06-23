@@ -22,273 +22,271 @@ namespace Constants
 
 // --- Items -------------------------------------------------------------------
 
-using ModelType = QString;
+const QString Yes = "Yes";
+const QString No = "No";
 
-const ModelType Yes = "Yes";
-const ModelType No = "No";
+const QString RootItemType = "ROOT_ITEM";
 
-const ModelType RootItemType = "ROOT_ITEM";
+const QString LayerType = "Layer";
+const QString MesoCrystalType = "MesoCrystal";
+const QString MultiLayerType = "MultiLayer";
+const QString ParticleType = "Particle";
+const QString ParticleLayoutType = "ParticleLayout";
+const QString ParticleCoreShellType = "ParticleCoreShell";
+const QString ParticleDistributionType = "ParticleDistribution";
+const QString ParticleCompositionType = "ParticleComposition";
+const QString RotationType = "Rotation";
+const QString InterferenceFunction1DLatticeType = "Interference1DLattice";
+const QString InterferenceFunction2DLatticeType = "Interference2DLattice";
+const QString InterferenceFunction2DParaCrystalType = "Interference2DParaCrystal";
+const QString InterferenceFunctionFinite2DLatticeType = "InterferenceFinite2DLattice";
+const QString InterferenceFunctionHardDiskType = "InterferenceHardDisk";
+const QString InterferenceFunctionRadialParaCrystalType = "InterferenceRadialParaCrystal";
+const QString GISASInstrumentType = "GISASInstrument";
+const QString OffSpecInstrumentType = "OffSpecInstrument";
+const QString SpecularInstrumentType = "SpecularInstrument";
+const QString DepthProbeInstrumentType = "DepthProbeInstrument";
+const QString GISASBeamType = "GISASBeam";
+const QString SpecularBeamType = "SpecularBeam";
 
-const ModelType LayerType = "Layer";
-const ModelType MesoCrystalType = "MesoCrystal";
-const ModelType MultiLayerType = "MultiLayer";
-const ModelType ParticleType = "Particle";
-const ModelType ParticleLayoutType = "ParticleLayout";
-const ModelType ParticleCoreShellType = "ParticleCoreShell";
-const ModelType ParticleDistributionType = "ParticleDistribution";
-const ModelType ParticleCompositionType = "ParticleComposition";
-const ModelType RotationType = "Rotation";
-const ModelType InterferenceFunction1DLatticeType = "Interference1DLattice";
-const ModelType InterferenceFunction2DLatticeType = "Interference2DLattice";
-const ModelType InterferenceFunction2DParaCrystalType = "Interference2DParaCrystal";
-const ModelType InterferenceFunctionFinite2DLatticeType = "InterferenceFinite2DLattice";
-const ModelType InterferenceFunctionHardDiskType = "InterferenceHardDisk";
-const ModelType InterferenceFunctionRadialParaCrystalType = "InterferenceRadialParaCrystal";
-const ModelType GISASInstrumentType = "GISASInstrument";
-const ModelType OffSpecInstrumentType = "OffSpecInstrument";
-const ModelType SpecularInstrumentType = "SpecularInstrument";
-const ModelType DepthProbeInstrumentType = "DepthProbeInstrument";
-const ModelType GISASBeamType = "GISASBeam";
-const ModelType SpecularBeamType = "SpecularBeam";
+const QString FormFactorType = "FormFactor";
+const QString AnisoPyramidType = "AnisoPyramid";
+const QString BarGaussType = "BarGauss";
+const QString BarLorentzType = "BarLorentz";
+const QString BoxType = "Box";
+const QString ConeType = "Cone";
+const QString Cone6Type = "Cone6";
+const QString CuboctahedronType = "Cuboctahedron";
+const QString CylinderType = "Cylinder";
+const QString DodecahedronType = "Dodecahedron";
+const QString DotType = "Dot";
+const QString EllipsoidalCylinderType = "EllipsoidalCylinder";
+const QString FullSphereType = "FullSphere";
+const QString FullSpheroidType = "FullSpheroid";
+const QString HemiEllipsoidType = "HemiEllipsoid";
+const QString IcosahedronType = "Icosahedron";
+const QString Prism3Type = "Prism3";
+const QString Prism6Type = "Prism6";
+const QString PyramidType = "Pyramid";
+const QString Ripple1BoxType = "Ripple1Box";
+const QString Ripple1GaussType = "Ripple1Gauss";
+const QString Ripple1LorentzType = "Ripple1Lorentz";
+const QString Ripple2BoxType = "Ripple2Box";
+const QString Ripple2GaussType = "Ripple2Gauss";
+const QString Ripple2LorentzType = "Ripple2Lorentz";
+const QString TetrahedronType = "Tetrahedron";
+const QString TruncatedCubeType = "TruncatedCube";
+const QString TruncatedSphereType = "TruncatedSphere";
+const QString TruncatedSpheroidType = "TruncatedSpheroid";
 
-const ModelType FormFactorType = "FormFactor";
-const ModelType AnisoPyramidType = "AnisoPyramid";
-const ModelType BarGaussType = "BarGauss";
-const ModelType BarLorentzType = "BarLorentz";
-const ModelType BoxType = "Box";
-const ModelType ConeType = "Cone";
-const ModelType Cone6Type = "Cone6";
-const ModelType CuboctahedronType = "Cuboctahedron";
-const ModelType CylinderType = "Cylinder";
-const ModelType DodecahedronType = "Dodecahedron";
-const ModelType DotType = "Dot";
-const ModelType EllipsoidalCylinderType = "EllipsoidalCylinder";
-const ModelType FullSphereType = "FullSphere";
-const ModelType FullSpheroidType = "FullSpheroid";
-const ModelType HemiEllipsoidType = "HemiEllipsoid";
-const ModelType IcosahedronType = "Icosahedron";
-const ModelType Prism3Type = "Prism3";
-const ModelType Prism6Type = "Prism6";
-const ModelType PyramidType = "Pyramid";
-const ModelType Ripple1BoxType = "Ripple1Box";
-const ModelType Ripple1GaussType = "Ripple1Gauss";
-const ModelType Ripple1LorentzType = "Ripple1Lorentz";
-const ModelType Ripple2BoxType = "Ripple2Box";
-const ModelType Ripple2GaussType = "Ripple2Gauss";
-const ModelType Ripple2LorentzType = "Ripple2Lorentz";
-const ModelType TetrahedronType = "Tetrahedron";
-const ModelType TruncatedCubeType = "TruncatedCube";
-const ModelType TruncatedSphereType = "TruncatedSphere";
-const ModelType TruncatedSpheroidType = "TruncatedSpheroid";
+const QString XRotationType = "XRotation";
+const QString YRotationType = "YRotation";
+const QString ZRotationType = "ZRotation";
+const QString EulerRotationType = "EulerRotation";
 
-const ModelType XRotationType = "XRotation";
-const ModelType YRotationType = "YRotation";
-const ModelType ZRotationType = "ZRotation";
-const ModelType EulerRotationType = "EulerRotation";
+const QString PropertyType = "Property";
+const QString VectorType = "Vector";
+const QString GroupItemType = "GroupProperty";
 
-const ModelType PropertyType = "Property";
-const ModelType VectorType = "Vector";
-const ModelType GroupItemType = "GroupProperty";
+const QString LayerBasicRoughnessType = "LayerBasicRoughness";
+const QString LayerZeroRoughnessType = "LayerZeroRoughness";
 
-const ModelType LayerBasicRoughnessType = "LayerBasicRoughness";
-const ModelType LayerZeroRoughnessType = "LayerZeroRoughness";
+const QString SphericalDetectorType = "SphericalDetector";
+const QString RectangularDetectorType = "RectangularDetector";
 
-const ModelType SphericalDetectorType = "SphericalDetector";
-const ModelType RectangularDetectorType = "RectangularDetector";
+const QString DistributionNoneType = "DistributionNone";
+const QString DistributionGateType = "DistributionGate";
+const QString DistributionLorentzType = "DistributionLorentz";
+const QString DistributionGaussianType = "DistributionGaussian";
+const QString DistributionLogNormalType = "DistributionLogNormal";
+const QString DistributionCosineType = "DistributionCosine";
+const QString DistributionTrapezoidType = "DistributionTrapezoid";
 
-const ModelType DistributionNoneType = "DistributionNone";
-const ModelType DistributionGateType = "DistributionGate";
-const ModelType DistributionLorentzType = "DistributionLorentz";
-const ModelType DistributionGaussianType = "DistributionGaussian";
-const ModelType DistributionLogNormalType = "DistributionLogNormal";
-const ModelType DistributionCosineType = "DistributionCosine";
-const ModelType DistributionTrapezoidType = "DistributionTrapezoid";
+const QString FTDistribution1DCauchyType = "FTDistribution1DCauchy";
+const QString FTDistribution1DGaussType = "FTDistribution1DGauss";
+const QString FTDistribution1DGateType = "FTDistribution1DGate";
+const QString FTDistribution1DTriangleType = "FTDistribution1DTriangle";
+const QString FTDistribution1DCosineType = "FTDistribution1DCosine";
+const QString FTDistribution1DVoigtType = "FTDistribution1DVoigt";
 
-const ModelType FTDistribution1DCauchyType = "FTDistribution1DCauchy";
-const ModelType FTDistribution1DGaussType = "FTDistribution1DGauss";
-const ModelType FTDistribution1DGateType = "FTDistribution1DGate";
-const ModelType FTDistribution1DTriangleType = "FTDistribution1DTriangle";
-const ModelType FTDistribution1DCosineType = "FTDistribution1DCosine";
-const ModelType FTDistribution1DVoigtType = "FTDistribution1DVoigt";
+const QString FTDistribution2DCauchyType = "FTDistribution2DCauchy";
+const QString FTDistribution2DGaussType = "FTDistribution2DGauss";
+const QString FTDistribution2DGateType = "FTDistribution2DGate";
+const QString FTDistribution2DConeType = "FTDistribution2DCone";
+const QString FTDistribution2DVoigtType = "FTDistribution2DVoigt";
 
-const ModelType FTDistribution2DCauchyType = "FTDistribution2DCauchy";
-const ModelType FTDistribution2DGaussType = "FTDistribution2DGauss";
-const ModelType FTDistribution2DGateType = "FTDistribution2DGate";
-const ModelType FTDistribution2DConeType = "FTDistribution2DCone";
-const ModelType FTDistribution2DVoigtType = "FTDistribution2DVoigt";
+const QString FTDecayFunction1DCauchyType = "FTDecayFunction1DCauchy";
+const QString FTDecayFunction1DGaussType = "FTDecayFunction1DGauss";
+const QString FTDecayFunction1DTriangleType = "FTDecayFunction1DTriangle";
+const QString FTDecayFunction1DVoigtType = "FTDecayFunction1DVoigt";
 
-const ModelType FTDecayFunction1DCauchyType = "FTDecayFunction1DCauchy";
-const ModelType FTDecayFunction1DGaussType = "FTDecayFunction1DGauss";
-const ModelType FTDecayFunction1DTriangleType = "FTDecayFunction1DTriangle";
-const ModelType FTDecayFunction1DVoigtType = "FTDecayFunction1DVoigt";
+const QString FTDecayFunction2DCauchyType = "FTDecayFunction2DCauchy";
+const QString FTDecayFunction2DGaussType = "FTDecayFunction2DGauss";
+const QString FTDecayFunction2DVoigtType = "FTDecayFunction2DVoigt";
 
-const ModelType FTDecayFunction2DCauchyType = "FTDecayFunction2DCauchy";
-const ModelType FTDecayFunction2DGaussType = "FTDecayFunction2DGauss";
-const ModelType FTDecayFunction2DVoigtType = "FTDecayFunction2DVoigt";
+const QString BasicLatticeType = "BasicLattice";
+const QString SquareLatticeType = "SquareLattice";
+const QString HexagonalLatticeType = "HexagonalLattice";
 
-const ModelType BasicLatticeType = "BasicLattice";
-const ModelType SquareLatticeType = "SquareLattice";
-const ModelType HexagonalLatticeType = "HexagonalLattice";
+const QString MaterialType = "Material";
+const QString MaterialContainerType = "MaterialContainer";
 
-const ModelType MaterialType = "Material";
-const ModelType MaterialContainerType = "MaterialContainer";
+const QString MaterialRefractiveDataType = "MaterialRefractiveData";
+const QString MaterialSLDDataType = "MaterialSLDData";
 
-const ModelType MaterialRefractiveDataType = "MaterialRefractiveData";
-const ModelType MaterialSLDDataType = "MaterialSLDData";
+const QString MagneticFieldType = "MagneticField";
 
-const ModelType MagneticFieldType = "MagneticField";
+const QString ParameterContainerType = "Parameter Container";
+const QString ParameterType = "Parameter";
+const QString ParameterLabelType = "Parameter Label";
 
-const ModelType ParameterContainerType = "Parameter Container";
-const ModelType ParameterType = "Parameter";
-const ModelType ParameterLabelType = "Parameter Label";
+const QString FitParameterContainerType = "FitParameterContainer";
+const QString FitParameterType = "FitParameter";
+const QString FitParameterLinkType = "FitParameterLink";
+const QString FitSuiteType = "FitSuite";
 
-const ModelType FitParameterContainerType = "FitParameterContainer";
-const ModelType FitParameterType = "FitParameter";
-const ModelType FitParameterLinkType = "FitParameterLink";
-const ModelType FitSuiteType = "FitSuite";
+const QString JobItemType = "JobItem";
+const QString IntensityDataType = "IntensityData";
+const QString SpecularDataType = "SpecularData";
+const QString Data1DViewItemType = "Data1DViewItem";
+const QString DataPropertyContainerType = "DataPropertyContainer";
+const QString DataItem1DPropertiesType = "DataItem1DProperties";
 
-const ModelType JobItemType = "JobItem";
-const ModelType IntensityDataType = "IntensityData";
-const ModelType SpecularDataType = "SpecularData";
-const ModelType Data1DViewItemType = "Data1DViewItem";
-const ModelType DataPropertyContainerType = "DataPropertyContainer";
-const ModelType DataItem1DPropertiesType = "DataItem1DProperties";
+const QString BasicAxisType = "BasicAxis";
+const QString PointwiseAxisType = "PointwiseAxis";
+const QString AmplitudeAxisType = "AmplitudeAxis";
 
-const ModelType BasicAxisType = "BasicAxis";
-const ModelType PointwiseAxisType = "PointwiseAxis";
-const ModelType AmplitudeAxisType = "AmplitudeAxis";
+const QString BeamDistributionType = "BeamDistribution";
+const QString BeamWavelengthType = "BeamWavelength";
+const QString BeamAzimuthalAngleType = "BeamAzimuthalAngle";
+const QString BeamInclinationAngleType = "BeamInclinationAngle";
+const QString SpecularBeamInclinationType = "SpecularBeamInclinationAxis";
+const QString SpecularBeamWavelengthType = "SpecularBeamWavelength";
 
-const ModelType BeamDistributionType = "BeamDistribution";
-const ModelType BeamWavelengthType = "BeamWavelength";
-const ModelType BeamAzimuthalAngleType = "BeamAzimuthalAngle";
-const ModelType BeamInclinationAngleType = "BeamInclinationAngle";
-const ModelType SpecularBeamInclinationType = "SpecularBeamInclinationAxis";
-const ModelType SpecularBeamWavelengthType = "SpecularBeamWavelength";
+const QString ResolutionFunctionNoneType = "ResolutionFunctionNone";
+const QString ResolutionFunction2DGaussianType = "ResolutionFunction2DGaussian";
 
-const ModelType ResolutionFunctionNoneType = "ResolutionFunctionNone";
-const ModelType ResolutionFunction2DGaussianType = "ResolutionFunction2DGaussian";
+const QString MaskContainerType = "MaskContainer";
+const QString RectangleMaskType = "RectangleMask";
+const QString PolygonMaskType = "PolygonMask";
+const QString PolygonPointType = "PolygonPoint";
+const QString EllipseMaskType = "EllipseMask";
+const QString VerticalLineMaskType = "VerticalLineMask";
+const QString HorizontalLineMaskType = "HorizontalLineMask";
+const QString MaskAllType = "MaskAllMask";
 
-const ModelType MaskContainerType = "MaskContainer";
-const ModelType RectangleMaskType = "RectangleMask";
-const ModelType PolygonMaskType = "PolygonMask";
-const ModelType PolygonPointType = "PolygonPoint";
-const ModelType EllipseMaskType = "EllipseMask";
-const ModelType VerticalLineMaskType = "VerticalLineMask";
-const ModelType HorizontalLineMaskType = "HorizontalLineMask";
-const ModelType MaskAllType = "MaskAllMask";
+const QString RegionOfInterestType = "RegionOfInterest";
 
-const ModelType RegionOfInterestType = "RegionOfInterest";
+const QString SimulationOptionsType = "SimulationOptions";
 
-const ModelType SimulationOptionsType = "SimulationOptions";
+const QString RealDataType = "RealData";
 
-const ModelType RealDataType = "RealData";
+const QString MinimizerContainerType = "MinimizerContainer";
+const QString MinuitMinimizerType = "Minuit2";
+const QString GSLMultiMinimizerType = "GSLMultiMin";
+const QString GSLLMAMinimizerType = "GSLLMA";
+const QString GSLSimAnMinimizerType = "GSLSimAn";
+const QString GeneticMinimizerType = "Genetic";
+const QString TestMinimizerType = "Test";
 
-const ModelType MinimizerContainerType = "MinimizerContainer";
-const ModelType MinuitMinimizerType = "Minuit2";
-const ModelType GSLMultiMinimizerType = "GSLMultiMin";
-const ModelType GSLLMAMinimizerType = "GSLLMA";
-const ModelType GSLSimAnMinimizerType = "GSLSimAn";
-const ModelType GeneticMinimizerType = "Genetic";
-const ModelType TestMinimizerType = "Test";
+const QString RealLimitsLimitlessType = "RealLimitsLimitless";
+const QString RealLimitsPositiveType = "RealLimitsPositive";
+const QString RealLimitsNonnegativeType = "RealLimitsNonnegative";
+const QString RealLimitsLowerLimitedType = "RealLimitsLowerLimited";
+const QString RealLimitsUpperLimitedType = "RealLimitsUpperLimited";
+const QString RealLimitsLimitedType = "RealLimitsLimited";
 
-const ModelType RealLimitsLimitlessType = "RealLimitsLimitless";
-const ModelType RealLimitsPositiveType = "RealLimitsPositive";
-const ModelType RealLimitsNonnegativeType = "RealLimitsNonnegative";
-const ModelType RealLimitsLowerLimitedType = "RealLimitsLowerLimited";
-const ModelType RealLimitsUpperLimitedType = "RealLimitsUpperLimited";
-const ModelType RealLimitsLimitedType = "RealLimitsLimited";
+const QString ProjectionContainerType = "ProjectionContainer";
 
-const ModelType ProjectionContainerType = "ProjectionContainer";
+const QString BackgroundNoneType = "NoBackground";
+const QString ConstantBackgroundType = "ConstantBackground";
+const QString PoissonNoiseBackgroundType = "PoissonNoiseBackground";
 
-const ModelType BackgroundNoneType = "NoBackground";
-const ModelType ConstantBackgroundType = "ConstantBackground";
-const ModelType PoissonNoiseBackgroundType = "PoissonNoiseBackground";
+const QString FootprintNoneType = "NoFootprint";
+const QString FootprintGaussianType = "GaussianFootrpint";
+const QString FootprintSquareType = "SquareFootprint";
 
-const ModelType FootprintNoneType = "NoFootprint";
-const ModelType FootprintGaussianType = "GaussianFootrpint";
-const ModelType FootprintSquareType = "SquareFootprint";
-
-const ModelType VarianceConstantFunctionType = "VarianceConstantFunction";
-const ModelType VarianceSimFunctionType = "VarianceSimFunction";
+const QString VarianceConstantFunctionType = "VarianceConstantFunction";
+const QString VarianceSimFunctionType = "VarianceSimFunction";
 
 // --- Groups ------------------------------------------------------------------
 
-const ModelType FormFactorGroup = "Form Factor";
-const ModelType RotationGroup = "Rotation group";
-const ModelType LayerRoughnessGroup = "Roughness";
-const ModelType DetectorGroup = "Detector group";
-const ModelType DistributionGroup = "Distribution group";
-const ModelType DistributionExtendedGroup = "Distribution extended group";
-const ModelType SymmetricDistributionGroup = "Symmetric distribution group";
-const ModelType FTDistribution1DGroup = "PDF 1D";
-const ModelType FTDistribution2DGroup = "PDF 2D";
-const ModelType FTDecayFunction1DGroup = "Decay function 1D";
-const ModelType FTDecayFunction2DGroup = "Decay function 2D";
-const ModelType LatticeGroup = "Lattice group";
-const ModelType MaterialGroup = "Material group";
-const ModelType ResolutionFunctionGroup = "Resolution function group";
-const ModelType MinimizerLibraryGroup = "Minimizer library group";
-const ModelType RealLimitsGroup = "RealLimits group";
-const ModelType BackgroundGroup = "Background group";
-const ModelType MaterialDataGroup = "Material data group";
-const ModelType FootprintGroup = "Footprint group";
-const ModelType AxesGroup = "Axes group";
-const ModelType VarianceFunctionGroup = "Variance group";
+const QString FormFactorGroup = "Form Factor";
+const QString RotationGroup = "Rotation group";
+const QString LayerRoughnessGroup = "Roughness";
+const QString DetectorGroup = "Detector group";
+const QString DistributionGroup = "Distribution group";
+const QString DistributionExtendedGroup = "Distribution extended group";
+const QString SymmetricDistributionGroup = "Symmetric distribution group";
+const QString FTDistribution1DGroup = "PDF 1D";
+const QString FTDistribution2DGroup = "PDF 2D";
+const QString FTDecayFunction1DGroup = "Decay function 1D";
+const QString FTDecayFunction2DGroup = "Decay function 2D";
+const QString LatticeGroup = "Lattice group";
+const QString MaterialGroup = "Material group";
+const QString ResolutionFunctionGroup = "Resolution function group";
+const QString MinimizerLibraryGroup = "Minimizer library group";
+const QString RealLimitsGroup = "RealLimits group";
+const QString BackgroundGroup = "Background group";
+const QString MaterialDataGroup = "Material data group";
+const QString FootprintGroup = "Footprint group";
+const QString AxesGroup = "Axes group";
+const QString VarianceFunctionGroup = "Variance group";
 
 // --- Units&Constants----------------------------------------------------------
 
-const ModelType UnitsNbins = "nbins";
-const ModelType UnitsRadians = "Radians";
-const ModelType UnitsDegrees = "Degrees";
-const ModelType UnitsMm = "mm";
-const ModelType UnitsQyQz = "q-space";
+const QString UnitsNbins = "nbins";
+const QString UnitsRadians = "Radians";
+const QString UnitsDegrees = "Degrees";
+const QString UnitsMm = "mm";
+const QString UnitsQyQz = "q-space";
 
-const ModelType STATUS_IDLE = "Idle";
-const ModelType STATUS_RUNNING = "Running";
-const ModelType STATUS_FITTING = "Fitting";
-const ModelType STATUS_COMPLETED = "Completed";
-const ModelType STATUS_CANCELED = "Canceled";
-const ModelType STATUS_FAILED = "Failed";
+const QString STATUS_IDLE = "Idle";
+const QString STATUS_RUNNING = "Running";
+const QString STATUS_FITTING = "Fitting";
+const QString STATUS_COMPLETED = "Completed";
+const QString STATUS_CANCELED = "Canceled";
+const QString STATUS_FAILED = "Failed";
 
-const ModelType GRADIENT_GRAYSCALE = "Grayscale";
-const ModelType GRADIENT_HOT = "Hot";
-const ModelType GRADIENT_COLD = "Cold";
-const ModelType GRADIENT_NIGHT = "Night";
-const ModelType GRADIENT_CANDY = "Candy";
-const ModelType GRADIENT_GEOGRAPHY = "Geography";
-const ModelType GRADIENT_ION = "Ion";
-const ModelType GRADIENT_THERMAL = "Thermal";
-const ModelType GRADIENT_POLAR = "Polar";
-const ModelType GRADIENT_SPECTRUM = "Spectrum";
-const ModelType GRADIENT_JET = "Jet";
-const ModelType GRADIENT_HUES = "Hues";
+const QString GRADIENT_GRAYSCALE = "Grayscale";
+const QString GRADIENT_HOT = "Hot";
+const QString GRADIENT_COLD = "Cold";
+const QString GRADIENT_NIGHT = "Night";
+const QString GRADIENT_CANDY = "Candy";
+const QString GRADIENT_GEOGRAPHY = "Geography";
+const QString GRADIENT_ION = "Ion";
+const QString GRADIENT_THERMAL = "Thermal";
+const QString GRADIENT_POLAR = "Polar";
+const QString GRADIENT_SPECTRUM = "Spectrum";
+const QString GRADIENT_JET = "Jet";
+const QString GRADIENT_HUES = "Hues";
 
-const ModelType JOB_RUN_IMMEDIATELY = "Immediately";
-const ModelType JOB_RUN_IN_BACKGROUND = "In background";
-const ModelType JOB_BACKUP = "_backup";
+const QString JOB_RUN_IMMEDIATELY = "Immediately";
+const QString JOB_RUN_IN_BACKGROUND = "In background";
+const QString JOB_BACKUP = "_backup";
 
-const ModelType SIMULATION_ANALYTICAL = "Analytical";
-const ModelType SIMULATION_MONTECARLO = "Monte-Carlo Integration";
+const QString SIMULATION_ANALYTICAL = "Analytical";
+const QString SIMULATION_MONTECARLO = "Monte-Carlo Integration";
 
-const ModelType ALIGNMENT_GENERIC = "Generic";
-const ModelType ALIGNMENT_TO_SAMPLE = "Perpendicular to sample x-axis";
-const ModelType ALIGNMENT_TO_DIRECT_BEAM = "Perpendicular to direct beam";
-const ModelType ALIGNMENT_TO_REFLECTED_BEAM = "Perpendicular to reflected beam";
-const ModelType ALIGNMENT_TO_REFLECTED_BEAM_DPOS = "Perpendicular to reflected beam (dpos)";
+const QString ALIGNMENT_GENERIC = "Generic";
+const QString ALIGNMENT_TO_SAMPLE = "Perpendicular to sample x-axis";
+const QString ALIGNMENT_TO_DIRECT_BEAM = "Perpendicular to direct beam";
+const QString ALIGNMENT_TO_REFLECTED_BEAM = "Perpendicular to reflected beam";
+const QString ALIGNMENT_TO_REFLECTED_BEAM_DPOS = "Perpendicular to reflected beam (dpos)";
 
-const ModelType FITPAR_FIXED = "fixed";
-const ModelType FITPAR_LIMITED = "limited";
-const ModelType FITPAR_LOWERLIMITED = "lower limited";
-const ModelType FITPAR_UPPERLIMITED = "upper limited";
-const ModelType FITPAR_FREE = "free";
+const QString FITPAR_FIXED = "fixed";
+const QString FITPAR_LIMITED = "limited";
+const QString FITPAR_LOWERLIMITED = "lower limited";
+const QString FITPAR_UPPERLIMITED = "upper limited";
+const QString FITPAR_FREE = "free";
 
-const ModelType DistributionSigmaFactor = "Sigma factor";
+const QString DistributionSigmaFactor = "Sigma factor";
 
-const ModelType LAYOUT_DA = "Decoupling Approximation";
-const ModelType LAYOUT_SSCA = "Size Space Coupling Approximation";
+const QString LAYOUT_DA = "Decoupling Approximation";
+const QString LAYOUT_SSCA = "Size Space Coupling Approximation";
 
-const ModelType AMBIENT_LAYER_MATERIAL = "Ambient Layer Material";
-const ModelType AVERAGE_LAYER_MATERIAL = "Average Layer Material";
+const QString AMBIENT_LAYER_MATERIAL = "Ambient Layer Material";
+const QString AVERAGE_LAYER_MATERIAL = "Average Layer Material";
 
 // --- Presentation types ----------------------------------------------------------
 
@@ -301,16 +299,17 @@ const QString MaskEditorPresentation = "Mask Editor";
 
 // --- Custom variants ----------------------------------------------------------
 
-const ModelType ExternalPropertyType = "ExternalProperty";
-const ModelType ComboPropertyType = "ComboProperty";
+const QString ExternalPropertyType = "ExternalProperty";
+const QString ComboPropertyType = "ComboProperty";
 
-// --- Custom editors for variant propertues ---
-const ModelType DefaultEditorType = "Default";
-const ModelType ScientificEditorType = "SceintificDouble";
-const ModelType ScientificSpinBoxType = "ScientificSpinBox";
-const ModelType MaterialEditorExternalType = "ExtMaterialEditor";
-const ModelType ColorEditorExternalType = "ExtColorEditor";
-const ModelType MultiSelectionComboEditorType = "MultiSelectionComboEditor";
+// --- Custom editors for variant properties ---
+const QString DefaultEditorType = "Default";
+const QString ScientificEditorType = "SceintificDouble";
+const QString ScientificSpinBoxType = "ScientificSpinBox";
+const QString MaterialEditorExternalType = "ExtMaterialEditor";
+const QString ColorEditorExternalType = "ExtColorEditor";
+const QString MultiSelectionComboEditorType = "MultiSelectionComboEditor";
+
 } // namespace Constants
 
 #endif // ITEM_CONSTANTS_H
