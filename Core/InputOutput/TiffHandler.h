@@ -20,7 +20,6 @@
 #include "OutputData.h"
 #include <memory>
 #include <tiffio.h>
-#include <tiffio.hxx>
 
 //! Reads/write tiff files, should be used through TiffReadStrategy.
 //! @ingroup input_output_internal
