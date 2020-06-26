@@ -22,7 +22,7 @@ class MultiLayer;
 class Beam;
 
 //! Abstract base for classes that calculate the beam footprint factor
-//! @ingroup simulation
+//! @ingroup beam
 
 class BA_CORE_API_ IFootprintFactor : public ICloneable, public INode
 {

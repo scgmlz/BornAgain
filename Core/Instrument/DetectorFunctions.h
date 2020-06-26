@@ -26,7 +26,7 @@ class IDetector;
 class SimulationAreaIterator;
 
 //! Contains set of detector-related convenience functions.
-//! @ingroup simulation
+//! @ingroup detector
 
 namespace DetectorFunctions
 {

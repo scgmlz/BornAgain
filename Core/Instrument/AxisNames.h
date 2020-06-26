@@ -20,7 +20,7 @@
 
 //! Contains functions to create maps that give the right axis names for different
 //! detector types and units
-//! @ingroup simulation
+//! @ingroup detector
 
 namespace AxisNames
 {

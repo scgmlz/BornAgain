@@ -20,7 +20,7 @@
 class SpecularSimulationElement;
 
 //! 1D detector for specular simulations. Use of this detector is deprecated.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SpecularDetector1D : public IDetector
 {

@@ -20,7 +20,7 @@
 //! Calculates footprint coefficient for a gaussian beam
 //! Beam width is interpreted as the full width on the level
 //! of \f[ \exp{-1/2} \f] from the peak intensity.
-//! @ingroup simulation
+//! @ingroup beam
 
 class BA_CORE_API_ FootprintFactorGaussian : public IFootprintFactor
 {

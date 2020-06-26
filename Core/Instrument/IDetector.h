@@ -32,7 +32,7 @@ class SimulationElement;
 class RegionOfInterest;
 
 //! Abstract detector interface.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ IDetector : public ICloneable, public INode
 {

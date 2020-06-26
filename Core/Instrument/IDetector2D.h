@@ -25,7 +25,7 @@ class IShape2D;
 class DetectorContext;
 
 //! Abstract 2D detector interface.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ IDetector2D : public IDetector
 {

@@ -18,7 +18,7 @@
 #include "SphericalDetector.h"
 
 //! A spherical detector used for validation with IsGISAXS results.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ IsGISAXSDetector : public SphericalDetector
 {

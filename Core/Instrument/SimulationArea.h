@@ -22,7 +22,7 @@ class IDetector;
 
 //! Holds iteration logic over active detector channels in the presence of masked areas
 //! and RegionOfInterest defined.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SimulationArea
 {
@@ -57,7 +57,7 @@ inline size_t SimulationArea::totalSize() const
 
 //! Holds iteration logic over active detector channels in the presence of ROI. On the contrary
 //! to SimulationArea class, iterates also over masked areas.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SimulationRoiArea : public SimulationArea
 {

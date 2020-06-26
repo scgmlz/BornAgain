@@ -22,7 +22,7 @@
 class IFootprintFactor;
 
 //! Beam defined by wavelength, direction and intensity.
-//! @ingroup simulation
+//! @ingroup beam
 
 class BA_CORE_API_ Beam : public INode
 {

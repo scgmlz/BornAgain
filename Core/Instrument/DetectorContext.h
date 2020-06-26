@@ -24,7 +24,7 @@
 class IDetector2D;
 
 //! Holds precalculated information for faster SimulationElement generation.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ DetectorContext
 {

@@ -23,7 +23,7 @@ template <class T> class OutputData;
 class Histogram2D;
 
 //! Collection of detector masks.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ DetectorMask
 {

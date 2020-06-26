@@ -19,7 +19,7 @@
 #include "IResolutionFunction2D.h"
 
 //! Convolutes the intensity in 1 or 2 dimensions with a resolution function.
-//! @ingroup simulation
+//! @ingroup detector
 
 //! Limitation: this class assumes that the data points are evenly distributed on each axis
 

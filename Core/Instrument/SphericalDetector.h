@@ -20,7 +20,7 @@
 
 //! A spherical detector with axes and resolution function.
 //! SphericalDetector
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SphericalDetector : public IDetector2D
 {

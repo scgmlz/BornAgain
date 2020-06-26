@@ -18,7 +18,7 @@
 #include "IFootprintFactor.h"
 
 //! Calculates footprint coefficient for a square beam
-//! @ingroup simulation
+//! @ingroup beam
 
 class BA_CORE_API_ FootprintFactorSquare : public IFootprintFactor
 {

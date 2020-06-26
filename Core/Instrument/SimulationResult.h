@@ -27,7 +27,7 @@ class IAxis;
 template <class T> class OutputData;
 
 //! Information about an axis in specific units. Can be used for plotting.
-//! @ingroup simulation
+//! @ingroup detector
 
 struct AxisInfo {
     std::string m_name;
@@ -36,7 +36,7 @@ struct AxisInfo {
 };
 
 //! Wrapper around OutputData<double> that also provides unit conversions.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SimulationResult
 {

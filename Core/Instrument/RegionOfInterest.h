@@ -25,7 +25,7 @@ class IAxis;
 template <class T> class OutputData;
 
 //! Defines rectangular area for the detector which will be simulated/fitted.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ RegionOfInterest : public ICloneable
 {

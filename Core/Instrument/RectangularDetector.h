@@ -21,7 +21,7 @@
 class RectangularPixel;
 
 //! A flat rectangular detector with axes and resolution function.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ RectangularDetector : public IDetector2D
 {

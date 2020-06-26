@@ -26,7 +26,7 @@ template <class T> class OutputData;
 
 //! Wrapper for detector axes units, required for a better representation of
 //! detector axes units in python
-//! @ingroup simulation
+//! @ingroup detector
 
 // workaround for SWIG (instead of just writing enum class AxesUnits...)
 struct BA_CORE_API_ AxesUnitsWrap {

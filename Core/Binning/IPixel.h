@@ -19,7 +19,7 @@
 #include "WinDllMacros.h"
 
 //! Interface for a function that maps [0,1]x[0,1] to the kvectors in a pixel.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ IPixel
 {

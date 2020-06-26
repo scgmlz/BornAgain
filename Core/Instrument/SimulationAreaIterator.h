@@ -20,7 +20,7 @@
 class SimulationArea;
 
 //! An iterator for SimulationArea.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SimulationAreaIterator
 {

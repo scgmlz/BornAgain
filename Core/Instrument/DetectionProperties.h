@@ -21,7 +21,7 @@
 #include "WinDllMacros.h"
 
 //! Detector properties (efficiency, transmission).
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ DetectionProperties : public INode
 {
