@@ -24,7 +24,7 @@ class Slice;
 
 //! Namespace containing functions for computing kz values for given multilayer and k (or kz) value
 //! on the surface of the sample.
-//! @ingroup simulation
+//! @ingroup samples_internal
 
 namespace KzComputation
 {
