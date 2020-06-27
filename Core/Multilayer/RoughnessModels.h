@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Computation/RoughnessModels.h
+//! @file      Core/Multilayer/RoughnessModels.h
 //! @brief     Define RoughnessModels enumerator and Python wrapper.
 //!
 //! @homepage  http://www.bornagainproject.org

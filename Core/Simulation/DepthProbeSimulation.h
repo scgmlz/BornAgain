@@ -1,3 +1,17 @@
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      Core/Simulation/DepthProbeSimulation.h
+//! @brief     Defines class DepthProbeSimulation
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
 #ifndef DEPTHPROBESIMULATION_H
 #define DEPTHPROBESIMULATION_H
 
