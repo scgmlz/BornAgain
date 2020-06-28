@@ -67,7 +67,6 @@ public:
                    bool _sym_S2 = false);
 
     double area() const { return m_area; }
-    kvector_t center() const { return m_center; }
     double pyramidalVolume() const { return m_rperp * m_area / 3; }
     double radius3d() const { return m_radius_3d; }
     //! Returns conj(q)*normal [BasicVector3D::dot is antilinear in 'this' argument]
@@ -88,7 +87,6 @@ private:
     double m_rperp;     //!< distance of this polygon's plane from the origin, along 'm_normal'
     double m_radius_2d; //!< radius of enclosing cylinder
     double m_radius_3d; //!< radius of enclosing sphere
-    kvector_t m_center; //!< center of mass
 
     void decompose_q(cvector_t q, complex_t& qperp, cvector_t& qpa) const;
     complex_t ff_n_core(int m, cvector_t qpa, complex_t qperp) const;

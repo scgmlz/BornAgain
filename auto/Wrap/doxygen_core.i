@@ -13049,9 +13049,6 @@ true if face has a perpedicular two-fold symmetry axis
 %feature("docstring")  PolyhedralFace::area "double PolyhedralFace::area() const
 ";
 
-%feature("docstring")  PolyhedralFace::center "kvector_t PolyhedralFace::center() const
-";
-
 %feature("docstring")  PolyhedralFace::pyramidalVolume "double PolyhedralFace::pyramidalVolume() const
 ";
 

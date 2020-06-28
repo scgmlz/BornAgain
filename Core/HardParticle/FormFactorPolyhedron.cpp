@@ -142,9 +142,6 @@ PolyhedralFace::PolyhedralFace(const std::vector<kvector_t>& V, bool _sym_S2) : 
 
     // Initialize list of 'edges'.
     // Do not create an edge if two vertices are too close to each other.
-    // TODO This is implemented in a somewhat sloppy way: we just skip an edge if it would
-    //      be too short. This leaves tiny open edges. In a clean implementation, we
-    //      rather should merge adjacent vertices before generating edges.
     for (size_t j = 0; j < NV; ++j) {
         size_t jj = (j + 1) % NV;
         if ((V[j] - V[jj]).mag() < 1e-14 * m_radius_2d)
@@ -152,8 +149,10 @@ PolyhedralFace::PolyhedralFace(const std::vector<kvector_t>& V, bool _sym_S2) : 
         edges.push_back(PolyhedralEdge(V[j], V[jj]));
     }
     size_t NE = edges.size();
-    if (NE < 3)
-        throw std::invalid_argument("Face has less than three non-vanishing edges");
+    if (NE < 3) {
+        m_area = 0;
+        return; // this case needs special treatment
+    }
 
     // compute n_k, rperp
     m_normal = kvector_t();
@@ -243,6 +242,8 @@ complex_t PolyhedralFace::ff_n_core(int m, cvector_t qpa, complex_t qperp) const
 
 complex_t PolyhedralFace::ff_n(int n, cvector_t q) const
 {
+    if (edges.size()<3)
+        return 0;
     complex_t qn = q.dot(m_normal); // conj(q)*normal (dot is antilinear in 'this' argument)
     if (std::abs(qn) < eps * q.mag())
         return 0.;
@@ -336,6 +337,8 @@ complex_t PolyhedralFace::edge_sum_ff(cvector_t q, cvector_t qpa, bool sym_Ci) c
 
 complex_t PolyhedralFace::ff(cvector_t q, bool sym_Ci) const
 {
+    if (edges.size()<3)
+        return 0;
     complex_t qperp;
     cvector_t qpa;
     decompose_q(q, qperp, qpa);
@@ -375,6 +378,8 @@ complex_t PolyhedralFace::ff(cvector_t q, bool sym_Ci) const
 
 complex_t PolyhedralFace::ff_2D(cvector_t qpa) const
 {
+    if (edges.size()<3)
+        return 0;
     if (std::abs(qpa.dot(m_normal)) > eps * qpa.mag())
         throw std::logic_error("ff_2D called with perpendicular q component");
     double qpa_red = m_radius_2d * qpa.mag();

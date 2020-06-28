@@ -9278,14 +9278,6 @@ class PolyhedralFace(object):
         """
         return _libBornAgainCore.PolyhedralFace_area(self)
 
-    def center(self):
-        r"""
-        center(PolyhedralFace self) -> kvector_t
-        kvector_t PolyhedralFace::center() const
-
-        """
-        return _libBornAgainCore.PolyhedralFace_center(self)
-
     def pyramidalVolume(self):
         r"""
         pyramidalVolume(PolyhedralFace self) -> double
