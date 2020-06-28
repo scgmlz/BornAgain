@@ -16641,7 +16641,7 @@ class Instrument(INode):
     r"""
 
 
-    Assembles beam, detector and their relative positions wrt the sample.
+    Assembles beam, detector and their relative positions with respect to the sample.
 
     C++ includes: Instrument.h
 

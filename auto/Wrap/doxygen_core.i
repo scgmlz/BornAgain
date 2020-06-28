@@ -8314,7 +8314,7 @@ Sets depth of the visitor in the composite hierarchy.
 // File: classInstrument.xml
 %feature("docstring") Instrument "
 
-Assembles beam, detector and their relative positions wrt the sample.
+Assembles beam, detector and their relative positions with respect to the sample.
 
 C++ includes: Instrument.h
 ";
@@ -17211,76 +17211,76 @@ C++ includes: ZLimits.h
 // File: namespace_0d374.xml
 
 
-// File: namespace_0d387.xml
+// File: namespace_0d386.xml
 
 
-// File: namespace_0d391.xml
+// File: namespace_0d390.xml
 
 
 // File: namespace_0d40.xml
 
 
-// File: namespace_0d403.xml
+// File: namespace_0d402.xml
 
 
-// File: namespace_0d409.xml
+// File: namespace_0d408.xml
 
 
-// File: namespace_0d414.xml
+// File: namespace_0d413.xml
 
 
-// File: namespace_0d416.xml
+// File: namespace_0d415.xml
+
+
+// File: namespace_0d419.xml
 
 
 // File: namespace_0d42.xml
 
 
-// File: namespace_0d420.xml
+// File: namespace_0d421.xml
 
 
-// File: namespace_0d422.xml
+// File: namespace_0d431.xml
 
 
-// File: namespace_0d432.xml
+// File: namespace_0d444.xml
 
 
-// File: namespace_0d445.xml
+// File: namespace_0d453.xml
 
 
-// File: namespace_0d454.xml
+// File: namespace_0d455.xml
 
 
-// File: namespace_0d456.xml
+// File: namespace_0d489.xml
 
 
-// File: namespace_0d490.xml
+// File: namespace_0d496.xml
 
 
-// File: namespace_0d497.xml
+// File: namespace_0d534.xml
 
 
-// File: namespace_0d535.xml
+// File: namespace_0d542.xml
 
 
-// File: namespace_0d543.xml
+// File: namespace_0d544.xml
 
 
-// File: namespace_0d545.xml
-
-
-// File: namespace_0d547.xml
+// File: namespace_0d546.xml
 
 
 // File: namespace_0d6.xml
 
 
-// File: namespace_0d631.xml
+// File: namespace_0d630.xml
 
 
-// File: namespace_0d635.xml
+// File: namespace_0d634.xml
 
 
-// File: namespace_0d659.xml
+// File: namespace_0d658.xml
 
 
 // File: namespace_0d97.xml
@@ -19616,9 +19616,6 @@ Creates averaged material. Square refractive index of returned material is arith
 // File: InterferenceFunctionUtils_8h.xml
 
 
-// File: ISpecularStrategy_8cpp.xml
-
-
 // File: ISpecularStrategy_8h.xml
 
 
@@ -20332,6 +20329,10 @@ Generate vertices of centered ellipse with given semi-axes at height z.
 
 // File: IFactory_8h.xml
 %feature("docstring")  create_new "T* create_new()
+
+Returns new instance of class T.
+
+This templated function is used in catalogues in form of a function pointer 'create_new<T>', with no function arguments supplied. Equivalently, we could use a lambda function '[](){return new T;}'. 
 ";
 
 

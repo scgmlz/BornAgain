@@ -37,7 +37,6 @@ option(BORNAGAIN_GENERATE_PYTHON_DOCS "Generate python documentation from the do
 option(BORNAGAIN_MANPAGE "Build Unix man page" OFF)
 option(BORNAGAIN_CONFIGURE_DOXY "Configure Doxygen files" OFF)
 option(AUTOGENERATE "Regenerate Py docs, Py wrappers, man page, Doxyfiles" OFF)
-option(BORNAGAIN_USERMANUAL "Build the User Manual" OFF)
 
 option(BUILD_DEBIAN "Build a debian package" OFF)
 option(BORNAGAIN_APPLE_BUNDLE "Create a Mac OS X bundle" OFF)
