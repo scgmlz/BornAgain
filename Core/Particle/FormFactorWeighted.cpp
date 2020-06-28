@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "FormFactorWeighted.h"
+#include "Algorithms.h"
 #include "BornAgainNamespace.h"
 
 FormFactorWeighted::FormFactorWeighted()
@@ -47,10 +48,8 @@ double FormFactorWeighted::bottomZ(const IRotation& rotation) const
     if (m_form_factors.size() == 0)
         throw std::runtime_error("FormFactorWeighted::bottomZ() -> Error: "
                                  "'this' contains no form factors.");
-    double zmin = m_form_factors[0]->bottomZ(rotation);
-    for (size_t index = 1; index < m_form_factors.size(); ++index)
-        zmin = std::min(zmin, m_form_factors[index]->bottomZ(rotation));
-    return zmin;
+    return algo::min_value(m_form_factors.begin(), m_form_factors.end(),
+                           [&rotation](IFormFactor* ff) { return ff->bottomZ(rotation); });
 }
 
 double FormFactorWeighted::topZ(const IRotation& rotation) const
@@ -58,10 +57,8 @@ double FormFactorWeighted::topZ(const IRotation& rotation) const
     if (m_form_factors.size() == 0)
         throw std::runtime_error("FormFactorWeighted::topZ() -> Error: "
                                  "'this' contains no form factors.");
-    double zmax = m_form_factors[0]->topZ(rotation);
-    for (size_t index = 1; index < m_form_factors.size(); ++index)
-        zmax = std::min(zmax, m_form_factors[index]->topZ(rotation));
-    return zmax;
+    return algo::max_value(m_form_factors.begin(), m_form_factors.end(),
+                           [&rotation](IFormFactor* ff) { return ff->topZ(rotation); });
 }
 
 void FormFactorWeighted::addFormFactor(const IFormFactor& form_factor, double weight)
