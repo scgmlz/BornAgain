@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "Transform3D.h"
+#include "Algorithms.h"
 #include <Eigen/LU>
 
 Transform3D::Transform3D()
@@ -223,28 +224,21 @@ bool Transform3D::isZRotation() const
     return true;
 }
 
+
 double BottomZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation)
 {
     if (vertices.size() == 0)
         throw std::runtime_error("BottomZ() error: no vertices passed!");
-    kvector_t vertex_rot = rotation.transformed(vertices[0]);
-    double zmin = vertex_rot.z();
-    for (size_t index = 1; index < vertices.size(); ++index) {
-        vertex_rot = rotation.transformed(vertices[index]);
-        zmin = std::min(zmin, vertex_rot.z());
-    }
-    return zmin;
+    return algo::min_value(vertices.begin(), vertices.end(),
+                           [&](const kvector_t& vertex) -> double
+                               { return rotation.transformed(vertex).z(); });
 }
 
 double TopZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation)
 {
     if (vertices.size() == 0)
         throw std::runtime_error("TopZ() error: no vertices passed!");
-    kvector_t vertex_rot = rotation.transformed(vertices[0]);
-    double zmax = vertex_rot.z();
-    for (size_t index = 1; index < vertices.size(); ++index) {
-        vertex_rot = rotation.transformed(vertices[index]);
-        zmax = std::max(zmax, vertex_rot.z());
-    }
-    return zmax;
+    return algo::max_value(vertices.begin(), vertices.end(),
+                           [&](const kvector_t& vertex) -> double
+                               { return rotation.transformed(vertex).z(); });
 }

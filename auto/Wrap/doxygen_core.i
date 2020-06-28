@@ -17118,172 +17118,184 @@ C++ includes: ZLimits.h
 ";
 
 
-// File: namespace_0d103.xml
+// File: namespace_0d104.xml
 
 
-// File: namespace_0d105.xml
+// File: namespace_0d106.xml
 
 
-// File: namespace_0d107.xml
+// File: namespace_0d108.xml
 
 
-// File: namespace_0d111.xml
+// File: namespace_0d112.xml
 
 
 // File: namespace_0d12.xml
 
 
-// File: namespace_0d126.xml
+// File: namespace_0d127.xml
 
 
-// File: namespace_0d135.xml
+// File: namespace_0d136.xml
 
 
-// File: namespace_0d140.xml
+// File: namespace_0d141.xml
 
 
-// File: namespace_0d149.xml
+// File: namespace_0d150.xml
 
 
-// File: namespace_0d151.xml
+// File: namespace_0d152.xml
 
 
-// File: namespace_0d155.xml
+// File: namespace_0d156.xml
 
 
 // File: namespace_0d18.xml
 
 
-// File: namespace_0d191.xml
+// File: namespace_0d192.xml
 
 
 // File: namespace_0d20.xml
 
 
-// File: namespace_0d226.xml
+// File: namespace_0d227.xml
 
 
-// File: namespace_0d234.xml
+// File: namespace_0d235.xml
 
 
-// File: namespace_0d240.xml
+// File: namespace_0d241.xml
 
 
-// File: namespace_0d244.xml
+// File: namespace_0d245.xml
 
 
-// File: namespace_0d294.xml
+// File: namespace_0d295.xml
 
 
-// File: namespace_0d303.xml
+// File: namespace_0d304.xml
 
 
-// File: namespace_0d311.xml
+// File: namespace_0d312.xml
 
 
-// File: namespace_0d315.xml
+// File: namespace_0d316.xml
 
 
-// File: namespace_0d317.xml
+// File: namespace_0d318.xml
 
 
 // File: namespace_0d32.xml
 
 
-// File: namespace_0d329.xml
+// File: namespace_0d330.xml
 
 
-// File: namespace_0d335.xml
+// File: namespace_0d336.xml
 
 
-// File: namespace_0d356.xml
+// File: namespace_0d357.xml
 
 
-// File: namespace_0d360.xml
+// File: namespace_0d361.xml
 
 
-// File: namespace_0d362.xml
+// File: namespace_0d363.xml
 
 
-// File: namespace_0d364.xml
+// File: namespace_0d365.xml
 
 
-// File: namespace_0d374.xml
+// File: namespace_0d375.xml
 
 
-// File: namespace_0d386.xml
+// File: namespace_0d387.xml
 
 
-// File: namespace_0d390.xml
+// File: namespace_0d391.xml
 
 
 // File: namespace_0d40.xml
 
 
-// File: namespace_0d402.xml
+// File: namespace_0d403.xml
 
 
-// File: namespace_0d408.xml
+// File: namespace_0d409.xml
 
 
-// File: namespace_0d413.xml
+// File: namespace_0d414.xml
 
 
-// File: namespace_0d415.xml
-
-
-// File: namespace_0d419.xml
+// File: namespace_0d416.xml
 
 
 // File: namespace_0d42.xml
 
 
-// File: namespace_0d421.xml
+// File: namespace_0d420.xml
 
 
-// File: namespace_0d431.xml
+// File: namespace_0d422.xml
 
 
-// File: namespace_0d444.xml
+// File: namespace_0d432.xml
 
 
-// File: namespace_0d453.xml
+// File: namespace_0d445.xml
 
 
-// File: namespace_0d455.xml
+// File: namespace_0d454.xml
 
 
-// File: namespace_0d489.xml
+// File: namespace_0d456.xml
 
 
-// File: namespace_0d496.xml
+// File: namespace_0d490.xml
 
 
-// File: namespace_0d534.xml
+// File: namespace_0d497.xml
 
 
-// File: namespace_0d542.xml
+// File: namespace_0d535.xml
 
 
-// File: namespace_0d544.xml
+// File: namespace_0d543.xml
 
 
-// File: namespace_0d546.xml
+// File: namespace_0d545.xml
+
+
+// File: namespace_0d547.xml
 
 
 // File: namespace_0d6.xml
 
 
-// File: namespace_0d630.xml
+// File: namespace_0d631.xml
 
 
-// File: namespace_0d634.xml
+// File: namespace_0d635.xml
 
 
-// File: namespace_0d658.xml
+// File: namespace_0d659.xml
 
 
-// File: namespace_0d97.xml
+// File: namespace_0d98.xml
+
+
+// File: namespacealgo.xml
+%feature("docstring")  algo::min_value "double algo::min_value(const Iterator &begin, const Iterator &end, const Evaluator &evaluate)
+
+Returns the minimum value of function evaluate as applied to the elements of an iterator range. 
+";
+
+%feature("docstring")  algo::max_value "double algo::max_value(const Iterator &begin, const Iterator &end, const Evaluator &evaluate)
+
+Returns the maximum value of function evaluate as applied to the elements of an iterator range. 
+";
 
 
 // File: namespaceArrayUtils.xml
@@ -18486,6 +18498,9 @@ Helper factory function to use in  GISASSimulation. Depending on the type of det
 
 
 // File: ParticleLayout_8h.xml
+
+
+// File: Algorithms_8h.xml
 
 
 // File: BornAgainNamespace_8h.xml
