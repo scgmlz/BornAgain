@@ -71,6 +71,12 @@ protected:
     //! Helper method for slicing
     SlicingEffects computeSlicingEffects(ZLimits limits, const kvector_t& position,
                                          double height) const;
+
+    //! Calculates the z-coordinate of the lowest vertex after rotation
+    static double BottomZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation);
+
+    //! Calculates the z-coordinate of the highest vertex after rotation
+    static double TopZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation);
 };
 
 //! Nested structure that holds slicing effects on position and removed parts.

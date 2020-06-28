@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "IFormFactorBorn.h"
+#include "Algorithms.h"
 #include "Dot.h"
 #include "Exceptions.h"
 #include "Rotations.h"
@@ -86,4 +87,24 @@ SlicingEffects IFormFactorBorn::computeSlicingEffects(ZLimits limits, const kvec
     if (dz_bottom > 0)
         new_position.setZ(lower_limit.m_value);
     return {new_position, dz_bottom, dz_top};
+}
+
+
+
+double IFormFactorBorn::BottomZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation)
+{
+    if (vertices.size() == 0)
+        throw std::runtime_error("BottomZ() error: no vertices passed!");
+    return algo::min_value(vertices.begin(), vertices.end(),
+                           [&](const kvector_t& vertex) -> double
+                               { return rotation.transformed(vertex).z(); });
+}
+
+double IFormFactorBorn::TopZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation)
+{
+    if (vertices.size() == 0)
+        throw std::runtime_error("TopZ() error: no vertices passed!");
+    return algo::max_value(vertices.begin(), vertices.end(),
+                           [&](const kvector_t& vertex) -> double
+                               { return rotation.transformed(vertex).z(); });
 }

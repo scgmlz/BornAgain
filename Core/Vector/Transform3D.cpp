@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "Transform3D.h"
-#include "Algorithms.h"
 #include <Eigen/LU>
 
 Transform3D::Transform3D()
@@ -222,23 +221,4 @@ bool Transform3D::isZRotation() const
     if (m_matrix(2, 1) != 0.0)
         return false;
     return true;
-}
-
-
-double BottomZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation)
-{
-    if (vertices.size() == 0)
-        throw std::runtime_error("BottomZ() error: no vertices passed!");
-    return algo::min_value(vertices.begin(), vertices.end(),
-                           [&](const kvector_t& vertex) -> double
-                               { return rotation.transformed(vertex).z(); });
-}
-
-double TopZ(const std::vector<kvector_t>& vertices, const Transform3D& rotation)
-{
-    if (vertices.size() == 0)
-        throw std::runtime_error("TopZ() error: no vertices passed!");
-    return algo::max_value(vertices.begin(), vertices.end(),
-                           [&](const kvector_t& vertex) -> double
-                               { return rotation.transformed(vertex).z(); });
 }
