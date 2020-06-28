@@ -4350,7 +4350,7 @@ C++ includes: FormFactorPolyhedron.h
 
 %feature("docstring")  FormFactorPolyhedron::evaluate_for_q "complex_t FormFactorPolyhedron::evaluate_for_q(cvector_t q) const override final
 
-Returns the form factor F(q) of this polyhedron, respecting the offset z_origin. 
+Returns the form factor F(q) of this polyhedron, respecting the offset z_bottom. 
 ";
 
 %feature("docstring")  FormFactorPolyhedron::evaluate_centered "complex_t FormFactorPolyhedron::evaluate_centered(cvector_t q) const

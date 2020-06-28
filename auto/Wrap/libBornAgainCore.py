@@ -9373,7 +9373,7 @@ class FormFactorPolyhedron(IFormFactorBorn):
         evaluate_for_q(FormFactorPolyhedron self, cvector_t q) -> complex_t
         complex_t FormFactorPolyhedron::evaluate_for_q(cvector_t q) const override final
 
-        Returns the form factor F(q) of this polyhedron, respecting the offset z_origin. 
+        Returns the form factor F(q) of this polyhedron, respecting the offset z_bottom. 
 
         """
         return _libBornAgainCore.FormFactorPolyhedron_evaluate_for_q(self, q)

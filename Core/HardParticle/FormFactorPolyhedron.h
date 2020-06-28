@@ -114,10 +114,10 @@ public:
     void assert_platonic() const;
 
 protected:
-    double m_z_origin;
+    double m_z_bottom;
     bool m_sym_Ci; //!< if true, then faces obtainable by inversion are not provided
 
-    void setPolyhedron(const PolyhedralTopology& topology, double z_origin,
+    void setPolyhedron(const PolyhedralTopology& topology, double z_bottom,
                        const std::vector<kvector_t>& vertices);
 
 private:

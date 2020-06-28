@@ -426,11 +426,11 @@ void FormFactorPolyhedron::setLimits(double _q, int _n)
 
 //! Called by child classes to set faces and other internal variables.
 
-void FormFactorPolyhedron::setPolyhedron(const PolyhedralTopology& topology, double z_origin,
+void FormFactorPolyhedron::setPolyhedron(const PolyhedralTopology& topology, double z_bottom,
                                          const std::vector<kvector_t>& vertices)
 {
     try {
-        m_z_origin = z_origin;
+        m_z_bottom = z_bottom;
         m_sym_Ci = topology.symmetry_Ci;
 
         double diameter = 0;
@@ -477,12 +477,12 @@ void FormFactorPolyhedron::setPolyhedron(const PolyhedralTopology& topology, dou
     }
 }
 
-//! Returns the form factor F(q) of this polyhedron, respecting the offset z_origin.
+//! Returns the form factor F(q) of this polyhedron, respecting the offset z_bottom.
 
 complex_t FormFactorPolyhedron::evaluate_for_q(cvector_t q) const
 {
     try {
-        return exp_I(-m_z_origin * q.z()) * evaluate_centered(q);
+        return exp_I(-m_z_bottom * q.z()) * evaluate_centered(q);
     } catch (std::logic_error& e) {
         throw std::logic_error("Bug in " + getName() + ": " + e.what()
                                + " [please report to the maintainers]");
