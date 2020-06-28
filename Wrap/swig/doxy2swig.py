@@ -2,9 +2,7 @@
 """Doxygen XML to SWIG docstring converter.
 
 Converts Doxygen generated XML files into a file containing docstrings
-that can be used by SWIG-1.3.x.  Note that you need to get SWIG
-version > 1.3.23 or use Robin Dunn's docstring patch to be able to use
-the resulting output.
+that can be used by Swig.
 
 Usage:
 
@@ -49,9 +47,8 @@ def my_open_write(dest, mode='w'):
 
 class Doxy2SWIG:
     """Converts Doxygen generated XML files into a file containing
-    docstrings that can be used by SWIG-1.3.x that have support for
-    feature("docstring").  Once the data is parsed it is stored in
-    self.pieces.
+    docstrings that can be used by Swig. Once the data is parsed it
+    is stored in self.pieces.
 
     """
 
