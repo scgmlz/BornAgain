@@ -20,25 +20,31 @@ add_custom_target(fullcheck COMMAND ${CMAKE_CTEST_COMMAND}) # => 'make check' is
 
 include(VERSION.cmake)
 
-# declare project-wide user flags, and set default values
+## declare project-wide user flags, and set default values
+
+# options that can be switched off to simplify the build and reduce its scope
 option(BORNAGAIN_PYTHON "Build with python support" ON)
+option(BORNAGAIN_GUI "Build a graphical user interface" ON)
+option(BORNAGAIN_TIFF_SUPPORT "Tiff files read/write support" ON)
+option(BORNAGAIN_OPENGL "Build additional modules for 3D in GUI" ON)
+option(UNITTESTS "Don't skip unit tests" ON)
+
 option(BORNAGAIN_USE_PYTHON2 "Build against python 2.7" OFF)
+option(BORNAGAIN_MPI "Build with MPI support" OFF)
+
 option(BORNAGAIN_GENERATE_BINDINGS "Generate python bindings during build (requires swig)" OFF)
 option(BORNAGAIN_GENERATE_PYTHON_DOCS "Generate python documentation from the doxygen comments" OFF)
-option(BORNAGAIN_GUI "Build a graphical user interface" ON)
-option(BORNAGAIN_USERMANUAL "Build the User Manual" OFF)
 option(BORNAGAIN_MANPAGE "Build Unix man page" OFF)
+option(BORNAGAIN_CONFIGURE_DOXY "Configure Doxygen files" OFF)
+option(AUTOGENERATE "Regenerate Py docs, Py wrappers, man page, Doxyfiles" OFF)
+option(BORNAGAIN_USERMANUAL "Build the User Manual" OFF)
+
 option(BUILD_DEBIAN "Build a debian package" OFF)
 option(BORNAGAIN_APPLE_BUNDLE "Create a Mac OS X bundle" OFF)
-option(BORNAGAIN_MPI "Build with MPI support" OFF)
-option(BORNAGAIN_CONFIGURE_DOXY "Configure Doxygen files" OFF)
-option(BORNAGAIN_TIFF_SUPPORT "Tiff files read/write support" ON)
-option(AUTOGENERATE "Regenerate directory auto (Py docs, Py wrappers, man page)" OFF)
+
 option(ZERO_TOLERANCE "Terminate compilation on warnings" OFF)
-option(UNITTESTS "Don't skip unit tests" ON)
 option(BORNAGAIN_COVERAGE "Build with test coverage information" OFF)
 option(BORNAGAIN_DEBUG_OPTIMIZATION "Build with debug optimization (gcc only)" OFF)
-option(BORNAGAIN_OPENGL "Build additional modules for 3D in GUI" ON)
 option(BORNAGAIN_BUILDBOT_SERVER "Special option for the buildbot server" OFF)
 option(BORNAGAIN_TIDY "Invokes clang-tidy" OFF)
 
@@ -46,6 +52,7 @@ if(AUTOGENERATE)
     set(BORNAGAIN_MANPAGE ON)
     set(BORNAGAIN_GENERATE_PYTHON_DOCS ON)
     set(BORNAGAIN_GENERATE_BINDINGS ON)
+    set(BORNAGAIN_CONFIGURE_DOXY ON)
 endif()
 
 # include CMake macros and functions
