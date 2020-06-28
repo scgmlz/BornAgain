@@ -107,9 +107,7 @@ message(STATUS "Destination directories:
 # configure files
 # -----------------------------------------------------------------------------
 
-if(NOT BORNAGAIN_BUILDBOT_SERVER)
 configure_file(${TEMPLATE_DIR}/CTestCustom.cmake.in ${CMAKE_BINARY_DIR}/CTestCustom.cmake)
-endif()
 
 if (WIN32)
     # Necessary to provide correct slashes in BABuild.h
