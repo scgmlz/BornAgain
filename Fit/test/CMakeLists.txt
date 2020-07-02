@@ -1,14 +1,11 @@
-############################################################################
-# Fit unit tests
-############################################################################
+# unit tests
+add_subdirectory(unit)
 
-set(test UnitTestFit)
+# test engine for functional tests
+add_subdirectory(engine)
 
-file(GLOB source_files "*.cpp" "run_gtests.cpp")
+# testing fitting via FitObjective
+add_subdirectory(FitObjective)
 
-add_executable(${test} ${source_files})
-target_include_directories(${test} PUBLIC ${gtest_SOURCE_DIR}/include)
-target_link_libraries(${test} ${BornAgainFit_LIBRARY} gtest)
-
-# add execution of TestCore just after compilation
-add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
+# testing standalone fitting of arbitrary objective functions
+add_subdirectory(Minimizer)

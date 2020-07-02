@@ -6,7 +6,6 @@ include_directories(${CMAKE_SOURCE_DIR}/Tests/Functional/TestMachinery)
 
 add_subdirectory(TestMachinery)
 add_subdirectory(Core)
-add_subdirectory(Fit)
 
 if(BORNAGAIN_PYTHON)
     add_subdirectory(Python)
