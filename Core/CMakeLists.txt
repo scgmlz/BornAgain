@@ -2,6 +2,8 @@
 # CMakeLists.txt file for building libBornAgainCore library
 ############################################################################
 
+message(STATUS "Configuring BornAgainCore")
+
 set(library_name BornAgainCore)
 
 if(BORNAGAIN_TIDY)

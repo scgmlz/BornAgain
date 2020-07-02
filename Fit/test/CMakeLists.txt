@@ -4,12 +4,10 @@
 
 set(test UnitTestFit)
 
-include_directories(${CMAKE_SOURCE_DIR}/Tests/UnitTests/utilities)
+file(GLOB source_files "*.cpp" "run_gtests.cpp")
 
-file(GLOB source_files "*.cpp" "../utilities/TestAll.cpp")
-file(GLOB include_files "*.h")
-
-add_executable(${test} ${source_files} ${include_files})
+add_executable(${test} ${source_files})
+target_include_directories(${test} PUBLIC ${gtest_SOURCE_DIR}/include)
 target_link_libraries(${test} ${BornAgainFit_LIBRARY} gtest)
 
 # add execution of TestCore just after compilation
