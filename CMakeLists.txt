@@ -91,7 +91,6 @@ endif()
 add_subdirectory(ThirdParty/common)
 add_subdirectory(ThirdParty/Fit)
 add_subdirectory(Fit)
-add_subdirectory(Tests/UnitTests/Fit)
 
 add_subdirectory(ThirdParty/Core)
 add_subdirectory(Core)

@@ -107,7 +107,7 @@ if(BORNAGAIN_PYTHON)
 endif()
 
 # exposing library name and list of include directories outside
-set(${library_name}_INCLUDE_DIRS ${include_dirs} PARENT_SCOPE)
+set(${library_name}_INCLUDE_DIRS ${FIT_SOURCE_DIRS} PARENT_SCOPE)
 set(${library_name}_LIBRARY ${library_name} PARENT_SCOPE)
 
 # --- dependencies ---------
