@@ -15,7 +15,7 @@
 #ifndef IFACTORY_H
 #define IFACTORY_H
 
-#include "Exceptions.h"
+#include <stdexcept>
 #include <functional>
 #include <map>
 #include <memory>
@@ -47,7 +47,7 @@ public:
         if (it == m_callbacks.end()) {
             std::ostringstream message;
             message << "IFactory::createItem() -> Error. Unknown item key '" << item_key << "'";
-            throw Exceptions::RuntimeErrorException(message.str());
+            throw std::runtime_error(message.str());
         }
         return (it->second)();
     }
@@ -59,7 +59,7 @@ public:
         if (it == m_callbacks.end()) {
             std::ostringstream message;
             message << "IFactory::createItem() -> Error. Unknown item key '" << item_key << "'";
-            throw Exceptions::RuntimeErrorException(message.str());
+            throw std::runtime_error(message.str());
         }
         return std::unique_ptr<AbstractProduct>((it->second)());
     }
@@ -73,7 +73,7 @@ public:
             std::ostringstream message;
             message << "IFactory::createItem() -> Error. Already registered item key '" << item_key
                     << "'";
-            throw Exceptions::RuntimeErrorException(message.str());
+            throw std::runtime_error(message.str());
         }
         if (itemDescription != "")
             m_descriptions.insert(make_pair(item_key, itemDescription));

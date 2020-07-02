@@ -28,8 +28,6 @@ ResidualTestPlan::ResidualTestPlan(const std::string& name, test_funct_t func)
     m_xvalues = axis.getBinBoundaries();
 }
 
-ResidualTestPlan::~ResidualTestPlan() = default;
-
 fcn_residual_t ResidualTestPlan::residualFunction()
 {
     fcn_residual_t func = [&](Fit::Parameters pars) -> std::vector<double> {
