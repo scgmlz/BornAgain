@@ -1,7 +1,3 @@
-############################################################################
-# CMakeLists.txt file for building libBornAgainCore library
-############################################################################
-
 set(library_name BornAgainFitTestMachinery)
 
 file(GLOB source_files "*.cpp")
