@@ -1,6 +1,5 @@
-############################################################################
-# Core unit tests
-############################################################################
+include(GoogleTest)
+
 set(test UnitTestNumeric)
 
 if(MSVC)
@@ -18,6 +17,4 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(${test} PUBLIC "-Wno-deprecated-copy")
 endif()
 
-# Registering in ctest section
-add_test(${test} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${test})
-set_tests_properties(${test} PROPERTIES LABELS "Fullcheck")
+gtest_discover_tests(${test} TEST_PREFIX Core:Unit:Numeric:)
