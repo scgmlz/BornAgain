@@ -33,7 +33,6 @@ class BA_CORE_API_ MinimizerTestPlan
 {
 public:
     MinimizerTestPlan(const std::string& name);
-
     virtual ~MinimizerTestPlan();
 
     void addParameter(const Fit::Parameter& param, double expected_value, double tolerance = 0.01);
