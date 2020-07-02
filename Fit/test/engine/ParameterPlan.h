@@ -24,13 +24,15 @@
 class BA_CORE_API_ ParameterPlan
 {
 public:
-    ParameterPlan(const Fit::Parameter& param, double expected_value, double tolerance = 0.01);
+    ParameterPlan(const Fit::Parameter& param, double expected_value, double tolerance = 0.01)
+        : m_expected_value(expected_value), m_tolerance(tolerance), m_parameter(param)
+    {
+    }
 
-    Fit::Parameter fitParameter() const;
-
+    Fit::Parameter fitParameter() const { return m_parameter; }
     double expectedValue() const { return m_expected_value; }
-
     double tolerance() const { return m_tolerance; }
+
     void setTolerance(double tolerance) { m_tolerance = tolerance; }
 
 private:
