@@ -25,13 +25,13 @@ env:
 
 on:
   push:
-    branches: [ master, develop]    
-    paths-ignore: 
-      - 'Doc/**'    
+    branches: [ master, develop]
+    paths-ignore:
+      - 'Doc/**'
   pull_request:
     branches: [ master, develop ]
-    paths-ignore: 
-      - 'Doc/**'    
+    paths-ignore:
+      - 'Doc/**'
 
 jobs:
   build:
@@ -43,14 +43,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with: 
-        submodules: true    
-    
+      with:
+        submodules: true
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-        
+
     - name: setup dependencies
       shell: powershell
       run: |
@@ -65,13 +65,13 @@ jobs:
         Get-Date -Format G
         dir deps
         dir deps/local_x64
-        
+
     - name: Install Python packages
       run: |
         python -m pip install --upgrade pip
         python -m pip install wheel setuptools
         python -m pip install numpy matplotlib
-        
+
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -92,7 +92,7 @@ jobs:
         set(ccache_url "https://github.com/cristianadam/ccache/releases/download/v$ENV{CCACHE_VERSION}/${{ runner.os }}.tar.xz")
         file(DOWNLOAD "${ccache_url}" ./ccache.tar.xz SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ccache.tar.xz)
-        
+
         set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v$ENV{NINJA_VERSION}/ninja-win.zip")
         file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
@@ -111,7 +111,7 @@ jobs:
       run: |
         string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
         message("::set-output name=timestamp::${current_date}")
-        
+
     - name: ccache cache files for BornAgain
       uses: actions/cache@v1.1.0
       with:
@@ -119,7 +119,7 @@ jobs:
         key: ba-windows-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
         restore-keys: |
           ba-windows-ccache-
-          
+
     - name: Build BornAgain
       shell: cmd
       env:
@@ -141,7 +141,7 @@ jobs:
         ccache -z
         ccache -p
         cmake --build . --config Release -j4
-        
+
     - name: Testing
       shell: cmd
       run: |
@@ -159,7 +159,7 @@ jobs:
       if: failure()
       with:
          name: LastTest.log
-         path: ./build/Testing/Temporary/LastTest.log  
+         path: ./build/Testing/Temporary/LastTest.log
 
     - name: Build package
       if: success()
@@ -168,6 +168,13 @@ jobs:
         cd ${{github.workspace}}\build
         set PATH=${{github.workspace}}\nsis-3.04;%PATH%
         cpack -c Release
+
+    - name: Upload CPack log
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+         name: CPack.log
+         path: ./build/_CPack_Packages/win64/NSIS/NSISOutput.log
 
     - name: Upload package
       uses: actions/upload-artifact@v2
