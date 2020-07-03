@@ -21,7 +21,8 @@ add_definitions(-DBOOST_ALL_DYN_LINK) # line is needed for MSVC
 # Boost component libraries (do not list headers here)
 set(boost_libraries_required filesystem iostreams program_options)
 if(WIN32)
-    list(APPEND boost_libraries_required zlib bzip2)
+    # system seems to be indirectly required
+    list(APPEND boost_libraries_required bzip2 system zlib)
 endif()
 find_package(Boost 1.65.1 COMPONENTS ${boost_libraries_required} REQUIRED)
 # In spite of the "REQUIRED" flag, FindBoost will not terminate if some components are missing
