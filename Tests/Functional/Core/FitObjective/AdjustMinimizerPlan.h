@@ -16,11 +16,12 @@
 #define ADJUSTMINIMIZERPLAN_H
 
 #include "FitPlan.h"
+#include "WinDllMacros.h"
 
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
 //! Parameters are made far from their original values, Genetic+Minuit used in pair.
 
-class AdjustMinimizerPlan : public FitPlan
+class BA_CORE_API_ AdjustMinimizerPlan : public FitPlan
 {
 public:
     AdjustMinimizerPlan();
