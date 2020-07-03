@@ -1,5 +1,8 @@
 BornAgain-1.17.99, work in progress
 
+  > Internal refactoring:
+    1) Unit tests now under CTest control, no longer enforced during compilation
+
 BornAgain-1.17.0, released 2020.06.16
   > API changes:
     1) Add Nevot-Croce roughness model.
