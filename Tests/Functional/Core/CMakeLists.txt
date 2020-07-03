@@ -5,6 +5,7 @@
 # add standard and special tests
 add_subdirectory(CoreStandardTest)
 add_subdirectory(SelfConsistenceTest)
+add_subdirectory(FitObjective)
 add_subdirectory(CoreSpecial)
 
 # build MPI test executable

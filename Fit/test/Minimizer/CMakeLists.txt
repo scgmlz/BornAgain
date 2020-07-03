@@ -29,7 +29,7 @@ file(GLOB include_files "*.h")
 
 add_executable(${test} ${include_files} ${source_files})
 target_include_directories(${test} PRIVATE ../engine)
-target_link_libraries(${test} BornAgainCore BornAgainFitTestMachinery)
+target_link_libraries(${test} BornAgainFit BornAgainFitTestMachinery)
 
 foreach(test_case ${test_cases})
     add_test(${test}/${test_case} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${test} ${test_case})

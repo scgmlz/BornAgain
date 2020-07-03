@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/test/FitObjective/FitObjectiveTestFactory.h
-//! @brief     Defines class FitObjectiveTestFactory
+//! @file      Tests/Functional/Core/FitObjective/main.cpp
+//! @brief     Implements program FitTest to run fit functional tests
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,17 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef FITOBJECTIVETESTFACTORY_H
-#define FITOBJECTIVETESTFACTORY_H
+#include "FitObjectiveTestFactory.h"
+#include "TestService.h"
 
-#include "FunctionalTestFactory.h"
+//! Runs functional tests.
 
-//! Factory to generate fitting tests. Tests will based on FitObjective approach.
-
-class FitObjectiveTestFactory : public FunctionalTestFactory
+int main(int argc, char** argv)
 {
-public:
-    FitObjectiveTestFactory();
-};
-
-#endif // FITOBJECTIVETESTFACTORY_H
+    return TestService<FitObjectiveTestFactory>().execute(argc, argv) ? 0 : 1;
+}

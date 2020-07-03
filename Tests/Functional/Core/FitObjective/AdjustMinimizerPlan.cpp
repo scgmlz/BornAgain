@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/test/FitObjective/AdjustMinimizerPlan.cpp
+//! @file      Tests/Functional/Core/FitObjective/AdjustMinimizerPlan.cpp
 //! @brief     Implements collection of AdjustMinimizerPlan classes
 //!
 //! @homepage  http://www.bornagainproject.org
