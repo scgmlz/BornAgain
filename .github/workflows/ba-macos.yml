@@ -21,13 +21,13 @@ name: MacOS
 
 on:
   push:
-    branches: [ master, develop]    
-    paths-ignore: 
-      - 'Doc/**'    
+    branches: [ master, develop]
+    paths-ignore:
+      - 'Doc/**'
   pull_request:
     branches: [ master, develop ]
-    paths-ignore: 
-      - 'Doc/**'    
+    paths-ignore:
+      - 'Doc/**'
 
 jobs:
   build:
@@ -39,9 +39,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with: 
-        submodules: true    
-    
+      with:
+        submodules: true
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -49,7 +49,7 @@ jobs:
 
     - name: setup dependencies
       run: |
-        brew install cmake fftw gsl boost qt5 libtiff ccache
+        brew install cmake fftw gsl boost qt5 libtiff libcerf ccache
         echo "Qt5 is installed to"
         echo $QTDIR
     - name: Install Python packages
@@ -57,14 +57,14 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install wheel setuptools
         python -m pip install numpy scipy matplotlib
-        
+
     - name: Prepare ccache timestamp
       id: ccache_cache_timestamp
       shell: cmake -P {0}
       run: |
         string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
         message("::set-output name=timestamp::${current_date}")
-        
+
     - name: ccache cache files for BornAgain
       uses: actions/cache@v1.1.0
       with:
@@ -72,7 +72,7 @@ jobs:
         key: ba-macos-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
         restore-keys: |
           ba-macos-ccache-
-          
+
     - name: Build BornAgain
       env:
         CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
@@ -94,21 +94,21 @@ jobs:
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         make -j4
-        
+
     - name: Testing
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE/build
         ccache -s
         ctest -LE Fullcheck --output-on-failure
-        
+
     - name: Upload test logs
       uses: actions/upload-artifact@v2
       if: failure()
       with:
          name: LastTest.log
          path: ./build/Testing/Temporary/LastTest.log
-         
+
     - name: Build package
       env:
         QTDIR: /usr/local/opt/qt
@@ -117,7 +117,7 @@ jobs:
         cd $GITHUB_WORKSPACE/build
         echo $QTDIR
         cpack -V
-        
+
     - name: Upload package
       uses: actions/upload-artifact@v2
       if: success()

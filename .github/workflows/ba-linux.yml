@@ -21,13 +21,13 @@ name: Linux
 
 on:
   push:
-    branches: [ master, develop]    
-    paths-ignore: 
-      - 'Doc/**'    
+    branches: [ master, develop]
+    paths-ignore:
+      - 'Doc/**'
   pull_request:
     branches: [ master, develop ]
-    paths-ignore: 
-      - 'Doc/**'    
+    paths-ignore:
+      - 'Doc/**'
 
 jobs:
   build:
@@ -39,9 +39,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with: 
-        submodules: true    
-    
+      with:
+        submodules: true
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -51,7 +51,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential\
-          gfortran cmake libgsl-dev libboost-all-dev libfftw3-dev libtiff5-dev \
+          gfortran cmake libgsl-dev libboost-all-dev libfftw3-dev libtiff5-dev libcerf-dev \
           qt5-default libqt5designercomponents5 qttools5-dev libqt5svg5-dev \
           ccache
     - name: Install Python packages
@@ -59,14 +59,14 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install wheel setuptools
         python -m pip install numpy matplotlib
-        
+
     - name: Prepare ccache timestamp
       id: ccache_cache_timestamp
       shell: cmake -P {0}
       run: |
         string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
         message("::set-output name=timestamp::${current_date}")
-        
+
     - name: ccache cache files for BornAgain
       uses: actions/cache@v1.1.0
       with:
@@ -74,7 +74,7 @@ jobs:
         key: ba-linux-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
         restore-keys: |
           ba-linux-ccache-
-          
+
     - name: Build BornAgain
       env:
         CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
@@ -94,17 +94,17 @@ jobs:
       if: success()
       with:
          name: BornAgainTar
-         path: ./build/BornAgain-*.tar.gz  
+         path: ./build/BornAgain-*.tar.gz
 
     - name: Testing
       run: |
         cd $GITHUB_WORKSPACE/build
         ccache -s
         ctest -LE Fullcheck --output-on-failure
-        
+
     - name: Upload test logs
       uses: actions/upload-artifact@v2
       if: failure()
       with:
          name: LastTest.log
-         path: ./build/Testing/Temporary/LastTest.log  
+         path: ./build/Testing/Temporary/LastTest.log
