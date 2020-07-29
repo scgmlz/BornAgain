@@ -85,9 +85,10 @@ jobs:
         cd $GITHUB_WORKSPACE && pwd && ls
         mkdir build && cd build
         cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DBUILD_DEBIAN=ON ../
         make package_source
         make -j4
+        cpack
 
     - name: Upload tarball
       uses: actions/upload-artifact@v2
@@ -95,6 +96,13 @@ jobs:
       with:
          name: BornAgainTar
          path: ./build/BornAgain-*.tar.gz
+
+    - name: Upload debian package
+      uses: actions/upload-artifact@v2
+      if: success()
+      with:
+         name: BornAgainDeb
+         path: ./build/*.deb
 
     - name: Testing
       run: |
