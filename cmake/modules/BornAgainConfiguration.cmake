@@ -111,12 +111,12 @@ configure_file(${CONFIGURABLES_DIR}/CTestCustom.cmake.in ${CMAKE_BINARY_DIR}/CTe
 
 if (WIN32)
     # Necessary to provide correct slashes in BABuild.h
-    file(TO_CMAKE_PATH ${Python_EXECUTABLE} Python_EXECUTABLE)
-    file(TO_CMAKE_PATH ${Python_STDLIB} Python_STDLIB)
-    file(TO_CMAKE_PATH ${Python_STDLIB} Python_STDLIB)
-    file(TO_CMAKE_PATH ${Python_INCLUDE_DIRS} Python_INCLUDE_DIRS)
-    file(TO_CMAKE_PATH ${Python_NumPy_INCLUDE_DIRS} Python_NumPy_INCLUDE_DIRS)
-    file(TO_CMAKE_PATH ${Python_SITELIB} Python_SITELIB)
+    file(TO_CMAKE_PATH ${Python3_EXECUTABLE} Python3_EXECUTABLE)
+    file(TO_CMAKE_PATH ${Python3_STDLIB} Python3_STDLIB)
+    file(TO_CMAKE_PATH ${Python3_STDLIB} Python3_STDLIB)
+    file(TO_CMAKE_PATH ${Python3_INCLUDE_DIRS} Python3_INCLUDE_DIRS)
+    file(TO_CMAKE_PATH ${Python3_NumPy_INCLUDE_DIRS} Python3_NumPy_INCLUDE_DIRS)
+    file(TO_CMAKE_PATH ${Python3_SITELIB} Python3_SITELIB)
 endif()
 
 configure_file(${CONFIGURABLES_DIR}/BAVersion.h.in  ${BUILD_INC_DIR}/BAVersion.h @ONLY)

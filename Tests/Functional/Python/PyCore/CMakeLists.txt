@@ -21,5 +21,5 @@ set(tests ${sources})
 list(REMOVE_ITEM tests utils.py)
 
 foreach(_test ${tests})
-    add_test(PyCore/${_test} ${Python_EXECUTABLE} ${OUTPUT_DIR}/${_test})
+    add_test(PyCore/${_test} ${Python3_EXECUTABLE} ${OUTPUT_DIR}/${_test})
 endforeach()

@@ -8,8 +8,8 @@ add_executable(${test} ${source_files} ${CMAKE_SOURCE_DIR}/Tests/GTestWrapper/Te
 target_include_directories(${test}
     PUBLIC
     ${CMAKE_SOURCE_DIR}/ThirdParty/common/gtest/gtest-1.8.0/include
-    ${Python_INCLUDE_DIRS}
-    ${Python_NumPy_INCLUDE_DIRS}
+    ${Python3_INCLUDE_DIRS}
+    ${Python3_NumPy_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/auto/Wrap
 )
 

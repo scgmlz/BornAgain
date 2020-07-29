@@ -53,7 +53,7 @@ if(BORNAGAIN_PYTHON)
 
         add_custom_command(
             OUTPUT ${AUTO_DIR}/libBornAgainCore.py
-            COMMAND ${Python_EXECUTABLE} ${WRAP_DIR}/swig/tweaks.py
+            COMMAND ${Python3_EXECUTABLE} ${WRAP_DIR}/swig/tweaks.py
                    ${TMP_DIR}/libBornAgainCore.py
                    ${AUTO_DIR}/libBornAgainCore.py
             DEPENDS ${TMP_DIR}/libBornAgainCore.py
@@ -165,8 +165,8 @@ endif()
 
 if(BORNAGAIN_PYTHON)
     target_compile_definitions(${library_name} PUBLIC -DBORNAGAIN_PYTHON)
-    include_directories(${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
-    target_link_libraries(${library_name} ${Python_LIBRARIES})
+    include_directories(${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+    target_link_libraries(${library_name} ${Python3_LIBRARIES})
 endif()
 
 if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
@@ -236,9 +236,9 @@ if(WIN32)
     endforeach()
 
     set(win_python_lib
-        "${Python_LIBRARY_DIRS}/python${Python_VERSION_MAJOR}${Python_VERSION_MINOR}.lib")
+        "${Python3_LIBRARY_DIRS}/python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}.lib")
     get_filename_component(UTF_BASE_NAME ${win_python_lib} NAME_WE)
-    get_filename_component(UTF_PATH ${Python_EXECUTABLE} PATH)
+    get_filename_component(UTF_PATH ${Python3_EXECUTABLE} PATH)
     message(STATUS "Python dll: ${UTF_PATH}/${UTF_BASE_NAME}.dll")
     install(FILES ${UTF_PATH}/${UTF_BASE_NAME}.dll
         DESTINATION ${destination_lib} COMPONENT Libraries)

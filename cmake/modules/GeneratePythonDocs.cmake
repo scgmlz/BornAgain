@@ -12,7 +12,7 @@ function(GeneratePythonDocs PD_TARGET SWIG_DIR)
             )
         add_custom_command(
             OUTPUT ${PD_TARGET}
-            COMMAND ${Python_EXECUTABLE} ${SWIG_DIR}/doxy2swig.py
+            COMMAND ${Python3_EXECUTABLE} ${SWIG_DIR}/doxy2swig.py
             ${TMP_DIR}/xml/index.xml ${PD_TARGET}
             DEPENDS ${TMP_DIR}/xml/index.xml
             )
