@@ -41,7 +41,7 @@ if(BORNAGAIN_PYTHON)
 
         add_custom_command(
             OUTPUT ${AUTO_DIR}/libBornAgainFit.py
-            COMMAND ${Python_EXECUTABLE} ${WRAP_DIR}/swig/tweaks.py
+            COMMAND ${Python3_EXECUTABLE} ${WRAP_DIR}/swig/tweaks.py
                    ${TMP_DIR}/libBornAgainFit.py
                    ${AUTO_DIR}/libBornAgainFit.py
             DEPENDS ${TMP_DIR}/libBornAgainFit.py
@@ -102,8 +102,8 @@ target_link_libraries(${lib} ${RootMinimizers_LIBRARY} ${Boost_LIBRARIES})
 
 if(BORNAGAIN_PYTHON)
     target_include_directories(${lib}
-        PUBLIC ${Python_INCLUDE_DIRS} ${Python_NumPy_INCLUDE_DIRS})
-    target_link_libraries(${lib} ${Python_LIBRARIES})
+        PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+    target_link_libraries(${lib} ${Python3_LIBRARIES})
 endif()
 
 # --- custom actions

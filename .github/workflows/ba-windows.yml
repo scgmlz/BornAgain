@@ -46,10 +46,10 @@ jobs:
       with:
         submodules: true
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+    - name: Set up Python3
+      uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.x'
 
     - name: setup dependencies
       shell: powershell
@@ -59,9 +59,19 @@ jobs:
         cd ${{github.workspace}}
         mkdir deps
         Get-Date -Format G
-        wget http://apps.jcns.fz-juelich.de/src/WinLibs/bornagain_deps_200710.zip -O ${{runner.temp}}\dependencies.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libboost1.65.win64.zip -O ${{runner.temp}}\libboost.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libcerf1.13.win64.zip -O ${{runner.temp}}\libcerf.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libfftw3.win64.zip -O ${{runner.temp}}\libfftw.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libgsl-static.win64.zip -O ${{runner.temp}}\libgsl.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libtiff.win64.zip -O ${{runner.temp}}\libtiff.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libyaml.win64.zip -O ${{runner.temp}}\libyaml.zip
         Get-Date -Format G
-        7z x ${{runner.temp}}\dependencies.zip -odeps
+        7z x ${{runner.temp}}\libboost.zip -odeps
+        7z x ${{runner.temp}}\libcerf.zip -odeps
+        7z x ${{runner.temp}}\libfftw.zip -odeps
+        7z x ${{runner.temp}}\libgsl.zip -odeps
+        7z x ${{runner.temp}}\libtiff.zip -odeps
+        7z x ${{runner.temp}}\libyaml.zip -odeps
         Get-Date -Format G
         dir deps
         dir deps/include

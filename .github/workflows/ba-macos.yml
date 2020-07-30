@@ -42,21 +42,14 @@ jobs:
       with:
         submodules: true
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.python-version }}
-
     - name: setup dependencies
       run: |
-        brew install cmake ccache fftw gsl boost qt5 libtiff libcerf eigen
-        echo "Qt5 is installed to"
-        echo $QTDIR
+        brew install cmake ccache fftw gsl boost qt5 libtiff libcerf eigen python numpy scipy
+        echo "Qt5 is installed to $QTDIR"
+
     - name: Install Python packages
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install wheel setuptools
-        python -m pip install numpy scipy matplotlib
+        pip3 install wheel setuptools matplotlib
 
     - name: Prepare ccache timestamp
       id: ccache_cache_timestamp

@@ -24,6 +24,6 @@ foreach(example ${examples})
     get_filename_component(script_name ${script_path} NAME_WE)
     set(test_name PyExamples/${script_name})
 
-    add_test(${test_name} ${Python_EXECUTABLE} ${test_script} ${script_path})
+    add_test(${test_name} ${Python3_EXECUTABLE} ${test_script} ${script_path})
     set_tests_properties(${test_name} PROPERTIES LABELS "Fullcheck")
 endforeach()
