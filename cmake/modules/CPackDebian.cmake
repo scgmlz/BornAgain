@@ -29,7 +29,7 @@ set(CPACK_STRIP_FILES "TRUE")
 #Version Specific Dependencies: set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgsl-dev(>=1.15), libboost-program-options${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-iostreams${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-regex${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libboost-filesystem${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}, libfftw3-3(>=3.3.1), python3, python3-numpy, python3-matplotlib, libqt5widgets5(>=5.4), libtiffxx5(>=4.0.2)")
 
 #Version-free dependencies:
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgsl-dev(>=1.15), libboost-all-dev, libfftw3-3(>=3.3.1), python3, python3-numpy, python3-matplotlib, libqt5widgets5(>=5.4), libtiffxx5(>=4.0.2)")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgsl(>=1.15), libboost-filesystem(>=1.60.0), libboost-program-options(>=1.60.0), libboost-regex(>=1.60.0), libboost-iostreams(>=1.60.0), libfftw3-3(>=3.3.1), python3, python3-numpy, python3-matplotlib, libqt5widgets5(>=5.4), libtiffxx5(>=4.0.2)")
 
 set(CPACK_DEBIAN_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_VERSION ${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR}-${BornAgain_VERSION_PATCH})
