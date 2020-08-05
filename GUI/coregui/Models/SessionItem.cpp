@@ -28,8 +28,7 @@ SessionItem::SessionItem(const QString& modelType)
     : m_parent(nullptr), m_model(nullptr), m_properties(new SessionItemData),
       m_tags(new SessionItemTags)
 {
-    if (modelType.isEmpty())
-        throw GUIHelpers::Error("SessionItem::SessionItem() -> Empty modelType.");
+    Q_ASSERT(!modelType.isEmpty());
 
     setRoleProperty(SessionFlags::ModelTypeRole, modelType);
     setDisplayName(modelType);
@@ -206,8 +205,8 @@ SessionItem* SessionItem::getItem(const QString& tag, int row) const
         return nullptr;
 
     int index = m_tags->indexFromTagRow(tagName, row);
-    if (index < 0 || index >= m_children.size())
-        throw GUIHelpers::Error("SessionItem::getItem() -> Invalid row for tag");
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < m_children.size());
     return m_children[index];
 }
 
@@ -227,19 +226,14 @@ QVector<SessionItem*> SessionItem::getItems(const QString& tag) const
 //! Insert item into given tag into given row.
 bool SessionItem::insertItem(int row, SessionItem* item, const QString& tag)
 {
-    if (!item || item->parent())
-        throw GUIHelpers::Error("SessionItem::insertItem() -> Invalid item, existing parent.");
+    Q_ASSERT(item);
+    Q_ASSERT(!item->parent());
 
     const QString tagName = tag.isEmpty() ? defaultTag() : tag;
-
-    if (!m_tags->isValid(tagName, item->modelType()))
-        throw GUIHelpers::Error("SessionItem::insertItem() -> Invalid tag, modelType.");
+    Q_ASSERT(m_tags->isValid(tagName, item->modelType()));
 
     int index = m_tags->insertIndexFromTagRow(tagName, row);
-
-    if (index < 0)
-        throw GUIHelpers::Error("SessionItem::insertItem() -> Invalid row, maximum reached.");
-
+    Q_ASSERT(index >= 0);
     Q_ASSERT(index <= m_children.size());
 
     if (m_model)
@@ -260,12 +254,8 @@ bool SessionItem::insertItem(int row, SessionItem* item, const QString& tag)
 SessionItem* SessionItem::takeItem(int row, const QString& tag)
 {
     const QString tagName = tag.isEmpty() ? defaultTag() : tag;
-
-    if (!m_tags->isValid(tagName))
-        throw GUIHelpers::Error("SessionItem::takeItem() -> Invalid tag, modelType.");
-
-    if (m_tags->isSingleItemTag(tagName))
-        throw GUIHelpers::Error("SessionItem::takeItem() -> Single item tag.");
+    Q_ASSERT(m_tags->isValid(tagName));
+    Q_ASSERT(!m_tags->isSingleItemTag(tagName));
 
     int index = m_tags->indexFromTagRow(tagName, row);
     Q_ASSERT(index >= 0 && index <= m_children.size());
@@ -285,15 +275,13 @@ SessionItem* SessionItem::takeItem(int row, const QString& tag)
 
 SessionItem* SessionItem::addProperty(const QString& name, const QVariant& variant)
 {
-    if (isTag(name))
-        throw GUIHelpers::Error(
-            "ParameterizedItem::registerProperty() -> Error. Already existing property " + name);
+    Q_ASSERT(!isTag(name));
 
     SessionItem* property = ItemFactory::CreateItem("Property");
     property->setDisplayName(name);
     registerTag(name, 1, 1, QStringList() << "Property");
-    if (!insertItem(0, property, name))
-        throw GUIHelpers::Error("SessionItem::addProperty -> Error. Can't insert item");
+    bool success = insertItem(0, property, name);
+    Q_ASSERT(success);
 
     property->setValue(variant);
     return property;
@@ -303,10 +291,7 @@ SessionItem* SessionItem::addProperty(const QString& name, const QVariant& varia
 
 QVariant SessionItem::getItemValue(const QString& tag) const
 {
-    if (!isTag(tag))
-        throw GUIHelpers::Error("ParameterizedItem::getRegisteredProperty() -> Error. Unknown tag '"
-                                + tag + "', item '" + modelType() + "'");
-
+    Q_ASSERT(isTag(tag));
     return getItem(tag)->value();
 }
 
@@ -314,9 +299,7 @@ QVariant SessionItem::getItemValue(const QString& tag) const
 
 void SessionItem::setItemValue(const QString& tag, const QVariant& variant)
 {
-    if (!isTag(tag))
-        throw GUIHelpers::Error("Property not existing!");
-
+    Q_ASSERT(isTag(tag));
     getItem(tag)->setValue(variant);
 }
 
@@ -341,9 +324,8 @@ SessionItem* SessionItem::addGroupProperty(const QString& groupTag, const QStrin
     }
     Q_ASSERT(result);
     result->setDisplayName(groupTag);
-    if (!insertItem(0, result, groupTag)) {
-        throw GUIHelpers::Error("SessionItem::addGroupProperty -> Error. Can't insert group item");
-    }
+    bool success = insertItem(0, result, groupTag);
+    Q_ASSERT(success);
     return result;
 }
 
@@ -413,10 +395,7 @@ QVariant SessionItem::value() const
 
 bool SessionItem::setValue(QVariant value)
 {
-    if (!SessionItemUtils::CompatibleVariantTypes(this->value(), value))
-        throw GUIHelpers::Error("SessionItem::setRegisteredProperty() -> Error. Type of "
-                                "previous and new variant does not coincide.");
-
+    Q_ASSERT(SessionItemUtils::CompatibleVariantTypes(this->value(), value));
     return setRoleProperty(Qt::DisplayRole, value);
 }
 
@@ -546,7 +525,7 @@ SessionItem& SessionItem::setToolTip(const QString& tooltip)
 
 QString SessionItem::editorType() const
 {
-    auto variant = roleProperty(SessionFlags::CustomEditorRole);
+    const auto variant = roleProperty(SessionFlags::CustomEditorRole);
     return variant.isValid() ? variant.toString() : "Default";
 }
 
