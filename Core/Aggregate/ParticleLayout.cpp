@@ -12,15 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "ParticleLayout.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "IInterferenceFunction.h"
-#include "InterferenceFunctionNone.h"
-#include "ParameterPool.h"
-#include "Particle.h"
-#include "ParticleDistribution.h"
-#include "RealParameter.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Aggregate/InterferenceFunctionNone.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleDistribution.h"
 
 namespace
 {
@@ -29,11 +28,10 @@ namespace
 //! which is the case for 2D functions.
 bool particleDensityIsProvidedByInterference(const IInterferenceFunction& iff)
 {
-    if (iff.getName() == BornAgain::InterferenceFunction2DLatticeType
-        || iff.getName() == BornAgain::InterferenceFunction2DParaCrystalType
-        || iff.getName() == BornAgain::InterferenceFunction2DSuperLattice
-        || iff.getName() == BornAgain::InterferenceFunctionFinite2DLatticeType
-        || iff.getName() == BornAgain::InterferenceFunctionHardDiskType)
+    if (iff.getName() == "Interference2DLattice" || iff.getName() == "Interference2DParaCrystal"
+        || iff.getName() == "Interference2DSuperLattice"
+        || iff.getName() == "InterferenceFinite2DLattice"
+        || iff.getName() == "InterferenceHardDisk")
         return true;
     return false;
 }
@@ -41,21 +39,21 @@ bool particleDensityIsProvidedByInterference(const IInterferenceFunction& iff)
 
 ParticleLayout::ParticleLayout() : mP_interference_function{nullptr}, m_total_particle_density{0.01}
 {
-    setName(BornAgain::ParticleLayoutType);
+    setName("ParticleLayout");
+    registerParticleDensity();
+    registerWeight();
+}
+
+ParticleLayout::ParticleLayout(const IAbstractParticle& particle, double abundance)
+    : mP_interference_function{nullptr}, m_total_particle_density{0.01}
+{
+    setName("ParticleLayout");
+    addParticle(particle, abundance);
     registerParticleDensity();
     registerWeight();
 }
 
 ParticleLayout::~ParticleLayout() {} // needs member class definitions => don't move to .h
-
-ParticleLayout::ParticleLayout(const IAbstractParticle& particle, double abundance)
-    : mP_interference_function{nullptr}, m_total_particle_density{0.01}
-{
-    setName(BornAgain::ParticleLayoutType);
-    addParticle(particle, abundance);
-    registerParticleDensity();
-    registerWeight();
-}
 
 ParticleLayout* ParticleLayout::clone() const
 {
@@ -173,14 +171,14 @@ void ParticleLayout::setAndRegisterInterferenceFunction(IInterferenceFunction* c
 void ParticleLayout::registerParticleDensity(bool make_registered)
 {
     if (make_registered) {
-        if (!parameter(BornAgain::TotalParticleDensity))
-            registerParameter(BornAgain::TotalParticleDensity, &m_total_particle_density);
+        if (!parameter("TotalParticleDensity"))
+            registerParameter("TotalParticleDensity", &m_total_particle_density);
     } else {
-        removeParameter(BornAgain::TotalParticleDensity);
+        removeParameter("TotalParticleDensity");
     }
 }
 
 void ParticleLayout::registerWeight()
 {
-    registerParameter(BornAgain::Weight, &m_weight);
+    registerParameter("Weight", &m_weight);
 }

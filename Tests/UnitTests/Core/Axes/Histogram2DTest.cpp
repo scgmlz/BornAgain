@@ -1,15 +1,14 @@
-#include "Histogram2D.h"
-#include "Histogram1D.h"
-#include "google_test.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Intensity/Histogram1D.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 class Histogram2DTest : public ::testing::Test
 {
 protected:
     Histogram2DTest();
-    virtual ~Histogram2DTest();
 
-    Histogram2D* hist;
+    Histogram2D hist;
 };
 
 // y
@@ -23,78 +22,68 @@ protected:
 // 0.0   -----------------------------------
 //     -1.0  -0.5        0.5   1.0        2.0  X
 
-Histogram2DTest::Histogram2DTest()
+Histogram2DTest::Histogram2DTest() : hist{4, {-1.0, -0.5, 0.5, 1.0, 2.0}, 3, {0.0, 1.0, 2.0, 4.0}}
 {
-    std::vector<double> xbin_edges = {-1.0, -0.5, 0.5, 1.0, 2.0};
-    std::vector<double> ybin_edges = {0.0, 1.0, 2.0, 4.0};
-    hist = new Histogram2D(4, xbin_edges, 3, ybin_edges);
-}
-
-Histogram2DTest::~Histogram2DTest()
-{
-    delete hist;
 }
 
 TEST_F(Histogram2DTest, VariableHist)
 {
-    hist->reset();
+    hist.reset();
 
     // basic axes check
-    EXPECT_EQ(size_t(12), hist->getTotalNumberOfBins());
-    EXPECT_EQ(hist->getRank(), size_t(2));
-    EXPECT_EQ(hist->getXaxis().getName(), std::string("x-axis"));
-    EXPECT_EQ(hist->getXaxis().size(), size_t(4));
-    EXPECT_EQ(hist->getXmin(), -1.0);
-    EXPECT_EQ(hist->getXmax(), 2.0);
-    EXPECT_EQ(hist->getYaxis().getName(), std::string("y-axis"));
-    EXPECT_EQ(hist->getYaxis().size(), size_t(3));
-    EXPECT_EQ(hist->getYmin(), 0.0);
-    EXPECT_EQ(hist->getYmax(), 4.0);
+    EXPECT_EQ(size_t(12), hist.getTotalNumberOfBins());
+    EXPECT_EQ(hist.getRank(), size_t(2));
+    EXPECT_EQ(hist.getXaxis().size(), size_t(4));
+    EXPECT_EQ(hist.getXmin(), -1.0);
+    EXPECT_EQ(hist.getXmax(), 2.0);
+    EXPECT_EQ(hist.getYaxis().size(), size_t(3));
+    EXPECT_EQ(hist.getYmin(), 0.0);
+    EXPECT_EQ(hist.getYmax(), 4.0);
 
     // globalbin -> axes indices
-    EXPECT_EQ(hist->getXaxisIndex(0), 0u);
-    EXPECT_EQ(hist->getXaxisIndex(1), 0u);
-    EXPECT_EQ(hist->getXaxisIndex(2), 0u);
-    EXPECT_EQ(hist->getXaxisIndex(3), 1u);
-    EXPECT_EQ(hist->getXaxisIndex(4), 1u);
-    EXPECT_EQ(hist->getXaxisIndex(5), 1u);
-    EXPECT_EQ(hist->getXaxisIndex(9), 3u);
-    EXPECT_EQ(hist->getXaxisIndex(10), 3u);
-    EXPECT_EQ(hist->getXaxisIndex(11), 3u);
+    EXPECT_EQ(hist.getXaxisIndex(0), 0u);
+    EXPECT_EQ(hist.getXaxisIndex(1), 0u);
+    EXPECT_EQ(hist.getXaxisIndex(2), 0u);
+    EXPECT_EQ(hist.getXaxisIndex(3), 1u);
+    EXPECT_EQ(hist.getXaxisIndex(4), 1u);
+    EXPECT_EQ(hist.getXaxisIndex(5), 1u);
+    EXPECT_EQ(hist.getXaxisIndex(9), 3u);
+    EXPECT_EQ(hist.getXaxisIndex(10), 3u);
+    EXPECT_EQ(hist.getXaxisIndex(11), 3u);
 
-    EXPECT_EQ(hist->getYaxisIndex(0), 0u);
-    EXPECT_EQ(hist->getYaxisIndex(1), 1u);
-    EXPECT_EQ(hist->getYaxisIndex(2), 2u);
-    EXPECT_EQ(hist->getYaxisIndex(3), 0u);
-    EXPECT_EQ(hist->getYaxisIndex(4), 1u);
-    EXPECT_EQ(hist->getYaxisIndex(5), 2u);
-    EXPECT_EQ(hist->getYaxisIndex(9), 0u);
-    EXPECT_EQ(hist->getYaxisIndex(10), 1u);
-    EXPECT_EQ(hist->getYaxisIndex(11), 2u);
+    EXPECT_EQ(hist.getYaxisIndex(0), 0u);
+    EXPECT_EQ(hist.getYaxisIndex(1), 1u);
+    EXPECT_EQ(hist.getYaxisIndex(2), 2u);
+    EXPECT_EQ(hist.getYaxisIndex(3), 0u);
+    EXPECT_EQ(hist.getYaxisIndex(4), 1u);
+    EXPECT_EQ(hist.getYaxisIndex(5), 2u);
+    EXPECT_EQ(hist.getYaxisIndex(9), 0u);
+    EXPECT_EQ(hist.getYaxisIndex(10), 1u);
+    EXPECT_EQ(hist.getYaxisIndex(11), 2u);
 
     // axes indices -> global bin
-    EXPECT_EQ(hist->getGlobalBin(0, 0), size_t(0));
-    EXPECT_EQ(hist->getGlobalBin(0, 2), size_t(2));
-    EXPECT_EQ(hist->getGlobalBin(1, 1), size_t(4));
-    EXPECT_EQ(hist->getGlobalBin(3, 2), size_t(11));
+    EXPECT_EQ(hist.getGlobalBin(0, 0), size_t(0));
+    EXPECT_EQ(hist.getGlobalBin(0, 2), size_t(2));
+    EXPECT_EQ(hist.getGlobalBin(1, 1), size_t(4));
+    EXPECT_EQ(hist.getGlobalBin(3, 2), size_t(11));
 
     // bin centers
-    EXPECT_EQ(hist->getXaxisValue(0), -0.75);
-    EXPECT_EQ(hist->getXaxisValue(2), -0.75);
-    EXPECT_EQ(hist->getXaxisValue(4), 0.0);
-    EXPECT_EQ(hist->getXaxisValue(10), 1.5);
-    EXPECT_EQ(hist->getXaxisValue(11), 1.5);
+    EXPECT_EQ(hist.getXaxisValue(0), -0.75);
+    EXPECT_EQ(hist.getXaxisValue(2), -0.75);
+    EXPECT_EQ(hist.getXaxisValue(4), 0.0);
+    EXPECT_EQ(hist.getXaxisValue(10), 1.5);
+    EXPECT_EQ(hist.getXaxisValue(11), 1.5);
 
-    EXPECT_EQ(hist->getYaxisValue(0), 0.5);
-    EXPECT_EQ(hist->getYaxisValue(2), 3.0);
-    EXPECT_EQ(hist->getYaxisValue(4), 1.5);
-    EXPECT_EQ(hist->getYaxisValue(10), 1.5);
-    EXPECT_EQ(hist->getYaxisValue(11), 3.0);
+    EXPECT_EQ(hist.getYaxisValue(0), 0.5);
+    EXPECT_EQ(hist.getYaxisValue(2), 3.0);
+    EXPECT_EQ(hist.getYaxisValue(4), 1.5);
+    EXPECT_EQ(hist.getYaxisValue(10), 1.5);
+    EXPECT_EQ(hist.getYaxisValue(11), 3.0);
 
     // coordinates to global bin
-    EXPECT_EQ(hist->findGlobalBin(-0.75, 0.5), size_t(0));
-    EXPECT_EQ(hist->findGlobalBin(0.0, 1.5), size_t(4));
-    EXPECT_EQ(hist->findGlobalBin(1.5, 3.0), size_t(11));
+    EXPECT_EQ(hist.findGlobalBin(-0.75, 0.5), size_t(0));
+    EXPECT_EQ(hist.findGlobalBin(0.0, 1.5), size_t(4));
+    EXPECT_EQ(hist.findGlobalBin(1.5, 3.0), size_t(11));
 }
 
 // y
@@ -110,7 +99,7 @@ TEST_F(Histogram2DTest, VariableHist)
 
 TEST_F(Histogram2DTest, VariableHistFill)
 {
-    hist->reset();
+    hist.reset();
 
     // values to fill all histogram
     std::vector<double> xvalues = {-0.75, -0.75, -0.75, 0.0, 0.0, 0.0,
@@ -119,21 +108,21 @@ TEST_F(Histogram2DTest, VariableHistFill)
 
     // put in every histogram bin one double value proportional to globalbin (globalbin*10.0)
     for (size_t i = 0; i < xvalues.size(); ++i) {
-        hist->fill(xvalues[i], yvalues[i], i * 10.0);
+        hist.fill(xvalues[i], yvalues[i], i * 10.0);
     }
 
     // check bin content using globalbin
-    for (size_t globalbin = 0; globalbin < hist->getTotalNumberOfBins(); ++globalbin) {
-        EXPECT_EQ(globalbin * 10.0, hist->getBinContent(globalbin));
-        EXPECT_EQ(1.0, hist->getBinNumberOfEntries(globalbin));
+    for (size_t globalbin = 0; globalbin < hist.getTotalNumberOfBins(); ++globalbin) {
+        EXPECT_EQ(globalbin * 10.0, hist.getBinContent(globalbin));
+        EXPECT_EQ(1.0, hist.getBinNumberOfEntries(globalbin));
     }
 
     // check bin content using axes bins
-    for (size_t binx = 0; binx < hist->getXaxis().size(); ++binx) {
-        for (size_t biny = 0; biny < hist->getYaxis().size(); ++biny) {
-            size_t globalbin = hist->getGlobalBin(binx, biny);
-            EXPECT_EQ(globalbin * 10.0, hist->getBinContent(binx, biny));
-            EXPECT_EQ(1.0, hist->getBinNumberOfEntries(binx, biny));
+    for (size_t binx = 0; binx < hist.getXaxis().size(); ++binx) {
+        for (size_t biny = 0; biny < hist.getYaxis().size(); ++biny) {
+            size_t globalbin = hist.getGlobalBin(binx, biny);
+            EXPECT_EQ(globalbin * 10.0, hist.getBinContent(binx, biny));
+            EXPECT_EQ(1.0, hist.getBinNumberOfEntries(binx, biny));
         }
     }
 }
@@ -151,7 +140,7 @@ TEST_F(Histogram2DTest, VariableHistFill)
 
 TEST_F(Histogram2DTest, projectionX)
 {
-    hist->reset();
+    hist.reset();
 
     // values to fill all histogram
     std::vector<double> xvalues = {-0.75, -0.75, -0.75, 0.0, 0.0, 0.0,
@@ -161,18 +150,18 @@ TEST_F(Histogram2DTest, projectionX)
 
     // put in every histogram bin the value from 'content' vector
     for (size_t i = 0; i < xvalues.size(); ++i) {
-        hist->fill(xvalues[i], yvalues[i], content[i]);
+        hist.fill(xvalues[i], yvalues[i], content[i]);
     }
 
     // a) create projection along X axis
-    std::unique_ptr<Histogram1D> h1(hist->projectionX());
-    EXPECT_EQ(hist->getXmin(), h1->getXmin());
-    EXPECT_EQ(hist->getXmax(), h1->getXmax());
-    EXPECT_EQ(hist->getNbinsX(), h1->getNbinsX());
-    EXPECT_EQ(hist->getXaxisValue(0), h1->getXaxisValue(0));
-    EXPECT_EQ(hist->getXaxisValue(3), h1->getXaxisValue(1));
-    EXPECT_EQ(hist->getXaxisValue(6), h1->getXaxisValue(2));
-    EXPECT_EQ(hist->getXaxisValue(9), h1->getXaxisValue(3));
+    std::unique_ptr<Histogram1D> h1(hist.projectionX());
+    EXPECT_EQ(hist.getXmin(), h1->getXmin());
+    EXPECT_EQ(hist.getXmax(), h1->getXmax());
+    EXPECT_EQ(hist.getNbinsX(), h1->getNbinsX());
+    EXPECT_EQ(hist.getXaxisValue(0), h1->getXaxisValue(0));
+    EXPECT_EQ(hist.getXaxisValue(3), h1->getXaxisValue(1));
+    EXPECT_EQ(hist.getXaxisValue(6), h1->getXaxisValue(2));
+    EXPECT_EQ(hist.getXaxisValue(9), h1->getXaxisValue(3));
 
     // check content of projections
     for (size_t binx = 0; binx < h1->getNbinsX(); ++binx) {
@@ -182,14 +171,14 @@ TEST_F(Histogram2DTest, projectionX)
     }
 
     // b) create projection along X axis at given y (slice)
-    h1.reset(hist->projectionX(1.01));
-    EXPECT_EQ(hist->getXmin(), h1->getXmin());
-    EXPECT_EQ(hist->getXmax(), h1->getXmax());
-    EXPECT_EQ(hist->getNbinsX(), h1->getNbinsX());
-    EXPECT_EQ(hist->getXaxisValue(0), h1->getXaxisValue(0));
-    EXPECT_EQ(hist->getXaxisValue(3), h1->getXaxisValue(1));
-    EXPECT_EQ(hist->getXaxisValue(6), h1->getXaxisValue(2));
-    EXPECT_EQ(hist->getXaxisValue(9), h1->getXaxisValue(3));
+    h1.reset(hist.projectionX(1.01));
+    EXPECT_EQ(hist.getXmin(), h1->getXmin());
+    EXPECT_EQ(hist.getXmax(), h1->getXmax());
+    EXPECT_EQ(hist.getNbinsX(), h1->getNbinsX());
+    EXPECT_EQ(hist.getXaxisValue(0), h1->getXaxisValue(0));
+    EXPECT_EQ(hist.getXaxisValue(3), h1->getXaxisValue(1));
+    EXPECT_EQ(hist.getXaxisValue(6), h1->getXaxisValue(2));
+    EXPECT_EQ(hist.getXaxisValue(9), h1->getXaxisValue(3));
 
     // check content of projections
     for (size_t binx = 0; binx < h1->getNbinsX(); ++binx) {
@@ -199,14 +188,14 @@ TEST_F(Histogram2DTest, projectionX)
     }
 
     // c) create projection along X for y between [ylow, yup]
-    h1.reset(hist->projectionX(0.99, 1.01));
-    EXPECT_EQ(hist->getXmin(), h1->getXmin());
-    EXPECT_EQ(hist->getXmax(), h1->getXmax());
-    EXPECT_EQ(hist->getNbinsX(), h1->getNbinsX());
-    EXPECT_EQ(hist->getXaxisValue(0), h1->getXaxisValue(0));
-    EXPECT_EQ(hist->getXaxisValue(3), h1->getXaxisValue(1));
-    EXPECT_EQ(hist->getXaxisValue(6), h1->getXaxisValue(2));
-    EXPECT_EQ(hist->getXaxisValue(9), h1->getXaxisValue(3));
+    h1.reset(hist.projectionX(0.99, 1.01));
+    EXPECT_EQ(hist.getXmin(), h1->getXmin());
+    EXPECT_EQ(hist.getXmax(), h1->getXmax());
+    EXPECT_EQ(hist.getNbinsX(), h1->getNbinsX());
+    EXPECT_EQ(hist.getXaxisValue(0), h1->getXaxisValue(0));
+    EXPECT_EQ(hist.getXaxisValue(3), h1->getXaxisValue(1));
+    EXPECT_EQ(hist.getXaxisValue(6), h1->getXaxisValue(2));
+    EXPECT_EQ(hist.getXaxisValue(9), h1->getXaxisValue(3));
 
     // check content of projections
     for (size_t binx = 0; binx < h1->getNbinsX(); ++binx) {
@@ -229,7 +218,7 @@ TEST_F(Histogram2DTest, projectionX)
 
 TEST_F(Histogram2DTest, projectionY)
 {
-    hist->reset();
+    hist.reset();
 
     // values to fill all histogram
     std::vector<double> xvalues = {-0.75, -0.75, -0.75, 0.0, 0.0, 0.0,
@@ -239,18 +228,18 @@ TEST_F(Histogram2DTest, projectionY)
 
     // put in every histogram bin the value from 'content' vector
     for (size_t i = 0; i < xvalues.size(); ++i) {
-        hist->fill(xvalues[i], yvalues[i], content[i]);
+        hist.fill(xvalues[i], yvalues[i], content[i]);
     }
 
     // a) create projection along Y axis
-    std::unique_ptr<Histogram1D> h1(hist->projectionY());
-    EXPECT_EQ(hist->getYmin(), h1->getXmin());
-    EXPECT_EQ(hist->getYmax(), h1->getXmax());
+    std::unique_ptr<Histogram1D> h1(hist.projectionY());
+    EXPECT_EQ(hist.getYmin(), h1->getXmin());
+    EXPECT_EQ(hist.getYmax(), h1->getXmax());
     EXPECT_EQ(size_t(3), h1->getNbinsX());
-    EXPECT_EQ(hist->getNbinsY(), h1->getNbinsX());
-    EXPECT_EQ(hist->getYaxisValue(3), h1->getXaxisValue(0));
-    EXPECT_EQ(hist->getYaxisValue(4), h1->getXaxisValue(1));
-    EXPECT_EQ(hist->getYaxisValue(5), h1->getXaxisValue(2));
+    EXPECT_EQ(hist.getNbinsY(), h1->getNbinsX());
+    EXPECT_EQ(hist.getYaxisValue(3), h1->getXaxisValue(0));
+    EXPECT_EQ(hist.getYaxisValue(4), h1->getXaxisValue(1));
+    EXPECT_EQ(hist.getYaxisValue(5), h1->getXaxisValue(2));
 
     // check content of projections
 
@@ -263,14 +252,14 @@ TEST_F(Histogram2DTest, projectionY)
     EXPECT_EQ(12.0, h1->getBinContent(2));
 
     // b) create projection along Y axis at given x(slice)
-    h1.reset(hist->projectionY(0.0));
-    EXPECT_EQ(hist->getYmin(), h1->getXmin());
-    EXPECT_EQ(hist->getYmax(), h1->getXmax());
+    h1.reset(hist.projectionY(0.0));
+    EXPECT_EQ(hist.getYmin(), h1->getXmin());
+    EXPECT_EQ(hist.getYmax(), h1->getXmax());
     EXPECT_EQ(size_t(3), h1->getNbinsX());
-    EXPECT_EQ(hist->getNbinsY(), h1->getNbinsX());
-    EXPECT_EQ(hist->getYaxisValue(3), h1->getXaxisValue(0));
-    EXPECT_EQ(hist->getYaxisValue(4), h1->getXaxisValue(1));
-    EXPECT_EQ(hist->getYaxisValue(5), h1->getXaxisValue(2));
+    EXPECT_EQ(hist.getNbinsY(), h1->getNbinsX());
+    EXPECT_EQ(hist.getYaxisValue(3), h1->getXaxisValue(0));
+    EXPECT_EQ(hist.getYaxisValue(4), h1->getXaxisValue(1));
+    EXPECT_EQ(hist.getYaxisValue(5), h1->getXaxisValue(2));
 
     // check content of projections
 
@@ -283,14 +272,14 @@ TEST_F(Histogram2DTest, projectionY)
     EXPECT_EQ(3.0, h1->getBinContent(2));
 
     // c) create projection along Y axis for x's between [xlow,xup]
-    h1.reset(hist->projectionY(0.0, 0.51));
-    EXPECT_EQ(hist->getYmin(), h1->getXmin());
-    EXPECT_EQ(hist->getYmax(), h1->getXmax());
+    h1.reset(hist.projectionY(0.0, 0.51));
+    EXPECT_EQ(hist.getYmin(), h1->getXmin());
+    EXPECT_EQ(hist.getYmax(), h1->getXmax());
     EXPECT_EQ(size_t(3), h1->getNbinsX());
-    EXPECT_EQ(hist->getNbinsY(), h1->getNbinsX());
-    EXPECT_EQ(hist->getYaxisValue(3), h1->getXaxisValue(0));
-    EXPECT_EQ(hist->getYaxisValue(4), h1->getXaxisValue(1));
-    EXPECT_EQ(hist->getYaxisValue(5), h1->getXaxisValue(2));
+    EXPECT_EQ(hist.getNbinsY(), h1->getNbinsX());
+    EXPECT_EQ(hist.getYaxisValue(3), h1->getXaxisValue(0));
+    EXPECT_EQ(hist.getYaxisValue(4), h1->getXaxisValue(1));
+    EXPECT_EQ(hist.getYaxisValue(5), h1->getXaxisValue(2));
 
     // check content of projections
 
@@ -316,7 +305,7 @@ TEST_F(Histogram2DTest, projectionY)
 
 TEST_F(Histogram2DTest, crop)
 {
-    hist->reset();
+    hist.reset();
 
     // values to fill all histogram
     std::vector<double> xvalues = {-0.75, -0.75, -0.75, 0.0, 0.0, 0.0,
@@ -326,10 +315,10 @@ TEST_F(Histogram2DTest, crop)
 
     // put in every histogram bin the value from 'content' vector
     for (size_t i = 0; i < xvalues.size(); ++i) {
-        hist->fill(xvalues[i], yvalues[i], content[i]);
+        hist.fill(xvalues[i], yvalues[i], content[i]);
     }
 
-    std::unique_ptr<Histogram2D> crop(hist->crop(-0.49, 0.0, 1.99, 1.9));
+    std::unique_ptr<Histogram2D> crop(hist.crop(-0.49, 0.0, 1.99, 1.9));
     EXPECT_EQ(-0.5, crop->getXmin());
     EXPECT_EQ(2.0, crop->getXmax());
     EXPECT_EQ(size_t(3), crop->getNbinsX());
@@ -354,55 +343,55 @@ TEST_F(Histogram2DTest, CreateHistogram)
         data[i] = double(i);
     }
 
-    std::unique_ptr<IHistogram> hist(IHistogram::createHistogram(data));
-    EXPECT_EQ(size_t(2), hist->getRank());
-    EXPECT_EQ(data.getAllocatedSize(), hist->getTotalNumberOfBins());
-    EXPECT_EQ(data.getAxis(0).getMin(), hist->getXmin());
-    EXPECT_EQ(data.getAxis(0).getMax(), hist->getXmax());
-    EXPECT_EQ(data.getAxis(1).getMin(), hist->getYmin());
-    EXPECT_EQ(data.getAxis(1).getMax(), hist->getYmax());
-    for (size_t i = 0; i < hist->getTotalNumberOfBins(); ++i) {
-        EXPECT_EQ(data[i], hist->getBinContent(i));
-        EXPECT_EQ(data[i], hist->getBinAverage(i));
-        EXPECT_EQ(1, hist->getBinNumberOfEntries(i));
-        EXPECT_EQ(0.0, hist->getBinError(i));
+    std::unique_ptr<IHistogram> h2(IHistogram::createHistogram(data));
+    EXPECT_EQ(size_t(2), h2->getRank());
+    EXPECT_EQ(data.getAllocatedSize(), h2->getTotalNumberOfBins());
+    EXPECT_EQ(data.getAxis(0).getMin(), h2->getXmin());
+    EXPECT_EQ(data.getAxis(0).getMax(), h2->getXmax());
+    EXPECT_EQ(data.getAxis(1).getMin(), h2->getYmin());
+    EXPECT_EQ(data.getAxis(1).getMax(), h2->getYmax());
+    for (size_t i = 0; i < h2->getTotalNumberOfBins(); ++i) {
+        EXPECT_EQ(data[i], h2->getBinContent(i));
+        EXPECT_EQ(data[i], h2->getBinAverage(i));
+        EXPECT_EQ(1, h2->getBinNumberOfEntries(i));
+        EXPECT_EQ(0.0, h2->getBinError(i));
     }
 }
 
 TEST_F(Histogram2DTest, CreateOutputData)
 {
-    Histogram2D hist(10, -5.0, 5.0, 5, -5.0, 0.0);
+    Histogram2D h2(10, -5.0, 5.0, 5, -5.0, 0.0);
 
-    for (size_t nx = 0; nx < hist.getNbinsX(); ++nx) {
-        for (size_t ny = 0; ny < hist.getNbinsY(); ++ny) {
-            double value(1.0 * ny + nx * hist.getNbinsY());
-            size_t globalbin = hist.getGlobalBin(nx, ny);
-            hist.fill(hist.getXaxisValue(globalbin), hist.getYaxisValue(globalbin), value);
+    for (size_t nx = 0; nx < h2.getNbinsX(); ++nx) {
+        for (size_t ny = 0; ny < h2.getNbinsY(); ++ny) {
+            double value(1.0 * ny + nx * h2.getNbinsY());
+            size_t globalbin = h2.getGlobalBin(nx, ny);
+            h2.fill(h2.getXaxisValue(globalbin), h2.getYaxisValue(globalbin), value);
         }
     }
 
-    std::unique_ptr<OutputData<double>> data(hist.createOutputData(IHistogram::DataType::INTEGRAL));
+    std::unique_ptr<OutputData<double>> data(h2.createOutputData(IHistogram::DataType::INTEGRAL));
     EXPECT_EQ(size_t(2), data->getRank());
-    EXPECT_EQ(data->getAllocatedSize(), hist.getTotalNumberOfBins());
-    EXPECT_EQ(data->getAxis(0).getMin(), hist.getXmin());
-    EXPECT_EQ(data->getAxis(0).getMax(), hist.getXmax());
-    EXPECT_EQ(data->getAxis(1).getMin(), hist.getYmin());
-    EXPECT_EQ(data->getAxis(1).getMax(), hist.getYmax());
+    EXPECT_EQ(data->getAllocatedSize(), h2.getTotalNumberOfBins());
+    EXPECT_EQ(data->getAxis(0).getMin(), h2.getXmin());
+    EXPECT_EQ(data->getAxis(0).getMax(), h2.getXmax());
+    EXPECT_EQ(data->getAxis(1).getMin(), h2.getYmin());
+    EXPECT_EQ(data->getAxis(1).getMax(), h2.getYmax());
     for (size_t i = 0; i < data->getAllocatedSize(); ++i) {
         EXPECT_EQ(double(i), (*data)[i]);
     }
 
-    data.reset(hist.createOutputData(IHistogram::DataType::AVERAGE));
+    data.reset(h2.createOutputData(IHistogram::DataType::AVERAGE));
     for (size_t i = 0; i < data->getAllocatedSize(); ++i) {
         EXPECT_EQ(double(i), (*data)[i]);
     }
 
-    data.reset(hist.createOutputData(IHistogram::DataType::STANDARD_ERROR));
+    data.reset(h2.createOutputData(IHistogram::DataType::STANDARD_ERROR));
     for (size_t i = 0; i < data->getAllocatedSize(); ++i) {
         EXPECT_EQ(0.0, (*data)[i]);
     }
 
-    data.reset(hist.createOutputData(IHistogram::DataType::NENTRIES));
+    data.reset(h2.createOutputData(IHistogram::DataType::NENTRIES));
     for (size_t i = 0; i < data->getAllocatedSize(); ++i) {
         EXPECT_EQ(1.0, (*data)[i]);
     }
@@ -410,16 +399,16 @@ TEST_F(Histogram2DTest, CreateOutputData)
 
 TEST_F(Histogram2DTest, GetMaximumGetMinimum)
 {
-    Histogram2D hist(10, -5.0, 5.0, 5, -5.0, 0.0);
+    Histogram2D h2(10, -5.0, 5.0, 5, -5.0, 0.0);
 
-    for (size_t ix = 0; ix < hist.getNbinsX(); ++ix) {
-        for (size_t iy = 0; iy < hist.getNbinsY(); ++iy) {
-            hist.fill(-5.0 + ix + 0.5, -5.0 + iy + 0.5, 10.0 + ix + hist.getNbinsX() * iy);
+    for (size_t ix = 0; ix < h2.getNbinsX(); ++ix) {
+        for (size_t iy = 0; iy < h2.getNbinsY(); ++iy) {
+            h2.fill(-5.0 + ix + 0.5, -5.0 + iy + 0.5, 10.0 + ix + h2.getNbinsX() * iy);
         }
     }
 
-    EXPECT_EQ(10.0, hist.getMinimum());
-    EXPECT_EQ(size_t(0), hist.getMinimumBinIndex());
-    EXPECT_EQ(59.0, hist.getMaximum());
-    EXPECT_EQ(size_t(49), hist.getMaximumBinIndex());
+    EXPECT_EQ(10.0, h2.getMinimum());
+    EXPECT_EQ(size_t(0), h2.getMinimumBinIndex());
+    EXPECT_EQ(59.0, h2.getMaximum());
+    EXPECT_EQ(size_t(49), h2.getMaximumBinIndex());
 }

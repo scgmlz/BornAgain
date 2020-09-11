@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "IShape2DView.h"
-#include "ISceneAdaptor.h"
-#include "MaskItems.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Views/MaskWidgets/IShape2DView.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/MaskWidgets/ISceneAdaptor.h"
 #include <QAction>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QMenu>
@@ -66,7 +66,7 @@ SessionItem* IShape2DView::parameterizedItem()
 
 void IShape2DView::setSceneAdaptor(const ISceneAdaptor* adaptor)
 {
-    Q_ASSERT(adaptor);
+    ASSERT(adaptor);
 
     if (m_adaptor != adaptor) {
         if (m_adaptor)

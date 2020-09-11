@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEVIEWDOCKS_H
-#define SAMPLEVIEWDOCKS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEVIEWDOCKS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEVIEWDOCKS_H
 
-#include "DocksController.h"
+#include "GUI/coregui/Views/CommonWidgets/DocksController.h"
 
 class SampleView;
 class SampleWidgetBox;
@@ -62,4 +62,4 @@ private:
     RealSpacePanel* m_realSpacePanel;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEVIEWDOCKS_H

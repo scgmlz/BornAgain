@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTIONSTOOLBAR_H
-#define PROJECTIONSTOOLBAR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSTOOLBAR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSTOOLBAR_H
 
-#include "MaskEditorFlags.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
+#include "Wrap/WinDllMacros.h"
 #include <QToolBar>
 
 class ProjectionsEditorActions;
@@ -55,4 +55,4 @@ private:
     MaskEditorFlags::Activity m_previousActivity;
 };
 
-#endif // PROJECTIONSTOOLBAR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSTOOLBAR_H

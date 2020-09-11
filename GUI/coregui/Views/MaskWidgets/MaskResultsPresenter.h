@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKRESULTSPRESENTER_H
-#define MASKRESULTSPRESENTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKRESULTSPRESENTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKRESULTSPRESENTER_H
 
-#include "MaskEditorFlags.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
+#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <QObject>
 #include <memory>
@@ -53,4 +53,4 @@ private:
     bool m_interpolation_flag_backup;
 };
 
-#endif // MASKRESULTSPRESENTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKRESULTSPRESENTER_H

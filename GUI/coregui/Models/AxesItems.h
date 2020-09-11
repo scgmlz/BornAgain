@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef AXESITEMS_H
-#define AXESITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_AXESITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_AXESITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 #include <memory>
 
 class IAxis;
@@ -25,12 +25,12 @@ class BA_CORE_API_ BasicAxisItem : public SessionItem
 public:
     static const QString P_IS_VISIBLE;
     static const QString P_NBINS;
-    static const QString P_MIN;
-    static const QString P_MAX;
+    static const QString P_MIN_DEG;
+    static const QString P_MAX_DEG;
     static const QString P_TITLE;
     static const QString P_TITLE_IS_VISIBLE;
 
-    explicit BasicAxisItem(const QString& type = Constants::BasicAxisType);
+    explicit BasicAxisItem(const QString& type = "BasicAxis");
     virtual ~BasicAxisItem();
 
     virtual std::unique_ptr<IAxis> createAxis(double scale) const;
@@ -50,4 +50,4 @@ private:
     void setMinMaxEditor(const QString& editorType);
 };
 
-#endif // AXESITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_AXESITEMS_H

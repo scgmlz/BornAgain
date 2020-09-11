@@ -12,22 +12,22 @@
 //
 // ************************************************************************** //
 
-#include "BeamItems.h"
-#include "AxesItems.h"
-#include "Beam.h"
-#include "BeamAngleItems.h"
-#include "BeamDistributionItem.h"
-#include "BeamWavelengthItem.h"
-#include "BornAgainNamespace.h"
-#include "FootprintItems.h"
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "IAxis.h"
-#include "ParameterTranslators.h"
-#include "PointwiseAxisItem.h"
-#include "SessionItemUtils.h"
-#include "SpecularBeamInclinationItem.h"
-#include "Units.h"
+#include "GUI/coregui/Models/BeamItems.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Basics/Units.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Binning/IAxis.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/BeamAngleItems.h"
+#include "GUI/coregui/Models/BeamDistributionItem.h"
+#include "GUI/coregui/Models/BeamWavelengthItem.h"
+#include "GUI/coregui/Models/FootprintItems.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/ParameterTranslators.h"
+#include "GUI/coregui/Models/PointwiseAxisItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <cmath>
 
 using SessionItemUtils::GetVectorItem;
@@ -40,23 +40,23 @@ const QString polarization_tooltip = "Polarization of the beam, given as the Blo
 RealLimits getLimits(double max_q);
 } // namespace
 
-const QString BeamItem::P_INTENSITY = QString::fromStdString(BornAgain::Intensity);
-const QString BeamItem::P_WAVELENGTH = QString::fromStdString(BornAgain::Wavelength);
-const QString BeamItem::P_INCLINATION_ANGLE = QString::fromStdString(BornAgain::Inclination);
-const QString BeamItem::P_AZIMUTHAL_ANGLE = QString::fromStdString(BornAgain::Azimuth);
-const QString BeamItem::P_POLARIZATION = QString("Polarization");
+const QString BeamItem::P_INTENSITY = QString::fromStdString("Intensity");
+const QString BeamItem::P_WAVELENGTH = QString::fromStdString("Wavelength");
+const QString BeamItem::P_INCLINATION_ANGLE = QString::fromStdString("InclinationAngle");
+const QString BeamItem::P_AZIMUTHAL_ANGLE = QString::fromStdString("AzimuthalAngle");
+const QString BeamItem::P_POLARIZATION = "Polarization";
 
 BeamItem::BeamItem(const QString& beam_model) : SessionItem(beam_model)
 {
     addProperty(P_INTENSITY, 1e+08)
         ->setLimits(RealLimits::limited(0.0, 1e+32))
         .setToolTip("Beam intensity in neutrons (or gammas) per sec.")
-        .setEditorType(Constants::ScientificEditorType);
+        .setEditorType("ScientificDouble");
 
-    addGroupProperty(P_AZIMUTHAL_ANGLE, Constants::BeamAzimuthalAngleType);
-    addGroupProperty(P_POLARIZATION, Constants::VectorType)->setToolTip(polarization_tooltip);
+    addGroupProperty(P_AZIMUTHAL_ANGLE, "BeamAzimuthalAngle");
+    addGroupProperty(P_POLARIZATION, "Vector")->setToolTip(polarization_tooltip);
 
-    addTranslator(VectorParameterTranslator(P_POLARIZATION, BornAgain::BlochVector));
+    addTranslator(VectorParameterTranslator(P_POLARIZATION, "BlochVector"));
 }
 
 BeamItem::~BeamItem() = default;
@@ -80,40 +80,39 @@ double BeamItem::getWavelength() const
 void BeamItem::setWavelength(double value)
 {
     auto beam_wavelength = dynamic_cast<BeamWavelengthItem*>(getItem(P_WAVELENGTH));
-    Q_ASSERT(beam_wavelength);
+    ASSERT(beam_wavelength);
     beam_wavelength->resetToValue(value);
 }
 
 void BeamItem::setInclinationAngle(double value)
 {
     auto angleItem = dynamic_cast<BeamDistributionItem*>(getItem(P_INCLINATION_ANGLE));
-    Q_ASSERT(angleItem);
+    ASSERT(angleItem);
     angleItem->resetToValue(value);
 }
 
 double BeamItem::getAzimuthalAngle() const
 {
     const auto inclination = dynamic_cast<BeamAzimuthalAngleItem*>(getItem(P_AZIMUTHAL_ANGLE));
-    Q_ASSERT(inclination);
+    ASSERT(inclination);
     return inclination->azimuthalAngle();
 }
 
 void BeamItem::setAzimuthalAngle(double value)
 {
     auto angleItem = dynamic_cast<BeamDistributionItem*>(getItem(P_AZIMUTHAL_ANGLE));
-    Q_ASSERT(angleItem);
+    ASSERT(angleItem);
     angleItem->resetToValue(value);
 }
 
 std::unique_ptr<Beam> BeamItem::createBeam() const
 {
-    auto result = std::make_unique<Beam>();
-
-    result->setIntensity(getIntensity());
     double lambda = getWavelength();
     double inclination_angle = Units::deg2rad(getInclinationAngle());
     double azimuthal_angle = Units::deg2rad(getAzimuthalAngle());
-    result->setCentralK(lambda, inclination_angle, azimuthal_angle);
+
+    auto result =
+        std::make_unique<Beam>(lambda, inclination_angle, azimuthal_angle, getIntensity());
 
     result->setPolarization(GetVectorItem(*this, P_POLARIZATION));
 
@@ -133,19 +132,19 @@ void BeamItem::setWavelengthProperty(const QString& wavelength_type)
 // Specular beam item
 /* ------------------------------------------------------------------------- */
 
-const QString SpecularBeamItem::P_FOOPTPRINT = QString("Footprint");
+const QString SpecularBeamItem::P_FOOPTPRINT = "Footprint";
 
 const QString footprint_group_label("Type");
 
-SpecularBeamItem::SpecularBeamItem() : BeamItem(Constants::SpecularBeamType)
+SpecularBeamItem::SpecularBeamItem() : BeamItem("SpecularBeam")
 {
-    setInclinationProperty(Constants::SpecularBeamInclinationType);
-    setWavelengthProperty(Constants::SpecularBeamWavelengthType);
+    setInclinationProperty("SpecularBeamInclinationAxis");
+    setWavelengthProperty("SpecularBeamWavelength");
 
     getItem(P_AZIMUTHAL_ANGLE)->setVisible(false);
     getItem(P_POLARIZATION)->setVisible(false);
 
-    auto item = addGroupProperty(P_FOOPTPRINT, Constants::FootprintGroup);
+    auto item = addGroupProperty(P_FOOPTPRINT, "Footprint group");
     item->setDisplayName(footprint_group_label);
     item->setToolTip("Footprint type");
 
@@ -172,7 +171,7 @@ double SpecularBeamItem::getInclinationAngle() const
 
 void SpecularBeamItem::setInclinationAngle(double value)
 {
-    Q_ASSERT(value == 0.0);
+    ASSERT(value == 0.0);
     value = 0.0;
     BeamItem::setInclinationAngle(value);
 }
@@ -200,18 +199,17 @@ void SpecularBeamItem::updateFileName(const QString& filename)
 
 void SpecularBeamItem::updateToData(const IAxis& axis, QString units)
 {
-    if (units == Constants::UnitsNbins) {
-        inclinationAxisGroup()->setCurrentType(Constants::BasicAxisType);
+    if (units == "nbins") {
+        inclinationAxisGroup()->setCurrentType("BasicAxis");
         auto axis_item = currentInclinationAxisItem();
         axis_item->setItemValue(BasicAxisItem::P_NBINS, static_cast<int>(axis.size()));
         return;
     }
 
     auto axis_group = inclinationAxisGroup();
-    auto axis_item =
-        static_cast<PointwiseAxisItem*>(axis_group->getChildOfType(Constants::PointwiseAxisType));
+    auto axis_item = static_cast<PointwiseAxisItem*>(axis_group->getChildOfType("PointwiseAxis"));
     axis_item->init(axis, units);
-    axis_group->setCurrentType(Constants::PointwiseAxisType); // calls updateWavelength()
+    axis_group->setCurrentType("PointwiseAxis"); // calls updateWavelength()
     axis_item->updateIndicators();
 }
 
@@ -221,7 +219,7 @@ void SpecularBeamItem::updateWavelength()
     auto wl_item = static_cast<SpecularBeamWavelengthItem*>(getItem(P_WAVELENGTH));
     if (auto axis_item = dynamic_cast<PointwiseAxisItem*>(item)) {
         auto axis = axis_item->getAxis();
-        if (axis && axis_item->getUnitsLabel() == Constants::UnitsQyQz)
+        if (axis && axis_item->getUnitsLabel() == "q-space")
             wl_item->setToRange(getLimits(axis->getMax()));
     } else
         wl_item->setToRange(RealLimits::positive());
@@ -230,10 +228,10 @@ void SpecularBeamItem::updateWavelength()
 // GISAS beam item
 /* ------------------------------------------------------------------------- */
 
-GISASBeamItem::GISASBeamItem() : BeamItem(Constants::GISASBeamType)
+GISASBeamItem::GISASBeamItem() : BeamItem("GISASBeam")
 {
-    setInclinationProperty(Constants::BeamInclinationAngleType);
-    setWavelengthProperty(Constants::BeamWavelengthType);
+    setInclinationProperty("BeamInclinationAngle");
+    setWavelengthProperty("BeamWavelength");
 }
 
 GISASBeamItem::~GISASBeamItem() = default;
@@ -241,7 +239,7 @@ GISASBeamItem::~GISASBeamItem() = default;
 double GISASBeamItem::getInclinationAngle() const
 {
     const auto inclination = dynamic_cast<BeamInclinationAngleItem*>(getItem(P_INCLINATION_ANGLE));
-    Q_ASSERT(inclination);
+    ASSERT(inclination);
     return inclination->inclinationAngle();
 }
 

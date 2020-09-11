@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef IOBSERVER_H
-#define IOBSERVER_H
+#ifndef BORNAGAIN_CORE_FITTING_IOBSERVER_H
+#define BORNAGAIN_CORE_FITTING_IOBSERVER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <list>
 #include <memory>
 
@@ -54,4 +54,4 @@ private:
     std::list<observer_t> m_observers;
 };
 
-#endif // IOBSERVER_H
+#endif // BORNAGAIN_CORE_FITTING_IOBSERVER_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OVERLAYLABELCONTROLLER_H
-#define OVERLAYLABELCONTROLLER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELCONTROLLER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELCONTROLLER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QString>
 
@@ -48,4 +48,4 @@ private:
     QString m_text;
 };
 
-#endif // OVERLAYLABELCONTROLLER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELCONTROLLER_H

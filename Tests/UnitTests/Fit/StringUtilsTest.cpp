@@ -1,13 +1,9 @@
-#include "StringUtils.h"
-#include "google_test.h"
+#include "Fit/Tools/StringUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class StringUtilsTest : public ::testing::Test
 {
-protected:
-    ~StringUtilsTest();
 };
-
-StringUtilsTest::~StringUtilsTest() = default;
 
 TEST_F(StringUtilsTest, removeSubstring)
 {
@@ -19,5 +15,5 @@ TEST_F(StringUtilsTest, removeSubstring)
 TEST_F(StringUtilsTest, toLower)
 {
     std::string target("QyQz");
-    EXPECT_EQ(StringUtils::to_lower(target), std::string("qyqz"));
+    EXPECT_EQ(StringUtils::to_lower(target), "qyqz");
 }

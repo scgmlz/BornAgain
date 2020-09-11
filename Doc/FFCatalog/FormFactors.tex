@@ -1985,7 +1985,7 @@ For the foreseeable future, this is not in the scope of BornAgain.
 
 We choose ripples to be elongated in $x$ direction.
 Different profiles in the $yz$ plane can be chosen:
-box, sinusoidal [\ffref{Ripple1}], saw-tooth [\ffref{Ripple2}].
+bar, cosine, sawtooth.
 
 For each of them, different profiles can also be chosen in the $xz$ plane,
 each of them characterized by a single parameter \texttt{length},~$L$.
@@ -2022,8 +2022,8 @@ the \texttt{Lorentz}
  form factor is the Fourier transform of an exponential in~$|x|$.
 
 \paragraph{History}\strut\\
-The \texttt{Box} variant of \E{Ripple1} and \E{Ripple2} replicates
-two form factors from \FitGISAXS\ \cite{Bab13}.
+\E{CosineRippleBox} and \E{SawtoothRippleBox} replicate
+Ripple1 and Ripple2 from \FitGISAXS\ \cite{Bab13}.
 
 Full documentation and API support for all ripple form factors appeared in BornAgain-1.17.
 Before that release, the \texttt{Lorentz} factor~$f_\parallel$
@@ -2084,34 +2084,33 @@ with $f_\parallel$ as defined in~\cref{EFparallel},
 \end{equation*}
 
 %===============================================================================
-\ffsection{Ripple1 (sinusoidal)} \label{SRipple1}
+\ffsection{CosineRipple} \label{SRipple1}
 %===============================================================================
-\index{Ripple!sinusoidal}
-\index{Sinusoidal ripple}
-\index{FormFactorRipple1Box@\Code{FormFactorRipple1Box}}
-\index{FormFactorRipple1Gauss@\Code{FormFactorRipple1Gauss}}
-\index{FormFactorRipple1Lorentz@\Code{FormFactorRipple1Lorentz}}
+\index{Ripple!cosine}
+\index{FormFactorCosineRippleBox@\Code{FormFactorCosineRippleBox}}
+\index{FormFactorCosineRippleGauss@\Code{FormFactorCosineRippleGauss}}
+\index{FormFactorCosineRippleLorentz@\Code{FormFactorCosineRippleLorentz}}
 
 \paragraph{Real-space geometry}\strut\\
 
 \begin{figure}[H]
 \hfill
-\subfigure[Perspective]{\includefinal{.24\TW}{fig/blue/Ripple13d.png}}
+\subfigure[Perspective]{\includefinal{.24\TW}{fig/blue/CosineRipple3d.png}}
 \hfill
-\subfigure[Top view]{\includefinal{.3\TW}{fig/cuts/Ripple12dxy.pdf}}
+\subfigure[Top view]{\includefinal{.3\TW}{fig/cuts/CosineRipple2dxy.pdf}}
 \hfill
-\subfigure[Side view]{\includefinal{.3\TW}{fig/cuts/Ripple12dyz.pdf}}
+\subfigure[Side view]{\includefinal{.3\TW}{fig/cuts/CosineRipple2dyz.pdf}}
 \hfill
 \caption{A ripple with a sinusoidal profile.}
 \end{figure}
 
 \paragraph{Syntax and parameters}\strut\\[-2ex plus .2ex minus .2ex]
 \begin{lstlisting}
-  FormFactorRipple1Box(
+  FormFactorCosineRippleBox(
      double length, double width, double height)
-  FormFactorRipple1Gauss(
+  FormFactorCosineRippleGauss(
      double length, double width, double height)
-  FormFactorRipple1Lorentz(
+  FormFactorCosineRippleLorentz(
      double length, double width, double height)
 \end{lstlisting}
 with the parameters
@@ -2151,7 +2150,7 @@ $u=\text{arccos}( 2z/H-1)$.
 
 \begin{figure}[H]
 \begin{center}
-\includefinal{1\TW}{fig/ff2/ff_Ripple1.pdf}
+\includefinal{1\TW}{fig/ff2/ff_CosineRipple.pdf}
 \end{center}
 \caption{Normalized intensity $|F|^2/V^2$,
 computed with $L=25$~nm, $W=10$~nm and $H=8$~nm,
@@ -2159,26 +2158,27 @@ for four different angles~$\omega$ of rotation around the $z$ axis.}
 \end{figure}
 
 \paragraph{History}\strut\\
-Agrees with the \E{Ripple1} form factor of \FitGISAXS\ \cite{Bab13}.
+Renamed from Ripple1 in BornAgain 1.18.
+\E{CosineRippleBox} agrees with Ripple1 of \FitGISAXS\ \cite{Bab13}.
 
 %===============================================================================
-\ffsection{Ripple2 (saw-tooth)} \label{SRipple2}
+\ffsection{SawtoothRipple} \label{SSawtoothRipple}
 %===============================================================================
-\index{Ripple!saw-tooth}
-\index{Saw-tooth ripple}
-\index{FormFactorRipple2@\Code{FormFactorRipple2Box}}
-\index{FormFactorRipple2Gauss@\Code{FormFactorRipple2Gauss}}
-\index{FormFactorRipple2Lorentz@\Code{FormFactorRipple2Lorentz}}
+\index{Ripple!sawtooth}
+\index{Sawtooth ripple}
+\index{FormFactorSawtoothRipple@\Code{FormFactorSawtoothRippleBox}}
+\index{FormFactorSawtoothRippleGauss@\Code{FormFactorSawtoothRippleGauss}}
+\index{FormFactorSawtoothRippleLorentz@\Code{FormFactorSawtoothRippleLorentz}}
 
 \paragraph{Real-space geometry}\strut\\
 
 \begin{figure}[H]
 \hfill
-\subfigure[Perspective]{\includefinal{.24\TW}{fig/blue/Ripple23d.png}}
+\subfigure[Perspective]{\includefinal{.24\TW}{fig/blue/SawtoothRipple3d.png}}
 \hfill
-\subfigure[Top view]{\includefinal{.3\TW}{fig/cuts/Ripple22dxy.pdf}}
+\subfigure[Top view]{\includefinal{.3\TW}{fig/cuts/SawtoothRipple2dxy.pdf}}
 \hfill
-\subfigure[Side view]{\includefinal{.3\TW}{fig/cuts/Ripple22dyz.pdf}}
+\subfigure[Side view]{\includefinal{.3\TW}{fig/cuts/SawtoothRipple2dyz.pdf}}
 \hfill
 \caption{A ripple with an asymmetric saw-tooth profile.}
 \end{figure}
@@ -2187,11 +2187,11 @@ Agrees with the \E{Ripple1} form factor of \FitGISAXS\ \cite{Bab13}.
 
 \paragraph{Syntax and parameters}\strut\\[-2ex plus .2ex minus .2ex]
 \begin{lstlisting}
-  FormFactorRipple2Box(
+  FormFactorSawtoothRippleBox(
      double length, double width, double height, asymmetry)
-  FormFactorRipple2Gauss(
+  FormFactorSawtoothRippleGauss(
      double length, double width, double height, asymmetry)
-  FormFactorRipple2Lorentz(
+  FormFactorSawtoothRippleLorentz(
      double length, double width, double height, asymmetry)
 \end{lstlisting}
 with the parameters
@@ -2231,7 +2231,7 @@ with $f_\parallel$ defined in~\cref{EFparallel}.
 
 \begin{figure}[H]
 \begin{center}
-\includefinal{1\TW}{fig/ff2/ff_Ripple2.pdf}
+\includefinal{1\TW}{fig/ff2/ff_SawtoothRipple.pdf}
 \end{center}
 \caption{Normalized intensity $|F|^2/V^2$,
 computed with $L=25$~nm, $W=10$~nm, $H=8$~nm, and $d=5$~nm,
@@ -2240,7 +2240,8 @@ The low symmetry requires other angular ranges than used in most other figures.}
 \end{figure}
 
 \paragraph{History}\strut\\
-Agrees with the \E{Ripple2} form factor of \FitGISAXS\ \cite{Bab13}.
+Renamed from Ripple2 in BornAgain 1.18.
+\E{SawtoothRippleBox} agrees with Ripple2 of \FitGISAXS\ \cite{Bab13}.
 
 \index{Ripple|)}
 

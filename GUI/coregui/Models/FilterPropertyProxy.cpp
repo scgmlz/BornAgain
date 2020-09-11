@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "FilterPropertyProxy.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
+#include "GUI/coregui/Models/SessionModel.h"
 
 int FilterPropertyProxy::columnCount(const QModelIndex& parent) const
 {
@@ -36,8 +36,7 @@ bool FilterPropertyProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sou
     if (!sourceParent.isValid())
         return true;
     const QString modelType = index.data(SessionFlags::ModelTypeRole).toString();
-    if (modelType == Constants::PropertyType || modelType == Constants::GroupItemType
-        || modelType == Constants::VectorType)
+    if (modelType == "Property" || modelType == "GroupProperty" || modelType == "Vector")
         return false;
 
     return true; //! sourceModel()->data(index, Qt::DisplayRole).isValid();

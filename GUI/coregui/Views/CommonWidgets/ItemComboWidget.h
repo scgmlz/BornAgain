@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMCOMBOWIDGET_H
-#define ITEMCOMBOWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMCOMBOWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMCOMBOWIDGET_H
 
-#include "IFactory.h"
-#include "SessionItemWidget.h"
-#include "WinDllMacros.h"
+#include "Fit/TestEngine/IFactory.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QString>
 #include <QWidget>
@@ -70,4 +70,4 @@ private:
     QMap<QString, SessionItemWidget*> m_presentationTypeToWidget;
 };
 
-#endif // ITEMCOMBOWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMCOMBOWIDGET_H

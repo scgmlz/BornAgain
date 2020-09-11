@@ -12,16 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "RotatedPyramidsBuilder.h"
-#include "BornAgainNamespace.h"
-#include "FormFactorPyramid.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/RotatedPyramidsBuilder.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorPyramid.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
 
 RotatedPyramidsBuilder::RotatedPyramidsBuilder()
     : m_length(10 * Units::nanometer), m_height(5 * Units::nanometer),

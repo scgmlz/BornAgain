@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ProjectionsPropertyPanel.h"
-#include "ComponentEditor.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsPropertyPanel.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QVBoxLayout>
 
 ProjectionsPropertyPanel::ProjectionsPropertyPanel(QWidget* parent)

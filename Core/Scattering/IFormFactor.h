@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#ifndef IFORMFACTOR_H
-#define IFORMFACTOR_H
+#ifndef BORNAGAIN_CORE_SCATTERING_IFORMFACTOR_H
+#define BORNAGAIN_CORE_SCATTERING_IFORMFACTOR_H
 
-#include "Complex.h"
-#include "EigenCore.h"
-#include "ISample.h"
-#include "Material.h"
-#include "Vectors3D.h"
-#include "ZLimits.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Material/Material.h"
+#include "Core/Scattering/ISample.h"
+#include "Core/Scattering/ZLimits.h"
+#include "Core/Vector/EigenCore.h"
+#include "Core/Vector/Vectors3D.h"
 
 class ILayerRTCoefficients;
 class IRotation;
@@ -40,8 +40,10 @@ class WavevectorInfo;
 class BA_CORE_API_ IFormFactor : public ISample
 {
 public:
-    IFormFactor() {}
-    ~IFormFactor() override;
+    IFormFactor() = default;
+    IFormFactor(const NodeMeta& meta, const std::vector<double>& PValues);
+
+    ~IFormFactor() = default;
     IFormFactor* clone() const override = 0;
 
     //! Creates a (possibly sliced) form factor with the given rotation and translation
@@ -90,4 +92,4 @@ protected:
 IFormFactor* CreateTransformedFormFactor(const IFormFactor& formfactor, const IRotation& rot,
                                          kvector_t translation);
 
-#endif // IFORMFACTOR_H
+#endif // BORNAGAIN_CORE_SCATTERING_IFORMFACTOR_H

@@ -12,15 +12,19 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARSCALARNCSTRATEGY_H
-#define SPECULARSCALARNCSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARNCSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARNCSTRATEGY_H
 
-#include "SpecularScalarStrategy.h"
+#include "Core/Multilayer/SpecularScalarStrategy.h"
 
 class Slice;
 
-//! Implements method 'execute' to compute refraction angles and transmission/reflection
-//! coefficients for coherent wave propagation in a multilayer.
+//! Implements Nevot-Croce roughness for a scaler computation.
+//!
+//! Implements the transition function that includes Nevot-Croce roughness
+//! in the computation of the coefficients for coherent wave propagation
+//! in a multilayer by applying modified Fresnel coefficients.
+//!
 //! @ingroup algorithms_internal
 
 class BA_CORE_API_ SpecularScalarNCStrategy : public SpecularScalarStrategy
@@ -35,4 +39,4 @@ private:
                                         const Eigen::Vector2cd& t_r1) const override;
 };
 
-#endif // SPECULARSCALARNCSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARNCSTRATEGY_H

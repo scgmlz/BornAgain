@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ELLIPSEVIEW_H
-#define ELLIPSEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ELLIPSEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ELLIPSEVIEW_H
 
-#include "RectangleBaseView.h"
+#include "GUI/coregui/Views/MaskWidgets/RectangleBaseView.h"
 
 //! This is a View of ellipse mask (represented by EllipseItem) on GraphicsScene.
 //! Given view follows standard QGraphicsScene notations: (x,y) is top left corner.
@@ -47,4 +47,4 @@ private:
     qreal bottom() const;
 };
 
-#endif // ELLIPSEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ELLIPSEVIEW_H

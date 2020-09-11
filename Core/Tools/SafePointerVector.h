@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAFEPOINTERVECTOR_H
-#define SAFEPOINTERVECTOR_H
+#ifndef BORNAGAIN_CORE_TOOLS_SAFEPOINTERVECTOR_H
+#define BORNAGAIN_CORE_TOOLS_SAFEPOINTERVECTOR_H
 
 #include <algorithm>
 #include <vector>
@@ -103,4 +103,4 @@ template <class T> void SafePointerVector<T>::clear()
     m_pointers.clear();
 }
 
-#endif // SAFEPOINTERVECTOR_H
+#endif // BORNAGAIN_CORE_TOOLS_SAFEPOINTERVECTOR_H

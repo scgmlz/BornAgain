@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INSTRUMENTITEMS_H
-#define INSTRUMENTITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTITEMS_H
 
-#include "BeamItems.h"
+#include "GUI/coregui/Models/BeamItems.h"
 
 class BackgroundItem;
 class DataItem;
@@ -108,4 +108,4 @@ public:
     void updateToRealData(const RealDataItem* item) override;
 };
 
-#endif // INSTRUMENTITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTITEMS_H

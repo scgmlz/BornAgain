@@ -12,21 +12,19 @@
 //
 // ************************************************************************** //
 
-#include "ParameterUtils.h"
-#include "BornAgainNamespace.h"
-#include "ParameterDistribution.h"
-#include "ParameterPool.h"
-#include "Particle.h"
-#include "ParticleDistribution.h"
-#include "RealParameter.h"
+#include "Core/Parametrization/ParameterUtils.h"
+#include "Core/Parametrization/IParameterized.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
+#include <memory>
 
 namespace
 {
 //! Returns list of all angle related parameters used in Core library.
 std::vector<std::string> angleRelatedParameters()
 {
-    std::vector<std::string> result{BornAgain::Inclination, BornAgain::Azimuth, BornAgain::Alpha,
-                                    BornAgain::Beta,        BornAgain::Gamma,   BornAgain::Angle};
+    std::vector<std::string> result{
+        "InclinationAngle", "AzimuthalAngle", "Alpha", "Beta", "Gamma", "Angle"};
     return result;
 }
 } // namespace
@@ -40,12 +38,6 @@ bool ParameterUtils::isAngleRelated(const std::string& par_name)
             return true;
     }
     return false;
-}
-
-std::string ParameterUtils::mainParUnits(const ParticleDistribution& distr)
-{
-    return poolParameterUnits(distr.prototype(),
-                              distr.parameterDistribution().getMainParameterName());
 }
 
 std::string ParameterUtils::poolParameterUnits(const IParameterized& node,

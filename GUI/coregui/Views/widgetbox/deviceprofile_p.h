@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef DEVICEPROFILE_P_H
-#define DEVICEPROFILE_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_DEVICEPROFILE_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_DEVICEPROFILE_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 #include <QtCore/QSharedDataPointer>
 #include <QtCore/QString>
@@ -154,4 +154,4 @@ inline bool operator!=(const DeviceProfile& s1, const DeviceProfile& s2)
 
 QT_END_NAMESPACE
 
-#endif // DEVICEPROFILE_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_DEVICEPROFILE_P_H

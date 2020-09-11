@@ -12,12 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONFINITE2DLATTICE_H
-#define INTERFERENCEFUNCTIONFINITE2DLATTICE_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONFINITE2DLATTICE_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONFINITE2DLATTICE_H
 
-#include "IInterferenceFunction.h"
-#include "Integrator.h"
-#include "Lattice2D.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Lattice/Lattice2D.h"
 
 //! Interference function of a finite 2D lattice.
 //! @ingroup interference
@@ -54,10 +53,8 @@ public:
 
 private:
     double iff_without_dw(const kvector_t q) const override final;
-    InterferenceFunctionFinite2DLattice(const InterferenceFunctionFinite2DLattice& other);
     void setLattice(const Lattice2D& lattice);
 
-    void init_parameters();
     double interferenceForXi(double xi) const;
 
     bool m_integrate_xi; //!< Integrate over the orientation xi
@@ -65,7 +62,6 @@ private:
     unsigned m_N_1, m_N_2; //!< Size of the finite lattice in lattice units
     mutable double m_qx;
     mutable double m_qy;
-    mutable RealIntegrator m_integrator;
 };
 
-#endif // INTERFERENCEFUNCTIONFINITE2DLATTICE_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONFINITE2DLATTICE_H

@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      GUI/coregui/Views/SampleDesigner/IView.h
-//! @brief     Defines class IView
+//! @file      GUI/coregui/Views/SampleDesigner/ViewTypes.h
+//! @brief     Defines namespace ViewTypes with enum EWidgetTypes (nothing to implement)
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef VIEWTYPES_H
-#define VIEWTYPES_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_VIEWTYPES_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_VIEWTYPES_H
 
 #include <QGraphicsItem>
 
@@ -43,4 +43,4 @@ enum EWidgetTypes {
 
 }
 
-#endif // VIEWTYPES_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_VIEWTYPES_H

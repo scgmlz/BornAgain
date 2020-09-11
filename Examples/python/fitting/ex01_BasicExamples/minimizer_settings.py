@@ -75,10 +75,10 @@ def run_fitting():
     real_data = create_real_data()
 
     # prints info about available minimizers
-    print(ba.MinimizerFactory().catalogueToString())
+    print(ba.MinimizerFactory().catalogToString())
 
     # prints detailed info about available minimizers and their options
-    print(ba.MinimizerFactory().catalogueDetailsToString())
+    print(ba.MinimizerFactory().catalogDetailsToString())
 
     fit_objective = ba.FitObjective()
     fit_objective.addSimulationAndData(get_simulation, real_data, 1.0)

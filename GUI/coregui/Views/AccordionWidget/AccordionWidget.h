@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 // This file is part of qAccordion. An Accordion widget for Qt
-// Copyright © 2015 Christian Rapp <0x2a at posteo dot org>
+// Copyright (C) 2015 Christian Rapp <0x2a at posteo dot org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef ACCORDIONWIDGET_H
-#define ACCORDIONWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_ACCORDIONWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_ACCORDIONWIDGET_H
 
-#include "ClickableFrame.h"
-#include "ContentPane.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/AccordionWidget/ClickableFrame.h"
+#include "GUI/coregui/Views/AccordionWidget/ContentPane.h"
+#include "Wrap/WinDllMacros.h"
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -100,7 +100,7 @@ public:
      * @details
      * Use this method to add a new content pane with the Header header.
      * The method will return the index of the new content pane, or <b>-1</b> if
-     * the pane was not added because \p header already exists.
+     * the pane was not added because header already exists.
      */
     int addContentPane(QString header);
     /**
@@ -134,7 +134,7 @@ public:
      *
      * @details
      * You can use this method to insert a new content pane at given index with
-     * \p header defining the Header. An empty content pane will be created that
+     * header defining the Header. An empty content pane will be created that
      * you can get with getContentPane().
      *
      * Returns true if the insert was successfull.
@@ -175,8 +175,8 @@ public:
      * @return bool True if swap was successfull
      *
      * @details
-     * With this method you can replace an existing content pane at \p index with
-     * a new one \p cpane.
+     * With this method you can replace an existing content pane at index with
+     * a new one cpane.
      *
      * Returns true if the swap was successfull.
      *
@@ -191,7 +191,7 @@ public:
      * @return bool
      *
      * @details
-     * Remove a content pane at \p index. If \p deleteObject is \p true the
+     * Remove a content pane at index. If deleteObject is true the
      * object will be deleted. Otherwise it is up to the user to
      * free the allocated memory.
      *
@@ -236,7 +236,7 @@ public:
      * @return bool
      *
      * @details
-     * Moves a content from \p currentIndex to \p newIndex. Returns true if the
+     * Moves a content from currentIndex to newIndex. Returns true if the
      * content pane was moved, false otherwise.
      */
     bool moveContentPane(uint currentIndex, uint newIndex);
@@ -247,7 +247,7 @@ public:
      * @return QFrame* or nullptr
      *
      * @details
-     * Get a content pane (QFrame*) with \p index. This method will return a
+     * Get a content pane (QFrame*) with index. This method will return a
      * __nullptr__ if the content pane does not exist.
      */
     ContentPane* getContentPane(uint index);
@@ -258,7 +258,7 @@ public:
      * @return Index of the content pane
      *
      * @details
-     * Get the index of a ContentPane with \p header. This method will return
+     * Get the index of a ContentPane with header. This method will return
      * <b>-1</b> if a ContentPane with this header does not exist.
      */
     int getContentPaneIndex(QString header);
@@ -298,7 +298,7 @@ public:
      * @details
      * This option allows you to open several ContentPane at the same time.
      * @note
-     * Default value for this option is \p false.
+     * Default value for this option is false.
      */
     void setMultiActive(bool status);
     /**
@@ -382,4 +382,4 @@ protected:
     void paintEvent(ATTR_UNUSED QPaintEvent* event);
 };
 
-#endif // ACCORDIONWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_ACCORDIONWIDGET_H

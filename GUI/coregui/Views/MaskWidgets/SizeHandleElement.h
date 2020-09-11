@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SIZEHANDLEELEMENT_H
-#define SIZEHANDLEELEMENT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_SIZEHANDLEELEMENT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_SIZEHANDLEELEMENT_H
 
-#include "MaskEditorHelper.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QCursor>
 #include <QGraphicsObject>
 #include <QMap>
@@ -73,4 +73,4 @@ private:
     static QMap<EHandleLocation, EHandleLocation> m_opposite_handle_location;
 };
 
-#endif // SIZEHANDLEELEMENT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_SIZEHANDLEELEMENT_H

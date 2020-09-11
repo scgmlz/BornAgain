@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef DELAYEDPROGRESSCOUNTER_H
-#define DELAYEDPROGRESSCOUNTER_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_DELAYEDPROGRESSCOUNTER_H
+#define BORNAGAIN_CORE_COMPUTATION_DELAYEDPROGRESSCOUNTER_H
 
 #include <cstddef>
 
@@ -36,4 +36,4 @@ private:
     size_t m_count;
 };
 
-#endif // DELAYEDPROGRESSCOUNTER_H
+#endif // BORNAGAIN_CORE_COMPUTATION_DELAYEDPROGRESSCOUNTER_H

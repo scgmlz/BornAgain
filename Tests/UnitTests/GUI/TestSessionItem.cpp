@@ -1,15 +1,11 @@
-#include "GUIHelpers.h"
-#include "SessionItem.h"
-#include "SessionModel.h"
-#include "google_test.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestSessionItem : public ::testing::Test
 {
-public:
-    ~TestSessionItem();
 };
-
-TestSessionItem::~TestSessionItem() = default;
 
 TEST_F(TestSessionItem, initialState)
 {
@@ -30,7 +26,7 @@ TEST_F(TestSessionItem, defaultTag)
 
     // insertion without tag is forbidden
     SessionItem* child = new SessionItem(modelType);
-    EXPECT_THROW(item->insertItem(0, child), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child), ".*");
     delete child;
     EXPECT_EQ(item->numberOfChildren(), 0);
 }
@@ -60,7 +56,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
     SessionItem* child = new SessionItem(modelType);
     EXPECT_TRUE(item->insertItem(0, child, tag1));
     // double insertion is forbidden
-    EXPECT_THROW(item->insertItem(0, child, tag1), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child, tag1), ".*");
     EXPECT_TRUE(child->parent() == item.get());
     EXPECT_EQ(item->numberOfChildren(), 1);
 
@@ -140,7 +136,7 @@ TEST_F(TestSessionItem, tagWithLimits)
         EXPECT_TRUE(item->insertItem(-1, child, tag1));
     }
     auto extra = new SessionItem(modelType);
-    EXPECT_THROW(item->insertItem(-1, extra, tag1), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(-1, extra, tag1), ".*");
 }
 
 TEST_F(TestSessionItem, tagsAndModelTypes)
@@ -228,16 +224,16 @@ TEST_F(TestSessionItem, takeRow)
 TEST_F(TestSessionItem, dataRoles)
 {
     std::unique_ptr<SessionItem> item(new SessionItem("Some model type"));
-    item->setData(Qt::DisplayRole, 1234);
-    EXPECT_TRUE(item->data(Qt::DisplayRole) == 1234);
-    EXPECT_TRUE(item->data(Qt::EditRole) == 1234);
-    item->setData(Qt::EditRole, 5432);
-    EXPECT_TRUE(item->data(Qt::DisplayRole) == 5432);
-    EXPECT_TRUE(item->data(Qt::EditRole) == 5432);
+    item->setRoleProperty(Qt::DisplayRole, 1234);
+    EXPECT_TRUE(item->roleProperty(Qt::DisplayRole) == 1234);
+    EXPECT_TRUE(item->roleProperty(Qt::EditRole) == 1234);
+    item->setRoleProperty(Qt::EditRole, 5432);
+    EXPECT_TRUE(item->roleProperty(Qt::DisplayRole) == 5432);
+    EXPECT_TRUE(item->roleProperty(Qt::EditRole) == 5432);
     for (int i = 0; i < 10; i++) {
-        EXPECT_TRUE(item->data(SessionFlags::EndSessionRoles + i).isValid() == false);
-        item->setData(SessionFlags::EndSessionRoles + i, i);
-        EXPECT_TRUE(item->data(SessionFlags::EndSessionRoles + i) == i);
+        EXPECT_TRUE(item->roleProperty(SessionFlags::EndSessionRoles + i).isValid() == false);
+        item->setRoleProperty(SessionFlags::EndSessionRoles + i, i);
+        EXPECT_TRUE(item->roleProperty(SessionFlags::EndSessionRoles + i) == i);
     }
 }
 
@@ -255,25 +251,25 @@ TEST_F(TestSessionItem, modelTypes)
     EXPECT_TRUE(item->insertItem(0, new SessionItem(model2), "Tag1"));
 
     auto child = new SessionItem(model3);
-    EXPECT_THROW(item->insertItem(0, child, "Tag1"), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child, "Tag1"), ".*");
     delete child;
 
     child = new SessionItem(model4);
-    EXPECT_THROW(item->insertItem(0, child, "Tag1"), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child, "Tag1"), ".*");
     delete child;
 
     child = new SessionItem(model5);
-    EXPECT_THROW(item->insertItem(0, child, "Tag1"), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child, "Tag1"), ".*");
     delete child;
 
     EXPECT_TRUE(item->registerTag("Tag2", 0, -1, QStringList() << model3 << model4 << model5));
 
     child = new SessionItem(model1);
-    EXPECT_THROW(item->insertItem(0, child, "Tag2"), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child, "Tag2"), ".*");
     delete child;
 
     child = new SessionItem(model2);
-    EXPECT_THROW(item->insertItem(0, child, "Tag2"), GUIHelpers::Error);
+    EXPECT_DEATH(item->insertItem(0, child, "Tag2"), ".*");
     delete child;
 
     EXPECT_TRUE(item->insertItem(0, new SessionItem(model3), "Tag2"));

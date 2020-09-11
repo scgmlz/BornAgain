@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERITEM_H
-#define MULTILAYERITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_MULTILAYERITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_MULTILAYERITEM_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class BA_CORE_API_ MultiLayerItem : public SessionGraphicsItem
 {
@@ -31,4 +31,4 @@ private:
     void updateLayers();
 };
 
-#endif // MULTILAYERITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_MULTILAYERITEM_H

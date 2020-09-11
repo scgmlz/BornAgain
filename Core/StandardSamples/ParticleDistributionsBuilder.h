@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLEDISTRIBUTIONSBUILDER_H
-#define PARTICLEDISTRIBUTIONSBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_PARTICLEDISTRIBUTIONSBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_PARTICLEDISTRIBUTIONSBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! Cylinders in BA with size distributions (IsGISAXS example #3, part II).
 //! @ingroup standard_samples
@@ -95,4 +95,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // PARTICLEDISTRIBUTIONSBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_PARTICLEDISTRIBUTIONSBUILDER_H

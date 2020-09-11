@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "PolygonView.h"
-#include "MaskItems.h"
-#include "PolygonPointView.h"
+#include "GUI/coregui/Views/MaskWidgets/PolygonView.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Views/MaskWidgets/PolygonPointView.h"
 #include <QCursor>
 #include <QPainter>
 
@@ -38,7 +38,7 @@ void PolygonView::addView(IShape2DView* childView, int row)
         return;
 
     PolygonPointView* pointView = dynamic_cast<PolygonPointView*>(childView);
-    Q_ASSERT(pointView);
+    ASSERT(pointView);
     pointView->setParentItem(this);
 
     // polygon consisting from more than 2 points can be closed via hover event by clicking
@@ -88,7 +88,7 @@ bool PolygonView::isClosedPolygon()
 
 void PolygonView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    Q_ASSERT(m_item);
+    ASSERT(m_item);
     painter->setRenderHints(QPainter::Antialiasing);
 
     bool mask_value = m_item->getItemValue(MaskItem::P_MASK_VALUE).toBool();
@@ -137,7 +137,7 @@ void PolygonView::update_polygon()
 
         m_polygon.clear();
 
-        for (SessionItem* item : m_item->getChildrenOfType(Constants::PolygonPointType)) {
+        for (SessionItem* item : m_item->getChildrenOfType("PolygonPoint")) {
             qreal px = toSceneX(item->getItemValue(PolygonPointItem::P_POSX).toReal());
             qreal py = toSceneY(item->getItemValue(PolygonPointItem::P_POSY).toReal());
             m_polygon << QPointF(px, py);

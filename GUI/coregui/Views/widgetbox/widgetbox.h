@@ -39,11 +39,11 @@
 **
 ****************************************************************************/
 
-#ifndef WIDGETBOX_H
-#define WIDGETBOX_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_WIDGETBOX_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_WIDGETBOX_H
 
-#include "widgetbox_global.h"
-#include <qdesigner_widgetbox_p.h>
+#include "GUI/coregui/Views/widgetbox/qdesigner_widgetbox_p.h"
+#include "GUI/coregui/Views/widgetbox/widgetbox_global.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -89,8 +89,7 @@ public:
     virtual bool save();
 
     virtual bool loadContents(const QString& contents);
-    virtual QIcon iconForWidget(const QString& className,
-                                const QString& category = QString()) const;
+    virtual QIcon iconForWidget(const QString& className, const QString& category = "") const;
 
 protected:
     virtual void dragEnterEvent(QDragEnterEvent* event);
@@ -111,4 +110,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // WIDGETBOX_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_WIDGETBOX_H

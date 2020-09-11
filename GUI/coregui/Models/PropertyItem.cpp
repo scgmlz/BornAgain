@@ -12,6 +12,6 @@
 //
 // ************************************************************************** //
 
-#include "PropertyItem.h"
+#include "GUI/coregui/Models/PropertyItem.h"
 
-PropertyItem::PropertyItem() : SessionItem(Constants::PropertyType) {}
+PropertyItem::PropertyItem() : SessionItem("Property") {}

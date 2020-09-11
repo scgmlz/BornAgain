@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "DataSelector.h"
-#include "CsvImportTable.h"
-#include "ImportDataInfo.h"
-#include "StyleUtils.h"
-#include "TableContextMenu.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/DataSelector.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/TableContextMenu.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QFileDialog>
 #include <QFormLayout>
 #include <QGroupBox>
@@ -285,7 +285,7 @@ QBoxLayout* DataSelector::createLayout()
     connect(m_cancelButton, &QPushButton::clicked, this, [this]() { reject(); });
 
     // Separator field -- This needs to communicate with importAssistant
-    m_separatorField = new QLineEdit(QString(""));
+    m_separatorField = new QLineEdit("");
     m_separatorField->setMaxLength(1);
     m_separatorField->setMaximumWidth(70);
     m_separatorField->setMinimumWidth(70);

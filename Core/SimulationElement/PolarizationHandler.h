@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef POLARIZATIONHANDLER_H_
-#define POLARIZATIONHANDLER_H_
+#ifndef BORNAGAIN_CORE_SIMULATIONELEMENT_POLARIZATIONHANDLER_H
+#define BORNAGAIN_CORE_SIMULATIONELEMENT_POLARIZATIONHANDLER_H
 
-#include "EigenCore.h"
-#include "WinDllMacros.h"
+#include "Core/Vector/EigenCore.h"
+#include "Wrap/WinDllMacros.h"
 
 //! Convenience class for handling polarization density matrix and polarization analyzer operator
 //! @ingroup simulation
@@ -46,4 +46,4 @@ private:
     Eigen::Matrix2cd m_analyzer_operator; //!< polarization analyzer operator
 };
 
-#endif /* POLARIZATIONHANDLER_H_ */
+#endif // BORNAGAIN_CORE_SIMULATIONELEMENT_POLARIZATIONHANDLER_H

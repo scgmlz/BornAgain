@@ -12,16 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "JobWorker.h"
-#include "GISASSimulation.h"
-#include "item_constants.h"
+#include "GUI/coregui/Models/JobWorker.h"
+#include "Core/Simulation/GISASSimulation.h"
 #include <QDateTime>
 #include <memory>
 
 JobWorker::JobWorker(const QString& identifier, Simulation* simulation)
     : m_identifier(identifier), m_simulation(simulation), m_percentage_done(0),
-      m_job_status(Constants::STATUS_IDLE), m_terminate_request_flag(false),
-      m_simulation_duration(0)
+      m_job_status("Idle"), m_terminate_request_flag(false), m_simulation_duration(0)
 {
 }
 
@@ -46,30 +44,29 @@ void JobWorker::start()
             return updateProgress(static_cast<int>(percentage_done));
         });
 
-        m_job_status = Constants::STATUS_RUNNING;
+        m_job_status = "Running";
 
         try {
             QDateTime beginTime = QDateTime::currentDateTime();
             m_simulation->runSimulation();
-            if (m_job_status != Constants::STATUS_CANCELED)
-                m_job_status = Constants::STATUS_COMPLETED;
+            if (m_job_status != "Canceled")
+                m_job_status = "Completed";
 
             QDateTime endTime = QDateTime::currentDateTime();
             m_simulation_duration = static_cast<int>(beginTime.msecsTo(endTime));
 
         } catch (const std::exception& ex) {
-            m_job_status = Constants::STATUS_FAILED;
+            m_job_status = "Failed";
             m_percentage_done = 100;
-            m_failure_message =
-                QString("JobRunner::start() -> Simulation failed with exception throw:\n\n");
+            m_failure_message = "JobRunner::start() -> Simulation failed with exception throw:\n\n";
 
             m_failure_message.append(QString(ex.what()));
         }
 
     } else {
-        m_job_status = Constants::STATUS_FAILED;
+        m_job_status = "Failed";
         m_percentage_done = 100;
-        m_failure_message = QString("JobRunner::start() -> Error. Simulation doesn't exist.");
+        m_failure_message = "JobRunner::start() -> Error. Simulation doesn't exist.";
     }
 
     emit progressUpdate();
@@ -96,7 +93,7 @@ int JobWorker::simulationDuration() const
 void JobWorker::terminate()
 {
     m_terminate_request_flag = true;
-    m_job_status = Constants::STATUS_CANCELED;
+    m_job_status = "Canceled";
 }
 
 //! Sets current progress. Returns true if we want to continue the simulation.

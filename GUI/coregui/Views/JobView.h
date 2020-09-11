@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBVIEW_H
-#define JOBVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include "fancymainwindow.h"
 
 class MainWindow;
@@ -63,4 +63,4 @@ private:
     MainWindow* m_mainWindow;
 };
 
-#endif // JOBVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBVIEW_H

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLELABELHANDLER_H
-#define SAMPLELABELHANDLER_H
+#ifndef BORNAGAIN_CORE_EXPORT_SAMPLELABELHANDLER_H
+#define BORNAGAIN_CORE_EXPORT_SAMPLELABELHANDLER_H
 
-#include "Exceptions.h"
-#include "OrderedMap.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Export/OrderedMap.h"
 
 class Crystal;
 class IAbstractParticle;
@@ -124,4 +124,4 @@ private:
     roughnesses_t m_LayerRoughnessLabel;
 };
 
-#endif // SAMPLELABELHANDLER_H
+#endif // BORNAGAIN_CORE_EXPORT_SAMPLELABELHANDLER_H

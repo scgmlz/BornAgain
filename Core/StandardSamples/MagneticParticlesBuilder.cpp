@@ -12,19 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "MagneticParticlesBuilder.h"
-#include "BornAgainNamespace.h"
-#include "FormFactorCylinder.h"
-#include "FormFactorFullSphere.h"
-#include "Layer.h"
-#include "LayerInterface.h"
-#include "LayerRoughness.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/MagneticParticlesBuilder.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorCylinder.h"
+#include "Core/HardParticle/FormFactorFullSphere.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerInterface.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
 
 // ----------------------------------------------------------------------------
 // Magnetic cylinders and zero magnetic field

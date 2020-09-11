@@ -1,20 +1,16 @@
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "ProcessedSample.h"
-#include "SimulationOptions.h"
-#include "SpecularMagneticOldStrategy.h"
-#include "SpecularScalarTanhStrategy.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/Computation/ProcessedSample.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/SpecularMagneticOldStrategy.h"
+#include "Core/Multilayer/SpecularScalarTanhStrategy.h"
+#include "Core/Parametrization/SimulationOptions.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class SpecularMagneticTest : public ::testing::Test
 {
-protected:
-    ~SpecularMagneticTest();
 };
-
-SpecularMagneticTest::~SpecularMagneticTest() = default;
 
 TEST_F(SpecularMagneticTest, initial)
 {

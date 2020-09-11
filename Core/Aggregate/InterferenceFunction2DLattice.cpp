@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "InterferenceFunction2DLattice.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "RealParameter.h"
+#include "Core/Aggregate/InterferenceFunction2DLattice.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Tools/Integrator.h"
 #include <algorithm>
 
 namespace
@@ -28,11 +28,10 @@ static const int min_points = 4;
 } // namespace
 
 InterferenceFunction2DLattice::InterferenceFunction2DLattice(const Lattice2D& lattice)
-    : m_integrate_xi(false)
+    : IInterferenceFunction(0), m_integrate_xi(false)
 {
-    setName(BornAgain::InterferenceFunction2DLatticeType);
+    setName("Interference2DLattice");
     setLattice(lattice);
-    init_parameters();
 }
 
 //! Constructor of two-dimensional interference function.
@@ -42,18 +41,20 @@ InterferenceFunction2DLattice::InterferenceFunction2DLattice(const Lattice2D& la
 //! @param xi: rotation of the lattice with respect to the x-axis (beam direction) in radians
 InterferenceFunction2DLattice::InterferenceFunction2DLattice(double length_1, double length_2,
                                                              double alpha, double xi)
-    : m_integrate_xi(false), m_na(0), m_nb(0)
+    : InterferenceFunction2DLattice(BasicLattice(length_1, length_2, alpha, xi))
 {
-    setName(BornAgain::InterferenceFunction2DLatticeType);
-    setLattice(BasicLattice(length_1, length_2, alpha, xi));
-    init_parameters();
 }
 
-InterferenceFunction2DLattice::~InterferenceFunction2DLattice() {}
+InterferenceFunction2DLattice::~InterferenceFunction2DLattice() = default;
 
 InterferenceFunction2DLattice* InterferenceFunction2DLattice::clone() const
 {
-    return new InterferenceFunction2DLattice(*this);
+    auto* ret = new InterferenceFunction2DLattice(*m_lattice);
+    ret->setPositionVariance(m_position_var);
+    ret->setIntegrationOverXi(integrationOverXi());
+    if (m_decay)
+        ret->setDecayFunction(*m_decay);
+    return ret;
 }
 
 //! Creates square lattice.
@@ -123,22 +124,9 @@ double InterferenceFunction2DLattice::iff_without_dw(const kvector_t q) const
     m_qy = q.y();
     if (!m_integrate_xi)
         return interferenceForXi(m_lattice->rotationAngle());
-    return m_integrator.integrate([&](double xi) -> double { return interferenceForXi(xi); }, 0.0,
-                                  M_TWOPI)
+    return RealIntegrator().integrate([&](double xi) -> double { return interferenceForXi(xi); },
+                                      0.0, M_TWOPI)
            / M_TWOPI;
-}
-
-InterferenceFunction2DLattice::InterferenceFunction2DLattice(
-    const InterferenceFunction2DLattice& other)
-    : IInterferenceFunction(other)
-{
-    setName(other.getName());
-    if (other.m_lattice)
-        setLattice(*other.m_lattice);
-    if (other.m_decay)
-        setDecayFunction(*other.m_decay);
-    setIntegrationOverXi(other.integrationOverXi());
-    init_parameters();
 }
 
 void InterferenceFunction2DLattice::setLattice(const Lattice2D& lattice)
@@ -147,8 +135,6 @@ void InterferenceFunction2DLattice::setLattice(const Lattice2D& lattice)
     registerChild(m_lattice.get());
     initialize_rec_vectors();
 }
-
-void InterferenceFunction2DLattice::init_parameters() {}
 
 double InterferenceFunction2DLattice::interferenceForXi(double xi) const
 {
@@ -216,8 +202,8 @@ void InterferenceFunction2DLattice::initialize_rec_vectors()
         throw std::runtime_error("InterferenceFunction2DLattice::initialize_rec_vectors() -> "
                                  "Error. No lattice defined yet");
 
-    BasicLattice base_lattice(m_lattice->length1(), m_lattice->length2(),
-                              m_lattice->latticeAngle());
+    BasicLattice base_lattice(m_lattice->length1(), m_lattice->length2(), m_lattice->latticeAngle(),
+                              0.);
     m_sbase = base_lattice.reciprocalBases();
 }
 

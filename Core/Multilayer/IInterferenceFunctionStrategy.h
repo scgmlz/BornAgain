@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef IINTERFERENCEFUNCTIONSTRATEGY_H
-#define IINTERFERENCEFUNCTIONSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_IINTERFERENCEFUNCTIONSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_IINTERFERENCEFUNCTIONSTRATEGY_H
 
-#include "Complex.h"
-#include "SimulationOptions.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Parametrization/SimulationOptions.h"
 #include <memory>
 #include <vector>
 
@@ -73,4 +73,4 @@ private:
 #endif
 };
 
-#endif // IINTERFERENCEFUNCTIONSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_IINTERFERENCEFUNCTIONSTRATEGY_H

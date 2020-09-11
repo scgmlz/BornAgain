@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "MaskEditorCanvas.h"
-#include "AppSvc.h"
-#include "ColorMap.h"
-#include "IntensityDataItem.h"
-#include "MaskGraphicsScene.h"
-#include "MaskGraphicsView.h"
-#include "MaskItems.h"
-#include "MaskResultsPresenter.h"
-#include "PlotStatusLabel.h"
-#include "SavePlotAssistant.h"
-#include "projectmanager.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorCanvas.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/SavePlotAssistant.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskGraphicsScene.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskGraphicsView.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskResultsPresenter.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
 #include <QVBoxLayout>
 
 MaskEditorCanvas::MaskEditorCanvas(QWidget* parent)
@@ -30,7 +30,7 @@ MaskEditorCanvas::MaskEditorCanvas(QWidget* parent)
       m_intensityDataItem(0), m_statusLabel(new PlotStatusLabel(0, this)),
       m_resultsPresenter(new MaskResultsPresenter(this))
 {
-    setObjectName(QStringLiteral("MaskEditorCanvas"));
+    setObjectName("MaskEditorCanvas");
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
@@ -111,7 +111,7 @@ void MaskEditorCanvas::onResetViewRequest()
 
 bool MaskEditorCanvas::isAxisRangeMatchData() const
 {
-    Q_ASSERT(m_intensityDataItem);
+    ASSERT(m_intensityDataItem);
 
     if (m_intensityDataItem->getLowerX() != m_intensityDataItem->getXmin())
         return false;
@@ -127,7 +127,7 @@ bool MaskEditorCanvas::isAxisRangeMatchData() const
 void MaskEditorCanvas::setZoomToROI()
 {
     if (MaskContainerItem* maskContainer = m_intensityDataItem->maskContainerItem()) {
-        if (SessionItem* roiItem = maskContainer->getChildOfType(Constants::RegionOfInterestType)) {
+        if (SessionItem* roiItem = maskContainer->getChildOfType("RegionOfInterest")) {
             m_intensityDataItem->setLowerX(roiItem->getItemValue(RectangleItem::P_XLOW).toDouble());
             m_intensityDataItem->setUpperX(roiItem->getItemValue(RectangleItem::P_XUP).toDouble());
             m_intensityDataItem->setLowerY(roiItem->getItemValue(RectangleItem::P_YLOW).toDouble());

@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "JobViewDocks.h"
-#include "FitActivityPanel.h"
-#include "JobMessagePanel.h"
-#include "JobModel.h"
-#include "JobOutputDataWidget.h"
-#include "JobRealTimeWidget.h"
-#include "JobSelectorWidget.h"
-#include "JobView.h"
-#include "JobViewActivities.h"
-#include "JobViewFlags.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewDocks.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/FitWidgets/FitActivityPanel.h"
+#include "GUI/coregui/Views/JobView.h"
+#include "GUI/coregui/Views/JobWidgets/JobMessagePanel.h"
+#include "GUI/coregui/Views/JobWidgets/JobOutputDataWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobRealTimeWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobSelectorWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
 #include <QDockWidget>
 
 namespace

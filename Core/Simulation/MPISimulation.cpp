@@ -13,11 +13,11 @@
 //
 // ************************************************************************** //
 
-#include "MPISimulation.h"
+#include "Core/Simulation/MPISimulation.h"
 
 #ifdef BORNAGAIN_MPI
 
-#include "Simulation.h"
+#include "Core/Simulation/Simulation.h"
 #include <mpi.h>
 
 // -----------------------------------------------------------------------------

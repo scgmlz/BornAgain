@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef ILATTICEORIENTATION_H
-#define ILATTICEORIENTATION_H
+#ifndef BORNAGAIN_CORE_LATTICE_ILATTICEORIENTATION_H
+#define BORNAGAIN_CORE_LATTICE_ILATTICEORIENTATION_H
 
-#include "Lattice.h"
-#include "Transform3D.h"
+#include "Core/Lattice/Lattice.h"
+#include "Core/Vector/Transform3D.h"
 
 class BA_CORE_API_ ILatticeOrientation
 {
@@ -63,4 +63,4 @@ private:
     MillerIndex m_ind1, m_ind2;
 };
 
-#endif // ILATTICEORIENTATION_H
+#endif // BORNAGAIN_CORE_LATTICE_ILATTICEORIENTATION_H

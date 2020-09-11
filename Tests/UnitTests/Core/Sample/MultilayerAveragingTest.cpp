@@ -1,15 +1,15 @@
-#include "FormFactorCylinder.h"
-#include "InterferenceFunction2DLattice.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MathConstants.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleLayout.h"
-#include "ProcessedSample.h"
-#include "SimulationOptions.h"
-#include "Slice.h"
-#include "google_test.h"
+#include "Core/Aggregate/InterferenceFunction2DLattice.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Computation/ProcessedSample.h"
+#include "Core/HardParticle/FormFactorCylinder.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/Particle/Particle.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class MultilayerAveragingTest : public ::testing::Test
 {
@@ -20,12 +20,8 @@ protected:
     {
     }
 
-    ~MultilayerAveragingTest() override;
-
     const Material vacuum, stone;
 };
-
-MultilayerAveragingTest::~MultilayerAveragingTest() = default;
 
 TEST_F(MultilayerAveragingTest, AverageMultilayer)
 {

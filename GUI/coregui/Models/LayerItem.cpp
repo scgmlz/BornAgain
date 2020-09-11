@@ -12,9 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "LayerItem.h"
-#include "BornAgainNamespace.h"
-#include "MaterialItemUtils.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 
 namespace
 {
@@ -23,31 +22,30 @@ const QString layer_nslices_tooltip = "Number of horizontal slices.\n"
                                       "when corresponding Simulation option set.";
 }
 
-const QString LayerItem::P_THICKNESS = QString::fromStdString(BornAgain::Thickness);
+const QString LayerItem::P_THICKNESS = QString::fromStdString("Thickness");
 const QString LayerItem::P_ROUGHNESS = "Top roughness";
 const QString LayerItem::P_MATERIAL = "Material";
 const QString LayerItem::P_NSLICES = "Number of slices";
 const QString LayerItem::T_LAYOUTS = "Layout tag";
 
-LayerItem::LayerItem() : SessionGraphicsItem(Constants::LayerType)
+LayerItem::LayerItem() : SessionGraphicsItem("Layer")
 {
-    setToolTip(QStringLiteral("A layer with thickness and material"));
+    setToolTip("A layer with thickness and material");
     addProperty(P_THICKNESS, 0.0)
         ->setLimits(RealLimits::lowerLimited(0.0))
-        .setToolTip(QStringLiteral("Thickness of a layer in nanometers"));
+        .setToolTip("Thickness of a layer in nanometers");
 
     addProperty(P_MATERIAL, MaterialItemUtils::defaultMaterialProperty().variant())
-        ->setToolTip(QStringLiteral("Material the layer is made of"))
-        .setEditorType(Constants::MaterialEditorExternalType);
+        ->setToolTip("Material the layer is made of")
+        .setEditorType("ExtMaterialEditor");
 
     addProperty(P_NSLICES, 1)
         ->setLimits(RealLimits::lowerLimited(0.0))
         .setToolTip(layer_nslices_tooltip);
 
-    addGroupProperty(P_ROUGHNESS, Constants::LayerRoughnessGroup)
-        ->setToolTip(QStringLiteral("Roughness of top interface"));
+    addGroupProperty(P_ROUGHNESS, "Roughness")->setToolTip("Roughness of top interface");
 
-    registerTag(T_LAYOUTS, 0, -1, QStringList() << Constants::ParticleLayoutType);
+    registerTag(T_LAYOUTS, 0, -1, QStringList() << "ParticleLayout");
     setDefaultTag(T_LAYOUTS);
 
     mapper()->setOnParentChange([this](SessionItem* new_parent) { updateAppearance(new_parent); });
@@ -66,7 +64,7 @@ QVector<SessionItem*> LayerItem::materialPropertyItems()
 void LayerItem::updateAppearance(SessionItem* new_parent)
 {
     if (!new_parent) {
-        if (parent() && parent()->modelType() == Constants::MultiLayerType) {
+        if (parent() && parent()->modelType() == "MultiLayer") {
             // we are about to be removed from MultiLayer
             getItem(LayerItem::P_ROUGHNESS)->setEnabled(true);
             getItem(LayerItem::P_THICKNESS)->setEnabled(true);

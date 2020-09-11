@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RootScalarFunction.h"
+#include "Fit/RootAdapter/RootScalarFunction.h"
 
 RootScalarFunction::RootScalarFunction(root_scalar_t fcn, int ndims)
     : ROOT::Math::Functor(fcn, static_cast<unsigned int>(ndims))

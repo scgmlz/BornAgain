@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GROUPINFOBOX_H
-#define GROUPINFOBOX_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_GROUPINFOBOX_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_GROUPINFOBOX_H
 
 #include <QGroupBox>
 
@@ -42,4 +42,4 @@ private:
     int m_yImage;
 };
 
-#endif // GROUPINFOBOX_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_GROUPINFOBOX_H

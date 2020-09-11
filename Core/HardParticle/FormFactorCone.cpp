@@ -12,23 +12,27 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorCone.h"
-#include "BornAgainNamespace.h"
-#include "DoubleEllipse.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorCone.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Shapes/DoubleEllipse.h"
+#include "Core/Tools/Integrator.h"
+#include "Core/Tools/MathFunctions.h"
 #include <limits>
 
 //! Constructor of a truncated cone with circular base.
 //! @param radius: radius of the base in nanometers
 //! @param height: height of the cone in nanometers
 //! @param alpha: angle between the base and the side surface in radians
-FormFactorCone::FormFactorCone(double radius, double height, double alpha)
-    : m_radius(radius), m_height(height), m_alpha(alpha)
+FormFactorCone::FormFactorCone(const std::vector<double> P)
+    : IFormFactorBorn({"Cone",
+                       "class_tooltip",
+                       {{"Radius", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                      P),
+      m_radius(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
-    setName(BornAgain::FFConeType);
     m_cot_alpha = MathFunctions::cot(m_alpha);
     if (!std::isfinite(m_cot_alpha) || m_cot_alpha < 0)
         throw Exceptions::OutOfBoundsException("pyramid angle alpha out of bounds");
@@ -41,12 +45,12 @@ FormFactorCone::FormFactorCone(double radius, double height, double alpha)
         ostr << "Check for 'height <= radius*tan(alpha)' failed.";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    registerParameter(BornAgain::Radius, &m_radius).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Alpha, &m_alpha)
-        .setUnit(BornAgain::UnitsRad)
-        .setLimited(0., M_PI_2);
     onChange();
+}
+
+FormFactorCone::FormFactorCone(double radius, double height, double alpha)
+    : FormFactorCone(std::vector<double>{radius, height, alpha})
+{
 }
 
 //! Integrand for complex form factor.
@@ -70,7 +74,7 @@ complex_t FormFactorCone::evaluate_for_q(cvector_t q) const
         return M_PI / 3. * (R * R * H + (R * R - R2 * R2) * (apex_height - H));
     } else {
         complex_t integral =
-            m_integrator.integrate([&](double Z) { return Integrand(Z); }, 0., m_height);
+            ComplexIntegrator().integrate([&](double Z) { return Integrand(Z); }, 0., m_height);
         return M_TWOPI * integral;
     }
 }

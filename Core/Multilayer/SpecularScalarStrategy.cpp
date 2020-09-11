@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "SpecularScalarStrategy.h"
-#include "KzComputation.h"
-#include "Layer.h"
-#include "LayerRoughness.h"
-#include "Slice.h"
+#include "Core/Multilayer/SpecularScalarStrategy.h"
+#include "Core/Multilayer/KzComputation.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/Slice.h"
 #include <Eigen/Dense>
 #include <stdexcept>
 
@@ -67,8 +67,7 @@ SpecularScalarStrategy::computeTR(const std::vector<Slice>& slices,
     }
 
     // Calculate transmission/refraction coefficients t_r for each layer, from bottom to top.
-    size_t start_index = N - 2;
-    calculateUpFromLayer(coeff, slices, kz, start_index);
+    calculateUpFromLayer(coeff, slices, kz);
     return coeff;
 }
 
@@ -81,17 +80,16 @@ void SpecularScalarStrategy::setZeroBelow(std::vector<ScalarRTCoefficients>& coe
     }
 }
 
-bool SpecularScalarStrategy::calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
+void SpecularScalarStrategy::calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
                                                   const std::vector<Slice>& slices,
-                                                  const std::vector<complex_t>& kz,
-                                                  size_t slice_index) const
+                                                  const std::vector<complex_t>& kz) const
 {
-    coeff[slice_index + 1].t_r(0) = 1.0;
-    coeff[slice_index + 1].t_r(1) = 0.0;
-    std::vector<complex_t> factors(slice_index + 2);
-    factors[slice_index + 1] = complex_t(1, 0);
-    for (size_t j = 0; j <= slice_index; ++j) {
-        size_t i = slice_index - j; // start from bottom
+    auto N = slices.size();
+
+    coeff.back().t_r(0) = 1.0;
+    coeff.back().t_r(1) = 0.0;
+    std::vector<complex_t> factors(N-1);
+    for(int i = N - 2; i >= 0; i-- ){
         double sigma = 0.0;
         if (const auto roughness = GetBottomRoughness(slices, i))
             sigma = roughness->getSigma();
@@ -117,7 +115,7 @@ bool SpecularScalarStrategy::calculateUpFromLayer(std::vector<ScalarRTCoefficien
     // at some point this divison underflows, which is the point when all further amplitudes are set
     // to zero
     auto dumpingFactor = complex_t(1, 0);
-    for (size_t j = 1; j <= slice_index + 1; ++j) {
+    for (size_t j = 1; j < N; ++j) {
         dumpingFactor = dumpingFactor * factors[j - 1];
         if (std::isinf(std::norm(dumpingFactor))) {
             setZeroBelow(coeff, j - 1);
@@ -125,9 +123,6 @@ bool SpecularScalarStrategy::calculateUpFromLayer(std::vector<ScalarRTCoefficien
         }
         coeff[j].t_r = coeff[j].t_r / dumpingFactor;
     }
-
-    // this return value is meaningless now, this procedure should always succeed
-    return true;
 }
 
 namespace

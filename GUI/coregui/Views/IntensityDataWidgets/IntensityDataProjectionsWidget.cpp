@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "IntensityDataProjectionsWidget.h"
-#include "DataItemUtils.h"
-#include "IntensityDataItem.h"
-#include "JobItem.h"
-#include "ProjectionItems.h"
-#include "ProjectionsEditor.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataProjectionsWidget.h"
+#include "GUI/coregui/Models/DataItemUtils.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/ProjectionItems.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsEditor.h"
 #include <QVBoxLayout>
 
 IntensityDataProjectionsWidget::IntensityDataProjectionsWidget(QWidget* parent)
@@ -58,13 +58,12 @@ IntensityDataItem* IntensityDataProjectionsWidget::intensityDataItem()
 ProjectionContainerItem*
 IntensityDataProjectionsWidget::projectionContainer(IntensityDataItem* intensityItem)
 {
-    Q_ASSERT(intensityItem);
+    ASSERT(intensityItem);
 
     auto containerItem = intensityItem->getItem(IntensityDataItem::T_PROJECTIONS);
     if (!containerItem)
-        containerItem = intensityItem->model()->insertNewItem(Constants::ProjectionContainerType,
-                                                              intensityItem->index(), -1,
-                                                              IntensityDataItem::T_PROJECTIONS);
+        containerItem = intensityItem->model()->insertNewItem(
+            "ProjectionContainer", intensityItem->index(), -1, IntensityDataItem::T_PROJECTIONS);
 
     return dynamic_cast<ProjectionContainerItem*>(containerItem);
 }

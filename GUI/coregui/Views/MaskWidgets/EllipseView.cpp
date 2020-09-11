@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "EllipseView.h"
-#include "MaskItems.h"
-#include "SizeHandleElement.h"
+#include "GUI/coregui/Views/MaskWidgets/EllipseView.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Views/MaskWidgets/SizeHandleElement.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 

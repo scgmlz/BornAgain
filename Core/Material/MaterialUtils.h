@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALUTILS_H_
-#define MATERIALUTILS_H_
+#ifndef BORNAGAIN_CORE_MATERIAL_MATERIALUTILS_H
+#define BORNAGAIN_CORE_MATERIAL_MATERIALUTILS_H
 
-#include "Complex.h"
-#include "EigenCore.h"
-#include "Material.h"
-#include "Vectors3D.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Material/Material.h"
+#include "Core/Vector/EigenCore.h"
+#include "Core/Vector/Vectors3D.h"
 
 //! A number of materials-related helper functions for internal use
 //! @ingroup materials
@@ -50,4 +50,4 @@ BA_CORE_API_ MATERIAL_TYPES checkMaterialTypes(const std::vector<const Material*
 
 } // namespace MaterialUtils
 
-#endif /* MATERIALUTILS_H_ */
+#endif // BORNAGAIN_CORE_MATERIAL_MATERIALUTILS_H

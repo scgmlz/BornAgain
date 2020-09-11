@@ -12,8 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "LayerRoughnessItems.h"
-#include "BornAgainNamespace.h"
+#include "GUI/coregui/Models/LayerRoughnessItems.h"
 
 namespace
 {
@@ -22,19 +21,19 @@ const QString hurst_tooltip =
     "dimensionless [0.0, 1.0], where 0.0 gives more spikes, \n1.0 more smoothness.";
 }
 
-LayerZeroRoughnessItem::LayerZeroRoughnessItem() : SessionItem(Constants::LayerZeroRoughnessType) {}
+LayerZeroRoughnessItem::LayerZeroRoughnessItem() : SessionItem("LayerZeroRoughness") {}
 
-const QString LayerBasicRoughnessItem::P_SIGMA = QString::fromStdString(BornAgain::Sigma);
-const QString LayerBasicRoughnessItem::P_HURST = QString::fromStdString(BornAgain::Hurst);
+const QString LayerBasicRoughnessItem::P_SIGMA = QString::fromStdString("Sigma");
+const QString LayerBasicRoughnessItem::P_HURST = QString::fromStdString("Hurst");
 const QString LayerBasicRoughnessItem::P_LATERAL_CORR_LENGTH =
-    QString::fromStdString(BornAgain::CorrelationLength);
+    QString::fromStdString("CorrelationLength");
 
-LayerBasicRoughnessItem::LayerBasicRoughnessItem() : SessionItem(Constants::LayerBasicRoughnessType)
+LayerBasicRoughnessItem::LayerBasicRoughnessItem() : SessionItem("LayerBasicRoughness")
 {
-    setToolTip(QStringLiteral("A roughness of interface between two layers."));
-    addProperty(P_SIGMA, 1.0)->setToolTip(QStringLiteral("rms of the roughness in nanometers"));
+    setToolTip("A roughness of interface between two layers.");
+    addProperty(P_SIGMA, 1.0)->setToolTip("rms of the roughness in nanometers");
     addProperty(P_HURST, 0.3)->setLimits(RealLimits::limited(0.0, 1.0)).setToolTip(hurst_tooltip);
     getItem(P_HURST)->setDecimals(3);
     addProperty(P_LATERAL_CORR_LENGTH, 5.0)
-        ->setToolTip(QStringLiteral("Lateral correlation length of the roughness in nanometers"));
+        ->setToolTip("Lateral correlation length of the roughness in nanometers");
 }

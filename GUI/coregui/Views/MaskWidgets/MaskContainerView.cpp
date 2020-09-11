@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "MaskContainerView.h"
-#include "ISceneAdaptor.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskContainerView.h"
+#include "GUI/coregui/Views/MaskWidgets/ISceneAdaptor.h"
 #include <QBrush>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>

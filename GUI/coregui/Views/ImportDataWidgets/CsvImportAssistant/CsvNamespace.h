@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CSVNAMESPACE_H
-#define CSVNAMESPACE_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVNAMESPACE_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVNAMESPACE_H
 
 #include <QString>
 #include <QStringList>
@@ -30,4 +30,4 @@ typedef std::vector<std::string> DataColumn;
 bool isAscii(QString filename);
 } // namespace csv
 
-#endif // CSVNAMESPACE_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVNAMESPACE_H

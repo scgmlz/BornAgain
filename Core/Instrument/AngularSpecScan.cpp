@@ -12,16 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "AngularSpecScan.h"
-#include "FixedBinAxis.h"
-#include "IFootprintFactor.h"
-#include "ParameterSample.h"
-#include "PointwiseAxis.h"
-#include "PythonFormatting.h"
-#include "RangedDistributions.h"
-#include "RealLimits.h"
-#include "ScanResolution.h"
-#include "SpecularSimulationElement.h"
+#include "Core/Instrument/AngularSpecScan.h"
+#include "Core/Beam/IFootprintFactor.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Binning/PointwiseAxis.h"
+#include "Core/Detector/ScanResolution.h"
+#include "Core/Multilayer/SpecularSimulationElement.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Parametrization/RangedDistributions.h"
+#include "Core/PyIO/PythonFormatting.h"
+#include "Core/Tools/PyFmt.h"
+#include "Fit/Tools/RealLimits.h"
 
 namespace
 {
@@ -238,28 +239,26 @@ AngularSpecScan::createIntensities(const std::vector<SpecularSimulationElement>&
 std::string AngularSpecScan::print() const
 {
     std::stringstream result;
-    result << "\n" << PythonFormatting::indent() << "# Defining specular scan:\n";
-    const std::string axis_def = PythonFormatting::indent() + "axis = ";
-    result << axis_def
-           << PythonFormatting::printAxis(*coordinateAxis(), BornAgain::UnitsRad, axis_def.size())
-           << "\n";
+    result << "\n" << pyfmt::indent() << "# Defining specular scan:\n";
+    const std::string axis_def = pyfmt::indent() + "axis = ";
+    result << axis_def << pyfmt2::printAxis(*coordinateAxis(), "rad", axis_def.size()) << "\n";
 
-    result << PythonFormatting::indent() << "scan = ";
-    result << "ba.AngularSpecScan(" << PythonFormatting::printDouble(m_wl) << ", axis)\n";
+    result << pyfmt::indent() << "scan = ";
+    result << "ba.AngularSpecScan(" << pyfmt::printDouble(m_wl) << ", axis)\n";
 
     if (m_footprint) {
         result << *m_footprint << "\n";
-        result << PythonFormatting::indent() << "scan.setFootprintFactor(footprint)\n";
+        result << pyfmt::indent() << "scan.setFootprintFactor(footprint)\n";
     }
     if (!m_inc_resolution->empty()) {
-        result << "\n" << PythonFormatting::indent() << "# Defining angular resolution\n";
+        result << "\n" << pyfmt::indent() << "# Defining angular resolution\n";
         result << *m_inc_resolution << "\n";
-        result << PythonFormatting::indent() << "scan.setAngleResolution(resolution)\n";
+        result << pyfmt::indent() << "scan.setAngleResolution(resolution)\n";
     }
     if (!m_wl_resolution->empty()) {
-        result << "\n" << PythonFormatting::indent() << "# Defining wavelength resolution\n";
+        result << "\n" << pyfmt::indent() << "# Defining wavelength resolution\n";
         result << *m_wl_resolution << "\n";
-        result << PythonFormatting::indent() << "scan.setWavelengthResolution(resolution)\n";
+        result << pyfmt::indent() << "scan.setWavelengthResolution(resolution)\n";
     }
     return result.str();
 }

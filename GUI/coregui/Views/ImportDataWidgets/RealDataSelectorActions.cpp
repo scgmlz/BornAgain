@@ -12,19 +12,19 @@
 //
 // ************************************************************************** //
 
-#include "RealDataSelectorActions.h"
-#include "AppSvc.h"
-#include "GUIHelpers.h"
-#include "ImportDataInfo.h"
-#include "ImportDataUtils.h"
-#include "IntensityDataFunctions.h"
-#include "IntensityDataItem.h"
-#include "MaskItems.h"
-#include "OutputData.h"
-#include "ProjectionItems.h"
-#include "RealDataItem.h"
-#include "RealDataModel.h"
-#include "projectmanager.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
+#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Intensity/OutputData.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/ProjectionItems.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
 #include <QAction>
 #include <QApplication>
 #include <QFileDialog>
@@ -86,21 +86,21 @@ RealDataSelectorActions::RealDataSelectorActions(QObject* parent)
       m_removeDataAction(nullptr), m_rotateDataAction(new QAction(this)), m_realDataModel(nullptr),
       m_selectionModel(nullptr)
 {
-    m_import2dDataAction = new QAction(QStringLiteral("Import 2D data"), parent);
+    m_import2dDataAction = new QAction("Import 2D data", parent);
     m_import2dDataAction->setIcon(QIcon(":/images/import.svg"));
-    m_import2dDataAction->setToolTip(QStringLiteral("Import 2D data"));
+    m_import2dDataAction->setToolTip("Import 2D data");
     connect(m_import2dDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onImport2dDataAction);
 
-    m_import1dDataAction = new QAction(QStringLiteral("Import 1D data"), parent);
+    m_import1dDataAction = new QAction("Import 1D data", parent);
     m_import1dDataAction->setIcon(QIcon(":/images/import.svg"));
-    m_import1dDataAction->setToolTip(QStringLiteral("Import 1D data"));
+    m_import1dDataAction->setToolTip("Import 1D data");
     connect(m_import1dDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onImport1dDataAction);
 
-    m_removeDataAction = new QAction(QStringLiteral("Remove this data"), parent);
+    m_removeDataAction = new QAction("Remove this data", parent);
     m_removeDataAction->setIcon(QIcon(":/images/delete.svg"));
-    m_removeDataAction->setToolTip(QStringLiteral("Remove selected data"));
+    m_removeDataAction->setToolTip("Remove selected data");
     connect(m_removeDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onRemoveDataAction);
 
@@ -123,8 +123,8 @@ void RealDataSelectorActions::setSelectionModel(QItemSelectionModel* selectionMo
 
 void RealDataSelectorActions::importDataLoop(int ndim)
 {
-    Q_ASSERT(m_realDataModel);
-    Q_ASSERT(m_selectionModel);
+    ASSERT(m_realDataModel);
+    ASSERT(m_selectionModel);
     QString filter_string_ba;
     if (ndim == 2) {
         filter_string_ba = "Intensity File (*.int *.gz *.tif *.tiff *.txt *.csv);;"
@@ -133,8 +133,8 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         filter_string_ba = "";
     }
     QString dirname = AppSvc::projectManager()->userImportDir();
-    QStringList fileNames = QFileDialog::getOpenFileNames(
-        Q_NULLPTR, QStringLiteral("Open Intensity Files"), dirname, filter_string_ba);
+    QStringList fileNames =
+        QFileDialog::getOpenFileNames(Q_NULLPTR, "Open Intensity Files", dirname, filter_string_ba);
 
     if (fileNames.isEmpty())
         return;
@@ -150,8 +150,8 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         if (ndim == 2) {
             std::unique_ptr<OutputData<double>> data = ImportDataUtils::Import2dData(fileName);
             if (data) {
-                RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(
-                    m_realDataModel->insertNewItem(Constants::RealDataType));
+                RealDataItem* realDataItem =
+                    dynamic_cast<RealDataItem*>(m_realDataModel->insertNewItem("RealData"));
                 realDataItem->setItemName(baseNameOfLoadedFile);
                 realDataItem->setOutputData(data.release());
                 m_selectionModel->clearSelection();
@@ -160,8 +160,8 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         } else if (ndim == 1) {
             auto data = ImportDataUtils::Import1dData(fileName);
             if (data) {
-                RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(
-                    m_realDataModel->insertNewItem(Constants::RealDataType));
+                RealDataItem* realDataItem =
+                    dynamic_cast<RealDataItem*>(m_realDataModel->insertNewItem("RealData"));
                 realDataItem->setItemName(baseNameOfLoadedFile);
                 realDataItem->setImportData(std::move(data));
                 m_selectionModel->clearSelection();
@@ -198,9 +198,9 @@ void RealDataSelectorActions::onRotateDataRequest()
 
     RealDataItem* dataItem =
         dynamic_cast<RealDataItem*>(m_realDataModel->itemForIndex(currentIndex));
-    Q_ASSERT(dataItem);
+    ASSERT(dataItem);
     auto intensityItem = dataItem->intensityDataItem();
-    Q_ASSERT(intensityItem);
+    ASSERT(intensityItem);
 
     if (rotationAffectsSetup(*intensityItem)) {
         if (!openRotateWarningDialog(nullptr))

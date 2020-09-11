@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARBEAMEDITOR_H_
-#define SPECULARBEAMEDITOR_H_
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_SPECULARBEAMEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_SPECULARBEAMEDITOR_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class BeamItem;
 class ColumnResizer;
@@ -48,4 +48,4 @@ private:
     QGridLayout* m_gridLayout;
 };
 
-#endif /* SPECULARBEAMEDITOR_H_ */
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_SPECULARBEAMEDITOR_H

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "CustomEventFilters.h"
+#include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QApplication>
 #include <QComboBox>
 #include <QKeyEvent>

@@ -3,8 +3,8 @@
 ###############################################################################
 set(executable_name BornAgain)
 
-set(source_files main.cpp appoptions.cpp)
-set(include_files appoptions.h)
+set(source_files main.cpp appoptions.cpp MessageHandler.cpp)
+set(include_files appoptions.h MessageHandler.h )
 
 # -----------------------------------------------------------------------------
 # Qt configuration
@@ -37,7 +37,7 @@ endif()
 # -----------------------------------------------------------------------------
 add_executable(${executable_name}
                ${executable_options}
-               ${source_files} ${include_files}
+               ${source_files}
                ${system_addons})
 
 
@@ -59,7 +59,8 @@ endif()
 
 if(APPLE)
     set(MACOSX_BUNDLE_IDENTIFIER "org.bornagainproject.BornAgain")
-    configure_file("${TEMPLATE_DIR}/MacOSXBundleInfo.plist.in" "${BUILD_VAR_DIR}/Info.plist" @ONLY)
+    configure_file("${CONFIGURABLES_DIR}/MacOSXBundleInfo.plist.in"
+        "${BUILD_VAR_DIR}/Info.plist" @ONLY)
 
     set_target_properties(${executable_name}
         PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${BUILD_VAR_DIR}/Info.plist)
@@ -69,7 +70,8 @@ if(APPLE)
         set(link_flags "-Wl,-rpath,@loader_path/../Frameworks/ \
   -Wl,-rpath,@loader_path/../lib/BornAgain-${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR}/")
     else()
-        set(link_flags "-Wl,-rpath,@loader_path/../../../lib/BornAgain-${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR}/")
+        set(link_flags "-Wl,-rpath,\
+@loader_path/../../../lib/BornAgain-${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR}/")
     endif()
     set_target_properties(${executable_name} PROPERTIES LINK_FLAGS ${link_flags})
 endif()
@@ -104,10 +106,10 @@ if(UNIX)
         install( FILES ${CMAKE_SOURCE_DIR}/GUI/main/BornAgain.icns
             DESTINATION ${destination_bundle}/Contents/Resources/
         )
-        install( FILES ${CMAKE_SOURCE_DIR}/cmake/bornagain/scripts/qt.conf
+        install( FILES ${CMAKE_SOURCE_DIR}/cmake/configurables/qt.conf
             DESTINATION ${destination_bundle}/Contents/Resources/
         )
-        configure_file(${CMAKE_SOURCE_DIR}/cmake/bornagain/modules/FixAppleBundle.cmake.in
+        configure_file(${CMAKE_SOURCE_DIR}/cmake/configurables/FixAppleBundle.cmake.in
                        ${BUILD_VAR_DIR}/FixAppleBundle.cmake @ONLY)
         install(SCRIPT ${BUILD_VAR_DIR}/FixAppleBundle.cmake COMPONENT Runtime)
     elseif(WIN32)

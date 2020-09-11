@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SysUtils.h"
+#include "Core/Tools/SysUtils.h"
 #include <chrono>
 #include <iomanip>
 #include <iostream>
@@ -48,9 +48,9 @@ void SysUtils::enableFloatingPointExceptions()
 std::string SysUtils::getenv(const std::string& name)
 {
     if (char* c = std::getenv(name.c_str()))
-        return std::string(c);
+        return c;
     else
-        return std::string();
+        return "";
 }
 
 bool SysUtils::isWindowsHost()

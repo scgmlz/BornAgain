@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLELAYOUTITEM_H
-#define PARTICLELAYOUTITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARTICLELAYOUTITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PARTICLELAYOUTITEM_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class BA_CORE_API_ ParticleLayoutItem : public SessionGraphicsItem
 {
@@ -31,4 +31,4 @@ private:
     void updateDensityValue();
 };
 
-#endif // PARTICLELAYOUTITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PARTICLELAYOUTITEM_H

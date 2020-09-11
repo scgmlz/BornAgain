@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALBYSLDIMPL_H_
-#define MATERIALBYSLDIMPL_H_
+#ifndef BORNAGAIN_CORE_MATERIAL_MATERIALBYSLDIMPL_H
+#define BORNAGAIN_CORE_MATERIAL_MATERIALBYSLDIMPL_H
 
-#include "MagneticMaterialImpl.h"
-#include "Material.h"
-#include "MaterialFactoryFuncs.h"
+#include "Core/Material/MagneticMaterialImpl.h"
+#include "Core/Material/Material.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
 
 //! Material implementation based on wavelength-independent data (valid for a range of wavelengths)
 //! @ingroup materials
@@ -64,4 +64,4 @@ private:
     double m_sld_imag; //!< imaginary part of scattering length density (negative by default)
 };
 
-#endif /* MATERIALBYSLDIMPL_H_ */
+#endif // BORNAGAIN_CORE_MATERIAL_MATERIALBYSLDIMPL_H

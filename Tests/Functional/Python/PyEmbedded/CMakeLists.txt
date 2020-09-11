@@ -1,30 +1,18 @@
+include(GoogleTest) # provides gtest_discover_tests
+
 set(test TestPyEmbedded)
 
-set(test_cases
-    SysPath
-    ImportNumpy
-    FunctionCall
-    MethodCall
-    CompiledFunction
-    ObjectExtract
-    EmbeddedMultiLayer
-    ExportToPythonAndBack
-    ModuleFunctionsList
-)
+file(GLOB source_files "*.cpp")
 
-include_directories(
-    ${Python_INCLUDE_DIRS}
-    ${Python_NumPy_INCLUDE_DIRS}
+add_executable(${test} ${source_files} ${CMAKE_SOURCE_DIR}/Tests/GTestWrapper/TestAll.cpp)
+target_include_directories(${test}
+    PUBLIC
+    ${CMAKE_SOURCE_DIR}/ThirdParty/common/gtest/gtest-1.8.0/include
+    ${Python3_INCLUDE_DIRS}
+    ${Python3_NumPy_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/auto/Wrap
 )
 
-file(GLOB source_files "*.cpp")
-file(GLOB include_files "*.h")
+target_link_libraries(${test} BornAgainCore gtest)
 
-add_executable(${test} ${include_files} ${source_files})
-target_link_libraries(${test} BornAgainCore BornAgainTestMachinery)
-
-foreach(test_case ${test_cases})
-    add_test(${test}/${test_case} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${test} ${test_case})
-endforeach()
-
+gtest_discover_tests(${test})

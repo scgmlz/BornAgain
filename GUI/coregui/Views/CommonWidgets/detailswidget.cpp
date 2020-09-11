@@ -23,9 +23,9 @@
 **
 ****************************************************************************/
 
-#include "detailswidget.h"
-#include "detailsbutton.h"
-#include "hostosinfo.h"
+#include "GUI/coregui/Views/CommonWidgets/detailswidget.h"
+#include "GUI/coregui/Views/CommonWidgets/detailsbutton.h"
+#include "GUI/coregui/utils/hostosinfo.h"
 
 #include <QApplication>
 #include <QCheckBox>

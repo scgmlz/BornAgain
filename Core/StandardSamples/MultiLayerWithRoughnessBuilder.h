@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERWITHROUGHNESSBUILDER_H
-#define MULTILAYERWITHROUGHNESSBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHROUGHNESSBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHROUGHNESSBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class ISample;
 
@@ -37,4 +37,4 @@ private:
     double m_crossCorrLength;
 };
 
-#endif // MULTILAYERWITHROUGHNESSBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHROUGHNESSBUILDER_H

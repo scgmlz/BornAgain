@@ -12,24 +12,24 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorTriangle.h"
-#include "BornAgainNamespace.h"
-#include "RealLimits.h"
-#include "RealParameter.h"
-#include "Triangle.h"
+#include "Core/HardParticle/FormFactorTriangle.h"
+#include "Fit/Tools/RealLimits.h"
 
-FormFactorTriangle::FormFactorTriangle(const double base_edge) : m_base_edge(base_edge)
+FormFactorTriangle::FormFactorTriangle(const std::vector<double> P)
+    : FormFactorPolygonalSurface(
+        {"Triangle", "class_tooltip", {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0}}}, P),
+      m_base_edge(m_P[0])
 {
-    setName("Triangle");
-    registerParameter(BornAgain::BaseEdge, &m_base_edge)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
     onChange();
+}
+
+FormFactorTriangle::FormFactorTriangle(double base_edge)
+    : FormFactorTriangle(std::vector<double>{base_edge})
+{
 }
 
 void FormFactorTriangle::onChange()
 {
-    mP_shape.reset(new Triangle(m_base_edge, 0.0));
     double a = m_base_edge;
     double as = a / 2;
     double ac = a / sqrt(3) / 2;

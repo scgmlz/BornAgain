@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELTREEVIEW_H
-#define MODELTREEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_MODELTREEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_MODELTREEVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QTreeView;
@@ -45,4 +45,4 @@ private:
     bool m_is_expanded;
 };
 
-#endif // MODELTREEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_MODELTREEVIEW_H

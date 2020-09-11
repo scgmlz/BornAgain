@@ -1,10 +1,10 @@
 #include <mpi.h>
 
-#include "IntensityDataFunctions.h"
-#include "IntensityDataIOFactory.h"
-#include "MultiLayer.h"
-#include "SampleBuilderFactory.h"
-#include "SimulationFactory.h"
+#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Simulation/SimulationFactory.h"
+#include "Core/StandardSamples/SampleBuilderFactory.h"
 
 #include <iostream>
 

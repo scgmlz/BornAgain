@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "ScalarFunctionAdapter.h"
-#include "KernelTypes.h"
-#include "RootScalarFunction.h"
+#include "Fit/RootAdapter/ScalarFunctionAdapter.h"
+#include "Fit/Kernel/KernelTypes.h"
+#include "Fit/RootAdapter/RootScalarFunction.h"
 
 using namespace Fit;
 

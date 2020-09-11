@@ -1,0 +1,9 @@
+// -*- mode: c++ -*-
+
+#include <cerf_ptr.h>
+
+std::complex<double> cerfcx(std::complex<double> z) {
+    std::complex<double> ret;
+    p_cerfcx((void*)&z, (void*)&ret);
+    return ret;
+}

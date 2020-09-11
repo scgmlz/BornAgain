@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "VariableBinAxis.h"
-#include "Exceptions.h"
-#include "Numeric.h"
+#include "Core/Binning/VariableBinAxis.h"
+#include "Core/Basics/Exceptions.h"
+#include "Fit/TestEngine/Numeric.h"
 #include <algorithm>
 #include <iomanip>
 

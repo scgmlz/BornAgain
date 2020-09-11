@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "WelcomeView.h"
-#include "DesignerHelper.h"
-#include "FancyLabel.h"
-#include "LayoutUtils.h"
-#include "StyleUtils.h"
-#include "UpdateNotifierWidget.h"
-#include "mainwindow.h"
-#include "mainwindow_constants.h"
-#include "projectdocument.h"
-#include "projectmanager.h"
-#include "qstringutils.h"
+#include "GUI/coregui/Views/WelcomeView.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/mainwindow/UpdateNotifierWidget.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/utils/FancyLabel.h"
+#include "GUI/coregui/utils/LayoutUtils.h"
+#include "GUI/coregui/utils/StyleUtils.h"
+#include "GUI/coregui/utils/qstringutils.h"
 #include <QCommandLinkButton>
 #include <QDesktopServices>
 #include <QUrl>

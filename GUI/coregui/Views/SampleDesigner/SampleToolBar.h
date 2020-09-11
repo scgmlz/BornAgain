@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLETOOLBAR_H
-#define SAMPLETOOLBAR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLETOOLBAR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLETOOLBAR_H
 
-#include "StyledToolBar.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
 #include <QTreeView>
 
 class QAction;
@@ -58,4 +58,4 @@ private:
     SampleViewActions* m_sampleViewActions;
 };
 
-#endif // SAMPLETOOLBAR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLETOOLBAR_H

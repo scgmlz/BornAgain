@@ -12,27 +12,27 @@
 //
 // ************************************************************************** //
 
-#include "DesignerScene.h"
-#include "ConnectableView.h"
-#include "DesignerHelper.h"
-#include "DesignerMimeData.h"
-#include "FilterPropertyProxy.h"
-#include "GUIExamplesFactory.h"
-#include "IView.h"
-#include "InstrumentModel.h"
-#include "ItemFactory.h"
-#include "LayerView.h"
-#include "NodeEditor.h"
-#include "NodeEditorConnection.h"
-#include "ParticleCompositionItem.h"
-#include "ParticleCoreShellItem.h"
-#include "ParticleItem.h"
-#include "ParticleLayoutItem.h"
-#include "SampleBuilderFactory.h"
-#include "SampleModel.h"
-#include "SampleViewAligner.h"
-#include "SampleViewFactory.h"
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
+#include "Core/StandardSamples/SampleBuilderFactory.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
+#include "GUI/coregui/Models/GUIExamplesFactory.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/ItemFactory.h"
+#include "GUI/coregui/Models/ParticleCompositionItem.h"
+#include "GUI/coregui/Models/ParticleCoreShellItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerMimeData.h"
+#include "GUI/coregui/Views/SampleDesigner/IView.h"
+#include "GUI/coregui/Views/SampleDesigner/LayerView.h"
+#include "GUI/coregui/Views/SampleDesigner/NodeEditor.h"
+#include "GUI/coregui/Views/SampleDesigner/NodeEditorConnection.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewAligner.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewFactory.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QItemSelection>
 #include <QPainter>
@@ -61,7 +61,7 @@ DesignerScene::~DesignerScene()
 
 void DesignerScene::setSampleModel(SampleModel* sampleModel)
 {
-    Q_ASSERT(sampleModel);
+    ASSERT(sampleModel);
 
     if (sampleModel != m_sampleModel) {
 
@@ -104,7 +104,7 @@ void DesignerScene::setMaterialModel(MaterialModel* materialModel)
 
 void DesignerScene::setSelectionModel(QItemSelectionModel* model, FilterPropertyProxy* proxy)
 {
-    Q_ASSERT(model);
+    ASSERT(model);
 
     if (model != m_selectionModel) {
 
@@ -134,7 +134,7 @@ void DesignerScene::resetScene()
 {
     clear();
     m_ItemToView.clear();
-    m_layer_interface_line = QLineF();
+    m_layer_interface_line = {};
 }
 
 void DesignerScene::updateScene()
@@ -202,7 +202,7 @@ void DesignerScene::onSceneSelectionChanged()
         if (view) {
             SessionItem* sampleItem = view->getItem();
             QModelIndex itemIndex = m_sampleModel->indexOfItem(sampleItem);
-            Q_ASSERT(itemIndex.isValid());
+            ASSERT(itemIndex.isValid());
             if (!m_selectionModel->isSelected(m_proxy->mapFromSource(itemIndex)))
                 m_selectionModel->select(m_proxy->mapFromSource(itemIndex),
                                          QItemSelectionModel::Select);
@@ -215,7 +215,7 @@ void DesignerScene::onSceneSelectionChanged()
 //! runs through all items recursively and updates corresponding views
 void DesignerScene::updateViews(const QModelIndex& parentIndex, IView* parentView)
 {
-    Q_ASSERT(m_sampleModel);
+    ASSERT(m_sampleModel);
 
     IView* childView(0);
     int childCount = 0;
@@ -241,7 +241,7 @@ void DesignerScene::updateViews(const QModelIndex& parentIndex, IView* parentVie
 //! adds view for item, if it doesn't exists
 IView* DesignerScene::addViewForItem(SessionItem* item)
 {
-    Q_ASSERT(item);
+    ASSERT(item);
 
     IView* view = getViewForItem(item);
 
@@ -285,7 +285,7 @@ void DesignerScene::deleteViews(const QModelIndex& viewIndex)
 //! removes view from scene corresponding to given item
 void DesignerScene::removeItemViewFromScene(SessionItem* item)
 {
-    Q_ASSERT(item);
+    ASSERT(item);
 
     for (QMap<SessionItem*, IView*>::iterator it = m_ItemToView.begin(); it != m_ItemToView.end();
          ++it) {
@@ -348,11 +348,10 @@ void DesignerScene::onEstablishedConnection(NodeEditorConnection* connection)
     ConnectableView* childView = connection->getChildView();
 
     QString tag;
-    if (connection->getParentView()->getItem()->modelType() == Constants::ParticleLayoutType) {
+    if (connection->getParentView()->getItem()->modelType() == "ParticleLayout") {
         if (connection->inputPort()->getPortType() == NodeEditorPort::INTERFERENCE)
             tag = ParticleLayoutItem::T_INTERFERENCE;
-    } else if (connection->getParentView()->getItem()->modelType()
-               == Constants::ParticleCoreShellType) {
+    } else if (connection->getParentView()->getItem()->modelType() == "ParticleCoreShell") {
         if (parentView->getInputPortIndex(connection->inputPort()) == 0)
             tag = ParticleCoreShellItem::T_CORE;
         else if (parentView->getInputPortIndex(connection->inputPort()) == 1)
@@ -360,11 +359,10 @@ void DesignerScene::onEstablishedConnection(NodeEditorConnection* connection)
         else if (connection->inputPort()->getPortType() == NodeEditorPort::TRANSFORMATION)
             tag = ParticleItem::T_TRANSFORMATION;
 
-    } else if (connection->getParentView()->getItem()->modelType()
-               == Constants::ParticleCompositionType) {
+    } else if (connection->getParentView()->getItem()->modelType() == "ParticleComposition") {
         if (connection->inputPort()->getPortType() == NodeEditorPort::TRANSFORMATION)
             tag = ParticleItem::T_TRANSFORMATION;
-    } else if (connection->getParentView()->getItem()->modelType() == Constants::MesoCrystalType) {
+    } else if (connection->getParentView()->getItem()->modelType() == "MesoCrystal") {
         if (connection->inputPort()->getPortType() == NodeEditorPort::TRANSFORMATION)
             tag = ParticleItem::T_TRANSFORMATION;
     }
@@ -413,10 +411,10 @@ void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent* event)
             if (SampleViewFactory::isValidType(mimeData->getClassName())) {
 
                 SessionItem* new_item(0);
-                if (mimeData->getClassName().startsWith(Constants::FormFactorType)) {
-                    new_item = m_sampleModel->insertNewItem(Constants::ParticleType);
+                if (mimeData->getClassName().startsWith("FormFactor")) {
+                    new_item = m_sampleModel->insertNewItem("Particle");
                     QString ffName = mimeData->getClassName();
-                    ffName.remove(Constants::FormFactorType);
+                    ffName.remove("FormFactor");
                     new_item->setGroupProperty(ParticleItem::P_FORM_FACTOR, ffName);
 
                 } else {
@@ -492,12 +490,12 @@ bool DesignerScene::isAcceptedByMultiLayer(const DesignerMimeData* mimeData,
         return false;
 
     //    // MultiLayer can be inserted in MultiLayer
-    //    if (mimeData->getClassName() == Constants::MultiLayerType && isMultiLayerNearby(event)) {
+    //    if (mimeData->getClassName() == "MultiLayer" && isMultiLayerNearby(event)) {
     //        return true;
     //    }
 
     // layer can be inserted in MultiLayer
-    if (mimeData->getClassName() == Constants::LayerType && isMultiLayerNearby(event)) {
+    if (mimeData->getClassName() == "Layer" && isMultiLayerNearby(event)) {
         return true;
     }
     return false;

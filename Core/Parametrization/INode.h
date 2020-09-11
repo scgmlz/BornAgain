@@ -12,13 +12,35 @@
 //
 // ************************************************************************** //
 
-#ifndef INODE_H
-#define INODE_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_INODE_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_INODE_H
 
-#include "INodeVisitor.h"
-#include "IParameterized.h"
+#include "Core/Parametrization/INodeVisitor.h" // not forward declared because used by all children
+#include "Core/Parametrization/IParameterized.h"
+#include <limits>
 #include <memory>
 #include <vector>
+
+const double INF = std::numeric_limits<double>::infinity();
+
+//! Metadata of one model parameter.
+struct BA_CORE_API_ ParaMeta {
+    std::string name;
+    std::string unit;
+    std::string tooltip;
+    double vMin;
+    double vMax;
+    double vDefault;
+};
+
+//! Metadata of one model node.
+struct BA_CORE_API_ NodeMeta {
+    std::string className;
+    std::string tooltip;
+    std::vector<ParaMeta> paraMeta;
+};
+
+NodeMeta nodeMetaUnion(const std::vector<ParaMeta>& base, const NodeMeta& other);
 
 //! Base class for tree-like structures containing parameterized objects.
 //! @ingroup tools_internal
@@ -26,7 +48,9 @@
 class BA_CORE_API_ INode : public IParameterized
 {
 public:
-    INode();
+    INode() : m_NP{0} {}
+    INode(const NodeMeta& meta, const std::vector<double>& PValues);
+
     virtual ~INode() {}
 
     //! Calls the INodeVisitor's visit method
@@ -54,7 +78,13 @@ public:
     ParameterPool* createParameterTree() const;
 
 private:
-    const INode* m_parent;
+    const INode* m_parent{nullptr};
+    // const std::string m_className;
+    // const std::string m_tooltip;
+
+protected:
+    const size_t m_NP;
+    std::vector<double> m_P;
 };
 
 template <class T>
@@ -101,4 +131,4 @@ inline std::vector<const INode*>& operator<<(std::vector<const INode*>&& v_node,
     return v_node;
 }
 
-#endif // INODE_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_INODE_H

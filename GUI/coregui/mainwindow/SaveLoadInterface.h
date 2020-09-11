@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAVELOADINTERFACE_H
-#define SAVELOADINTERFACE_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVELOADINTERFACE_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVELOADINTERFACE_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 #include <QDateTime>
 #include <QString>
@@ -50,4 +50,4 @@ public:
     QString fileName(const QString& projectDir) const;
 };
 
-#endif // SAVELOADINTERFACE_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVELOADINTERFACE_H

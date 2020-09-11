@@ -12,13 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "projectdocument.h"
-#include "ApplicationModels.h"
-#include "GUIHelpers.h"
-#include "JobModel.h"
-#include "MessageService.h"
-#include "OutputDataIOService.h"
-#include "ProjectUtils.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/mainwindow/OutputDataIOService.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/MessageService.h"
 #include <QDir>
 #include <QElapsedTimer>
 #include <QXmlStreamReader>
@@ -65,7 +66,7 @@ QString ProjectDocument::projectFileName() const
     if (!projectName().isEmpty())
         return projectDir() + "/" + projectName() + projectFileExtension();
     else
-        return QString();
+        return "";
 }
 
 void ProjectDocument::setProjectFileName(const QString& projectFileName)
@@ -76,7 +77,7 @@ void ProjectDocument::setProjectFileName(const QString& projectFileName)
 
 QString ProjectDocument::projectFileExtension()
 {
-    return QString(".pro");
+    return ".pro";
 }
 
 void ProjectDocument::setApplicationModels(ApplicationModels* applicationModels)
@@ -223,7 +224,7 @@ void ProjectDocument::onModelChanged()
 
 void ProjectDocument::readFrom(QIODevice* device)
 {
-    Q_ASSERT(m_messageService);
+    ASSERT(m_messageService);
     QXmlStreamReader reader(device);
 
     while (!reader.atEnd()) {

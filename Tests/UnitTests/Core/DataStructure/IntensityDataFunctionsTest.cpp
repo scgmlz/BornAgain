@@ -1,14 +1,10 @@
-#include "IntensityDataFunctions.h"
-#include "VariableBinAxis.h"
-#include "google_test.h"
+#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Binning/VariableBinAxis.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class IntensityDataFunctionsTest : public ::testing::Test
 {
-protected:
-    ~IntensityDataFunctionsTest();
 };
-
-IntensityDataFunctionsTest::~IntensityDataFunctionsTest() = default;
 
 TEST_F(IntensityDataFunctionsTest, ClipDataSetFixed)
 {

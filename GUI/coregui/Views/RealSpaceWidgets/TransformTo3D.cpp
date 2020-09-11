@@ -12,20 +12,20 @@
 //
 // ************************************************************************** //
 
-#include "TransformTo3D.h"
-#include "ExternalProperty.h"
-#include "FormFactorItems.h"
-#include "GUIDomainSampleVisitor.h"
-#include "HardParticles.h"
-#include "LayerItem.h"
-#include "MultiLayerItem.h"
-#include "ParticleComposition.h"
-#include "ParticleCompositionItem.h"
-#include "ParticleItem.h"
-#include "RealSpaceCanvas.h"
-#include "SessionItem.h"
-#include "Units.h"
-#include "VectorItem.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.h"
+#include "Core/Basics/Units.h"
+#include "Core/Particle/ParticleComposition.h"
+#include "Core/includeIncludes/HardParticles.h"
+#include "GUI/coregui/Models/FormFactorItems.h"
+#include "GUI/coregui/Models/GUIDomainSampleVisitor.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParticleCompositionItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.h"
 
 namespace
 {
@@ -44,7 +44,7 @@ bool isBottomLayer(const SessionItem& layerItem)
 double TransformTo3D::visualLayerThickness(const SessionItem& layerItem,
                                            const SceneGeometry& sceneGeometry)
 {
-    Q_ASSERT(layerItem.modelType() == Constants::LayerType);
+    ASSERT(layerItem.modelType() == "Layer");
 
     double thickness(0.0);
     if (isTopLayer(layerItem))
@@ -61,7 +61,7 @@ std::unique_ptr<RealSpace::Layer> TransformTo3D::createLayer(const SessionItem& 
                                                              const SceneGeometry& sceneGeometry,
                                                              const QVector3D& origin)
 {
-    Q_ASSERT(layerItem.modelType() == Constants::LayerType);
+    ASSERT(layerItem.modelType() == "Layer");
 
     double thickness = TransformTo3D::visualLayerThickness(layerItem, sceneGeometry);
 
@@ -86,7 +86,7 @@ std::unique_ptr<RealSpace::Layer> TransformTo3D::createLayer(const SessionItem& 
 std::unique_ptr<RealSpace::Particles::Particle>
 TransformTo3D::createParticle3D(const SessionItem& particleItem)
 {
-    Q_ASSERT(particleItem.modelType() == Constants::ParticleType);
+    ASSERT(particleItem.modelType() == "Particle");
 
     std::unique_ptr<RealSpace::Particles::Particle> result;
 
@@ -188,36 +188,40 @@ TransformTo3D::createParticlefromIFormFactor(const IFormFactor* ff)
         double height = ff_Pyramid->getHeight();
         double alpha = ff_Pyramid->getAlpha();
         result = std::make_unique<RealSpace::Particles::Pyramid>(baseedge, height, alpha);
-    } else if (auto ff_Ripple1Box = dynamic_cast<const FormFactorRipple1Box*>(ff)) {
-        double length = ff_Ripple1Box->getLength();
-        double width = ff_Ripple1Box->getWidth();
-        double height = ff_Ripple1Box->getHeight();
-        result = std::make_unique<RealSpace::Particles::Ripple1Box>(length, width, height);
-    } else if (auto ff_Ripple1Gauss = dynamic_cast<const FormFactorRipple1Gauss*>(ff)) {
-        double length = ff_Ripple1Gauss->getLength();
-        double width = ff_Ripple1Gauss->getWidth();
-        double height = ff_Ripple1Gauss->getHeight();
-        result = std::make_unique<RealSpace::Particles::Ripple1Gauss>(length, width, height);
-    } else if (auto ff_Ripple1Lorentz = dynamic_cast<const FormFactorRipple1Lorentz*>(ff)) {
-        double length = ff_Ripple1Lorentz->getLength();
-        double width = ff_Ripple1Lorentz->getWidth();
-        double height = ff_Ripple1Lorentz->getHeight();
-        result = std::make_unique<RealSpace::Particles::Ripple1Lorentz>(length, width, height);
-    } else if (auto ff_Ripple2Box = dynamic_cast<const FormFactorRipple2Box*>(ff)) {
-        double length = ff_Ripple2Box->getLength();
-        double width = ff_Ripple2Box->getWidth();
-        double height = ff_Ripple2Box->getHeight();
-        result = std::make_unique<RealSpace::Particles::Ripple2Box>(length, width, height);
-    } else if (auto ff_Ripple2Gauss = dynamic_cast<const FormFactorRipple2Gauss*>(ff)) {
-        double length = ff_Ripple2Gauss->getLength();
-        double width = ff_Ripple2Gauss->getWidth();
-        double height = ff_Ripple2Gauss->getHeight();
-        result = std::make_unique<RealSpace::Particles::Ripple2Gauss>(length, width, height);
-    } else if (auto ff_Ripple2Lorentz = dynamic_cast<const FormFactorRipple2Lorentz*>(ff)) {
-        double length = ff_Ripple2Lorentz->getLength();
-        double width = ff_Ripple2Lorentz->getWidth();
-        double height = ff_Ripple2Lorentz->getHeight();
-        result = std::make_unique<RealSpace::Particles::Ripple2Lorentz>(length, width, height);
+    } else if (auto ff_CosineRippleBox = dynamic_cast<const FormFactorCosineRippleBox*>(ff)) {
+        double length = ff_CosineRippleBox->getLength();
+        double width = ff_CosineRippleBox->getWidth();
+        double height = ff_CosineRippleBox->getHeight();
+        result = std::make_unique<RealSpace::Particles::CosineRippleBox>(length, width, height);
+    } else if (auto ff_CosineRippleGauss = dynamic_cast<const FormFactorCosineRippleGauss*>(ff)) {
+        double length = ff_CosineRippleGauss->getLength();
+        double width = ff_CosineRippleGauss->getWidth();
+        double height = ff_CosineRippleGauss->getHeight();
+        result = std::make_unique<RealSpace::Particles::CosineRippleGauss>(length, width, height);
+    } else if (auto ff_CosineRippleLorentz =
+                   dynamic_cast<const FormFactorCosineRippleLorentz*>(ff)) {
+        double length = ff_CosineRippleLorentz->getLength();
+        double width = ff_CosineRippleLorentz->getWidth();
+        double height = ff_CosineRippleLorentz->getHeight();
+        result = std::make_unique<RealSpace::Particles::CosineRippleLorentz>(length, width, height);
+    } else if (auto ff_SawtoothRippleBox = dynamic_cast<const FormFactorSawtoothRippleBox*>(ff)) {
+        double length = ff_SawtoothRippleBox->getLength();
+        double width = ff_SawtoothRippleBox->getWidth();
+        double height = ff_SawtoothRippleBox->getHeight();
+        result = std::make_unique<RealSpace::Particles::SawtoothRippleBox>(length, width, height);
+    } else if (auto ff_SawtoothRippleGauss =
+                   dynamic_cast<const FormFactorSawtoothRippleGauss*>(ff)) {
+        double length = ff_SawtoothRippleGauss->getLength();
+        double width = ff_SawtoothRippleGauss->getWidth();
+        double height = ff_SawtoothRippleGauss->getHeight();
+        result = std::make_unique<RealSpace::Particles::SawtoothRippleGauss>(length, width, height);
+    } else if (auto ff_SawtoothRippleLorentz =
+                   dynamic_cast<const FormFactorSawtoothRippleLorentz*>(ff)) {
+        double length = ff_SawtoothRippleLorentz->getLength();
+        double width = ff_SawtoothRippleLorentz->getWidth();
+        double height = ff_SawtoothRippleLorentz->getHeight();
+        result =
+            std::make_unique<RealSpace::Particles::SawtoothRippleLorentz>(length, width, height);
     } else if (auto ff_Tetrahedron = dynamic_cast<const FormFactorTetrahedron*>(ff)) {
         double baseedge = ff_Tetrahedron->getBaseEdge();
         double height = ff_Tetrahedron->getHeight();

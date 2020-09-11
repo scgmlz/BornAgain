@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "GSLMultiMinimizer.h"
-#include "MinimizerUtils.h"
+#include "Fit/RootAdapter/GSLMultiMinimizer.h"
+#include "Fit/Tools/MinimizerUtils.h"
 #include <string>
 
 #ifdef _WIN32
@@ -32,30 +32,30 @@ GSLMultiMinimizer::GSLMultiMinimizer(const std::string& algorithmName)
     : RootMinimizerAdapter(MinimizerInfo::buildGSLMultiMinInfo(algorithmName)),
       m_gsl_minimizer(new ROOT::Math::GSLMinimizer(algorithmName.c_str()))
 {
-    addOption(OptionNames::PrintLevel, 0, "Minimizer internal print level");
-    addOption(OptionNames::MaxIterations, 0, "Maximum number of iterations");
+    addOption("PrintLevel", 0, "Minimizer internal print level");
+    addOption("MaxIterations", 0, "Maximum number of iterations");
 }
 
 GSLMultiMinimizer::~GSLMultiMinimizer() = default;
 
 void GSLMultiMinimizer::setPrintLevel(int value)
 {
-    setOptionValue(OptionNames::PrintLevel, value);
+    setOptionValue("PrintLevel", value);
 }
 
 int GSLMultiMinimizer::printLevel() const
 {
-    return optionValue<int>(OptionNames::PrintLevel);
+    return optionValue<int>("PrintLevel");
 }
 
 void GSLMultiMinimizer::setMaxIterations(int value)
 {
-    setOptionValue(OptionNames::MaxIterations, value);
+    setOptionValue("MaxIterations", value);
 }
 
 int GSLMultiMinimizer::maxIterations() const
 {
-    return optionValue<int>(OptionNames::MaxIterations);
+    return optionValue<int>("MaxIterations");
 }
 
 std::string GSLMultiMinimizer::statusToString() const

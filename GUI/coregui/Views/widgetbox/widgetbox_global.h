@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#ifndef WIDGETBOX_GLOBAL_H
-#define WIDGETBOX_GLOBAL_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_WIDGETBOX_GLOBAL_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_WIDGETBOX_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 
@@ -54,4 +54,4 @@
 #define QT_WIDGETBOX_EXPORT
 #endif
 
-#endif // WIDGETBOX_GLOBAL_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_WIDGETBOX_GLOBAL_H

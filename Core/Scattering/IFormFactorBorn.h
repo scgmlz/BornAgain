@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef IFORMFACTORBORN_H
-#define IFORMFACTORBORN_H
+#ifndef BORNAGAIN_CORE_SCATTERING_IFORMFACTORBORN_H
+#define BORNAGAIN_CORE_SCATTERING_IFORMFACTORBORN_H
 
-#include "IFormFactor.h"
-#include "IShape.h"
-#include "Vectors3D.h"
+#include "Core/Scattering/IFormFactor.h"
+#include "Core/Shapes/IShape.h"
+#include "Core/Vector/Vectors3D.h"
 
 struct SlicingEffects;
 
@@ -32,8 +32,8 @@ struct SlicingEffects;
 class BA_CORE_API_ IFormFactorBorn : public IFormFactor
 {
 public:
-    IFormFactorBorn();
-    ~IFormFactorBorn() override {}
+    IFormFactorBorn() = default;
+    IFormFactorBorn(const NodeMeta& meta, const std::vector<double>& PValues);
 
     IFormFactorBorn* clone() const override = 0;
 
@@ -45,9 +45,8 @@ public:
     Eigen::Matrix2cd evaluatePol(const WavevectorInfo& wavevectors) const override;
 #endif
 
-    double bottomZ(const IRotation& rotation) const override;
-
-    double topZ(const IRotation& rotation) const override;
+    virtual double bottomZ(const IRotation& rotation) const override;
+    virtual double topZ(const IRotation& rotation) const override;
 
     //! Returns scattering amplitude for complex scattering wavevector q=k_i-k_f.
     //! This method is public only for convenience of plotting form factors in Python.
@@ -71,6 +70,12 @@ protected:
     //! Helper method for slicing
     SlicingEffects computeSlicingEffects(ZLimits limits, const kvector_t& position,
                                          double height) const;
+
+    //! Calculates the z-coordinate of the lowest vertex after rotation
+    static double BottomZ(const std::vector<kvector_t>& vertices, const IRotation& rotation);
+
+    //! Calculates the z-coordinate of the highest vertex after rotation
+    static double TopZ(const std::vector<kvector_t>& vertices, const IRotation& rotation);
 };
 
 //! Nested structure that holds slicing effects on position and removed parts.
@@ -104,4 +109,4 @@ public:
 };
 #endif
 
-#endif // IFORMFACTORBORN_H
+#endif // BORNAGAIN_CORE_SCATTERING_IFORMFACTORBORN_H

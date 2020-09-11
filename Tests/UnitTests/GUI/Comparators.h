@@ -1,5 +1,5 @@
-#ifndef COMPARATORS_H
-#define COMPARATORS_H
+#ifndef BORNAGAIN_TESTS_UNITTESTS_GUI_COMPARATORS_H
+#define BORNAGAIN_TESTS_UNITTESTS_GUI_COMPARATORS_H
 
 //! Helper class to register custom variants comparators and to report
 //! unit tests if comparators should be tested.
@@ -14,4 +14,4 @@ private:
     static bool m_is_registered;
 };
 
-#endif // COMPARATORS_H
+#endif // BORNAGAIN_TESTS_UNITTESTS_GUI_COMPARATORS_H

@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "SampleViewDocks.h"
-#include "ApplicationModels.h"
-#include "FilterPropertyProxy.h"
-#include "RealSpacePanel.h"
-#include "SampleDesigner.h"
-#include "SamplePropertyWidget.h"
-#include "SampleTreeWidget.h"
-#include "SampleView.h"
-#include "SampleWidgetBox.h"
-#include "ScriptPanel.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewDocks.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
+#include "GUI/coregui/Views/SampleDesigner/RealSpacePanel.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleDesigner.h"
+#include "GUI/coregui/Views/SampleDesigner/SamplePropertyWidget.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleTreeWidget.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleWidgetBox.h"
+#include "GUI/coregui/Views/SampleDesigner/ScriptPanel.h"
+#include "GUI/coregui/Views/SampleView.h"
 #include <QAction>
 #include <QDockWidget>
 #include <QTreeView>

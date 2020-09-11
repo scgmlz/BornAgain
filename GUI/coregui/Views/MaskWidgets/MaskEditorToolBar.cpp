@@ -12,9 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "MaskEditorToolBar.h"
-#include "MaskEditorActions.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorToolBar.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorActions.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QButtonGroup>
 #include <QLabel>
 #include <QRadioButton>
@@ -185,7 +186,7 @@ void MaskEditorToolBar::setup_shapes_group()
 
 void MaskEditorToolBar::setup_maskmodify_group()
 {
-    Q_ASSERT(m_editorActions);
+    ASSERT(m_editorActions);
     addAction(m_editorActions->bringToFrontAction());
     addAction(m_editorActions->sendToBackAction());
     add_separator();

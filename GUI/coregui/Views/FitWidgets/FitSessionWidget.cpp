@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "FitSessionWidget.h"
-#include "FitParameterWidget.h"
-#include "FitResultsWidget.h"
-#include "FitSessionController.h"
-#include "JobItem.h"
-#include "MinimizerSettingsWidget.h"
-#include "RunFitControlWidget.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/FitWidgets/FitSessionWidget.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Views/FitWidgets/FitParameterWidget.h"
+#include "GUI/coregui/Views/FitWidgets/FitResultsWidget.h"
+#include "GUI/coregui/Views/FitWidgets/FitSessionController.h"
+#include "GUI/coregui/Views/FitWidgets/MinimizerSettingsWidget.h"
+#include "GUI/coregui/Views/FitWidgets/RunFitControlWidget.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QTabWidget>
 #include <QVBoxLayout>
 
@@ -50,7 +50,7 @@ FitSessionWidget::FitSessionWidget(QWidget* parent)
 
 void FitSessionWidget::setItem(JobItem* jobItem)
 {
-    Q_ASSERT(jobItem);
+    ASSERT(jobItem);
     m_fitParametersWidget->setItem(jobItem);
     m_minimizerSettingsWidget->setItem(jobItem);
     m_controlWidget->setItem(jobItem);
@@ -58,8 +58,8 @@ void FitSessionWidget::setItem(JobItem* jobItem)
 
 void FitSessionWidget::setModelTuningWidget(ParameterTuningWidget* tuningWidget)
 {
-    Q_ASSERT(m_fitParametersWidget);
-    Q_ASSERT(tuningWidget);
+    ASSERT(m_fitParametersWidget);
+    ASSERT(tuningWidget);
     m_fitParametersWidget->setParameterTuningWidget(tuningWidget);
 }
 

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "InfoPanel.h"
-#include "InfoPanelToolBar.h"
+#include "GUI/coregui/Views/CommonWidgets/InfoPanel.h"
+#include "GUI/coregui/Views/CommonWidgets/InfoPanelToolBar.h"
 #include <QBoxLayout>
 #include <QResizeEvent>
 #include <QStackedWidget>

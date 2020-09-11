@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef DATAITEM_H
-#define DATAITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DATAITEM_H
 
-#include "OutputData.h"
-#include "SaveLoadInterface.h"
-#include "SessionItem.h"
+#include "Core/Intensity/OutputData.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/mainwindow/SaveLoadInterface.h"
 #include <QDateTime>
 #include <mutex>
 
@@ -70,4 +70,4 @@ protected:
     std::mutex m_update_data_mutex;
 };
 
-#endif // DATAITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DATAITEM_H

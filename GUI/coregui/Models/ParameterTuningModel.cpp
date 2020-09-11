@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "ParameterTuningModel.h"
-#include "FitParameterHelper.h"
-#include "ParameterTreeItems.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/ParameterTuningModel.h"
+#include "GUI/coregui/Models/FitParameterHelper.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
+#include "GUI/coregui/Models/SessionModel.h"
 #include <QMimeData>
 
 ParameterTuningModel::ParameterTuningModel(QObject* parent) : FilterPropertyProxy(2, parent) {}
@@ -30,7 +30,7 @@ Qt::ItemFlags ParameterTuningModel::flags(const QModelIndex& proxyIndex) const
             result |= Qt::ItemIsEditable;
 
         const QString modelType = sourceIndex.data(SessionFlags::ModelTypeRole).toString();
-        if (modelType == Constants::ParameterType && getParameterItem(proxyIndex))
+        if (modelType == "Parameter" && getParameterItem(proxyIndex))
             result |= Qt::ItemIsDragEnabled;
     }
     return result;
@@ -55,7 +55,7 @@ QMimeData* ParameterTuningModel::mimeData(const QModelIndexList& proxyIndexes) c
 ParameterItem* ParameterTuningModel::getParameterItem(const QModelIndex& proxyIndex) const
 {
     SessionModel* sessionModel = dynamic_cast<SessionModel*>(sourceModel());
-    Q_ASSERT(sessionModel);
+    ASSERT(sessionModel);
 
     QModelIndex sourceIndex = toSourceIndex(proxyIndex);
     if (sourceIndex.column() == 0) {

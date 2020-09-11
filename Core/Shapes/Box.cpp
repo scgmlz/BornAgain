@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "Box.h"
+#include "Core/Shapes/Box.h"
 
 #include <algorithm>
 

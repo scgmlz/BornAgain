@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALDATAITEM_H
-#define REALDATAITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class DataItem;
 class InstrumentItem;
@@ -33,7 +33,7 @@ public:
     static const QString P_INSTRUMENT_ID;
     static const QString P_INSTRUMENT_NAME;
     static const QString T_NATIVE_DATA;
-    static const QString P_NATIVE_UNITS;
+    static const QString P_NATIVE_DATA_UNITS;
 
     RealDataItem();
 
@@ -68,4 +68,4 @@ private:
     const InstrumentItem* m_linkedInstrument;
 };
 
-#endif // REALDATAITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H

@@ -1,20 +1,27 @@
 /*!
 \mainpage
 
-C++ API Reference of <a href="http://www.bornagainproject.org">BornAgain Project</a>, a software to simulate and fit grazing incidence small angle scattering.
+C++ API Reference of <a href="http://www.bornagainproject.org">BornAgain Project</a>,
+ an open-source software to simulate and fit
+ neutron and x-ray reflectometry and grazing-incidence small-angle scattering.
 
 <ul>
-<li> Section <a href="userapi.html">User API</a> contains list of main classes to run the simulation.
-<li> Section <a href="annotated.html">Full C++ API</a> contains a full list of classes belonging to the %BornAgain framework.
-<li> Section <a href="namespace.html">Namespace List</a> contains a full list of namespaces belonging to the %BornAgain framework.
-<li> Section <a href="files.html">File List</a> lets you browse the C++ source code.
+<li> Section <a href="userapi.html">User API</a>
+  contains list of main classes to run the simulation.
+<li> Section <a href="annotated.html">Full C++ API</a>
+  contains a full list of classes belonging to the %BornAgain framework.
+<li> Section <a href="namespace.html">Namespace List</a>
+  contains a full list of namespaces belonging to the %BornAgain framework.
+<li> Section <a href="files.html">File List</a>
+  lets you browse the C++ source code.
 
 </ul>
 
 
 <b> License: </b>
 <br>
-GNU General Public License v3 or higher
+<a href="https://github.com/scgmlz/BornAgain/blob/master/COPYING"
+  >GNU General Public License v3 or higher</a>
 <br>
 Copyright Forschungszentrum Jülich GmbH 2015-
 
@@ -23,8 +30,9 @@ Copyright Forschungszentrum Jülich GmbH 2015-
 <br>
 Scientific Computing Group at MLZ Garching.
 <br>
-Current maintainers: J. Carmona Loaiza, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke, D. Yurov.
-<br>
-Former contributors: J. Burle, C. Durniak, J. M. Fisher.
+See file <a href="https://github.com/scgmlz/BornAgain/blob/master/AUTHORS">AUTHORS</a>
+
+<b> Citation:  </b>
+See file <a href="https://github.com/scgmlz/BornAgain/blob/master/CITATION">CITATION</a>
 
 */

@@ -1,16 +1,14 @@
-#include "SampleProvider.h"
-#include "IMultiLayerBuilder.h"
-#include "MultiLayer.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
-#include "google_test.h"
+#include "Core/Multilayer/SampleProvider.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 class SampleProviderTest : public ::testing::Test
 {
 public:
-    ~SampleProviderTest();
-
     //! Returns test multilayer.
     static std::unique_ptr<MultiLayer> testMultiLayer(double length)
     {
@@ -57,8 +55,6 @@ public:
         double m_length;
     };
 };
-
-SampleProviderTest::~SampleProviderTest() = default;
 
 //! Test initial state,  assignment operator.
 

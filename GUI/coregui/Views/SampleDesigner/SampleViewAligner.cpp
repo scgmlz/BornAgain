@@ -12,25 +12,28 @@
 //
 // ************************************************************************** //
 
-#include "SampleViewAligner.h"
-#include "DesignerScene.h"
-#include "IView.h"
-#include "SampleModel.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewAligner.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
+#include "GUI/coregui/Views/SampleDesigner/IView.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QModelIndex>
 
-namespace {
-int step_width() {
-    return StyleUtils::SizeOfLetterM().width()*12.5;
+namespace
+{
+int step_width()
+{
+    return StyleUtils::SizeOfLetterM().width() * 12.5;
 }
-int step_height() {
-    return StyleUtils::SizeOfLetterM().height()*11;
+int step_height()
+{
+    return StyleUtils::SizeOfLetterM().height() * 11;
 }
-}
+} // namespace
 
 SampleViewAligner::SampleViewAligner(DesignerScene* scene) : m_scene(scene)
 {
-    Q_ASSERT(m_scene);
+    ASSERT(m_scene);
 }
 
 //! Spring based implified algorithm for smart alignment
@@ -120,14 +123,14 @@ QList<IView*> SampleViewAligner::getConnectedViews(IView* view)
 
     QList<SessionItem*> connected_items;
 
-    if (itemOfView->parent()->modelType() == Constants::LayerType) {
+    if (itemOfView->parent()->modelType() == "Layer") {
         // e.g. we are dealing here with ParticleLayout, so we will use directly MultiLayer to
         // interact with
         connected_items.append(itemOfView->parent()->parent());
     } else {
         connected_items.append(itemOfView->parent());
     }
-    if (itemOfView->modelType() == Constants::MultiLayerType) {
+    if (itemOfView->modelType() == "MultiLayer") {
         // MultiLayer will not interact with its Layers, but with they children, e.g. with
         // ParticleLayouts
         for (auto child : itemOfView->children()) {
@@ -148,7 +151,7 @@ QList<IView*> SampleViewAligner::getConnectedViews(IView* view)
 //! Aligns sample starting from
 void SampleViewAligner::alignSample(SessionItem* item, QPointF reference, bool force_alignment)
 {
-    Q_ASSERT(item);
+    ASSERT(item);
     alignSample(m_scene->getSampleModel()->indexOfItem(item), reference, force_alignment);
 }
 
@@ -176,7 +179,8 @@ void SampleViewAligner::alignSample(const QModelIndex& parentIndex, QPointF refe
         QModelIndex itemIndex = sampleModel->index(i_row, 0, parentIndex);
         if (!getViewForIndex(itemIndex))
             continue;
-        QPointF child_reference = reference + QPointF(-step_width(), step_height() * child_counter++);
+        QPointF child_reference =
+            reference + QPointF(-step_width(), step_height() * child_counter++);
         alignSample(itemIndex, child_reference, force_alignment);
     }
 }

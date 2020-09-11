@@ -1,14 +1,12 @@
-#include "Instrument.h"
-#include "BornAgainNamespace.h"
-#include "MathConstants.h"
-#include "OutputData.h"
-#include "google_test.h"
+#include "Core/Instrument/Instrument.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Intensity/OutputData.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class InstrumentTest : public ::testing::Test
 {
 protected:
     InstrumentTest();
-    ~InstrumentTest();
 
     Instrument m_instrument;
     OutputData<double> m_data;
@@ -16,11 +14,9 @@ protected:
 
 InstrumentTest::InstrumentTest()
 {
-    m_data.addAxis(BornAgain::PHI_AXIS_NAME, 10, 0., 10.);
+    m_data.addAxis("phi_f", 10, 0., 10.);
     m_data.addAxis("theta_f", 20, 0., 20.);
 }
-
-InstrumentTest::~InstrumentTest() = default;
 
 TEST_F(InstrumentTest, InstrumentInitialState)
 {

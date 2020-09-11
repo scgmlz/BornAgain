@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "ParameterPool.h"
-#include "Exceptions.h"
-#include "RealLimits.h"
-#include "RealParameter.h"
-#include "StringUtils.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Fit/Tools/RealLimits.h"
+#include "Fit/Tools/StringUtils.h"
 #include <algorithm>
-#include <cassert>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>

@@ -12,26 +12,21 @@
 //
 // ************************************************************************** //
 
-#include "InterferenceFunctionNone.h"
-#include "BornAgainNamespace.h"
+#include "Core/Aggregate/InterferenceFunctionNone.h"
 
-InterferenceFunctionNone::InterferenceFunctionNone()
+InterferenceFunctionNone::InterferenceFunctionNone() : IInterferenceFunction(0)
 {
-    setName(BornAgain::InterferenceFunctionNoneType);
+    setName("InterferenceNone");
 }
 
 InterferenceFunctionNone* InterferenceFunctionNone::clone() const
 {
-    return new InterferenceFunctionNone(*this);
+    auto* ret = new InterferenceFunctionNone();
+    ret->setPositionVariance(m_position_var);
+    return ret;
 }
 
 double InterferenceFunctionNone::iff_without_dw(const kvector_t) const
 {
     return 1.0;
-}
-
-InterferenceFunctionNone::InterferenceFunctionNone(const InterferenceFunctionNone& other)
-    : IInterferenceFunction(other)
-{
-    setName(other.getName());
 }

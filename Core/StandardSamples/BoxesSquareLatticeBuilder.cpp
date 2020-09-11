@@ -12,17 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "BoxesSquareLatticeBuilder.h"
-#include "BornAgainNamespace.h"
-#include "FormFactorBox.h"
-#include "InterferenceFunction2DLattice.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/BoxesSquareLatticeBuilder.h"
+#include "Core/Aggregate/InterferenceFunction2DLattice.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorBox.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
 
 // -----------------------------------------------------------------------------
 // Boxes in square lattice
@@ -45,9 +44,9 @@ MultiLayer* BoxesSquareLatticeBuilder::buildSample() const
     Layer substrate_layer(substrate_material);
 
     std::unique_ptr<InterferenceFunction2DLattice> P_interference_function(
-        InterferenceFunction2DLattice::createSquare(8 * Units::nanometer));
+        InterferenceFunction2DLattice::createSquare(8 * Units::nanometer, 0));
 
-    FTDecayFunction2DCauchy pdf(100.0 * Units::nanometer, 100.0 * Units::nanometer);
+    FTDecayFunction2DCauchy pdf(100.0 * Units::nanometer, 100.0 * Units::nanometer, 0);
     P_interference_function->setDecayFunction(pdf);
 
     // particles

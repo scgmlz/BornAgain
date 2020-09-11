@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEWIDGETBOX_H
-#define SAMPLEWIDGETBOX_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEWIDGETBOX_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEWIDGETBOX_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QDesignerWidgetBoxInterface;
@@ -34,4 +34,4 @@ private:
     QDesignerWidgetBoxInterface* m_widgetBox;
 };
 
-#endif // SAMPLEWIDGETBOX_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEWIDGETBOX_H

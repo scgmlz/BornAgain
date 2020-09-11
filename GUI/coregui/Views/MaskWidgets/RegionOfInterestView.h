@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REGIONOFINTERESTVIEW_H
-#define REGIONOFINTERESTVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_REGIONOFINTERESTVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_REGIONOFINTERESTVIEW_H
 
-#include "RectangleView.h"
+#include "GUI/coregui/Views/MaskWidgets/RectangleView.h"
 
 //! The RegionOfInterest class represent view of RegionOfInterestItem on graphics scene.
 
@@ -30,4 +30,4 @@ protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
 };
 
-#endif // REGIONOFINTERESTVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_REGIONOFINTERESTVIEW_H

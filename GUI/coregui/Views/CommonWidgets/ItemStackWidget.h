@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMSTACKWIDGET_H
-#define ITEMSTACKWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SessionModel;
@@ -58,4 +58,4 @@ protected:
     QSize m_size_hint;
 };
 
-#endif // ITEMSTACKWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKWIDGET_H

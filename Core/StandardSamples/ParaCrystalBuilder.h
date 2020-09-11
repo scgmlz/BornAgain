@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARACRYSTALBUILDER_H
-#define PARACRYSTALBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_PARACRYSTALBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_PARACRYSTALBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include <memory>
 
 class IFTDistribution2D;
@@ -47,14 +47,12 @@ class BA_CORE_API_ Basic2DParaCrystalBuilder : public IMultiLayerBuilder
 {
 public:
     Basic2DParaCrystalBuilder();
-    virtual ~Basic2DParaCrystalBuilder();
+    ~Basic2DParaCrystalBuilder();
     virtual MultiLayer* buildSample() const;
 
     MultiLayer* createSample(size_t index = 0);
-    size_t size();
 
 private:
-    FTDistribution2DComponents& pdf_components();
     std::unique_ptr<IFTDistribution2D> m_pdf1;
     std::unique_ptr<IFTDistribution2D> m_pdf2;
 };
@@ -87,4 +85,4 @@ public:
     virtual MultiLayer* buildSample() const;
 };
 
-#endif // PARACRYSTALBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_PARACRYSTALBUILDER_H

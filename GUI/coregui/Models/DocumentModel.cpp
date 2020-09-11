@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "DocumentModel.h"
-#include "SimulationOptionsItem.h"
+#include "GUI/coregui/Models/DocumentModel.h"
+#include "GUI/coregui/Models/SimulationOptionsItem.h"
 
 DocumentModel::DocumentModel(QObject* parent) : SessionModel(SessionXML::DocumentModelTag, parent)
 {

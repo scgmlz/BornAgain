@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "DelayedProgressCounter.h"
-#include "ProgressHandler.h"
+#include "Core/Computation/DelayedProgressCounter.h"
+#include "Core/Computation/ProgressHandler.h"
 
 DelayedProgressCounter::DelayedProgressCounter(ProgressHandler* p_progress, size_t interval)
     : mp_progress(p_progress), m_interval(interval), m_count(0)

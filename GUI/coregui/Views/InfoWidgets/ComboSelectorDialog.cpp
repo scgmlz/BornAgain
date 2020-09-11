@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ComboSelectorDialog.h"
-#include "DesignerHelper.h"
+#include "GUI/coregui/Views/InfoWidgets/ComboSelectorDialog.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include <QApplication>
 #include <QComboBox>
 #include <QLabel>

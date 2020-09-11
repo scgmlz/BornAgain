@@ -12,30 +12,32 @@
 //
 // ************************************************************************** //
 
-#include "SessionItemUtils.h"
-#include "ExternalProperty.h"
-#include "GUIHelpers.h"
-#include "GroupInfoCatalogue.h"
-#include "MaterialItem.h"
-#include "SessionGraphicsItem.h"
-#include "SessionItem.h"
-#include "VectorItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/GroupInfoCatalog.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QColor>
 #include <QIcon>
 #include <QPixmap>
 
 namespace
 {
-const GroupInfoCatalogue& groupInfoCatalogue()
+const GroupInfoCatalog& groupInfoCatalog()
 {
-    static GroupInfoCatalogue s_catalogue = GroupInfoCatalogue();
-    return s_catalogue;
+    static GroupInfoCatalog s_catalog = {};
+    return s_catalog;
 }
 
 QStringList parents_with_abundance()
 {
-    return QStringList() << Constants::ParticleCoreShellType << Constants::ParticleCompositionType
-                         << Constants::ParticleDistributionType << Constants::MesoCrystalType;
+    return QStringList() << "ParticleCoreShell"
+                         << "ParticleComposition"
+                         << "ParticleDistribution"
+                         << "MesoCrystal";
 }
 
 } // namespace
@@ -50,7 +52,7 @@ int SessionItemUtils::ParentRow(const SessionItem& item)
 kvector_t SessionItemUtils::GetVectorItem(const SessionItem& item, const QString& name)
 {
     SessionItem* vectorItem = item.getItem(name);
-    Q_ASSERT(vectorItem);
+    ASSERT(vectorItem);
     double x = vectorItem->getItemValue(VectorItem::P_X).toDouble();
     double y = vectorItem->getItemValue(VectorItem::P_Y).toDouble();
     double z = vectorItem->getItemValue(VectorItem::P_Z).toDouble();
@@ -117,12 +119,12 @@ QVariant SessionItemUtils::CheckStateRole(const SessionItem& item)
 
 bool SessionItemUtils::IsValidGroup(const QString& group_type)
 {
-    return groupInfoCatalogue().containsGroup(group_type);
+    return groupInfoCatalog().containsGroup(group_type);
 }
 
 GroupInfo SessionItemUtils::GetGroupInfo(const QString& group_type)
 {
-    return groupInfoCatalogue().groupInfo(group_type);
+    return groupInfoCatalog().groupInfo(group_type);
 }
 
 int SessionItemUtils::VariantType(const QVariant& variant)
@@ -163,7 +165,7 @@ bool SessionItemUtils::IsTheSame(const QVariant& var1, const QVariant& var2)
 
 bool SessionItemUtils::IsPositionRelated(const SessionItem& item)
 {
-    if (item.modelType() == Constants::PropertyType
+    if (item.modelType() == "Property"
         && (item.displayName() == SessionGraphicsItem::P_XPOS
             || item.displayName() == SessionGraphicsItem::P_YPOS))
         return true;

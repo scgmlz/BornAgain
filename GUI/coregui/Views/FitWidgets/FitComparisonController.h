@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITCOMPARISONCONTROLLER_H
-#define FITCOMPARISONCONTROLLER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONCONTROLLER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONCONTROLLER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class DataItem;
@@ -51,4 +51,4 @@ private:
     PropertyRepeater* m_zAxisRepeater;
 };
 
-#endif // FITCOMPARISONCONTROLLER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONCONTROLLER_H

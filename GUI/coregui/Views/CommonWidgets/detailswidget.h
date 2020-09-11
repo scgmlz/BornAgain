@@ -23,10 +23,10 @@
 **
 ****************************************************************************/
 
-#ifndef DETAILSWIDGET_H
-#define DETAILSWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 namespace Utils
@@ -98,4 +98,4 @@ private:
 
 } // namespace Utils
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSWIDGET_H

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "IntensityDataView.h"
-#include "ISceneAdaptor.h"
+#include "GUI/coregui/Views/MaskWidgets/IntensityDataView.h"
+#include "GUI/coregui/Views/MaskWidgets/ISceneAdaptor.h"
 #include <QBrush>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>

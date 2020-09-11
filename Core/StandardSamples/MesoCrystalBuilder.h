@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MESOCRYSTALBUILDER_H
-#define MESOCRYSTALBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MESOCRYSTALBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_MESOCRYSTALBUILDER_H
 
-#include "Complex.h"
-#include "IMultiLayerBuilder.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class IFormFactor;
 class ISample;
@@ -33,4 +33,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // MESOCRYSTALBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_MESOCRYSTALBUILDER_H

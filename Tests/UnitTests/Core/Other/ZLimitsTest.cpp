@@ -1,14 +1,10 @@
-#include "ZLimits.h"
-#include "google_test.h"
+#include "Core/Scattering/ZLimits.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <stdexcept>
 
 class ZLimitsTest : public ::testing::Test
 {
-protected:
-    ~ZLimitsTest();
 };
-
-ZLimitsTest::~ZLimitsTest() = default;
 
 TEST_F(ZLimitsTest, ZLimitsDefaultConstructor)
 {

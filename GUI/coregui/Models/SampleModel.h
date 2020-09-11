@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEMODEL_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEMODEL_H
 
-#include "SessionModel.h"
+#include "GUI/coregui/Models/SessionModel.h"
 
 class MultiLayerItem;
 
@@ -33,4 +33,4 @@ public:
     MultiLayerItem* multiLayerItem();
 };
 
-#endif // SAMPLEMODEL_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEMODEL_H

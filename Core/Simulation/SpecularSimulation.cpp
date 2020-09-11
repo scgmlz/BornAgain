@@ -12,24 +12,24 @@
 //
 // ************************************************************************** //
 
-#include "SpecularSimulation.h"
-#include "AngularSpecScan.h"
-#include "Distributions.h"
-#include "Histogram1D.h"
-#include "IBackground.h"
-#include "IFootprintFactor.h"
-#include "IMultiLayerBuilder.h"
-#include "ISpecularScan.h"
-#include "MaterialUtils.h"
-#include "MathConstants.h"
-#include "MultiLayer.h"
-#include "ParameterPool.h"
-#include "PointwiseAxis.h"
-#include "RealParameter.h"
-#include "SpecularComputation.h"
-#include "SpecularDetector1D.h"
-#include "SpecularSimulationElement.h"
-#include "UnitConverter1D.h"
+#include "Core/Simulation/SpecularSimulation.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Beam/IFootprintFactor.h"
+#include "Core/Binning/PointwiseAxis.h"
+#include "Core/Computation/IBackground.h"
+#include "Core/Computation/SpecularComputation.h"
+#include "Core/Detector/SpecularDetector1D.h"
+#include "Core/Instrument/AngularSpecScan.h"
+#include "Core/Instrument/ISpecularScan.h"
+#include "Core/Intensity/Histogram1D.h"
+#include "Core/Intensity/UnitConverter1D.h"
+#include "Core/Material/MaterialUtils.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/SpecularSimulationElement.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
 
 namespace
 {
@@ -161,7 +161,7 @@ SpecularSimulation::generateSimulationElements(const Beam& beam)
 std::unique_ptr<IComputation>
 SpecularSimulation::generateSingleThreadedComputation(size_t start, size_t n_elements)
 {
-    assert(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
+    ASSERT(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
     const auto& begin = m_sim_elements.begin() + static_cast<long>(start);
     return std::make_unique<SpecularComputation>(*sample(), m_options, m_progress, begin,
                                                  begin + static_cast<long>(n_elements));
@@ -192,18 +192,18 @@ void SpecularSimulation::validateParametrization(const ParameterDistribution& pa
     const std::vector<RealParameter*> names =
         parameter_pool->getMatchedParameters(par_distr.getMainParameterName());
     for (const auto par : names)
-        if (par->getName().find(BornAgain::Inclination) != std::string::npos && !zero_mean)
+        if (par->getName().find("InclinationAngle") != std::string::npos && !zero_mean)
             throw std::runtime_error("Error in SpecularSimulation: parameter distribution of "
                                      "beam inclination angle should have zero mean.");
 }
 
 void SpecularSimulation::initialize()
 {
-    setName(BornAgain::SpecularSimulationType);
+    setName("SpecularSimulation");
 
     // allow for negative inclinations in the beam of specular simulation
     // it is required for proper averaging in the case of divergent beam
-    auto inclination = m_instrument.getBeam().parameter(BornAgain::Inclination);
+    auto inclination = m_instrument.getBeam().parameter("InclinationAngle");
     inclination->setLimits(RealLimits::limited(-M_PI_2, M_PI_2));
 }
 

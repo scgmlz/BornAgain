@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef SCALARFRESNELMAP_H
-#define SCALARFRESNELMAP_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SCALARFRESNELMAP_H
+#define BORNAGAIN_CORE_MULTILAYER_SCALARFRESNELMAP_H
 
-#include "IFresnelMap.h"
-#include "ISpecularStrategy.h"
-#include "ScalarRTCoefficients.h"
+#include "Core/Multilayer/IFresnelMap.h"
+#include "Core/Multilayer/ISpecularStrategy.h"
+#include "Core/RT/ScalarRTCoefficients.h"
 #include <cstddef>
 #include <unordered_map>
 #include <utility>
@@ -57,4 +57,4 @@ private:
         m_cache;
 };
 
-#endif // SCALARFRESNELMAP_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SCALARFRESNELMAP_H

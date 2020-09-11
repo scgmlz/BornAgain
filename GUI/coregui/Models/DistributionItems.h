@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DISTRIBUTIONITEMS_H
-#define DISTRIBUTIONITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DISTRIBUTIONITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DISTRIBUTIONITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class IDistribution1D;
 class RangedDistribution;
@@ -140,4 +140,4 @@ public:
     void showMean(bool flag) override;
 };
 
-#endif // DISTRIBUTIONITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DISTRIBUTIONITEMS_H

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "DoubleEllipse.h"
+#include "Core/Shapes/DoubleEllipse.h"
 
 #include <algorithm>
 

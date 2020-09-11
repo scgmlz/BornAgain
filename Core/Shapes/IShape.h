@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ISHAPE_H
-#define ISHAPE_H
+#ifndef BORNAGAIN_CORE_SHAPES_ISHAPE_H
+#define BORNAGAIN_CORE_SHAPES_ISHAPE_H
 
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
 #include <vector>
 
 //! Pure virtual base class for different shapes.
@@ -45,13 +45,7 @@ protected:
 //! Generate vertices of centered rectangle at height z
 std::vector<kvector_t> RectangleVertices(double length, double width, double z);
 
-//! Generate vertices of centered regular triangle with vertex on x-axis at height z
-std::vector<kvector_t> TriangleVertices(double length, double z);
-
-//! Generate vertices of centered regular hexagon with vertex on x-axis at height z
-std::vector<kvector_t> HexagonVertices(double length, double z);
-
 //! Generate vertices of centered ellipse with given semi-axes at height z
 std::vector<kvector_t> EllipseVertices(double r_x, double r_y, double z);
 
-#endif // ISHAPE_H
+#endif // BORNAGAIN_CORE_SHAPES_ISHAPE_H

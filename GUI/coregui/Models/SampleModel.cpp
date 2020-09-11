@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "SampleModel.h"
-#include "MultiLayerItem.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
 
 SampleModel::SampleModel(QObject* parent) : SessionModel(SessionXML::SampleModelTag, parent)
 {

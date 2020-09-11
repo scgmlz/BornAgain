@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALSPACETOOLBAR_H
-#define REALSPACETOOLBAR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACETOOLBAR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACETOOLBAR_H
 
-#include "StyledToolBar.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
 
 class QToolButton;
 class QCheckBox;
@@ -48,4 +48,4 @@ private:
     QToolButton* m_savePictureButton;
 };
 
-#endif // REALSPACETOOLBAR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACETOOLBAR_H

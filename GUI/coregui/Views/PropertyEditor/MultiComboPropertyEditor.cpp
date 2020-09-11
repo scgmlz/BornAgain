@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MultiComboPropertyEditor.h"
-#include "ComboProperty.h"
-#include "CustomEventFilters.h"
+#include "GUI/coregui/Views/PropertyEditor/MultiComboPropertyEditor.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QComboBox>
 #include <QEvent>
 #include <QLineEdit>

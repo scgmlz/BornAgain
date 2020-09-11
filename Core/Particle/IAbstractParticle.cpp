@@ -12,11 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "IAbstractParticle.h"
+#include "Core/Particle/IAbstractParticle.h"
 
-IAbstractParticle::IAbstractParticle() : m_abundance(1.0) {}
-
-IAbstractParticle::~IAbstractParticle() {}
+IAbstractParticle::IAbstractParticle(const NodeMeta& meta, const std::vector<double>& PValues)
+    : ISample(meta, PValues)
+{
+}
 
 void IAbstractParticle::accept(INodeVisitor* visitor) const
 {

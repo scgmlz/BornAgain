@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef INTENSITYDATACANVAS_H
-#define INTENSITYDATACANVAS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATACANVAS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATACANVAS_H
 
-#include "OutputData.h"
-#include "SessionItemWidget.h"
+#include "Core/Intensity/OutputData.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <memory>
 
 class SessionItem;
@@ -59,4 +59,4 @@ private:
     QAction* m_savePlotAction;
 };
 
-#endif // INTENSITYDATACANVAS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATACANVAS_H

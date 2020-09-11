@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "DistributionWidget.h"
-#include "DistributionItems.h"
-#include "Distributions.h"
-#include "RealLimitsItems.h"
-#include "WarningSign.h"
+#include "GUI/coregui/Views/InfoWidgets/DistributionWidget.h"
+#include "Core/Parametrization/Distributions.h"
+#include "GUI/coregui/Models/DistributionItems.h"
+#include "GUI/coregui/Models/RealLimitsItems.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
 #include "qcustomplot.h"
 #include <QLabel>
 #include <QVBoxLayout>
@@ -163,7 +163,7 @@ void DistributionWidget::init_plot()
 
 void DistributionWidget::plot_distributions()
 {
-    if (m_item->modelType() == Constants::DistributionNoneType)
+    if (m_item->modelType() == "DistributionNone")
         plot_single_value();
 
     else
@@ -174,7 +174,7 @@ void DistributionWidget::plot_distributions()
 
 void DistributionWidget::plot_single_value()
 {
-    Q_ASSERT(m_item->displayName() == Constants::DistributionNoneType);
+    ASSERT(m_item->displayName() == "DistributionNone");
 
     double value = m_item->getItemValue(DistributionNoneItem::P_MEAN).toDouble();
 
@@ -187,7 +187,7 @@ void DistributionWidget::plot_single_value()
 
 void DistributionWidget::plot_multiple_values()
 {
-    Q_ASSERT(m_item->displayName() != Constants::DistributionNoneType);
+    ASSERT(m_item->displayName() != "DistributionNone");
 
     int numberOfSamples = m_item->getItemValue(DistributionItem::P_NUMBER_OF_SAMPLES).toInt();
     double sigmafactor(0.0);
@@ -209,7 +209,7 @@ void DistributionWidget::plot_multiple_values()
     std::transform(xp.begin(), xp.end(), yp.begin(),
                    [&](double value) { return dist->probabilityDensity(value); });
     double sumOfWeights = std::accumulate(yp.begin(), yp.end(), 0.0);
-    Q_ASSERT(sumOfWeights != 0.0);
+    ASSERT(sumOfWeights != 0.0);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QVector<double> xBar(xp.begin(), xp.end());
@@ -255,7 +255,7 @@ void DistributionWidget::setPlotRange(const QPair<double, double>& xRange,
 
 void DistributionWidget::plotBars(const QVector<double>& xbars, const QVector<double>& ybars)
 {
-    Q_ASSERT(xbars.size() > 0);
+    ASSERT(xbars.size() > 0);
 
     auto xRange = xRangeForValues(xbars);
     auto yRange = yRangeForValues(ybars);
@@ -336,14 +336,14 @@ QPair<double, double> xRangeForValues(double value1, double value2)
 {
     const double range_factor(0.1);
     double dr = (value2 - value1) * range_factor;
-    Q_ASSERT(dr > 0.0);
+    ASSERT(dr > 0.0);
 
     return QPair<double, double>(value1 - dr, value2 + dr);
 }
 
 QPair<double, double> xRangeForValues(const QVector<double>& xvec)
 {
-    Q_ASSERT(!xvec.isEmpty());
+    ASSERT(!xvec.isEmpty());
     return xvec.size() == 1 ? xRangeForValue(xvec.front())
                             : xRangeForValues(xvec.front(), xvec.back());
 }

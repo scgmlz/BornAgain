@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEEDITORCONNECTION_H
-#define NODEEDITORCONNECTION_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITORCONNECTION_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITORCONNECTION_H
 
 /*
  * Node editor: original code is taken from
@@ -21,8 +21,8 @@
  * Copyright (c) 2012, STANISLAW ADASZEWSKI
  */
 
-#include "WinDllMacros.h"
-#include "ViewTypes.h"
+#include "GUI/coregui/Views/SampleDesigner/ViewTypes.h"
+#include "Wrap/WinDllMacros.h"
 #include <QGraphicsPathItem>
 
 class NodeEditorPort;
@@ -64,4 +64,4 @@ private:
     NodeEditorPort* m_port2;
 };
 
-#endif // NODEEDITORCONNECTION_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITORCONNECTION_H

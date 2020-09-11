@@ -12,6 +12,6 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceActions.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceActions.h"
 
 RealSpaceActions::RealSpaceActions(QObject* parent) : QObject(parent) {}

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ROUGHMULTILAYERCOMPUTATION_H
-#define ROUGHMULTILAYERCOMPUTATION_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
+#define BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
 
-#include "Complex.h"
+#include "Core/Basics/Complex.h"
 
 class ProcessedSample;
 class SimulationElement;
@@ -37,4 +37,4 @@ private:
     complex_t get_sum8terms(size_t ilayer, const SimulationElement& sim_element) const;
 };
 
-#endif // ROUGHMULTILAYERCOMPUTATION_H
+#endif // BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H

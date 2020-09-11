@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "FitSessionController.h"
-#include "FitLog.h"
-#include "FitObjectiveBuilder.h"
-#include "FitParameterItems.h"
-#include "FitProgressInfo.h"
-#include "FitSuiteItem.h"
-#include "FitWorkerLauncher.h"
-#include "GUIFitObserver.h"
-#include "GUIHelpers.h"
-#include "IntensityDataItem.h"
-#include "JobItem.h"
+#include "GUI/coregui/Views/FitWidgets/FitSessionController.h"
+#include "GUI/coregui/Models/FitParameterItems.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Views/FitWidgets/FitLog.h"
+#include "GUI/coregui/Views/FitWidgets/FitObjectiveBuilder.h"
+#include "GUI/coregui/Views/FitWidgets/FitProgressInfo.h"
+#include "GUI/coregui/Views/FitWidgets/FitWorkerLauncher.h"
+#include "GUI/coregui/Views/FitWidgets/GUIFitObserver.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -52,7 +52,7 @@ void FitSessionController::setItem(JobItem* item)
         throw GUIHelpers::Error("FitSuiteManager::setItem() -> Item was already set.");
 
     m_jobItem = item;
-    Q_ASSERT(m_jobItem);
+    ASSERT(m_jobItem);
 
     // no need to unsubscribe from jobItem on jobItem destroy. FitSessionManager deletes
     // controller right after the jobItem.
@@ -83,7 +83,7 @@ void FitSessionController::onStartFittingRequest()
         m_runFitManager->runFitting(m_objectiveBuilder);
 
     } catch (std::exception& e) {
-        m_jobItem->setStatus(Constants::STATUS_FAILED);
+        m_jobItem->setStatus("Failed");
         m_fitlog->append(e.what(), FitLogFlags::ERROR);
         emit fittingError(QString::fromStdString(e.what()));
     }
@@ -121,7 +121,7 @@ void FitSessionController::onFittingStarted()
 {
     m_fitlog->clearLog();
 
-    m_jobItem->setStatus(Constants::STATUS_FITTING);
+    m_jobItem->setStatus("Fitting");
     m_jobItem->setProgress(0);
     m_jobItem->setBeginTime(GUIHelpers::currentDateTime());
     m_jobItem->setEndTime(QString());
@@ -132,8 +132,8 @@ void FitSessionController::onFittingStarted()
 
 void FitSessionController::onFittingFinished()
 {
-    if (m_jobItem->getStatus() != Constants::STATUS_FAILED)
-        m_jobItem->setStatus(Constants::STATUS_COMPLETED);
+    if (m_jobItem->getStatus() != "Failed")
+        m_jobItem->setStatus("Completed");
     m_jobItem->setEndTime(GUIHelpers::currentDateTime());
     m_jobItem->setProgress(100);
     m_jobItem->setDuration(m_runFitManager->getDuration());

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALPROPERTYCONTROLLER_H
-#define MATERIALPROPERTYCONTROLLER_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_MATERIALPROPERTYCONTROLLER_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_MATERIALPROPERTYCONTROLLER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class MaterialModel;
@@ -47,4 +47,4 @@ private:
     SampleModel* m_sampleModel;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_MATERIALPROPERTYCONTROLLER_H

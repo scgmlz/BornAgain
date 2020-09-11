@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LINE_H
-#define LINE_H
+#ifndef BORNAGAIN_CORE_MASK_LINE_H
+#define BORNAGAIN_CORE_MASK_LINE_H
 
-#include "IShape2D.h"
+#include "Core/Mask/IShape2D.h"
 
 //! A line segment.
 //! @ingroup mask
@@ -69,4 +69,4 @@ private:
     double m_y;
 };
 
-#endif // LINE_H
+#endif // BORNAGAIN_CORE_MASK_LINE_H

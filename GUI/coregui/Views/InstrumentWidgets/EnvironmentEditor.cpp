@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "EnvironmentEditor.h"
-#include "ColumnResizer.h"
-#include "ComponentEditor.h"
-#include "GroupItem.h"
-#include "InstrumentItems.h"
-#include "LayoutUtils.h"
+#include "GUI/coregui/Views/InstrumentWidgets/EnvironmentEditor.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
+#include "GUI/coregui/utils/LayoutUtils.h"
 #include <QGridLayout>
 #include <QSpacerItem>
 
@@ -58,6 +58,6 @@ void EnvironmentEditor::unsubscribeFromItem()
 InstrumentItem* EnvironmentEditor::instrumentItem()
 {
     auto result = dynamic_cast<InstrumentItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }

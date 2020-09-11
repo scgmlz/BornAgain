@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef WARNINGSIGN_H
-#define WARNINGSIGN_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class WarningSignWidget;
@@ -52,4 +52,4 @@ private:
     bool m_clear_just_had_happened;
 };
 
-#endif // WARNINGSIGN_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H

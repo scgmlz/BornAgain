@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ILAYERVIEW_H
-#define ILAYERVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ILAYERVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ILAYERVIEW_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 class MultiLayerView;
 class MultiLayerCandidate;
@@ -31,7 +31,7 @@ public:
 
     int type() const { return ViewTypes::LAYER; }
 
-    virtual QString getLabel() const { return QString(); }
+    virtual QString getLabel() const { return ""; }
 
     void updateLabel();
 
@@ -66,4 +66,4 @@ public:
     QLineF getInterfaceToScene();
 };
 
-#endif // ILAYERVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ILAYERVIEW_H

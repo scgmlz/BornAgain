@@ -1,10 +1,24 @@
-#ifndef DEPTHPROBESIMULATION_H
-#define DEPTHPROBESIMULATION_H
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      Core/Simulation/DepthProbeSimulation.h
+//! @brief     Defines class DepthProbeSimulation
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
 
-#include "DepthProbeElement.h"
-#include "ILayerRTCoefficients.h"
-#include "OutputData.h"
-#include "Simulation.h"
+#ifndef BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H
+#define BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H
+
+#include "Core/Intensity/OutputData.h"
+#include "Core/RT/ILayerRTCoefficients.h"
+#include "Core/Simulation/Simulation.h"
+#include "Core/SimulationElement/DepthProbeElement.h"
 
 #include <vector>
 
@@ -112,4 +126,4 @@ private:
     std::vector<std::valarray<double>> m_cache;
 };
 
-#endif // DEPTHPROBESIMULATION_H
+#endif // BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H

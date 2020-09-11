@@ -12,12 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "Layer.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "ILayout.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Correlations/ILayout.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
 
 //! Constructor of a layer with thickness and material
 //! @param material: material the layer is made of
@@ -25,7 +24,7 @@
 Layer::Layer(Material material, double thickness)
     : m_material(std::move(material)), m_thickness(thickness)
 {
-    setName(BornAgain::LayerType);
+    setName("Layer");
     registerThickness();
 }
 
@@ -81,11 +80,9 @@ std::vector<const INode*> Layer::getChildren() const
 void Layer::registerThickness(bool make_registered)
 {
     if (make_registered) {
-        if (!parameter(BornAgain::Thickness))
-            registerParameter(BornAgain::Thickness, &m_thickness)
-                .setUnit(BornAgain::UnitsNm)
-                .setNonnegative();
+        if (!parameter("Thickness"))
+            registerParameter("Thickness", &m_thickness).setUnit("nm").setNonnegative();
     } else {
-        removeParameter(BornAgain::Thickness);
+        removeParameter("Thickness");
     }
 }

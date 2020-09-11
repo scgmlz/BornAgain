@@ -1,8 +1,7 @@
-#include "GUIHelpers.h"
-#include "GUIMessage.h"
-#include "MessageService.h"
-#include "google_test.h"
-#include "item_constants.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/GUIMessage.h"
+#include "GUI/coregui/utils/MessageService.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <QObject>
 #include <QString>
 
@@ -24,18 +23,12 @@ const QString description3("description3");
 class TestMessageService : public ::testing::Test
 {
 public:
-    ~TestMessageService();
-
     class Sender : public QObject
     {
     public:
         Sender(const QString& name) { setObjectName(name); }
-        ~Sender();
     };
 };
-
-TestMessageService::~TestMessageService() = default;
-TestMessageService::Sender::~Sender() = default;
 
 TEST_F(TestMessageService, guiMessage)
 {

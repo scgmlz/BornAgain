@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "PySampleWidget.h"
-#include "DesignerHelper.h"
-#include "DomainObjectBuilder.h"
-#include "ExportToPython.h"
-#include "MultiLayer.h"
-#include "MultiLayerItem.h"
-#include "PythonSyntaxHighlighter.h"
-#include "SampleModel.h"
-#include "SessionItemUtils.h"
-#include "UpdateTimer.h"
-#include "WarningSign.h"
+#include "GUI/coregui/Views/InfoWidgets/PySampleWidget.h"
+#include "Core/Export/ExportToPython.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "GUI/coregui/Models/DomainObjectBuilder.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
+#include "GUI/coregui/Views/InfoWidgets/PythonSyntaxHighlighter.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include <QScrollBar>
 #include <QTextEdit>
 #include <QVBoxLayout>

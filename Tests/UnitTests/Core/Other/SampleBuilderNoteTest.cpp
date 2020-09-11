@@ -1,8 +1,8 @@
-#include "IMultiLayerBuilder.h"
-#include "MultiLayer.h"
-#include "ParameterPool.h"
-#include "SampleBuilderNode.h"
-#include "google_test.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/SampleBuilderNode.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -10,8 +10,6 @@
 class SampleBuilderNodeTest : public ::testing::Test
 {
 public:
-    ~SampleBuilderNodeTest();
-
     //! Returns test multilayer.
     static std::unique_ptr<MultiLayer> testMultiLayer(double length)
     {
@@ -35,8 +33,6 @@ public:
     };
 };
 
-SampleBuilderNodeTest::~SampleBuilderNodeTest() = default;
-
 //! Checks children and pool parameters.
 
 TEST_F(SampleBuilderNodeTest, builderParameters)
@@ -59,7 +55,6 @@ TEST_F(SampleBuilderNodeTest, builderParameters)
     EXPECT_EQ(builderNode.getChildren().size(), 0u);
 
     // checks that  node has same parameters/name as sample builder
-    EXPECT_EQ(builderNode.getName(), builder->getName());
     EXPECT_EQ(builder.use_count(), 2);
     ASSERT_EQ(builderNode.parameterPool()->parameterNames().size(), 1u);
     EXPECT_EQ(builderNode.parameterPool()->parameterNames()[0], "length");

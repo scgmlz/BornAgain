@@ -12,10 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ResidualTestPlan.h"
-#include "FixedBinAxis.h"
-#include "Minimizer.h"
-#include "Parameters.h"
+#include "Tests/Functional/Fit/Minimizer/ResidualTestPlan.h"
+#include "Fit/Kernel/Minimizer.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Fit/TestEngine/Numeric.h"
+#include <cassert>
 #include <iostream>
 #include <sstream>
 
@@ -24,11 +25,10 @@ using namespace Fit;
 ResidualTestPlan::ResidualTestPlan(const std::string& name, test_funct_t func)
     : MinimizerTestPlan(name), m_test_func(func)
 {
-    FixedBinAxis axis("x", 100, 0.0, 10.0);
-    m_xvalues = axis.getBinBoundaries();
+    m_xvalues.resize(101);
+    for (int i = 0; i <= 100; ++i)
+        m_xvalues[i] = i * 0.1;
 }
-
-ResidualTestPlan::~ResidualTestPlan() = default;
 
 fcn_residual_t ResidualTestPlan::residualFunction()
 {

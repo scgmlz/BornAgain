@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/SoftParticle/FormFactorGauss.cpp
-//! @brief     Implements class FormFactorGauss.
+//! @brief     Implements class FormFactorGaussSphere.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,44 +12,39 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorGauss.h"
-#include "BornAgainNamespace.h"
-#include "Box.h"
-#include "MathConstants.h"
-#include "RealParameter.h"
+#include "Core/SoftParticle/FormFactorGauss.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Shapes/Box.h"
 #include <limits>
 
-FormFactorGauss::FormFactorGauss(double length) : FormFactorGauss(length, length) {}
-
-FormFactorGauss::FormFactorGauss(double width, double height)
+FormFactorGaussSphere::FormFactorGaussSphere(const std::vector<double> P)
+    : IFormFactorBorn({"FormFactorGaussSphere",
+                       "class_tooltip",
+                       {{"MeanRadius", "nm", "para_tooltip", 0, +INF, 0}}},
+                      P),
+      m_mean_radius(m_P[0])
 {
-    m_width = width;
-    m_height = height;
-    setName(BornAgain::FFGaussType);
-    registerParameter(BornAgain::Width, &m_width).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    m_max_ql = std::sqrt(-4 * M_PI * std::log(std::numeric_limits<double>::min()) / 3);
     onChange();
 }
 
-complex_t FormFactorGauss::evaluate_for_q(cvector_t q) const
+FormFactorGaussSphere::FormFactorGaussSphere(double mean_radius)
+    : FormFactorGaussSphere(std::vector<double>{mean_radius})
 {
-    complex_t qzHdiv2 = m_height * q.z() / 2.0;
-    double qzh = q.z().real() * m_height;
-    if (std::abs(qzh) > m_max_ql)
-        return 0.0;
-    double qxr = q.x().real() * m_width;
-    if (std::abs(qxr) > m_max_ql)
-        return 0.0;
-    double qyr = q.y().real() * m_width;
-    if (std::abs(qyr) > m_max_ql)
-        return 0.0;
-
-    return exp_I(qzHdiv2) * m_height * m_width * m_width
-           * std::exp(-(qxr * qxr + qyr * qyr + qzh * qzh) / 4.0 / M_PI);
 }
 
-void FormFactorGauss::onChange()
+complex_t FormFactorGaussSphere::evaluate_for_q(cvector_t q) const
 {
-    mP_shape.reset(new Box(m_width, m_width, m_height));
+    const double max_ql = std::sqrt(-4 * M_PI * std::log(std::numeric_limits<double>::min()) / 3);
+
+    double qzh = q.z().real() * m_mean_radius;
+    if (std::abs(qzh) > max_ql)
+        return 0.0;
+    double qxr = q.x().real() * m_mean_radius;
+    if (std::abs(qxr) > max_ql)
+        return 0.0;
+    double qyr = q.y().real() * m_mean_radius;
+    if (std::abs(qyr) > max_ql)
+        return 0.0;
+
+    return pow(m_mean_radius, 3) * std::exp(-(qxr * qxr + qyr * qyr + qzh * qzh) / 4.0 / M_PI);
 }

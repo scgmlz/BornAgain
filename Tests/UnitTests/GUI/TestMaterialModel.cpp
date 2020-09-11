@@ -1,17 +1,13 @@
-#include "MaterialDataItems.h"
-#include "MaterialItem.h"
-#include "MaterialItemUtils.h"
-#include "MaterialModel.h"
-#include "google_test.h"
+#include "GUI/coregui/Models/MaterialDataItems.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 class TestMaterialModel : public ::testing::Test
 {
-public:
-    ~TestMaterialModel();
 };
-
-TestMaterialModel::~TestMaterialModel() = default;
 
 TEST_F(TestMaterialModel, addRefractiveMaterial)
 {
@@ -113,7 +109,7 @@ TEST_F(TestMaterialModel, test_materialPropertyFromMaterial)
     auto material = model.addRefractiveMaterial("Something", 1.0, 2.0);
 
     ExternalProperty property = MaterialItemUtils::materialProperty(*material);
-    EXPECT_EQ(property.text(), QString("Something"));
+    EXPECT_EQ(property.text(), "Something");
     EXPECT_EQ(property.color(), material->color());
     EXPECT_EQ(property.identifier(), material->identifier());
 }
@@ -133,7 +129,7 @@ TEST_F(TestMaterialModel, defaultMaterialProperty)
     auto mat1 = model.addRefractiveMaterial("Something1", 1.0, 2.0);
     model.addRefractiveMaterial("Something2", 3.0, 4.0);
     ExternalProperty property2 = MaterialItemUtils::defaultMaterialProperty();
-    EXPECT_EQ(property2.text(), QString("Something1"));
+    EXPECT_EQ(property2.text(), "Something1");
     EXPECT_EQ(property2.color(), mat1->color());
     EXPECT_EQ(property2.identifier(), mat1->identifier());
 }

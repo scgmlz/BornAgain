@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "SSCApproximationStrategy.h"
-#include "FormFactorCoherentSum.h"
-#include "IInterferenceFunction.h"
-#include "InterferenceFunctionUtils.h"
-#include "SimulationElement.h"
+#include "Core/Multilayer/SSCApproximationStrategy.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Multilayer/FormFactorCoherentSum.h"
+#include "Core/Multilayer/InterferenceFunctionUtils.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
 using InterferenceFunctionUtils::PrecomputePolarizedFormFactors;
 using InterferenceFunctionUtils::PrecomputeScalarFormFactors;

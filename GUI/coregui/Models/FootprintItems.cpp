@@ -12,11 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "FootprintItems.h"
-#include "BornAgainNamespace.h"
-#include "FootprintFactorGaussian.h"
-#include "FootprintFactorSquare.h"
-#include "item_constants.h"
+#include "GUI/coregui/Models/FootprintItems.h"
+#include "Core/Beam/FootprintGauss.h"
+#include "Core/Beam/FootprintSquare.h"
 
 namespace
 {
@@ -34,7 +32,7 @@ FootprintItem::~FootprintItem() = default;
 // Footprint none
 /* ------------------------------------------------ */
 
-FootprintNoneItem::FootprintNoneItem() : FootprintItem(Constants::FootprintNoneType) {}
+FootprintNoneItem::FootprintNoneItem() : FootprintItem("NoFootprint") {}
 
 FootprintNoneItem::~FootprintNoneItem() = default;
 
@@ -48,7 +46,7 @@ std::unique_ptr<IFootprintFactor> FootprintNoneItem::createFootprint() const
 
 const QString FootprintGaussianItem::P_VALUE = footprint_value_name;
 
-FootprintGaussianItem::FootprintGaussianItem() : FootprintItem(Constants::FootprintGaussianType)
+FootprintGaussianItem::FootprintGaussianItem() : FootprintItem("GaussianFootrpint")
 {
     addProperty(P_VALUE, 0.0)
         ->setLimits(RealLimits::nonnegative())
@@ -59,7 +57,7 @@ FootprintGaussianItem::~FootprintGaussianItem() = default;
 
 std::unique_ptr<IFootprintFactor> FootprintGaussianItem::createFootprint() const
 {
-    return std::make_unique<FootprintFactorGaussian>(getItemValue(P_VALUE).toDouble());
+    return std::make_unique<FootprintGauss>(getItemValue(P_VALUE).toDouble());
 }
 
 // Square footprint
@@ -67,7 +65,7 @@ std::unique_ptr<IFootprintFactor> FootprintGaussianItem::createFootprint() const
 
 const QString FootprintSquareItem::P_VALUE = footprint_value_name;
 
-FootprintSquareItem::FootprintSquareItem() : FootprintItem(Constants::FootprintSquareType)
+FootprintSquareItem::FootprintSquareItem() : FootprintItem("SquareFootprint")
 {
     addProperty(P_VALUE, 0.0)
         ->setLimits(RealLimits::nonnegative())
@@ -78,5 +76,5 @@ FootprintSquareItem::~FootprintSquareItem() = default;
 
 std::unique_ptr<IFootprintFactor> FootprintSquareItem::createFootprint() const
 {
-    return std::make_unique<FootprintFactorSquare>(getItemValue(P_VALUE).toDouble());
+    return std::make_unique<FootprintSquare>(getItemValue(P_VALUE).toDouble());
 }

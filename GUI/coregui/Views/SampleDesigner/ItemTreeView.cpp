@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ItemTreeView.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/SampleDesigner/ItemTreeView.h"
+#include "GUI/coregui/Models/SessionModel.h"
 #include <QDragMoveEvent>
 #include <QMimeData>
 #include <QtCore/QXmlStreamWriter>
@@ -22,8 +22,8 @@ ItemTreeView::ItemTreeView(QWidget* parent) : QTreeView(parent)
 {
 
     setAllColumnsShowFocus(true);
-    setWindowTitle(QString("Sample Tree View"));
-    setObjectName(QString("ObjectTree"));
+    setWindowTitle("Sample Tree View");
+    setObjectName("ObjectTree");
     setContextMenuPolicy(Qt::CustomContextMenu);
     setDragDropMode(QAbstractItemView::InternalMove);
 }

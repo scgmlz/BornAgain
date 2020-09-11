@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAP_H
-#define COLORMAP_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAP_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAP_H
 
-#include "ScientificPlot.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
 #include "qcustomplot.h"
 #include <QMap>
 #include <QPoint>
@@ -107,4 +107,4 @@ private:
     bool m_block_update;
 };
 
-#endif // COLORMAP_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAP_H

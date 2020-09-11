@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef FITSTATUS_H
-#define FITSTATUS_H
+#ifndef BORNAGAIN_CORE_FITTING_FITSTATUS_H
+#define BORNAGAIN_CORE_FITTING_FITSTATUS_H
 
-#include "FitObserver.h"
-#include "FitTypes.h"
-#include "IterationInfo.h"
-#include "WinDllMacros.h"
+#include "Core/Fitting/FitObserver.h"
+#include "Core/Fitting/FitTypes.h"
+#include "Core/Fitting/IterationInfo.h"
+#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <vector>
 
@@ -66,4 +66,4 @@ private:
     std::unique_ptr<Fit::MinimizerResult> m_minimizer_result;
 };
 
-#endif // FITSTATUS_H
+#endif // BORNAGAIN_CORE_FITTING_FITSTATUS_H

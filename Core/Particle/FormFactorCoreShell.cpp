@@ -12,13 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorCoreShell.h"
-#include "BornAgainNamespace.h"
+#include "Core/Particle/FormFactorCoreShell.h"
 
 FormFactorCoreShell::FormFactorCoreShell(IFormFactor* core, IFormFactor* shell)
     : mP_core(core), mP_shell(shell)
 {
-    setName(BornAgain::FormFactorCoreShellType);
+    setName("FormFactorCoreShell");
 }
 
 FormFactorCoreShell::~FormFactorCoreShell() {}

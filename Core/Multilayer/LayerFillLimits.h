@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERFILLLIMITS_H
-#define LAYERFILLLIMITS_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_LAYERFILLLIMITS_H
+#define BORNAGAIN_CORE_MULTILAYER_LAYERFILLLIMITS_H
 
-#include "IParticle.h"
-#include "ZLimits.h"
+#include "Core/Scattering/ZLimits.h"
 #include <cstddef>
 #include <utility>
 #include <vector>
@@ -47,4 +46,4 @@ private:
     std::vector<ZLimits> m_layer_fill_limits;
 };
 
-#endif // LAYERFILLLIMITS_H
+#endif // BORNAGAIN_CORE_MULTILAYER_LAYERFILLLIMITS_H

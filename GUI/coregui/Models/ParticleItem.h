@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLEITEM_H
-#define PARTICLEITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARTICLEITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PARTICLEITEM_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class Particle;
 
@@ -39,4 +39,4 @@ private:
     bool parentIsParticleLayout() const;
 };
 
-#endif // PARTICLEITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PARTICLEITEM_H

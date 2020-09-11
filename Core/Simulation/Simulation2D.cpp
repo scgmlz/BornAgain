@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "Simulation2D.h"
-#include "DWBAComputation.h"
-#include "DetectorContext.h"
-#include "DetectorFunctions.h"
-#include "Histogram2D.h"
-#include "IBackground.h"
-#include "SimulationElement.h"
+#include "Core/Simulation/Simulation2D.h"
+#include "Core/Computation/DWBAComputation.h"
+#include "Core/Computation/IBackground.h"
+#include "Core/Detector/DetectorContext.h"
+#include "Core/Detector/DetectorFunctions.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
 namespace
 {
@@ -94,7 +94,7 @@ void Simulation2D::setDetector(const IDetector2D& detector)
 std::unique_ptr<IComputation> Simulation2D::generateSingleThreadedComputation(size_t start,
                                                                               size_t n_elements)
 {
-    assert(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
+    ASSERT(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
     const auto& begin = m_sim_elements.begin() + static_cast<long>(start);
     return std::make_unique<DWBAComputation>(*sample(), m_options, m_progress, begin,
                                              begin + static_cast<long>(n_elements));
@@ -165,7 +165,7 @@ void Simulation2D::addDataToCache(double weight)
 
 void Simulation2D::moveDataFromCache()
 {
-    assert(!m_cache.empty());
+    ASSERT(!m_cache.empty());
     if (!m_cache.empty()) {
         for (unsigned i = 0; i < m_sim_elements.size(); i++) {
             m_sim_elements[i].setIntensity(m_cache[i]);

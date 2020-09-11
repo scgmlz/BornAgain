@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEM_H
-#define SESSIONITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEM_H
 
-#include "ModelMapper.h"
-#include "RealLimits.h"
-#include "item_constants.h"
+#include "Core/Basics/Assert.h"
+#include "Fit/Tools/RealLimits.h"
+#include "GUI/coregui/Models/ModelMapper.h"
 #include <QStringList>
 #include <memory>
 
@@ -34,7 +34,7 @@ class BA_CORE_API_ SessionItem
 public:
     static const QString P_NAME;
 
-    explicit SessionItem(const QString& modelType = QString());
+    explicit SessionItem(const QString& modelType = "");
     virtual ~SessionItem();
     SessionModel* model() const;
     SessionItem* parent() const;
@@ -51,8 +51,7 @@ public:
     SessionItem* takeRow(int row);
 
     // manage and check tags
-    bool registerTag(const QString& name, int min = 0, int max = -1,
-                     QStringList modelTypes = QStringList());
+    bool registerTag(const QString& name, int min = 0, int max = -1, QStringList modelTypes = {});
     bool isTag(const QString& name) const;
     SessionItemTags* sessionItemTags();
     QString tagFromItem(const SessionItem* item) const;
@@ -60,10 +59,10 @@ public:
     QVector<QString> acceptableDefaultItemTypes() const;
 
     // access tagged items
-    SessionItem* getItem(const QString& tag = QString(), int row = 0) const;
+    SessionItem* getItem(const QString& tag = "", int row = 0) const;
     template <typename T> T& item(const QString& tag) const;
-    QVector<SessionItem*> getItems(const QString& tag = QString()) const;
-    bool insertItem(int row, SessionItem* item, const QString& tag = QString());
+    QVector<SessionItem*> getItems(const QString& tag = "") const;
+    bool insertItem(int row, SessionItem* item, const QString& tag = "");
     SessionItem* takeItem(int row, const QString& tag);
 
     // convenience functions for properties
@@ -78,8 +77,8 @@ public:
     template <typename T> T& groupItem(const QString& groupName) const;
 
     // access data stored in roles
-    virtual QVariant data(int role) const;
-    virtual bool setData(int role, const QVariant& value);
+    QVariant roleProperty(int role) const;
+    bool setRoleProperty(int role, const QVariant& value);
     QVector<int> getRoles() const;
     void emitDataChanged(int role = Qt::DisplayRole);
 
@@ -133,7 +132,7 @@ private:
     SessionItem* m_parent;
     SessionModel* m_model;
     QVector<SessionItem*> m_children;
-    std::unique_ptr<SessionItemData> m_values;
+    std::unique_ptr<SessionItemData> m_properties;
     std::unique_ptr<SessionItemTags> m_tags;
     std::unique_ptr<ModelMapper> m_mapper;
     QVector<IPathTranslator*> m_translators;
@@ -142,15 +141,15 @@ private:
 template <typename T> T& SessionItem::item(const QString& tag) const
 {
     T* t = dynamic_cast<T*>(getItem(tag));
-    Q_ASSERT(t);
+    ASSERT(t);
     return *t;
 }
 
 template <typename T> T& SessionItem::groupItem(const QString& groupName) const
 {
     T* t = dynamic_cast<T*>(getGroupItem(groupName));
-    Q_ASSERT(t);
+    ASSERT(t);
     return *t;
 }
 
-#endif // SESSIONITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEM_H

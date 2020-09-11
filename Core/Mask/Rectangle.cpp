@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "Rectangle.h"
-#include "Bin.h"
-#include "Exceptions.h"
+#include "Core/Mask/Rectangle.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Binning/Bin.h"
 
 //! @param xlow x-coordinate of lower left corner
 //! @param ylow y-coordinate of lower left corner

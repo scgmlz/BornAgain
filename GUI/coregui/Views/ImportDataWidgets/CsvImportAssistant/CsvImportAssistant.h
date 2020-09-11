@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#ifndef CSVIMPORTASSISTANT_H
-#define CSVIMPORTASSISTANT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVIMPORTASSISTANT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVIMPORTASSISTANT_H
 
-#include "CsvDataColumn.h"
-#include "CsvReader.h"
-#include "DataFormatUtils.h"
-#include "ImportDataInfo.h"
-#include "WinDllMacros.h"
+#include "Core/InputOutput/DataFormatUtils.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvDataColumn.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvReader.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
+#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <QWidget>
 #include <memory>
@@ -86,4 +86,4 @@ private:
     AxesUnits m_units;
     bool m_dataAvailable;
 };
-#endif // CSVIMPORTASSISTANT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVIMPORTASSISTANT_H

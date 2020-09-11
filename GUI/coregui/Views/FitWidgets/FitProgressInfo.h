@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITPROGRESSINFO_H
-#define FITPROGRESSINFO_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPROGRESSINFO_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPROGRESSINFO_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
@@ -43,4 +43,4 @@ private:
     std::vector<double> m_sim_values;
 };
 
-#endif // FITPROGRESSINFO_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPROGRESSINFO_H

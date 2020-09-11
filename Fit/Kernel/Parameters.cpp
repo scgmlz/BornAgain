@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "Parameters.h"
+#include "Fit/Kernel/Parameters.h"
 #include <cmath>
 #include <sstream>
 #include <stdexcept>
@@ -70,10 +70,10 @@ void Parameters::setValues(const std::vector<double>& values)
         if (std::isnan(values[index]))
             throw std::runtime_error("Parameters::setValues() -> Error."
                                      " Attempt to set nan '"
-                                     + par.name() + std::string("'."));
+                                     + par.name() + "'.");
         if (std::isinf(values[index]))
             throw std::runtime_error("Parameters::setValues() -> Error. Attempt to set inf '"
-                                     + par.name() + std::string("'."));
+                                     + par.name() + "'.");
         par.setValue(values[index]);
         ++index;
     }

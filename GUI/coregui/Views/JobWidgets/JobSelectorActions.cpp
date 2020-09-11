@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "JobSelectorActions.h"
-#include "IntensityDataItem.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "StyledToolBar.h"
+#include "GUI/coregui/Views/JobWidgets/JobSelectorActions.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
 #include <QAction>
 #include <QItemSelectionModel>
 #include <QMenu>
@@ -27,12 +27,12 @@ JobSelectorActions::JobSelectorActions(JobModel* jobModel, QObject* parent)
     : QObject(parent), m_runJobAction(nullptr), m_removeJobAction(nullptr),
       m_selectionModel(nullptr), m_jobModel(jobModel)
 {
-    m_runJobAction = new QAction(QStringLiteral("Run"), this);
+    m_runJobAction = new QAction("Run", this);
     m_runJobAction->setIcon(QIcon(":/images/play.svg"));
     m_runJobAction->setToolTip("Run currently selected job");
     connect(m_runJobAction, &QAction::triggered, this, &JobSelectorActions::onRunJob);
 
-    m_removeJobAction = new QAction(QStringLiteral("Remove"), this);
+    m_removeJobAction = new QAction("Remove", this);
     m_removeJobAction->setIcon(QIcon(":/images/delete.svg"));
     m_removeJobAction->setToolTip("Remove currently selected job.");
     connect(m_removeJobAction, &QAction::triggered, this, &JobSelectorActions::onRemoveJob);
@@ -84,7 +84,7 @@ void JobSelectorActions::equalizeSelectedToJob(int selected_id)
         return;
 
     JobItem* referenceItem = m_jobModel->getJobItemForIndex(selectedList.at(selected_id));
-    Q_ASSERT(referenceItem);
+    ASSERT(referenceItem);
 
     IntensityDataItem* referenceDataItem = referenceItem->intensityDataItem();
     if (!referenceDataItem)
@@ -161,7 +161,7 @@ bool JobSelectorActions::canRunJob(const QModelIndex& index) const
 
     const JobItem* jobItem = m_jobModel->getJobItemForIndex(index);
 
-    if (jobItem->isRunning() || jobItem->getStatus() == Constants::STATUS_FITTING)
+    if (jobItem->isRunning() || jobItem->getStatus() == "Fitting")
         return false;
 
     return true;
@@ -173,7 +173,7 @@ bool JobSelectorActions::canRemoveJob(const QModelIndex& index) const
         return false;
 
     const JobItem* jobItem = m_jobModel->getJobItemForIndex(index);
-    if (jobItem->isRunning() || jobItem->getStatus() == Constants::STATUS_FITTING)
+    if (jobItem->isRunning() || jobItem->getStatus() == "Fitting")
         return false;
 
     return true;

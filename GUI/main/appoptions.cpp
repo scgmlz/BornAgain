@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "appoptions.h"
-#include "GUIHelpers.h"
+#include "GUI/main/appoptions.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QSize>
 #include <boost/program_options/config.hpp>
 #include <boost/program_options/parsers.hpp>

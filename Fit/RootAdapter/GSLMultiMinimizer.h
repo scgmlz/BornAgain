@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GSLMULTIMINIMIZER_H
-#define GSLMULTIMINIMIZER_H
+#ifndef BORNAGAIN_FIT_ROOTADAPTER_GSLMULTIMINIMIZER_H
+#define BORNAGAIN_FIT_ROOTADAPTER_GSLMULTIMINIMIZER_H
 
-#include "MinimizerConstants.h"
-#include "RootMinimizerAdapter.h"
+#include "Fit/RootAdapter/RootMinimizerAdapter.h"
 
 namespace ROOT
 {
@@ -32,7 +31,7 @@ class GSLMinimizer;
 class BA_CORE_API_ GSLMultiMinimizer : public RootMinimizerAdapter
 {
 public:
-    explicit GSLMultiMinimizer(const std::string& algorithmName = AlgorithmNames::ConjugateFR);
+    explicit GSLMultiMinimizer(const std::string& algorithmName = "ConjugateFR");
     ~GSLMultiMinimizer();
 
     //! Sets minimizer internal print level.
@@ -55,4 +54,4 @@ private:
     std::unique_ptr<ROOT::Math::GSLMinimizer> m_gsl_minimizer;
 };
 
-#endif // GSLMULTIMINIMIZER_H
+#endif // BORNAGAIN_FIT_ROOTADAPTER_GSLMULTIMINIMIZER_H

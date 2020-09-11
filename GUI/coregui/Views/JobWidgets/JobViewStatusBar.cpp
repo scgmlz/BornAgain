@@ -12,9 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "JobViewStatusBar.h"
-#include "JobViewActivities.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewStatusBar.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QStatusBar>
@@ -73,7 +74,7 @@ void JobViewStatusBar::onActivityChanged(int activity)
 
 void JobViewStatusBar::initAppearance()
 {
-    Q_ASSERT(m_mainWindow);
+    ASSERT(m_mainWindow);
     m_mainWindow->statusBar()->addWidget(this, 1);
     m_mainWindow->statusBar()->setSizeGripEnabled(false);
     this->hide();

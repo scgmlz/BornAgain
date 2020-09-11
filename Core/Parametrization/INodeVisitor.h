@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INODEVISITOR_H
-#define INODEVISITOR_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_INODEVISITOR_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_INODEVISITOR_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 class BasicLattice;
 class Beam;
@@ -28,8 +28,8 @@ class DistributionGaussian;
 class DistributionLogNormal;
 class DistributionLorentz;
 class DistributionTrapezoid;
-class FootprintFactorGaussian;
-class FootprintFactorSquare;
+class FootprintGauss;
+class FootprintSquare;
 class FormFactorAnisoPyramid;
 class FormFactorBarGauss;
 class FormFactorBarLorentz;
@@ -51,21 +51,21 @@ class FormFactorDot;
 class FormFactorEllipsoidalCylinder;
 class FormFactorFullSphere;
 class FormFactorFullSpheroid;
-class FormFactorGauss;
+class FormFactorGaussSphere;
+class FormFactorHollowSphere;
 class FormFactorHemiEllipsoid;
 class FormFactorIcosahedron;
 class FormFactorLongBoxGauss;
 class FormFactorLongBoxLorentz;
-class FormFactorLorentz;
 class FormFactorPrism3;
 class FormFactorPrism6;
 class FormFactorPyramid;
-class FormFactorRipple1Box;
-class FormFactorRipple1Gauss;
-class FormFactorRipple1Lorentz;
-class FormFactorRipple2Box;
-class FormFactorRipple2Gauss;
-class FormFactorRipple2Lorentz;
+class FormFactorCosineRippleBox;
+class FormFactorCosineRippleGauss;
+class FormFactorCosineRippleLorentz;
+class FormFactorSawtoothRippleBox;
+class FormFactorSawtoothRippleGauss;
+class FormFactorSawtoothRippleLorentz;
 class FormFactorSphereGaussianRadius;
 class FormFactorSphereLogNormalRadius;
 class FormFactorTetrahedron;
@@ -103,8 +103,6 @@ class IInterferenceFunction;
 class ILayout;
 class INode;
 class Instrument;
-class IntensityNormalizer;
-class IntensityScaleAndShiftNormalizer;
 class InterferenceFunction1DLattice;
 class InterferenceFunction2DLattice;
 class InterferenceFunction2DParaCrystal;
@@ -166,8 +164,8 @@ public:
     virtual void visit(const DistributionLogNormal*) {}
     virtual void visit(const DistributionLorentz*) {}
     virtual void visit(const DistributionTrapezoid*) {}
-    virtual void visit(const FootprintFactorGaussian*) {}
-    virtual void visit(const FootprintFactorSquare*) {}
+    virtual void visit(const FootprintGauss*) {}
+    virtual void visit(const FootprintSquare*) {}
     virtual void visit(const FormFactorAnisoPyramid*) {}
     virtual void visit(const FormFactorBarGauss*) {}
     virtual void visit(const FormFactorBarLorentz*) {}
@@ -189,21 +187,21 @@ public:
     virtual void visit(const FormFactorEllipsoidalCylinder*) {}
     virtual void visit(const FormFactorFullSphere*) {}
     virtual void visit(const FormFactorFullSpheroid*) {}
-    virtual void visit(const FormFactorGauss*) {}
+    virtual void visit(const FormFactorGaussSphere*) {}
     virtual void visit(const FormFactorHemiEllipsoid*) {}
+    virtual void visit(const FormFactorHollowSphere*) {}
     virtual void visit(const FormFactorIcosahedron*) {}
     virtual void visit(const FormFactorLongBoxGauss*) {}
     virtual void visit(const FormFactorLongBoxLorentz*) {}
-    virtual void visit(const FormFactorLorentz*) {}
     virtual void visit(const FormFactorPrism3*) {}
     virtual void visit(const FormFactorPrism6*) {}
     virtual void visit(const FormFactorPyramid*) {}
-    virtual void visit(const FormFactorRipple1Box*) {}
-    virtual void visit(const FormFactorRipple1Gauss*) {}
-    virtual void visit(const FormFactorRipple1Lorentz*) {}
-    virtual void visit(const FormFactorRipple2Box*) {}
-    virtual void visit(const FormFactorRipple2Gauss*) {}
-    virtual void visit(const FormFactorRipple2Lorentz*) {}
+    virtual void visit(const FormFactorCosineRippleBox*) {}
+    virtual void visit(const FormFactorCosineRippleGauss*) {}
+    virtual void visit(const FormFactorCosineRippleLorentz*) {}
+    virtual void visit(const FormFactorSawtoothRippleBox*) {}
+    virtual void visit(const FormFactorSawtoothRippleGauss*) {}
+    virtual void visit(const FormFactorSawtoothRippleLorentz*) {}
     virtual void visit(const FormFactorSphereGaussianRadius*) {}
     virtual void visit(const FormFactorSphereLogNormalRadius*) {}
     virtual void visit(const FormFactorTetrahedron*) {}
@@ -241,8 +239,6 @@ public:
     virtual void visit(const ILayout*) {}
     virtual void visit(const INode*) {}
     virtual void visit(const Instrument*) {}
-    virtual void visit(const IntensityNormalizer*) {}
-    virtual void visit(const IntensityScaleAndShiftNormalizer*) {}
     virtual void visit(const InterferenceFunction1DLattice*) {}
     virtual void visit(const InterferenceFunction2DLattice*) {}
     virtual void visit(const InterferenceFunction2DParaCrystal*) {}
@@ -295,4 +291,4 @@ private:
 BA_CORE_API_ void VisitNodesPreorder(const INode& node, INodeVisitor& visitor);
 BA_CORE_API_ void VisitNodesPostorder(const INode& node, INodeVisitor& visitor);
 
-#endif // ISAMPLEVISITOR_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_INODEVISITOR_H

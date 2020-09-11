@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "PolarizationHandler.h"
+#include "Core/SimulationElement/PolarizationHandler.h"
 
 // corresponds to completely unpolarized beam and the absence of spin selection in the analyzer
 PolarizationHandler::PolarizationHandler()

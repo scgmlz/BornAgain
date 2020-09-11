@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RegionOfInterestView.h"
+#include "GUI/coregui/Views/MaskWidgets/RegionOfInterestView.h"
 #include <QPainter>
 
 //! Paints two-color tiny frame without filling.

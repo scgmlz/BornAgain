@@ -1,19 +1,16 @@
-#include "DistributionHandler.h"
-#include "Distributions.h"
-#include "IParameterized.h"
-#include "ParameterPool.h"
-#include "google_test.h"
+#include "Core/Parametrization/DistributionHandler.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/IParameterized.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 
 class DistributionHandlerTest : public ::testing::Test
 {
 protected:
     DistributionHandlerTest() : m_value(99.0) {}
-    ~DistributionHandlerTest();
     double m_value;
 };
-
-DistributionHandlerTest::~DistributionHandlerTest() = default;
 
 TEST_F(DistributionHandlerTest, DistributionHandlerConstructor)
 {
@@ -27,11 +24,9 @@ TEST_F(DistributionHandlerTest, DistributionHandlerConstructor)
     handler.addParameterDistribution(par_distr);
 
     EXPECT_EQ(size_t(2), handler.getTotalNumberOfSamples());
-    EXPECT_EQ("DistributionHandler", handler.getName());
 
     const DistributionHandler::Distributions_t& distr = handler.getDistributions();
     ParameterDistribution distribution1 = distr[0];
-    EXPECT_EQ(distribution1.getName(), "ParameterDistribution");
     EXPECT_EQ(distribution1.getNbrSamples(), size_t(2));
     EXPECT_EQ(distribution1.getSigmaFactor(), 1.0);
 }

@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLELAYOUT_H
-#define PARTICLELAYOUT_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_PARTICLELAYOUT_H
+#define BORNAGAIN_CORE_AGGREGATE_PARTICLELAYOUT_H
 
-#include "ILayout.h"
-#include "Rotations.h"
-#include "Vectors3D.h"
+#include "Core/Correlations/ILayout.h"
+#include "Core/Scattering/Rotations.h"
+#include "Core/Vector/Vectors3D.h"
 #include <memory>
 
 class IAbstractParticle;
@@ -39,8 +39,7 @@ public:
     void accept(INodeVisitor* visitor) const final override { visitor->visit(this); }
 
     void addParticle(const IAbstractParticle& particle, double abundance = -1.0,
-                     const kvector_t position = kvector_t(),
-                     const IRotation& rotation = IdentityRotation());
+                     const kvector_t position = {}, const IRotation& rotation = IdentityRotation());
 
     SafePointerVector<IParticle> particles() const final override;
 
@@ -67,4 +66,4 @@ private:
     double m_total_particle_density;
 };
 
-#endif // PARTICLELAYOUT_H
+#endif // BORNAGAIN_CORE_AGGREGATE_PARTICLELAYOUT_H

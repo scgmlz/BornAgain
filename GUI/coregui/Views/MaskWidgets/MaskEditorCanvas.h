@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKEDITORCANVAS_H
-#define MASKEDITORCANVAS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITORCANVAS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITORCANVAS_H
 
-#include "MaskEditorFlags.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
 #include <QWidget>
 
 class MaskGraphicsScene;
@@ -65,4 +65,4 @@ private:
     MaskResultsPresenter* m_resultsPresenter;
 };
 
-#endif // MASKEDITORCANVAS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITORCANVAS_H

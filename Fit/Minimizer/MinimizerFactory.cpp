@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "MinimizerFactory.h"
-#include "GSLLevenbergMarquardtMinimizer.h"
-#include "GSLMultiMinimizer.h"
-#include "GeneticMinimizer.h"
-#include "MinimizerCatalogue.h"
-#include "Minuit2Minimizer.h"
-#include "SimAnMinimizer.h"
-#include "TestMinimizer.h"
+#include "Fit/Minimizer/MinimizerFactory.h"
+#include "Fit/Minimizer/MinimizerCatalog.h"
+#include "Fit/Minimizer/TestMinimizer.h"
+#include "Fit/RootAdapter/GSLLevenbergMarquardtMinimizer.h"
+#include "Fit/RootAdapter/GSLMultiMinimizer.h"
+#include "Fit/RootAdapter/GeneticMinimizer.h"
+#include "Fit/RootAdapter/Minuit2Minimizer.h"
+#include "Fit/RootAdapter/SimAnMinimizer.h"
 #include <boost/format.hpp>
 #include <iomanip>
 #include <iostream>
@@ -32,27 +32,27 @@ IMinimizer* MinimizerFactory::createMinimizer(const std::string& minimizerName,
 {
     IMinimizer* result(0);
 
-    if (minimizerName == MinimizerNames::Minuit2) {
+    if (minimizerName == "Minuit2") {
         result = new Minuit2Minimizer(algorithmType);
     }
 
-    else if (minimizerName == MinimizerNames::GSLLMA) {
+    else if (minimizerName == "GSLLMA") {
         result = new GSLLevenbergMarquardtMinimizer();
     }
 
-    else if (minimizerName == MinimizerNames::GSLSimAn) {
+    else if (minimizerName == "GSLSimAn") {
         result = new SimAnMinimizer();
     }
 
-    else if (minimizerName == MinimizerNames::GSLMultiMin) {
+    else if (minimizerName == "GSLMultiMin") {
         result = new GSLMultiMinimizer(algorithmType);
     }
 
-    else if (minimizerName == MinimizerNames::Genetic) {
+    else if (minimizerName == "Genetic") {
         result = new GeneticMinimizer();
     }
 
-    else if (minimizerName == MinimizerNames::Test) {
+    else if (minimizerName == "Test") {
         result = new TestMinimizer();
     }
 
@@ -63,7 +63,7 @@ IMinimizer* MinimizerFactory::createMinimizer(const std::string& minimizerName,
              << minimizerName << "' or algorithm '" << algorithmType << "'" << std::endl;
         ostr << "Possible names are:" << std::endl;
 
-        ostr << catalogue().toString();
+        ostr << catalog().toString();
         throw std::runtime_error(ostr.str());
     }
 
@@ -73,31 +73,31 @@ IMinimizer* MinimizerFactory::createMinimizer(const std::string& minimizerName,
     return result;
 }
 
-void MinimizerFactory::printCatalogue()
+void MinimizerFactory::printCatalog()
 {
-    std::cout << catalogueToString() << std::endl;
+    std::cout << catalogToString() << std::endl;
 }
 
-//! Returns multi-line string representing catalogue content: minimizer names and list of their
+//! Returns multi-line string representing catalog content: minimizer names and list of their
 //! algorithms.
 
-std::string MinimizerFactory::catalogueToString()
+std::string MinimizerFactory::catalogToString()
 {
-    return catalogue().toString();
+    return catalog().toString();
 }
 
-//! Returns multi-line string representing detailed catalogue content:
+//! Returns multi-line string representing detailed catalog content:
 //! minimizer names, list of their algorithms and description, list of minimizer options.
 
-std::string MinimizerFactory::catalogueDetailsToString()
+std::string MinimizerFactory::catalogDetailsToString()
 {
     const int text_width = 80;
     std::ostringstream result;
     const std::string fmt("%-20s| %-65s\n");
 
-    for (const auto& minimizerName : catalogue().minimizerNames()) {
+    for (const auto& minimizerName : catalog().minimizerNames()) {
         // general info
-        const MinimizerInfo& info = catalogue().minimizerInfo(minimizerName);
+        const MinimizerInfo& info = catalog().minimizerInfo(minimizerName);
         result << std::string(text_width, '-') << "\n";
         result << boost::format(fmt) % info.name() % info.description();
         result << std::string(text_width, '-') << "\n";
@@ -128,8 +128,8 @@ std::string MinimizerFactory::catalogueDetailsToString()
     return result.str();
 }
 
-const MinimizerCatalogue& MinimizerFactory::catalogue()
+const MinimizerCatalog& MinimizerFactory::catalog()
 {
-    static MinimizerCatalogue s_catalogue = MinimizerCatalogue();
-    return s_catalogue;
+    static MinimizerCatalog s_catalog;
+    return s_catalog;
 }

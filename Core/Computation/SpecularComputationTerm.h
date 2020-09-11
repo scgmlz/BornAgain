@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARCOMPUTATIONTERM_H_
-#define SPECULARCOMPUTATIONTERM_H_
+#ifndef BORNAGAIN_CORE_COMPUTATION_SPECULARCOMPUTATIONTERM_H
+#define BORNAGAIN_CORE_COMPUTATION_SPECULARCOMPUTATIONTERM_H
 
-#include "ISpecularStrategy.h"
+#include "Core/Multilayer/ISpecularStrategy.h"
 
 #include <memory>
 #include <vector>
@@ -28,6 +28,9 @@ class Slice;
 
 //! Computes the specular scattering.
 //! Used by SpecularComputation.
+//!
+//! Inherited by SpecularScalarTerm, SpecularMatrixTerm
+//!
 //! @ingroup algorithms_internal
 
 class SpecularComputationTerm
@@ -51,6 +54,10 @@ private:
     std::unique_ptr<DelayedProgressCounter> mP_progress_counter;
 };
 
+//! Computes the specular scattering for a scalar sample
+//! Used by SpecularComputation.
+//! @ingroup algorithms_internal
+
 class SpecularScalarTerm : public SpecularComputationTerm
 {
 public:
@@ -62,6 +69,10 @@ private:
 protected:
     void eval(SpecularSimulationElement& elem, const std::vector<Slice>& slices) const override;
 };
+
+//! Computes the specular scattering for a magnetic sample
+//! Used by SpecularComputation.
+//! @ingroup algorithms_internal
 
 class SpecularMatrixTerm : public SpecularComputationTerm
 {
@@ -77,4 +88,4 @@ protected:
                      ISpecularStrategy::single_coeff_t& coeff) const;
 };
 
-#endif /* SPECULARCOMPUTATIONTERM_H_ */
+#endif // BORNAGAIN_CORE_COMPUTATION_SPECULARCOMPUTATIONTERM_H

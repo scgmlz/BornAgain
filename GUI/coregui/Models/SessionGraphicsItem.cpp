@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 const QString SessionGraphicsItem::P_XPOS = "xpos";
 const QString SessionGraphicsItem::P_YPOS = "ypos";

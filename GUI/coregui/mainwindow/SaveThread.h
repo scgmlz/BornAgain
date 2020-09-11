@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAVETHREAD_H
-#define SAVETHREAD_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVETHREAD_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVETHREAD_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QThread>
 
@@ -42,4 +42,4 @@ private:
     QString m_projectFile;
 };
 
-#endif // SAVETHREAD_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVETHREAD_H

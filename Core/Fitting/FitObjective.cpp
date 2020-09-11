@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "FitObjective.h"
-#include "ArrayUtils.h"
-#include "ChiSquaredModule.h"
-#include "FitStatus.h"
-#include "MinimizerResult.h"
-#include "ObjectiveMetric.h"
-#include "ObjectiveMetricUtils.h"
-#include "Parameters.h"
-#include "PyFittingCallbacks.h"
-#include "Simulation.h"
+#include "Core/Fitting/FitObjective.h"
+#include "Core/Fitting/FitStatus.h"
+#include "Core/Fitting/ObjectiveMetric.h"
+#include "Core/Fitting/ObjectiveMetricUtils.h"
+#include "Core/Fitting/PyFittingCallbacks.h"
+#include "Core/Instrument/ChiSquaredModule.h"
+#include "Core/Intensity/ArrayUtils.h"
+#include "Core/Simulation/Simulation.h"
+#include "Fit/Kernel/MinimizerResult.h"
+#include "Fit/Kernel/Parameters.h"
 #include <stdexcept>
 
 class IMetricWrapper
@@ -105,8 +105,9 @@ std::vector<double> FitObjective::evaluate_residuals(const Fit::Parameters& para
 
 size_t FitObjective::numberOfFitElements() const
 {
-    return std::accumulate(m_fit_objects.begin(), m_fit_objects.end(), 0u,
-                           [](size_t acc, auto& obj) { return acc + obj.numberOfFitElements(); });
+    return std::accumulate(
+        m_fit_objects.begin(), m_fit_objects.end(), 0u,
+        [](size_t acc, auto& obj) -> size_t { return acc + obj.numberOfFitElements(); });
 }
 
 //! Returns simulation result in the form of SimulationResult.

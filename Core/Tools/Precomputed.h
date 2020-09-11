@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PRECOMPUTED_H
-#define PRECOMPUTED_H
+#ifndef BORNAGAIN_CORE_TOOLS_PRECOMPUTED_H
+#define BORNAGAIN_CORE_TOOLS_PRECOMPUTED_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <array>
 #include <utility>
 #include <vector>
@@ -44,4 +44,4 @@ constexpr std::array<double, N> GenerateReciprocalFactorialArray()
 };
 } // namespace Precomputed
 
-#endif // PRECOMPUTED_H
+#endif // BORNAGAIN_CORE_TOOLS_PRECOMPUTED_H

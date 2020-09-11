@@ -12,10 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorDWBAPol.h"
-#include "BornAgainNamespace.h"
-#include "ILayerRTCoefficients.h"
-#include "WavevectorInfo.h"
+#include "Core/Multilayer/FormFactorDWBAPol.h"
+#include "Core/RT/ILayerRTCoefficients.h"
+#include "Core/Vector/WavevectorInfo.h"
 
 namespace
 {
@@ -29,7 +28,7 @@ std::complex<double> VecMatVecProduct(const Eigen::Vector2cd& vec1, const Eigen:
 FormFactorDWBAPol::FormFactorDWBAPol(const IFormFactor& form_factor)
     : mP_form_factor(form_factor.clone())
 {
-    setName(BornAgain::FormFactorPolarizedDWBAType);
+    setName("FormFactorDWBAPol");
 }
 
 FormFactorDWBAPol::~FormFactorDWBAPol() {}

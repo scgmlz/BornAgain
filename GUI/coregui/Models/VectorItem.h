@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef VECTORITEM_H
-#define VECTORITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_VECTORITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_VECTORITEM_H
 
-#include "SessionItem.h"
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class BA_CORE_API_ VectorItem : public SessionItem
 {
@@ -33,4 +33,4 @@ private:
     void updateLabel();
 };
 
-#endif // VECTORITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_VECTORITEM_H

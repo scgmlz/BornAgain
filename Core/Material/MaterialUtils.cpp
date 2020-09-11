@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MaterialUtils.h"
-#include "Material.h"
-#include "PhysicalConstants.h"
+#include "Core/Material/MaterialUtils.h"
+#include "Core/Basics/PhysicalConstants.h"
+#include "Core/Material/Material.h"
 
 using PhysConsts::g_factor_n;
 using PhysConsts::h_bar;

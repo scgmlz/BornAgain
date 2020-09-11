@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKEDITOR_H
-#define MASKEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITOR_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMainWindow>
 #include <QModelIndex>
 #include <QWidget>
@@ -66,4 +66,4 @@ private:
     Manhattan::MiniSplitter* m_splitter;
 };
 
-#endif // MASKEDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITOR_H

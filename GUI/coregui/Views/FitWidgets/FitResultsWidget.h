@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITRESULTSWIDGET_H
-#define FITRESULTSWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITRESULTSWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITRESULTSWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 //! The FitResultsWidget contains fitting summary. Part of FitSuiteWidget.
@@ -28,4 +28,4 @@ public:
     FitResultsWidget(QWidget* parent = 0);
 };
 
-#endif // FITRESULTSWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITRESULTSWIDGET_H

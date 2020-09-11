@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "SpecularPlot.h"
-#include "AxesItems.h"
-#include "ColorMapUtils.h"
-#include "MathConstants.h"
-#include "PlotEventInfo.h"
-#include "SpecularDataItem.h"
-#include "UpdateTimer.h"
-#include "plot_constants.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularPlot.h"
+#include "Core/Basics/MathConstants.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
+#include "GUI/coregui/Views/FitWidgets/plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotEventInfo.h"
 
 namespace
 {
@@ -110,8 +110,7 @@ void SpecularPlot::subscribeToItem()
 
     specularItem()->mapper()->setOnChildPropertyChange(
         [this](SessionItem* item, const QString name) {
-            if (item->modelType() == Constants::BasicAxisType
-                || item->modelType() == Constants::AmplitudeAxisType)
+            if (item->modelType() == "BasicAxis" || item->modelType() == "AmplitudeAxis")
                 modifyAxesProperties(item->itemName(), name);
         },
         this);
@@ -180,7 +179,7 @@ void SpecularPlot::setUpdateTimerConnected(bool isConnected)
 
 void SpecularPlot::setPlotFromItem(SpecularDataItem* specularItem)
 {
-    Q_ASSERT(specularItem);
+    ASSERT(specularItem);
 
     m_block_update = true;
 
@@ -214,7 +213,7 @@ void SpecularPlot::setAxesLabelsFromItem(SpecularDataItem* item)
 
 void SpecularPlot::setLabel(const BasicAxisItem* item, QCPAxis* axis, QString label)
 {
-    Q_ASSERT(item && axis);
+    ASSERT(item && axis);
     if (item->getItemValue(BasicAxisItem::P_TITLE_IS_VISIBLE).toBool())
         axis->setLabel(std::move(label));
     else
@@ -223,7 +222,7 @@ void SpecularPlot::setLabel(const BasicAxisItem* item, QCPAxis* axis, QString la
 
 void SpecularPlot::setDataFromItem(SpecularDataItem* item)
 {
-    Q_ASSERT(item);
+    ASSERT(item);
     auto data = item->getOutputData();
     if (!data)
         return;
@@ -258,7 +257,7 @@ void SpecularPlot::modifyAxesProperties(const QString& axisName, const QString& 
     }
 
     if (axisName == SpecularDataItem::P_XAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setAxesRangeConnected(false);
             m_custom_plot->xAxis->setRange(specularItem()->getLowerX(),
                                            specularItem()->getUpperX());
@@ -266,7 +265,7 @@ void SpecularPlot::modifyAxesProperties(const QString& axisName, const QString& 
             replot();
         }
     } else if (axisName == SpecularDataItem::P_YAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setAxesRangeConnected(false);
             m_custom_plot->yAxis->setRange(specularItem()->getLowerY(),
                                            specularItem()->getUpperY());

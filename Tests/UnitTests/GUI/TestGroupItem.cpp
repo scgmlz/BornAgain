@@ -1,19 +1,15 @@
-#include "ComboProperty.h"
-#include "GUIHelpers.h"
-#include "GroupInfo.h"
-#include "GroupItem.h"
-#include "SessionItemUtils.h"
-#include "SessionModel.h"
-#include "google_test.h"
-#include "test_utils.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/GroupInfo.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/GUI/Utils.h"
 
 class TestGroupItem : public ::testing::Test
 {
-public:
-    ~TestGroupItem();
 };
-
-TestGroupItem::~TestGroupItem() = default;
 
 TEST_F(TestGroupItem, test_groupInfo)
 {
@@ -24,8 +20,8 @@ TEST_F(TestGroupItem, test_groupInfo)
     info.setDefaultType("AAA");
 
     // sorted group (default behavior)
-    EXPECT_EQ(info.groupType(), QString("Group"));
-    EXPECT_EQ(info.defaultType(), QString("AAA"));
+    EXPECT_EQ(info.groupType(), "Group");
+    EXPECT_EQ(info.defaultType(), "AAA");
     EXPECT_EQ(info.itemTypes(), QStringList() << "AAA"
                                               << "BBB"
                                               << "CCC");
@@ -39,7 +35,7 @@ TEST_F(TestGroupItem, test_groupInfo)
     info.add("AAA2", "a_label2");
     info.add("CCC2", "c_label2");
     info.setDefaultType("AAA2");
-    EXPECT_EQ(info.defaultType(), QString("AAA2"));
+    EXPECT_EQ(info.defaultType(), "AAA2");
     EXPECT_EQ(info.itemTypes(), QStringList() << "BBB2"
                                               << "AAA2"
                                               << "CCC2");
@@ -58,10 +54,10 @@ TEST_F(TestGroupItem, test_CreateGroup)
 {
     SessionModel model("TestModel");
 
-    GroupInfo groupInfo = SessionItemUtils::GetGroupInfo(Constants::FormFactorGroup);
-    EXPECT_EQ(groupInfo.defaultType(), Constants::CylinderType);
+    GroupInfo groupInfo = SessionItemUtils::GetGroupInfo("Form Factor");
+    EXPECT_EQ(groupInfo.defaultType(), "Cylinder");
 
-    auto groupItem = dynamic_cast<GroupItem*>(model.insertNewItem(Constants::GroupItemType));
+    auto groupItem = dynamic_cast<GroupItem*>(model.insertNewItem("GroupProperty"));
     EXPECT_EQ(groupItem->children().size(), 0);
     EXPECT_TRUE(groupItem->currentItem() == nullptr);
     EXPECT_FALSE(groupItem->value().isValid());
@@ -76,7 +72,7 @@ TEST_F(TestGroupItem, test_CreateGroup)
     EXPECT_EQ(groupItem->children().size(), 1);
     EXPECT_EQ(groupItem->children()[0], groupItem->currentItem());
     SessionItem* ffItem = groupItem->currentItem();
-    EXPECT_EQ(ffItem->modelType(), Constants::CylinderType);
+    EXPECT_EQ(ffItem->modelType(), "Cylinder");
 
     // checking current variant
     QVariant value = groupItem->value();
@@ -88,20 +84,20 @@ TEST_F(TestGroupItem, test_CreateGroup)
     EXPECT_EQ(combo.getValue(), groupInfo.itemLabels().at(index));
 
     // changing current item
-    SessionItem* newItem = groupItem->setCurrentType(Constants::FullSphereType);
+    SessionItem* newItem = groupItem->setCurrentType("FullSphere");
     EXPECT_EQ(newItem, groupItem->currentItem());
-    EXPECT_EQ(newItem->modelType(), Constants::FullSphereType);
+    EXPECT_EQ(newItem->modelType(), "FullSphere");
     EXPECT_EQ(groupItem->children().size(), 2);
 
     // checking current variant
     combo = groupItem->value().value<ComboProperty>();
     EXPECT_EQ(combo.getValues(), groupInfo.itemLabels());
-    index = groupInfo.itemTypes().indexOf(Constants::FullSphereType);
+    index = groupInfo.itemTypes().indexOf("FullSphere");
     EXPECT_EQ(combo.currentIndex(), index);
     EXPECT_EQ(combo.getValue(), groupInfo.itemLabels().at(index));
 
     // returning back to previous item
-    EXPECT_EQ(groupItem->setCurrentType(Constants::CylinderType), ffItem);
+    EXPECT_EQ(groupItem->setCurrentType("Cylinder"), ffItem);
     EXPECT_EQ(groupItem->currentItem(), ffItem);
     EXPECT_EQ(groupItem->children().size(), 2);
 }
@@ -110,13 +106,13 @@ TEST_F(TestGroupItem, test_CreateGroup)
 
 TEST_F(TestGroupItem, test_groupPropertyWithDisplayNames)
 {
-    GroupInfo groupInfo = SessionItemUtils::GetGroupInfo(Constants::DistributionGroup);
+    GroupInfo groupInfo = SessionItemUtils::GetGroupInfo("Distribution group");
 
     GroupItem groupItem;
     groupItem.setGroupInfo(groupInfo);
 
     SessionItem* cosineItem = groupItem.currentItem();
-    cosineItem->setDisplayName(Constants::DistributionCosineType + QString::number(0));
+    cosineItem->setDisplayName("DistributionCosine" + QString::number(0));
 
     EXPECT_EQ(groupItem.currentItem(), cosineItem);
 }

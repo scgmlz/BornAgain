@@ -35,8 +35,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef PYTHONSYNTAXHIGHLIGHTER_H
-#define PYTHONSYNTAXHIGHLIGHTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYTHONSYNTAXHIGHLIGHTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYTHONSYNTAXHIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
 
@@ -81,12 +81,11 @@ private:
     // multi-line section.
     bool matchMultiline(const QString& text, const QRegExp& delimiter, const int inState,
                         const QTextCharFormat& style);
-    const QTextCharFormat getTextCharFormat(const QString& colorName,
-                                            const QString& style = QString());
+    const QTextCharFormat getTextCharFormat(const QString& colorName, const QString& style = "");
 
     QList<HighlightingRule> rules;
     QRegExp triSingleQuote;
     QRegExp triDoubleQuote;
 };
 
-#endif // PYTHONSYNTAXHIGHLIGHTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYTHONSYNTAXHIGHLIGHTER_H

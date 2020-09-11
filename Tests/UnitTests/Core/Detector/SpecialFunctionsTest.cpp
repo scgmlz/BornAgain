@@ -1,6 +1,6 @@
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "google_test.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 #define EXPECT_CNEAR(a, b, epsi)                                                                   \
     EXPECT_NEAR((a).real(), (b).real(), epsi);                                                     \
@@ -8,11 +8,7 @@
 
 class SpecialFunctionsTest : public ::testing::Test
 {
-protected:
-    ~SpecialFunctionsTest();
 };
-
-SpecialFunctionsTest::~SpecialFunctionsTest() = default;
 
 // Test complex Bessel function J1
 TEST_F(SpecialFunctionsTest, BesselJ1)

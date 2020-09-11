@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "ParameterTreeUtils.h"
-#include "FitParameterHelper.h"
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "JobItem.h"
-#include "ModelPath.h"
-#include "MultiLayerItem.h"
-#include "ParameterTreeItems.h"
-#include "SampleModel.h"
+#include "GUI/coregui/Models/ParameterTreeUtils.h"
+#include "GUI/coregui/Models/FitParameterHelper.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QStack>
 
 namespace
@@ -37,7 +37,7 @@ QString removeLeadingSlash(const QString& name)
 
 void populateDomainLinks(SessionItem* container)
 {
-    if (container->modelType() != Constants::ParameterContainerType)
+    if (container->modelType() != "Parameter Container")
         throw GUIHelpers::Error("ParameterTreeUtils::populateParameterContainer() -> Error. "
                                 "Not a ParameterContainerType.");
 
@@ -57,7 +57,7 @@ void handleItem(SessionItem* tree, const SessionItem* source);
 void ParameterTreeUtils::createParameterTree(JobItem* jobItem)
 {
     SessionItem* container = jobItem->model()->insertNewItem(
-        Constants::ParameterContainerType, jobItem->index(), -1, JobItem::T_PARAMETER_TREE);
+        "Parameter Container", jobItem->index(), -1, JobItem::T_PARAMETER_TREE);
 
     populateParameterContainer(container, jobItem->getItem(JobItem::T_MATERIAL_CONTAINER));
 
@@ -79,12 +79,12 @@ void ParameterTreeUtils::createParameterTree(JobItem* jobItem)
 void ParameterTreeUtils::populateParameterContainer(SessionItem* container,
                                                     const SessionItem* source)
 {
-    if (container->modelType() != Constants::ParameterContainerType)
+    if (container->modelType() != "Parameter Container")
         throw GUIHelpers::Error("ParameterTreeUtils::populateParameterContainer() -> Error. "
                                 "Not a ParameterContainerType.");
 
     SessionItem* sourceLabel =
-        container->model()->insertNewItem(Constants::ParameterLabelType, container->index());
+        container->model()->insertNewItem("Parameter Label", container->index());
 
     handleItem(sourceLabel, source);
 }
@@ -99,8 +99,8 @@ void ParameterTreeUtils::visitParameterContainer(SessionItem* container,
     stack.push(current);
     while (!stack.empty()) {
         current = stack.pop();
-        if (current->modelType() == Constants::ParameterLabelType
-            || current->modelType() == Constants::ParameterContainerType) {
+        if (current->modelType() == "Parameter Label"
+            || current->modelType() == "Parameter Container") {
             for (SessionItem* child : current->getItems())
                 stack.push(child);
         } else {
@@ -139,13 +139,13 @@ QStringList ParameterTreeUtils::translatedParameterTreeNames(const SessionItem* 
 
 QVector<QPair<QString, QString>> ParameterTreeUtils::parameterDictionary(const SessionItem* source)
 {
-    Q_ASSERT(source);
+    ASSERT(source);
 
     QVector<QPair<QString, QString>> result;
 
     // Create container with ParameterItem's of given source item
     SampleModel model;
-    SessionItem* container = model.insertNewItem(Constants::ParameterContainerType);
+    SessionItem* container = model.insertNewItem("Parameter Container");
     populateParameterContainer(container, source);
 
     // Iterate through all ParameterItems and retrieve necessary data.
@@ -199,7 +199,7 @@ SessionItem* ParameterTreeUtils::parameterNameToLinkedItem(const QString& parNam
                                                            const SessionItem* source)
 {
     SampleModel model;
-    SessionItem* container = model.insertNewItem(Constants::ParameterContainerType);
+    SessionItem* container = model.insertNewItem("Parameter Container");
     populateParameterContainer(container, source);
 
     // Iterate through all ParameterItems and retrieve necessary data.
@@ -222,12 +222,12 @@ namespace
 
 void handleItem(SessionItem* tree, const SessionItem* source)
 {
-    if (tree->modelType() == Constants::ParameterLabelType) {
+    if (tree->modelType() == "Parameter Label") {
         tree->setDisplayName(source->itemName());
 
     }
 
-    else if (tree->modelType() == Constants::ParameterType) {
+    else if (tree->modelType() == "Parameter") {
         tree->setDisplayName(source->itemName());
 
         double sourceValue = source->value().toDouble();
@@ -246,23 +246,22 @@ void handleItem(SessionItem* tree, const SessionItem* source)
 
     for (SessionItem* child : source->children()) {
         if (child->isVisible() && child->isEnabled()) {
-            if (child->modelType() == Constants::PropertyType) {
+            if (child->modelType() == "Property") {
                 if (child->value().type() == QVariant::Double) {
-                    SessionItem* branch =
-                        tree->model()->insertNewItem(Constants::ParameterType, tree->index());
+                    SessionItem* branch = tree->model()->insertNewItem("Parameter", tree->index());
                     handleItem(branch, child);
                 }
 
-            } else if (child->modelType() == Constants::GroupItemType) {
+            } else if (child->modelType() == "GroupProperty") {
                 SessionItem* currentItem = dynamic_cast<GroupItem*>(child)->currentItem();
                 if (currentItem && currentItem->numberOfChildren() > 0) {
                     SessionItem* branch =
-                        tree->model()->insertNewItem(Constants::ParameterLabelType, tree->index());
+                        tree->model()->insertNewItem("Parameter Label", tree->index());
                     handleItem(branch, currentItem);
                 }
             } else {
                 SessionItem* branch =
-                    tree->model()->insertNewItem(Constants::ParameterLabelType, tree->index());
+                    tree->model()->insertNewItem("Parameter Label", tree->index());
                 handleItem(branch, child);
             }
         }

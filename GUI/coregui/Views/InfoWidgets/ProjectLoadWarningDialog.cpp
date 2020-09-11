@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ProjectLoadWarningDialog.h"
-#include "DesignerHelper.h"
-#include "GUIHelpers.h"
-#include "GUIMessage.h"
-#include "MessageService.h"
+#include "GUI/coregui/Views/InfoWidgets/ProjectLoadWarningDialog.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/GUIMessage.h"
+#include "GUI/coregui/utils/MessageService.h"
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QHeaderView>

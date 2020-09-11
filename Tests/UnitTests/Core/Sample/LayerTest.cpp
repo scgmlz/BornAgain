@@ -1,16 +1,12 @@
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "ParticleLayout.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class LayerTest : public ::testing::Test
 {
-protected:
-    virtual ~LayerTest();
 };
-
-LayerTest::~LayerTest() = default;
 
 TEST_F(LayerTest, LayerGetAndSet)
 {
@@ -20,19 +16,16 @@ TEST_F(LayerTest, LayerGetAndSet)
     EXPECT_EQ(0u, layer.layouts().size());
     EXPECT_EQ(10, layer.thickness());
     EXPECT_EQ(layer.numberOfLayouts(), 0u);
-    EXPECT_EQ(BornAgain::LayerType, layer.getName());
 
     layer.setThickness(20.0);
     EXPECT_EQ(air, *layer.material());
     EXPECT_EQ(20, layer.thickness());
-    EXPECT_EQ(BornAgain::LayerType, layer.getName());
 
     std::unique_ptr<Layer> clone(layer.clone());
     EXPECT_EQ(air, *clone->material());
     EXPECT_EQ(0u, clone->layouts().size());
     EXPECT_EQ(20, clone->thickness());
     EXPECT_EQ(clone->numberOfLayouts(), 0u);
-    EXPECT_EQ(BornAgain::LayerType, clone->getName());
 }
 
 TEST_F(LayerTest, LayerAndDecoration)

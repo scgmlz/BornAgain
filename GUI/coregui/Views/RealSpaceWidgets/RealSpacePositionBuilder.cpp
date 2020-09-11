@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "RealSpacePositionBuilder.h"
-#include "IPositionBuilder.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpacePositionBuilder.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/IPositionBuilder.h"
 
 RealSpacePositionBuilder::RealSpacePositionBuilder() : mP_pos_builder{new DefaultPositionBuilder()}
 {

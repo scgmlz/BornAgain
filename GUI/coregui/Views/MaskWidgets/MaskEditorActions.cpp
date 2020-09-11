@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MaskEditorActions.h"
-#include "MaskItems.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorActions.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/SessionModel.h"
 #include <QAction>
 #include <QItemSelectionModel>
 #include <QMenu>
@@ -103,8 +103,8 @@ void MaskEditorActions::onItemContextMenuRequest(const QPoint& point)
 
 void MaskEditorActions::onDeleteMaskAction()
 {
-    Q_ASSERT(m_maskModel);
-    Q_ASSERT(m_selectionModel);
+    ASSERT(m_maskModel);
+    ASSERT(m_selectionModel);
 
     QModelIndexList indexes = m_selectionModel->selectedIndexes();
     while (indexes.size()) {
@@ -116,8 +116,8 @@ void MaskEditorActions::onDeleteMaskAction()
 //! Performs switch of mask value for all selected items (true -> false, false -> true)
 void MaskEditorActions::onToggleMaskValueAction()
 {
-    Q_ASSERT(m_maskModel);
-    Q_ASSERT(m_selectionModel);
+    ASSERT(m_maskModel);
+    ASSERT(m_selectionModel);
     for (auto itemIndex : m_selectionModel->selectedIndexes()) {
         if (SessionItem* item = m_maskModel->itemForIndex(itemIndex)) {
             bool old_value = item->getItemValue(MaskItem::P_MASK_VALUE).toBool();
@@ -204,8 +204,8 @@ void MaskEditorActions::initItemContextMenu(QMenu& menu)
     if (!m_rootIndex.isValid())
         return;
 
-    Q_ASSERT(m_maskModel);
-    Q_ASSERT(m_selectionModel);
+    ASSERT(m_maskModel);
+    ASSERT(m_selectionModel);
 
     if (m_selectionModel->selectedIndexes().isEmpty())
         setAllActionsEnabled(false);

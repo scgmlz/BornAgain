@@ -12,16 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "actionmanager.h"
-#include "PyImportAssistant.h"
-#include "SysUtils.h"
-#include "UpdateNotifier.h"
-#include "aboutapplicationdialog.h"
-#include "hostosinfo.h"
-#include "mainwindow.h"
-#include "mainwindow_constants.h"
-#include "projectmanager.h"
-#include "qstringutils.h"
+#include "GUI/coregui/mainwindow/actionmanager.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Tools/SysUtils.h"
+#include "GUI/coregui/mainwindow/PyImportAssistant.h"
+#include "GUI/coregui/mainwindow/UpdateNotifier.h"
+#include "GUI/coregui/mainwindow/aboutapplicationdialog.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/utils/hostosinfo.h"
+#include "GUI/coregui/utils/qstringutils.h"
 #include <QDir>
 #include <QMenuBar>
 #include <QSettings>
@@ -42,7 +43,7 @@ ActionManager::ActionManager(MainWindow* parent)
 void ActionManager::createActions()
 {
     ProjectManager* projectManager = m_mainWindow->projectManager();
-    Q_ASSERT(projectManager);
+    ASSERT(projectManager);
 
     // new project action
     m_newAction = new QAction("&New Project", m_mainWindow);
@@ -109,11 +110,13 @@ void ActionManager::createMenus()
     QAction* action = m_importMenu->addAction("Import from Python script (experimental)");
     action->setToolTip("Import sample from Python script.\n The script should contain a function "
                        "returning a valid multi-layer.");
-    connect(action, &QAction::triggered, this, &ActionManager::onImportFromPythonScript);
 
+#ifdef BORNAGAIN_PYTHON
+    connect(action, &QAction::triggered, this, &ActionManager::onImportFromPythonScript);
     if (GUI_OS_Utils::HostOsInfo::isMacHost())
         if (SysUtils::getenv("PYTHONHOME").empty())
             action->setEnabled(false);
+#endif // BORNAGAIN_PYTHON
 
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_exitAction);
@@ -213,8 +216,10 @@ void ActionManager::onAboutApplication()
     dialog.exec();
 }
 
+#ifdef BORNAGAIN_PYTHON
 void ActionManager::onImportFromPythonScript()
 {
     PyImportAssistant assistant(m_mainWindow);
     assistant.exec();
 }
+#endif // BORNAGAIN_PYTHON

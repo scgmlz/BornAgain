@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "BoxCompositionBuilder.h"
-#include "FormFactorBox.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleComposition.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/BoxCompositionBuilder.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorBox.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleComposition.h"
 
 BoxCompositionBuilder::BoxCompositionBuilder()
     : m_particleMaterial(HomogeneousMaterial("Ag", 1.245e-5, 5.419e-7)),

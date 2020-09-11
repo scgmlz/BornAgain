@@ -23,8 +23,8 @@ def get_sample(cyl_height=5*nm):
     particle_layout.addParticle(cylinder, 1.0, position)
 
     # interference function
-    interference = ba.InterferenceFunction2DLattice.createSquare(15*nm)
-    pdf = ba.FTDecayFunction2DCauchy(300*nm, 300*nm)
+    interference = ba.InterferenceFunction2DLattice.createSquare(15*nm, 0*deg)
+    pdf = ba.FTDecayFunction2DCauchy(300*nm, 300*nm, 0)
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
 

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "AutosaveController.h"
-#include "GUIHelpers.h"
-#include "ProjectUtils.h"
-#include "UpdateTimer.h"
-#include "projectdocument.h"
+#include "GUI/coregui/mainwindow/AutosaveController.h"
+#include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QDir>
 
 namespace
@@ -51,7 +51,7 @@ void AutosaveController::setDocument(ProjectDocument* document)
 void AutosaveController::setAutosaveTime(int timerInterval)
 {
     m_timer->reset();
-    m_timer->setTimeInterval(timerInterval);
+    m_timer->setWallclockTimer(timerInterval);
 }
 
 //! Returns the name of autosave directory.
@@ -61,7 +61,7 @@ QString AutosaveController::autosaveDir() const
     if (m_document && m_document->hasValidNameAndPath())
         return ProjectUtils::autosaveDir(m_document->projectFileName());
 
-    return QString();
+    return "";
 }
 
 QString AutosaveController::autosaveName() const
@@ -69,7 +69,7 @@ QString AutosaveController::autosaveName() const
     if (m_document && m_document->hasValidNameAndPath())
         return ProjectUtils::autosaveName(m_document->projectFileName());
 
-    return QString();
+    return "";
 }
 
 void AutosaveController::removeAutosaveDir()

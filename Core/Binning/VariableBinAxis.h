@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef VARIABLEBINAXIS_H
-#define VARIABLEBINAXIS_H
+#ifndef BORNAGAIN_CORE_BINNING_VARIABLEBINAXIS_H
+#define BORNAGAIN_CORE_BINNING_VARIABLEBINAXIS_H
 
-#include "IAxis.h"
+#include "Core/Binning/IAxis.h"
 
 //! Axis with variable bin size.
 //! @ingroup tools
@@ -64,4 +64,4 @@ private:
     std::vector<double> m_bin_boundaries; //!< vector containing the bin limits
 };
 
-#endif // VARIABLEBINAXIS_H
+#endif // BORNAGAIN_CORE_BINNING_VARIABLEBINAXIS_H

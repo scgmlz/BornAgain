@@ -1,14 +1,10 @@
-#include "RealLimits.h"
-#include "google_test.h"
+#include "Fit/Tools/RealLimits.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <limits>
 
 class RealLimitsTest : public ::testing::Test
 {
-protected:
-    ~RealLimitsTest();
 };
-
-RealLimitsTest::~RealLimitsTest() = default;
 
 TEST_F(RealLimitsTest, LimitsInitial)
 {

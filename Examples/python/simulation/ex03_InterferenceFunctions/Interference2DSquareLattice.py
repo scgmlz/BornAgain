@@ -16,9 +16,9 @@ def get_sample():
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
-    interference = ba.InterferenceFunction2DLattice.createSquare(25.0*nm)
+    interference = ba.InterferenceFunction2DLattice.createSquare(25.0*nm, 0*deg)
     pdf = ba.FTDecayFunction2DCauchy(300.0*nm/2.0/numpy.pi,
-                                     100.0*nm/2.0/numpy.pi)
+                                     100.0*nm/2.0/numpy.pi, 0)
     interference.setDecayFunction(pdf)
 
     cylinder_ff = ba.FormFactorCylinder(3.*nm, 3.*nm)

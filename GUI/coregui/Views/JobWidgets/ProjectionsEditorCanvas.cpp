@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "ProjectionsEditorCanvas.h"
-#include "ColorMap.h"
-#include "IntensityDataItem.h"
-#include "MaskGraphicsScene.h"
-#include "MaskGraphicsView.h"
-#include "MaskItems.h"
-#include "PlotStatusLabel.h"
-#include "ScientificPlotEvent.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsEditorCanvas.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlotEvent.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskGraphicsScene.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskGraphicsView.h"
 #include <QItemSelectionModel>
 #include <QVBoxLayout>
 
@@ -30,7 +30,7 @@ ProjectionsEditorCanvas::ProjectionsEditorCanvas(QWidget* parent)
       m_liveProjection(nullptr), m_model(nullptr), m_intensityDataItem(nullptr),
       m_currentActivity(MaskEditorFlags::HORIZONTAL_LINE_MODE), m_block_update(false)
 {
-    setObjectName(QStringLiteral("MaskEditorCanvas"));
+    setObjectName("MaskEditorCanvas");
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
@@ -64,7 +64,7 @@ void ProjectionsEditorCanvas::setContext(SessionModel* model,
 void ProjectionsEditorCanvas::resetContext()
 {
     m_intensityDataItem = nullptr;
-    m_containerIndex = QModelIndex();
+    m_containerIndex = {};
     setConnected(false);
     m_colorMap = nullptr;
     m_scene->resetContext();
@@ -83,11 +83,9 @@ void ProjectionsEditorCanvas::onEnteringColorMap()
     m_block_update = true;
 
     if (m_currentActivity == MaskEditorFlags::HORIZONTAL_LINE_MODE)
-        m_liveProjection =
-            m_model->insertNewItem(Constants::HorizontalLineMaskType, m_containerIndex);
+        m_liveProjection = m_model->insertNewItem("HorizontalLineMask", m_containerIndex);
     else if (m_currentActivity == MaskEditorFlags::VERTICAL_LINE_MODE)
-        m_liveProjection =
-            m_model->insertNewItem(Constants::VerticalLineMaskType, m_containerIndex);
+        m_liveProjection = m_model->insertNewItem("VerticalLineMask", m_containerIndex);
 
     if (m_liveProjection)
         m_liveProjection->setItemValue(MaskItem::P_IS_VISIBLE, false);
@@ -144,7 +142,7 @@ void ProjectionsEditorCanvas::onActivityModeChanged(MaskEditorFlags::Activity va
 
 void ProjectionsEditorCanvas::setColorMap(ColorMap* colorMap)
 {
-    Q_ASSERT(colorMap);
+    ASSERT(colorMap);
     setConnected(false);
 
     m_colorMap = colorMap;

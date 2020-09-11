@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef ATTLIMITS_H
-#define ATTLIMITS_H
+#ifndef BORNAGAIN_FIT_TOOLS_ATTLIMITS_H
+#define BORNAGAIN_FIT_TOOLS_ATTLIMITS_H
 
-#include "Attributes.h"
-#include "RealLimits.h"
-#include "WinDllMacros.h"
+#include "Fit/Tools/Attributes.h"
+#include "Fit/Tools/RealLimits.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 //! Attributes and limits of a fit parameter, and coupling between these properties.
@@ -65,4 +65,4 @@ private:
     Attributes m_att_fixed;
 };
 
-#endif // ATTLIMITS_H
+#endif // BORNAGAIN_FIT_TOOLS_ATTLIMITS_H

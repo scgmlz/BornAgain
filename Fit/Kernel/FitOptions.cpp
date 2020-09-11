@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "FitOptions.h"
+#include "Fit/Kernel/FitOptions.h"
 
 FitOptions::FitOptions() : m_deriv_epsilon(1e-09), m_step_factor(0.01) {}
 

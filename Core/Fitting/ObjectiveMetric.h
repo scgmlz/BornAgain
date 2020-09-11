@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OBJECTIVEMETRIC_H
-#define OBJECTIVEMETRIC_H
+#ifndef BORNAGAIN_CORE_FITTING_OBJECTIVEMETRIC_H
+#define BORNAGAIN_CORE_FITTING_OBJECTIVEMETRIC_H
 
-#include "ICloneable.h"
+#include "Core/Basics/ICloneable.h"
 #include <functional>
 #include <memory>
 #include <vector>
@@ -199,4 +199,4 @@ public:
     double compute(const SimDataPair& data_pair, bool use_weights) const override;
 };
 
-#endif // OBJECTIVEMETRIC_H
+#endif // BORNAGAIN_CORE_FITTING_OBJECTIVEMETRIC_H

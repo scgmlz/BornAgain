@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORPYRAMID_H
-#define FORMFACTORPYRAMID_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPYRAMID_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPYRAMID_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A frustum with a quadratic base.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorPyramid : public FormFactorPolyhedron
 {
 public:
+    FormFactorPyramid(const std::vector<double> P);
     FormFactorPyramid(double base_edge, double height, double alpha);
 
     FormFactorPyramid* clone() const override final
@@ -44,9 +45,9 @@ protected:
 private:
     static const PolyhedralTopology topology;
 
-    double m_base_edge;
-    double m_height;
-    double m_alpha;
+    const double& m_base_edge;
+    const double& m_height;
+    const double& m_alpha;
 };
 
-#endif // FORMFACTORPYRAMID_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPYRAMID_H

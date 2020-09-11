@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANSFORMATIONITEM_H
-#define TRANSFORMATIONITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMATIONITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMATIONITEM_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class BA_CORE_API_ TransformationItem : public SessionGraphicsItem
 {
@@ -24,4 +24,4 @@ public:
     TransformationItem();
 };
 
-#endif // TRANSFORMATIONITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMATIONITEM_H

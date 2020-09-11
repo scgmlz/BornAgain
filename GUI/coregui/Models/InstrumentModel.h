@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INSTRUMENTMODEL_H
-#define INSTRUMENTMODEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H
 
-#include "SessionModel.h"
+#include "GUI/coregui/Models/SessionModel.h"
 
 class InstrumentItem;
 
@@ -33,4 +33,4 @@ public:
     InstrumentItem* instrumentItem();
 };
 
-#endif // INSTRUMENTMODEL_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H

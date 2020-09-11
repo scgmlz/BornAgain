@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "aboutapplicationdialog.h"
-#include "CustomEventFilters.h"
-#include "DesignerHelper.h"
-#include "GUIHelpers.h"
+#include "GUI/coregui/mainwindow/aboutapplicationdialog.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/CustomEventFilters.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QDate>
 #include <QLabel>
 #include <QPushButton>

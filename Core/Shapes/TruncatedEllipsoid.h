@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TRUNCATEDELLIPSOID_H
-#define TRUNCATEDELLIPSOID_H
+#ifndef BORNAGAIN_CORE_SHAPES_TRUNCATEDELLIPSOID_H
+#define BORNAGAIN_CORE_SHAPES_TRUNCATEDELLIPSOID_H
 
-#include "IShape.h"
+#include "Core/Shapes/IShape.h"
 
 class TruncatedEllipsoid : public IShape
 {
@@ -24,4 +24,4 @@ public:
     ~TruncatedEllipsoid();
 };
 
-#endif // TRUNCATEDELLIPSOID_H
+#endif // BORNAGAIN_CORE_SHAPES_TRUNCATEDELLIPSOID_H

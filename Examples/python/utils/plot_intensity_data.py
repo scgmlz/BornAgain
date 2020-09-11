@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Plots data stored in BornAgain "*.int" or "*.int.gz" format
 Can handle both 1D and 2D arrays

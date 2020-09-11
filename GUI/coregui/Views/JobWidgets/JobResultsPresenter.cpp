@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "JobResultsPresenter.h"
-#include "FitComparisonWidget.h"
-#include "FitComparisonWidget1D.h"
-#include "GUIHelpers.h"
-#include "IntensityDataProjectionsWidget.h"
-#include "IntensityDataWidget.h"
-#include "JobItem.h"
-#include "SpecularDataWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobResultsPresenter.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Views/FitWidgets/FitComparisonWidget.h"
+#include "GUI/coregui/Views/FitWidgets/FitComparisonWidget1D.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataProjectionsWidget.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataWidget.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataWidget.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -27,15 +27,15 @@ namespace
 const bool use_job_last_presentation = true;
 
 const std::map<QString, QString> instrument_to_default_presentaion{
-    {Constants::SpecularInstrumentType, Constants::SpecularDataPresentation},
-    {Constants::GISASInstrumentType, Constants::IntensityDataPresentation},
-    {Constants::OffSpecInstrumentType, Constants::IntensityDataPresentation},
-    {Constants::DepthProbeInstrumentType, Constants::IntensityDataPresentation}};
+    {"SpecularInstrument", "Reflectometry"},
+    {"GISASInstrument", "Color Map"},
+    {"OffSpecInstrument", "Color Map"},
+    {"DepthProbeInstrument", "Color Map"}};
 
 const std::map<QString, QString> instrument_to_fit_presentaion{
-    {Constants::SpecularInstrumentType, Constants::FitComparisonPresentation1D},
-    {Constants::GISASInstrumentType, Constants::FitComparisonPresentation2D},
-    {Constants::OffSpecInstrumentType, Constants::FitComparisonPresentation2D}};
+    {"SpecularInstrument", "Fit 1D Data"},
+    {"GISASInstrument", "Fit 2D Data"},
+    {"OffSpecInstrument", "Fit 2D Data"}};
 
 const std::map<JobViewFlags::EActivities, std::map<QString, QString>> activity_to_presentation{
     {JobViewFlags::FITTING_ACTIVITY, instrument_to_fit_presentaion},
@@ -43,13 +43,10 @@ const std::map<JobViewFlags::EActivities, std::map<QString, QString>> activity_t
     {JobViewFlags::JOB_VIEW_ACTIVITY, instrument_to_default_presentaion}};
 
 const std::map<QString, QStringList> default_active_presentation_list{
-    {Constants::SpecularInstrumentType, {Constants::SpecularDataPresentation}},
-    {{Constants::GISASInstrumentType},
-     {Constants::IntensityDataPresentation, Constants::IntensityProjectionsPresentation}},
-    {{Constants::OffSpecInstrumentType},
-     {Constants::IntensityDataPresentation, Constants::IntensityProjectionsPresentation}},
-    {{Constants::DepthProbeInstrumentType},
-     {Constants::IntensityDataPresentation, Constants::IntensityProjectionsPresentation}}};
+    {"SpecularInstrument", {"Reflectometry"}},
+    {{"GISASInstrument"}, {"Color Map", "Projections"}},
+    {{"OffSpecInstrument"}, {"Color Map", "Projections"}},
+    {{"DepthProbeInstrument"}, {"Color Map", "Projections"}}};
 
 template <class QStringObj>
 QStringObj getPresentations(const SessionItem* job_item,
@@ -65,15 +62,14 @@ QStringObj getPresentations(const SessionItem* job_item,
 
 JobResultsPresenter::JobResultsPresenter(QWidget* parent) : ItemComboWidget(parent)
 {
-    registerWidget(Constants::IntensityDataPresentation, create_new<IntensityDataWidget>);
+    registerWidget("Color Map", create_new<IntensityDataWidget>);
 
-    registerWidget(Constants::IntensityProjectionsPresentation,
-                   create_new<IntensityDataProjectionsWidget>);
+    registerWidget("Projections", create_new<IntensityDataProjectionsWidget>);
 
-    registerWidget(Constants::FitComparisonPresentation1D, create_new<FitComparisonWidget1D>);
-    registerWidget(Constants::FitComparisonPresentation2D, create_new<FitComparisonWidget>);
+    registerWidget("Fit 1D Data", create_new<FitComparisonWidget1D>);
+    registerWidget("Fit 2D Data", create_new<FitComparisonWidget>);
 
-    registerWidget(Constants::SpecularDataPresentation, create_new<SpecularDataWidget>);
+    registerWidget("Reflectometry", create_new<SpecularDataWidget>);
 }
 
 QString JobResultsPresenter::itemPresentation() const

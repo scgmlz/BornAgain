@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef DISTRIBUTIONDIALOG_H
-#define DISTRIBUTIONDIALOG_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONDIALOG_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONDIALOG_H
 
 #include <QDialog>
 class DistributionEditor;
@@ -35,4 +35,4 @@ private:
     DistributionEditor* m_editor;
 };
 
-#endif // DISTRIBUTIONDIALOG_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONDIALOG_H

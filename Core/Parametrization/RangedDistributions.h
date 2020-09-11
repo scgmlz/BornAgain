@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef RANGEDDISTRIBUTIONS_H
-#define RANGEDDISTRIBUTIONS_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_RANGEDDISTRIBUTIONS_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_RANGEDDISTRIBUTIONS_H
 
-#include "ICloneable.h"
-#include "RealLimits.h"
+#include "Core/Basics/ICloneable.h"
+#include "Fit/Tools/RealLimits.h"
 #include <memory>
 #include <vector>
 
@@ -222,4 +222,4 @@ inline std::ostream& operator<<(std::ostream& os, const RangedDistribution& dist
     return os << distribution.print();
 }
 
-#endif // RANGEDDISTRIBUTIONS_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_RANGEDDISTRIBUTIONS_H

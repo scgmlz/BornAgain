@@ -12,20 +12,20 @@
 //
 // ************************************************************************** //
 
-#include "FitParameterWidget.h"
-#include "CustomEventFilters.h"
-#include "FilterPropertyProxy.h"
-#include "FitParameterHelper.h"
-#include "FitParameterItems.h"
-#include "FitParameterProxyModel.h"
-#include "FitSuiteItem.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "OverlayLabelController.h"
-#include "ParameterTreeItems.h"
-#include "ParameterTuningWidget.h"
-#include "SessionModelDelegate.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/FitWidgets/FitParameterWidget.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
+#include "GUI/coregui/Models/FitParameterHelper.h"
+#include "GUI/coregui/Models/FitParameterItems.h"
+#include "GUI/coregui/Models/FitParameterProxyModel.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
+#include "GUI/coregui/Models/SessionModelDelegate.h"
+#include "GUI/coregui/Views/InfoWidgets/OverlayLabelController.h"
+#include "GUI/coregui/Views/JobWidgets/ParameterTuningWidget.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QAction>
 #include <QMenu>
 #include <QTreeView>
@@ -58,7 +58,7 @@ FitParameterWidget::FitParameterWidget(QWidget* parent)
             SLOT(onFitParameterTreeContextMenu(const QPoint&)));
 
     m_infoLabel->setArea(m_treeView);
-    m_infoLabel->setText(QStringLiteral("Drop parameter(s) to fit here"));
+    m_infoLabel->setText("Drop parameter(s) to fit here");
 }
 
 //! Sets ParameterTuningWidget to be able to provide it with context menu and steer
@@ -129,7 +129,7 @@ void FitParameterWidget::onFitParametersSelectionChanged(const QItemSelection& s
     for (auto index : selection.indexes()) {
         m_tuningWidget->selectionModel()->clearSelection();
         SessionItem* item = m_fitParameterModel->itemForIndex(index);
-        if (item->parent()->modelType() == Constants::FitParameterLinkType) {
+        if (item->parent()->modelType() == "FitParameterLink") {
             QString link = item->parent()->getItemValue(FitParameterLinkItem::P_LINK).toString();
             m_tuningWidget->makeSelected(
                 FitParameterHelper::getParameterItem(jobItem()->fitParameterContainerItem(), link));
@@ -217,13 +217,13 @@ void FitParameterWidget::subscribeToItem()
 
 void FitParameterWidget::init_actions()
 {
-    m_createFitParAction = new QAction(QStringLiteral("Create fit parameter"), this);
+    m_createFitParAction = new QAction("Create fit parameter", this);
     connect(m_createFitParAction, SIGNAL(triggered()), this, SLOT(onCreateFitParAction()));
 
-    m_removeFromFitParAction = new QAction(QStringLiteral("Remove from fit parameters"), this);
+    m_removeFromFitParAction = new QAction("Remove from fit parameters", this);
     connect(m_removeFromFitParAction, SIGNAL(triggered()), this, SLOT(onRemoveFromFitParAction()));
 
-    m_removeFitParAction = new QAction(QStringLiteral("Remove fit parameter"), this);
+    m_removeFitParAction = new QAction("Remove fit parameter", this);
     connect(m_removeFitParAction, SIGNAL(triggered()), this, SLOT(onRemoveFitParAction()));
 
     connect(m_keyboardFilter, SIGNAL(removeItem()), this, SLOT(onRemoveFitParAction()));
@@ -233,7 +233,7 @@ void FitParameterWidget::init_actions()
 
 void FitParameterWidget::initTuningWidgetContextMenu(QMenu& menu)
 {
-    if (jobItem()->getStatus() == Constants::STATUS_FITTING) {
+    if (jobItem()->getStatus() == "Fitting") {
         setActionsEnabled(false);
         return;
     }
@@ -267,7 +267,7 @@ void FitParameterWidget::initTuningWidgetContextMenu(QMenu& menu)
 
 void FitParameterWidget::initFitParameterTreeContextMenu(QMenu& menu)
 {
-    if (jobItem()->getStatus() == Constants::STATUS_FITTING) {
+    if (jobItem()->getStatus() == "Fitting") {
         setActionsEnabled(false);
         return;
     }
@@ -337,9 +337,9 @@ QVector<FitParameterItem*> FitParameterWidget::selectedFitParameters()
     QModelIndexList indexes = m_treeView->selectionModel()->selectedIndexes();
     for (auto index : indexes) {
         if (SessionItem* item = m_fitParameterModel->itemForIndex(index)) {
-            if (item->modelType() == Constants::FitParameterType) {
+            if (item->modelType() == "FitParameter") {
                 FitParameterItem* fitParItem = dynamic_cast<FitParameterItem*>(item);
-                Q_ASSERT(fitParItem);
+                ASSERT(fitParItem);
                 result.push_back(fitParItem);
             }
         }
@@ -367,10 +367,10 @@ QVector<FitParameterLinkItem*> FitParameterWidget::selectedFitParameterLinks()
     QModelIndexList indexes = m_treeView->selectionModel()->selectedIndexes();
     for (QModelIndex index : indexes) {
         if (SessionItem* item = m_fitParameterModel->itemForIndex(index)) {
-            if (item->parent()->modelType() == Constants::FitParameterLinkType) {
+            if (item->parent()->modelType() == "FitParameterLink") {
                 FitParameterLinkItem* fitParItem =
                     dynamic_cast<FitParameterLinkItem*>(item->parent());
-                Q_ASSERT(fitParItem);
+                ASSERT(fitParItem);
                 result.push_back(fitParItem);
             }
         }
@@ -408,7 +408,7 @@ void FitParameterWidget::updateInfoLabel()
 
 void FitParameterWidget::connectTuningWidgetSelection(bool active)
 {
-    Q_ASSERT(m_tuningWidget);
+    ASSERT(m_tuningWidget);
 
     if (active) {
         connect(m_tuningWidget->selectionModel(),

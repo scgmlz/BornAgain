@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PERCUSYEVICKBUILDER_H
-#define PERCUSYEVICKBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_PERCUSYEVICKBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_PERCUSYEVICKBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include <memory>
 
 class ISample;
@@ -36,4 +36,4 @@ private:
     double m_density;
 };
 
-#endif // PERCUSYEVICKBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_PERCUSYEVICKBUILDER_H

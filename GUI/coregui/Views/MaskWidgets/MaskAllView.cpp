@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "MaskAllView.h"
-#include "ColorMapSceneAdaptor.h"
-#include "MaskEditorHelper.h"
-#include "MaskItems.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskAllView.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Views/MaskWidgets/ColorMapSceneAdaptor.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QBrush>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>

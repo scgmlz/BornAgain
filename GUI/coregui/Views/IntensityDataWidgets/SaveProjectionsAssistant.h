@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAVEPROJECTIONSASSISTANT_H
-#define SAVEPROJECTIONSASSISTANT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_SAVEPROJECTIONSASSISTANT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_SAVEPROJECTIONSASSISTANT_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <QVector>
 #include <memory>
@@ -58,4 +58,4 @@ private:
     QString projectionFileHeader(ProjectionsData& projectionsData);
 };
 
-#endif // SAVEPROJECTIONSASSISTANT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_SAVEPROJECTIONSASSISTANT_H

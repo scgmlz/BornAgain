@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef SHEET_DELEGATE_P_H
-#define SHEET_DELEGATE_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_SHEET_DELEGATE_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_SHEET_DELEGATE_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 //#include <QtWidgets/QItemDelegate>
 //#include <QtWidgets/QTreeView>
@@ -85,4 +85,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // SHEET_DELEGATE_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_SHEET_DELEGATE_P_H

@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "ResonatorBuilder.h"
-#include "Layer.h"
-#include "LayerRoughness.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Units.h"
+#include "Core/StandardSamples/ResonatorBuilder.h"
+#include "Core/Basics/Units.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MultiLayer.h"
 #include <memory>
 
 ResonatorBuilder::ResonatorBuilder() : IMultiLayerBuilder(), m_l_ti(13.0 * Units::nm)
@@ -42,10 +42,7 @@ MultiLayer* ResonatorBuilder::buildSample() const
     Layer l_Pt(m_Pt, 32.0 * Units::nm);
     Layer l_D2O(m_D2O);
 
-    LayerRoughness roughness;
-    roughness.setSigma(2.0 * Units::nm);
-    roughness.setHurstParameter(0.8);
-    roughness.setLatteralCorrLength(10.0 * Units::micrometer);
+    LayerRoughness roughness(2.0 * Units::nm, 0.8, 10.0 * Units::micrometer);
 
     result->addLayer(l_Si);
 

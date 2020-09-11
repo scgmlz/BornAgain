@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "GSLLevenbergMarquardtMinimizer.h"
-#include "AttLimits.h"
-#include "GSLMultiMinimizer.h"
-#include "MinimizerUtils.h"
-#include "StringUtils.h"
+#include "Fit/RootAdapter/GSLLevenbergMarquardtMinimizer.h"
+#include "Fit/RootAdapter/GSLMultiMinimizer.h"
+#include "Fit/Tools/AttLimits.h"
+#include "Fit/Tools/MinimizerUtils.h"
+#include "Fit/Tools/StringUtils.h"
 #include <stdexcept>
 
 #ifdef _WIN32
@@ -49,41 +49,41 @@ GSLLevenbergMarquardtMinimizer::GSLLevenbergMarquardtMinimizer()
     : RootMinimizerAdapter(MinimizerInfo::buildGSLLMAInfo()),
       m_gsl_minimizer(new ROOT::Math::GSLNLSMinimizer(2))
 {
-    addOption(OptionNames::Tolerance, 0.01, "Tolerance on the function value at the minimum");
-    addOption(OptionNames::PrintLevel, 0, "Minimizer internal print level");
-    addOption(OptionNames::MaxIterations, 0, "Maximum number of iterations");
+    addOption("Tolerance", 0.01, "Tolerance on the function value at the minimum");
+    addOption("PrintLevel", 0, "Minimizer internal print level");
+    addOption("MaxIterations", 0, "Maximum number of iterations");
 }
 
 GSLLevenbergMarquardtMinimizer::~GSLLevenbergMarquardtMinimizer() = default;
 
 void GSLLevenbergMarquardtMinimizer::setTolerance(double value)
 {
-    setOptionValue(OptionNames::Tolerance, value);
+    setOptionValue("Tolerance", value);
 }
 
 double GSLLevenbergMarquardtMinimizer::tolerance() const
 {
-    return optionValue<double>(OptionNames::Tolerance);
+    return optionValue<double>("Tolerance");
 }
 
 void GSLLevenbergMarquardtMinimizer::setPrintLevel(int value)
 {
-    setOptionValue(OptionNames::PrintLevel, value);
+    setOptionValue("PrintLevel", value);
 }
 
 int GSLLevenbergMarquardtMinimizer::printLevel() const
 {
-    return optionValue<int>(OptionNames::PrintLevel);
+    return optionValue<int>("PrintLevel");
 }
 
 void GSLLevenbergMarquardtMinimizer::setMaxIterations(int value)
 {
-    setOptionValue(OptionNames::MaxIterations, value);
+    setOptionValue("MaxIterations", value);
 }
 
 int GSLLevenbergMarquardtMinimizer::maxIterations() const
 {
-    return optionValue<int>(OptionNames::MaxIterations);
+    return optionValue<int>("MaxIterations");
 }
 
 std::string GSLLevenbergMarquardtMinimizer::statusToString() const

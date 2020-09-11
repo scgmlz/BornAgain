@@ -12,25 +12,25 @@
 //
 // ************************************************************************** //
 
-#include "MesoCrystalView.h"
-#include "MesoCrystalItem.h"
-#include "ParticleItem.h"
-#include "SessionItem.h"
-#include "DesignerHelper.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/SampleDesigner/MesoCrystalView.h"
+#include "GUI/coregui/Models/MesoCrystalItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 
 MesoCrystalView::MesoCrystalView(QGraphicsItem* parent) : ConnectableView(parent)
 {
-    setName(Constants::MesoCrystalType);
+    setName("MesoCrystal");
     setColor(DesignerHelper::getDefaultParticleColor());
-    setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::ParticleCoreShellType));
+    setRectangle(DesignerHelper::getDefaultBoundingRect("ParticleCoreShell"));
     addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect to the ParticleLayout"));
+        ->setToolTip("Connect to the ParticleLayout");
     addPort("basis", NodeEditorPort::INPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect basis particles"));
+        ->setToolTip("Connect basis particles");
     addPort("transformation", NodeEditorPort::INPUT, NodeEditorPort::TRANSFORMATION)
-        ->setToolTip(QStringLiteral("Connect rotation to this port, if necessary"));
-    m_label_vspace = StyleUtils::SizeOfLetterM().height()*2.5;
+        ->setToolTip("Connect rotation to this port, if necessary");
+    m_label_vspace = StyleUtils::SizeOfLetterM().height() * 2.5;
 }
 
 void MesoCrystalView::addView(IView* childView, int /* row */)

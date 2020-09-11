@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "FileSystemUtils.h"
-#include "Exceptions.h"
+#include "Core/Tools/FileSystemUtils.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Basics/Exceptions.h"
 #include <boost/filesystem.hpp>
-#include <cassert>
 #include <codecvt>
 #include <locale>
 #include <regex>
@@ -71,8 +71,8 @@ std::vector<std::string> FileSystemUtils::filesInDirectory(const std::string& di
 
 std::string FileSystemUtils::jointPath(const std::string& spath1, const std::string& spath2)
 {
-    assert(spath1 != "");
-    assert(spath2 != "");
+    ASSERT(spath1 != "");
+    ASSERT(spath2 != "");
     boost::filesystem::path path1(spath1);
     boost::filesystem::path path2(spath2);
     boost::filesystem::path full_path = path1 / path2;

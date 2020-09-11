@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMTAGS_H
-#define SESSIONITEMTAGS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMTAGS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMTAGS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <QStringList>
 #include <QVector>
@@ -27,7 +27,7 @@ class BA_CORE_API_ SessionItemTags
 public:
     bool registerTag(const QString& name, int min, int max, const QStringList& modelTypes);
 
-    bool isValid(const QString& tagName, const QString& modelType = QString()) const;
+    bool isValid(const QString& tagName, const QString& modelType = "") const;
 
     QStringList modelTypesForTag(const QString& tagName) const;
 
@@ -49,14 +49,11 @@ public:
     bool maximumReached(const QString& tagName) const;
 
 private:
-    class TagInfo
-    {
-    public:
-        TagInfo();
+    struct TagInfo {
         QString name;
-        int min;
-        int max;
-        int childCount;
+        int min{0};
+        int max{-1};
+        int childCount{0};
         QStringList modelTypes;
     };
 
@@ -66,4 +63,4 @@ private:
     QVector<TagInfo> m_tags;
 };
 
-#endif //  SESSIONITEMTAGS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMTAGS_H

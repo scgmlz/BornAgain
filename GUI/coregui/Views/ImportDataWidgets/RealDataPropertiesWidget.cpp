@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "RealDataPropertiesWidget.h"
-#include "LinkInstrumentManager.h"
-#include "RealDataItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataPropertiesWidget.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
 #include <QComboBox>
 #include <QDataWidgetMapper>
 #include <QLabel>
@@ -143,7 +143,7 @@ void RealDataPropertiesWidget::onInstrumentMapUpdate()
         m_instrumentCombo->setCurrentIndex(index);
     } else {
         // instrument corresponding to m_current_id was deleted
-        m_current_id = QString();
+        m_current_id = "";
         m_instrumentCombo->setCurrentIndex(0);
     }
     setComboConnected(true);
@@ -166,7 +166,7 @@ void RealDataPropertiesWidget::setComboToIdentifier(const QString& identifier)
     setComboConnected(false);
     m_current_id = identifier;
     int index = m_linkManager->instrumentComboIndex(identifier);
-    Q_ASSERT(index >= 0);
+    ASSERT(index >= 0);
     m_instrumentCombo->setCurrentIndex(index);
     setComboConnected(true);
 }

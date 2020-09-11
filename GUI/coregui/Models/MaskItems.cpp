@@ -12,22 +12,24 @@
 //
 // ************************************************************************** //
 
-#include "MaskItems.h"
-#include "Ellipse.h"
-#include "GUIHelpers.h"
-#include "InfinitePlane.h"
-#include "Line.h"
-#include "Polygon.h"
-#include "Rectangle.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "Core/Mask/Ellipse.h"
+#include "Core/Mask/InfinitePlane.h"
+#include "Core/Mask/Line.h"
+#include "Core/Mask/Polygon.h"
+#include "Core/Mask/Rectangle.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
-MaskContainerItem::MaskContainerItem() : SessionItem(Constants::MaskContainerType)
+MaskContainerItem::MaskContainerItem() : SessionItem("MaskContainer")
 {
     const QString T_MASKS = "Mask Tag";
-    QStringList allowedMasks = QStringList()
-                               << Constants::RectangleMaskType << Constants::PolygonMaskType
-                               << Constants::EllipseMaskType << Constants::VerticalLineMaskType
-                               << Constants::HorizontalLineMaskType << Constants::MaskAllType
-                               << Constants::RegionOfInterestType;
+    QStringList allowedMasks = QStringList() << "RectangleMask"
+                                             << "PolygonMask"
+                                             << "EllipseMask"
+                                             << "VerticalLineMask"
+                                             << "HorizontalLineMask"
+                                             << "MaskAllMask"
+                                             << "RegionOfInterest";
     registerTag(T_MASKS, 0, -1, allowedMasks);
     setDefaultTag(T_MASKS);
 }
@@ -75,7 +77,7 @@ std::unique_ptr<IShape2D> RectangleItem::createShape(double scale) const
 
 /* ------------------------------------------------------------------------- */
 
-RegionOfInterestItem::RegionOfInterestItem() : RectangleItem(Constants::RegionOfInterestType)
+RegionOfInterestItem::RegionOfInterestItem() : RectangleItem("RegionOfInterest")
 {
     setItemValue(P_MASK_VALUE, false);
 }
@@ -85,9 +87,9 @@ RegionOfInterestItem::RegionOfInterestItem() : RectangleItem(Constants::RegionOf
 const QString PolygonPointItem::P_POSX = "X position";
 const QString PolygonPointItem::P_POSY = "Y position";
 
-PolygonPointItem::PolygonPointItem() : SessionItem(Constants::PolygonPointType)
+PolygonPointItem::PolygonPointItem() : SessionItem("PolygonPoint")
 {
-    setItemName(Constants::PolygonPointType);
+    setItemName("PolygonPoint");
     addProperty(P_POSX, 0.0)->setLimits(RealLimits::limitless());
     addProperty(P_POSY, 0.0)->setLimits(RealLimits::limitless());
 }
@@ -96,11 +98,11 @@ PolygonPointItem::PolygonPointItem() : SessionItem(Constants::PolygonPointType)
 
 const QString PolygonItem::P_ISCLOSED = "Is closed";
 
-PolygonItem::PolygonItem() : MaskItem(Constants::PolygonMaskType)
+PolygonItem::PolygonItem() : MaskItem("PolygonMask")
 {
-    setItemName(Constants::PolygonMaskType);
+    setItemName("PolygonMask");
     const QString T_POINTS = "Point tag";
-    registerTag(T_POINTS, 0, -1, QStringList() << Constants::PolygonPointType);
+    registerTag(T_POINTS, 0, -1, QStringList() << "PolygonPoint");
     setDefaultTag(T_POINTS);
     addProperty(P_ISCLOSED, false)->setVisible(false);
 }
@@ -108,7 +110,7 @@ PolygonItem::PolygonItem() : MaskItem(Constants::PolygonMaskType)
 std::unique_ptr<IShape2D> PolygonItem::createShape(double scale) const
 {
     std::vector<double> x, y;
-    for (auto item : this->getChildrenOfType(Constants::PolygonPointType)) {
+    for (auto item : this->getChildrenOfType("PolygonPoint")) {
         x.push_back(scale * item->getItemValue(PolygonPointItem::P_POSX).toDouble());
         y.push_back(scale * item->getItemValue(PolygonPointItem::P_POSY).toDouble());
     }
@@ -118,9 +120,9 @@ std::unique_ptr<IShape2D> PolygonItem::createShape(double scale) const
 /* ------------------------------------------------------------------------- */
 const QString VerticalLineItem::P_POSX = "X position";
 
-VerticalLineItem::VerticalLineItem() : MaskItem(Constants::VerticalLineMaskType)
+VerticalLineItem::VerticalLineItem() : MaskItem("VerticalLineMask")
 {
-    setItemName(Constants::VerticalLineMaskType);
+    setItemName("VerticalLineMask");
     addProperty(P_POSX, 0.0)->setLimits(RealLimits::limitless());
 }
 
@@ -133,9 +135,9 @@ std::unique_ptr<IShape2D> VerticalLineItem::createShape(double scale) const
 /* ------------------------------------------------------------------------- */
 const QString HorizontalLineItem::P_POSY = "Y position";
 
-HorizontalLineItem::HorizontalLineItem() : MaskItem(Constants::HorizontalLineMaskType)
+HorizontalLineItem::HorizontalLineItem() : MaskItem("HorizontalLineMask")
 {
-    setItemName(Constants::HorizontalLineMaskType);
+    setItemName("HorizontalLineMask");
     addProperty(P_POSY, 0.0)->setLimits(RealLimits::limitless());
 }
 
@@ -153,9 +155,9 @@ const QString EllipseItem::P_XRADIUS = "X radius";
 const QString EllipseItem::P_YRADIUS = "Y radius";
 const QString EllipseItem::P_ANGLE = "Angle";
 
-EllipseItem::EllipseItem() : MaskItem(Constants::EllipseMaskType)
+EllipseItem::EllipseItem() : MaskItem("EllipseMask")
 {
-    setItemName(Constants::EllipseMaskType);
+    setItemName("EllipseMask");
     addProperty(P_XCENTER, 0.0)->setLimits(RealLimits::limitless());
     addProperty(P_YCENTER, 0.0)->setLimits(RealLimits::limitless());
     addProperty(P_XRADIUS, 0.0);
@@ -176,9 +178,9 @@ std::unique_ptr<IShape2D> EllipseItem::createShape(double scale) const
 
 /* ------------------------------------------------------------------------- */
 
-MaskAllItem::MaskAllItem() : MaskItem(Constants::MaskAllType)
+MaskAllItem::MaskAllItem() : MaskItem("MaskAllMask")
 {
-    setItemName(Constants::MaskAllType);
+    setItemName("MaskAllMask");
     getItem(MaskItem::P_MASK_VALUE)->setEnabled(false);
 }
 

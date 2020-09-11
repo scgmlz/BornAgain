@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALDATASELECTORHBAR_H
-#define REALDATASELECTORHBAR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORHBAR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORHBAR_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QToolBar>
 
 class RealDataSelectorActions;
@@ -37,4 +37,4 @@ private:
     RealDataSelectorActions* m_actions;
 };
 
-#endif // REALDATASELECTORHBAR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORHBAR_H

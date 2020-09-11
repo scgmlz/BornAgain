@@ -1,16 +1,12 @@
-#include "FormFactorItems.h"
-#include "FormFactors.h"
-#include "Numeric.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/includeIncludes/FormFactors.h"
+#include "Fit/TestEngine/Numeric.h"
+#include "GUI/coregui/Models/FormFactorItems.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestFormFactorItems : public ::testing::Test
 {
-public:
-    ~TestFormFactorItems();
 };
-
-TestFormFactorItems::~TestFormFactorItems() = default;
 
 TEST_F(TestFormFactorItems, test_AnisoPyramidItem)
 {

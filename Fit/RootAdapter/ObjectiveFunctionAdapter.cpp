@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ObjectiveFunctionAdapter.h"
-#include "ResidualFunctionAdapter.h"
-#include "RootResidualFunction.h"
-#include "RootScalarFunction.h"
-#include "ScalarFunctionAdapter.h"
+#include "Fit/RootAdapter/ObjectiveFunctionAdapter.h"
+#include "Fit/RootAdapter/ResidualFunctionAdapter.h"
+#include "Fit/RootAdapter/RootResidualFunction.h"
+#include "Fit/RootAdapter/RootScalarFunction.h"
+#include "Fit/RootAdapter/ScalarFunctionAdapter.h"
 
 using namespace Fit;
 

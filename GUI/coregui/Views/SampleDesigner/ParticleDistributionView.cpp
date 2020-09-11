@@ -12,23 +12,23 @@
 //
 // ************************************************************************** //
 
-#include "ParticleDistributionView.h"
-#include "SessionItem.h"
-#include "DesignerHelper.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleDistributionView.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 
 ParticleDistributionView::ParticleDistributionView(QGraphicsItem* parent) : ConnectableView(parent)
 {
-    setName(Constants::ParticleDistributionType);
+    setName("ParticleDistribution");
     setColor(DesignerHelper::getDefaultParticleColor());
-    setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::ParticleDistributionType));
+    setRectangle(DesignerHelper::getDefaultBoundingRect("ParticleDistribution"));
     addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect to the ParticleLayout"));
+        ->setToolTip("Connect to the ParticleLayout");
     addPort("particle", NodeEditorPort::INPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect particle to this port. It will be a prototype \n"
-                                    "for parametric distribution."));
+        ->setToolTip("Connect particle to this port. It will be a prototype \n"
+                     "for parametric distribution.");
 
-    m_label_vspace = StyleUtils::SizeOfLetterM().height()*3.0;
+    m_label_vspace = StyleUtils::SizeOfLetterM().height() * 3.0;
 }
 
 void ParticleDistributionView::addView(IView* childView, int /* row */)

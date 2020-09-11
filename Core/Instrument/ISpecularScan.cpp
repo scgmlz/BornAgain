@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "ISpecularScan.h"
+#include "Core/Instrument/ISpecularScan.h"
 
 ISpecularScan::ISpecularScan(SPECULAR_DATA_TYPE data_type) : m_data_type(data_type) {}
 

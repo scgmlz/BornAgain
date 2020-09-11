@@ -12,16 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SOFTPARTICLES_H
-#define SOFTPARTICLES_H
+#ifndef BORNAGAIN_CORE_INCLUDEINCLUDES_SOFTPARTICLES_H
+#define BORNAGAIN_CORE_INCLUDEINCLUDES_SOFTPARTICLES_H
 
-#include "FormFactorDebyeBueche.h"
-#include "FormFactorGauss.h"
-#include "FormFactorLorentz.h"
-#include "FormFactorOrnsteinZernike.h"
-#include "FormFactorSphereGaussianRadius.h"
-#include "FormFactorSphereLogNormalRadius.h"
-#include "FormFactorSphereUniformRadius.h"
-#include "SoftParticles.h"
+#include "Core/SoftParticle/FormFactorGauss.h"
+#include "Core/SoftParticle/FormFactorSphereGaussianRadius.h"
+#include "Core/SoftParticle/FormFactorSphereLogNormalRadius.h"
 
-#endif // SOFTPARTICLES_H
+#endif // BORNAGAIN_CORE_INCLUDEINCLUDES_SOFTPARTICLES_H

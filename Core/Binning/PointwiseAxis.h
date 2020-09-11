@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef POINTWISEAXIS_H
-#define POINTWISEAXIS_H
+#ifndef BORNAGAIN_CORE_BINNING_POINTWISEAXIS_H
+#define BORNAGAIN_CORE_BINNING_POINTWISEAXIS_H
 
-#include "IAxis.h"
+#include "Core/Binning/IAxis.h"
 
 //! Axis containing arbitrary (non-equidistant) coordinate values.
 //! Lower boundary of the first bin and upper boundary of the
@@ -85,4 +85,4 @@ private:
     std::vector<double> m_coordinates;
 };
 
-#endif // POINTWISEAXIS_H
+#endif // BORNAGAIN_CORE_BINNING_POINTWISEAXIS_H

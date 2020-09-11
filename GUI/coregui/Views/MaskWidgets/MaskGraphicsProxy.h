@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKGRAPHICSPROXY_H
-#define MASKGRAPHICSPROXY_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSPROXY_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSPROXY_H
 
-#include "MaskEditorHelper.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QGraphicsProxyWidget>
 
 class SessionItem;
@@ -54,4 +54,4 @@ private:
     bool m_send_signals_to_colormap;
 };
 
-#endif // MASKGRAPHICSPROXY_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSPROXY_H

@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "PythonScriptWidget.h"
-#include "DesignerHelper.h"
-#include "DomainSimulationBuilder.h"
-#include "ExportToPython.h"
-#include "GISASSimulation.h"
-#include "InstrumentItems.h"
-#include "PythonSyntaxHighlighter.h"
-#include "StyleUtils.h"
-#include "WarningSign.h"
+#include "GUI/coregui/Views/SimulationWidgets/PythonScriptWidget.h"
+#include "Core/Export/ExportToPython.h"
+#include "Core/Simulation/GISASSimulation.h"
+#include "GUI/coregui/Models/DomainSimulationBuilder.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/InfoWidgets/PythonSyntaxHighlighter.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPushButton>
@@ -112,7 +112,7 @@ void PythonScriptWidget::onExportToFileButton()
 
     QString filters("Python scripts (*.py)");
     QString defaultFilter("Python scripts (*.py)");
-    QString defaultName = dirname + QString("/untitled");
+    QString defaultName = dirname + "/untitled";
 
     QString fileName =
         QFileDialog::getSaveFileName(nullptr, "Save file", defaultName, filters, &defaultFilter);

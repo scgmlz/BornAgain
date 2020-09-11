@@ -7,7 +7,7 @@ find_package(MPI REQUIRED)
 # include dirs
 include_directories(
     ${MPI_CXX_INCLUDE_PATH}
-    ${EIGEN3_INCLUDE_DIR}
+    ${EIGEN3_INCLUDE_DIRS}
     ${BornAgainCore_INCLUDE_DIRS}
     )
 

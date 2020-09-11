@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RootResidualFunction.h"
+#include "Fit/RootAdapter/RootResidualFunction.h"
 
 RootResidualFunction::RootResidualFunction(scalar_function_t objective_fun,
                                            gradient_function_t gradient_fun, size_t npars,

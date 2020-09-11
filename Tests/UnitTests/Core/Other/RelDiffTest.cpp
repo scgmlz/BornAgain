@@ -1,14 +1,10 @@
-#include "Numeric.h"
-#include "google_test.h"
+#include "Fit/TestEngine/Numeric.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <algorithm>
 
 class RelDiffTest : public ::testing::Test
 {
-protected:
-    ~RelDiffTest();
 };
-
-RelDiffTest::~RelDiffTest() = default;
 
 TEST_F(RelDiffTest, RelDiffAlmostEq)
 {

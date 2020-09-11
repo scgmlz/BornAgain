@@ -1,13 +1,9 @@
-#include "AttLimits.h"
-#include "google_test.h"
+#include "Fit/Tools/AttLimits.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class AttLimitsTest : public ::testing::Test
 {
-protected:
-    ~AttLimitsTest();
 };
-
-AttLimitsTest::~AttLimitsTest() = default;
 
 TEST_F(AttLimitsTest, InitialState)
 {

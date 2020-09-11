@@ -12,34 +12,34 @@
 //
 // ************************************************************************** //
 
-#include "DomainObjectBuilder.h"
-#include "AxesItems.h"
-#include "BeamItems.h"
-#include "ComboProperty.h"
-#include "DepthProbeInstrumentItem.h"
-#include "GUIHelpers.h"
-#include "IDetector2D.h"
-#include "InstrumentItems.h"
-#include "InterferenceFunctionItems.h"
-#include "LayerItem.h"
-#include "ParticleDistributionItem.h"
-#include "ParticleLayoutItem.h"
-#include "SimpleUnitConverters.h"
-#include "SpecularBeamInclinationItem.h"
-#include "TransformToDomain.h"
-#include "UnitConverter1D.h"
-#include "UnitConverterUtils.h"
-#include "Units.h"
+#include "GUI/coregui/Models/DomainObjectBuilder.h"
+#include "Core/Basics/Units.h"
+#include "Core/Detector/IDetector2D.h"
+#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Intensity/UnitConverter1D.h"
+#include "Core/Simulation/UnitConverterUtils.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/BeamItems.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InterferenceFunctionItems.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/ParticleDistributionItem.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
+#include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
+#include "GUI/coregui/Models/TransformToDomain.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 std::unique_ptr<MultiLayer> DomainObjectBuilder::buildMultiLayer(const SessionItem& multilayer_item)
 {
     auto P_multilayer = TransformToDomain::createMultiLayer(multilayer_item);
     QVector<SessionItem*> children = multilayer_item.children();
     for (int i = 0; i < children.size(); ++i) {
-        if (children[i]->modelType() == Constants::LayerType) {
+        if (children[i]->modelType() == "Layer") {
             auto P_layer = buildLayer(*children[i]);
             auto roughnessItem = children[i]->getGroupItem(LayerItem::P_ROUGHNESS);
-            Q_ASSERT(roughnessItem);
+            ASSERT(roughnessItem);
             auto P_roughness = TransformToDomain::createLayerRoughness(*roughnessItem);
             if (P_layer) {
                 if (P_roughness) {
@@ -58,7 +58,7 @@ std::unique_ptr<Layer> DomainObjectBuilder::buildLayer(const SessionItem& item)
     auto P_layer = TransformToDomain::createLayer(item);
     QVector<SessionItem*> children = item.children();
     for (int i = 0; i < children.size(); ++i) {
-        if (children[i]->modelType() == Constants::ParticleLayoutType) {
+        if (children[i]->modelType() == "ParticleLayout") {
             auto P_layout = buildParticleLayout(*children[i]);
             if (P_layout) {
                 P_layer->addLayout(*P_layout);
@@ -78,7 +78,7 @@ std::unique_ptr<ParticleLayout> DomainObjectBuilder::buildParticleLayout(const S
             P_layout->addParticle(*P_particle);
             continue;
         }
-        if (children[i]->modelType() == Constants::ParticleDistributionType) {
+        if (children[i]->modelType() == "ParticleDistribution") {
             auto prop = children[i]
                             ->getItemValue(ParticleDistributionItem::P_DISTRIBUTED_PARAMETER)
                             .value<ComboProperty>();
@@ -122,7 +122,7 @@ std::unique_ptr<IInterferenceFunction>
 DomainObjectBuilder::buildInterferenceFunction(const SessionItem& item)
 {
     auto iffItem = dynamic_cast<const InterferenceFunctionItem*>(&item);
-    Q_ASSERT(iffItem);
+    ASSERT(iffItem);
     return iffItem->createInterferenceFunction();
 }
 
@@ -143,10 +143,10 @@ DomainObjectBuilder::createUnitConverter(const InstrumentItem* instrumentItem)
     const auto instrument = instrumentItem->createInstrument();
     instrument->initDetector();
 
-    if (instrumentItem->modelType() == Constants::GISASInstrumentType)
+    if (instrumentItem->modelType() == "GISASInstrument")
         return UnitConverterUtils::createConverterForGISAS(*instrument);
 
-    if (instrumentItem->modelType() == Constants::OffSpecInstrumentType) {
+    if (instrumentItem->modelType() == "OffSpecInstrument") {
         auto axis_item = dynamic_cast<BasicAxisItem*>(
             instrumentItem->getItem(OffSpecInstrumentItem::P_ALPHA_AXIS));
         const auto detector2d = dynamic_cast<const IDetector2D*>(instrument->getDetector());

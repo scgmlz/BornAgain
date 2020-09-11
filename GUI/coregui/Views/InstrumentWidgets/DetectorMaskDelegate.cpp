@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "DetectorMaskDelegate.h"
-#include "AxesItems.h"
-#include "ComboProperty.h"
-#include "DetectorItems.h"
-#include "InstrumentItems.h"
-#include "InstrumentModel.h"
-#include "IntensityDataItem.h"
-#include "JobItemUtils.h"
-#include "MaskEditor.h"
-#include "MaskItems.h"
-#include "ModelPath.h"
+#include "GUI/coregui/Views/InstrumentWidgets/DetectorMaskDelegate.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditor.h"
 
 DetectorMaskDelegate::DetectorMaskDelegate(QObject* parent)
     : QObject(parent), m_tempIntensityDataModel(new SessionModel("TempIntensityDataModel", this)),
@@ -37,8 +37,8 @@ void DetectorMaskDelegate::initMaskEditorContext(MaskEditor* maskEditor,
     m_instrumentModel = instrumentModel;
     m_detectorItem = detectorItem;
 
-    Q_ASSERT(m_instrumentModel);
-    Q_ASSERT(m_detectorItem);
+    ASSERT(m_instrumentModel);
+    ASSERT(m_detectorItem);
 
     createIntensityDataItem();
     m_detectorItem->createMaskContainer();
@@ -55,23 +55,23 @@ void DetectorMaskDelegate::createIntensityDataItem()
 {
     m_tempIntensityDataModel->clear();
 
-    m_intensityItem = dynamic_cast<IntensityDataItem*>(
-        m_tempIntensityDataModel->insertNewItem(Constants::IntensityDataType));
-    Q_ASSERT(m_intensityItem);
+    m_intensityItem =
+        dynamic_cast<IntensityDataItem*>(m_tempIntensityDataModel->insertNewItem("IntensityData"));
+    ASSERT(m_intensityItem);
 
     m_intensityItem->getItem(IntensityDataItem::P_PROJECTIONS_FLAG)->setEnabled(false);
     m_intensityItem->setItemValue(IntensityDataItem::P_IS_INTERPOLATED, false);
 
     auto& zAxisItem = m_intensityItem->item<AmplitudeAxisItem>(IntensityDataItem::P_ZAXIS);
     zAxisItem.setItemValue(BasicAxisItem::P_IS_VISIBLE, false);
-    zAxisItem.setItemValue(BasicAxisItem::P_MIN, 0.0);
-    zAxisItem.setItemValue(BasicAxisItem::P_MAX, 2.0);
+    zAxisItem.setItemValue(BasicAxisItem::P_MIN_DEG, 0.0);
+    zAxisItem.setItemValue(BasicAxisItem::P_MAX_DEG, 2.0);
     zAxisItem.setItemValue(AmplitudeAxisItem::P_IS_LOGSCALE, false);
     zAxisItem.setItemValue(AmplitudeAxisItem::P_LOCK_MIN_MAX, true);
 
     // creating output data corresponding to the detector
     auto instrument = dynamic_cast<const GISASInstrumentItem*>(
-        ModelPath::ancestor(m_detectorItem, Constants::GISASInstrumentType));
+        ModelPath::ancestor(m_detectorItem, "GISASInstrument"));
     JobItemUtils::createDefaultDetectorMap(m_intensityItem, instrument);
 
     m_intensityItem->getOutputData()->setAllTo(1.0);

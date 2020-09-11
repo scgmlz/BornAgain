@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "IFunctionAdapter.h"
+#include "Fit/Kernel/IFunctionAdapter.h"
 
 using namespace Fit;
 

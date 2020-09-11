@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEVALIDATOR_H
-#define SAMPLEVALIDATOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEVALIDATOR_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEVALIDATOR_H
 
 #include <QModelIndex>
 
@@ -46,4 +46,4 @@ private:
     QString m_validation_message;
 };
 
-#endif // SAMPLEVALIDATOR_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEVALIDATOR_H

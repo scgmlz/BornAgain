@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "MaskEditorHelper.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QBrush>
 #include <QColor>
 #include <QPen>

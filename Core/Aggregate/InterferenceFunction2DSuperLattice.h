@@ -12,12 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTION2DSUPERLATTICE_H
-#define INTERFERENCEFUNCTION2DSUPERLATTICE_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DSUPERLATTICE_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DSUPERLATTICE_H
 
-#include "IInterferenceFunction.h"
-#include "Integrator.h"
-#include "Lattice2D.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Lattice/Lattice2D.h"
 
 //! Interference function of a 2D superlattice with a configurable interference function for
 //! each lattice site.
@@ -56,10 +55,8 @@ public:
 
 private:
     double iff_without_dw(const kvector_t q) const override final;
-    InterferenceFunction2DSuperLattice(const InterferenceFunction2DSuperLattice& other);
     void setLattice(const Lattice2D& lattice);
 
-    void init_parameters();
     double interferenceForXi(double xi) const;
 
     bool m_integrate_xi; //!< Integrate over the orientation xi
@@ -70,7 +67,6 @@ private:
     mutable double m_qx;
     mutable double m_qy;
     mutable double m_xi;
-    mutable RealIntegrator m_integrator;
 };
 
-#endif // INTERFERENCEFUNCTION2DSUPERLATTICE_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DSUPERLATTICE_H

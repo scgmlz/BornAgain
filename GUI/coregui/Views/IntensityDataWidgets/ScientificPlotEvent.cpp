@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "ScientificPlotEvent.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlotEvent.h"
 #include <QMouseEvent>
 #include <qcustomplot.h>
 

@@ -12,15 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "PoissonNoiseBackground.h"
-#include "MathFunctions.h"
+#include "Core/Computation/PoissonNoiseBackground.h"
+#include "Core/Tools/MathFunctions.h"
 
 PoissonNoiseBackground::PoissonNoiseBackground()
+    : IBackground({"PoissonNoiseBackground", "class_tooltip", {}}, {})
 {
-    setName(BornAgain::PoissonNoiseBackgroundType);
 }
-
-PoissonNoiseBackground::~PoissonNoiseBackground() = default;
 
 PoissonNoiseBackground* PoissonNoiseBackground::clone() const
 {

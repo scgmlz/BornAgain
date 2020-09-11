@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "IMinimizer.h"
+#include "Fit/Minimizer/IMinimizer.h"
 
 IMinimizer::IMinimizer() = default;
 

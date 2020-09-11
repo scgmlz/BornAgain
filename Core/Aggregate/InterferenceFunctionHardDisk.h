@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONHARDDISK_H
-#define INTERFERENCEFUNCTIONHARDDISK_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONHARDDISK_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONHARDDISK_H
 
-#include "IInterferenceFunction.h"
-#include "Integrator.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
 
 //! Percus-Yevick hard disk interference function.
 //!
@@ -28,8 +27,8 @@
 class BA_CORE_API_ InterferenceFunctionHardDisk : public IInterferenceFunction
 {
 public:
-    InterferenceFunctionHardDisk(double radius, double density);
-    ~InterferenceFunctionHardDisk() final;
+    InterferenceFunctionHardDisk(double radius, double density, double position_var = 0);
+    ~InterferenceFunctionHardDisk() final = default;
 
     InterferenceFunctionHardDisk* clone() const override final;
 
@@ -41,16 +40,14 @@ public:
     double density() const;
 
 private:
-    InterferenceFunctionHardDisk(const InterferenceFunctionHardDisk& other);
     double iff_without_dw(const kvector_t q) const override final;
-    void init_parameters();
-    void validateParameters() const;
     double packingRatio() const;
     double integrand(double x) const;
+
     double m_radius;
     double m_density;
+
     mutable double m_q, m_c_zero, m_s2, m_packing;
-    mutable RealIntegrator m_integrator;
 };
 
-#endif // INTERFERENCEFUNCTIONHARDDISK_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONHARDDISK_H

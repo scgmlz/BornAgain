@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANSFORMATIONSBUILDER_H
-#define TRANSFORMATIONSBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_TRANSFORMATIONSBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_TRANSFORMATIONSBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! Rotated box in 3 layers system.
 //! @ingroup standard_samples
@@ -27,4 +27,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // TRANSFORMATIONSBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_TRANSFORMATIONSBUILDER_H

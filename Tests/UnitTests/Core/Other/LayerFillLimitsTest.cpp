@@ -1,12 +1,11 @@
-#include "LayerFillLimits.h"
-#include "google_test.h"
+#include "Core/Multilayer/LayerFillLimits.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <stdexcept>
 
 class LayerFillLimitsTest : public ::testing::Test
 {
 protected:
     LayerFillLimitsTest();
-    ~LayerFillLimitsTest();
 
     LayerFillLimits m_fill_limits;
     std::vector<double> layers_bottomz;
@@ -17,8 +16,6 @@ LayerFillLimitsTest::LayerFillLimitsTest() : m_fill_limits({})
     std::vector<double> layers_bottomz = {0, -5, -20};
     m_fill_limits = LayerFillLimits(layers_bottomz);
 }
-
-LayerFillLimitsTest::~LayerFillLimitsTest() = default;
 
 TEST_F(LayerFillLimitsTest, LayerFillLimitsEmptyConstructor)
 {

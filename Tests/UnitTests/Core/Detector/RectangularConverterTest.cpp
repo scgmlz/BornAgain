@@ -1,9 +1,9 @@
-#include "Beam.h"
-#include "RectangularDetector.h"
-#include "SimpleUnitConverters.h"
-#include "Units.h"
-#include "Vectors3D.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Detector/RectangularDetector.h"
+#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Vector/Vectors3D.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 
 namespace
@@ -19,7 +19,6 @@ class RectangularConverterTest : public ::testing::Test
 {
 public:
     RectangularConverterTest();
-    ~RectangularConverterTest();
 
 protected:
     RectangularDetector m_detector;
@@ -29,9 +28,8 @@ protected:
 };
 
 RectangularConverterTest::RectangularConverterTest()
-    : m_detector(det_nx, det_width, det_ny, det_height)
+    : m_detector(det_nx, det_width, det_ny, det_height), m_beam(1.0, 1.0 * Units::deg, 0.0, 1.0)
 {
-    m_beam.setCentralK(1.0, 1.0 * Units::deg, 0.0);
     m_detector.setPerpendicularToSampleX(det_distance, det_width / 2.0, 0.0);
     m_detector.init(m_beam);
     m_phi = std::atan2(det_width / 2.0, det_distance);
@@ -42,8 +40,6 @@ RectangularConverterTest::RectangularConverterTest()
     m_kfy = K * std::sin(m_phi);
     m_kfz = K * std::sin(m_alpha);
 }
-
-RectangularConverterTest::~RectangularConverterTest() = default;
 
 TEST_F(RectangularConverterTest, RectangularConverter)
 {
@@ -91,14 +87,12 @@ TEST_F(RectangularConverterTest, RectangularConverter)
     auto axis = converter.createConvertedAxis(0, AxesUnits::DEFAULT);
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis.get()));
     EXPECT_EQ(axis->size(), converter.axisSize(0));
-    EXPECT_EQ(axis->getName(), converter.axisName(0));
     EXPECT_EQ(axis->getMin(), converter.calculateMin(0, AxesUnits::DEFAULT));
     EXPECT_EQ(axis->getMax(), converter.calculateMax(0, AxesUnits::DEFAULT));
 
     auto axis2 = converter.createConvertedAxis(1, AxesUnits::QSPACE);
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis2.get()));
     EXPECT_EQ(axis2->size(), converter.axisSize(1));
-    EXPECT_EQ(axis2->getName(), converter.axisName(1, AxesUnits::QSPACE));
     EXPECT_EQ(axis2->getMin(), converter.calculateMin(1, AxesUnits::QSPACE));
     EXPECT_EQ(axis2->getMax(), converter.calculateMax(1, AxesUnits::QSPACE));
 

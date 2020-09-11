@@ -1,19 +1,15 @@
-#include "AxesItems.h"
-#include "FixedBinAxis.h"
-#include "GUIHelpers.h"
-#include "PropertyItem.h"
-#include "TransformFromDomain.h"
-#include "Units.h"
-#include "VariableBinAxis.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Binning/VariableBinAxis.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/PropertyItem.h"
+#include "GUI/coregui/Models/TransformFromDomain.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestAxesItems : public ::testing::Test
 {
-public:
-    ~TestAxesItems();
 };
-
-TestAxesItems::~TestAxesItems() = default;
 
 TEST_F(TestAxesItems, transformFromDomain)
 {
@@ -23,8 +19,8 @@ TEST_F(TestAxesItems, transformFromDomain)
     FixedBinAxis axis0("axis0", 99, -42.0, 42.0);
     TransformFromDomain::setAxisItem(&item, axis0);
     EXPECT_EQ(item.getItemValue(BasicAxisItem::P_NBINS), static_cast<int>(axis0.size()));
-    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MIN), static_cast<int>(axis0.getMin()));
-    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MAX), static_cast<int>(axis0.getMax()));
+    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MIN_DEG), static_cast<int>(axis0.getMin()));
+    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MAX_DEG), static_cast<int>(axis0.getMax()));
     EXPECT_EQ(item.getItemValue(BasicAxisItem::P_TITLE), QString::fromStdString(axis0.getName()));
 
     // transform domain axis with limits given in radians
@@ -32,8 +28,8 @@ TEST_F(TestAxesItems, transformFromDomain)
     const double scale = 1. / Units::deg;
     TransformFromDomain::setAxisItem(&item, axis1, scale);
     EXPECT_EQ(item.getItemValue(BasicAxisItem::P_NBINS), static_cast<int>(axis1.size()));
-    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MIN), -42.0);
-    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MAX), 42.0);
+    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MIN_DEG), -42.0);
+    EXPECT_EQ(item.getItemValue(BasicAxisItem::P_MAX_DEG), 42.0);
     EXPECT_EQ(item.getItemValue(BasicAxisItem::P_TITLE), QString::fromStdString(axis1.getName()));
 
     // transform to unexpected item

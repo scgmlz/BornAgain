@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "MaterialPropertyController.h"
-#include "MaterialItemUtils.h"
-#include "MaterialModel.h"
-#include "ModelPath.h"
-#include "ModelUtils.h"
-#include "SampleModel.h"
+#include "GUI/coregui/Models/MaterialPropertyController.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/ModelUtils.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include <QVector>
 
 MaterialPropertyController::MaterialPropertyController(QObject* parent)
@@ -47,7 +47,7 @@ void MaterialPropertyController::onMaterialModelLoad()
 {
     for (auto sampleItem : relatedSampleItems()) {
         QString tag = MaterialItemUtils::materialTag(*sampleItem);
-        Q_ASSERT(!tag.isEmpty());
+        ASSERT(!tag.isEmpty());
 
         ExternalProperty property = sampleItem->getItemValue(tag).value<ExternalProperty>();
         if (MaterialItem* material =
@@ -67,12 +67,12 @@ void MaterialPropertyController::onMaterialDataChanged(const QModelIndex& topLef
                                                        const QModelIndex&, const QVector<int>&)
 {
     auto changedItem = m_materialModel->itemForIndex(topLeft);
-    if (auto materialItem = dynamic_cast<const MaterialItem*>(
-            ModelPath::ancestor(changedItem, Constants::MaterialType))) {
+    if (auto materialItem =
+            dynamic_cast<const MaterialItem*>(ModelPath::ancestor(changedItem, "Material"))) {
 
         for (auto sampleItem : relatedSampleItems()) {
             QString tag = MaterialItemUtils::materialTag(*sampleItem);
-            Q_ASSERT(!tag.isEmpty());
+            ASSERT(!tag.isEmpty());
 
             ExternalProperty property = sampleItem->getItemValue(tag).value<ExternalProperty>();
             if (property.identifier() == materialItem->identifier()) {
@@ -103,7 +103,7 @@ void MaterialPropertyController::onMaterialRowsAboutToBeRemoved(const QModelInde
     // rewriting MaterialProperty in corresponding sample items
     for (auto sampleItem : relatedSampleItems()) {
         QString tag = MaterialItemUtils::materialTag(*sampleItem);
-        Q_ASSERT(!tag.isEmpty());
+        ASSERT(!tag.isEmpty());
 
         ExternalProperty property = sampleItem->getItemValue(tag).value<ExternalProperty>();
         if (identifiersToDelete.contains(property.identifier())) {

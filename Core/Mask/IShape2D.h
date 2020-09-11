@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ISHAPE2D_H
-#define ISHAPE2D_H
+#ifndef BORNAGAIN_CORE_MASK_ISHAPE2D_H
+#define BORNAGAIN_CORE_MASK_ISHAPE2D_H
 
-#include "ICloneable.h"
-#include "INamed.h"
+#include "Core/Basics/ICloneable.h"
 #include <iostream>
 
 struct Bin1D;
@@ -24,10 +23,10 @@ struct Bin1D;
 //! Basic class for all shapes in 2D.
 //! @ingroup tools
 
-class BA_CORE_API_ IShape2D : public ICloneable, public INamed
+class BA_CORE_API_ IShape2D : public ICloneable
 {
 public:
-    IShape2D(const std::string& name) : INamed(name) {}
+    IShape2D(const char* name) : m_name(name) {}
     virtual IShape2D* clone() const = 0;
 
     //! Returns true if point with given coordinates is inside or on border of the shape.
@@ -44,7 +43,10 @@ public:
     }
 
 protected:
-    virtual void print(std::ostream& ostr) const { ostr << getName(); }
+    virtual void print(std::ostream& ostr) const { ostr << m_name; }
+
+private:
+    const char* const m_name;
 };
 
-#endif // ISHAPE2D_H
+#endif // BORNAGAIN_CORE_MASK_ISHAPE2D_H

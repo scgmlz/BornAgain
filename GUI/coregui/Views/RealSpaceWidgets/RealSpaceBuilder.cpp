@@ -12,32 +12,32 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceBuilder.h"
-#include "ExternalProperty.h"
-#include "InterferenceFunctionItems.h"
-#include "InterferenceFunctions.h"
-#include "Lattice2DItems.h"
-#include "LayerItem.h"
-#include "MesoCrystalItem.h"
-#include "MultiLayerItem.h"
-#include "Particle.h"
-#include "Particle3DContainer.h"
-#include "ParticleCompositionItem.h"
-#include "ParticleCoreShell.h"
-#include "ParticleCoreShellItem.h"
-#include "ParticleDistributionItem.h"
-#include "ParticleItem.h"
-#include "ParticleLayoutItem.h"
-#include "RealSpaceBuilderUtils.h"
-#include "RealSpaceCanvas.h"
-#include "RealSpaceModel.h"
-#include "RealSpacePositionBuilder.h"
-#include "SessionItem.h"
-#include "TransformTo3D.h"
-#include "Units.h"
-#include "VectorItem.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilder.h"
+#include "Core/Basics/Units.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleCoreShell.h"
+#include "Core/includeIncludes/InterferenceFunctions.h"
+#include "GUI/ba3d/model/layer.h"
+#include "GUI/coregui/Models/InterferenceFunctionItems.h"
+#include "GUI/coregui/Models/Lattice2DItems.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/MesoCrystalItem.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParticleCompositionItem.h"
+#include "GUI/coregui/Models/ParticleCoreShellItem.h"
+#include "GUI/coregui/Models/ParticleDistributionItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilderUtils.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceModel.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpacePositionBuilder.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.h"
 #include <QDebug>
-#include <ba3d/model/layer.h>
 
 namespace
 {
@@ -56,28 +56,28 @@ void RealSpaceBuilder::populate(RealSpaceModel* model, const SessionItem& item,
 
     model->defCamPos = cameraPosition;
 
-    if (item.modelType() == Constants::MultiLayerType)
+    if (item.modelType() == "MultiLayer")
         populateMultiLayer(model, item, sceneGeometry);
 
-    else if (item.modelType() == Constants::LayerType)
+    else if (item.modelType() == "Layer")
         populateLayer(model, item, sceneGeometry);
 
-    else if (item.modelType() == Constants::ParticleLayoutType)
+    else if (item.modelType() == "ParticleLayout")
         populateLayout(model, item, sceneGeometry);
 
-    else if (item.modelType() == Constants::ParticleType)
+    else if (item.modelType() == "Particle")
         populateParticleFromParticleItem(model, item);
 
-    else if (item.modelType() == Constants::ParticleCompositionType)
+    else if (item.modelType() == "ParticleComposition")
         populateParticleFromParticleItem(model, item);
 
-    else if (item.modelType() == Constants::ParticleCoreShellType)
+    else if (item.modelType() == "ParticleCoreShell")
         populateParticleFromParticleItem(model, item);
 
-    else if (item.modelType() == Constants::ParticleDistributionType)
+    else if (item.modelType() == "ParticleDistribution")
         populateParticleFromParticleItem(model, item);
 
-    else if (item.modelType() == Constants::MesoCrystalType)
+    else if (item.modelType() == "MesoCrystal")
         populateParticleFromParticleItem(model, item);
 }
 
@@ -114,7 +114,7 @@ void RealSpaceBuilder::populateLayer(RealSpaceModel* model, const SessionItem& l
 void RealSpaceBuilder::populateLayout(RealSpaceModel* model, const SessionItem& layoutItem,
                                       const SceneGeometry& sceneGeometry, const QVector3D& origin)
 {
-    Q_ASSERT(layoutItem.modelType() == Constants::ParticleLayoutType);
+    ASSERT(layoutItem.modelType() == "ParticleLayout");
 
     // If there is no particle to populate
     if (!layoutItem.getItem(ParticleLayoutItem::T_PARTICLES))
@@ -140,11 +140,11 @@ void RealSpaceBuilder::populateParticleFromParticleItem(RealSpaceModel* model,
                                                         const SessionItem& particleItem) const
 {
     Particle3DContainer particle3DContainer;
-    if (particleItem.modelType() == Constants::ParticleType) {
+    if (particleItem.modelType() == "Particle") {
         auto pItem = dynamic_cast<const ParticleItem*>(&particleItem);
         auto particle = pItem->createParticle();
         particle3DContainer = RealSpaceBuilderUtils::singleParticle3DContainer(*particle);
-    } else if (particleItem.modelType() == Constants::ParticleCoreShellType) {
+    } else if (particleItem.modelType() == "ParticleCoreShell") {
         auto particleCoreShellItem = dynamic_cast<const ParticleCoreShellItem*>(&particleItem);
         // If there is no CORE or SHELL to populate inside ParticleCoreShellItem
         if (!particleCoreShellItem->getItem(ParticleCoreShellItem::T_CORE)
@@ -153,7 +153,7 @@ void RealSpaceBuilder::populateParticleFromParticleItem(RealSpaceModel* model,
         auto particleCoreShell = particleCoreShellItem->createParticleCoreShell();
         particle3DContainer =
             RealSpaceBuilderUtils::particleCoreShell3DContainer(*particleCoreShell);
-    } else if (particleItem.modelType() == Constants::ParticleCompositionType) {
+    } else if (particleItem.modelType() == "ParticleComposition") {
         auto particleCompositionItem = dynamic_cast<const ParticleCompositionItem*>(&particleItem);
         // If there is no particle to populate inside ParticleCompositionItem
         if (!particleCompositionItem->getItem(ParticleCompositionItem::T_PARTICLES))
@@ -161,14 +161,14 @@ void RealSpaceBuilder::populateParticleFromParticleItem(RealSpaceModel* model,
         auto particleComposition = particleCompositionItem->createParticleComposition();
         particle3DContainer =
             RealSpaceBuilderUtils::particleComposition3DContainer(*particleComposition);
-    } else if (particleItem.modelType() == Constants::ParticleDistributionType) {
+    } else if (particleItem.modelType() == "ParticleDistribution") {
         auto particleDistributionItem =
             dynamic_cast<const ParticleDistributionItem*>(&particleItem);
         // If there is no particle to populate inside ParticleDistributionItem
         if (!particleDistributionItem->getItem(ParticleDistributionItem::T_PARTICLES))
             return;
         // show nothing when ParticleDistributionItem is selected
-    } else if (particleItem.modelType() == Constants::MesoCrystalType) {
+    } else if (particleItem.modelType() == "MesoCrystal") {
         auto mesoCrystalItem = dynamic_cast<const MesoCrystalItem*>(&particleItem);
         // If there is no particle to populate inside MesoCrystalItem
         if (!mesoCrystalItem->getItem(MesoCrystalItem::T_BASIS_PARTICLE))

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTENSITYDATAWIDGET_H
-#define INTENSITYDATAWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAWIDGET_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <memory>
 
 class SessionItem;
@@ -52,4 +52,4 @@ private:
     IntensityDataFFTPresenter* m_fftPresenter;
 };
 
-#endif // INTENSITYDATAWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAWIDGET_H

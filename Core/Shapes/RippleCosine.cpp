@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RippleCosine.h"
+#include "Core/Shapes/RippleCosine.h"
 
 #include <cmath>
 

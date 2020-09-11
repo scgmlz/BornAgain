@@ -1,17 +1,13 @@
-#include "DataItem.h"
-#include "SessionModel.h"
-#include "google_test.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <QTest>
 
 class TestDataItems : public ::testing::Test
 {
 public:
-    ~TestDataItems();
-
     void testItemClock(QString type);
 };
-
-TestDataItems::~TestDataItems() = default;
 
 void TestDataItems::testItemClock(QString model_type)
 {
@@ -40,10 +36,10 @@ void TestDataItems::testItemClock(QString model_type)
 
 TEST_F(TestDataItems, testSpecularItemClock)
 {
-    testItemClock(Constants::SpecularDataType);
+    testItemClock("SpecularData");
 }
 
 TEST_F(TestDataItems, testIntensityItemClock)
 {
-    testItemClock(Constants::IntensityDataType);
+    testItemClock("IntensityData");
 }

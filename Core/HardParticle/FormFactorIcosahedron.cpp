@@ -12,10 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorIcosahedron.h"
-#include "BornAgainNamespace.h"
-#include "Icosahedron.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorIcosahedron.h"
 
 const PolyhedralTopology FormFactorIcosahedron::topology = {{// bottom:
                                                              {{0, 2, 1}, false},
@@ -47,16 +44,21 @@ const PolyhedralTopology FormFactorIcosahedron::topology = {{// bottom:
 
 //! Constructor of a icosahedron.
 //! @param edge: length of the edge in nanometers
-FormFactorIcosahedron::FormFactorIcosahedron(double edge) : FormFactorPolyhedron(), m_edge(edge)
+FormFactorIcosahedron::FormFactorIcosahedron(const std::vector<double> P)
+    : FormFactorPolyhedron(
+        {"Icosahedron", "class_tooltip", {{"Edge", "nm", "para_tooltip", 0, +INF, 0}}}, P),
+      m_edge(m_P[0])
 {
-    setName(BornAgain::FFIcosahedronType);
-    registerParameter(BornAgain::Edge, &m_edge).setUnit(BornAgain::UnitsNm).setNonnegative();
     onChange();
+}
+
+FormFactorIcosahedron::FormFactorIcosahedron(double edge)
+    : FormFactorIcosahedron(std::vector<double>{edge})
+{
 }
 
 void FormFactorIcosahedron::onChange()
 {
-    mP_shape.reset(new Icosahedron(m_edge));
     double a = m_edge;
     setPolyhedron(topology, -0.7557613140761708 * a,
                   {{0.5773502691896258 * a, 0 * a, -0.7557613140761708 * a},

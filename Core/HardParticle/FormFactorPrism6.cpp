@@ -12,23 +12,25 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorPrism6.h"
-#include "BornAgainNamespace.h"
-#include "Pyramid6.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorPrism6.h"
 
 //! Constructor of a prism with a regular hexagonal base.
 //! @param base_edge: length of the hexagonal base in nanometers
 //! @param height: height in nanometers
-FormFactorPrism6::FormFactorPrism6(double base_edge, double height)
-    : FormFactorPolygonalPrism(height), m_base_edge(base_edge)
+FormFactorPrism6::FormFactorPrism6(const std::vector<double> P)
+    : FormFactorPolygonalPrism({"Prism6",
+                                "class_tooltip",
+                                {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                                 {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                               P),
+      m_base_edge(m_P[0]), m_height(m_P[1])
 {
-    setName(BornAgain::FFPrism6Type);
-    registerParameter(BornAgain::BaseEdge, &m_base_edge)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
     onChange();
+}
+
+FormFactorPrism6::FormFactorPrism6(double base_edge, double height)
+    : FormFactorPrism6(std::vector<double>{base_edge, height})
+{
 }
 
 IFormFactor* FormFactorPrism6::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -41,7 +43,6 @@ IFormFactor* FormFactorPrism6::sliceFormFactor(ZLimits limits, const IRotation& 
 
 void FormFactorPrism6::onChange()
 {
-    mP_shape.reset(new Pyramid6(m_base_edge, m_height, M_PI_2));
     double a = m_base_edge;
     double as = a * sqrt(3) / 2;
     double ac = a / 2;

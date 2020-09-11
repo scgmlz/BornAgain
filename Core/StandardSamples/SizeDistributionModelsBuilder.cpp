@@ -12,20 +12,19 @@
 //
 // ************************************************************************** //
 
-#include "SizeDistributionModelsBuilder.h"
-#include "BornAgainNamespace.h"
-#include "Distributions.h"
-#include "FormFactorCylinder.h"
-#include "InterferenceFunctionRadialParaCrystal.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "ParameterPattern.h"
-#include "Particle.h"
-#include "ParticleDistribution.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/SizeDistributionModelsBuilder.h"
+#include "Core/Aggregate/InterferenceFunctionRadialParaCrystal.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorCylinder.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPattern.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleDistribution.h"
 
 MultiLayer* SizeDistributionDAModelBuilder::buildSample() const
 {
@@ -189,14 +188,10 @@ MultiLayer* CylindersInSSCABuilder::buildSample() const
 
     DistributionGaussian gauss(5.0 * Units::nanometer, 1.25 * Units::nanometer);
     ParameterPattern pattern_radius;
-    pattern_radius.add(BornAgain::ParticleType)
-        .add(BornAgain::FFCylinderType)
-        .add(BornAgain::Radius);
+    pattern_radius.add("Particle").add("Cylinder").add("Radius");
     ParameterDistribution par_distr(pattern_radius.toStdString(), gauss, 30, 3.0);
     ParameterPattern pattern_height;
-    pattern_height.add(BornAgain::ParticleType)
-        .add(BornAgain::FFCylinderType)
-        .add(BornAgain::Height);
+    pattern_height.add("Particle").add("Cylinder").add("Height");
     par_distr.linkParameter(pattern_height.toStdString());
     ParticleDistribution particle_collection(particle_prototype, par_distr);
     particle_layout.addParticle(particle_collection);

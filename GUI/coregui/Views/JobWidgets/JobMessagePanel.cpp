@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "JobMessagePanel.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/JobWidgets/JobMessagePanel.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QScrollBar>
 #include <QStackedWidget>
 #include <QTextEdit>

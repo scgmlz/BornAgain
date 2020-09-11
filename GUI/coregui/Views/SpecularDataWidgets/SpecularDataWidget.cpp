@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "SpecularDataWidget.h"
-#include "DataItemUtils.h"
-#include "GUIHelpers.h"
-#include "IntensityDataPropertyWidget.h"
-#include "JobItem.h"
-#include "SpecularDataCanvas.h"
-#include "SpecularDataItem.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataWidget.h"
+#include "GUI/coregui/Models/DataItemUtils.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataPropertyWidget.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataCanvas.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QBoxLayout>
 #include <QMenu>
 

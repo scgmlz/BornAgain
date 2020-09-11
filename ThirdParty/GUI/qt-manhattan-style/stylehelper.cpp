@@ -179,7 +179,7 @@ void StyleHelper::verticalGradient(QPainter* painter, const QRect& spanRect, con
         QString key;
         QColor keyColor = baseColor(lightColored);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-        key = QString("mh_vertical %d %d %d %d %d")
+        key = QString("mh_vertical %1 %2 %3 %4 %5")
                   .arg(spanRect.width(), spanRect.height(), clipRect.width(), clipRect.height(),
                        keyColor.rgb());
 #else

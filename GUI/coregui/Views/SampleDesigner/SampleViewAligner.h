@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEVIEWALIGNER_H
-#define SAMPLEVIEWALIGNER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEVIEWALIGNER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEVIEWALIGNER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QModelIndex>
 #include <QPointF>
@@ -30,13 +30,12 @@ class BA_CORE_API_ SampleViewAligner
 public:
     SampleViewAligner(DesignerScene* scene);
 
-    void alignSample(SessionItem* item, QPointF reference = QPointF(),
-                     bool force_alignment = false);
-    void alignSample(const QModelIndex& parentIndex, QPointF reference = QPointF(),
+    void alignSample(SessionItem* item, QPointF reference = {}, bool force_alignment = false);
+    void alignSample(const QModelIndex& parentIndex, QPointF reference = {},
                      bool force_alignment = false);
 
     void smartAlign();
-    void updateViews(const QModelIndex& parentIndex = QModelIndex());
+    void updateViews(const QModelIndex& parentIndex = {});
     void updateForces();
     void calculateForces(IView* view);
     void advance();
@@ -50,4 +49,4 @@ private:
     QMap<IView*, QPointF> m_viewToPos;
 };
 
-#endif // SAMPLEVIEWALIGNER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEVIEWALIGNER_H

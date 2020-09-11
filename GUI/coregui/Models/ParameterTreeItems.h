@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARAMETERTREEITEMS_H
-#define PARAMETERTREEITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 //! ParameterTreeItems is a collection of items necessary to form a tuning tree for
 //! real time widget.
@@ -54,4 +54,4 @@ public:
     ParameterContainerItem();
 };
 
-#endif // PARAMETERTREEITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEITEMS_H

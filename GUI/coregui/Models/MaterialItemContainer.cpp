@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "MaterialItemContainer.h"
-#include "GUIHelpers.h"
-#include "MaterialItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/MaterialItemContainer.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 const QString MaterialItemContainer::T_MATERIALS = "MaterialVector";
 
-MaterialItemContainer::MaterialItemContainer() : SessionItem(Constants::MaterialContainerType)
+MaterialItemContainer::MaterialItemContainer() : SessionItem("MaterialContainer")
 {
     setItemName("Materials");
-    registerTag(T_MATERIALS, 0, -1, QStringList{Constants::MaterialType});
+    registerTag(T_MATERIALS, 0, -1, QStringList{"Material"});
 }
 
 MaterialItem* MaterialItemContainer::insertCopy(MaterialItem* material_item)

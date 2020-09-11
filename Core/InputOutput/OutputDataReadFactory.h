@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OUTPUTDATAREADFACTORY_H
-#define OUTPUTDATAREADFACTORY_H
+#ifndef BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADFACTORY_H
+#define BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADFACTORY_H
 
-#include "OutputDataReader.h"
+#include "Core/InputOutput/OutputDataReader.h"
 
 //! Creates reader appropariate for given type of files.
 //! @ingroup input_output_internal
@@ -30,4 +30,4 @@ private:
     static IOutputDataReadStrategy* getReadStrategy(const std::string& file_name);
 };
 
-#endif // OUTPUTDATAREADFACTORY_H
+#endif // BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADFACTORY_H

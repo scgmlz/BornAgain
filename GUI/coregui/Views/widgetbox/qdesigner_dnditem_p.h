@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef QDESIGNER_DNDITEM_P_H
-#define QDESIGNER_DNDITEM_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_DNDITEM_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_DNDITEM_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 #include <QtDesigner/abstractdnditem.h>
 
 #include <QtCore/QList>
@@ -146,4 +146,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // QDESIGNER_DNDITEM_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_DNDITEM_P_H

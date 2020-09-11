@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MESOCRYSTALVIEW_H
-#define MESOCRYSTALVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MESOCRYSTALVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MESOCRYSTALVIEW_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 //! Class representing view of a meso crystal item
 class BA_CORE_API_ MesoCrystalView : public ConnectableView
@@ -30,4 +30,4 @@ public:
     void addView(IView* childView, int row = 0);
 };
 
-#endif // MESOCRYSTALVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MESOCRYSTALVIEW_H

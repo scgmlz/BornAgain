@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INSTRUMENTEDITORWIDGET_H
-#define INSTRUMENTEDITORWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTEDITORWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTEDITORWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SessionItem;
@@ -53,4 +53,4 @@ private:
     bool m_block_signals;
 };
 
-#endif // INSTRUMENTEDITORWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTEDITORWIDGET_H

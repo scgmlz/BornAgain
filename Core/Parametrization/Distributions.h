@@ -12,18 +12,18 @@
 //
 // ************************************************************************** //
 
-#ifndef DISTRIBUTIONS_H
-#define DISTRIBUTIONS_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_DISTRIBUTIONS_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_DISTRIBUTIONS_H
 
-#include "ICloneable.h"
-#include "INode.h"
-#include "RealLimits.h"
+#include "Core/Basics/ICloneable.h"
+#include "Core/Parametrization/INode.h"
+#include "Fit/Tools/RealLimits.h"
 #include <vector>
 
 class ParameterSample;
 
 // ************************************************************************** //
-// interface class IDistribution1D
+// interface IDistribution1D
 // ************************************************************************** //
 
 //! Interface for one-dimensional distributions.
@@ -32,8 +32,7 @@ class ParameterSample;
 class BA_CORE_API_ IDistribution1D : public ICloneable, public INode
 {
 public:
-    IDistribution1D() {}
-    virtual ~IDistribution1D() {}
+    IDistribution1D(const NodeMeta& meta, const std::vector<double>& PValues);
 
     virtual IDistribution1D* clone() const = 0;
 
@@ -68,11 +67,6 @@ public:
     virtual void setUnits(const std::string& units);
 
 protected:
-#ifndef SWIG
-    //! this function is called during bad initialization of a subclass
-    [[noreturn]] static void SignalBadInitialization(std::string distribution_name);
-#endif
-
     //! modifies xmin and xmax if they are outside of limits
     void adjustMinMaxForLimits(double& xmin, double& xmax, const RealLimits& limits) const;
 
@@ -82,7 +76,7 @@ protected:
 };
 
 // ************************************************************************** //
-// specific distribution classes
+// class DistributionGate
 // ************************************************************************** //
 
 //! Uniform distribution function with half width hwhm.
@@ -91,9 +85,9 @@ protected:
 class BA_CORE_API_ DistributionGate : public IDistribution1D
 {
 public:
-    DistributionGate() : DistributionGate(0., 1.) {}
+    DistributionGate(const std::vector<double> P);
     DistributionGate(double min, double max);
-    virtual ~DistributionGate() {}
+    DistributionGate();
 
     DistributionGate* clone() const final { return new DistributionGate(m_min, m_max); }
 
@@ -110,16 +104,14 @@ public:
 
     void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    void init_parameters();
-
 private:
-    //! check initialization
-    bool checkInitialization() const;
-    double m_min;
-    double m_max;
+    const double& m_min;
+    const double& m_max;
 };
+
+// ************************************************************************** //
+// class DistributionLorentz
+// ************************************************************************** //
 
 //! Lorentz distribution with half width hwhm.
 //! @ingroup paramDistribution
@@ -127,9 +119,9 @@ private:
 class BA_CORE_API_ DistributionLorentz : public IDistribution1D
 {
 public:
-    DistributionLorentz() : DistributionLorentz(0., 1.) {}
+    DistributionLorentz(const std::vector<double> P);
     DistributionLorentz(double mean, double hwhm);
-    virtual ~DistributionLorentz() {}
+    DistributionLorentz();
 
     DistributionLorentz* clone() const final { return new DistributionLorentz(m_mean, m_hwhm); }
 
@@ -145,16 +137,14 @@ public:
 
     void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    void init_parameters();
-
 private:
-    //! check initialization
-    bool checkInitialization() const;
-    double m_mean;
-    double m_hwhm;
+    const double& m_mean;
+    const double& m_hwhm;
 };
+
+// ************************************************************************** //
+// class Distribution
+// ************************************************************************** //
 
 //! Gaussian distribution with standard deviation std_dev.
 //! @ingroup paramDistribution
@@ -162,9 +152,9 @@ private:
 class BA_CORE_API_ DistributionGaussian : public IDistribution1D
 {
 public:
-    DistributionGaussian() : DistributionGaussian(0., 1.) {}
+    DistributionGaussian(const std::vector<double> P);
     DistributionGaussian(double mean, double std_dev);
-    virtual ~DistributionGaussian() {}
+    DistributionGaussian();
 
     DistributionGaussian* clone() const final
     {
@@ -183,16 +173,14 @@ public:
 
     void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    void init_parameters();
-
 private:
-    //! check initialization
-    bool checkInitialization() const;
-    double m_mean;
-    double m_std_dev;
+    const double& m_mean;
+    const double& m_std_dev;
 };
+
+// ************************************************************************** //
+// class DistributionLogNormal
+// ************************************************************************** //
 
 //! Log-normal distribution.
 //! @ingroup paramDistribution
@@ -200,9 +188,9 @@ private:
 class BA_CORE_API_ DistributionLogNormal : public IDistribution1D
 {
 public:
-    DistributionLogNormal(double scale_param) : DistributionLogNormal(1., scale_param) {}
+    DistributionLogNormal(const std::vector<double> P);
     DistributionLogNormal(double median, double scale_param);
-    virtual ~DistributionLogNormal() {}
+    DistributionLogNormal() = delete;
 
     DistributionLogNormal* clone() const final
     {
@@ -224,16 +212,14 @@ public:
 
     virtual void setUnits(const std::string& units);
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    void init_parameters();
-
 private:
-    //! check initialization
-    bool checkInitialization() const;
-    double m_median;
-    double m_scale_param;
+    const double& m_median;
+    const double& m_scale_param;
 };
+
+// ************************************************************************** //
+// class DistributionCosine
+// ************************************************************************** //
 
 //! Cosine distribution.
 //! @ingroup paramDistribution
@@ -241,9 +227,9 @@ private:
 class BA_CORE_API_ DistributionCosine : public IDistribution1D
 {
 public:
-    DistributionCosine() : DistributionCosine(0., 1.) {}
+    DistributionCosine(const std::vector<double> P);
     DistributionCosine(double mean, double sigma);
-    virtual ~DistributionCosine() {}
+    DistributionCosine();
 
     DistributionCosine* clone() const final { return new DistributionCosine(m_mean, m_sigma); }
 
@@ -259,16 +245,14 @@ public:
 
     void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    void init_parameters();
-
 private:
-    //! check initialization
-    bool checkInitialization() const;
-    double m_mean;
-    double m_sigma;
+    const double& m_mean;
+    const double& m_sigma;
 };
+
+// ************************************************************************** //
+// class DistributionTrapezoid
+// ************************************************************************** //
 
 //! Trapezoidal distribution.
 //! @ingroup paramDistribution
@@ -276,10 +260,9 @@ private:
 class BA_CORE_API_ DistributionTrapezoid : public IDistribution1D
 {
 public:
-    DistributionTrapezoid() : DistributionTrapezoid(0., 0., 1., 0.) {}
-    DistributionTrapezoid(double center, double left_width, double middle_width,
-                          double right_width);
-    virtual ~DistributionTrapezoid() {}
+    DistributionTrapezoid(const std::vector<double> P);
+    DistributionTrapezoid(double center, double left, double middle, double right);
+    DistributionTrapezoid();
 
     DistributionTrapezoid* clone() const final
     {
@@ -300,18 +283,12 @@ public:
 
     void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-protected:
-    //! Registers some class members for later access via parameter pool
-    void init_parameters();
-
 private:
-    //! check initialization
-    bool checkInitialization() const;
     void adjustLimitsToNonZeroSamples(double& min, double& max, size_t nbr_samples) const;
-    double m_center;
-    double m_left;
-    double m_middle;
-    double m_right;
+    const double& m_center;
+    const double& m_left;
+    const double& m_middle;
+    const double& m_right;
 };
 
-#endif // DISTRIBUTIONS_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_DISTRIBUTIONS_H

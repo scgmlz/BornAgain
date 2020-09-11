@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DETECTORITEMS_H
-#define DETECTORITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DETECTORITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DETECTORITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class MaskContainerItem;
 class IDetector2D;
@@ -69,4 +69,4 @@ protected:
     void addMasksToDomain(IDetector2D* detector) const;
 };
 
-#endif // DETECTORITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DETECTORITEMS_H

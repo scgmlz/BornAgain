@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "SessionModelDelegate.h"
-#include "CustomEditors.h"
-#include "CustomEventFilters.h"
-#include "PropertyEditorFactory.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionModelDelegate.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/PropertyEditor/CustomEditors.h"
+#include "GUI/coregui/Views/PropertyEditor/PropertyEditorFactory.h"
+#include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QApplication>
 
 namespace
@@ -106,7 +106,7 @@ void SessionModelDelegate::updateEditorGeometry(QWidget* editor, const QStyleOpt
 void SessionModelDelegate::onCustomEditorDataChanged(const QVariant&)
 {
     CustomEditor* editor = qobject_cast<CustomEditor*>(sender());
-    Q_ASSERT(editor);
+    ASSERT(editor);
     emit commitData(editor);
 }
 

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OUTPUTDATAREADSTRATEGY_H
-#define OUTPUTDATAREADSTRATEGY_H
+#ifndef BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADSTRATEGY_H
+#define BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADSTRATEGY_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <istream>
 
 template <class T> class OutputData;
@@ -76,4 +76,4 @@ private:
 };
 #endif // BORNAGAIN_TIFF_SUPPORT
 
-#endif // OUTPUTDATAREADSTRATEGY_H
+#endif // BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADSTRATEGY_H

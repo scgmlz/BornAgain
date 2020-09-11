@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ResidualFunctionAdapter.h"
-#include "RootResidualFunction.h"
+#include "Fit/RootAdapter/ResidualFunctionAdapter.h"
+#include "Fit/RootAdapter/RootResidualFunction.h"
 #include <cassert>
 #include <sstream>
 

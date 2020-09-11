@@ -12,26 +12,26 @@
 //
 // ************************************************************************** //
 
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "ItemFactory.h"
-#include "ParameterTranslators.h"
-#include "SessionItemData.h"
-#include "SessionItemTags.h"
-#include "SessionItemUtils.h"
-#include "SessionModel.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/ItemFactory.h"
+#include "GUI/coregui/Models/ParameterTranslators.h"
+#include "GUI/coregui/Models/SessionItemData.h"
+#include "GUI/coregui/Models/SessionItemTags.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 const QString SessionItem::P_NAME = "Name";
 
 //! Constructs new item with given model type. The type must be defined.
 SessionItem::SessionItem(const QString& modelType)
-    : m_parent(nullptr), m_model(nullptr), m_values(new SessionItemData),
+    : m_parent(nullptr), m_model(nullptr), m_properties(new SessionItemData),
       m_tags(new SessionItemTags)
 {
-    if (modelType.isEmpty())
-        throw GUIHelpers::Error("SessionItem::SessionItem() -> Empty modelType.");
+    ASSERT(!modelType.isEmpty());
 
-    setData(SessionFlags::ModelTypeRole, modelType);
+    setRoleProperty(SessionFlags::ModelTypeRole, modelType);
     setDisplayName(modelType);
     setDecimals(3);
     setLimits(RealLimits::nonnegative());
@@ -206,8 +206,8 @@ SessionItem* SessionItem::getItem(const QString& tag, int row) const
         return nullptr;
 
     int index = m_tags->indexFromTagRow(tagName, row);
-    if (index < 0 || index >= m_children.size())
-        throw GUIHelpers::Error("SessionItem::getItem() -> Invalid row for tag");
+    ASSERT(index >= 0);
+    ASSERT(index < m_children.size());
     return m_children[index];
 }
 
@@ -220,27 +220,22 @@ QVector<SessionItem*> SessionItem::getItems(const QString& tag) const
         return QVector<SessionItem*>();
 
     int index = m_tags->tagStartIndex(tagName);
-    Q_ASSERT(index >= 0 && index <= m_children.size());
+    ASSERT(index >= 0 && index <= m_children.size());
     return m_children.mid(index, m_tags->childCount(tagName));
 }
 
 //! Insert item into given tag into given row.
 bool SessionItem::insertItem(int row, SessionItem* item, const QString& tag)
 {
-    if (!item || item->parent())
-        throw GUIHelpers::Error("SessionItem::insertItem() -> Invalid item, existing parent.");
+    ASSERT(item);
+    ASSERT(!item->parent());
 
     const QString tagName = tag.isEmpty() ? defaultTag() : tag;
-
-    if (!m_tags->isValid(tagName, item->modelType()))
-        throw GUIHelpers::Error("SessionItem::insertItem() -> Invalid tag, modelType.");
+    ASSERT(m_tags->isValid(tagName, item->modelType()));
 
     int index = m_tags->insertIndexFromTagRow(tagName, row);
-
-    if (index < 0)
-        throw GUIHelpers::Error("SessionItem::insertItem() -> Invalid row, maximum reached.");
-
-    Q_ASSERT(index <= m_children.size());
+    ASSERT(index >= 0);
+    ASSERT(index <= m_children.size());
 
     if (m_model)
         m_model->beginInsertRows(this->index(), index, index);
@@ -260,15 +255,11 @@ bool SessionItem::insertItem(int row, SessionItem* item, const QString& tag)
 SessionItem* SessionItem::takeItem(int row, const QString& tag)
 {
     const QString tagName = tag.isEmpty() ? defaultTag() : tag;
-
-    if (!m_tags->isValid(tagName))
-        throw GUIHelpers::Error("SessionItem::takeItem() -> Invalid tag, modelType.");
-
-    if (m_tags->isSingleItemTag(tagName))
-        throw GUIHelpers::Error("SessionItem::takeItem() -> Single item tag.");
+    ASSERT(m_tags->isValid(tagName));
+    ASSERT(!m_tags->isSingleItemTag(tagName));
 
     int index = m_tags->indexFromTagRow(tagName, row);
-    Q_ASSERT(index >= 0 && index <= m_children.size());
+    ASSERT(index >= 0 && index <= m_children.size());
 
     if (m_model)
         m_model->beginRemoveRows(this->index(), index, index);
@@ -285,16 +276,13 @@ SessionItem* SessionItem::takeItem(int row, const QString& tag)
 
 SessionItem* SessionItem::addProperty(const QString& name, const QVariant& variant)
 {
-    if (isTag(name))
-        throw GUIHelpers::Error(
-            "ParameterizedItem::registerProperty() -> Error. Already existing property " + name);
+    ASSERT(!isTag(name));
 
-    const QString property_type = Constants::PropertyType;
-    SessionItem* property = ItemFactory::CreateItem(property_type);
+    SessionItem* property = ItemFactory::CreateItem("Property");
     property->setDisplayName(name);
-    registerTag(name, 1, 1, QStringList() << property_type);
-    if (!insertItem(0, property, name))
-        throw GUIHelpers::Error("SessionItem::addProperty -> Error. Can't insert item");
+    registerTag(name, 1, 1, QStringList() << "Property");
+    bool success = insertItem(0, property, name);
+    ASSERT(success);
 
     property->setValue(variant);
     return property;
@@ -304,10 +292,7 @@ SessionItem* SessionItem::addProperty(const QString& name, const QVariant& varia
 
 QVariant SessionItem::getItemValue(const QString& tag) const
 {
-    if (!isTag(tag))
-        throw GUIHelpers::Error("ParameterizedItem::getRegisteredProperty() -> Error. Unknown tag '"
-                                + tag + "', item '" + modelType() + "'");
-
+    ASSERT(isTag(tag));
     return getItem(tag)->value();
 }
 
@@ -315,9 +300,7 @@ QVariant SessionItem::getItemValue(const QString& tag) const
 
 void SessionItem::setItemValue(const QString& tag, const QVariant& variant)
 {
-    if (!isTag(tag))
-        throw GUIHelpers::Error("Property not existing!");
-
+    ASSERT(isTag(tag));
     getItem(tag)->setValue(variant);
 }
 
@@ -330,22 +313,20 @@ SessionItem* SessionItem::addGroupProperty(const QString& groupTag, const QStrin
     if (SessionItemUtils::IsValidGroup(groupType)) {
         // create group item
         GroupInfo groupInfo = SessionItemUtils::GetGroupInfo(groupType);
-        GroupItem* groupItem =
-            dynamic_cast<GroupItem*>(ItemFactory::CreateItem(Constants::GroupItemType));
-        Q_ASSERT(groupItem);
+        GroupItem* groupItem = dynamic_cast<GroupItem*>(ItemFactory::CreateItem("GroupProperty"));
+        ASSERT(groupItem);
         groupItem->setGroupInfo(groupInfo);
-        registerTag(groupTag, 1, 1, QStringList() << Constants::GroupItemType);
+        registerTag(groupTag, 1, 1, QStringList() << "GroupProperty");
         result = groupItem;
     } else {
         // create single item
         registerTag(groupTag, 1, 1, QStringList() << groupType);
         result = ItemFactory::CreateItem(groupType);
     }
-    Q_ASSERT(result);
+    ASSERT(result);
     result->setDisplayName(groupTag);
-    if (!insertItem(0, result, groupTag)) {
-        throw GUIHelpers::Error("SessionItem::addGroupProperty -> Error. Can't insert group item");
-    }
+    bool success = insertItem(0, result, groupTag);
+    ASSERT(success);
     return result;
 }
 
@@ -365,16 +346,16 @@ SessionItem* SessionItem::getGroupItem(const QString& groupName) const
 
 //! Returns corresponding variant under given role, invalid variant when role is not present.
 
-QVariant SessionItem::data(int role) const
+QVariant SessionItem::roleProperty(int role) const
 {
-    return m_values->data(role);
+    return m_properties->data(role);
 }
 
 //! Set variant to role, create role if not present yet.
 
-bool SessionItem::setData(int role, const QVariant& value)
+bool SessionItem::setRoleProperty(int role, const QVariant& value)
 {
-    bool result = m_values->setData(role, value);
+    bool result = m_properties->setData(role, value);
     if (result)
         emitDataChanged(role);
     return result;
@@ -384,7 +365,7 @@ bool SessionItem::setData(int role, const QVariant& value)
 
 QVector<int> SessionItem::getRoles() const
 {
-    return m_values->roles();
+    return m_properties->roles();
 }
 
 //! Notify model about data changes.
@@ -401,49 +382,46 @@ void SessionItem::emitDataChanged(int role)
 
 QString SessionItem::modelType() const
 {
-    return data(SessionFlags::ModelTypeRole).toString();
+    return roleProperty(SessionFlags::ModelTypeRole).toString();
 }
 
 //! Get value.
 
 QVariant SessionItem::value() const
 {
-    return data(Qt::DisplayRole);
+    return roleProperty(Qt::DisplayRole);
 }
 
 //! Set value, ensure that variant types match.
 
 bool SessionItem::setValue(QVariant value)
 {
-    if (!SessionItemUtils::CompatibleVariantTypes(this->value(), value))
-        throw GUIHelpers::Error("SessionItem::setRegisteredProperty() -> Error. Type of "
-                                "previous and new variant does not coincide.");
-
-    return setData(Qt::DisplayRole, value);
+    ASSERT(SessionItemUtils::CompatibleVariantTypes(this->value(), value));
+    return setRoleProperty(Qt::DisplayRole, value);
 }
 
 //! Get default tag
 
 QString SessionItem::defaultTag() const
 {
-    return data(SessionFlags::DefaultTagRole).toString();
+    return roleProperty(SessionFlags::DefaultTagRole).toString();
 }
 
 //! Set default tag
 
 void SessionItem::setDefaultTag(const QString& tag)
 {
-    setData(SessionFlags::DefaultTagRole, tag);
+    setRoleProperty(SessionFlags::DefaultTagRole, tag);
 }
 
 //! Get display name of item, append index if ambigue.
 
 QString SessionItem::displayName() const
 {
-    QString result = data(SessionFlags::DisplayNameRole).toString();
+    QString result = roleProperty(SessionFlags::DisplayNameRole).toString();
 
-    if (modelType() == Constants::PropertyType || modelType() == Constants::GroupItemType
-        || modelType() == Constants::ParameterType || modelType() == Constants::ParameterLabelType)
+    if (modelType() == "Property" || modelType() == "GroupProperty" || modelType() == "Parameter"
+        || modelType() == "Parameter Label")
         return result;
 
     if (m_parent) {
@@ -463,7 +441,7 @@ QString SessionItem::displayName() const
 
 void SessionItem::setDisplayName(const QString& display_name)
 {
-    setData(SessionFlags::DisplayNameRole, display_name);
+    setRoleProperty(SessionFlags::DisplayNameRole, display_name);
 }
 
 //! Get item name, return display name if no name is set.
@@ -515,46 +493,46 @@ bool SessionItem::isEditable() const
 
 RealLimits SessionItem::limits() const
 {
-    return data(SessionFlags::LimitsRole).value<RealLimits>();
+    return roleProperty(SessionFlags::LimitsRole).value<RealLimits>();
 }
 
 SessionItem& SessionItem::setLimits(const RealLimits& value)
 {
-    this->setData(SessionFlags::LimitsRole, QVariant::fromValue<RealLimits>(value));
+    setRoleProperty(SessionFlags::LimitsRole, QVariant::fromValue<RealLimits>(value));
     return *this;
 }
 
 int SessionItem::decimals() const
 {
-    return data(SessionFlags::DecimalRole).toInt();
+    return roleProperty(SessionFlags::DecimalRole).toInt();
 }
 
 SessionItem& SessionItem::setDecimals(int n)
 {
-    setData(SessionFlags::DecimalRole, n);
+    setRoleProperty(SessionFlags::DecimalRole, n);
     return *this;
 }
 
 QString SessionItem::toolTip() const
 {
-    return data(Qt::ToolTipRole).toString();
+    return roleProperty(Qt::ToolTipRole).toString();
 }
 
 SessionItem& SessionItem::setToolTip(const QString& tooltip)
 {
-    setData(Qt::ToolTipRole, tooltip);
+    setRoleProperty(Qt::ToolTipRole, tooltip);
     return *this;
 }
 
 QString SessionItem::editorType() const
 {
-    auto variant = data(SessionFlags::CustomEditorRole);
-    return variant.isValid() ? variant.toString() : Constants::DefaultEditorType;
+    const auto variant = roleProperty(SessionFlags::CustomEditorRole);
+    return variant.isValid() ? variant.toString() : "Default";
 }
 
 SessionItem& SessionItem::setEditorType(const QString& editorType)
 {
-    setData(SessionFlags::CustomEditorRole, editorType);
+    setRoleProperty(SessionFlags::CustomEditorRole, editorType);
     return *this;
 }
 
@@ -587,7 +565,7 @@ void SessionItem::addTranslator(const IPathTranslator& translator)
 void SessionItem::childDeleted(SessionItem* child)
 {
     int index = rowOfChild(child);
-    Q_ASSERT(index != -1);
+    ASSERT(index != -1);
     m_children.replace(index, nullptr);
 }
 
@@ -610,7 +588,7 @@ void SessionItem::setModel(SessionModel* model)
 
 int SessionItem::flags() const
 {
-    QVariant flags = data(SessionFlags::FlagRole);
+    QVariant flags = roleProperty(SessionFlags::FlagRole);
 
     if (!flags.isValid())
         return SessionFlags::VISIBLE | SessionFlags::EDITABLE | SessionFlags::ENABLED;
@@ -627,7 +605,7 @@ void SessionItem::changeFlags(bool enabled, int flag)
     else
         flags &= ~flag;
 
-    setData(SessionFlags::FlagRole, flags);
+    setRoleProperty(SessionFlags::FlagRole, flags);
 }
 
 //! internal

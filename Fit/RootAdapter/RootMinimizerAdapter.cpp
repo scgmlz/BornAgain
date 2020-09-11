@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "RootMinimizerAdapter.h"
+#include "Fit/RootAdapter/RootMinimizerAdapter.h"
+#include "Fit/Kernel/Parameter.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Fit/RootAdapter/MinimizerResultUtils.h"
+#include "Fit/RootAdapter/ObjectiveFunctionAdapter.h"
+#include "Fit/RootAdapter/RootResidualFunction.h"
+#include "Fit/RootAdapter/RootScalarFunction.h"
+#include "Fit/Tools/StringUtils.h"
 #include "Math/Minimizer.h"
-#include "MinimizerResultUtils.h"
-#include "ObjectiveFunctionAdapter.h"
-#include "Parameter.h"
-#include "Parameters.h"
-#include "RootResidualFunction.h"
-#include "RootScalarFunction.h"
-#include "StringUtils.h"
 
 using namespace Fit;
 
@@ -87,7 +87,7 @@ double RootMinimizerAdapter::minValue() const
 
 std::string RootMinimizerAdapter::statusToString() const
 {
-    return m_status ? std::string("Minimum found") : std::string("Error in solving");
+    return m_status ? "Minimum found" : "Error in solving";
 }
 
 bool RootMinimizerAdapter::providesError() const

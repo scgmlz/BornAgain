@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARAMETERTREEUTILS_H
-#define PARAMETERTREEUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEUTILS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QPair>
 #include <QString>
 #include <functional>
@@ -54,4 +54,4 @@ BA_CORE_API_ SessionItem* parameterNameToLinkedItem(const QString& parName,
 
 } // namespace ParameterTreeUtils
 
-#endif // PARAMETERTREEUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEUTILS_H

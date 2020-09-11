@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ABOUTAPPLICATIONDIALOG_H
-#define ABOUTAPPLICATIONDIALOG_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_ABOUTAPPLICATIONDIALOG_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_ABOUTAPPLICATIONDIALOG_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 
 class QBoxLayout;
@@ -34,4 +34,4 @@ private:
     QBoxLayout* createButtonLayout();
 };
 
-#endif // ABOUTAPPLICATIONDIALOG_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_ABOUTAPPLICATIONDIALOG_H

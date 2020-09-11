@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef CONSTKBINAXIS_H
-#define CONSTKBINAXIS_H
+#ifndef BORNAGAIN_CORE_BINNING_CONSTKBINAXIS_H
+#define BORNAGAIN_CORE_BINNING_CONSTKBINAXIS_H
 
-#include "VariableBinAxis.h"
+#include "Core/Binning/VariableBinAxis.h"
 
 //! Axis with fixed bin size in sin(angle) space.
 //! @ingroup tools
@@ -45,4 +45,4 @@ protected:
     double m_end;
 };
 
-#endif // CONSTKBINAXIS_H
+#endif // BORNAGAIN_CORE_BINNING_CONSTKBINAXIS_H

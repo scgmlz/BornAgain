@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
+#ifndef BORNAGAIN_CORE_MASK_RECTANGLE_H
+#define BORNAGAIN_CORE_MASK_RECTANGLE_H
 
-#include "IShape2D.h"
+#include "Core/Mask/IShape2D.h"
 
 //! The rectangle shape having its axis aligned to the (non-rotated) coordinate system.
 //! @ingroup mask
@@ -40,4 +40,4 @@ private:
     double m_xlow, m_ylow, m_xup, m_yup;
 };
 
-#endif // RECTANGLE_H
+#endif // BORNAGAIN_CORE_MASK_RECTANGLE_H

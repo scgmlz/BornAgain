@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef POLYGON_H
-#define POLYGON_H
+#ifndef BORNAGAIN_CORE_MASK_POLYGON_H
+#define BORNAGAIN_CORE_MASK_POLYGON_H
 
-#include "IShape2D.h"
+#include "Core/Mask/IShape2D.h"
 #include <vector>
 
 class PolygonPrivate;
@@ -52,4 +52,4 @@ private:
     PolygonPrivate* m_d;
 };
 
-#endif // POLYGON_H
+#endif // BORNAGAIN_CORE_MASK_POLYGON_H

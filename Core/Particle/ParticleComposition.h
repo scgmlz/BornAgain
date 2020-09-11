@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLECOMPOSITION_H
-#define PARTICLECOMPOSITION_H
+#ifndef BORNAGAIN_CORE_PARTICLE_PARTICLECOMPOSITION_H
+#define BORNAGAIN_CORE_PARTICLE_PARTICLECOMPOSITION_H
 
-#include "IParticle.h"
+#include "Core/Particle/IParticle.h"
 #include <memory>
 
 //! A composition of particles at fixed positions
@@ -57,4 +57,4 @@ private:
     void initialize();
 };
 
-#endif // PARTICLECOMPOSITION_H
+#endif // BORNAGAIN_CORE_PARTICLE_PARTICLECOMPOSITION_H

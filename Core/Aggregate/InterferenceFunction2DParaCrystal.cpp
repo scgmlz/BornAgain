@@ -12,24 +12,26 @@
 //
 // ************************************************************************** //
 
-#include "InterferenceFunction2DParaCrystal.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
+#include "Core/Aggregate/InterferenceFunction2DParaCrystal.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Tools/Integrator.h"
 #include <limits>
 
 InterferenceFunction2DParaCrystal::InterferenceFunction2DParaCrystal(const Lattice2D& lattice,
                                                                      double damping_length,
                                                                      double domain_size_1,
                                                                      double domain_size_2)
-    : m_integrate_xi(false), m_damping_length(damping_length)
+    : IInterferenceFunction(0), m_integrate_xi(false), m_damping_length(damping_length)
 {
-    setName(BornAgain::InterferenceFunction2DParaCrystalType);
+    setName("Interference2DParaCrystal");
     setLattice(lattice);
     setDomainSizes(domain_size_1, domain_size_2);
-    init_parameters();
+    registerParameter("DampingLength", &m_damping_length).setUnit("nm").setNonnegative();
+    registerParameter("DomainSize1", &m_domain_sizes[0]).setUnit("nm").setNonnegative();
+    registerParameter("DomainSize2", &m_domain_sizes[1]).setUnit("nm").setNonnegative();
 }
 
 //! Constructor of interference function of two-dimensional paracrystal.
@@ -43,32 +45,22 @@ InterferenceFunction2DParaCrystal::InterferenceFunction2DParaCrystal(double leng
                                                                      double length_2, double alpha,
                                                                      double xi,
                                                                      double damping_length)
-    : m_integrate_xi(false), m_damping_length(damping_length)
+    : InterferenceFunction2DParaCrystal(BasicLattice(length_1, length_2, alpha, xi), damping_length,
+                                        0, 0)
 {
-    setName(BornAgain::InterferenceFunction2DParaCrystalType);
-    setLattice(BasicLattice(length_1, length_2, alpha, xi));
-    setDomainSizes(0.0, 0.0);
-    init_parameters();
 }
 
-InterferenceFunction2DParaCrystal::~InterferenceFunction2DParaCrystal() {}
+InterferenceFunction2DParaCrystal::~InterferenceFunction2DParaCrystal() = default;
 
 InterferenceFunction2DParaCrystal* InterferenceFunction2DParaCrystal::clone() const
 {
-    return new InterferenceFunction2DParaCrystal(*this);
-}
-
-void InterferenceFunction2DParaCrystal::init_parameters()
-{
-    registerParameter(BornAgain::DampingLength, &m_damping_length)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::DomainSize1, &m_domain_sizes[0])
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::DomainSize2, &m_domain_sizes[1])
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
+    auto* ret = new InterferenceFunction2DParaCrystal(*m_lattice, m_damping_length,
+                                                      m_domain_sizes[0], m_domain_sizes[1]);
+    ret->setPositionVariance(m_position_var);
+    if (m_pdf1 && m_pdf2)
+        ret->setProbabilityDistributions(*m_pdf1, *m_pdf2);
+    ret->setIntegrationOverXi(m_integrate_xi);
+    return ret;
 }
 
 //! Sets the probability distributions (Fourier transformed) for the two lattice directions.
@@ -109,24 +101,9 @@ double InterferenceFunction2DParaCrystal::iff_without_dw(const kvector_t q) cons
     m_qy = q.y();
     if (!m_integrate_xi)
         return interferenceForXi(m_lattice->rotationAngle());
-    return m_integrator.integrate([&](double xi) -> double { return interferenceForXi(xi); }, 0.0,
-                                  M_TWOPI)
+    return RealIntegrator().integrate([&](double xi) -> double { return interferenceForXi(xi); },
+                                      0.0, M_TWOPI)
            / M_TWOPI;
-}
-
-InterferenceFunction2DParaCrystal::InterferenceFunction2DParaCrystal(
-    const InterferenceFunction2DParaCrystal& other)
-    : IInterferenceFunction(other)
-{
-    setName(other.getName());
-    m_damping_length = other.m_damping_length;
-    if (other.m_lattice)
-        setLattice(*other.m_lattice);
-    if (other.m_pdf1 && other.m_pdf2)
-        setProbabilityDistributions(*other.m_pdf1, *other.m_pdf2);
-    setDomainSizes(other.m_domain_sizes[0], other.m_domain_sizes[1]);
-    setIntegrationOverXi(other.m_integrate_xi);
-    init_parameters();
 }
 
 void InterferenceFunction2DParaCrystal::setLattice(const Lattice2D& lattice)
@@ -162,7 +139,7 @@ InterferenceFunction2DParaCrystal::createHexagonal(double lattice_length, double
                                                    double domain_size_1, double domain_size_2)
 {
     auto result = new InterferenceFunction2DParaCrystal(
-        HexagonalLattice(lattice_length), damping_length, domain_size_1, domain_size_2);
+        HexagonalLattice(lattice_length, 0.), damping_length, domain_size_1, domain_size_2);
     result->setIntegrationOverXi(true);
     return result;
 }

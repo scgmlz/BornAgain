@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "GISASDetectorEditor.h"
-#include "ComponentEditor.h"
-#include "DetectorItems.h"
-#include "DetectorPresenter.h"
-#include "GroupItem.h"
-#include "InstrumentItems.h"
+#include "GUI/coregui/Views/InstrumentWidgets/GISASDetectorEditor.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/InstrumentWidgets/DetectorPresenter.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QVBoxLayout>
 
 GISASDetectorEditor::GISASDetectorEditor(QWidget* parent)
@@ -53,7 +53,7 @@ void GISASDetectorEditor::unsubscribeFromItem()
 Instrument2DItem* GISASDetectorEditor::instrumentItem()
 {
     auto result = dynamic_cast<Instrument2DItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 

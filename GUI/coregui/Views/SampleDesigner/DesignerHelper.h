@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DESIGNERHELPER_H
-#define DESIGNERHELPER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERHELPER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERHELPER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QColor>
 #include <QGradient>
 #include <QGraphicsItem>
@@ -79,4 +79,4 @@ public:
     static int getPythonEditorFontSize();
 };
 
-#endif // DESIGNERHELPER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERHELPER_H

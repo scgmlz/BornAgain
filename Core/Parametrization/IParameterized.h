@@ -12,12 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef IPARAMETERIZED_H
-#define IPARAMETERIZED_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_IPARAMETERIZED_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_IPARAMETERIZED_H
 
-#include "BornAgainNamespace.h"
-#include "INamed.h"
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
+#include <memory>
 
 class RealLimits;
 class ParameterPool;
@@ -26,17 +25,17 @@ class RealParameter;
 //! Manages a local parameter pool, and a tree of child pools.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ IParameterized : public INamed
+class BA_CORE_API_ IParameterized
 {
 public:
     IParameterized(const std::string& name = "");
     IParameterized(const IParameterized& other);
-    ~IParameterized();
+    virtual ~IParameterized();
 
     IParameterized& operator=(const IParameterized& other) = delete;
 
     //! Returns pointer to the parameter pool.
-    ParameterPool* parameterPool() const { return m_pool; }
+    ParameterPool* parameterPool() const { return m_pool.get(); } // has non-const usages!
 
     //! Creates new parameter pool, with all local parameters and those of its children.
     virtual ParameterPool* createParameterTree() const;
@@ -47,7 +46,7 @@ public:
     RealParameter& registerParameter(const std::string& name, double* parpointer);
 
     void registerVector(const std::string& base_name, kvector_t* p_vec,
-                        const std::string& units = BornAgain::UnitsNm);
+                        const std::string& units = "nm");
 
     void setParameterValue(const std::string& name, double value);
 
@@ -66,8 +65,12 @@ public:
     static std::string YComponentName(const std::string& base_name);
     static std::string ZComponentName(const std::string& base_name);
 
+    void setName(const std::string& name) { m_name = name; }
+    const std::string& getName() const { return m_name; }
+
 private:
-    ParameterPool* m_pool; //!< parameter pool (kind of pointer-to-implementation)
+    std::string m_name;
+    std::unique_ptr<ParameterPool> m_pool; //!< parameter pool (kind of pointer-to-implementation)
 };
 
-#endif // IPARAMETERIZED_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_IPARAMETERIZED_H

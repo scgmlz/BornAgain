@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MINUIT2MINIMIZER_H
-#define MINUIT2MINIMIZER_H
+#ifndef BORNAGAIN_FIT_ROOTADAPTER_MINUIT2MINIMIZER_H
+#define BORNAGAIN_FIT_ROOTADAPTER_MINUIT2MINIMIZER_H
 
-#include "MinimizerConstants.h"
-#include "RootMinimizerAdapter.h"
+#include "Fit/RootAdapter/RootMinimizerAdapter.h"
 #include <memory>
 
 namespace ROOT
@@ -34,7 +33,7 @@ class Minuit2Minimizer;
 class BA_CORE_API_ Minuit2Minimizer : public RootMinimizerAdapter
 {
 public:
-    Minuit2Minimizer(const std::string& algorithmName = AlgorithmNames::Migrad);
+    Minuit2Minimizer(const std::string& algorithmName = "Migrad");
     ~Minuit2Minimizer();
 
     //! Sets minimization strategy (0-low, 1-medium, 2-high minimization quality).
@@ -85,4 +84,4 @@ private:
     std::unique_ptr<ROOT::Minuit2::Minuit2Minimizer> m_minuit2_minimizer;
 };
 
-#endif // MINUIT2MINIMIZER_H
+#endif // BORNAGAIN_FIT_ROOTADAPTER_MINUIT2MINIMIZER_H

@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "JobQueueData.h"
-#include "DomainSimulationBuilder.h"
-#include "GISASSimulation.h"
-#include "GUIHelpers.h"
-#include "InstrumentItems.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "JobWorker.h"
+#include "GUI/coregui/Models/JobQueueData.h"
+#include "Core/Simulation/GISASSimulation.h"
+#include "GUI/coregui/Models/DomainSimulationBuilder.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/JobWorker.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QThread>
 
 namespace
@@ -56,7 +56,7 @@ void JobQueueData::runJob(JobItem* jobItem)
         message += QString::fromStdString(std::string(ex.what()));
         jobItem->setComments(message);
         jobItem->setProgress(100);
-        jobItem->setStatus(Constants::STATUS_FAILED);
+        jobItem->setStatus("Failed");
         emit focusRequest(jobItem);
         return;
     }
@@ -108,7 +108,7 @@ void JobQueueData::onStartedJob()
 
     auto jobItem = m_jobModel->getJobItemForIdentifier(worker->identifier());
     jobItem->setProgress(0);
-    jobItem->setStatus(Constants::STATUS_RUNNING);
+    jobItem->setStatus("Running");
     jobItem->setBeginTime(GUIHelpers::currentDateTime());
     jobItem->setEndTime(QString());
 }
@@ -201,7 +201,7 @@ void JobQueueData::assignForDeletion(QThread* thread)
 
 void JobQueueData::assignForDeletion(JobWorker* worker)
 {
-    Q_ASSERT(worker);
+    ASSERT(worker);
     worker->disconnect();
     for (auto it = m_workers.begin(); it != m_workers.end(); ++it) {
         if (it.value() == worker) {
@@ -229,7 +229,7 @@ void JobQueueData::processFinishedJob(JobWorker* worker, JobItem* jobItem)
     jobItem->setDuration(worker->simulationDuration());
 
     // propagating status of runner
-    if (worker->status() == Constants::STATUS_FAILED) {
+    if (worker->status() == "Failed") {
         jobItem->setComments(worker->failureMessage());
     } else {
         // propagating simulation results

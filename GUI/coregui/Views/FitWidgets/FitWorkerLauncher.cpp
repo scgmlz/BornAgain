@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "FitWorkerLauncher.h"
-#include "FitWorker.h"
+#include "GUI/coregui/Views/FitWidgets/FitWorkerLauncher.h"
+#include "GUI/coregui/Views/FitWidgets/FitWorker.h"
 #include <QThread>
 
 FitWorkerLauncher::FitWorkerLauncher(QObject* parent)

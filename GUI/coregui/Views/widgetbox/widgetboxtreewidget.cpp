@@ -39,13 +39,14 @@
 **
 ****************************************************************************/
 
-#include "widgetboxtreewidget.h"
-#include "widgetboxcategorylistview.h"
+#include "GUI/coregui/Views/widgetbox/widgetboxtreewidget.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Views/widgetbox/widgetboxcategorylistview.h"
 
 // shared
-#include <qdesigner_utils_p.h>
-#include <sheet_delegate_p.h>
-#include <ui4_p.h>
+#include "GUI/coregui/Views/widgetbox/qdesigner_utils_p.h"
+#include "GUI/coregui/Views/widgetbox/sheet_delegate_p.h"
+#include "GUI/coregui/Views/widgetbox/ui4_p.h"
 
 // sdk
 #include <QtDesigner/QDesignerDnDItemInterface>
@@ -147,7 +148,7 @@ WidgetBoxCategoryListView* WidgetBoxTreeWidget::categoryViewAt(int idx) const
     if (QTreeWidgetItem* cat_item = topLevelItem(idx))
         if (QTreeWidgetItem* embedItem = cat_item->child(0))
             rc = qobject_cast<WidgetBoxCategoryListView*>(itemWidget(embedItem, 0));
-    Q_ASSERT(rc);
+    ASSERT(rc);
     return rc;
 }
 

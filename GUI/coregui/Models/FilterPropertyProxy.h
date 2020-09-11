@@ -11,10 +11,10 @@
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
 // ************************************************************************** //
-#ifndef FILTERPROPERTYPROXY_H
-#define FILTERPROPERTYPROXY_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QSortFilterProxyModel>
 
 //!
@@ -42,4 +42,4 @@ private:
     int m_columns;
 };
 
-#endif // FILTERPROPERTYPROXY_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H

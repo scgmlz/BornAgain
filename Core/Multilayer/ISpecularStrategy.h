@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Multilayer/ISpecularStrategy.h
-//! @brief     Defines class ISpecularStrategy.
+//! @brief     Defines and implements class ISpecularStrategy.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,11 +12,18 @@
 //
 // ************************************************************************** //
 
-#ifndef ISPECULARSTRATEGY_H
-#define ISPECULARSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_ISPECULARSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_ISPECULARSTRATEGY_H
 
-#include "ILayerRTCoefficients.h"
-#include "Slice.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/RT/ILayerRTCoefficients.h"
+
+//! Interface for the Fresnel computations, both in the scalar and magnetic case
+//!
+//! Inherited by SpecularScalarStrategy, SpecularMagneticOldStrategy,
+//! SpecularMagneticStrategy, SpecularMagneticNewStrategy
+
+//! @ingroup algorithms_internal
 
 class BA_CORE_API_ ISpecularStrategy
 {
@@ -31,4 +38,4 @@ public:
                              const std::vector<complex_t>& kz) const = 0;
 };
 
-#endif // ISPECULARSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_ISPECULARSTRATEGY_H

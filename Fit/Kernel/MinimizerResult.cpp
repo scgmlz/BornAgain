@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MinimizerResult.h"
-#include "MinimizerResultUtils.h"
-#include "MinimizerUtils.h"
+#include "Fit/Kernel/MinimizerResult.h"
+#include "Fit/RootAdapter/MinimizerResultUtils.h"
+#include "Fit/Tools/MinimizerUtils.h"
 #include <sstream>
 
 using namespace Fit;

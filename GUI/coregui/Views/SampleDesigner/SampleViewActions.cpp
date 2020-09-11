@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SampleViewActions.h"
-#include "SampleView.h"
-#include "SampleViewDocks.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewActions.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewDocks.h"
+#include "GUI/coregui/Views/SampleView.h"
 #include <QAction>
 #include <QDockWidget>
 

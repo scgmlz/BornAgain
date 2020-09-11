@@ -12,30 +12,34 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorSphereGaussianRadius.h"
-#include "BornAgainNamespace.h"
-#include "RealLimits.h"
-#include "RealParameter.h"
-#include "TruncatedEllipsoid.h"
+#include "Core/SoftParticle/FormFactorSphereGaussianRadius.h"
+#include "Core/Shapes/TruncatedEllipsoid.h"
+#include "Core/Vector/SomeFormFactors.h"
+#include "Fit/Tools/RealLimits.h"
+
+FormFactorSphereGaussianRadius::FormFactorSphereGaussianRadius(const std::vector<double> P)
+    : IFormFactorBorn({"FormFactorSphereGaussianRadius",
+                       "class_tooltip",
+                       {{"MeanRadius", "nm", "para_tooltip", 0, +INF, 0},
+                        {"SigmaRadius", "nm", "para_tooltip", 0, +INF, 0}}},
+                      P),
+      m_mean(m_P[0]), m_sigma(m_P[1])
+{
+    m_mean_r3 = calculateMeanR3();
+    onChange();
+}
 
 FormFactorSphereGaussianRadius::FormFactorSphereGaussianRadius(double mean, double sigma)
-    : m_mean(mean), m_sigma(sigma), m_mean_r3(0.0)
+    : FormFactorSphereGaussianRadius(std::vector<double>{mean, sigma})
 {
-    setName(BornAgain::FormFactorSphereGaussianRadiusType);
-    m_mean_r3 = calculateMeanR3();
-    P_ff_sphere.reset(new FormFactorFullSphere(m_mean_r3));
-    registerParameter(BornAgain::MeanRadius, &m_mean).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::SigmaRadius, &m_sigma)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    onChange();
 }
 
 complex_t FormFactorSphereGaussianRadius::evaluate_for_q(cvector_t q) const
 {
     double q2 = std::norm(q.x()) + std::norm(q.y()) + std::norm(q.z());
     double dw = std::exp(-q2 * m_sigma * m_sigma / 2.0);
-    return dw * P_ff_sphere->evaluate_for_q(q);
+    return dw * exp_I(q.z() * m_mean_r3) * someff::ffSphere(q, m_mean_r3);
+    // TODO: don't center at bottom; revise mesocrystal1.py
 }
 
 void FormFactorSphereGaussianRadius::onChange()

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "WavevectorInfo.h"
-#include "Transform3D.h"
+#include "Core/Vector/WavevectorInfo.h"
+#include "Core/Vector/Transform3D.h"
 
 // TODO: can be removed when IFormFactor::volume() is refactored
 // (static function is provided to easily track usage of default constructor)

@@ -1,15 +1,11 @@
-#include "Lattice.h"
-#include "MathConstants.h"
-#include "Transform3D.h"
-#include "google_test.h"
+#include "Core/Lattice/Lattice.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Vector/Transform3D.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class LatticeTest : public ::testing::Test
 {
-protected:
-    ~LatticeTest();
 };
-
-LatticeTest::~LatticeTest() = default;
 
 // tests the declaration of Lattice object, copy constructor and the getBasisVector_() functions
 TEST_F(LatticeTest, declarationTest)
@@ -27,7 +23,7 @@ TEST_F(LatticeTest, declarationTest)
     EXPECT_EQ(a3, l2.getBasisVectorC());
 
     // calls and tests copy constructor
-    Lattice l3 = Lattice(l2);
+    Lattice l3 = {l2};
     EXPECT_EQ(a1, l3.getBasisVectorA());
     EXPECT_EQ(a2, l3.getBasisVectorB());
     EXPECT_EQ(a3, l3.getBasisVectorC());
@@ -203,9 +199,9 @@ TEST_F(LatticeTest, onChangeTest)
     // The new changed lattice vectors
     kvector_t c1(2, 0, 0), c2(0, 2, 0), c3(0, 0, 2);
 
-    l1.setVectorValue(BornAgain::BasisVector_A, c1);
-    l1.setVectorValue(BornAgain::BasisVector_B, c2);
-    l1.setVectorValue(BornAgain::BasisVector_C, c3);
+    l1.setVectorValue("BasisA", c1);
+    l1.setVectorValue("BasisB", c2);
+    l1.setVectorValue("BasisC", c3);
     EXPECT_EQ(c1, l1.getBasisVectorA());
     EXPECT_EQ(c2, l1.getBasisVectorB());
     EXPECT_EQ(c3, l1.getBasisVectorC());

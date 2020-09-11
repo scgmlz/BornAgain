@@ -12,18 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "BackgroundItems.h"
-#include "BornAgainNamespace.h"
-#include "ConstantBackground.h"
-#include "PoissonNoiseBackground.h"
-#include "item_constants.h"
+#include "GUI/coregui/Models/BackgroundItems.h"
+#include "Core/Computation/ConstantBackground.h"
+#include "Core/Computation/PoissonNoiseBackground.h"
 
 BackgroundItem::BackgroundItem(const QString& model_type) : SessionItem(model_type) {}
 
 // Background none
 /* ------------------------------------------------ */
 
-BackgroundNoneItem::BackgroundNoneItem() : BackgroundItem(Constants::BackgroundNoneType) {}
+BackgroundNoneItem::BackgroundNoneItem() : BackgroundItem("NoBackground") {}
 
 std::unique_ptr<IBackground> BackgroundNoneItem::createBackground() const
 {
@@ -38,9 +36,9 @@ namespace
 const QString constant_background_value_tooltip = "Constant background value [counts/pixel]";
 }
 
-const QString ConstantBackgroundItem::P_VALUE = QString::fromStdString(BornAgain::BackgroundValue);
+const QString ConstantBackgroundItem::P_VALUE = QString::fromStdString("BackgroundValue");
 
-ConstantBackgroundItem::ConstantBackgroundItem() : BackgroundItem(Constants::ConstantBackgroundType)
+ConstantBackgroundItem::ConstantBackgroundItem() : BackgroundItem("ConstantBackground")
 {
     addProperty(P_VALUE, 0.0)
         ->setLimits(RealLimits::nonnegative())
@@ -55,8 +53,7 @@ std::unique_ptr<IBackground> ConstantBackgroundItem::createBackground() const
 // Background consisting of Poisson noise
 /* ------------------------------------------------ */
 
-PoissonNoiseBackgroundItem::PoissonNoiseBackgroundItem()
-    : BackgroundItem(Constants::PoissonNoiseBackgroundType)
+PoissonNoiseBackgroundItem::PoissonNoiseBackgroundItem() : BackgroundItem("PoissonNoiseBackground")
 {
 }
 

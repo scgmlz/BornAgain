@@ -12,16 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "ResolutionFunctionItems.h"
-#include "BornAgainNamespace.h"
-#include "ResolutionFunction2DGaussian.h"
+#include "GUI/coregui/Models/ResolutionFunctionItems.h"
+#include "Core/Detector/ResolutionFunction2DGaussian.h"
 
 ResolutionFunctionItem::ResolutionFunctionItem(const QString& name) : SessionItem(name) {}
 
 /* --------------------------------------------------------------------------------------------- */
 
 ResolutionFunctionNoneItem::ResolutionFunctionNoneItem()
-    : ResolutionFunctionItem(Constants::ResolutionFunctionNoneType)
+    : ResolutionFunctionItem("ResolutionFunctionNone")
 {
 }
 
@@ -33,13 +32,11 @@ ResolutionFunctionNoneItem::createResolutionFunction(double) const
 
 /* --------------------------------------------------------------------------------------------- */
 
-const QString ResolutionFunction2DGaussianItem::P_SIGMA_X =
-    QString::fromStdString(BornAgain::SigmaX);
-const QString ResolutionFunction2DGaussianItem::P_SIGMA_Y =
-    QString::fromStdString(BornAgain::SigmaY);
+const QString ResolutionFunction2DGaussianItem::P_SIGMA_X = QString::fromStdString("SigmaX");
+const QString ResolutionFunction2DGaussianItem::P_SIGMA_Y = QString::fromStdString("SigmaY");
 
 ResolutionFunction2DGaussianItem::ResolutionFunction2DGaussianItem()
-    : ResolutionFunctionItem(Constants::ResolutionFunction2DGaussianType)
+    : ResolutionFunctionItem("ResolutionFunction2DGaussian")
 {
     addProperty(P_SIGMA_X, 0.02)
         ->setLimits(RealLimits::lowerLimited(0.0))

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "SimulationElement.h"
-#include "IPixel.h"
+#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Binning/IPixel.h"
 
 SimulationElement::SimulationElement(double wavelength, double alpha_i, double phi_i,
                                      std::unique_ptr<IPixel> pixel)

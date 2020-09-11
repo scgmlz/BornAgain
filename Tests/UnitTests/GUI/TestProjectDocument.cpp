@@ -1,23 +1,21 @@
-#include "ApplicationModels.h"
-#include "GUIHelpers.h"
-#include "InstrumentItems.h"
-#include "InstrumentModel.h"
-#include "IntensityDataItem.h"
-#include "JobItemUtils.h"
-#include "ProjectUtils.h"
-#include "RealDataItem.h"
-#include "RealDataModel.h"
-#include "google_test.h"
-#include "projectdocument.h"
-#include "test_utils.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/GUI/Utils.h"
 #include <QFileInfo>
 #include <QSignalSpy>
 
 class TestProjectDocument : public ::testing::Test
 {
-public:
-    ~TestProjectDocument();
-
+protected:
     //! helper method to modify something in a model
     void modify_models(ApplicationModels* models)
     {
@@ -25,8 +23,6 @@ public:
         instrument->setItemValue(InstrumentItem::P_IDENTIFIER, GUIHelpers::createUuid());
     }
 };
-
-TestProjectDocument::~TestProjectDocument() = default;
 
 TEST_F(TestProjectDocument, test_documentFlags)
 {
@@ -61,7 +57,7 @@ TEST_F(TestProjectDocument, test_documentFlags)
 TEST_F(TestProjectDocument, test_projectDocument)
 {
     const QString projectDir("test_projectDocument");
-    TestUtils::create_dir(projectDir);
+    GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
 
     ApplicationModels models;
@@ -79,7 +75,7 @@ TEST_F(TestProjectDocument, test_projectDocument)
     document.save(projectFileName);
     EXPECT_TRUE(document.hasValidNameAndPath());
     EXPECT_EQ(document.projectDir(), projectDir);
-    EXPECT_EQ(document.projectName(), QString("document"));
+    EXPECT_EQ(document.projectName(), "document");
     EXPECT_EQ(document.projectFileName(), projectFileName);
     EXPECT_FALSE(document.isModified());
 
@@ -103,11 +99,11 @@ TEST_F(TestProjectDocument, test_projectDocument)
 TEST_F(TestProjectDocument, test_projectDocumentWithData)
 {
     const QString projectDir("test_projectDocumentWithData");
-    TestUtils::create_dir(projectDir);
+    GuiUnittestUtils::create_dir(projectDir);
 
     ApplicationModels models;
-    RealDataItem* realData = TestUtils::createRealData("RealData", *models.realDataModel());
-    Q_ASSERT(realData);
+    RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", *models.realDataModel());
+    ASSERT(realData);
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
                                            models.instrumentModel()->instrumentItem());

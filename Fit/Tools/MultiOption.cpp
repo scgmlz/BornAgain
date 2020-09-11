@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "MultiOption.h"
+#include "Fit/Tools/MultiOption.h"
 #include <boost/lexical_cast.hpp>
 
 MultiOption::MultiOption(const std::string& name) : m_name(name) {}

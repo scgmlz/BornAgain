@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INSTRUMENTPRESENTER_H
-#define INSTRUMENTPRESENTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTPRESENTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTPRESENTER_H
 
-#include "ItemComboWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemComboWidget.h"
 
 //! Contains stack of instrument editors and the logic to show proper editor for certain type
 //! of instrument (GISAS, OffSpec and Specular). Main component of InstrumentEditorWidget.
@@ -32,4 +32,4 @@ protected:
     QStringList activePresentationList(SessionItem* item) override;
 };
 
-#endif // INSTRUMENTPRESENTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTPRESENTER_H

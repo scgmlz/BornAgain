@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LINEVIEWS_H
-#define LINEVIEWS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_LINEVIEWS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_LINEVIEWS_H
 
-#include "IShape2DView.h"
+#include "GUI/coregui/Views/MaskWidgets/IShape2DView.h"
 
 //! This is a view of VerticalLineItem mask
 
@@ -59,4 +59,4 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value);
 };
 
-#endif // LINEVIEWS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_LINEVIEWS_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONFLAGS_H
-#define SESSIONFLAGS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONFLAGS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONFLAGS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <qnamespace.h>
 
 //! Collection of flags for SessionModel and SessionItem.
@@ -49,4 +49,4 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(SessionFlags::ModelColumn)
 Q_DECLARE_OPERATORS_FOR_FLAGS(SessionFlags::ItemDataRole)
 Q_DECLARE_OPERATORS_FOR_FLAGS(SessionFlags::ItemAppearance)
 
-#endif // SESSIONFLAGS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONFLAGS_H

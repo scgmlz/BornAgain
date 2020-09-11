@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBITEMUTILS_H
-#define JOBITEMUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBITEMUTILS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_JOBITEMUTILS_H
 
-#include "ComboProperty.h"
-#include "IDetector.h"
+#include "Core/Detector/IDetector.h"
+#include "GUI/coregui/Models/ComboProperty.h"
 #include <QMap>
 
 class DataItem;
@@ -53,4 +53,4 @@ BA_CORE_API_ void setResults(DataItem* intensityItem, const Simulation* simulati
 BA_CORE_API_ ComboProperty availableUnits(const IUnitConverter& converter);
 } // namespace JobItemUtils
 
-#endif // JOBITEMUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_JOBITEMUTILS_H

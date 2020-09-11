@@ -1,27 +1,22 @@
-#include "SphericalDetector.h"
-#include "Beam.h"
-#include "BornAgainNamespace.h"
-#include "ConvolutionDetectorResolution.h"
-#include "DetectorFunctions.h"
-#include "Exceptions.h"
-#include "FixedBinAxis.h"
-#include "OutputData.h"
-#include "Polygon.h"
-#include "Rectangle.h"
-#include "RegionOfInterest.h"
-#include "ResolutionFunction2DGaussian.h"
-#include "SimulationArea.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Detector/SphericalDetector.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/Units.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Detector/ConvolutionDetectorResolution.h"
+#include "Core/Detector/DetectorFunctions.h"
+#include "Core/Detector/RegionOfInterest.h"
+#include "Core/Detector/ResolutionFunction2DGaussian.h"
+#include "Core/Detector/SimulationArea.h"
+#include "Core/Intensity/OutputData.h"
+#include "Core/Mask/Polygon.h"
+#include "Core/Mask/Rectangle.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 class SphericalDetectorTest : public ::testing::Test
 {
-protected:
-    ~SphericalDetectorTest();
 };
-
-SphericalDetectorTest::~SphericalDetectorTest() = default;
 
 // Default detector construction
 TEST_F(SphericalDetectorTest, initialState)
@@ -61,8 +56,6 @@ TEST_F(SphericalDetectorTest, constructionWithAxes)
     EXPECT_EQ(2u, detector.dimension());
     EXPECT_EQ(axis0.getMin(), detector.getAxis(0).getMin());
     EXPECT_EQ(axis0.getMax(), detector.getAxis(0).getMax());
-    EXPECT_EQ(axis0.getName(), detector.getAxis(0).getName());
-    EXPECT_EQ(axis1.getName(), detector.getAxis(1).getName());
     EXPECT_EQ(axis1.getMin(), detector.getAxis(1).getMin());
     EXPECT_EQ(axis1.getMax(), detector.getAxis(1).getMax());
 
@@ -78,11 +71,9 @@ TEST_F(SphericalDetectorTest, constructionWithParameters)
     EXPECT_EQ(10u, detector.getAxis(0).size());
     EXPECT_EQ(-1.0, detector.getAxis(0).getMin());
     EXPECT_EQ(1.0, detector.getAxis(0).getMax());
-    EXPECT_EQ(BornAgain::PHI_AXIS_NAME, detector.getAxis(0).getName());
     EXPECT_EQ(20u, detector.getAxis(1).size());
     EXPECT_EQ(0.0, detector.getAxis(1).getMin());
     EXPECT_EQ(2.0, detector.getAxis(1).getMax());
-    EXPECT_EQ(BornAgain::ALPHA_AXIS_NAME, detector.getAxis(1).getName());
 }
 
 // Creation of the detector map with axes in given units
@@ -219,8 +210,6 @@ TEST_F(SphericalDetectorTest, Clone)
     EXPECT_EQ(data->getAxis(1).size(), 2u);
     EXPECT_EQ(data->getAxis(1).getMin(), 1.0 * Units::deg);
     EXPECT_EQ(data->getAxis(1).getMax(), 3.0 * Units::deg);
-
-    EXPECT_EQ(std::string("ConvolutionDetectorResolution"), clone->detectorResolution()->getName());
 
     EXPECT_EQ(clone->detectorMask()->numberOfMaskedChannels(), 8);
 

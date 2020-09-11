@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef SSCAHELPER_H
-#define SSCAHELPER_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SSCAHELPER_H
+#define BORNAGAIN_CORE_MULTILAYER_SSCAHELPER_H
 
-#include "Complex.h"
-#include "IInterferenceFunctionStrategy.h"
-#include "InterferenceFunctionUtils.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Multilayer/IInterferenceFunctionStrategy.h"
+#include "Core/Multilayer/InterferenceFunctionUtils.h"
 #include <Eigen/StdVector>
 
 class FormFactorCoherentSum;
@@ -50,4 +50,4 @@ private:
     double m_mean_radius;
 };
 
-#endif // SSCAHELPER_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SSCAHELPER_H

@@ -19,7 +19,7 @@ def get_sample():
 
     interference = ba.InterferenceFunction2DParaCrystal.createSquare(
         10.0*nm, 0.0, 20.0*micrometer, 20.0*micrometer)
-    pdf = ba.FTDistribution2DCauchy(1.0*nm, 1.0*nm)
+    pdf = ba.FTDistribution2DCauchy(1.0*nm, 1.0*nm, 0)
     interference.setProbabilityDistributions(pdf, pdf)
 
     particle_layout = ba.ParticleLayout()

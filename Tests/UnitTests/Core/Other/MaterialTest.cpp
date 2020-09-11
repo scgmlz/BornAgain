@@ -1,20 +1,16 @@
-#include "Exceptions.h"
-#include "HomogeneousRegion.h"
-#include "MaterialBySLDImpl.h"
-#include "MaterialFactoryFuncs.h"
-#include "RefractiveMaterialImpl.h"
-#include "Rotations.h"
-#include "Units.h"
-#include "WavevectorInfo.h"
-#include "google_test.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/Units.h"
+#include "Core/Material/MaterialBySLDImpl.h"
+#include "Core/Material/RefractiveMaterialImpl.h"
+#include "Core/Particle/HomogeneousRegion.h"
+#include "Core/Scattering/Rotations.h"
+#include "Core/Vector/Transform3D.h"
+#include "Core/Vector/WavevectorInfo.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class MaterialTest : public ::testing::Test
 {
-public:
-    ~MaterialTest();
 };
-
-MaterialTest::~MaterialTest() = default;
 
 TEST_F(MaterialTest, MaterialConstruction)
 {
@@ -23,32 +19,27 @@ TEST_F(MaterialTest, MaterialConstruction)
     kvector_t magnetism = kvector_t(3.0, 4.0, 5.0);
 
     Material material = HomogeneousMaterial("MagMaterial", refIndex, magnetism);
-    EXPECT_EQ("MagMaterial", material.getName());
     EXPECT_EQ(material_data, material.materialData());
     EXPECT_EQ(magnetism, material.magnetization());
 
     Material material2 =
         HomogeneousMaterial("MagMaterial", material_data.real(), material_data.imag(), magnetism);
-    EXPECT_EQ("MagMaterial", material2.getName());
     EXPECT_EQ(material_data, material2.materialData());
     EXPECT_EQ(magnetism, material2.magnetization());
 
     Material material3 =
         MaterialBySLD("MagMaterial", material_data.real(), material_data.imag(), magnetism);
-    EXPECT_EQ("MagMaterial", material3.getName());
     EXPECT_EQ(material_data, material3.materialData());
     EXPECT_EQ(magnetism, material3.magnetization());
 
     kvector_t default_magnetism = kvector_t{};
 
     Material material4 = HomogeneousMaterial("Material", refIndex);
-    EXPECT_EQ("Material", material4.getName());
     EXPECT_EQ(material_data, material4.materialData());
     EXPECT_EQ(default_magnetism, material4.magnetization());
 
     Material material5 =
         HomogeneousMaterial("Material", material_data.real(), material_data.imag());
-    EXPECT_EQ("Material", material5.getName());
     EXPECT_EQ(material_data, material5.materialData());
     EXPECT_EQ(default_magnetism, material5.magnetization());
 
@@ -62,20 +53,16 @@ TEST_F(MaterialTest, MaterialTransform)
     complex_t refIndex = complex_t(1.0 - material_data.real(), material_data.imag());
     kvector_t magnetism = kvector_t(1.0, 0.0, 0.0);
     RotationZ transform(90. * Units::degree);
-    kvector_t transformed_mag = transform.getTransform3D().transformed(magnetism);
+    kvector_t transformed_mag = transform.transformed(magnetism);
 
     Material material = HomogeneousMaterial("Material", refIndex, magnetism);
-    Material material2 = material.transformedMaterial(transform.getTransform3D());
-
-    EXPECT_EQ("Material", material2.getName());
+    Material material2 = material.rotatedMaterial(transform.getTransform3D());
     EXPECT_EQ(material_data, material2.materialData());
     EXPECT_EQ(transformed_mag, material2.magnetization());
 
     Material material3 =
         MaterialBySLD("Material", material_data.real(), material_data.imag(), magnetism);
-    Material material4 = material.transformedMaterial(transform.getTransform3D());
-
-    EXPECT_EQ("Material", material4.getName());
+    Material material4 = material.rotatedMaterial(transform.getTransform3D());
     EXPECT_EQ(material_data, material4.materialData());
     EXPECT_EQ(transformed_mag, material4.magnetization());
 }
@@ -84,9 +71,6 @@ TEST_F(MaterialTest, DefaultMaterials)
 {
     Material material = HomogeneousMaterial();
     const double dummy_wavelength = 1.0;
-
-    EXPECT_EQ(material.getName(), std::string("vacuum"));
-    EXPECT_EQ(material.getName(), MaterialBySLD().getName());
 
     EXPECT_EQ(material.materialData(), complex_t());
     EXPECT_EQ(material.materialData(), MaterialBySLD().materialData());
@@ -163,7 +147,6 @@ TEST_F(MaterialTest, AveragedMaterialTest)
                                                     HomogeneousRegion{0.25, material}};
 
     const Material material_avr = CreateAveragedMaterial(material, regions);
-    EXPECT_EQ(material_avr.getName(), material.getName() + "_avg");
     EXPECT_EQ(material_avr.magnetization(), magnetization);
     EXPECT_DOUBLE_EQ(material_avr.materialData().real(), 0.5);
     EXPECT_DOUBLE_EQ(material_avr.materialData().imag(), 0.5);
@@ -229,8 +212,6 @@ TEST_F(MaterialTest, MaterialCopy)
     Material material = HomogeneousMaterial("MagMaterial", refIndex, magnetism);
 
     Material copy = material;
-
-    EXPECT_EQ("MagMaterial", copy.getName());
     EXPECT_EQ(material_data, copy.materialData());
     EXPECT_EQ(magnetism, copy.magnetization());
     EXPECT_TRUE(material == copy);
@@ -244,7 +225,6 @@ TEST_F(MaterialTest, MaterialMove)
     Material material = HomogeneousMaterial("MagMaterial", refIndex, magnetism);
 
     Material moved_material(std::move(material));
-    EXPECT_EQ("MagMaterial", moved_material.getName());
     EXPECT_EQ(material_data, moved_material.materialData());
     EXPECT_EQ(magnetism, moved_material.magnetization());
     EXPECT_TRUE(material.isEmpty());

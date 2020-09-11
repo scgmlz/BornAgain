@@ -12,14 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentPresenter.h"
-#include "DepthProbeInstrumentEditor.h"
-#include "GISASInstrumentEditor.h"
-#include "GUIHelpers.h"
-#include "OffSpecInstrumentEditor.h"
-#include "SessionItem.h"
-#include "SpecularInstrumentEditor.h"
-#include "item_constants.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentPresenter.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/InstrumentWidgets/DepthProbeInstrumentEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/GISASInstrumentEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/OffSpecInstrumentEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/SpecularInstrumentEditor.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -43,13 +42,13 @@ QString InstrumentPresenter::itemPresentation() const
     if (!currentItem())
         return {};
 
-    if (currentItem()->modelType() == Constants::GISASInstrumentType)
+    if (currentItem()->modelType() == "GISASInstrument")
         return GISASPresentation;
-    else if (currentItem()->modelType() == Constants::OffSpecInstrumentType)
+    else if (currentItem()->modelType() == "OffSpecInstrument")
         return OffSpecPresentation;
-    else if (currentItem()->modelType() == Constants::SpecularInstrumentType)
+    else if (currentItem()->modelType() == "SpecularInstrument")
         return SpecularPresentation;
-    else if (currentItem()->modelType() == Constants::DepthProbeInstrumentType)
+    else if (currentItem()->modelType() == "DepthProbeInstrument")
         return DepthProbePresentation;
     else
         throw GUIHelpers::Error("InstrumentPresenter::itemPresentation() -> Error. Wrong item "

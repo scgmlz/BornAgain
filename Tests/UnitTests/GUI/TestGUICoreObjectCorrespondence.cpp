@@ -1,16 +1,14 @@
-#include "FormFactorItems.h"
-#include "FormFactors.h"
-#include "InterferenceFunctionItems.h"
-#include "InterferenceFunctions.h"
-#include "ParameterPool.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/includeIncludes/FormFactors.h"
+#include "Core/includeIncludes/InterferenceFunctions.h"
+#include "GUI/coregui/Models/FormFactorItems.h"
+#include "GUI/coregui/Models/InterferenceFunctionItems.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestGUICoreObjectCorrespondence : public ::testing::Test
 {
 public:
-    ~TestGUICoreObjectCorrespondence();
-
     void GUICoreObjectCorrespondence(const SessionItem& gui_object,
                                      const IParameterized& core_object)
     {
@@ -24,8 +22,6 @@ public:
         }
     }
 };
-
-TestGUICoreObjectCorrespondence::~TestGUICoreObjectCorrespondence() = default;
 
 TEST_F(TestGUICoreObjectCorrespondence, test_AnisoPyramid)
 {
@@ -139,17 +135,17 @@ TEST_F(TestGUICoreObjectCorrespondence, test_Pyramid)
     GUICoreObjectCorrespondence(gui_pyramid, core_pyramid);
 }
 
-TEST_F(TestGUICoreObjectCorrespondence, test_Ripple1Box)
+TEST_F(TestGUICoreObjectCorrespondence, test_CosineRippleBox)
 {
-    Ripple1BoxItem gui_ripple1;
-    FormFactorRipple1Box core_ripple1(10.0, 2.0, 1.0);
+    CosineRippleBoxItem gui_ripple1;
+    FormFactorCosineRippleBox core_ripple1(10.0, 2.0, 1.0);
     GUICoreObjectCorrespondence(gui_ripple1, core_ripple1);
 }
 
-TEST_F(TestGUICoreObjectCorrespondence, test_Ripple2Box)
+TEST_F(TestGUICoreObjectCorrespondence, test_SawtoothRippleBox)
 {
-    Ripple2BoxItem gui_ripple2;
-    FormFactorRipple2Box core_ripple2(10.0, 2.0, 1.0, 0.1);
+    SawtoothRippleBoxItem gui_ripple2;
+    FormFactorSawtoothRippleBox core_ripple2(10.0, 2.0, 1.0, 0.1);
     GUICoreObjectCorrespondence(gui_ripple2, core_ripple2);
 }
 
@@ -170,14 +166,14 @@ TEST_F(TestGUICoreObjectCorrespondence, test_TruncatedCube)
 TEST_F(TestGUICoreObjectCorrespondence, test_TruncatedSphere)
 {
     TruncatedSphereItem gui_truncsphere;
-    FormFactorTruncatedSphere core_truncsphere(1.0, 0.5);
+    FormFactorTruncatedSphere core_truncsphere(1.0, 0.5, 0);
     GUICoreObjectCorrespondence(gui_truncsphere, core_truncsphere);
 }
 
 TEST_F(TestGUICoreObjectCorrespondence, test_TruncatedSpheroid)
 {
     TruncatedSpheroidItem gui_truncspheroid;
-    FormFactorTruncatedSpheroid core_truncspheroid(1.0, 1.5, 1.5);
+    FormFactorTruncatedSpheroid core_truncspheroid(1.0, 1.5, 1.5, 0);
     GUICoreObjectCorrespondence(gui_truncspheroid, core_truncspheroid);
 }
 

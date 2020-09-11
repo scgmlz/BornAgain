@@ -12,13 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "IFormFactorBorn.h"
-#include "Dot.h"
-#include "Exceptions.h"
-#include "Rotations.h"
-#include "WavevectorInfo.h"
+#include "Core/Scattering/IFormFactorBorn.h"
+#include "Core/Basics/Algorithms.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Scattering/Rotations.h"
+#include "Core/Vector/WavevectorInfo.h"
 
-IFormFactorBorn::IFormFactorBorn() : mP_shape(new Dot()) {}
+IFormFactorBorn::IFormFactorBorn(const NodeMeta& meta, const std::vector<double>& PValues)
+    : IFormFactor(meta, PValues)
+{
+}
 
 complex_t IFormFactorBorn::evaluate(const WavevectorInfo& wavevectors) const
 {
@@ -32,17 +35,21 @@ Eigen::Matrix2cd IFormFactorBorn::evaluatePol(const WavevectorInfo& wavevectors)
 
 double IFormFactorBorn::bottomZ(const IRotation& rotation) const
 {
-    return BottomZ(mP_shape->vertices(), rotation.getTransform3D());
+    if (!mP_shape)
+        return 0;
+    return BottomZ(mP_shape->vertices(), rotation);
 }
 
 double IFormFactorBorn::topZ(const IRotation& rotation) const
 {
-    return TopZ(mP_shape->vertices(), rotation.getTransform3D());
+    if (!mP_shape)
+        return 0;
+    return TopZ(mP_shape->vertices(), rotation);
 }
 
 bool IFormFactorBorn::canSliceAnalytically(const IRotation& rot) const
 {
-    if (IsZRotation(rot))
+    if (rot.zInvariant())
         return true;
     return false;
 }
@@ -86,4 +93,20 @@ SlicingEffects IFormFactorBorn::computeSlicingEffects(ZLimits limits, const kvec
     if (dz_bottom > 0)
         new_position.setZ(lower_limit.m_value);
     return {new_position, dz_bottom, dz_top};
+}
+
+double IFormFactorBorn::BottomZ(const std::vector<kvector_t>& vertices, const IRotation& rotation)
+{
+    ASSERT(vertices.size());
+    return algo::min_value(
+        vertices.begin(), vertices.end(),
+        [&](const kvector_t& vertex) -> double { return rotation.transformed(vertex).z(); });
+}
+
+double IFormFactorBorn::TopZ(const std::vector<kvector_t>& vertices, const IRotation& rotation)
+{
+    ASSERT(vertices.size());
+    return algo::max_value(
+        vertices.begin(), vertices.end(),
+        [&](const kvector_t& vertex) -> double { return rotation.transformed(vertex).z(); });
 }

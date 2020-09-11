@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "FitWorker.h"
-#include "FitObjectiveBuilder.h"
+#include "GUI/coregui/Views/FitWidgets/FitWorker.h"
+#include "GUI/coregui/Views/FitWidgets/FitObjectiveBuilder.h"
 #include <QDateTime>
 
 void FitWorker::startFit()

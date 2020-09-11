@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORWEIGHTED_H
-#define FORMFACTORWEIGHTED_H
+#ifndef BORNAGAIN_CORE_PARTICLE_FORMFACTORWEIGHTED_H
+#define BORNAGAIN_CORE_PARTICLE_FORMFACTORWEIGHTED_H
 
-#include "IFormFactor.h"
+#include "Core/Scattering/IFormFactor.h"
 
 //! Coherent sum of different scalar IFormFactor's with different weights.
 //!
@@ -57,4 +57,4 @@ protected:
     std::vector<double> m_weights;
 };
 
-#endif // FORMFACTORWEIGHTED_H
+#endif // BORNAGAIN_CORE_PARTICLE_FORMFACTORWEIGHTED_H

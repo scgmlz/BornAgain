@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKITEMS_H
-#define MASKITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_MASKITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_MASKITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class IShape2D;
 
@@ -45,7 +45,7 @@ public:
     static const QString P_YLOW;
     static const QString P_XUP;
     static const QString P_YUP;
-    explicit RectangleItem(const QString& modelType = Constants::RectangleMaskType);
+    explicit RectangleItem(const QString& modelType = "RectangleMask");
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
@@ -111,4 +111,4 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
-#endif // MASKITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_MASKITEMS_H

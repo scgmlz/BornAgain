@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "StringUtils.h"
+#include "Fit/Tools/StringUtils.h"
 #include <boost/algorithm/string.hpp>
 #include <regex>
 

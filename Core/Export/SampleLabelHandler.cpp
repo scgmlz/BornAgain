@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "SampleLabelHandler.h"
-#include "IInterferenceFunction.h"
-#include "LayerRoughness.h"
-#include "Material.h"
-#include "MesoCrystal.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleComposition.h"
-#include "ParticleCoreShell.h"
-#include "ParticleDistribution.h"
+#include "Core/Export/SampleLabelHandler.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Material/Material.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Particle/MesoCrystal.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleComposition.h"
+#include "Core/Particle/ParticleCoreShell.h"
+#include "Core/Particle/ParticleDistribution.h"
 #include <set>
 
 std::string SampleLabelHandler::labelCrystal(const Crystal* cr)

@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef SIMULATIONRESULT_H
-#define SIMULATIONRESULT_H
+#ifndef BORNAGAIN_CORE_INSTRUMENT_SIMULATIONRESULT_H
+#define BORNAGAIN_CORE_INSTRUMENT_SIMULATIONRESULT_H
 
-#include "IUnitConverter.h"
-#include "PyObject.h"
-#include "WinDllMacros.h"
+#include "Core/Intensity/IUnitConverter.h"
+#include "Core/Tools/PyObject.h"
+#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <vector>
 
@@ -27,7 +27,7 @@ class IAxis;
 template <class T> class OutputData;
 
 //! Information about an axis in specific units. Can be used for plotting.
-//! @ingroup simulation
+//! @ingroup detector
 
 struct AxisInfo {
     std::string m_name;
@@ -36,7 +36,7 @@ struct AxisInfo {
 };
 
 //! Wrapper around OutputData<double> that also provides unit conversions.
-//! @ingroup simulation
+//! @ingroup detector
 
 class BA_CORE_API_ SimulationResult
 {
@@ -83,4 +83,4 @@ private:
     std::unique_ptr<IUnitConverter> mP_unit_converter;
 };
 
-#endif // SIMULATIONRESULT_H
+#endif // BORNAGAIN_CORE_INSTRUMENT_SIMULATIONRESULT_H

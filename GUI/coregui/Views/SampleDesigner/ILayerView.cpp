@@ -12,20 +12,20 @@
 //
 // ************************************************************************** //
 
-#include "ILayerView.h"
-#include "DesignerHelper.h"
-#include "DesignerScene.h"
-#include "ExternalProperty.h"
-#include "GUIHelpers.h"
-#include "LayerItem.h"
-#include "MultiLayerView.h"
-#include "SampleModel.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/ILayerView.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
+#include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QGraphicsSceneMouseEvent>
 
 QLineF MultiLayerCandidate::getInterfaceToScene()
 {
-    Q_ASSERT(multilayer);
+    ASSERT(multilayer);
     QLineF line = multilayer->getInterfaceLine(row);
     if (line.length() != 0) {
         QPointF p1(multilayer->mapToScene(line.p1()));
@@ -82,7 +82,7 @@ void ILayerView::updateColor()
             setColor(mp.color());
             update();
         } else {
-            Q_ASSERT(0);
+            ASSERT(0);
         }
     }
 }
@@ -147,7 +147,7 @@ void ILayerView::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
-    Q_ASSERT(designerScene);
+    ASSERT(designerScene);
     designerScene->setLayerInterfaceLine(); // removing drop area hint from the scene
 
     if (QLineF(m_drag_start_position, pos()).length() == 0) {
@@ -227,8 +227,7 @@ MultiLayerCandidate ILayerView::getMultiLayerCandidate()
 
     QRectF layerRect = mapRectToScene(boundingRect());
     for (auto item : scene()->items()) {
-        if (item->type() == ViewTypes::MULTILAYER && item != this
-            && !childItems().contains(item)) {
+        if (item->type() == ViewTypes::MULTILAYER && item != this && !childItems().contains(item)) {
             MultiLayerView* multilayer = qgraphicsitem_cast<MultiLayerView*>(item);
             if (multilayer->mapRectToScene(multilayer->boundingRect()).intersects(layerRect)) {
                 MultiLayerCandidate candidate;

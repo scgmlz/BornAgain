@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "SpecularComputationTerm.h"
-#include "DelayedProgressCounter.h"
-#include "ScalarRTCoefficients.h"
-#include "SpecularScalarStrategy.h"
-#include "SpecularSimulationElement.h"
+#include "Core/Computation/SpecularComputationTerm.h"
+#include "Core/Computation/DelayedProgressCounter.h"
+#include "Core/Multilayer/SpecularScalarStrategy.h"
+#include "Core/Multilayer/SpecularSimulationElement.h"
+#include "Core/RT/ScalarRTCoefficients.h"
 
 SpecularComputationTerm::SpecularComputationTerm(std::unique_ptr<ISpecularStrategy> strategy)
     : m_Strategy(std::move(strategy)){};

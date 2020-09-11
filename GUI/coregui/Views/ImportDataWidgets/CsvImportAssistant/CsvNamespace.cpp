@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "CsvNamespace.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvNamespace.h"
 #include <fstream>
 #include <sstream>
 

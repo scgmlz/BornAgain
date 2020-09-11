@@ -18,5 +18,5 @@ set(tests
 )
 
 foreach(_test ${tests})
-    add_test(PyFit/${_test} ${Python_EXECUTABLE}  ${output_dir}/${_test})
+    add_test(PyFit/${_test} ${Python3_EXECUTABLE}  ${output_dir}/${_test})
 endforeach()

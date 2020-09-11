@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SCRIPTPANEL_H
-#define SCRIPTPANEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SCRIPTPANEL_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SCRIPTPANEL_H
 
-#include "InfoPanel.h"
+#include "GUI/coregui/Views/CommonWidgets/InfoPanel.h"
 
 class SampleModel;
 class InstrumentModel;
@@ -37,4 +37,4 @@ private:
     PySampleWidget* m_pySampleWidget;
 };
 
-#endif // SCRIPTPANEL_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SCRIPTPANEL_H

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "NodeIterator.h"
+#include "Core/Parametrization/NodeIterator.h"
 
 IteratorState::IteratorState(const INode* single_element) : m_position(0)
 {

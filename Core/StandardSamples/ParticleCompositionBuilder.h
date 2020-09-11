@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLECOMPOSITIONBUILDER_H
-#define PARTICLECOMPOSITIONBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_PARTICLECOMPOSITIONBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_PARTICLECOMPOSITIONBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! Builds sample: two layers of spheres at hex lattice.
 //! @ingroup standard_samples
@@ -27,4 +27,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // PARTICLECOMPOSITIONBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_PARTICLECOMPOSITIONBUILDER_H

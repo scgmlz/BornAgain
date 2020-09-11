@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ILatticeOrientation.h"
-#include "EigenCore.h"
+#include "Core/Lattice/ILatticeOrientation.h"
+#include "Core/Vector/EigenCore.h"
 
 namespace
 {

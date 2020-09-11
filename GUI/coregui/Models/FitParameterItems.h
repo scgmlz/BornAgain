@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef FITPARAMETERITEMS_H
-#define FITPARAMETERITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERITEMS_H
 
-#include "AttLimits.h"
-#include "SessionItem.h"
+#include "Fit/Tools/AttLimits.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 //! FitParameterItems is a collection of items to define fit parameters in GUI.
 
@@ -83,4 +83,4 @@ public:
     Fit::Parameters createParameters() const;
 };
 
-#endif // FITPARAMETERITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERITEMS_H

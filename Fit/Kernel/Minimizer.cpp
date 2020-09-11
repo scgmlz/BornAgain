@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "Minimizer.h"
-#include "Kernel.h"
-#include "PyCallback.h"
+#include "Fit/Kernel/Minimizer.h"
+#include "Fit/Kernel/Kernel.h"
+#include "Fit/Kernel/PyCallback.h"
 
 using namespace Fit;
 

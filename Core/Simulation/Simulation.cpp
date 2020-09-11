@@ -12,16 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "Simulation.h"
-#include "IBackground.h"
-#include "IComputation.h"
-#include "IMultiLayerBuilder.h"
-#include "MPISimulation.h"
-#include "MultiLayer.h"
-#include "MultiLayerUtils.h"
-#include "ParameterPool.h"
-#include "ParameterSample.h"
-#include "StringUtils.h"
+#include "Core/Simulation/Simulation.h"
+#include "Core/Computation/IBackground.h"
+#include "Core/Computation/IComputation.h"
+#include "Core/Detector/DetectorFunctions.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/MultiLayerUtils.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Simulation/MPISimulation.h"
+#include "Core/Simulation/UnitConverterUtils.h"
+#include "Fit/Tools/StringUtils.h"
 #include <gsl/gsl_errno.h>
 #include <iomanip>
 #include <iostream>
@@ -53,7 +55,7 @@ Simulation::Simulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builde
 }
 
 Simulation::Simulation(const Simulation& other)
-    : ICloneable(), m_sample_provider(other.m_sample_provider), m_options(other.m_options),
+    : m_sample_provider(other.m_sample_provider), m_options(other.m_options),
       m_distribution_handler(other.m_distribution_handler), m_progress(other.m_progress),
       m_instrument(other.m_instrument)
 {
@@ -219,7 +221,7 @@ void Simulation::runSingleSimulation(size_t batch_start, size_t batch_size, doub
     initSimulationElementVector();
 
     const size_t n_threads = m_options.getNumberOfThreads();
-    assert(n_threads > 0);
+    ASSERT(n_threads > 0);
 
     std::vector<std::unique_ptr<IComputation>> computations;
 
@@ -244,12 +246,56 @@ void Simulation::initialize()
     registerChild(&m_sample_provider);
 }
 
+//! Convert user data to SimulationResult object for later drawing in various axes units.
+//! User data will be cropped to the ROI defined in the simulation, amplitudes in areas
+//! corresponding to the masked areas of the detector will be set to zero.
+//! @param simulation: Simulation object with possible ROI and masks defined.
+//! @param data: User data with amplitudes with the shape of data matching the detector.
+//! @return SimulationResult object.
+
+SimulationResult Simulation::convertData(const OutputData<double>& data,
+                                         bool put_masked_areas_to_zero)
+{
+    auto converter = UnitConverterUtils::createConverter(*this);
+    auto roi_data =
+        UnitConverterUtils::createOutputData(*converter.get(), converter->defaultUnits());
+
+    auto detector = getInstrument().getDetector();
+
+    if (roi_data->hasSameDimensions(data)) {
+        // data is already cropped to ROI
+        if (put_masked_areas_to_zero) {
+            detector->iterate(
+                [&](IDetector::const_iterator it) {
+                    (*roi_data)[it.roiIndex()] = data[it.roiIndex()];
+                },
+                /*visit_masked*/ false);
+        } else {
+            roi_data->setRawDataVector(data.getRawDataVector());
+        }
+
+    } else if (DetectorFunctions::hasSameDimensions(*detector, data)) {
+        // exp data has same shape as the detector, we have to put orig data to smaller roi map
+        detector->iterate(
+            [&](IDetector::const_iterator it) {
+                (*roi_data)[it.roiIndex()] = data[it.detectorIndex()];
+            },
+            /*visit_masked*/ !put_masked_areas_to_zero);
+
+    } else {
+        throw std::runtime_error("FitObject::init_dataset() -> Error. Detector and exp data have "
+                                 "different shape.");
+    }
+
+    return SimulationResult(*roi_data, *converter);
+}
+
 namespace
 {
 size_t getIndexStep(size_t total_size, size_t n_handlers)
 {
-    assert(total_size > 0);
-    assert(n_handlers > 0);
+    ASSERT(total_size > 0);
+    ASSERT(n_handlers > 0);
     size_t result = total_size / n_handlers;
     return total_size % n_handlers ? ++result : result;
 }
@@ -274,7 +320,7 @@ size_t getNumberOfElements(size_t n_handlers, size_t current_handler, size_t n_e
 
 void runComputations(std::vector<std::unique_ptr<IComputation>> computations)
 {
-    assert(!computations.empty());
+    ASSERT(!computations.empty());
 
     if (computations.size() == 1) { // Running computation in current thread
         auto& computation = computations.front();

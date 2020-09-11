@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "DWBASingleComputation.h"
-#include "DelayedProgressCounter.h"
-#include "GISASSpecularComputation.h"
-#include "ParticleLayoutComputation.h"
-#include "RoughMultiLayerComputation.h"
+#include "Core/Computation/DWBASingleComputation.h"
+#include "Core/Computation/DelayedProgressCounter.h"
+#include "Core/Computation/GISASSpecularComputation.h"
+#include "Core/Computation/ParticleLayoutComputation.h"
+#include "Core/Computation/RoughMultiLayerComputation.h"
 
 DWBASingleComputation::DWBASingleComputation() = default;
 

@@ -12,19 +12,23 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARMAGNETICSTRATEGY_H
-#define SPECULARMAGNETICSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICSTRATEGY_H
 
-#include "ISpecularStrategy.h"
-#include "MatrixRTCoefficients_v2.h"
-#include "Vectors3D.h"
+#include "Core/Multilayer/ISpecularStrategy.h"
+#include "Core/RT/MatrixRTCoefficients_v2.h"
+#include "Core/Vector/Vectors3D.h"
 #include <memory>
 #include <vector>
 
 class Slice;
 
+//! Implements the magnetic Fresnel computation without roughness
+//!
 //! Implements the matrix formalism for the calculation of wave amplitudes of
 //! the coherent wave solution in a multilayer with magnetization.
+//! For a detailed description see internal document "Polarized Specular Reflectometry"
+//!
 //! @ingroup algorithms_internal
 class BA_CORE_API_ SpecularMagneticStrategy : public ISpecularStrategy
 {
@@ -66,4 +70,4 @@ public:
                                   const Eigen::Matrix2cd& weights);
 };
 
-#endif // SPECULARMAGNETICSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICSTRATEGY_H

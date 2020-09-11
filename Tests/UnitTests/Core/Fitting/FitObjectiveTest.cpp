@@ -1,17 +1,11 @@
-#include "FitObjective.h"
-#include "FittingTestHelper.h"
-#include "Parameters.h"
-#include "google_test.h"
+#include "Core/Fitting/FitObjective.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/Core/Fitting/FittingTestHelper.h"
 
 class FitObjectiveTest : public ::testing::Test
 {
-public:
-    ~FitObjectiveTest();
-
-protected:
 };
-
-FitObjectiveTest::~FitObjectiveTest() = default;
 
 TEST_F(FitObjectiveTest, twoDatasets)
 {

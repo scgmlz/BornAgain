@@ -12,15 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "GISASSimulation.h"
-#include "BornAgainNamespace.h"
-#include "DWBAComputation.h"
-#include "Histogram2D.h"
-#include "IBackground.h"
-#include "IMultiLayerBuilder.h"
-#include "MultiLayer.h"
-#include "SimulationElement.h"
-#include "UnitConverterUtils.h"
+#include "Core/Simulation/GISASSimulation.h"
+#include "Core/Computation/DWBAComputation.h"
+#include "Core/Computation/IBackground.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Simulation/UnitConverterUtils.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
 GISASSimulation::GISASSimulation()
 {
@@ -91,5 +90,5 @@ void GISASSimulation::initSimulationElementVector()
 
 void GISASSimulation::initialize()
 {
-    setName(BornAgain::GISASSimulationType);
+    setName("GISASSimulation");
 }

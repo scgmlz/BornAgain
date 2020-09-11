@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RealLimitsItems.h"
+#include "GUI/coregui/Models/RealLimitsItems.h"
 
 namespace
 {
@@ -27,7 +27,7 @@ RealLimitsItem::RealLimitsItem(const QString& name) : SessionItem(name) {}
 
 // --------------------------------------------------------------------------------------------- //
 
-LimitlessItem::LimitlessItem() : RealLimitsItem(Constants::RealLimitsLimitlessType) {}
+LimitlessItem::LimitlessItem() : RealLimitsItem("RealLimitsLimitless") {}
 
 RealLimits LimitlessItem::createRealLimits(double /*scale_factor*/) const
 {
@@ -36,7 +36,7 @@ RealLimits LimitlessItem::createRealLimits(double /*scale_factor*/) const
 
 // --------------------------------------------------------------------------------------------- //
 
-PositiveItem::PositiveItem() : RealLimitsItem(Constants::RealLimitsPositiveType) {}
+PositiveItem::PositiveItem() : RealLimitsItem("RealLimitsPositive") {}
 
 RealLimits PositiveItem::createRealLimits(double /*scale_factor*/) const
 {
@@ -45,7 +45,7 @@ RealLimits PositiveItem::createRealLimits(double /*scale_factor*/) const
 
 // --------------------------------------------------------------------------------------------- //
 
-NonnegativeItem::NonnegativeItem() : RealLimitsItem(Constants::RealLimitsNonnegativeType) {}
+NonnegativeItem::NonnegativeItem() : RealLimitsItem("RealLimitsNonnegative") {}
 
 RealLimits NonnegativeItem::createRealLimits(double /*scale_factor*/) const
 {
@@ -54,7 +54,7 @@ RealLimits NonnegativeItem::createRealLimits(double /*scale_factor*/) const
 
 // --------------------------------------------------------------------------------------------- //
 
-LowerLimitedItem::LowerLimitedItem() : RealLimitsItem(Constants::RealLimitsLowerLimitedType)
+LowerLimitedItem::LowerLimitedItem() : RealLimitsItem("RealLimitsLowerLimited")
 {
     addProperty(P_XMIN, 0.0)->setToolTip(tooltip_min_value).setLimits(RealLimits::limitless());
 }
@@ -66,7 +66,7 @@ RealLimits LowerLimitedItem::createRealLimits(double scale_factor) const
 
 // --------------------------------------------------------------------------------------------- //
 
-UpperLimitedItem::UpperLimitedItem() : RealLimitsItem(Constants::RealLimitsUpperLimitedType)
+UpperLimitedItem::UpperLimitedItem() : RealLimitsItem("RealLimitsUpperLimited")
 {
     addProperty(P_XMAX, 1.0)->setToolTip(tooltip_max_value).setLimits(RealLimits::limitless());
 }
@@ -78,7 +78,7 @@ RealLimits UpperLimitedItem::createRealLimits(double scale_factor) const
 
 // --------------------------------------------------------------------------------------------- //
 
-LimitedItem::LimitedItem() : RealLimitsItem(Constants::RealLimitsLimitedType)
+LimitedItem::LimitedItem() : RealLimitsItem("RealLimitsLimited")
 {
     addProperty(P_XMIN, 0.0)->setToolTip(tooltip_min_value).setLimits(RealLimits::limitless());
     addProperty(P_XMAX, 1.0)->setToolTip(tooltip_max_value).setLimits(RealLimits::limitless());

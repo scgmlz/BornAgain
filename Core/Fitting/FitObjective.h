@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#ifndef FITOBJECTIVE_H
-#define FITOBJECTIVE_H
+#ifndef BORNAGAIN_CORE_FITTING_FITOBJECTIVE_H
+#define BORNAGAIN_CORE_FITTING_FITOBJECTIVE_H
 
-#include "ArrayUtils.h"
-#include "FitTypes.h"
-#include "IterationInfo.h"
-#include "MinimizerResult.h"
-#include "OutputData.h"
-#include "SimDataPair.h"
+#include "Core/Fitting/FitTypes.h"
+#include "Core/Fitting/IterationInfo.h"
+#include "Core/Fitting/SimDataPair.h"
+#include "Core/Intensity/ArrayUtils.h"
+#include "Core/Intensity/OutputData.h"
+#include "Fit/Kernel/MinimizerResult.h"
 
 class FitStatus;
 class IChiSquaredModule;
@@ -146,4 +146,4 @@ private:
     std::unique_ptr<FitStatus> m_fit_status;
 };
 
-#endif // FITOBJECTIVE_H
+#endif // BORNAGAIN_CORE_FITTING_FITOBJECTIVE_H

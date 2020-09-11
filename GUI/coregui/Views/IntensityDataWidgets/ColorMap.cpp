@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "ColorMap.h"
-#include "AxesItems.h"
-#include "ColorMapUtils.h"
-#include "IntensityDataItem.h"
-#include "MathConstants.h"
-#include "PlotEventInfo.h"
-#include "UpdateTimer.h"
-#include "StyleUtils.h"
-#include "plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
+#include "Core/Basics/MathConstants.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
+#include "GUI/coregui/Views/FitWidgets/plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotEventInfo.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 
 namespace
 {
@@ -131,14 +131,14 @@ void ColorMap::onAxisPropertyChanged(const QString& axisName, const QString& pro
     }
 
     if (axisName == IntensityDataItem::P_XAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setAxesRangeConnected(false);
             m_customPlot->xAxis->setRange(ColorMapUtils::itemZoomX(intensityItem()));
             setAxesRangeConnected(true);
             replot();
         }
     } else if (axisName == IntensityDataItem::P_YAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setAxesRangeConnected(false);
             m_customPlot->yAxis->setRange(ColorMapUtils::itemZoomY(intensityItem()));
             setAxesRangeConnected(true);
@@ -147,7 +147,7 @@ void ColorMap::onAxisPropertyChanged(const QString& axisName, const QString& pro
     }
 
     else if (axisName == IntensityDataItem::P_ZAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setDataRangeFromItem(intensityItem());
             replot();
         } else if (propertyName == AmplitudeAxisItem::P_IS_LOGSCALE) {
@@ -213,8 +213,7 @@ void ColorMap::subscribeToItem()
 
     intensityItem()->mapper()->setOnChildPropertyChange(
         [this](SessionItem* item, const QString name) {
-            if (item->modelType() == Constants::BasicAxisType
-                || item->modelType() == Constants::AmplitudeAxisType)
+            if (item->modelType() == "BasicAxis" || item->modelType() == "AmplitudeAxis")
                 onAxisPropertyChanged(item->itemName(), name);
         },
         this);
@@ -238,7 +237,7 @@ void ColorMap::initColorMap()
 
     m_colorBarLayout->addElement(0, 0, m_colorScale);
     m_colorBarLayout->setMinimumSize(colorbar_width_logz, 10);
-    auto base_size = StyleUtils::SizeOfLetterM(this).width()*0.5;
+    auto base_size = StyleUtils::SizeOfLetterM(this).width() * 0.5;
     m_colorBarLayout->setMargins(QMargins(base_size, 0, base_size, 0));
 
     m_colorScale->axis()->axisRect()->setMargins(QMargins(0, 0, 0, 0));
@@ -247,8 +246,10 @@ void ColorMap::initColorMap()
     m_colorScale->setBarWidth(Constants::plot_colorbar_size());
     m_colorScale->axis()->setTickLabelFont(
         QFont(QFont().family(), Constants::plot_tick_label_size()));
-    m_customPlot->xAxis->setTickLabelFont(QFont(QFont().family(), Constants::plot_tick_label_size()));
-    m_customPlot->yAxis->setTickLabelFont(QFont(QFont().family(), Constants::plot_tick_label_size()));
+    m_customPlot->xAxis->setTickLabelFont(
+        QFont(QFont().family(), Constants::plot_tick_label_size()));
+    m_customPlot->yAxis->setTickLabelFont(
+        QFont(QFont().family(), Constants::plot_tick_label_size()));
 
     connect(m_customPlot, SIGNAL(afterReplot()), this, SLOT(marginsChangedNotify()));
 }
@@ -311,7 +312,7 @@ void ColorMap::setFixedColorMapMargins()
 
 void ColorMap::setColorMapFromItem(IntensityDataItem* intensityItem)
 {
-    Q_ASSERT(intensityItem);
+    ASSERT(intensityItem);
 
     m_block_update = true;
 

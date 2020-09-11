@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ROTATEDPYRAMIDSBUILDER_H
-#define ROTATEDPYRAMIDSBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_ROTATEDPYRAMIDSBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_ROTATEDPYRAMIDSBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! Builds sample: Pyramids, rotated pyramids on top of substrate (IsGISAXS example #9)
 //! @ingroup standard_samples
@@ -33,4 +33,4 @@ private:
     double m_zangle;
 };
 
-#endif // ROTATEDPYRAMIDSBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_ROTATEDPYRAMIDSBUILDER_H

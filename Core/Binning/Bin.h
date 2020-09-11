@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef BIN_H
-#define BIN_H
+#ifndef BORNAGAIN_CORE_BINNING_BIN_H
+#define BORNAGAIN_CORE_BINNING_BIN_H
 
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
 
 struct BA_CORE_API_ Bin1D {
     Bin1D() : m_lower(0), m_upper(0) {}
@@ -61,4 +61,4 @@ public:
     cvector_t m_q_upper; //!< upper bound of the bin
 };
 
-#endif // BIN_H
+#endif // BORNAGAIN_CORE_BINNING_BIN_H

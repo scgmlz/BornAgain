@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "DistributionItems.h"
-#include "BornAgainNamespace.h"
-#include "Distributions.h"
-#include "RangedDistributions.h"
-#include "RealLimitsItems.h"
+#include "GUI/coregui/Models/DistributionItems.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/RangedDistributions.h"
+#include "GUI/coregui/Models/RealLimitsItems.h"
 #include <cmath>
 
 namespace
@@ -27,7 +26,7 @@ createRangedDistribution(const SymmetricDistributionItem& distr_item, double sca
 }
 
 const QString DistributionItem::P_NUMBER_OF_SAMPLES = "Number of samples";
-const QString DistributionItem::P_SIGMA_FACTOR = Constants::DistributionSigmaFactor;
+const QString DistributionItem::P_SIGMA_FACTOR = "Sigma factor";
 const QString DistributionItem::P_IS_INITIALIZED = "is initialized";
 const QString DistributionItem::P_LIMITS = "Limits";
 
@@ -55,19 +54,19 @@ void DistributionItem::init_limits_group(const RealLimits& limits, double factor
     if (!isTag(P_LIMITS))
         return;
     if (limits.isLimitless()) {
-        setGroupProperty(P_LIMITS, Constants::RealLimitsLimitlessType);
+        setGroupProperty(P_LIMITS, "RealLimitsLimitless");
     } else if (limits.isPositive()) {
-        setGroupProperty(P_LIMITS, Constants::RealLimitsPositiveType);
+        setGroupProperty(P_LIMITS, "RealLimitsPositive");
     } else if (limits.isNonnegative()) {
-        setGroupProperty(P_LIMITS, Constants::RealLimitsNonnegativeType);
+        setGroupProperty(P_LIMITS, "RealLimitsNonnegative");
     } else if (limits.isLowerLimited()) {
-        SessionItem* lim = setGroupProperty(P_LIMITS, Constants::RealLimitsLowerLimitedType);
+        SessionItem* lim = setGroupProperty(P_LIMITS, "RealLimitsLowerLimited");
         lim->setItemValue(RealLimitsItem::P_XMIN, limits.lowerLimit() * factor);
     } else if (limits.isUpperLimited()) {
-        SessionItem* lim = setGroupProperty(P_LIMITS, Constants::RealLimitsUpperLimitedType);
+        SessionItem* lim = setGroupProperty(P_LIMITS, "RealLimitsUpperLimited");
         lim->setItemValue(RealLimitsItem::P_XMAX, limits.upperLimit() * factor);
     } else if (limits.isLimited()) {
-        SessionItem* lim = setGroupProperty(P_LIMITS, Constants::RealLimitsLimitedType);
+        SessionItem* lim = setGroupProperty(P_LIMITS, "RealLimitsLimited");
         lim->setItemValue(RealLimitsItem::P_XMIN, limits.lowerLimit() * factor);
         lim->setItemValue(RealLimitsItem::P_XMAX, limits.upperLimit() * factor);
     }
@@ -85,13 +84,13 @@ void DistributionItem::register_sigma_factor()
 
 void DistributionItem::register_limits()
 {
-    addGroupProperty(P_LIMITS, Constants::RealLimitsGroup);
-    setGroupProperty(P_LIMITS, Constants::RealLimitsLimitlessType);
+    addGroupProperty(P_LIMITS, "RealLimits group");
+    setGroupProperty(P_LIMITS, "RealLimitsLimitless");
 }
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString SymmetricDistributionItem::P_MEAN = QString::fromStdString(BornAgain::Mean);
+const QString SymmetricDistributionItem::P_MEAN = QString::fromStdString("Mean");
 
 SymmetricDistributionItem::SymmetricDistributionItem(const QString& name) : DistributionItem(name)
 {
@@ -104,8 +103,7 @@ void SymmetricDistributionItem::showMean(bool flag)
 
 // --------------------------------------------------------------------------------------------- //
 
-DistributionNoneItem::DistributionNoneItem()
-    : SymmetricDistributionItem(Constants::DistributionNoneType)
+DistributionNoneItem::DistributionNoneItem() : SymmetricDistributionItem("DistributionNone")
 {
     addProperty(P_MEAN, 0.1)->setLimits(RealLimits::limitless()).setDisplayName("Value");
     getItem(P_MEAN)->setDecimals(4);
@@ -134,10 +132,10 @@ void DistributionNoneItem::init_distribution(double value)
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString DistributionGateItem::P_MIN = QString::fromStdString(BornAgain::Minimum);
-const QString DistributionGateItem::P_MAX = QString::fromStdString(BornAgain::Maximum);
+const QString DistributionGateItem::P_MIN = QString::fromStdString("Min");
+const QString DistributionGateItem::P_MAX = QString::fromStdString("Max");
 
-DistributionGateItem::DistributionGateItem() : DistributionItem(Constants::DistributionGateType)
+DistributionGateItem::DistributionGateItem() : DistributionItem("DistributionGate")
 {
     addProperty(P_MIN, 0.0)->setLimits(RealLimits::limitless());
     addProperty(P_MAX, 1.0)->setLimits(RealLimits::limitless());
@@ -164,10 +162,10 @@ void DistributionGateItem::init_distribution(double value)
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString DistributionLorentzItem::P_HWHM = QString::fromStdString(BornAgain::HWHM);
+const QString DistributionLorentzItem::P_HWHM = QString::fromStdString("HWHM");
 
 DistributionLorentzItem::DistributionLorentzItem()
-    : SymmetricDistributionItem(Constants::DistributionLorentzType)
+    : SymmetricDistributionItem("DistributionLorentz")
 {
     addProperty(P_MEAN, 1.0)->setLimits(RealLimits::limitless());
     addProperty(P_HWHM, 1.0);
@@ -207,10 +205,10 @@ void DistributionLorentzItem::init_distribution(double value)
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString DistributionGaussianItem::P_STD_DEV = QString::fromStdString(BornAgain::StdDeviation);
+const QString DistributionGaussianItem::P_STD_DEV = QString::fromStdString("StdDev");
 
 DistributionGaussianItem::DistributionGaussianItem()
-    : SymmetricDistributionItem(Constants::DistributionGaussianType)
+    : SymmetricDistributionItem("DistributionGaussian")
 {
     addProperty(P_MEAN, 1.0)->setLimits(RealLimits::limitless());
     addProperty(P_STD_DEV, 1.0);
@@ -250,12 +248,10 @@ void DistributionGaussianItem::init_distribution(double value)
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString DistributionLogNormalItem::P_MEDIAN = QString::fromStdString(BornAgain::Median);
-const QString DistributionLogNormalItem::P_SCALE_PAR =
-    QString::fromStdString(BornAgain::ScaleParameter);
+const QString DistributionLogNormalItem::P_MEDIAN = QString::fromStdString("Median");
+const QString DistributionLogNormalItem::P_SCALE_PAR = QString::fromStdString("ScaleParameter");
 
-DistributionLogNormalItem::DistributionLogNormalItem()
-    : DistributionItem(Constants::DistributionLogNormalType)
+DistributionLogNormalItem::DistributionLogNormalItem() : DistributionItem("DistributionLogNormal")
 {
     addProperty(P_MEDIAN, 1.0);
     addProperty(P_SCALE_PAR, 1.0);
@@ -289,10 +285,9 @@ void DistributionLogNormalItem::showMean(bool flag)
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString DistributionCosineItem::P_SIGMA = QString::fromStdString(BornAgain::Sigma);
+const QString DistributionCosineItem::P_SIGMA = QString::fromStdString("Sigma");
 
-DistributionCosineItem::DistributionCosineItem()
-    : SymmetricDistributionItem(Constants::DistributionCosineType)
+DistributionCosineItem::DistributionCosineItem() : SymmetricDistributionItem("DistributionCosine")
 {
     addProperty(P_MEAN, 1.0)->setLimits(RealLimits::limitless());
     addProperty(P_SIGMA, 1.0);
@@ -332,15 +327,12 @@ void DistributionCosineItem::init_distribution(double value)
 
 // --------------------------------------------------------------------------------------------- //
 
-const QString DistributionTrapezoidItem::P_CENTER = QString::fromStdString(BornAgain::Center);
-const QString DistributionTrapezoidItem::P_LEFTWIDTH = QString::fromStdString(BornAgain::LeftWidth);
-const QString DistributionTrapezoidItem::P_MIDDLEWIDTH =
-    QString::fromStdString(BornAgain::MiddleWidth);
-const QString DistributionTrapezoidItem::P_RIGHTWIDTH =
-    QString::fromStdString(BornAgain::RightWidth);
+const QString DistributionTrapezoidItem::P_CENTER = QString::fromStdString("Center");
+const QString DistributionTrapezoidItem::P_LEFTWIDTH = QString::fromStdString("LeftWidth");
+const QString DistributionTrapezoidItem::P_MIDDLEWIDTH = QString::fromStdString("MiddleWidth");
+const QString DistributionTrapezoidItem::P_RIGHTWIDTH = QString::fromStdString("RightWidth");
 
-DistributionTrapezoidItem::DistributionTrapezoidItem()
-    : DistributionItem(Constants::DistributionTrapezoidType)
+DistributionTrapezoidItem::DistributionTrapezoidItem() : DistributionItem("DistributionTrapezoid")
 {
     addProperty(P_CENTER, 1.0)->setLimits(RealLimits::limitless());
     addProperty(P_LEFTWIDTH, 1.0);

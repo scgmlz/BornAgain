@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DETAILEDMESSAGEBOX_H
-#define DETAILEDMESSAGEBOX_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DETAILEDMESSAGEBOX_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DETAILEDMESSAGEBOX_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 #include <QString>
 
@@ -45,4 +45,4 @@ private:
     QTextEdit* m_textEdit;
 };
 
-#endif // DETAILEDMESSAGEBOX_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DETAILEDMESSAGEBOX_H

@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "ParameterTuningWidget.h"
-#include "GUIHelpers.h"
-#include "IntensityDataItem.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "JobRealTimeToolBar.h"
-#include "ParameterTreeItems.h"
-#include "ParameterTuningDelegate.h"
-#include "ParameterTuningModel.h"
-#include "SliderSettingsWidget.h"
-#include "WarningSign.h"
+#include "GUI/coregui/Views/JobWidgets/ParameterTuningWidget.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
+#include "GUI/coregui/Models/ParameterTuningModel.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
+#include "GUI/coregui/Views/JobWidgets/JobRealTimeToolBar.h"
+#include "GUI/coregui/Views/JobWidgets/ParameterTuningDelegate.h"
+#include "GUI/coregui/Views/JobWidgets/SliderSettingsWidget.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -61,7 +61,7 @@ ParameterTuningWidget::ParameterTuningWidget(QWidget* parent)
 
 QItemSelectionModel* ParameterTuningWidget::selectionModel()
 {
-    Q_ASSERT(m_treeView);
+    ASSERT(m_treeView);
     return m_treeView->selectionModel();
 }
 
@@ -80,7 +80,7 @@ QVector<ParameterItem*> ParameterTuningWidget::getSelectedParameters()
 
 void ParameterTuningWidget::onCurrentLinkChanged(SessionItem* item)
 {
-    Q_ASSERT(jobItem());
+    ASSERT(jobItem());
 
     if (jobItem()->isRunning())
         return;
@@ -106,7 +106,7 @@ void ParameterTuningWidget::onLockZValueChanged(bool value)
 
 void ParameterTuningWidget::updateParameterModel()
 {
-    Q_ASSERT(m_jobModel);
+    ASSERT(m_jobModel);
 
     if (!jobItem())
         return;
@@ -134,8 +134,8 @@ void ParameterTuningWidget::onCustomContextMenuRequested(const QPoint& point)
 
 void ParameterTuningWidget::restoreModelsOfCurrentJobItem()
 {
-    Q_ASSERT(m_jobModel);
-    Q_ASSERT(jobItem());
+    ASSERT(m_jobModel);
+    ASSERT(jobItem());
 
     if (jobItem()->isRunning())
         return;
@@ -196,8 +196,8 @@ JobItem* ParameterTuningWidget::jobItem()
 
 void ParameterTuningWidget::updateDragAndDropSettings()
 {
-    Q_ASSERT(jobItem());
-    if (jobItem()->getStatus() == Constants::STATUS_FITTING) {
+    ASSERT(jobItem());
+    if (jobItem()->getStatus() == "Fitting") {
         setTuningDelegateEnabled(false);
         m_treeView->setDragDropMode(QAbstractItemView::NoDragDrop);
     } else {

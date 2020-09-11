@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "RectangularDetectorEditor.h"
-#include "ComboProperty.h"
-#include "ComponentEditor.h"
-#include "RectangularDetectorItem.h"
+#include "GUI/coregui/Views/InstrumentWidgets/RectangularDetectorEditor.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/RectangularDetectorItem.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QGridLayout>
 
 RectangularDetectorEditor::RectangularDetectorEditor(QWidget* parent)
@@ -60,7 +60,7 @@ void RectangularDetectorEditor::unsubscribeFromItem()
 RectangularDetectorItem* RectangularDetectorEditor::detectorItem()
 {
     auto result = dynamic_cast<RectangularDetectorItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
@@ -126,7 +126,7 @@ void RectangularDetectorEditor::init_alignment_editors()
     ComboProperty alignment =
         detectorItem()->getItemValue(RectangularDetectorItem::P_ALIGNMENT).value<ComboProperty>();
 
-    if (alignment.getValue() == Constants::ALIGNMENT_GENERIC) {
+    if (alignment.getValue() == "Generic") {
         m_positionsEditor->show();
         m_normalEditor->show();
         m_directionEditor->show();
@@ -140,15 +140,15 @@ void RectangularDetectorEditor::init_alignment_editors()
         auto directionVectorItem = detectorItem()->getItem(RectangularDetectorItem::P_DIRECTION);
         m_directionEditor->setItem(directionVectorItem);
 
-    } else if (alignment.getValue() == Constants::ALIGNMENT_TO_DIRECT_BEAM
-               || alignment.getValue() == Constants::ALIGNMENT_TO_REFLECTED_BEAM_DPOS) {
+    } else if (alignment.getValue() == "Perpendicular to direct beam"
+               || alignment.getValue() == "Perpendicular to reflected beam (dpos)") {
         m_positionsEditor->show();
         m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DBEAM_U0));
         m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DBEAM_V0));
         m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_DISTANCE));
 
-    } else if (alignment.getValue() == Constants::ALIGNMENT_TO_SAMPLE
-               || alignment.getValue() == Constants::ALIGNMENT_TO_REFLECTED_BEAM) {
+    } else if (alignment.getValue() == "Perpendicular to sample x-axis"
+               || alignment.getValue() == "Perpendicular to reflected beam") {
         m_positionsEditor->show();
 
         m_positionsEditor->addItem(detectorItem()->getItem(RectangularDetectorItem::P_U0));

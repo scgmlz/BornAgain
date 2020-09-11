@@ -12,28 +12,25 @@
 //
 // ************************************************************************** //
 
-#include "TestView.h"
-#include "AccordionWidget.h"
-#include "ApplicationModels.h"
-#include "Data1DViewItem.h"
-#include "DataPropertyContainer.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "MaskEditor.h"
-#include "MaterialEditor.h"
-#include "MinimizerItem.h"
-#include "MinimizerSettingsWidget.h"
-#include "Plot1DCanvas.h"
-#include "RealDataItem.h"
-#include "SampleModel.h"
-#include "SpecularDataItem.h"
-#include "TestComponentView.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/TestView.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/MinimizerItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
+#include "GUI/coregui/Views/FitWidgets/MinimizerSettingsWidget.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditor.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialEditor.h"
+#include "GUI/coregui/Views/PropertyEditor/TestComponentView.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceWidget.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/Plot1DCanvas.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QTreeView>
-
-#ifdef BORNAGAIN_OPENGL
-#include "RealSpaceWidget.h"
-#endif
 
 #include <QCheckBox>
 #include <QLineEdit>
@@ -89,8 +86,8 @@ void TestView::test_MinimizerSettings()
     setLayout(layout);
 
     SessionModel* model = new SessionModel("TempModel", this);
-    MinimizerContainerItem* minimizerItem = dynamic_cast<MinimizerContainerItem*>(
-        model->insertNewItem(Constants::MinimizerContainerType));
+    MinimizerContainerItem* minimizerItem =
+        dynamic_cast<MinimizerContainerItem*>(model->insertNewItem("MinimizerContainer"));
     widget->setItem(minimizerItem);
 }
 
@@ -175,10 +172,8 @@ void TestView::test_ba3d()
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
-#ifdef BORNAGAIN_OPENGL
     RealSpaceWidget* widget = new RealSpaceWidget(m_mainWindow->sampleModel());
     layout->addWidget(widget);
-#endif
     setLayout(layout);
 }
 
@@ -187,7 +182,7 @@ void TestView::test_specular_data_widget()
     SessionModel* tempModel = new SessionModel("Test", this);
 
     // creating job item
-    auto job_item = dynamic_cast<JobItem*>(tempModel->insertNewItem(Constants::JobItemType));
+    auto job_item = dynamic_cast<JobItem*>(tempModel->insertNewItem("JobItem"));
 
     // creating "simulation" data
     auto data_item = new SpecularDataItem();
@@ -230,7 +225,7 @@ double getTestValue(size_t bin, double factor)
 SpecularDataItem* fillTestItem(SessionItem* item, double factor)
 {
     SpecularDataItem* result = dynamic_cast<SpecularDataItem*>(item);
-    Q_ASSERT(result);
+    ASSERT(result);
     auto outputData = std::make_unique<OutputData<double>>();
     outputData->addAxis(FixedBinAxis("Angle [deg]", 1000, 0.0, 10.0));
     for (size_t i = 0; i < 1000; ++i)

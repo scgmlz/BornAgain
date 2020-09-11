@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "FitFlowWidget.h"
-#include "FitSuiteItem.h"
-#include "HistogramPlot.h"
+#include "GUI/coregui/Views/FitWidgets/FitFlowWidget.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Views/FitWidgets/HistogramPlot.h"
 #include <QVBoxLayout>
 
 FitFlowWidget::FitFlowWidget(QWidget* parent)

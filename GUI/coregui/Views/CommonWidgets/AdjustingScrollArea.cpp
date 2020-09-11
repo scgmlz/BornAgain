@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "AdjustingScrollArea.h"
+#include "GUI/coregui/Views/CommonWidgets/AdjustingScrollArea.h"
 #include <QEvent>
 #include <QScrollBar>
 

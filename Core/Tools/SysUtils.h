@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SYSUTILS_H
-#define SYSUTILS_H
+#ifndef BORNAGAIN_CORE_TOOLS_SYSUTILS_H
+#define BORNAGAIN_CORE_TOOLS_SYSUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 //! Utility functions getCurrentDateAndTime, enableFloatingPointExceptions.
@@ -36,4 +36,4 @@ BA_CORE_API_ bool isWindowsHost();
 
 } // namespace SysUtils
 
-#endif // SYSUTILS_H
+#endif // BORNAGAIN_CORE_TOOLS_SYSUTILS_H

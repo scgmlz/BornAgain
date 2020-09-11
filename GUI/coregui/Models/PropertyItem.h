@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYITEM_H
-#define PROPERTYITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PROPERTYITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PROPERTYITEM_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class BA_CORE_API_ PropertyItem : public SessionItem
 {
@@ -24,4 +24,4 @@ public:
     PropertyItem();
 };
 
-#endif // PROPERTYITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PROPERTYITEM_H

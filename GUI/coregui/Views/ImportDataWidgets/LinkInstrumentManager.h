@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LINKINSTRUMENTMANAGER_H
-#define LINKINSTRUMENTMANAGER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QList>
 #include <QObject>
 #include <QStringList>
@@ -82,4 +82,4 @@ private:
     QVector<InstrumentInfo> m_instrumentVec;
 };
 
-#endif // LINKINSTRUMENTMANAGER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H

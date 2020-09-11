@@ -1,15 +1,14 @@
-#include "BornAgainNamespace.h"
-#include "Layer.h"
-#include "LayerInterface.h"
-#include "LayerRoughness.h"
-#include "MaterialFactoryFuncs.h"
-#include "MathConstants.h"
-#include "MultiLayer.h"
-#include "ParticleLayout.h"
-#include "ProcessedSample.h"
-#include "SimulationOptions.h"
-#include "SpecularScalarTanhStrategy.h"
-#include "google_test.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Computation/ProcessedSample.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerInterface.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/SpecularScalarTanhStrategy.h"
+#include "Core/Parametrization/SimulationOptions.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class RTTest : public ::testing::Test
 {
@@ -31,7 +30,7 @@ protected:
         EXPECT_NEAR(coeff1.t_r(1).real(), coeff2.t_r(1).real(), 1e-10);
         EXPECT_NEAR(coeff1.t_r(1).imag(), coeff2.t_r(1).imag(), 1e-10);
     }
-    std::vector<ScalarRTCoefficients> getCoeffs(SpecularScalarTanhStrategy::coeffs_t&& inputCoeffs)
+    std::vector<ScalarRTCoefficients> getCoeffs(ISpecularStrategy::coeffs_t&& inputCoeffs)
     {
         std::vector<ScalarRTCoefficients> result;
         for (auto& coeff : inputCoeffs)

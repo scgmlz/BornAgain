@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "SimulationView.h"
-#include "SimulationSetupWidget.h"
-#include "StyledToolBar.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/SimulationView.h"
+#include "GUI/coregui/Views/SimulationWidgets/SimulationSetupWidget.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QVBoxLayout>
 
 SimulationView::SimulationView(MainWindow* mainWindow)

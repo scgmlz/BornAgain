@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DISTRIBUTIONEDITOR_H
-#define DISTRIBUTIONEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONEDITOR_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class QGroupBox;
 class GroupItem;
@@ -49,4 +49,4 @@ private:
     QGroupBox* m_box;
 };
 
-#endif // DISTRIBUTIONEDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONEDITOR_H

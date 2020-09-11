@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "InfoPanelToolBar.h"
+#include "GUI/coregui/Views/CommonWidgets/InfoPanelToolBar.h"
 #include <QAction>
 #include <QHBoxLayout>
 #include <QToolButton>

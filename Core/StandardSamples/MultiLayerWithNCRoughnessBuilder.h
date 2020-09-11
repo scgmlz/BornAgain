@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERWITHNCROUGHNESSBUILDER_H
-#define MULTILAYERWITHNCROUGHNESSBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHNCROUGHNESSBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHNCROUGHNESSBUILDER_H
 
-#include "IMultiLayerBuilder.h"
-#include "MultiLayerWithRoughnessBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/StandardSamples/MultiLayerWithRoughnessBuilder.h"
 
 class ISample;
 
@@ -28,8 +28,6 @@ class BA_CORE_API_ MultiLayerWithNCRoughnessBuilder : public MultiLayerWithRough
 public:
     MultiLayerWithNCRoughnessBuilder();
     MultiLayer* buildSample() const override;
-
-private:
 };
 
-#endif // MULTILAYERWITHNCROUGHNESSBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHNCROUGHNESSBUILDER_H

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "newprojectdialog.h"
-#include "projectdocument.h"
+#include "GUI/coregui/mainwindow/newprojectdialog.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
 #include <QFileDialog>
 #include <QGroupBox>
 #include <QLabel>

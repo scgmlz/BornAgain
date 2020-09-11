@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "ParameterDistribution.h"
-#include "Distributions.h"
-#include "Exceptions.h"
-#include "ParameterSample.h"
+#include "Core/Parametrization/ParameterDistribution.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterSample.h"
 
 ParameterDistribution::ParameterDistribution(const std::string& par_name,
                                              const IDistribution1D& distribution,

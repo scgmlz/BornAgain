@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORCRYSTAL_H
-#define FORMFACTORCRYSTAL_H
+#ifndef BORNAGAIN_CORE_PARTICLE_FORMFACTORCRYSTAL_H
+#define BORNAGAIN_CORE_PARTICLE_FORMFACTORCRYSTAL_H
 
-#include "IFormFactorBorn.h"
-#include "Lattice.h"
+#include "Core/Lattice/Lattice.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! The form factor of a MesoCrystal.
 //! @ingroup formfactors
@@ -64,4 +64,4 @@ private:
     double m_max_rec_length;
 };
 
-#endif // FORMFACTORCRYSTAL_H
+#endif // BORNAGAIN_CORE_PARTICLE_FORMFACTORCRYSTAL_H

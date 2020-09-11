@@ -12,21 +12,25 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARSCALARSTRATEGY_H
-#define SPECULARSCALARSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARSTRATEGY_H
 
-#include "ISpecularStrategy.h"
-#include "ScalarRTCoefficients.h"
-#include "Vectors3D.h"
+#include "Core/Multilayer/ISpecularStrategy.h"
+#include "Core/RT/ScalarRTCoefficients.h"
+#include "Core/Vector/Vectors3D.h"
 #include <memory>
 #include <vector>
 
 class Slice;
 
+//! Implements the scalar Fresnel computation
+//!
 //! Implements method 'execute' to compute refraction angles and transmission/reflection
 //! coefficients for coherent wave propagation in a multilayer.
+//!
+//! Inherited by SpecularScalarNCStrategy, SpecularScalarTanhStrategy
+//!
 //! @ingroup algorithms_internal
-
 class BA_CORE_API_ SpecularScalarStrategy : public ISpecularStrategy
 {
 public:
@@ -47,9 +51,9 @@ private:
 
     static void setZeroBelow(std::vector<ScalarRTCoefficients>& coeff, size_t current_layer);
 
-    bool calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
-                              const std::vector<Slice>& slices, const std::vector<complex_t>& kz,
-                              size_t slice_index) const;
+    void calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
+                              const std::vector<Slice>& slices,
+                              const std::vector<complex_t>& kz) const;
 };
 
-#endif // SPECULARSCALARSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARSTRATEGY_H

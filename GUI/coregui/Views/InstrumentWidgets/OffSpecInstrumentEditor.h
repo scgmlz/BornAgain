@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OFFSPECINSTRUMENTEDITOR_H
-#define OFFSPECINSTRUMENTEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_OFFSPECINSTRUMENTEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_OFFSPECINSTRUMENTEDITOR_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class OffSpecInstrumentItem;
 class OffSpecBeamEditor;
@@ -43,4 +43,4 @@ private:
     PolarizationAnalysisEditor* m_polarizationAnalysisEditor;
 };
 
-#endif // OFFSPECINSTRUMENTEDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_OFFSPECINSTRUMENTEDITOR_H

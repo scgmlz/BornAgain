@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SplashScreen.h"
-#include "GUIHelpers.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/mainwindow/SplashScreen.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QElapsedTimer>

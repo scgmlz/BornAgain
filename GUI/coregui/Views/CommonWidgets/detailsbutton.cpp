@@ -23,8 +23,8 @@
 **
 ****************************************************************************/
 
-#include "detailsbutton.h"
-#include "hostosinfo.h"
+#include "GUI/coregui/Views/CommonWidgets/detailsbutton.h"
+#include "GUI/coregui/utils/hostosinfo.h"
 
 #include <QGraphicsOpacityEffect>
 #include <QGuiApplication>

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SPLASHSCREEN_H
-#define SPLASHSCREEN_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_SPLASHSCREEN_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_SPLASHSCREEN_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QSplashScreen>
 
 class BA_CORE_API_ SplashScreen : public QSplashScreen
@@ -36,4 +36,4 @@ private:
     int m_percentage_done;
 };
 
-#endif // SPLASHSCREEN_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_SPLASHSCREEN_H

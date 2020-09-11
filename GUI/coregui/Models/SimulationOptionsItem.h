@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SIMULATIONOPTIONSITEM_H
-#define SIMULATIONOPTIONSITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SIMULATIONOPTIONSITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SIMULATIONOPTIONSITEM_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 #include <QMap>
 
 //! The SimulationOptionsItem class holds simulation status (run policy, number of threads,
@@ -60,4 +60,4 @@ private:
     QMap<QString, int> m_text_to_nthreads;
 };
 
-#endif // SIMULATIONOPTIONSITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SIMULATIONOPTIONSITEM_H

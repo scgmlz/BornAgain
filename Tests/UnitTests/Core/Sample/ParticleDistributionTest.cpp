@@ -1,12 +1,10 @@
-#include "ParticleDistribution.h"
-#include "BornAgainNamespace.h"
-#include "Distributions.h"
-#include "FormFactors.h"
-#include "MaterialFactoryFuncs.h"
-#include "ParameterUtils.h"
-#include "Particle.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Particle/ParticleDistribution.h"
+#include "Core/Basics/Units.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Particle/Particle.h"
+#include "Core/includeIncludes/FormFactors.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class ParticleDistributionTest : public ::testing::Test
 {
@@ -25,7 +23,6 @@ TEST_F(ParticleDistributionTest, getChildren)
     std::vector<const INode*> children = distr.getChildren();
 
     EXPECT_EQ(children.size(), 2u);
-    EXPECT_EQ(children.at(0)->getName(), BornAgain::ParticleType);
 }
 
 TEST_F(ParticleDistributionTest, mainParameterUnits)
@@ -35,9 +32,9 @@ TEST_F(ParticleDistributionTest, mainParameterUnits)
 
     ParameterDistribution par("/Particle/FullSphere/Radius", gate, 5);
     ParticleDistribution distr(Particle(mat, FormFactorFullSphere(1.0)), par);
-    EXPECT_EQ(ParameterUtils::mainParUnits(distr), BornAgain::UnitsNm);
+    EXPECT_EQ(distr.mainUnits(), "nm");
 
     par = ParameterDistribution("/Particle/Cone/Alpha", gate, 5);
     ParticleDistribution distr2(Particle(mat, FormFactorCone(10.0, 20.0, 70.0 * Units::deg)), par);
-    EXPECT_EQ(ParameterUtils::mainParUnits(distr2), BornAgain::UnitsRad);
+    EXPECT_EQ(distr2.mainUnits(), "rad");
 }

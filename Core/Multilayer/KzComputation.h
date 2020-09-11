@@ -12,19 +12,19 @@
 //
 // ************************************************************************** //
 
-#ifndef IKZCOMPUTATION_H
-#define IKZCOMPUTATION_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_KZCOMPUTATION_H
+#define BORNAGAIN_CORE_MULTILAYER_KZCOMPUTATION_H
 
-#include "Complex.h"
-#include "ICloneable.h"
-#include "Vectors3D.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Basics/ICloneable.h"
+#include "Core/Vector/Vectors3D.h"
 #include <vector>
 
 class Slice;
 
 //! Namespace containing functions for computing kz values for given multilayer and k (or kz) value
 //! on the surface of the sample.
-//! @ingroup simulation
+//! @ingroup samples_internal
 
 namespace KzComputation
 {
@@ -50,4 +50,4 @@ BA_CORE_API_ std::vector<complex_t> computeKzFromRefIndices(const std::vector<Sl
                                                             kvector_t k);
 } // namespace KzComputation
 
-#endif // IKZCOMPUTATION_H
+#endif // BORNAGAIN_CORE_MULTILAYER_KZCOMPUTATION_H

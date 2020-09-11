@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "SampleView.h"
-#include "ApplicationModels.h"
-#include "SampleDesigner.h"
-#include "SampleToolBar.h"
-#include "SampleTreeWidget.h"
-#include "SampleViewActions.h"
-#include "SampleViewDocks.h"
-#include "SampleViewStatusBar.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/SampleView.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleDesigner.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleToolBar.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleTreeWidget.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewActions.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewDocks.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewStatusBar.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QMenu>
 #include <memory>
 

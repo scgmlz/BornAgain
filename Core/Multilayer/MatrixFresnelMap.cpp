@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "MatrixFresnelMap.h"
-#include "SimulationElement.h"
-#include "Slice.h"
-#include "SpecularMagneticOldStrategy.h"
-#include "SpecularMagneticStrategy.h"
+#include "Core/Multilayer/MatrixFresnelMap.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/Multilayer/SpecularMagneticOldStrategy.h"
+#include "Core/Multilayer/SpecularMagneticStrategy.h"
+#include "Core/SimulationElement/SimulationElement.h"
 #include <functional>
 
 MatrixFresnelMap::MatrixFresnelMap(std::unique_ptr<ISpecularStrategy> strategy)

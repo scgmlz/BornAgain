@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORICOSAHEDRON_H
-#define FORMFACTORICOSAHEDRON_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORICOSAHEDRON_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORICOSAHEDRON_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A regular icosahedron.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorIcosahedron : public FormFactorPolyhedron
 {
 public:
+    FormFactorIcosahedron(const std::vector<double> P);
     FormFactorIcosahedron(double edge);
 
     FormFactorIcosahedron* clone() const override final
@@ -38,7 +39,7 @@ protected:
 
 private:
     static const PolyhedralTopology topology;
-    double m_edge;
+    const double& m_edge;
 };
 
-#endif // FORMFACTORICOSAHEDRON_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORICOSAHEDRON_H

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GISASSPECULARCOMPUTATION_H_
-#define GISASSPECULARCOMPUTATION_H_
+#ifndef BORNAGAIN_CORE_COMPUTATION_GISASSPECULARCOMPUTATION_H
+#define BORNAGAIN_CORE_COMPUTATION_GISASSPECULARCOMPUTATION_H
 
 class IFresnelMap;
 class SimulationElement;
@@ -32,4 +32,4 @@ private:
     const IFresnelMap* mp_fresnel_map;
 };
 
-#endif // GISASSPECULARCOMPUTATION_H_
+#endif // BORNAGAIN_CORE_COMPUTATION_GISASSPECULARCOMPUTATION_H

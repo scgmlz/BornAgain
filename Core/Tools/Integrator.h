@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef INTEGRATOR_H
-#define INTEGRATOR_H
+#ifndef BORNAGAIN_CORE_TOOLS_INTEGRATOR_H
+#define BORNAGAIN_CORE_TOOLS_INTEGRATOR_H
 
-#include "WinDllMacros.h"
-#include "Complex.h"
+#include "Core/Basics/Complex.h"
+#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <gsl/gsl_integration.h>
 
@@ -48,4 +48,4 @@ private:
     RealIntegrator imagPart;
 };
 
-#endif // INTEGRATOR_H
+#endif // BORNAGAIN_CORE_TOOLS_INTEGRATOR_H

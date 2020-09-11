@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEEDITOR_H
-#define NODEEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITOR_H
 
 /*
  * Node editor: original code is taken from
@@ -21,7 +21,7 @@
  * Copyright (c) 2012, STANISLAW ADASZEWSKI
  */
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QGraphicsScene;
@@ -60,4 +60,4 @@ private:
     NodeEditorConnection* m_conn;
 };
 
-#endif // NODEEDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITOR_H

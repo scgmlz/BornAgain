@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONDECORATIONMODEL_H
-#define SESSIONDECORATIONMODEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONDECORATIONMODEL_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONDECORATIONMODEL_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QIdentityProxyModel>
 
 class SessionModel;
@@ -42,4 +42,4 @@ private:
     SessionModel* m_model;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONDECORATIONMODEL_H

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "MagneticMaterialImpl.h"
-#include "MaterialUtils.h"
-#include "PhysicalConstants.h"
-#include "Transform3D.h"
-#include "WavevectorInfo.h"
+#include "Core/Material/MagneticMaterialImpl.h"
+#include "Core/Basics/PhysicalConstants.h"
+#include "Core/Material/MaterialUtils.h"
+#include "Core/Vector/Transform3D.h"
+#include "Core/Vector/WavevectorInfo.h"
 #include <memory>
 
 using PhysConsts::gamma_n;
@@ -45,7 +45,6 @@ MagneticMaterialImpl* MagneticMaterialImpl::inverted() const
 {
     std::string name = isScalarMaterial() ? getName() : getName() + "_inv";
     std::unique_ptr<MagneticMaterialImpl> result(this->clone());
-    result->setName(name);
     result->setMagnetization(-magnetization());
     return result.release();
 }
@@ -72,11 +71,10 @@ Eigen::Matrix2cd MagneticMaterialImpl::polarizedSubtrSLD(const WavevectorInfo& w
     return MaterialUtils::MagnetizationCorrection(unit_factor, magnetization_prefactor, mag_ortho);
 }
 
-MagneticMaterialImpl* MagneticMaterialImpl::transformedMaterial(const Transform3D& transform) const
+MagneticMaterialImpl* MagneticMaterialImpl::rotatedMaterial(const Transform3D& transform) const
 {
     kvector_t transformed_field = transform.transformed(m_magnetization);
     std::unique_ptr<MagneticMaterialImpl> result(this->clone());
-    result->setName(this->getName());
     result->setMagnetization(transformed_field);
     return result.release();
 }

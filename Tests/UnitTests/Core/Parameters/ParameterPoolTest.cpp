@@ -1,15 +1,11 @@
-#include "ParameterPool.h"
-#include "Exceptions.h"
-#include "RealParameter.h"
-#include "google_test.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class ParameterPoolTest : public ::testing::Test
 {
-protected:
-    ~ParameterPoolTest();
 };
-
-ParameterPoolTest::~ParameterPoolTest() = default;
 
 TEST_F(ParameterPoolTest, initialState)
 {

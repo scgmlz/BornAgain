@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef POLYGONVIEW_H
-#define POLYGONVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_POLYGONVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_POLYGONVIEW_H
 
-#include "IShape2DView.h"
+#include "GUI/coregui/Views/MaskWidgets/IShape2DView.h"
 #include <QPolygonF>
 
 //! This is a View of polygon mask (represented by PolygonItem) on GraphicsScene.
@@ -56,4 +56,4 @@ private:
     bool m_close_polygon_request;
 };
 
-#endif // POLYGONVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_POLYGONVIEW_H

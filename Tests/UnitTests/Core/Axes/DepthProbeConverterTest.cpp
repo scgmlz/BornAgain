@@ -1,17 +1,15 @@
-#include "Beam.h"
-#include "FixedBinAxis.h"
-#include "MathConstants.h"
-#include "SimpleUnitConverters.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Basics/Units.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class DepthProbeConverterTest : public ::testing::Test
 {
-public:
-    DepthProbeConverterTest();
-    ~DepthProbeConverterTest();
-
 protected:
+    DepthProbeConverterTest();
+
     void checkMainFunctionality(const DepthProbeConverter& test_object);
     void checkAlphaAxis(AxesUnits units, const DepthProbeConverter& test_object);
     void checkZAxis(AxesUnits units, const DepthProbeConverter& test_object);
@@ -20,20 +18,19 @@ protected:
     const double m_z_start = -30.0;
     const double m_z_end = 10.0;
     const size_t m_nbins = 100;
-    Beam m_beam;
     FixedBinAxis m_inclination_axis;
     FixedBinAxis m_z_axis;
+    Beam m_beam;
 };
 
 DepthProbeConverterTest::DepthProbeConverterTest()
     : m_inclination_axis("Angles", m_nbins, m_alpha_start, m_alpha_end) // angles in radians
       ,
       m_z_axis("Positions", m_nbins, m_z_start, m_z_end) // z positions in nm
+      ,
+      m_beam(Beam::horizontalBeam())
 {
-    m_beam.setCentralK(1.0, 0.0, 0.0); // wavelength = 1.0 nm
 }
-
-DepthProbeConverterTest::~DepthProbeConverterTest() = default;
 
 void DepthProbeConverterTest::checkMainFunctionality(const DepthProbeConverter& test_object)
 {
@@ -77,7 +74,6 @@ void DepthProbeConverterTest::checkAlphaAxis(AxesUnits units,
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis.get()));
     EXPECT_EQ(axis->size(), test_object.axisSize(0));
     EXPECT_EQ(axis->size(), m_nbins);
-    EXPECT_EQ(axis->getName(), test_object.axisName(0, units));
     EXPECT_EQ(axis->getMin(), test_object.calculateMin(0, units));
     EXPECT_EQ(axis->getMax(), test_object.calculateMax(0, units));
 }
@@ -88,7 +84,6 @@ void DepthProbeConverterTest::checkZAxis(AxesUnits units, const DepthProbeConver
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis.get()));
     EXPECT_EQ(axis->size(), test_object.axisSize(1));
     EXPECT_EQ(axis->size(), m_nbins);
-    EXPECT_EQ(axis->getName(), test_object.axisName(1, units));
 
     EXPECT_EQ(axis->getMin(), test_object.calculateMin(1, units));
     const double test_min = units == AxesUnits::NBINS ? 0 : m_z_start;

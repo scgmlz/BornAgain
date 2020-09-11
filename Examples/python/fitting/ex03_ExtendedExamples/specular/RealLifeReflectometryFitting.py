@@ -91,7 +91,7 @@ def create_simulation(arg_dict, bin_start, bin_end):
     """
     wavelength = 1.54 * ba.angstrom
     alpha_distr = ba.RangedDistributionGaussian(30, 3)
-    footprint = ba.FootprintFactorGaussian(arg_dict["footprint_factor"])
+    footprint = ba.FootprintGauss(arg_dict["footprint_factor"])
 
     scan = ba.AngularSpecScan(wavelength,
                               get_real_data_axis(bin_start, bin_end))

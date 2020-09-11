@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "MathFunctions.h"
-#include "MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
+#include "Core/Basics/MathConstants.h"
 #include <chrono>
 #include <cstring>
 #include <fftw3.h>

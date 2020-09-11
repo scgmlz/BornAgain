@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "ProjectionsEditor.h"
-#include "IntensityDataItem.h"
-#include "ProjectionsEditorActions.h"
-#include "ProjectionsEditorCanvas.h"
-#include "ProjectionsPropertyPanel.h"
-#include "ProjectionsToolBar.h"
-#include "ProjectionsWidget.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsEditor.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsEditorActions.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsEditorCanvas.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsPropertyPanel.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsToolBar.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsWidget.h"
 #include "minisplitter.h"
 #include <QItemSelectionModel>
 #include <QSplitter>

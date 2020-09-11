@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SIMULATIONOPTIONSWIDGET_H
-#define SIMULATIONOPTIONSWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONOPTIONSWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONOPTIONSWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SimulationOptionsItem;
@@ -37,4 +37,4 @@ private:
     ComponentFlatView* m_boxEditor;
 };
 
-#endif // SIMULATIONOPTIONSWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONOPTIONSWIDGET_H

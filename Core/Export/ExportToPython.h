@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef EXPORTTOPYTHON_H
-#define EXPORTTOPYTHON_H
+#ifndef BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H
+#define BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class MultiLayer;
@@ -32,4 +32,4 @@ BA_CORE_API_ std::string generatePyExportTest(const Simulation& simulation);
 
 } // namespace ExportToPython
 
-#endif // EXPORTTOPYTHON_H
+#endif // BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H

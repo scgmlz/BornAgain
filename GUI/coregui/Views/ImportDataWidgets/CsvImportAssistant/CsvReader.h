@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CSVREADER_H
-#define CSVREADER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVREADER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVREADER_H
 
 #include <algorithm>
 #include <fstream>
@@ -124,4 +124,4 @@ private:
     std::vector<std::vector<std::string>> m_data;
 };
 
-#endif // CSVREADER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVREADER_H

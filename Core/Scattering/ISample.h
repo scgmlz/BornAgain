@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef ISAMPLE_H
-#define ISAMPLE_H
+#ifndef BORNAGAIN_CORE_SCATTERING_ISAMPLE_H
+#define BORNAGAIN_CORE_SCATTERING_ISAMPLE_H
 
-#include "ICloneable.h"
-#include "INode.h"
+#include "Core/Basics/ICloneable.h"
+#include "Core/Parametrization/INode.h"
 #include <vector>
 
 class Material;
@@ -27,6 +27,9 @@ class Material;
 class BA_CORE_API_ ISample : public ICloneable, public INode
 {
 public:
+    ISample() = default;
+    ISample(const NodeMeta& meta, const std::vector<double>& PValues);
+
     //! Returns a clone of this ISample object.
     ISample* clone() const override = 0;
 
@@ -37,4 +40,4 @@ public:
     std::vector<const Material*> containedMaterials() const;
 };
 
-#endif // ISAMPLE_H
+#endif // BORNAGAIN_CORE_SCATTERING_ISAMPLE_H

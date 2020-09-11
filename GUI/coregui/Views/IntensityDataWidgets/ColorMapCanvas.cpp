@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ColorMapCanvas.h"
-#include "ColorMap.h"
-#include "FontScalingEvent.h"
-#include "IntensityDataItem.h"
-#include "PlotStatusLabel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMapCanvas.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/FontScalingEvent.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
 #include <QLabel>
 #include <QVBoxLayout>
 

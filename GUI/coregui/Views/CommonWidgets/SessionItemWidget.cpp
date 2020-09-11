@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SessionItemWidget.h"
-#include "SessionItem.h"
-#include "SessionItemController.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemController.h"
 
 SessionItemWidget::SessionItemWidget(QWidget* parent)
     : QWidget(parent), m_itemController(new SessionItemController(this))

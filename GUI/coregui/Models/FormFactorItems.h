@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORITEMS_H
-#define FORMFACTORITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_FORMFACTORITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_FORMFACTORITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class IFormFactor;
 
@@ -196,66 +196,66 @@ public:
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-class BA_CORE_API_ Ripple1BoxItem : public FormFactorItem
+class BA_CORE_API_ CosineRippleBoxItem : public FormFactorItem
 {
 public:
     static const QString P_LENGTH;
     static const QString P_WIDTH;
     static const QString P_HEIGHT;
-    Ripple1BoxItem();
+    CosineRippleBoxItem();
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-class BA_CORE_API_ Ripple1GaussItem : public FormFactorItem
+class BA_CORE_API_ CosineRippleGaussItem : public FormFactorItem
 {
 public:
     static const QString P_LENGTH;
     static const QString P_WIDTH;
     static const QString P_HEIGHT;
-    Ripple1GaussItem();
+    CosineRippleGaussItem();
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-class BA_CORE_API_ Ripple1LorentzItem : public FormFactorItem
+class BA_CORE_API_ CosineRippleLorentzItem : public FormFactorItem
 {
 public:
     static const QString P_LENGTH;
     static const QString P_WIDTH;
     static const QString P_HEIGHT;
-    Ripple1LorentzItem();
+    CosineRippleLorentzItem();
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-class BA_CORE_API_ Ripple2BoxItem : public FormFactorItem
+class BA_CORE_API_ SawtoothRippleBoxItem : public FormFactorItem
 {
 public:
     static const QString P_LENGTH;
     static const QString P_WIDTH;
     static const QString P_HEIGHT;
     static const QString P_ASYMMETRY;
-    Ripple2BoxItem();
+    SawtoothRippleBoxItem();
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-class BA_CORE_API_ Ripple2GaussItem : public FormFactorItem
+class BA_CORE_API_ SawtoothRippleGaussItem : public FormFactorItem
 {
 public:
     static const QString P_LENGTH;
     static const QString P_WIDTH;
     static const QString P_HEIGHT;
     static const QString P_ASYMMETRY;
-    Ripple2GaussItem();
+    SawtoothRippleGaussItem();
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-class BA_CORE_API_ Ripple2LorentzItem : public FormFactorItem
+class BA_CORE_API_ SawtoothRippleLorentzItem : public FormFactorItem
 {
 public:
     static const QString P_LENGTH;
     static const QString P_WIDTH;
     static const QString P_HEIGHT;
     static const QString P_ASYMMETRY;
-    Ripple2LorentzItem();
+    SawtoothRippleLorentzItem();
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
@@ -299,4 +299,4 @@ public:
     std::unique_ptr<IFormFactor> createFormFactor() const;
 };
 
-#endif // FORMFACTORITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_FORMFACTORITEMS_H

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SimulationOptions.h"
+#include "Core/Parametrization/SimulationOptions.h"
 #include <stdexcept>
 #include <thread>
 

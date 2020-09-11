@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DATAFORMATUTILS_H
-#define DATAFORMATUTILS_H
+#ifndef BORNAGAIN_CORE_INPUTOUTPUT_DATAFORMATUTILS_H
+#define BORNAGAIN_CORE_INPUTOUTPUT_DATAFORMATUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -54,4 +54,4 @@ BA_CORE_API_ std::vector<double> parse_doubles(const std::string& str);
 void readLineOfDoubles(std::vector<double>& buffer, std::istringstream& iss);
 } // namespace DataFormatUtils
 
-#endif // DATAFORMATUTILS_H
+#endif // BORNAGAIN_CORE_INPUTOUTPUT_DATAFORMATUTILS_H

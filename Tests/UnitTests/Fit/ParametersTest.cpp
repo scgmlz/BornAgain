@@ -1,14 +1,10 @@
-#include "Parameters.h"
-#include "google_test.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <string>
 
 class ParametersTest : public ::testing::Test
 {
-protected:
-    ~ParametersTest();
 };
-
-ParametersTest::~ParametersTest() = default;
 
 TEST_F(ParametersTest, defaultConstructor)
 {

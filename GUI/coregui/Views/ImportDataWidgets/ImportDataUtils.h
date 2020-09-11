@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef IMPORTDATAUTILS_H
-#define IMPORTDATAUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_IMPORTDATAUTILS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_IMPORTDATAUTILS_H
 
-#include "ImportDataInfo.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <memory>
 #include <vector>
@@ -50,4 +50,4 @@ BA_CORE_API_ QString printShapeMessage(const std::vector<int>& instrument_shape,
                                        const std::vector<int>& data_shape);
 }; // namespace ImportDataUtils
 
-#endif // IMPORTDATAUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_IMPORTDATAUTILS_H

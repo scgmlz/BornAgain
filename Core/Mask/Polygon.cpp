@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "Polygon.h"
-#include "Bin.h"
-#include "Exceptions.h"
+#include "Core/Mask/Polygon.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Binning/Bin.h"
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>

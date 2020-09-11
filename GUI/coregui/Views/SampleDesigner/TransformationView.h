@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANSFORMATIONVIEW_H
-#define TRANSFORMATIONVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_TRANSFORMATIONVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_TRANSFORMATIONVIEW_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 class TransformationView : public ConnectableView
 {
@@ -27,4 +27,4 @@ public:
     int type() const { return ViewTypes::TRANSFORMATION; }
 };
 
-#endif // TRANSFORMATIONVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_TRANSFORMATIONVIEW_H

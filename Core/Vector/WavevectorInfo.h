@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef WAVEVECTORINFO_H
-#define WAVEVECTORINFO_H
+#ifndef BORNAGAIN_CORE_VECTOR_WAVEVECTORINFO_H
+#define BORNAGAIN_CORE_VECTOR_WAVEVECTORINFO_H
 
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
 
 class Transform3D;
 
@@ -48,4 +48,4 @@ private:
     double m_vacuum_wavelength;
 };
 
-#endif // WAVEVECTORINFO_H
+#endif // BORNAGAIN_CORE_VECTOR_WAVEVECTORINFO_H

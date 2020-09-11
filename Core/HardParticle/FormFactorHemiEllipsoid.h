@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORHEMIELLIPSOID_H
-#define FORMFACTORHEMIELLIPSOID_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORHEMIELLIPSOID_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORHEMIELLIPSOID_H
 
-#include "IFormFactorBorn.h"
-#include "Integrator.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! An hemi ellipsoid,
 //!   obtained by truncating a full ellipsoid in the middle plane spanned by two principal axes.
@@ -25,6 +24,7 @@
 class BA_CORE_API_ FormFactorHemiEllipsoid : public IFormFactorBorn
 {
 public:
+    FormFactorHemiEllipsoid(const std::vector<double> P);
     FormFactorHemiEllipsoid(double radius_x, double radius_y, double height);
     virtual ~FormFactorHemiEllipsoid() {}
 
@@ -48,11 +48,10 @@ protected:
 private:
     complex_t Integrand(double Z) const;
 
-    double m_radius_x;
-    double m_radius_y;
-    double m_height;
+    const double& m_radius_x;
+    const double& m_radius_y;
+    const double& m_height;
     mutable cvector_t m_q;
-    mutable ComplexIntegrator m_integrator;
 };
 
-#endif // FORMFACTORHEMIELLIPSOID_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORHEMIELLIPSOID_H

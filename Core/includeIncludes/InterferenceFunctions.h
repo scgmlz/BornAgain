@@ -12,19 +12,19 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONS_H
-#define INTERFERENCEFUNCTIONS_H
+#ifndef BORNAGAIN_CORE_INCLUDEINCLUDES_INTERFERENCEFUNCTIONS_H
+#define BORNAGAIN_CORE_INCLUDEINCLUDES_INTERFERENCEFUNCTIONS_H
 
-#include "InterferenceFunction1DLattice.h"
-#include "InterferenceFunction2DLattice.h"
-#include "InterferenceFunction2DParaCrystal.h"
-#include "InterferenceFunction2DSuperLattice.h"
-#include "InterferenceFunction3DLattice.h"
-#include "InterferenceFunctionFinite2DLattice.h"
-#include "InterferenceFunctionFinite3DLattice.h"
-#include "InterferenceFunctionHardDisk.h"
-#include "InterferenceFunctionNone.h"
-#include "InterferenceFunctionRadialParaCrystal.h"
-#include "InterferenceFunctionTwin.h"
+#include "Core/Aggregate/InterferenceFunction1DLattice.h"
+#include "Core/Aggregate/InterferenceFunction2DLattice.h"
+#include "Core/Aggregate/InterferenceFunction2DParaCrystal.h"
+#include "Core/Aggregate/InterferenceFunction2DSuperLattice.h"
+#include "Core/Aggregate/InterferenceFunction3DLattice.h"
+#include "Core/Aggregate/InterferenceFunctionFinite2DLattice.h"
+#include "Core/Aggregate/InterferenceFunctionFinite3DLattice.h"
+#include "Core/Aggregate/InterferenceFunctionHardDisk.h"
+#include "Core/Aggregate/InterferenceFunctionNone.h"
+#include "Core/Aggregate/InterferenceFunctionRadialParaCrystal.h"
+#include "Core/Aggregate/InterferenceFunctionTwin.h"
 
-#endif // INTERFERENCEFUNCTIONS_H
+#endif // BORNAGAIN_CORE_INCLUDEINCLUDES_INTERFERENCEFUNCTIONS_H

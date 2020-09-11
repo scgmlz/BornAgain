@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "PyFittingCallbacks.h"
+#include "Core/Fitting/PyFittingCallbacks.h"
 
 // --- PyBuilderCallback ---
 

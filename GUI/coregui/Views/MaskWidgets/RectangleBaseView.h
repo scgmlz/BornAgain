@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGLEBASEVIEW_H
-#define RECTANGLEBASEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEBASEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEBASEVIEW_H
 
-#include "IShape2DView.h"
-#include "SizeHandleElement.h"
+#include "GUI/coregui/Views/MaskWidgets/IShape2DView.h"
+#include "GUI/coregui/Views/MaskWidgets/SizeHandleElement.h"
 #include <QMap>
 
 //! Base view for all rectangular-like masks.
@@ -58,4 +58,4 @@ protected:
     SizeHandleElement* m_activeHandleElement;
 };
 
-#endif // RECTANGLEBASEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEBASEVIEW_H

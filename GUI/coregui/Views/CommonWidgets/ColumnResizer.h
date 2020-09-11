@@ -19,8 +19,8 @@
  * https://github.com/agateau/columnresizer
  */
 
-#ifndef COLUMNRESIZER_H
-#define COLUMNRESIZER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_COLUMNRESIZER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_COLUMNRESIZER_H
 
 #include <QFormLayout>
 #include <QList>
@@ -59,4 +59,4 @@ private:
     ColumnResizerPrivate* const d;
 };
 
-#endif // COLUMNRESIZER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_COLUMNRESIZER_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GUIOBJECTBUILDER_H
-#define GUIOBJECTBUILDER_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_GUIOBJECTBUILDER_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_GUIOBJECTBUILDER_H
 
-#include "INodeVisitor.h"
+#include "Core/Parametrization/INodeVisitor.h"
 #include <QMap>
 #include <QString>
 
@@ -39,14 +39,14 @@ BA_CORE_API_ SessionItem* populateSampleModelFromSim(SampleModel* sampleModel,
 BA_CORE_API_ SessionItem* populateSampleModel(SampleModel* sampleModel,
                                               MaterialModel* materialModel,
                                               const MultiLayer& sample,
-                                              const QString& sample_name = QString());
+                                              const QString& sample_name = "");
 
 BA_CORE_API_ SessionItem* populateInstrumentModel(InstrumentModel* p_instrument_model,
                                                   const Simulation& simulation,
-                                                  const QString& instrument_name = QString());
+                                                  const QString& instrument_name = "");
 
 BA_CORE_API_ SessionItem* populateDocumentModel(DocumentModel* p_documentModel,
                                                 const Simulation& simulation);
 }; // namespace GUIObjectBuilder
 
-#endif // GUIOBJECTBUILDER_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_GUIOBJECTBUILDER_H

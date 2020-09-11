@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "PyCallback.h"
+#include "Fit/Kernel/PyCallback.h"
 
 PyCallback::PyCallback(PyCallback::CallbackType callback_type) : m_callback_type(callback_type) {}
 

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef WELCOMEVIEW_H
-#define WELCOMEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WELCOMEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WELCOMEVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QPushButton;
@@ -65,4 +65,4 @@ private:
     UpdateNotifierWidget* m_notifierWidget;
 };
 
-#endif // WELCOMEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WELCOMEVIEW_H

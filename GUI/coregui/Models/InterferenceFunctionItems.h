@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONITEMS_H
-#define INTERFERENCEFUNCTIONITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_INTERFERENCEFUNCTIONITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_INTERFERENCEFUNCTIONITEMS_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 class IInterferenceFunction;
 
 class BA_CORE_API_ InterferenceFunctionItem : public SessionGraphicsItem
@@ -104,4 +104,4 @@ public:
     std::unique_ptr<IInterferenceFunction> createInterferenceFunction() const;
 };
 
-#endif // INTERFERENCEFUNCTIONITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_INTERFERENCEFUNCTIONITEMS_H

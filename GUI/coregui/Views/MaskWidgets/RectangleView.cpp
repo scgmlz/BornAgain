@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "RectangleView.h"
-#include "MaskItems.h"
+#include "GUI/coregui/Views/MaskWidgets/RectangleView.h"
+#include "GUI/coregui/Models/MaskItems.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 

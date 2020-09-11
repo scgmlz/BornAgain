@@ -1,61 +1,54 @@
-#include "OutputDataIterator.h"
-#include "OutputData.h"
-#include "google_test.h"
+#include "Core/Intensity/OutputDataIterator.h"
+#include "Core/Intensity/OutputData.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class OutputDataIteratorTest : public ::testing::Test
 {
 protected:
     OutputDataIteratorTest();
-    virtual ~OutputDataIteratorTest();
 
-    OutputData<double>* p_data;
+    OutputData<double> _data;
 };
 
 OutputDataIteratorTest::OutputDataIteratorTest()
 {
-    p_data = new OutputData<double>();
     int* dims = new int[2];
     dims[0] = 3;
     dims[1] = 5;
-    p_data->setAxisSizes(2, dims);
+    _data.setAxisSizes(2, dims);
     double value = 0.0;
-    OutputData<double>::iterator it = p_data->begin();
-    while (it != p_data->end()) {
+    OutputData<double>::iterator it = _data.begin();
+    while (it != _data.end()) {
         *it = value;
         value += 1.0;
         ++it;
     }
 }
 
-OutputDataIteratorTest::~OutputDataIteratorTest()
-{
-    delete p_data;
-}
-
 TEST_F(OutputDataIteratorTest, Iterate)
 {
-    OutputData<double>::iterator it = p_data->begin();
+    OutputData<double>::iterator it = _data.begin();
     EXPECT_EQ(0.0, *it);
     for (size_t i = 0; i < 14; ++i) {
         ++it;
     }
     EXPECT_DOUBLE_EQ(14.0, *it);
     ++it;
-    EXPECT_EQ(it, p_data->end());
+    EXPECT_EQ(it, _data.end());
     ++it;
-    EXPECT_EQ(it, p_data->end());
+    EXPECT_EQ(it, _data.end());
 }
 
 TEST_F(OutputDataIteratorTest, ConstIterate)
 {
-    OutputData<double>::const_iterator it = p_data->begin();
+    OutputData<double>::const_iterator it = _data.begin();
     EXPECT_EQ(0.0, *it);
     for (size_t i = 0; i < 14; ++i) {
         ++it;
     }
     EXPECT_DOUBLE_EQ(14.0, *it);
     ++it;
-    EXPECT_EQ(it, p_data->end());
+    EXPECT_EQ(it, _data.end());
     ++it;
-    EXPECT_EQ(it, p_data->end());
+    EXPECT_EQ(it, _data.end());
 }

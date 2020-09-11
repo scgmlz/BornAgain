@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "HomogeneousMultilayerBuilder.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
+#include "Core/StandardSamples/HomogeneousMultilayerBuilder.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
 
 HomogeneousMultilayerBuilder::HomogeneousMultilayerBuilder()
     : m_number_of_layers(10), m_delta_ti(-7.36e-7), m_delta_ni(3.557e-6), m_delta_si(7.81e-7),

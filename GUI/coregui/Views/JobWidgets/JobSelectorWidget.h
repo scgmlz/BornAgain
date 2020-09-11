@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBSELECTORWIDGET_H
-#define JOBSELECTORWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class JobModel;
@@ -65,4 +65,4 @@ private:
     JobModel* m_jobModel;
 };
 
-#endif // JOBSELECTORWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORWIDGET_H

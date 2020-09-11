@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "IChiSquaredModule.h"
-#include "IIntensityFunction.h"
-#include <VarianceFunctions.h>
+#include "Core/Instrument/IChiSquaredModule.h"
+#include "Core/Instrument/VarianceFunctions.h"
+#include "Core/Intensity/IIntensityFunction.h"
 
 IChiSquaredModule::IChiSquaredModule() : m_variance_function(new VarianceSimFunction) {}
 
@@ -23,7 +23,7 @@ const IVarianceFunction* IChiSquaredModule::varianceFunction() const
     return m_variance_function.get();
 }
 
-IChiSquaredModule::IChiSquaredModule(const IChiSquaredModule& other) : ICloneable()
+IChiSquaredModule::IChiSquaredModule(const IChiSquaredModule& other)
 {
     if (other.m_variance_function)
         m_variance_function.reset(other.m_variance_function->clone());

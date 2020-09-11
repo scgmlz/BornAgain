@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef BEAMITEM_H
-#define BEAMITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_BEAMITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_BEAMITEMS_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class BasicAxisItem;
 class Beam;
@@ -86,4 +86,4 @@ public:
     double getInclinationAngle() const override;
 };
 
-#endif // BEAMITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_BEAMITEMS_H

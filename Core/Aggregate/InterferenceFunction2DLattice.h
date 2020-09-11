@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTION2DLATTICE_H
-#define INTERFERENCEFUNCTION2DLATTICE_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DLATTICE_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DLATTICE_H
 
-#include "FTDecayFunctions.h"
-#include "IInterferenceFunction.h"
-#include "Integrator.h"
-#include "Lattice2D.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Correlations/FTDecay1D.h"
+#include "Core/Correlations/FTDecay2D.h"
+#include "Core/Lattice/Lattice2D.h"
 
 //! Interference function of a 2D lattice.
 //! @ingroup interference
@@ -26,16 +26,16 @@
 class BA_CORE_API_ InterferenceFunction2DLattice : public IInterferenceFunction
 {
 public:
+    InterferenceFunction2DLattice(double length_1, double length_2, double alpha, double xi);
     InterferenceFunction2DLattice(const Lattice2D& lattice);
-    InterferenceFunction2DLattice(double length_1, double length_2, double alpha, double xi = 0.0);
     ~InterferenceFunction2DLattice() final;
 
     InterferenceFunction2DLattice* clone() const override final;
 
     void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
 
-    static InterferenceFunction2DLattice* createSquare(double lattice_length, double xi = 0.0);
-    static InterferenceFunction2DLattice* createHexagonal(double lattice_length, double xi = 0.0);
+    static InterferenceFunction2DLattice* createSquare(double lattice_length, double xi);
+    static InterferenceFunction2DLattice* createHexagonal(double lattice_length, double xi);
 
     void setDecayFunction(const IFTDecayFunction2D& decay);
 
@@ -53,10 +53,8 @@ public:
 
 private:
     double iff_without_dw(const kvector_t q) const override final;
-    InterferenceFunction2DLattice(const InterferenceFunction2DLattice& other);
     void setLattice(const Lattice2D& lattice);
 
-    void init_parameters();
     double interferenceForXi(double xi) const;
 
     //! Returns interference from a single reciprocal lattice vector
@@ -83,7 +81,6 @@ private:
     int m_na, m_nb; //!< determines the number of reciprocal lattice points to use
     mutable double m_qx;
     mutable double m_qy;
-    mutable RealIntegrator m_integrator;
 };
 
-#endif // INTERFERENCEFUNCTION2DLATTICE_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DLATTICE_H

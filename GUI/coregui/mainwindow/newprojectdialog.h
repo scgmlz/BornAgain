@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef NEWPROJECTDIALOG_H
-#define NEWPROJECTDIALOG_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_NEWPROJECTDIALOG_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_NEWPROJECTDIALOG_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 #include <QLineEdit>
 
@@ -26,8 +26,8 @@ class BA_CORE_API_ NewProjectDialog : public QDialog
 {
     Q_OBJECT
 public:
-    NewProjectDialog(QWidget* parent = 0, const QString& workingDirectory = QString(),
-                     const QString& projectName = QString());
+    NewProjectDialog(QWidget* parent = 0, const QString& workingDirectory = "",
+                     const QString& projectName = "");
 
     QString getWorkingDirectory() const;
     void setWorkingDirectory(const QString& text);
@@ -60,4 +60,4 @@ private:
     bool m_valid_projectPath;
 };
 
-#endif // NEWPROJECTDIALOG_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_NEWPROJECTDIALOG_H

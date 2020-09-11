@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "RangedDistributions.h"
-#include "Distributions.h"
-#include "ParameterSample.h"
-#include "PythonFormatting.h"
+#include "Core/Parametrization/RangedDistributions.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Tools/PyFmt.h"
 #include <limits>
 
 namespace
@@ -88,10 +88,10 @@ std::unique_ptr<IDistribution1D> RangedDistribution::distribution(double mean, d
 std::string RangedDistribution::print() const
 {
     std::stringstream result;
-    result << PythonFormatting::indent() << "distribution = " << name();
-    result << "(" << m_n_samples << ", " << PythonFormatting::printDouble(m_sigma_factor);
+    result << pyfmt::indent() << "distribution = " << name();
+    result << "(" << m_n_samples << ", " << pyfmt::printDouble(m_sigma_factor);
     if (!m_limits.isLimitless())
-        result << PythonFormatting::printRealLimitsArg(m_limits);
+        result << pyfmt::printRealLimitsArg(m_limits);
     result << ")";
     return result.str();
 }

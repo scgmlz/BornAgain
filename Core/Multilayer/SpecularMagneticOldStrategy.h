@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARMAGNETICOLDSTRATEGY_H
-#define SPECULARMAGNETICOLDSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICOLDSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICOLDSTRATEGY_H
 
-#include "ISpecularStrategy.h"
-#include "MatrixRTCoefficients.h"
-#include "Vectors3D.h"
+#include "Core/Multilayer/ISpecularStrategy.h"
+#include "Core/RT/MatrixRTCoefficients.h"
+#include "Core/Vector/Vectors3D.h"
 #include <memory>
 #include <vector>
 
@@ -38,4 +38,4 @@ public:
 
 }; // class SpecularMagneticOldStrategy
 
-#endif // SPECULARMAGNETICOLDSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICOLDSTRATEGY_H

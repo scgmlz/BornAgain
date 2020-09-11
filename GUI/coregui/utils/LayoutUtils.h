@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYOUTUTILS_H
-#define LAYOUTUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_UTILS_LAYOUTUTILS_H
+#define BORNAGAIN_GUI_COREGUI_UTILS_LAYOUTUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 class QLayout;
 class QGridLayout;
@@ -43,4 +43,4 @@ BA_CORE_API_ void clearGridLayout(QGridLayout* layout, bool deleteWidgets = true
 BA_CORE_API_ QWidget* placeHolder();
 } // namespace LayoutUtils
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_UTILS_LAYOUTUTILS_H

@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "ProcessedLayout.h"
-#include "FormFactorBAPol.h"
-#include "FormFactorCoherentSum.h"
-#include "FormFactorDWBA.h"
-#include "FormFactorDWBAPol.h"
-#include "IInterferenceFunction.h"
-#include "ILayout.h"
-#include "IParticle.h"
-#include "Slice.h"
-#include "SlicedFormFactorList.h"
+#include "Core/Computation/ProcessedLayout.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Correlations/ILayout.h"
+#include "Core/Multilayer/FormFactorBAPol.h"
+#include "Core/Multilayer/FormFactorCoherentSum.h"
+#include "Core/Multilayer/FormFactorDWBA.h"
+#include "Core/Multilayer/FormFactorDWBAPol.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/Multilayer/SlicedFormFactorList.h"
+#include "Core/Particle/IParticle.h"
 
 namespace
 {

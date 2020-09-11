@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "MinimizerSettingsWidget.h"
-#include "ComponentEditor.h"
-#include "FitSuiteItem.h"
-#include "JobItem.h"
-#include "MinimizerItem.h"
+#include "GUI/coregui/Views/FitWidgets/MinimizerSettingsWidget.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/MinimizerItem.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -41,13 +41,13 @@ QSize MinimizerSettingsWidget::minimumSizeHint() const
 
 void MinimizerSettingsWidget::setItem(JobItem* jobItem)
 {
-    Q_ASSERT(jobItem);
+    ASSERT(jobItem);
     setItem(jobItem->fitSuiteItem()->minimizerContainerItem());
 }
 
 void MinimizerSettingsWidget::setItem(MinimizerContainerItem* minimizerItem)
 {
-    Q_ASSERT(minimizerItem);
+    ASSERT(minimizerItem);
     m_currentItem = minimizerItem;
     m_componentEditor->setItem(minimizerItem);
 }

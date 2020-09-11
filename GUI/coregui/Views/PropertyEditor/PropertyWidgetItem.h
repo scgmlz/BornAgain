@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYWIDGETITEM_H
-#define PROPERTYWIDGETITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_PROPERTYWIDGETITEM_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_PROPERTYWIDGETITEM_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QLabel;
@@ -52,4 +52,4 @@ private:
     const SessionItem* m_item;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_PROPERTYWIDGETITEM_H

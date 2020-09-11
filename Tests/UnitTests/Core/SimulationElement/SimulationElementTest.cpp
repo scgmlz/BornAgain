@@ -1,8 +1,8 @@
-#include "SimulationElement.h"
-#include "Bin.h"
-#include "SphericalDetector.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Basics/Units.h"
+#include "Core/Binning/Bin.h"
+#include "Core/Detector/SphericalPixel.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 namespace
@@ -17,8 +17,6 @@ const double phi_i = 0.0 * Units::deg;
 class SimulationElementTest : public ::testing::Test
 {
 public:
-    ~SimulationElementTest();
-
     std::unique_ptr<IPixel> createPixel() const
     {
         return std::make_unique<SphericalPixel>(alpha_bin, phi_bin);
@@ -30,8 +28,6 @@ public:
     }
 };
 
-SimulationElementTest::~SimulationElementTest() = default;
-
 TEST_F(SimulationElementTest, basicConstructor)
 {
     SimulationElement element(wavelength, alpha_i, phi_i, createPixel());
@@ -39,8 +35,8 @@ TEST_F(SimulationElementTest, basicConstructor)
     EXPECT_EQ(element.getAlphaI(), alpha_i);
     EXPECT_EQ(element.getPhiI(), phi_i);
     EXPECT_EQ(element.getIntensity(), 0.0);
-    EXPECT_FLOAT_EQ(element.getAlphaMean(), 0.5 * Units::deg);
-    EXPECT_FLOAT_EQ(element.getPhiMean(), 0.0 * Units::deg);
+    EXPECT_NEAR(element.getAlphaMean(), 0.5 * Units::deg, 1e-14);
+    EXPECT_NEAR(element.getPhiMean(), 0.0 * Units::deg, 1e-14);
     EXPECT_EQ(element.getKi(), vecOfLambdaAlphaPhi(wavelength, alpha_i, phi_i));
     EXPECT_EQ(element.getMeanKf(), createPixel()->getK(0.5, 0.5, wavelength));
     EXPECT_FALSE(element.isSpecular());

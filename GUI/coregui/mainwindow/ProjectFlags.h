@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTFLAGS_H
-#define PROJECTFLAGS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTFLAGS_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTFLAGS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QFlags>
 
 class BA_CORE_API_ ProjectFlags
@@ -37,4 +37,4 @@ public:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(ProjectFlags::DocumentStatus)
 
-#endif //  PROJECTFLAGS_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTFLAGS_H

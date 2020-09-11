@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBMODELFUNCTIONS_H
-#define JOBMODELFUNCTIONS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBMODELFUNCTIONS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_JOBMODELFUNCTIONS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 class InstrumentItem;
 class JobItem;
@@ -52,4 +52,4 @@ BA_CORE_API_ void copyRealDataItem(JobItem* jobItem, const RealDataItem* realDat
 BA_CORE_API_ const JobItem* findJobItem(const SessionItem* item);
 } // namespace JobModelFunctions
 
-#endif // JOBMODELFUNCTIONS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_JOBMODELFUNCTIONS_H

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "FancyLabel.h"
+#include "GUI/coregui/utils/FancyLabel.h"
 #include <QTimer>
 
 FancyLabel::FancyLabel(const QString& text, QWidget* parent) : QLabel(text, parent)

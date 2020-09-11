@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "ComponentProxyModel.h"
-#include "ComponentProxyStrategy.h"
-#include "ModelUtils.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/ComponentProxyModel.h"
+#include "GUI/coregui/Models/ComponentProxyStrategy.h"
+#include "GUI/coregui/Models/ModelUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
 #include <QSet>
 #include <functional>
 
@@ -147,11 +147,11 @@ void ComponentProxyModel::sourceDataChanged(const QModelIndex& topLeft,
                                             const QModelIndex& bottomRight,
                                             const QVector<int>& roles)
 {
-    Q_ASSERT(topLeft.isValid() ? topLeft.model() == sourceModel() : true);
-    Q_ASSERT(bottomRight.isValid() ? bottomRight.model() == sourceModel() : true);
+    ASSERT(topLeft.isValid() ? topLeft.model() == sourceModel() : true);
+    ASSERT(bottomRight.isValid() ? bottomRight.model() == sourceModel() : true);
 
     if (SessionItem* item = m_model->itemForIndex(topLeft)) {
-        if (item->modelType() == Constants::GroupItemType)
+        if (item->modelType() == "GroupProperty")
             updateModelMap();
     }
     dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);

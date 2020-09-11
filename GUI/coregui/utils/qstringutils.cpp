@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "qstringutils.h"
-#include "hostosinfo.h"
+#include "GUI/coregui/utils/qstringutils.h"
+#include "GUI/coregui/utils/hostosinfo.h"
 #include <QDir>
 
 namespace GUI_StringUtils

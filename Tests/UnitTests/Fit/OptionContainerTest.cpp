@@ -1,14 +1,10 @@
-#include "OptionContainer.h"
-#include "google_test.h"
+#include "Fit/Tools/OptionContainer.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <exception>
 
 class OptionContainerTest : public ::testing::Test
 {
-protected:
-    ~OptionContainerTest();
 };
-
-OptionContainerTest::~OptionContainerTest() = default;
 
 TEST_F(OptionContainerTest, addOption)
 {

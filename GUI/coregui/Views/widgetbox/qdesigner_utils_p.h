@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef QDESIGNER_UTILS_P_H
-#define QDESIGNER_UTILS_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_UTILS_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_UTILS_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 #include <QtDesigner/QDesignerFormWindowInterface>
 
@@ -330,9 +330,8 @@ private:
 class QDESIGNER_SHARED_EXPORT PropertySheetTranslatableData
 {
 protected:
-    PropertySheetTranslatableData(bool translatable = true,
-                                  const QString& disambiguation = QString(),
-                                  const QString& comment = QString());
+    PropertySheetTranslatableData(bool translatable = true, const QString& disambiguation = "",
+                                  const QString& comment = "");
     bool equals(const PropertySheetTranslatableData& rhs) const;
 
 public:
@@ -353,9 +352,8 @@ private:
 class QDESIGNER_SHARED_EXPORT PropertySheetStringValue : public PropertySheetTranslatableData
 {
 public:
-    PropertySheetStringValue(const QString& value = QString(), bool translatable = true,
-                             const QString& disambiguation = QString(),
-                             const QString& comment = QString());
+    PropertySheetStringValue(const QString& value = "", bool translatable = true,
+                             const QString& disambiguation = "", const QString& comment = "");
 
     bool operator==(const PropertySheetStringValue& other) const { return equals(other); }
     bool operator!=(const PropertySheetStringValue& other) const { return !equals(other); }
@@ -373,9 +371,8 @@ private:
 class QDESIGNER_SHARED_EXPORT PropertySheetStringListValue : public PropertySheetTranslatableData
 {
 public:
-    PropertySheetStringListValue(const QStringList& value = QStringList(), bool translatable = true,
-                                 const QString& disambiguation = QString(),
-                                 const QString& comment = QString());
+    PropertySheetStringListValue(const QStringList& value = {}, bool translatable = true,
+                                 const QString& disambiguation = "", const QString& comment = "");
 
     bool operator==(const PropertySheetStringListValue& other) const { return equals(other); }
     bool operator!=(const PropertySheetStringListValue& other) const { return !equals(other); }
@@ -393,14 +390,11 @@ private:
 class QDESIGNER_SHARED_EXPORT PropertySheetKeySequenceValue : public PropertySheetTranslatableData
 {
 public:
-    PropertySheetKeySequenceValue(const QKeySequence& value = QKeySequence(),
-                                  bool translatable = true,
-                                  const QString& disambiguation = QString(),
-                                  const QString& comment = QString());
+    PropertySheetKeySequenceValue(const QKeySequence& value = {}, bool translatable = true,
+                                  const QString& disambiguation = "", const QString& comment = "");
     PropertySheetKeySequenceValue(const QKeySequence::StandardKey& standardKey,
-                                  bool translatable = true,
-                                  const QString& disambiguation = QString(),
-                                  const QString& comment = QString());
+                                  bool translatable = true, const QString& disambiguation = "",
+                                  const QString& comment = "");
 
     bool operator==(const PropertySheetKeySequenceValue& other) const { return equals(other); }
     bool operator!=(const PropertySheetKeySequenceValue& other) const { return !equals(other); }
@@ -519,4 +513,4 @@ inline bool isCentralWidget(QDesignerFormWindowInterface* fw, QWidget* widget)
 
 QT_END_NAMESPACE
 
-#endif // QDESIGNER_UTILS_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_UTILS_P_H

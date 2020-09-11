@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DECOUPLINGAPPROXIMATIONSTRATEGY_H
-#define DECOUPLINGAPPROXIMATIONSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_DECOUPLINGAPPROXIMATIONSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_DECOUPLINGAPPROXIMATIONSTRATEGY_H
 
-#include "IInterferenceFunctionStrategy.h"
+#include "Core/Multilayer/IInterferenceFunctionStrategy.h"
 
 class SimulationElement;
 
@@ -33,4 +33,4 @@ private:
     double polarizedCalculation(const SimulationElement& sim_element) const override;
 };
 
-#endif // DECOUPLINGAPPROXIMATIONSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_DECOUPLINGAPPROXIMATIONSTRATEGY_H

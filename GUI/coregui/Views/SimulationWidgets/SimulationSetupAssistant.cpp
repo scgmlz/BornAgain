@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "SimulationSetupAssistant.h"
-#include "ImportDataUtils.h"
-#include "InstrumentItems.h"
-#include "RealDataItem.h"
-#include "SampleValidator.h"
+#include "GUI/coregui/Views/SimulationWidgets/SimulationSetupAssistant.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SampleValidator.h"
+#include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
 #include <QMessageBox>
 
 //! Returns true if given setup is valid for submitting the job
@@ -34,7 +34,7 @@ bool SimulationSetupAssistant::isValidSimulationSetup(const MultiLayerItem* mult
     checkFittingSetup(instrumentItem, realData);
 
     if (!m_isValid)
-        QMessageBox::warning(nullptr, QStringLiteral("Can't run the job"), composeMessage());
+        QMessageBox::warning(nullptr, "Can't run the job", composeMessage());
 
     return m_isValid;
 }
@@ -48,7 +48,7 @@ void SimulationSetupAssistant::clear()
 void SimulationSetupAssistant::checkMultiLayerItem(const MultiLayerItem* multiLayerItem)
 {
     if (!multiLayerItem) {
-        m_messages.append(QStringLiteral("No sample selected"));
+        m_messages.append("No sample selected");
         m_isValid = false;
     } else {
         SampleValidator sampleValidator;
@@ -62,7 +62,7 @@ void SimulationSetupAssistant::checkMultiLayerItem(const MultiLayerItem* multiLa
 void SimulationSetupAssistant::checkInstrumentItem(const InstrumentItem* instrumentItem)
 {
     if (!instrumentItem) {
-        m_messages.append(QStringLiteral("No instrument selected"));
+        m_messages.append("No instrument selected");
         m_isValid = false;
     }
 }

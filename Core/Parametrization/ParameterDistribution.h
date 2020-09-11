@@ -12,16 +12,18 @@
 //
 // ************************************************************************** //
 
-#ifndef PARAMETERDISTRIBUTION_H
-#define PARAMETERDISTRIBUTION_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERDISTRIBUTION_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERDISTRIBUTION_H
 
-#include "IParameterized.h"
-#include "ParameterSample.h"
-#include "RealLimits.h"
+#include "Core/Parametrization/IParameterized.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Fit/Tools/RealLimits.h"
 #include <memory>
 #include <vector>
 
 class IDistribution1D;
+
+//! A parametric distribution function, for use with any model parameter.
 
 class BA_CORE_API_ ParameterDistribution : public IParameterized
 {
@@ -75,4 +77,4 @@ private:
     double m_xmax;
 };
 
-#endif // PARAMETERDISTRIBUTION_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERDISTRIBUTION_H

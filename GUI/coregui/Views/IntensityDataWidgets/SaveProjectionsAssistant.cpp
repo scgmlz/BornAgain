@@ -12,16 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "SaveProjectionsAssistant.h"
-#include "GUIHelpers.h"
-#include "Histogram1D.h"
-#include "Histogram2D.h"
-#include "IntensityDataItem.h"
-#include "MaskItems.h"
-#include "ProjectUtils.h"
-#include "ProjectionItems.h"
-#include "PythonFormatting.h"
-#include "item_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/SaveProjectionsAssistant.h"
+#include "Core/Intensity/Histogram1D.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Tools/PyFmt.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/ProjectionItems.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QFileDialog>
 #include <QTextStream>
 
@@ -32,13 +31,13 @@ const int bin_values_colwidth = 20;
 
 QString to_scientific_str(double value)
 {
-    auto str = PythonFormatting::printScientificDouble(value);
+    auto str = pyfmt::printScientificDouble(value);
     return QString("%1").arg(QString::fromStdString(str), -bin_values_colwidth);
 }
 
 QString to_double_str(double value)
 {
-    auto str = PythonFormatting::printDouble(value);
+    auto str = pyfmt::printDouble(value);
     return QString("%1").arg(QString::fromStdString(str), -bin_centers_colwidth);
 }
 } // unnamed namespace
@@ -50,9 +49,9 @@ SaveProjectionsAssistant::~SaveProjectionsAssistant() = default;
 
 void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataItem* intensityItem)
 {
-    Q_ASSERT(intensityItem);
+    ASSERT(intensityItem);
 
-    QString defaultName = ProjectUtils::userExportDir() + QString("/untitled.txt");
+    QString defaultName = ProjectUtils::userExportDir() + "/untitled.txt";
     QString fileName = QFileDialog::getSaveFileName(parent, "Save projections data", defaultName);
 
     if (fileName.isEmpty())
@@ -68,11 +67,11 @@ void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataIte
     QTextStream out(&file);
 
     out << "# Projections along x-axis (horizontal projections) \n";
-    out << projectionsToString(Constants::HorizontalLineMaskType, intensityItem);
+    out << projectionsToString("HorizontalLineMask", intensityItem);
     out << "\n";
 
     out << "# Projections along y-axis (vertical projections) \n";
-    out << projectionsToString(Constants::VerticalLineMaskType, intensityItem);
+    out << projectionsToString("VerticalLineMask", intensityItem);
     out << "\n";
 
     file.close();
@@ -96,7 +95,7 @@ QString SaveProjectionsAssistant::projectionsToString(const QString& projections
     auto bin_centers = projData.bin_centers;
 
     for (int i_point = 0; i_point < bin_centers.size(); ++i_point) {
-        out << to_double_str(bin_centers[i_point]) << QString(" ");
+        out << to_double_str(bin_centers[i_point]) << " ";
         for (auto& data : projData.projections) {
             out << to_scientific_str(data.bin_values[i_point]);
         }
@@ -112,14 +111,14 @@ SaveProjectionsAssistant::projectionsData(const QString& projectionsType,
                                           IntensityDataItem* intensityItem)
 {
     ProjectionsData result;
-    projectionsType == Constants::VerticalLineMaskType ? result.is_horizontal = false
-                                                       : result.is_horizontal = true;
+    projectionsType == "VerticalLineMask" ? result.is_horizontal = false
+                                          : result.is_horizontal = true;
 
     for (auto item : projectionItems(projectionsType, intensityItem)) {
         std::unique_ptr<Histogram1D> hist;
         SaveProjectionsAssistant::Projection data;
 
-        if (item->modelType() == Constants::HorizontalLineMaskType) {
+        if (item->modelType() == "HorizontalLineMask") {
             data.axis_value = item->getItemValue(HorizontalLineItem::P_POSY).toDouble();
             hist.reset(m_hist2d->projectionX(data.axis_value));
         } else {
@@ -152,7 +151,7 @@ QVector<SessionItem*> SaveProjectionsAssistant::projectionItems(const QString& p
     auto result = intensityItem->projectionContainerItem()->getChildrenOfType(projectionsType);
     std::sort(result.begin(), result.end(), [=](SessionItem* item1, SessionItem* item2) {
         QString propertyName = HorizontalLineItem::P_POSY;
-        if (projectionsType != Constants::HorizontalLineMaskType)
+        if (projectionsType != "HorizontalLineMask")
             propertyName = VerticalLineItem::P_POSX;
 
         return item1->getItemValue(propertyName).toDouble()

@@ -12,9 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "SavePlotAssistant.h"
-#include "ColorMap.h"
-#include "IntensityDataIOFactory.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/SavePlotAssistant.h"
+#include "Core/Basics/Assert.h"
+#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -55,7 +56,7 @@ void SavePlotAssistant::savePlot(const QString& dirname, QCustomPlot* plot,
 
 {
     QString selectedFilter("*.png");
-    QString defaultName = dirname + QString("/untitled");
+    QString defaultName = dirname + "/untitled";
     QString fileName = QFileDialog::getSaveFileName(0, "Save Plot", defaultName, getFilterString(),
                                                     &selectedFilter);
 
@@ -90,7 +91,7 @@ void SavePlotAssistant::saveToFile(const QString& fileName, QCustomPlot* plot,
     }
 
     else {
-        Q_ASSERT(output_data);
+        ASSERT(output_data);
         IntensityDataIOFactory::writeOutputData(*output_data, fileName.toStdString());
     }
 }
@@ -138,7 +139,7 @@ QString SavePlotAssistant::getExtensionFromFilterName(const QString& filterName)
             return m_formats[i].m_file_extention;
         }
     }
-    return QString();
+    return "";
 }
 
 bool SavePlotAssistant::isPngFile(const QString& fileName) const

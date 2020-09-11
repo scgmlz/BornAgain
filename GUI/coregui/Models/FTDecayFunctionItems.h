@@ -12,11 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef FTDECAYFUNCTIONITEMS_H
-#define FTDECAYFUNCTIONITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_FTDECAYFUNCTIONITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_FTDECAYFUNCTIONITEMS_H
 
-#include "FTDecayFunctions.h"
-#include "SessionItem.h"
+#include "Core/Correlations/FTDecay1D.h"
+#include "Core/Correlations/FTDecay2D.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class BA_CORE_API_ FTDecayFunction1DItem : public SessionItem
 {
@@ -99,4 +100,4 @@ public:
     std::unique_ptr<IFTDecayFunction2D> createFTDecayFunction() const;
 };
 
-#endif // FTDECAYFUNCTIONITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_FTDECAYFUNCTIONITEMS_H

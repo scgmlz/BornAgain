@@ -12,17 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "ProjectionsPlot.h"
-#include "AxesItems.h"
-#include "ColorMapUtils.h"
-#include "Histogram1D.h"
-#include "Histogram2D.h"
-#include "IntensityDataItem.h"
-#include "MaskItems.h"
-#include "ModelMapper.h"
-#include "ProjectionItems.h"
-#include "SessionItem.h"
-#include "plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ProjectionsPlot.h"
+#include "Core/Intensity/Histogram1D.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/ProjectionItems.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/FitWidgets/plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
 #include "qcustomplot.h"
 
 ProjectionsPlot::ProjectionsPlot(const QString& projectionType, QWidget* parent)
@@ -35,8 +34,10 @@ ProjectionsPlot::ProjectionsPlot(const QString& projectionType, QWidget* parent)
     vlayout->addWidget(m_customPlot);
     setLayout(vlayout);
 
-    m_customPlot->xAxis->setTickLabelFont(QFont(QFont().family(), Constants::plot_tick_label_size()));
-    m_customPlot->yAxis->setTickLabelFont(QFont(QFont().family(), Constants::plot_tick_label_size()));
+    m_customPlot->xAxis->setTickLabelFont(
+        QFont(QFont().family(), Constants::plot_tick_label_size()));
+    m_customPlot->yAxis->setTickLabelFont(
+        QFont(QFont().family(), Constants::plot_tick_label_size()));
 
     ColorMapUtils::setDefaultMargins(m_customPlot);
 }
@@ -87,8 +88,7 @@ void ProjectionsPlot::subscribeToItem()
     // Update to changed IntensityDataItem axes
     intensityItem()->mapper()->setOnChildPropertyChange(
         [this](SessionItem* item, const QString name) {
-            if (item->modelType() == Constants::BasicAxisType
-                || item->modelType() == Constants::AmplitudeAxisType)
+            if (item->modelType() == "BasicAxis" || item->modelType() == "AmplitudeAxis")
                 onAxisPropertyChanged(item->itemName(), name);
         },
         this);
@@ -123,7 +123,7 @@ void ProjectionsPlot::onProjectionPropertyChanged(SessionItem* item, const QStri
 IntensityDataItem* ProjectionsPlot::intensityItem()
 {
     IntensityDataItem* result = dynamic_cast<IntensityDataItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
@@ -131,7 +131,7 @@ ProjectionContainerItem* ProjectionsPlot::projectionContainerItem()
 {
     ProjectionContainerItem* result = dynamic_cast<ProjectionContainerItem*>(
         intensityItem()->getItem(IntensityDataItem::T_PROJECTIONS));
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
@@ -255,7 +255,7 @@ void ProjectionsPlot::onAxisPropertyChanged(const QString& axisName, const QStri
 {
     Q_UNUSED(axisName);
 
-    if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX)
+    if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG)
         updateAxesRange();
     else if (propertyName == BasicAxisItem::P_TITLE)
         updateAxesTitle();
@@ -271,7 +271,7 @@ void ProjectionsPlot::setGraphFromItem(QCPGraph* graph, SessionItem* item)
 {
     std::unique_ptr<Histogram1D> hist;
 
-    if (item->modelType() == Constants::HorizontalLineMaskType) {
+    if (item->modelType() == "HorizontalLineMask") {
         double value = item->getItemValue(HorizontalLineItem::P_POSY).toDouble();
         hist.reset(m_hist2d->projectionX(value));
     } else {
@@ -310,5 +310,5 @@ void ProjectionsPlot::replot()
 
 bool ProjectionsPlot::isHorizontalType()
 {
-    return m_projectionType == Constants::HorizontalLineMaskType;
+    return m_projectionType == "HorizontalLineMask";
 }

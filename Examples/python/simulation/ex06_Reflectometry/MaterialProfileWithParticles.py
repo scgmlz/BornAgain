@@ -35,7 +35,7 @@ def get_sample():
     particle = ba.Particle(m_particle, ff)
     layout = ba.ParticleLayout()
     layout.addParticle(particle)
-    iff = ba.InterferenceFunction2DLattice.createSquare(10 * nm)
+    iff = ba.InterferenceFunction2DLattice.createSquare(10 * nm, 0)
     layout.setInterferenceFunction(iff)
     ambient_layer.addLayout(layout)
     ambient_layer.setNumberOfSlices(20)

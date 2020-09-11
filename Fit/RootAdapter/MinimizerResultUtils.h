@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MINIMIZERRESULTSHELPER_H
-#define MINIMIZERRESULTSHELPER_H
+#ifndef BORNAGAIN_FIT_ROOTADAPTER_MINIMIZERRESULTUTILS_H
+#define BORNAGAIN_FIT_ROOTADAPTER_MINIMIZERRESULTUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class RootMinimizerAdapter;
@@ -37,4 +37,4 @@ std::string reportParameters(const Fit::Parameters& parameters);
 
 }; // namespace MinimizerResultUtils
 
-#endif // MINIMIZERRESULTSHELPER_H
+#endif // BORNAGAIN_FIT_ROOTADAPTER_MINIMIZERRESULTUTILS_H

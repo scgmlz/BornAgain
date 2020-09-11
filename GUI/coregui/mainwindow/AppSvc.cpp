@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "AppSvc.h"
-#include "GUIHelpers.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 ProjectManager* AppSvc::projectManager()
 {

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GUIDOMAINSAMPLEVISITOR_H
-#define GUIDOMAINSAMPLEVISITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H
 
-#include "INodeVisitor.h"
+#include "Core/Parametrization/INodeVisitor.h"
 #include <QMap>
 #include <QString>
 
@@ -36,8 +36,7 @@ public:
     ~GUIDomainSampleVisitor();
 
     SessionItem* populateSampleModel(SampleModel* sampleModel, MaterialModel* materialModel,
-                                     const MultiLayer& sample,
-                                     const QString& sample_name = QString());
+                                     const MultiLayer& sample, const QString& sample_name = "");
 
     using INodeVisitor::visit;
 
@@ -71,12 +70,12 @@ public:
     void visit(const FormFactorPrism3*);
     void visit(const FormFactorPrism6*);
     void visit(const FormFactorPyramid*);
-    void visit(const FormFactorRipple1Box*);
-    void visit(const FormFactorRipple1Gauss*);
-    void visit(const FormFactorRipple1Lorentz*);
-    void visit(const FormFactorRipple2Box*);
-    void visit(const FormFactorRipple2Gauss*);
-    void visit(const FormFactorRipple2Lorentz*);
+    void visit(const FormFactorCosineRippleBox*);
+    void visit(const FormFactorCosineRippleGauss*);
+    void visit(const FormFactorCosineRippleLorentz*);
+    void visit(const FormFactorSawtoothRippleBox*);
+    void visit(const FormFactorSawtoothRippleGauss*);
+    void visit(const FormFactorSawtoothRippleLorentz*);
     void visit(const FormFactorTetrahedron*);
     void visit(const FormFactorDot*);
     void visit(const FormFactorTruncatedCube*);
@@ -111,4 +110,4 @@ private:
     MaterialModel* m_materialModel;
 };
 
-#endif //  GUIDOMAINSAMPLEVISITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H

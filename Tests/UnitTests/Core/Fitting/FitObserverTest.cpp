@@ -1,5 +1,5 @@
-#include "FitObserver.h"
-#include "google_test.h"
+#include "Core/Fitting/FitObserver.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class FitObserverTest : public ::testing::Test
 {
@@ -11,13 +11,7 @@ public:
         int m_ncalls;
         int m_data;
     };
-
-    ~FitObserverTest();
-
-protected:
 };
-
-FitObserverTest::~FitObserverTest() = default;
 
 //! Checks that single observer is called on every iteration.
 

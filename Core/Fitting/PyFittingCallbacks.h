@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef PYFITTINGCALLBACKS_H
-#define PYFITTINGCALLBACKS_H
+#ifndef BORNAGAIN_CORE_FITTING_PYFITTINGCALLBACKS_H
+#define BORNAGAIN_CORE_FITTING_PYFITTINGCALLBACKS_H
 
 //! Collection of wrapper classes to call Python callable from C++.
 
-#include "Parameters.h"
-#include "WinDllMacros.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Wrap/WinDllMacros.h"
 
 class Simulation;
 
@@ -50,4 +50,4 @@ public:
     virtual void update(const FitObjective&);
 };
 
-#endif //  PYFITTINGCALLBACKS_H
+#endif // BORNAGAIN_CORE_FITTING_PYFITTINGCALLBACKS_H

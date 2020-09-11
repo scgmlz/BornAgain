@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MINIMIZERUTILS_H
-#define MINIMIZERUTILS_H
+#ifndef BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
+#define BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -38,4 +38,4 @@ BA_CORE_API_ std::string sectionString(const std::string& sectionName = "",
 
 } // namespace MinimizerUtils
 
-#endif
+#endif // BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H

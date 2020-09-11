@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMSELECTORWIDGET_H
-#define ITEMSELECTORWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSELECTORWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSELECTORWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QItemSelectionModel>
 #include <QWidget>
 #include <memory>
@@ -71,4 +71,4 @@ protected:
     std::unique_ptr<SessionDecorationModel> m_decorationModel;
 };
 
-#endif // ITEMSELECTORWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSELECTORWIDGET_H

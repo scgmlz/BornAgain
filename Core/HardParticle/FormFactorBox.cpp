@@ -12,30 +12,34 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorBox.h"
-#include "BornAgainNamespace.h"
-#include "Box.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorBox.h"
+#include "Core/Tools/MathFunctions.h"
 
 //! Constructor of a rectangular cuboid.
 //! @param length: length of the base in nanometers
 //! @param width: width of the base in nanometers
 //! @param height: height of the box in nanometers
-FormFactorBox::FormFactorBox(double length, double width, double height)
-    : m_length(length), m_width(width), m_height(height)
+FormFactorBox::FormFactorBox(const std::vector<double> P)
+    : FormFactorPolygonalPrism({"Box",
+                                "class_tooltip",
+                                {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                                 {"Width", "nm", "para_tooltip", 0, +INF, 0},
+                                 {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                               P),
+      m_length(m_P[0]), m_width(m_P[1]), m_height(m_P[2])
 {
-    setName(BornAgain::FFBoxType);
-    registerParameter(BornAgain::Length, &m_length).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Width, &m_width).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
     onChange();
+}
+
+FormFactorBox::FormFactorBox(double length, double width, double height)
+    : FormFactorBox(std::vector<double>{length, width, height})
+{
 }
 
 complex_t FormFactorBox::evaluate_for_q(cvector_t q) const
 {
     complex_t qzHdiv2 = m_height / 2 * q.z();
-    return m_height * m_length * m_width * MathFunctions::sinc(m_length / 2 * q.x())
+    return m_length * m_width * m_height * MathFunctions::sinc(m_length / 2 * q.x())
            * MathFunctions::sinc(m_width / 2 * q.y()) * MathFunctions::sinc(qzHdiv2)
            * exp_I(qzHdiv2);
 }
@@ -50,5 +54,8 @@ IFormFactor* FormFactorBox::sliceFormFactor(ZLimits limits, const IRotation& rot
 
 void FormFactorBox::onChange()
 {
-    mP_shape.reset(new Box(m_length, m_width, m_height));
+    double a = m_length / 2;
+    double b = m_width / 2;
+    std::vector<kvector_t> V{{a, b, 0.}, {-a, b, 0.}, {-a, -b, 0.}, {a, -b, 0}};
+    setPrism(true, V);
 }

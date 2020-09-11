@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef OFFSPECSIMULATION_H
-#define OFFSPECSIMULATION_H
+#ifndef BORNAGAIN_CORE_SIMULATION_OFFSPECSIMULATION_H
+#define BORNAGAIN_CORE_SIMULATION_OFFSPECSIMULATION_H
 
-#include "Simulation2D.h"
-#include "SimulationElement.h"
+#include "Core/Simulation/Simulation2D.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
 class Histogram2D;
 
@@ -88,4 +88,4 @@ private:
     OutputData<double> m_intensity_map;
 };
 
-#endif // OFFSPECSIMULATION_H
+#endif // BORNAGAIN_CORE_SIMULATION_OFFSPECSIMULATION_H

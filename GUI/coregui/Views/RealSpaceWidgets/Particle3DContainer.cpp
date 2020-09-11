@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "Particle3DContainer.h"
-#include <ba3d/model/particles.h>
+#include "GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h"
+#include "GUI/ba3d/model/particles.h"
 
 // copy constructor
 Particle3DContainer::Particle3DContainer(const Particle3DContainer& other)

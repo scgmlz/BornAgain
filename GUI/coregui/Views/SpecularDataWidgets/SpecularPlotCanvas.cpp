@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "SpecularPlotCanvas.h"
-#include "FontScalingEvent.h"
-#include "PlotStatusLabel.h"
-#include "SpecularDataItem.h"
-#include "SpecularPlot.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularPlotCanvas.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/FontScalingEvent.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularPlot.h"
 #include <QVBoxLayout>
 
 SpecularPlotCanvas::SpecularPlotCanvas(QWidget* parent)

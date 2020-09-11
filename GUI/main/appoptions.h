@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef APPOPTIONS_H
-#define APPOPTIONS_H
+#ifndef BORNAGAIN_GUI_MAIN_APPOPTIONS_H
+#define BORNAGAIN_GUI_MAIN_APPOPTIONS_H
 
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/positional_options.hpp>
@@ -70,4 +70,4 @@ private:
     bpo::variables_map m_variables_map; //! parsed variables
 };
 
-#endif // APPOPTIONS_H
+#endif // BORNAGAIN_GUI_MAIN_APPOPTIONS_H

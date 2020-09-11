@@ -12,15 +12,45 @@
 //
 // ************************************************************************** //
 
-#include "INode.h"
-#include "Exceptions.h"
-#include "IterationStrategy.h"
-#include "NodeIterator.h"
-#include "NodeUtils.h"
-#include "ParameterPool.h"
+#include "Core/Parametrization/INode.h"
+#include "Core/Basics/Algorithms.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Parametrization/IterationStrategy.h"
+#include "Core/Parametrization/NodeIterator.h"
+#include "Core/Parametrization/NodeUtils.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
 #include <algorithm>
+#include <exception>
 
-INode::INode() : m_parent(nullptr) {}
+NodeMeta nodeMetaUnion(const std::vector<ParaMeta>& base, const NodeMeta& other)
+{
+    return {other.className, other.tooltip, algo::concat(base, other.paraMeta)};
+}
+
+INode::INode(const NodeMeta& meta, const std::vector<double>& PValues)
+    : /*m_tooltip(meta.tooltip),*/
+      m_NP(meta.paraMeta.size())
+{
+    m_P.resize(m_NP);
+    setName(meta.className);
+    parameterPool()->clear(); // non-trivially needed by a few children
+    for (size_t i = 0; i < m_NP; ++i) {
+        m_P[i] = PValues[i];
+        const ParaMeta& pm = meta.paraMeta[i];
+        auto& reg = registerParameter(pm.name, &m_P[i]);
+        reg.setUnit(pm.unit);
+        if (pm.vMin == -INF) {
+            ASSERT(pm.vMax == +INF);
+            // nothing to do
+        } else if (pm.vMax == +INF) {
+            ASSERT(pm.vMin == 0);
+            reg.setNonnegative();
+        } else {
+            reg.setLimited(pm.vMin, pm.vMax);
+        }
+    }
+}
 
 std::string INode::treeToString() const
 {
@@ -29,8 +59,7 @@ std::string INode::treeToString() const
 
 void INode::registerChild(INode* node)
 {
-    if (!node)
-        throw Exceptions::NullPointerException("INode::registerChild -> Error. Null pointer.");
+    ASSERT(node);
     node->setParent(this);
 }
 

@@ -12,49 +12,48 @@
 //
 // ************************************************************************** //
 
-#include "TransformToDomain.h"
-#include "AngularSpecScan.h"
-#include "BeamAngleItems.h"
-#include "BeamItems.h"
-#include "BeamWavelengthItem.h"
-#include "BornAgainNamespace.h"
-#include "ComboProperty.h"
-#include "DetectorItems.h"
-#include "Distributions.h"
-#include "FTDecayFunctionItems.h"
-#include "FTDistributionItems.h"
-#include "GISASSimulation.h"
-#include "GUIHelpers.h"
-#include "InterferenceFunctions.h"
-#include "JobItem.h"
-#include "JobModelFunctions.h"
-#include "Lattice2DItems.h"
-#include "LayerItem.h"
-#include "LayerRoughnessItems.h"
-#include "MaskItems.h"
-#include "MaterialItemUtils.h"
-#include "MesoCrystal.h"
-#include "MesoCrystalItem.h"
-#include "MultiLayerItem.h"
-#include "ParameterPattern.h"
-#include "Particle.h"
-#include "ParticleCompositionItem.h"
-#include "ParticleCoreShell.h"
-#include "ParticleCoreShellItem.h"
-#include "ParticleDistributionItem.h"
-#include "ParticleItem.h"
-#include "ParticleLayoutItem.h"
-#include "RangedDistributions.h"
-#include "RectangularDetectorItem.h"
-#include "RotationItems.h"
-#include "ScanResolution.h"
-#include "SessionItemUtils.h"
-#include "SimulationOptionsItem.h"
-#include "SpecularBeamInclinationItem.h"
-#include "SphericalDetectorItem.h"
-#include "TransformationItem.h"
-#include "Units.h"
-#include "VectorItem.h"
+#include "GUI/coregui/Models/TransformToDomain.h"
+#include "Core/Basics/Units.h"
+#include "Core/Detector/ScanResolution.h"
+#include "Core/Instrument/AngularSpecScan.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPattern.h"
+#include "Core/Parametrization/RangedDistributions.h"
+#include "Core/Particle/MesoCrystal.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleCoreShell.h"
+#include "Core/Simulation/GISASSimulation.h"
+#include "Core/includeIncludes/InterferenceFunctions.h"
+#include "GUI/coregui/Models/BeamAngleItems.h"
+#include "GUI/coregui/Models/BeamItems.h"
+#include "GUI/coregui/Models/BeamWavelengthItem.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/FTDecayFunctionItems.h"
+#include "GUI/coregui/Models/FTDistributionItems.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModelFunctions.h"
+#include "GUI/coregui/Models/Lattice2DItems.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/LayerRoughnessItems.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/MesoCrystalItem.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParticleCompositionItem.h"
+#include "GUI/coregui/Models/ParticleCoreShellItem.h"
+#include "GUI/coregui/Models/ParticleDistributionItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
+#include "GUI/coregui/Models/RectangularDetectorItem.h"
+#include "GUI/coregui/Models/RotationItems.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SimulationOptionsItem.h"
+#include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
+#include "GUI/coregui/Models/SphericalDetectorItem.h"
+#include "GUI/coregui/Models/TransformationItem.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 using SessionItemUtils::GetVectorItem;
 
@@ -100,9 +99,9 @@ std::unique_ptr<Layer> TransformToDomain::createLayer(const SessionItem& item)
 std::unique_ptr<LayerRoughness>
 TransformToDomain::createLayerRoughness(const SessionItem& roughnessItem)
 {
-    if (roughnessItem.modelType() == Constants::LayerZeroRoughnessType) {
+    if (roughnessItem.modelType() == "LayerZeroRoughness") {
         return nullptr;
-    } else if (roughnessItem.modelType() == Constants::LayerBasicRoughnessType) {
+    } else if (roughnessItem.modelType() == "LayerBasicRoughness") {
         return std::make_unique<LayerRoughness>(
             roughnessItem.getItemValue(LayerBasicRoughnessItem::P_SIGMA).toDouble(),
             roughnessItem.getItemValue(LayerBasicRoughnessItem::P_HURST).toDouble(),
@@ -125,16 +124,16 @@ std::unique_ptr<ParticleLayout> TransformToDomain::createParticleLayout(const Se
 std::unique_ptr<IParticle> TransformToDomain::createIParticle(const SessionItem& item)
 {
     std::unique_ptr<IParticle> P_particle;
-    if (item.modelType() == Constants::ParticleType) {
+    if (item.modelType() == "Particle") {
         auto& particle_item = static_cast<const ParticleItem&>(item);
         P_particle = particle_item.createParticle();
-    } else if (item.modelType() == Constants::ParticleCoreShellType) {
+    } else if (item.modelType() == "ParticleCoreShell") {
         auto& particle_coreshell_item = static_cast<const ParticleCoreShellItem&>(item);
         P_particle = particle_coreshell_item.createParticleCoreShell();
-    } else if (item.modelType() == Constants::ParticleCompositionType) {
+    } else if (item.modelType() == "ParticleComposition") {
         auto& particle_composition_item = static_cast<const ParticleCompositionItem&>(item);
         P_particle = particle_composition_item.createParticleComposition();
-    } else if (item.modelType() == Constants::MesoCrystalType) {
+    } else if (item.modelType() == "MesoCrystal") {
         auto& mesocrystal_item = static_cast<const MesoCrystalItem&>(item);
         P_particle = mesocrystal_item.createMesoCrystal();
     }
@@ -153,24 +152,24 @@ TransformToDomain::createParticleDistribution(const SessionItem& item)
 void TransformToDomain::addDistributionParametersToSimulation(const SessionItem& beam_item,
                                                               GISASSimulation& simulation)
 {
-    if (beam_item.modelType() != Constants::GISASBeamType) {
-        Q_ASSERT(beam_item.modelType() == Constants::GISASBeamType);
+    if (beam_item.modelType() != "GISASBeam") {
+        ASSERT(beam_item.modelType() == "GISASBeam");
         return;
     }
 
     setParameterDistributionToSimulation<BeamWavelengthItem>(
-        BornAgain::Wavelength, beam_item.getItem(BeamItem::P_WAVELENGTH), simulation);
+        "Wavelength", beam_item.getItem(BeamItem::P_WAVELENGTH), simulation);
     setParameterDistributionToSimulation<BeamInclinationAngleItem>(
-        BornAgain::Inclination, beam_item.getItem(BeamItem::P_INCLINATION_ANGLE), simulation);
+        "InclinationAngle", beam_item.getItem(BeamItem::P_INCLINATION_ANGLE), simulation);
     setParameterDistributionToSimulation<BeamAzimuthalAngleItem>(
-        BornAgain::Azimuth, beam_item.getItem(BeamItem::P_AZIMUTHAL_ANGLE), simulation);
+        "AzimuthalAngle", beam_item.getItem(BeamItem::P_AZIMUTHAL_ANGLE), simulation);
 }
 
 void TransformToDomain::addBeamDivergencesToScan(const SessionItem& beam_item,
                                                  AngularSpecScan& scan)
 {
-    if (beam_item.modelType() != Constants::SpecularBeamType) {
-        Q_ASSERT(beam_item.modelType() == Constants::SpecularBeamType);
+    if (beam_item.modelType() != "SpecularBeam") {
+        ASSERT(beam_item.modelType() == "SpecularBeam");
         return;
     }
 
@@ -187,7 +186,7 @@ void TransformToDomain::setBeamDistribution(const std::string& parameter_name,
                                             Simulation& simulation)
 {
     ParameterPattern parameter_pattern;
-    parameter_pattern.beginsWith("*").add(BornAgain::BeamType).add(parameter_name);
+    parameter_pattern.beginsWith("*").add("Beam").add(parameter_name);
 
     auto P_par_distr = item.getParameterDistributionForName(parameter_pattern.toStdString());
     if (P_par_distr)
@@ -196,17 +195,17 @@ void TransformToDomain::setBeamDistribution(const std::string& parameter_name,
 
 void TransformToDomain::setSimulationOptions(Simulation* simulation, const SessionItem& item)
 {
-    Q_ASSERT(item.modelType() == Constants::SimulationOptionsType);
+    ASSERT(item.modelType() == "SimulationOptions");
 
     if (auto optionItem = dynamic_cast<const SimulationOptionsItem*>(&item)) {
         simulation->getOptions().setNumberOfThreads(optionItem->getNumberOfThreads());
-        if (optionItem->getComputationMethod() == Constants::SIMULATION_MONTECARLO) {
+        if (optionItem->getComputationMethod() == "Monte-Carlo Integration") {
             simulation->getOptions().setMonteCarloIntegration(
                 true, optionItem->getNumberOfMonteCarloPoints());
         }
-        if (optionItem->getFresnelMaterialMethod() == Constants::AVERAGE_LAYER_MATERIAL)
+        if (optionItem->getFresnelMaterialMethod() == "Average Layer Material")
             simulation->getOptions().setUseAvgMaterials(true);
-        if (optionItem->getIncludeSpecularPeak() == Constants::Yes)
+        if (optionItem->getIncludeSpecularPeak() == "Yes")
             simulation->getOptions().setIncludeSpecular(true);
     }
 }
@@ -227,7 +226,7 @@ void TransformToDomain::setRotationInfo(IParticle* result, const SessionItem& it
 {
     QVector<SessionItem*> children = item.children();
     for (int i = 0; i < children.size(); ++i) {
-        if (children[i]->modelType() == Constants::RotationType) {
+        if (children[i]->modelType() == "Rotation") {
             auto& rot_item = children[i]->groupItem<RotationItem>(TransformationItem::P_ROT);
             auto rotation = rot_item.createRotation();
             if (rotation)
@@ -245,12 +244,12 @@ void setParameterDistributionToSimulation(const std::string& parameter_name,
 {
     const auto parameter_item = dynamic_cast<const T*>(item);
     if (!parameter_item) {
-        Q_ASSERT(parameter_item);
+        ASSERT(parameter_item);
         return;
     }
 
     ParameterPattern parameter_pattern;
-    parameter_pattern.beginsWith("*").add(BornAgain::BeamType).add(parameter_name);
+    parameter_pattern.beginsWith("*").add("Beam").add(parameter_name);
 
     auto P_par_distr =
         parameter_item->getParameterDistributionForName(parameter_pattern.toStdString());

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef FITLOG_H
-#define FITLOG_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOG_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOG_H
 
-#include "FitLogFlags.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/FitWidgets/FitLogFlags.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
@@ -41,4 +41,4 @@ private:
     JobMessagePanel* m_messagePanel;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOG_H

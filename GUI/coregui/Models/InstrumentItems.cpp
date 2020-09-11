@@ -12,29 +12,28 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentItems.h"
-#include "AxesItems.h"
-#include "BackgroundItems.h"
-#include "BeamItems.h"
-#include "DataItem.h"
-#include "DetectorItems.h"
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "IDetector2D.h"
-#include "Instrument.h"
-#include "ItemFileNameUtils.h"
-#include "JobItemUtils.h"
-#include "MaskItems.h"
-#include "PointwiseAxisItem.h"
-#include "RealDataItem.h"
-#include "SessionModel.h"
-#include "UnitConverter1D.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "Core/Detector/IDetector2D.h"
+#include "Core/Instrument/Instrument.h"
+#include "Core/Intensity/UnitConverter1D.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/BackgroundItems.h"
+#include "GUI/coregui/Models/BeamItems.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/ItemFileNameUtils.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/PointwiseAxisItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
 const QString background_group_label = "Type";
-const QStringList instrument_names{Constants::GISASInstrumentType, Constants::OffSpecInstrumentType,
-                                   Constants::SpecularInstrumentType};
+const QStringList instrument_names{"GISASInstrument", "OffSpecInstrument", "SpecularInstrument"};
 void addAxisGroupProperty(SessionItem* parent, const QString& tag);
 } // namespace
 
@@ -51,7 +50,7 @@ QStringList InstrumentItem::translateList(const QStringList& list) const
         result = SessionItem::translateList(list);
         if (instrument_names.contains(result.back())) {
             result.removeLast();
-            result << QStringLiteral("Instrument");
+            result << "Instrument";
         }
     }
     return result;
@@ -100,14 +99,14 @@ void InstrumentItem::initBeamGroup(const QString& beam_model)
 
 void InstrumentItem::initBackgroundGroup()
 {
-    auto item = addGroupProperty(P_BACKGROUND, Constants::BackgroundGroup);
+    auto item = addGroupProperty(P_BACKGROUND, "Background group");
     item->setDisplayName(background_group_label);
     item->setToolTip("Background type");
 }
 
-SpecularInstrumentItem::SpecularInstrumentItem() : InstrumentItem(Constants::SpecularInstrumentType)
+SpecularInstrumentItem::SpecularInstrumentItem() : InstrumentItem("SpecularInstrument")
 {
-    initBeamGroup(Constants::SpecularBeamType);
+    initBeamGroup("SpecularBeam");
     initBackgroundGroup();
     item<SpecularBeamItem>(P_BEAM).updateFileName(ItemFileNameUtils::instrumentDataFileName(*this));
 }
@@ -136,16 +135,16 @@ void SpecularInstrumentItem::updateToRealData(const RealDataItem* item)
         throw GUIHelpers::Error("Error in SpecularInstrumentItem::updateToRealData: The type "
                                 "of instrument is incompatible with passed data shape.");
 
-    QString units = item->getItemValue(RealDataItem::P_NATIVE_UNITS).toString();
+    QString units = item->getItemValue(RealDataItem::P_NATIVE_DATA_UNITS).toString();
     const auto& data = item->nativeData()->getOutputData()->getAxis(0);
     beamItem()->updateToData(data, units);
 }
 
 bool SpecularInstrumentItem::alignedWith(const RealDataItem* item) const
 {
-    const QString native_units = item->getItemValue(RealDataItem::P_NATIVE_UNITS).toString();
-    if (native_units == Constants::UnitsNbins) {
-        return beamItem()->currentInclinationAxisItem()->modelType() == Constants::BasicAxisType
+    const QString native_units = item->getItemValue(RealDataItem::P_NATIVE_DATA_UNITS).toString();
+    if (native_units == "nbins") {
+        return beamItem()->currentInclinationAxisItem()->modelType() == "BasicAxis"
                && shape() == item->shape();
     } else {
         auto axis_item = dynamic_cast<PointwiseAxisItem*>(beamItem()->currentInclinationAxisItem());
@@ -183,8 +182,8 @@ const QString Instrument2DItem::P_DETECTOR = "Detector";
 
 Instrument2DItem::Instrument2DItem(const QString& modelType) : InstrumentItem(modelType)
 {
-    initBeamGroup(Constants::GISASBeamType);
-    addGroupProperty(P_DETECTOR, Constants::DetectorGroup);
+    initBeamGroup("GISASBeam");
+    addGroupProperty(P_DETECTOR, "Detector group");
     initBackgroundGroup();
 
     setDefaultTag(P_DETECTOR);
@@ -227,7 +226,7 @@ std::unique_ptr<Instrument> Instrument2DItem::createInstrument() const
     return result;
 }
 
-GISASInstrumentItem::GISASInstrumentItem() : Instrument2DItem(Constants::GISASInstrumentType) {}
+GISASInstrumentItem::GISASInstrumentItem() : Instrument2DItem("GISASInstrument") {}
 
 std::vector<int> GISASInstrumentItem::shape() const
 {
@@ -250,10 +249,10 @@ void GISASInstrumentItem::updateToRealData(const RealDataItem* item)
 
 const QString OffSpecInstrumentItem::P_ALPHA_AXIS = "Alpha axis";
 
-OffSpecInstrumentItem::OffSpecInstrumentItem() : Instrument2DItem(Constants::OffSpecInstrumentType)
+OffSpecInstrumentItem::OffSpecInstrumentItem() : Instrument2DItem("OffSpecInstrument")
 {
     addAxisGroupProperty(this, P_ALPHA_AXIS);
-    auto inclination_item = getItem(P_ALPHA_AXIS)->getItem(BasicAxisItem::P_MIN);
+    auto inclination_item = getItem(P_ALPHA_AXIS)->getItem(BasicAxisItem::P_MIN_DEG);
     auto beam_item = beamItem();
     beam_item->setInclinationAngle(inclination_item->value().toDouble());
     beam_item->getItem(BeamItem::P_INCLINATION_ANGLE)->setEnabled(false);
@@ -287,15 +286,15 @@ namespace
 {
 void addAxisGroupProperty(SessionItem* parent, const QString& tag)
 {
-    auto item = parent->addGroupProperty(tag, Constants::BasicAxisType);
+    auto item = parent->addGroupProperty(tag, "BasicAxis");
     item->setToolTip("Incoming alpha range [deg]");
     item->getItem(BasicAxisItem::P_TITLE)->setVisible(false);
     item->getItem(BasicAxisItem::P_NBINS)->setToolTip("Number of points in scan");
-    item->getItem(BasicAxisItem::P_MIN)->setToolTip("Starting value [deg]");
-    item->getItem(BasicAxisItem::P_MAX)->setToolTip("Ending value [deg]");
+    item->getItem(BasicAxisItem::P_MIN_DEG)->setToolTip("Starting value [deg]");
+    item->getItem(BasicAxisItem::P_MAX_DEG)->setToolTip("Ending value [deg]");
 
     item->setItemValue(BasicAxisItem::P_TITLE, "alpha_i");
-    item->setItemValue(BasicAxisItem::P_MIN, 0.0);
-    item->setItemValue(BasicAxisItem::P_MAX, 10.0);
+    item->setItemValue(BasicAxisItem::P_MIN_DEG, 0.0);
+    item->setItemValue(BasicAxisItem::P_MAX_DEG, 10.0);
 }
 } // namespace

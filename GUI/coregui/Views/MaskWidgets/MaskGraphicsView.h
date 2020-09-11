@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKGRAPHICSVIEW_H
-#define MASKGRAPHICSVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSVIEW_H
 
-#include "MaskEditorFlags.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
 #include <QGraphicsView>
 
 class QWheelEvent;
@@ -57,4 +57,4 @@ private:
     double m_current_zoom_value;
 };
 
-#endif // MASKGRAPHICSVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSVIEW_H

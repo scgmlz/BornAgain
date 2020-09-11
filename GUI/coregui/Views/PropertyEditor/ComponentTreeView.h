@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPONENTTREEVIEW_H
-#define COMPONENTTREEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTTREEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTTREEVIEW_H
 
-#include "ComponentView.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentView.h"
 #include <memory>
 
 class QTreeView;
@@ -60,4 +60,4 @@ private:
     bool m_show_root_item; //!< Tree will starts from item itself, if true.
 };
 
-#endif //  COMPONENTTREEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTTREEVIEW_H

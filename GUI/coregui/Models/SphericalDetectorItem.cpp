@@ -12,33 +12,33 @@
 //
 // ************************************************************************** //
 
-#include "SphericalDetectorItem.h"
-#include "AxesItems.h"
-#include "SphericalDetector.h"
-#include "Units.h"
+#include "GUI/coregui/Models/SphericalDetectorItem.h"
+#include "Core/Basics/Units.h"
+#include "Core/Detector/SphericalDetector.h"
+#include "GUI/coregui/Models/AxesItems.h"
 
 const QString SphericalDetectorItem::P_PHI_AXIS = "Phi axis";
 const QString SphericalDetectorItem::P_ALPHA_AXIS = "Alpha axis";
 
-SphericalDetectorItem::SphericalDetectorItem() : DetectorItem(Constants::SphericalDetectorType)
+SphericalDetectorItem::SphericalDetectorItem() : DetectorItem("SphericalDetector")
 {
-    SessionItem* item = addGroupProperty(P_PHI_AXIS, Constants::BasicAxisType);
+    SessionItem* item = addGroupProperty(P_PHI_AXIS, "BasicAxis");
     item->getItem(BasicAxisItem::P_TITLE)->setVisible(false);
-    item->setItemValue(BasicAxisItem::P_MIN, -1.0);
-    item->setItemValue(BasicAxisItem::P_MAX, 1.0);
+    item->setItemValue(BasicAxisItem::P_MIN_DEG, -1.0);
+    item->setItemValue(BasicAxisItem::P_MAX_DEG, 1.0);
 
     item->getItem(BasicAxisItem::P_NBINS)->setToolTip("Number of phi-axis bins");
-    item->getItem(BasicAxisItem::P_MIN)->setToolTip("Low edge of first phi-bin (in deg)");
-    item->getItem(BasicAxisItem::P_MAX)->setToolTip("Upper edge of last phi-bin (in deg)");
+    item->getItem(BasicAxisItem::P_MIN_DEG)->setToolTip("Low edge of first phi-bin (in deg)");
+    item->getItem(BasicAxisItem::P_MAX_DEG)->setToolTip("Upper edge of last phi-bin (in deg)");
 
-    item = addGroupProperty(P_ALPHA_AXIS, Constants::BasicAxisType);
+    item = addGroupProperty(P_ALPHA_AXIS, "BasicAxis");
     item->getItem(BasicAxisItem::P_TITLE)->setVisible(false);
-    item->setItemValue(BasicAxisItem::P_MIN, 0.0);
-    item->setItemValue(BasicAxisItem::P_MAX, 2.0);
+    item->setItemValue(BasicAxisItem::P_MIN_DEG, 0.0);
+    item->setItemValue(BasicAxisItem::P_MAX_DEG, 2.0);
 
     item->getItem(BasicAxisItem::P_NBINS)->setToolTip("Number of alpha-axis bins");
-    item->getItem(BasicAxisItem::P_MIN)->setToolTip("Low edge of first alpha-bin (in deg)");
-    item->getItem(BasicAxisItem::P_MAX)->setToolTip("Upper edge of last alpha-bin (in deg)");
+    item->getItem(BasicAxisItem::P_MIN_DEG)->setToolTip("Low edge of first alpha-bin (in deg)");
+    item->getItem(BasicAxisItem::P_MAX_DEG)->setToolTip("Upper edge of last alpha-bin (in deg)");
 
     register_resolution_function();
 }
@@ -48,16 +48,16 @@ std::unique_ptr<IDetector2D> SphericalDetectorItem::createDomainDetector() const
     std::unique_ptr<SphericalDetector> result(new SphericalDetector());
 
     auto x_axis = dynamic_cast<BasicAxisItem*>(getItem(SphericalDetectorItem::P_PHI_AXIS));
-    Q_ASSERT(x_axis);
+    ASSERT(x_axis);
     int n_x = x_axis->getItemValue(BasicAxisItem::P_NBINS).toInt();
-    double x_min = Units::deg2rad(x_axis->getItemValue(BasicAxisItem::P_MIN).toDouble());
-    double x_max = Units::deg2rad(x_axis->getItemValue(BasicAxisItem::P_MAX).toDouble());
+    double x_min = Units::deg2rad(x_axis->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble());
+    double x_max = Units::deg2rad(x_axis->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble());
 
     auto y_axis = dynamic_cast<BasicAxisItem*>(getItem(SphericalDetectorItem::P_ALPHA_AXIS));
-    Q_ASSERT(y_axis);
+    ASSERT(y_axis);
     int n_y = y_axis->getItemValue(BasicAxisItem::P_NBINS).toInt();
-    double y_min = Units::deg2rad(y_axis->getItemValue(BasicAxisItem::P_MIN).toDouble());
-    double y_max = Units::deg2rad(y_axis->getItemValue(BasicAxisItem::P_MAX).toDouble());
+    double y_min = Units::deg2rad(y_axis->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble());
+    double y_max = Units::deg2rad(y_axis->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble());
 
     result->setDetectorParameters(n_x, x_min, x_max, n_y, y_min, y_max);
 

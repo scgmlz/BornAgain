@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef QSTRINGUTILS_H
-#define QSTRINGUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_UTILS_QSTRINGUTILS_H
+#define BORNAGAIN_GUI_COREGUI_UTILS_QSTRINGUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 namespace GUI_StringUtils
@@ -25,4 +25,4 @@ BA_CORE_API_ QString withTildeHomePath(const QString& path);
 
 }
 
-#endif // QSTRINGUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_UTILS_QSTRINGUTILS_H

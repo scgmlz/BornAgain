@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 // This file is part of qAccordion. An Accordion widget for Qt
-// Copyright © 2015 Christian Rapp <0x2a at posteo dot org>
+// Copyright (C) 2015 Christian Rapp <0x2a at posteo dot org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CLICKABLEFRAME_H
-#define CLICKABLEFRAME_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 #include <QGraphicsView>
 #include <QHBoxLayout>
@@ -171,4 +171,4 @@ protected:
     void leaveEvent(QEvent* event);
 };
 
-#endif // CLICKABLEFRAME_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H

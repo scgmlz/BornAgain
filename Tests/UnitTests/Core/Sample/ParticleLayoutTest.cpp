@@ -1,13 +1,12 @@
-#include "ParticleLayout.h"
-#include "BornAgainNamespace.h"
-#include "IAbstractParticle.h"
-#include "INodeUtils.h"
-#include "InterferenceFunction1DLattice.h"
-#include "InterferenceFunctionNone.h"
-#include "MaterialFactoryFuncs.h"
-#include "Particle.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Aggregate/InterferenceFunction1DLattice.h"
+#include "Core/Aggregate/InterferenceFunctionNone.h"
+#include "Core/Basics/Units.h"
+#include "Core/Export/INodeUtils.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Particle/IAbstractParticle.h"
+#include "Core/Particle/Particle.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class ParticleLayoutTest : public ::testing::Test
 {
@@ -23,8 +22,6 @@ TEST_F(ParticleLayoutTest, ParticleLayoutInitial)
     ParticleLayout particleDecoration;
     auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
     auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
-
-    EXPECT_EQ(BornAgain::ParticleLayoutType, particleDecoration.getName());
     EXPECT_EQ(size_t(0), particles.size());
     EXPECT_EQ(nullptr, p_iff);
 }
@@ -36,8 +33,6 @@ TEST_F(ParticleLayoutTest, ParticleLayoutInitByValue)
     ParticleLayout particleDecoration(particle, 2.0);
     auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
     auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
-
-    EXPECT_EQ(BornAgain::ParticleLayoutType, particleDecoration.getName());
     EXPECT_EQ(size_t(1), particles.size());
     EXPECT_EQ(nullptr, p_iff);
 
@@ -131,8 +126,6 @@ TEST_F(ParticleLayoutTest, ParticleLayoutClone)
     ParticleLayout* clone = particleDecoration.clone();
     auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(*clone);
 
-    EXPECT_EQ(BornAgain::ParticleLayoutType, clone->getName());
-
     const IAbstractParticle* p_particle1 = particles[0];
     EXPECT_TRUE(nullptr != p_particle1);
     EXPECT_EQ(1.0, p_particle1->abundance());
@@ -179,6 +172,4 @@ TEST_F(ParticleLayoutTest, getChildren)
     layout.setInterferenceFunction(InterferenceFunction1DLattice(1.0, 2.0));
     children = layout.getChildren();
     EXPECT_EQ(children.size(), 2u);
-    EXPECT_EQ(children.at(0)->getName(), BornAgain::ParticleType);
-    EXPECT_EQ(children.at(1)->getName(), BornAgain::InterferenceFunction1DLatticeType);
 }

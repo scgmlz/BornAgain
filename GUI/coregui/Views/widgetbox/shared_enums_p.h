@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef SHARED_ENUMS_P_H
-#define SHARED_ENUMS_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_SHARED_ENUMS_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_SHARED_ENUMS_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -98,4 +98,4 @@ enum AuxiliaryItemDataRoles {
 
 QT_END_NAMESPACE
 
-#endif // SHARED_ENUMS_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_SHARED_ENUMS_P_H

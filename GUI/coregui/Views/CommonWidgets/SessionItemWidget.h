@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMWIDGET_H
-#define SESSIONITEMWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_SESSIONITEMWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_SESSIONITEMWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SessionItem;
@@ -51,4 +51,4 @@ private:
     SessionItemController* m_itemController;
 };
 
-#endif // SESSIONITEMWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_SESSIONITEMWIDGET_H

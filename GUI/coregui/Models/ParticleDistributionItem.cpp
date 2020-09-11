@@ -12,18 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "ParticleDistributionItem.h"
-#include "ComboProperty.h"
-#include "DistributionItems.h"
-#include "Distributions.h"
-#include "GUIHelpers.h"
-#include "ParameterTreeUtils.h"
-#include "ParameterUtils.h"
-#include "ParticleItem.h"
-#include "RealLimitsItems.h"
-#include "TransformFromDomain.h"
-#include "TransformToDomain.h"
-#include "Units.h"
+#include "GUI/coregui/Models/ParticleDistributionItem.h"
+#include "Core/Basics/Units.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterUtils.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DistributionItems.h"
+#include "GUI/coregui/Models/ParameterTreeUtils.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/RealLimitsItems.h"
+#include "GUI/coregui/Models/TransformFromDomain.h"
+#include "GUI/coregui/Models/TransformToDomain.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -37,38 +37,38 @@ const QString ParticleDistributionItem::P_DISTRIBUTION = "Distribution";
 const QString ParticleDistributionItem::NO_SELECTION = "None";
 const QString ParticleDistributionItem::T_PARTICLES = "Particle Tag";
 
-ParticleDistributionItem::ParticleDistributionItem()
-    : SessionGraphicsItem(Constants::ParticleDistributionType)
+ParticleDistributionItem::ParticleDistributionItem() : SessionGraphicsItem("ParticleDistribution")
 {
-    setToolTip(QStringLiteral("Collection of particles obtained via parametric distribution "
-                              "of particle prototype"));
+    setToolTip("Collection of particles obtained via parametric distribution "
+               "of particle prototype");
 
     addProperty(ParticleItem::P_ABUNDANCE, 1.0)
         ->setLimits(RealLimits::limited(0.0, 1.0))
         .setDecimals(3)
         .setToolTip(abundance_tooltip);
 
-    addGroupProperty(P_DISTRIBUTION, Constants::DistributionGroup)
-        ->setToolTip(QStringLiteral("Distribution to apply to the specified parameter"));
+    addGroupProperty(P_DISTRIBUTION, "Distribution group")
+        ->setToolTip("Distribution to apply to the specified parameter");
 
     registerTag(T_PARTICLES, 0, 1,
-                QStringList() << Constants::ParticleType << Constants::ParticleCoreShellType
-                              << Constants::ParticleCompositionType << Constants::MesoCrystalType);
+                QStringList() << "Particle"
+                              << "ParticleCoreShell"
+                              << "ParticleComposition"
+                              << "MesoCrystal");
     setDefaultTag(T_PARTICLES);
 
     ComboProperty par_prop;
-    addProperty(P_DISTRIBUTED_PARAMETER, par_prop.variant())
-        ->setToolTip(QStringLiteral("Parameter to distribute"));
+    addProperty(P_DISTRIBUTED_PARAMETER, par_prop.variant())->setToolTip("Parameter to distribute");
 
     addProperty(P_LINKED_PARAMETER, par_prop.variant())
-        ->setToolTip(QStringLiteral("Linked parameter"))
-        .setEditorType(Constants::MultiSelectionComboEditorType);
+        ->setToolTip("Linked parameter")
+        .setEditorType("MultiSelectionComboEditor");
 
     updateMainParameterList();
 
     mapper()->setOnAnyChildChange([this](SessionItem* item) {
         // prevent infinit loop when item changes its own properties
-        if (item && item->modelType() == Constants::PropertyType && item->parent() == this)
+        if (item && item->modelType() == "Property" && item->parent() == this)
             return;
         updateMainParameterList();
     });
@@ -202,7 +202,7 @@ const SessionItem* ParticleDistributionItem::childParticle() const
     if (getItems(T_PARTICLES).size() == 0)
         return nullptr;
 
-    Q_ASSERT(getItems(T_PARTICLES).size() == 1);
+    ASSERT(getItems(T_PARTICLES).size() == 1);
     return getItems(T_PARTICLES).front();
 }
 

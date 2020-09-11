@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef CUSTOMBINAXIS_H
-#define CUSTOMBINAXIS_H
+#ifndef BORNAGAIN_CORE_BINNING_CUSTOMBINAXIS_H
+#define BORNAGAIN_CORE_BINNING_CUSTOMBINAXIS_H
 
-#include "VariableBinAxis.h"
+#include "Core/Binning/VariableBinAxis.h"
 
 //! Axis with fixed bin size in sin(angle) space used for numerical comparison with IsGisaxs.
 //! The main feature of the axis is that it produces zero bin sizes.
@@ -49,4 +49,4 @@ protected:
     std::vector<double> m_bin_centers;
 };
 
-#endif // CUSTOMBINAXIS_H
+#endif // BORNAGAIN_CORE_BINNING_CUSTOMBINAXIS_H

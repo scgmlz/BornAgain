@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "Ellipse.h"
-#include "Bin.h"
-#include "Exceptions.h"
+#include "Core/Mask/Ellipse.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Binning/Bin.h"
 
 //! @param xcenter x-coordinate of Ellipse's center
 //! @param ycenter y-coordinate of Ellipse's center

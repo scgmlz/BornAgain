@@ -1,13 +1,12 @@
-#include "LLData.h"
-#include "Complex.h"
-#include "google_test.h"
+#include "Core/Intensity/LLData.h"
+#include "Core/Basics/Complex.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <algorithm>
 
 class LLDataTest : public ::testing::Test
 {
 protected:
     LLDataTest();
-    ~LLDataTest();
 
     LLData<int>* int_data_0d;
     LLData<float>* fl_data_1d;
@@ -38,8 +37,6 @@ LLDataTest::LLDataTest()
 
     matrix_data_2d = new LLData<Eigen::Matrix2d>(2u, dim2);
 }
-
-LLDataTest::~LLDataTest() = default;
 
 TEST_F(LLDataTest, TotalSize)
 {

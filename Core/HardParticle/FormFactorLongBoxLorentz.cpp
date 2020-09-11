@@ -12,20 +12,25 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorLongBoxLorentz.h"
-#include "BornAgainNamespace.h"
-#include "Box.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorLongBoxLorentz.h"
+#include "Core/Shapes/Box.h"
+#include "Core/Tools/MathFunctions.h"
+
+FormFactorLongBoxLorentz::FormFactorLongBoxLorentz(const std::vector<double> P)
+    : IFormFactorBorn({"FormFactorLongBoxLorentz",
+                       "class_tooltip",
+                       {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Width", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                      P),
+      m_length(m_P[0]), m_width(m_P[1]), m_height(m_P[2])
+{
+    onChange();
+}
 
 FormFactorLongBoxLorentz::FormFactorLongBoxLorentz(double length, double width, double height)
-    : m_length(length), m_width(width), m_height(height)
+    : FormFactorLongBoxLorentz(std::vector<double>{length, width, height})
 {
-    setName(BornAgain::FFLongBoxLorentzType);
-    registerParameter(BornAgain::Length, &m_length).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Width, &m_width).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    onChange();
 }
 
 complex_t FormFactorLongBoxLorentz::evaluate_for_q(cvector_t q) const

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DISTRIBUTIONHANDLER_H
-#define DISTRIBUTIONHANDLER_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_DISTRIBUTIONHANDLER_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_DISTRIBUTIONHANDLER_H
 
-#include "ParameterDistribution.h"
+#include "Core/Parametrization/ParameterDistribution.h"
 #include <vector>
 
 //! Provides the functionality to average over parameter distributions with weights.
@@ -57,4 +57,4 @@ private:
     std::vector<std::vector<ParameterSample>> m_cached_samples;
 };
 
-#endif // DISTRIBUTIONHANDLER_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_DISTRIBUTIONHANDLER_H

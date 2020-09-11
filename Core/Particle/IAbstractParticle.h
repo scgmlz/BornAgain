@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef IABSTRACTPARTICLE_H
-#define IABSTRACTPARTICLE_H
+#ifndef BORNAGAIN_CORE_PARTICLE_IABSTRACTPARTICLE_H
+#define BORNAGAIN_CORE_PARTICLE_IABSTRACTPARTICLE_H
 
-#include "ISample.h"
-#include "Vectors3D.h"
+#include "Core/Scattering/ISample.h"
+#include "Core/Vector/Vectors3D.h"
 
 class IRotation;
 
@@ -29,8 +29,9 @@ class IRotation;
 class BA_CORE_API_ IAbstractParticle : public ISample
 {
 public:
-    IAbstractParticle();
-    virtual ~IAbstractParticle();
+    IAbstractParticle() = default;
+    IAbstractParticle(const NodeMeta& meta, const std::vector<double>& PValues);
+    virtual ~IAbstractParticle() = default;
 
     virtual IAbstractParticle* clone() const = 0;
 
@@ -50,7 +51,7 @@ public:
     virtual void rotate(const IRotation& rotation) = 0;
 
 protected:
-    double m_abundance;
+    double m_abundance{1.0}; // not a Parameter
 };
 
-#endif // IABSTRACTPARTICLE_H
+#endif // BORNAGAIN_CORE_PARTICLE_IABSTRACTPARTICLE_H

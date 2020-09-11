@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PYOBJECT_H
-#define PYOBJECT_H
+#ifndef BORNAGAIN_CORE_TOOLS_PYOBJECT_H
+#define BORNAGAIN_CORE_TOOLS_PYOBJECT_H
 
 #ifdef BORNAGAIN_PYTHON
 #ifndef PyObject_HEAD
@@ -22,4 +22,4 @@ typedef _object PyObject;
 #endif
 #endif
 
-#endif
+#endif // BORNAGAIN_CORE_TOOLS_PYOBJECT_H

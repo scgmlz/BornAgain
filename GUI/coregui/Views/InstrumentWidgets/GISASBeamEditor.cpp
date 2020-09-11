@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "GISASBeamEditor.h"
-#include "BeamDistributionItem.h"
-#include "BeamItems.h"
-#include "ColumnResizer.h"
-#include "ComponentEditor.h"
-#include "DistributionDialog.h"
-#include "InstrumentItems.h"
+#include "GUI/coregui/Views/InstrumentWidgets/GISASBeamEditor.h"
+#include "GUI/coregui/Models/BeamDistributionItem.h"
+#include "GUI/coregui/Models/BeamItems.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
+#include "GUI/coregui/Views/InfoWidgets/DistributionDialog.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QGridLayout>
 #include <QGroupBox>
 
@@ -85,7 +85,7 @@ void GISASBeamEditor::unsubscribeFromItem()
 GISASInstrumentItem* GISASBeamEditor::instrumentItem()
 {
     auto result = dynamic_cast<GISASInstrumentItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 

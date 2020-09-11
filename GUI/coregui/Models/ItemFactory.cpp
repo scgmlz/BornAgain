@@ -12,28 +12,25 @@
 //
 // ************************************************************************** //
 
-#include "ItemFactory.h"
-#include "GUIHelpers.h"
-#include "ItemCatalogue.h"
+#include "GUI/coregui/Models/ItemFactory.h"
+#include "GUI/coregui/Models/ItemCatalog.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 namespace
 {
 
-const ItemCatalogue& catalogue()
+//! Returns the single instance of ItemCatalog.
+const ItemCatalog& catalog()
 {
-    static ItemCatalogue item_catalogue;
-    return item_catalogue;
+    static ItemCatalog item_catalog;
+    return item_catalog;
 }
 
 } // namespace
 
 SessionItem* ItemFactory::CreateItem(const QString& model_name, SessionItem* parent)
 {
-    if (!catalogue().contains(model_name))
-        throw GUIHelpers::Error("ItemFactory::createItem() -> Error: Model name does not exist: "
-                                + model_name);
-
-    SessionItem* result = catalogue().create(model_name).release();
+    SessionItem* result = catalog().createItemPtr(model_name).release();
     if (parent)
         parent->insertItem(-1, result);
 
@@ -42,10 +39,10 @@ SessionItem* ItemFactory::CreateItem(const QString& model_name, SessionItem* par
 
 SessionItem* ItemFactory::CreateEmptyItem()
 {
-    return new SessionItem(Constants::RootItemType);
+    return new SessionItem("ROOT_ITEM");
 }
 
 QStringList ItemFactory::ValidTopItemTypes()
 {
-    return catalogue().validTopItemTypes();
+    return catalog().validTopItemTypes();
 }

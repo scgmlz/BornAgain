@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "PolygonPointView.h"
-#include "MaskItems.h"
+#include "GUI/coregui/Views/MaskWidgets/PolygonPointView.h"
+#include "GUI/coregui/Models/MaskItems.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 

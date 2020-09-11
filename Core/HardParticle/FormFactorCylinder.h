@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORCYLINDER_H
-#define FORMFACTORCYLINDER_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCYLINDER_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCYLINDER_H
 
-#include "IFormFactorBorn.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! A circular cylinder.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorCylinder : public IFormFactorBorn
 {
 public:
+    FormFactorCylinder(const std::vector<double> P);
     FormFactorCylinder(double radius, double height);
 
     FormFactorCylinder* clone() const override final
@@ -45,8 +46,8 @@ protected:
     void onChange() override final;
 
 private:
-    double m_radius;
-    double m_height;
+    const double& m_radius;
+    const double& m_height;
 };
 
-#endif // FORMFACTORCYLINDER_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCYLINDER_H

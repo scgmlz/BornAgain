@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAPUTILS_H
-#define COLORMAPUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include "qcustomplot.h"
 #include <QMap>
 #include <QMargins>
@@ -58,4 +58,4 @@ BA_CORE_API_ void setDefaultMargins(QCustomPlot* customPlot);
 
 } // namespace ColorMapUtils
 
-#endif // COLORMAPUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H

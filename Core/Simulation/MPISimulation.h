@@ -13,8 +13,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MPISIMULATION_H
-#define MPISIMULATION_H
+#ifndef BORNAGAIN_CORE_SIMULATION_MPISIMULATION_H
+#define BORNAGAIN_CORE_SIMULATION_MPISIMULATION_H
 
 class Simulation;
 
@@ -24,4 +24,4 @@ public:
     void runSimulation(Simulation* simulation);
 };
 
-#endif // MPISIMULATION_H
+#endif // BORNAGAIN_CORE_SIMULATION_MPISIMULATION_H

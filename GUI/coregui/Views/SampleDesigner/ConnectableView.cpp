@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "ConnectableView.h"
-#include "DesignerHelper.h"
-#include "GUIHelpers.h"
-#include "NodeEditorConnection.h"
-#include "NodeEditorPort.h"
-#include "SessionItem.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/Views/SampleDesigner/NodeEditorConnection.h"
+#include "GUI/coregui/Views/SampleDesigner/NodeEditorPort.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QObject>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -31,8 +31,8 @@ ConnectableView::ConnectableView(QGraphicsItem* parent, QRectF rect)
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
-    m_label_vspace = StyleUtils::SizeOfLetterM().height()*2.5;
-    m_roundpar = StyleUtils::SizeOfLetterM().height()/3.0;
+    m_label_vspace = StyleUtils::SizeOfLetterM().height() * 2.5;
+    m_roundpar = StyleUtils::SizeOfLetterM().height() / 3.0;
 }
 
 void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
@@ -53,7 +53,7 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
     painter->setPen(Qt::black);
     double width = getRectangle().width() * 0.9;
-    double yoffset = StyleUtils::SizeOfLetterM().height()/2; // space above the label
+    double yoffset = StyleUtils::SizeOfLetterM().height() / 2; // space above the label
     double height = m_label_vspace - yoffset;
     QFont serifFont("Monospace", DesignerHelper::getLabelFontSize(), QFont::Normal);
     painter->setFont(serifFont);
@@ -86,7 +86,7 @@ void ConnectableView::setLabel(const QString& name)
 
 void ConnectableView::connectInputPort(ConnectableView* other, int port_number)
 {
-    Q_ASSERT(other);
+    ASSERT(other);
 
     if (port_number >= m_input_ports.size())
         throw GUIHelpers::Error("ConnectableView::connectInputPort() -> Wrong input port number");

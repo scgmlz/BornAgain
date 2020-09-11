@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceView.h"
-#include "RealSpaceModel.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceView.h"
+#include "GUI/ba3d/widget.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceModel.h"
 #include <QVBoxLayout>
-#include <ba3d/widget.h>
 
 RealSpaceView::RealSpaceView(QWidget* parent) : QWidget(parent), m_3dview(new RealSpace::Widget3D)
 {

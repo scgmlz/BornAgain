@@ -12,16 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "InterferenceFunction3DLattice.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "IPeakShape.h"
+#include "Core/Aggregate/InterferenceFunction3DLattice.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Correlations/IPeakShape.h"
 #include <algorithm>
 
 InterferenceFunction3DLattice::InterferenceFunction3DLattice(const Lattice& lattice)
-    : m_lattice(lattice), mP_peak_shape(nullptr), m_rec_radius(0.0)
+    : IInterferenceFunction(0), m_lattice(lattice), mP_peak_shape(nullptr), m_rec_radius(0.0)
 {
-    setName(BornAgain::InterferenceFunction3DLatticeType);
+    setName("Interference3DLattice");
     initRecRadius();
 }
 
@@ -29,7 +28,11 @@ InterferenceFunction3DLattice::~InterferenceFunction3DLattice() = default;
 
 InterferenceFunction3DLattice* InterferenceFunction3DLattice::clone() const
 {
-    return new InterferenceFunction3DLattice(*this);
+    auto* ret = new InterferenceFunction3DLattice(m_lattice);
+    ret->setPositionVariance(m_position_var);
+    if (mP_peak_shape)
+        ret->setPeakShape(*mP_peak_shape);
+    return ret;
 }
 
 void InterferenceFunction3DLattice::setPeakShape(const IPeakShape& peak_shape)
@@ -73,17 +76,6 @@ double InterferenceFunction3DLattice::iff_without_dw(const kvector_t q) const
         }
     }
     return result;
-}
-
-InterferenceFunction3DLattice::InterferenceFunction3DLattice(
-    const InterferenceFunction3DLattice& other)
-    : IInterferenceFunction(other), m_lattice(other.m_lattice), mP_peak_shape(nullptr),
-      m_rec_radius(0.0)
-{
-    setName(other.getName());
-    initRecRadius();
-    if (other.mP_peak_shape)
-        setPeakShape(*other.mP_peak_shape);
 }
 
 void InterferenceFunction3DLattice::initRecRadius()

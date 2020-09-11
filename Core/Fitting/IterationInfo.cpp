@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "IterationInfo.h"
+#include "Core/Fitting/IterationInfo.h"
 
 IterationInfo::IterationInfo() : m_chi2(0.0), m_iteration_count(0) {}
 

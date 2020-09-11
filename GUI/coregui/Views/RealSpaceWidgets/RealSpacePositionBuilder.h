@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALSPACEPOSITIONBUILDER_H
-#define REALSPACEPOSITIONBUILDER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H
 
-#include "INodeVisitor.h"
+#include "Core/Parametrization/INodeVisitor.h"
 #include <memory>
 #include <vector>
 
@@ -42,4 +42,4 @@ private:
     std::unique_ptr<IPositionBuilder> mP_pos_builder;
 };
 
-#endif // REALSPACEPOSITIONBUILDER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H

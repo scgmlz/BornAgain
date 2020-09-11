@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GISASDETECTOREDITOR_H
-#define GISASDETECTOREDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_GISASDETECTOREDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_GISASDETECTOREDITOR_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class ComponentEditor;
 class DetectorPresenter;
@@ -44,4 +44,4 @@ private:
     DetectorPresenter* m_detectorPresenter;
 };
 
-#endif // GISASDETECTOREDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_GISASDETECTOREDITOR_H

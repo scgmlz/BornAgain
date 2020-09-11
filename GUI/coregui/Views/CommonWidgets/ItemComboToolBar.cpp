@@ -12,7 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ItemComboToolBar.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemComboToolBar.h"
+#include "Core/Basics/Assert.h"
 #include <QAction>
 #include <QComboBox>
 #include <QStandardItemModel>
@@ -39,7 +40,7 @@ void ItemComboToolBar::setPresentation(const QString& name)
 void ItemComboToolBar::setPresentationList(const QStringList& presentationList,
                                            const QStringList& activeList)
 {
-    Q_ASSERT(presentationList.size());
+    ASSERT(presentationList.size());
 
     QString previous = currentPresentation();
 
@@ -90,7 +91,7 @@ void ItemComboToolBar::setComboConnected(bool value)
 void ItemComboToolBar::makeItemsEnabled(const QStringList& activePresentations)
 {
     const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(m_comboBox->model());
-    Q_ASSERT(model);
+    ASSERT(model);
 
     for (int row = 0; row < m_comboBox->count(); ++row) {
         QString text = m_comboBox->itemText(row);

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGLEVIEW_H
-#define RECTANGLEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEVIEW_H
 
-#include "RectangleBaseView.h"
+#include "GUI/coregui/Views/MaskWidgets/RectangleBaseView.h"
 
 //! This is a View of rectangular mask (represented by RectangleItem) on GraphicsScene.
 //! Given view follows standard QGraphicsScene notations: (x,y) is top left corner.
@@ -47,4 +47,4 @@ protected:
     qreal bottom() const;
 };
 
-#endif // RECTANGLEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEVIEW_H

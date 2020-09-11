@@ -23,8 +23,8 @@
 **
 ****************************************************************************/
 
-#ifndef DETAILSBUTTON_H
-#define DETAILSBUTTON_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSBUTTON_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSBUTTON_H
 
 #include <QAbstractButton>
 
@@ -83,4 +83,4 @@ private:
 };
 } // namespace Utils
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSBUTTON_H

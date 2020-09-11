@@ -12,20 +12,20 @@
 //
 // ************************************************************************** //
 
-#include "DataItemUtils.h"
-#include "GUIHelpers.h"
-#include "IntensityDataItem.h"
-#include "JobItem.h"
-#include "RealDataItem.h"
-#include "SpecularDataItem.h"
+#include "GUI/coregui/Models/DataItemUtils.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
 template <class DataItemType> DataItemType* dataItem(SessionItem* parent)
 {
-    assert(parent && "Assertion failed in DataItemUtils::dataItem: nullptr passed.");
+    ASSERT(parent && "Assertion failed in DataItemUtils::dataItem: nullptr passed.");
 
-    if (parent->modelType() == Constants::JobItemType)
+    if (parent->modelType() == "JobItem")
         return dynamic_cast<DataItemType*>(parent->getItem(JobItem::T_OUTPUT));
     else if (auto real_data = dynamic_cast<RealDataItem*>(parent))
         return dynamic_cast<DataItemType*>(real_data->dataItem());

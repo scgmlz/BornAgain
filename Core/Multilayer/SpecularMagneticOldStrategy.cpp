@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "SpecularMagneticOldStrategy.h"
-#include "Layer.h"
-#include "LayerInterface.h"
-#include "MultiLayer.h"
-#include "Slice.h"
-#include "WavevectorInfo.h"
+#include "Core/Multilayer/SpecularMagneticOldStrategy.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerInterface.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/Vector/WavevectorInfo.h"
 #include <Eigen/LU>
 
 namespace
@@ -46,8 +46,7 @@ ISpecularStrategy::coeffs_t SpecularMagneticOldStrategy::Execute(const std::vect
 }
 
 ISpecularStrategy::coeffs_t
-SpecularMagneticOldStrategy::Execute(const std::vector<Slice>&,
-                                     const std::vector<complex_t>&) const
+SpecularMagneticOldStrategy::Execute(const std::vector<Slice>&, const std::vector<complex_t>&) const
 {
     throw std::runtime_error("Not implemented");
 }

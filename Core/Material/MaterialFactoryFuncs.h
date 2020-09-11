@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALFACTORYFUNCS_H_
-#define MATERIALFACTORYFUNCS_H_
+#ifndef BORNAGAIN_CORE_MATERIAL_MATERIALFACTORYFUNCS_H
+#define BORNAGAIN_CORE_MATERIAL_MATERIALFACTORYFUNCS_H
 
-#include "Material.h"
+#include "Core/Material/Material.h"
 
 struct HomogeneousRegion;
 
@@ -26,7 +26,7 @@ BA_CORE_API_ Material HomogeneousMaterial();
 //! @ingroup materials
 
 BA_CORE_API_ Material HomogeneousMaterial(const std::string& name, double delta, double beta,
-                                          kvector_t magnetization = kvector_t());
+                                          kvector_t magnetization = {});
 
 //! @ingroup materials
 
@@ -37,7 +37,7 @@ BA_CORE_API_ Material HomogeneousMaterial(const std::string& name, double delta,
 //! With no parameters given, constructs default (vacuum) material with \f$n = 1\f$ and zero
 //! magnetization.
 BA_CORE_API_ Material HomogeneousMaterial(const std::string& name, complex_t refractive_index,
-                                          kvector_t magnetization = kvector_t());
+                                          kvector_t magnetization = {});
 
 //! @ingroup materials
 
@@ -60,17 +60,6 @@ BA_CORE_API_ Material MaterialBySLD();
 //! @param sld_imag: imaginary part of the scattering length density, inverse square angstroms
 //! @param magnetization: magnetization (in A/m)
 BA_CORE_API_ Material MaterialBySLD(const std::string& name, double sld_real, double sld_imag,
-                                    kvector_t magnetization = kvector_t());
+                                    kvector_t magnetization = {});
 
-#ifndef SWIG
-
-//! @ingroup materials
-
-//! Creates averaged material. Square refractive index of returned material is arithmetic mean over
-//! _regions_ and _layer_mat_. Magnetization (if present) is averaged linearly.
-BA_CORE_API_ Material CreateAveragedMaterial(const Material& layer_mat,
-                                             const std::vector<HomogeneousRegion>& regions);
-
-#endif // SWIG
-
-#endif /* MATERIALFACTORYFUNCS_H_ */
+#endif // BORNAGAIN_CORE_MATERIAL_MATERIALFACTORYFUNCS_H

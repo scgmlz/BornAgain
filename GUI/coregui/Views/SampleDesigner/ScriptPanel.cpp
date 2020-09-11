@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "ScriptPanel.h"
-#include "InfoPanelToolBar.h"
-#include "PySampleWidget.h"
+#include "GUI/coregui/Views/SampleDesigner/ScriptPanel.h"
+#include "GUI/coregui/Views/CommonWidgets/InfoPanelToolBar.h"
+#include "GUI/coregui/Views/InfoWidgets/PySampleWidget.h"
 #include <QResizeEvent>
 #include <QStackedWidget>
 

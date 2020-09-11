@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALDATASELECTORWIDGET_H
-#define REALDATASELECTORWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class RealDataPropertiesWidget;
@@ -63,4 +63,4 @@ private:
     RealDataPropertiesWidget* m_propertiesWidget;
 };
 
-#endif // REALDATASELECTORWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H

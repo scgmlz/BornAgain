@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Simulation/DepthProbeSimulation.cpp
-//! @brief     Implements class OffSpecSimulation.
+//! @brief     Implements class DepthProbeSimulation
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,20 +12,20 @@
 //
 // ************************************************************************** //
 
-#include "DepthProbeSimulation.h"
-#include "DepthProbeComputation.h"
-#include "Distributions.h"
-#include "Histogram1D.h"
-#include "IBackground.h"
-#include "IFootprintFactor.h"
-#include "IMultiLayerBuilder.h"
-#include "MaterialUtils.h"
-#include "MathConstants.h"
-#include "MultiLayer.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
-#include "SimpleUnitConverters.h"
-#include "SpecularDetector1D.h"
+#include "Core/Simulation/DepthProbeSimulation.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Beam/IFootprintFactor.h"
+#include "Core/Computation/DepthProbeComputation.h"
+#include "Core/Computation/IBackground.h"
+#include "Core/Detector/SpecularDetector1D.h"
+#include "Core/Intensity/Histogram1D.h"
+#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Material/MaterialUtils.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
 
 namespace
 {
@@ -188,7 +188,7 @@ std::vector<DepthProbeElement> DepthProbeSimulation::generateSimulationElements(
 std::unique_ptr<IComputation>
 DepthProbeSimulation::generateSingleThreadedComputation(size_t start, size_t n_elements)
 {
-    assert(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
+    ASSERT(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
     const auto& begin = m_sim_elements.begin() + static_cast<long>(start);
     return std::make_unique<DepthProbeComputation>(*sample(), m_options, m_progress, begin,
                                                    begin + static_cast<long>(n_elements));
@@ -225,18 +225,18 @@ void DepthProbeSimulation::validateParametrization(const ParameterDistribution& 
     const std::vector<RealParameter*> names =
         parameter_pool->getMatchedParameters(par_distr.getMainParameterName());
     for (const auto par : names)
-        if (par->getName().find(BornAgain::Inclination) != std::string::npos && !zero_mean)
+        if (par->getName().find("InclinationAngle") != std::string::npos && !zero_mean)
             throw std::runtime_error("Error in DepthProbeSimulation: parameter distribution of "
                                      "beam inclination angle should have zero mean.");
 }
 
 void DepthProbeSimulation::initialize()
 {
-    setName(BornAgain::DepthProbeSimulationType);
+    setName("DepthProbeSimulation");
 
     // allow for negative inclinations in the beam of specular simulation
     // it is required for proper averaging in the case of divergent beam
-    auto inclination = m_instrument.getBeam().parameter(BornAgain::Inclination);
+    auto inclination = m_instrument.getBeam().parameter("InclinationAngle");
     inclination->setLimits(RealLimits::limited(-M_PI_2, M_PI_2));
 }
 

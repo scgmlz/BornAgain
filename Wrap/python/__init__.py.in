@@ -13,7 +13,7 @@ if sys.version_info >= (3, 8, 0) and sys.platform == 'win32':
     if "PATH" in os.environ:
         for p in os.environ['PATH'].split(';'):
             if p and os.path.exists(p):
-                os.add_dll_directory(p)
+                os.add_dll_directory(os.path.abspath(p))
 
 from libBornAgainFit import *
 from libBornAgainCore import *

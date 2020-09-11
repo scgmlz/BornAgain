@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARBEAMINCLINATIONITEM_H
-#define SPECULARBEAMINCLINATIONITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SPECULARBEAMINCLINATIONITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SPECULARBEAMINCLINATIONITEM_H
 
-#include "BeamDistributionItem.h"
+#include "GUI/coregui/Models/BeamDistributionItem.h"
 
 //! BeamInclinationAxisItem contains inclination angle axis for specular/off-specular
 //! simulations and also provides distribution functionality.
@@ -39,4 +39,4 @@ private:
     static const bool m_show_mean = false;
 };
 
-#endif // SPECULARBEAMINCLINATIONITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SPECULARBEAMINCLINATIONITEM_H

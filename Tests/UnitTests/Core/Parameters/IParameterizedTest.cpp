@@ -1,12 +1,10 @@
-#include "IParameterized.h"
-#include "google_test.h"
+#include "Core/Parametrization/IParameterized.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <stdexcept>
 
 class IParameterizedTest : public ::testing::Test
 {
 protected:
-    ~IParameterizedTest();
-
     IParameterized m_initial_object;
 
     class ParameterizedObject : public IParameterized
@@ -15,22 +13,14 @@ protected:
         ParameterizedObject() : m_real_par1(0), m_real_par2(0)
         {
             setName("Parameterized");
-            init_parameters();
-        }
-        double m_real_par1;
-        double m_real_par2;
-
-    protected:
-        virtual void init_parameters()
-        {
             registerParameter("par1", &m_real_par1);
             registerParameter("par2", &m_real_par2);
         }
+        double m_real_par1;
+        double m_real_par2;
     };
     ParameterizedObject m_parameterized;
 };
-
-IParameterizedTest::~IParameterizedTest() = default;
 
 // TODO enable tests
 

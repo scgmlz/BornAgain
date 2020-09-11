@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "GUIFitObserver.h"
-#include "FitObjective.h"
-#include "FitProgressInfo.h"
-#include "GUIHelpers.h"
-#include "MinimizerResult.h"
-#include "MinimizerUtils.h"
+#include "GUI/coregui/Views/FitWidgets/GUIFitObserver.h"
+#include "Core/Fitting/FitObjective.h"
+#include "Fit/Kernel/MinimizerResult.h"
+#include "Fit/Tools/MinimizerUtils.h"
+#include "GUI/coregui/Views/FitWidgets/FitProgressInfo.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 GUIFitObserver::GUIFitObserver(QObject* parent)
     : QObject(parent), m_block_update_plots(false), m_update_interval(1)

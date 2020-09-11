@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATHCONSTANTS_H
-#define MATHCONSTANTS_H
+#ifndef BORNAGAIN_CORE_BASICS_MATHCONSTANTS_H
+#define BORNAGAIN_CORE_BASICS_MATHCONSTANTS_H
 
 // undefine macros that may or may not be defined, depending on compiler settings
 #undef M_E
@@ -48,4 +48,4 @@
 // additionally, we find convenient:
 #define M_TWOPI 6.28318530717958647693
 
-#endif // MATHCONSTANTS_H
+#endif // BORNAGAIN_CORE_BASICS_MATHCONSTANTS_H

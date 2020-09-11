@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGULARDETECTORITEM_H
-#define RECTANGULARDETECTORITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H
 
-#include "DetectorItems.h"
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
+#include "GUI/coregui/Models/DetectorItems.h"
 
 class BA_CORE_API_ RectangularDetectorItem : public DetectorItem
 {
@@ -50,4 +50,4 @@ private:
     bool m_is_constructed;
 };
 
-#endif // RECTANGULARDETECTORITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H

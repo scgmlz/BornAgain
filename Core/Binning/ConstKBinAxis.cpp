@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "ConstKBinAxis.h"
-#include "Exceptions.h"
-#include "Numeric.h"
+#include "Core/Binning/ConstKBinAxis.h"
+#include "Core/Basics/Exceptions.h"
+#include "Fit/TestEngine/Numeric.h"
 #include <iomanip>
 
 ConstKBinAxis::ConstKBinAxis(const std::string& name, size_t nbins)

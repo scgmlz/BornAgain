@@ -12,17 +12,18 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORBOX_H
-#define FORMFACTORBOX_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORBOX_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORBOX_H
 
-#include "IFormFactorBorn.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A rectangular prism (parallelepiped).
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorBox : public IFormFactorBorn
+class BA_CORE_API_ FormFactorBox : public FormFactorPolygonalPrism
 {
 public:
+    FormFactorBox(const std::vector<double> P);
     FormFactorBox(double length, double width, double height);
 
     FormFactorBox* clone() const override final
@@ -33,11 +34,10 @@ public:
     void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
 
     double getLength() const { return m_length; }
-    double getHeight() const { return m_height; }
     double getWidth() const { return m_width; }
 
+    double volume() const override final { return m_length * m_height * m_width; }
     double radialExtension() const override final { return m_length / 2.0; }
-
     complex_t evaluate_for_q(cvector_t q) const override final;
 
 protected:
@@ -45,11 +45,12 @@ protected:
                                  kvector_t translation) const override final;
 
     void onChange() override final;
+    double height() const final { return m_height; }
 
 private:
-    double m_length;
-    double m_width;
-    double m_height;
+    const double& m_length;
+    const double& m_width;
+    const double& m_height;
 };
 
-#endif // FORMFACTORBOX_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORBOX_H

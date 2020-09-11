@@ -12,9 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ProjectionsWidget.h"
-#include "ProjectionsPlot.h"
-#include "item_constants.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsWidget.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ProjectionsPlot.h"
 #include <QTabWidget>
 #include <QVBoxLayout>
 
@@ -25,18 +24,16 @@ const int vertical_projection_tab = 1;
 } // namespace
 
 ProjectionsWidget::ProjectionsWidget(QWidget* parent)
-    : SessionItemWidget(parent),
-      m_xProjection(new ProjectionsPlot(Constants::HorizontalLineMaskType)),
-      m_yProjection(new ProjectionsPlot(Constants::VerticalLineMaskType)),
-      m_tabWidget(new QTabWidget)
+    : SessionItemWidget(parent), m_xProjection(new ProjectionsPlot("HorizontalLineMask")),
+      m_yProjection(new ProjectionsPlot("VerticalLineMask")), m_tabWidget(new QTabWidget)
 {
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
 
     m_tabWidget->setTabPosition(QTabWidget::North);
-    m_tabWidget->insertTab(HORIZONTAL, m_xProjection, QStringLiteral("Horizontal"));
-    m_tabWidget->insertTab(VERTICAL, m_yProjection, QStringLiteral("Vertical"));
+    m_tabWidget->insertTab(HORIZONTAL, m_xProjection, "Horizontal");
+    m_tabWidget->insertTab(VERTICAL, m_yProjection, "Vertical");
 
     layout->addWidget(m_tabWidget);
     setLayout(layout);

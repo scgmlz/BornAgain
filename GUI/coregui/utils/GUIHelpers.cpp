@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "GUIHelpers.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include "BAVersion.h"
-#include "JobItem.h"
-#include "RealDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
 #include <QApplication>
 #include <QDateTime>
 #include <QDir>
@@ -29,13 +29,13 @@ namespace
 QMap<QString, QString> initializeCharacterMap()
 {
     QMap<QString, QString> result;
-    result["\\"] = QString("_backslash_");
-    result["/"] = QString("_slash_");
-    result["\""] = QString("_quote_");
-    result["<"] = QString("_lessthan_");
-    result[">"] = QString("_greaterthan_");
-    result["|"] = QString("_pipe_");
-    result["?"] = QString("_questionmark_");
+    result["\\"] = "_backslash_";
+    result["/"] = "_slash_";
+    result["\""] = "_quote_";
+    result["<"] = "_lessthan_";
+    result[">"] = "_greaterthan_";
+    result["|"] = "_pipe_";
+    result["?"] = "_questionmark_";
     return result;
 }
 
@@ -146,7 +146,7 @@ bool parseVersion(const QString& version, int& major_num, int& minor_num, int& p
 {
     major_num = minor_num = patch_num = 0;
     bool success(true);
-    QStringList nums = version.split(QStringLiteral("."));
+    QStringList nums = version.split(".");
     if (nums.size() != 3)
         return false;
 
@@ -187,7 +187,7 @@ QString fileDir(const QString& fileName)
     if (info.exists()) {
         return info.dir().path();
     }
-    return QString();
+    return "";
 }
 
 //! Returns base name of file.

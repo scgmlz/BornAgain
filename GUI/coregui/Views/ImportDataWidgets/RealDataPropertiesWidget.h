@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALDATAPROPERTIESWIDGET_H
-#define REALDATAPROPERTIESWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPROPERTIESWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPROPERTIESWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class LinkInstrumentManager;
@@ -63,4 +63,4 @@ private:
     RealDataItem* m_currentDataItem;
 };
 
-#endif // REALDATAPROPERTIESWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPROPERTIESWIDGET_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORBAPOL_H
-#define FORMFACTORBAPOL_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_FORMFACTORBAPOL_H
+#define BORNAGAIN_CORE_MULTILAYER_FORMFACTORBAPOL_H
 
-#include "IFormFactor.h"
+#include "Core/Scattering/IFormFactor.h"
 #include <memory>
 
 //! Evaluates the matrix BA term in a polarized IFormFactor.
@@ -56,4 +56,4 @@ private:
     std::unique_ptr<IFormFactor> mP_form_factor;
 };
 
-#endif // FORMFACTORBAPOL_H
+#endif // BORNAGAIN_CORE_MULTILAYER_FORMFACTORBAPOL_H

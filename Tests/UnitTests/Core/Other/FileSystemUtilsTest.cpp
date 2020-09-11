@@ -1,13 +1,9 @@
-#include "FileSystemUtils.h"
-#include "google_test.h"
+#include "Core/Tools/FileSystemUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class FileSystemUtilsTest : public ::testing::Test
 {
-protected:
-    ~FileSystemUtilsTest();
 };
-
-FileSystemUtilsTest::~FileSystemUtilsTest() = default;
 
 TEST_F(FileSystemUtilsTest, extention)
 {

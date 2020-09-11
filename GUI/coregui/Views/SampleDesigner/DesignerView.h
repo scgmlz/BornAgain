@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DESIGNERVIEW_H
-#define DESIGNERVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QGraphicsView>
 
 class QGraphicsView;
@@ -55,4 +55,4 @@ protected:
     void keyReleaseEvent(QKeyEvent* event);
 };
 
-#endif // DESIGNERVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H

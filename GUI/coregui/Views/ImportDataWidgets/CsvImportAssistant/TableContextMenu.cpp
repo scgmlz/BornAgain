@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "TableContextMenu.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/TableContextMenu.h"
 
 TableContextMenu::TableContextMenu(QWidget* parent)
     : QMenu(parent), m_coordSubMenu(this),

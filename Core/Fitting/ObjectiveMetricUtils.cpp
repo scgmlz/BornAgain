@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ObjectiveMetricUtils.h"
-#include "ObjectiveMetric.h"
+#include "Core/Fitting/ObjectiveMetricUtils.h"
+#include "Core/Fitting/ObjectiveMetric.h"
 #include <algorithm>
 #include <cmath>
 #include <map>

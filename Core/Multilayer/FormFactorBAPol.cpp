@@ -12,15 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorBAPol.h"
-#include "BornAgainNamespace.h"
-#include "WavevectorInfo.h"
+#include "Core/Multilayer/FormFactorBAPol.h"
+#include "Core/Vector/WavevectorInfo.h"
 #include <stdexcept>
 
 FormFactorBAPol::FormFactorBAPol(const IFormFactor& form_factor)
     : mP_form_factor(form_factor.clone())
 {
-    setName(BornAgain::FormFactorPolarizedBAType);
+    setName("FormFactorBAPol");
 }
 
 FormFactorBAPol::~FormFactorBAPol() = default;

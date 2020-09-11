@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MaterialBySLDImpl.h"
-#include "Units.h"
-#include "WavevectorInfo.h"
+#include "Core/Material/MaterialBySLDImpl.h"
+#include "Core/Basics/Units.h"
+#include "Core/Vector/WavevectorInfo.h"
 
 namespace
 {

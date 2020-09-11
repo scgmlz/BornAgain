@@ -12,24 +12,24 @@
 //
 // ************************************************************************** //
 
-#include "ParticleCompositionView.h"
-#include "ParticleItem.h"
-#include "SessionItem.h"
-#include "DesignerHelper.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleCompositionView.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 
 ParticleCompositionView::ParticleCompositionView(QGraphicsItem* parent) : ConnectableView(parent)
 {
-    setName(Constants::ParticleCompositionType);
+    setName("ParticleComposition");
     setColor(DesignerHelper::getDefaultParticleColor());
-    setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::ParticleCoreShellType));
+    setRectangle(DesignerHelper::getDefaultBoundingRect("ParticleCoreShell"));
     addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect to the ParticleLayout"));
+        ->setToolTip("Connect to the ParticleLayout");
     addPort("particles", NodeEditorPort::INPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect particles"));
+        ->setToolTip("Connect particles");
     addPort("transformation", NodeEditorPort::INPUT, NodeEditorPort::TRANSFORMATION)
-        ->setToolTip(QStringLiteral("Connect rotation to this port, if necessary"));
-    m_label_vspace = StyleUtils::SizeOfLetterM().height()*3.0;
+        ->setToolTip("Connect rotation to this port, if necessary");
+    m_label_vspace = StyleUtils::SizeOfLetterM().height() * 3.0;
 }
 
 void ParticleCompositionView::addView(IView* childView, int /* row */)

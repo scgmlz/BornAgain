@@ -12,9 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ComponentUtils.h"
-#include "SessionItem.h"
-#include "item_constants.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentUtils.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 namespace
 {
@@ -23,10 +22,12 @@ QList<const SessionItem*> groupItems(const SessionItem& item);
 
 QStringList ComponentUtils::propertyRelatedTypes()
 {
-    QStringList result = QStringList()
-                         << Constants::PropertyType << Constants::GroupItemType
-                         << Constants::VectorType << Constants::BasicAxisType
-                         << Constants::AmplitudeAxisType << Constants::MaterialRefractiveDataType;
+    QStringList result = QStringList() << "Property"
+                                       << "GroupProperty"
+                                       << "Vector"
+                                       << "BasicAxis"
+                                       << "AmplitudeAxis"
+                                       << "MaterialRefractiveData";
     return result;
 }
 
@@ -36,10 +37,10 @@ QList<const SessionItem*> ComponentUtils::componentItems(const SessionItem& item
 
     QList<const SessionItem*> result;
 
-    if (item.modelType() == Constants::PropertyType) {
+    if (item.modelType() == "Property") {
         result.push_back(&item);
 
-    } else if (item.modelType() == Constants::GroupItemType) {
+    } else if (item.modelType() == "GroupProperty") {
         result.push_back(&item);
         result += groupItems(item);
 
@@ -52,7 +53,7 @@ QList<const SessionItem*> ComponentUtils::componentItems(const SessionItem& item
             if (propertyRelated.contains(child->modelType()))
                 result.append(child);
 
-            if (child->modelType() == Constants::GroupItemType)
+            if (child->modelType() == "GroupProperty")
                 result += groupItems(*child);
         }
     }
@@ -64,7 +65,7 @@ namespace
 {
 QList<const SessionItem*> groupItems(const SessionItem& item)
 {
-    Q_ASSERT(item.modelType() == Constants::GroupItemType);
+    ASSERT(item.modelType() == "GroupProperty");
 
     QList<const SessionItem*> result;
     for (auto grandchild : item.children()) {

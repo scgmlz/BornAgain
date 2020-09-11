@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "DockWidgetInfo.h"
+#include "GUI/coregui/Views/CommonWidgets/DockWidgetInfo.h"
 #include <QDockWidget>
 #include <QWidget>
 

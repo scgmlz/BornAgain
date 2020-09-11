@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTIPLELAYOUTBUILDER_H
-#define MULTIPLELAYOUTBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MULTIPLELAYOUTBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_MULTIPLELAYOUTBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class ISample;
 
@@ -37,4 +37,4 @@ private:
     double m_cylinder_weight;
 };
 
-#endif // MULTIPLELAYOUTBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_MULTIPLELAYOUTBUILDER_H

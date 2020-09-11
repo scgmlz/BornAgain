@@ -1,15 +1,11 @@
-#include "Complex.h"
-#include "EigenCore.h"
-#include "Vectors3D.h"
-#include "google_test.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Vector/EigenCore.h"
+#include "Core/Vector/Vectors3D.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class CVectorTest : public ::testing::Test
 {
-protected:
-    ~CVectorTest();
 };
-
-CVectorTest::~CVectorTest() = default;
 
 TEST_F(CVectorTest, TrivialOperations)
 {

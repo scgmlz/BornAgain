@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERITEM_H
-#define LAYERITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_LAYERITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_LAYERITEM_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class BA_CORE_API_ LayerItem : public SessionGraphicsItem
 {
@@ -33,4 +33,4 @@ private:
     void updateAppearance(SessionItem* new_parent);
 };
 
-#endif // LAYERITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_LAYERITEM_H

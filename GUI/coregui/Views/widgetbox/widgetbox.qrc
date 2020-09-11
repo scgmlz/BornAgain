@@ -1,10 +1,24 @@
 <RCC>
     <qresource prefix="/widgetbox">
         <file>widgetbox.xml</file>
+        <file>images/Lattice1D.png</file>
+        <file>images/Lattice2D.png</file>
+        <file>images/Lattice2DFinite.png</file>
+        <file>images/Layer.png</file>
+        <file>images/Mesocrystal_64x64.png</file>
+        <file>images/MultiLayer.png</file>
+        <file>images/ParaCrystal1D.png</file>
+        <file>images/ParaCrystal2D.png</file>
+        <file>images/ParticleComposition_64x64.png</file>
+        <file>images/ParticleCoreShell_64x64.png</file>
+        <file>images/ParticleDistribution_64x64.png</file>
+        <file>images/ParticleLayout.png</file>
+        <file>images/Transformation.png</file>
         <file>images/ff_AnisoPyramid_64x64.png</file>
         <file>images/ff_Box_64x64.png</file>
-        <file>images/ff_Cone_64x64.png</file>
         <file>images/ff_Cone6_64x64.png</file>
+        <file>images/ff_Cone_64x64.png</file>
+        <file>images/ff_CosineRipple_64x64.png</file>
         <file>images/ff_Cuboctahedron_64x64.png</file>
         <file>images/ff_Cylinder_64x64.png</file>
         <file>images/ff_Dodecahedron_64x64.png</file>
@@ -14,28 +28,14 @@
         <file>images/ff_FullSpheroid_64x64.png</file>
         <file>images/ff_HemiEllipsoid_64x64.png</file>
         <file>images/ff_Icosahedron_64x64.png</file>
-        <file>images/Mesocrystal_64x64.png</file>
         <file>images/ff_Prism3_64x64.png</file>
         <file>images/ff_Prism6_64x64.png</file>
         <file>images/ff_Pyramid_64x64.png</file>
-        <file>images/ff_Ripple1_64x64.png</file>
-        <file>images/ff_Ripple2_64x64.png</file>
+        <file>images/ff_SawtoothRipple_64x64.png</file>
         <file>images/ff_Tetrahedron_64x64.png</file>
         <file>images/ff_TruncatedCube_64x64.png</file>
         <file>images/ff_TruncatedSphere_64x64.png</file>
         <file>images/ff_TruncatedSpheroid_64x64.png</file>
-        <file>images/MultiLayer.png</file>
-        <file>images/Layer.png</file>
-        <file>images/ParaCrystal2D.png</file>
-        <file>images/ParaCrystal1D.png</file>
-        <file>images/ParticleLayout.png</file>
-        <file>images/ParticleCoreShell_64x64.png</file>
-        <file>images/Lattice2D.png</file>
-        <file>images/Transformation.png</file>
-        <file>images/ParticleComposition_64x64.png</file>
-        <file>images/ParticleDistribution_64x64.png</file>
-        <file>images/Lattice1D.png</file>
         <file>images/sample_layers2.png</file>
-        <file>images/Lattice2DFinite.png</file>
     </qresource>
 </RCC>

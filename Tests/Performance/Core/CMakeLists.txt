@@ -1,0 +1,13 @@
+function(PerformanceTest NAME SPEED DEPS)
+    set(TEST "PTest${NAME}")
+    add_executable(${TEST} ${NAME}.cpp ${DEPS})
+    target_link_libraries(${TEST} BornAgainCore)
+    if((${SPEED} STREQUAL "fast") OR SLOWTESTS)
+        add_test(Core:Perf:${NAME} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TEST})
+    endif()
+endfunction()
+
+PerformanceTest(CoreIO "slow" ../Benchmark.cpp)
+PerformanceTest(Multilayer "fast" "")
+PerformanceTest(Mesocrystal "fast" "")
+PerformanceTest(Threading "slow" ThreadingComponents.cpp)

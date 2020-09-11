@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "ComponentTreeView.h"
-#include "ComponentProxyModel.h"
-#include "ComponentTreeActions.h"
-#include "CustomEventFilters.h"
-#include "SessionModel.h"
-#include "SessionModelDelegate.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentTreeView.h"
+#include "GUI/coregui/Models/ComponentProxyModel.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Models/SessionModelDelegate.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentTreeActions.h"
+#include "GUI/coregui/utils/CustomEventFilters.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QBoxLayout>
 #include <QStandardItemModel>
 #include <QTreeView>
@@ -86,7 +86,7 @@ void ComponentTreeView::setRootIndex(const QModelIndex& index, bool show_root_it
 {
     if (QWidget* editor = m_tree->indexWidget(m_tree->currentIndex()))
         m_delegate->closeEditor(editor, QAbstractItemDelegate::NoHint);
-    Q_ASSERT(m_proxyModel);
+    ASSERT(m_proxyModel);
     m_proxyModel->setRootIndex(index);
     if (!show_root_item)
         m_tree->setRootIndex(m_proxyModel->mapFromSource(index));

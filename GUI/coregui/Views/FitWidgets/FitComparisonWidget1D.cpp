@@ -12,18 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "FitComparisonWidget1D.h"
-#include "Data1DViewItem.h"
-#include "FitComparisonViewController.h"
-#include "FitFlowWidget.h"
-#include "FitSuiteItem.h"
-#include "IntensityDataPropertyWidget.h"
-#include "JobItem.h"
-#include "Plot1D.h"
-#include "Plot1DCanvas.h"
-#include "PlotStatusLabel.h"
-#include "RealDataItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/FitWidgets/FitComparisonWidget1D.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/FitWidgets/FitComparisonViewController.h"
+#include "GUI/coregui/Views/FitWidgets/FitFlowWidget.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataPropertyWidget.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/Plot1D.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/Plot1DCanvas.h"
 #include <QAction>
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -120,6 +120,6 @@ JobItem* FitComparisonWidget1D::jobItem()
 Data1DViewItem* FitComparisonWidget1D::viewItem()
 {
     auto view_item = dynamic_cast<Data1DViewItem*>(jobItem()->dataItemView());
-    Q_ASSERT(view_item);
+    ASSERT(view_item);
     return view_item;
 }

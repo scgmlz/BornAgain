@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAPSCENEADAPTOR_H
-#define COLORMAPSCENEADAPTOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_COLORMAPSCENEADAPTOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_COLORMAPSCENEADAPTOR_H
 
-#include "ISceneAdaptor.h"
+#include "GUI/coregui/Views/MaskWidgets/ISceneAdaptor.h"
 class ColorMap;
 
 //! Performs conversion of MaskItems coordinates between ColorMap and GraphicsScene.
@@ -43,4 +43,4 @@ private:
     ColorMap* m_plot;
 };
 
-#endif // COLORMAPSCENEADAPTOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_COLORMAPSCENEADAPTOR_H

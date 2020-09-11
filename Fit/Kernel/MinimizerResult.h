@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MINIMIZERRESULT_H
-#define MINIMIZERRESULT_H
+#ifndef BORNAGAIN_FIT_KERNEL_MINIMIZERRESULT_H
+#define BORNAGAIN_FIT_KERNEL_MINIMIZERRESULT_H
 
-#include "Parameters.h"
-#include "WinDllMacros.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 namespace Fit
@@ -56,4 +56,4 @@ private:
 
 } // namespace Fit
 
-#endif
+#endif // BORNAGAIN_FIT_KERNEL_MINIMIZERRESULT_H

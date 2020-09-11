@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "ParticleCoreShellItem.h"
-#include "GUIHelpers.h"
-#include "ModelPath.h"
-#include "Particle.h"
-#include "ParticleCoreShell.h"
-#include "ParticleItem.h"
-#include "SessionItemUtils.h"
-#include "TransformToDomain.h"
+#include "GUI/coregui/Models/ParticleCoreShellItem.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleCoreShell.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/TransformToDomain.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -31,28 +31,27 @@ const QString position_tooltip = "Relative position of the particle's reference 
 
 } // namespace
 
-const QString ParticleCoreShellItem::T_CORE = "Core Tag";
-const QString ParticleCoreShellItem::T_SHELL = "Shell Tag";
+const QString ParticleCoreShellItem::T_CORE = "Core tag";
+const QString ParticleCoreShellItem::T_SHELL = "Shell tag";
 
 // TODO make ParticleCoreShellItem and ParticleItem to derive from common base.
 
-ParticleCoreShellItem::ParticleCoreShellItem()
-    : SessionGraphicsItem(Constants::ParticleCoreShellType)
+ParticleCoreShellItem::ParticleCoreShellItem() : SessionGraphicsItem("ParticleCoreShell")
 {
-    setToolTip(QStringLiteral("A particle with a core/shell geometry"));
+    setToolTip("A particle with a core/shell geometry");
 
     addProperty(ParticleItem::P_ABUNDANCE, 1.0)
         ->setLimits(RealLimits::limited(0.0, 1.0))
         .setDecimals(3)
         .setToolTip(abundance_tooltip);
 
-    addGroupProperty(ParticleItem::P_POSITION, Constants::VectorType)->setToolTip(position_tooltip);
+    addGroupProperty(ParticleItem::P_POSITION, "Vector")->setToolTip(position_tooltip);
 
-    registerTag(T_CORE, 0, 1, QStringList() << Constants::ParticleType);
-    registerTag(T_SHELL, 0, 1, QStringList() << Constants::ParticleType);
-    registerTag(ParticleItem::T_TRANSFORMATION, 0, 1, QStringList() << Constants::RotationType);
+    registerTag(T_CORE, 0, 1, QStringList() << "Particle");
+    registerTag(T_SHELL, 0, 1, QStringList() << "Particle");
+    registerTag(ParticleItem::T_TRANSFORMATION, 0, 1, QStringList() << "Rotation");
 
-    addTranslator(VectorParameterTranslator(ParticleItem::P_POSITION, BornAgain::Position));
+    addTranslator(VectorParameterTranslator(ParticleItem::P_POSITION, "Position"));
     addTranslator(RotationTranslator());
 
     mapper()->setOnParentChange([this](SessionItem* parent) {

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ItemSelectorWidget.h"
-#include "SessionDecorationModel.h"
-#include "SessionItem.h"
-#include "SessionModel.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemSelectorWidget.h"
+#include "GUI/coregui/Models/SessionDecorationModel.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QListView>
 #include <QVBoxLayout>
 

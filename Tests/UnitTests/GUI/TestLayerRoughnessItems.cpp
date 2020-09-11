@@ -1,16 +1,12 @@
-#include "LayerRoughness.h"
-#include "LayerRoughnessItems.h"
-#include "TransformFromDomain.h"
-#include "TransformToDomain.h"
-#include "google_test.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "GUI/coregui/Models/LayerRoughnessItems.h"
+#include "GUI/coregui/Models/TransformFromDomain.h"
+#include "GUI/coregui/Models/TransformToDomain.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestLayerRoughnessItems : public ::testing::Test
 {
-public:
-    ~TestLayerRoughnessItems();
 };
-
-TestLayerRoughnessItems::~TestLayerRoughnessItems() = default;
 
 TEST_F(TestLayerRoughnessItems, test_LayerRoughnessToDomain)
 {

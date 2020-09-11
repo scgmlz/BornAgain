@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef KERNELTYPES_H
-#define KERNELTYPES_H
+#ifndef BORNAGAIN_FIT_KERNEL_KERNELTYPES_H
+#define BORNAGAIN_FIT_KERNEL_KERNELTYPES_H
 
 #include <functional>
 #include <vector>
@@ -37,4 +37,4 @@ using root_gradient_t = std::function<double(const double*, unsigned int, double
 using fcn_scalar_t = std::function<double(const Fit::Parameters&)>;
 using fcn_residual_t = std::function<std::vector<double>(const Fit::Parameters&)>;
 
-#endif // KERNELTYPES_H
+#endif // BORNAGAIN_FIT_KERNEL_KERNELTYPES_H

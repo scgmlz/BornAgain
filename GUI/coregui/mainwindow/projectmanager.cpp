@@ -12,18 +12,19 @@
 //
 // ************************************************************************** //
 
-#include "projectmanager.h"
-#include "AppSvc.h"
-#include "ApplicationModels.h"
-#include "GUIHelpers.h"
-#include "MessageService.h"
-#include "ProjectLoadWarningDialog.h"
-#include "ProjectUtils.h"
-#include "SaveService.h"
-#include "mainwindow.h"
-#include "mainwindow_constants.h"
-#include "newprojectdialog.h"
-#include "projectdocument.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Views/InfoWidgets/ProjectLoadWarningDialog.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/mainwindow/SaveService.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/mainwindow/newprojectdialog.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/MessageService.h"
 #include <QApplication>
 #include <QDateTime>
 #include <QFileDialog>
@@ -121,7 +122,7 @@ QString ProjectManager::projectDir() const
     if (m_project_document && m_project_document->hasValidNameAndPath())
         return m_project_document->projectDir();
 
-    return QString();
+    return "";
 }
 
 //! Returns directory name suitable for saving plots.
@@ -360,7 +361,7 @@ QString ProjectManager::acquireProjectFileName()
     NewProjectDialog dialog(m_mainWindow, workingDirectory(), untitledProjectName());
 
     if (dialog.exec() != QDialog::Accepted)
-        return QString();
+        return "";
 
     m_workingDirectory = dialog.getWorkingDirectory();
 
@@ -420,7 +421,7 @@ void ProjectManager::riseProjectLoadFailedDialog()
 
 void ProjectManager::riseProjectLoadWarningDialog()
 {
-    Q_ASSERT(m_project_document);
+    ASSERT(m_project_document);
     ProjectLoadWarningDialog* warningDialog = new ProjectLoadWarningDialog(
         m_mainWindow, m_messageService, m_project_document->documentVersion());
 

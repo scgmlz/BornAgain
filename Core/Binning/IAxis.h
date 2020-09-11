@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef IAXIS_H
-#define IAXIS_H
+#ifndef BORNAGAIN_CORE_BINNING_IAXIS_H
+#define BORNAGAIN_CORE_BINNING_IAXIS_H
 
-#include "Bin.h"
+#include "Core/Binning/Bin.h"
 #include <vector>
 
 //! Interface for one-dimensional axes.
@@ -96,4 +96,4 @@ inline bool HaveSameNameAndShape(const IAxis& left, const IAxis& right)
     return left == right;
 }
 
-#endif // IAXIS_H
+#endif // BORNAGAIN_CORE_BINNING_IAXIS_H

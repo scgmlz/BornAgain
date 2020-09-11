@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "StyledToolBar.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
 #include <QLabel>
 #include <QStyle>
 

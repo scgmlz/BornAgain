@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INFOPANELTOOLBAR_H
-#define INFOPANELTOOLBAR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_INFOPANELTOOLBAR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_INFOPANELTOOLBAR_H
 
-#include "StyledToolBar.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
 
 class QAction;
 
@@ -44,4 +44,4 @@ private:
     bool m_expanded;
 };
 
-#endif // INFOPANELTOOLBAR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_INFOPANELTOOLBAR_H

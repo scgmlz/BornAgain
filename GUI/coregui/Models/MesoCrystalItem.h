@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MESOCRYSTALITEM_H
-#define MESOCRYSTALITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_MESOCRYSTALITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_MESOCRYSTALITEM_H
 
-#include "Lattice.h"
-#include "SessionGraphicsItem.h"
+#include "Core/Lattice/Lattice.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class IFormFactor;
 class IParticle;
@@ -25,9 +25,8 @@ class MesoCrystal;
 class BA_CORE_API_ MesoCrystalItem : public SessionGraphicsItem
 {
 public:
-    static const QString P_FORM_FACTOR;
+    static const QString P_OUTER_SHAPE;
     static const QString T_BASIS_PARTICLE;
-    static const QString LATTICE_VECTOR;
     static const QString P_VECTOR_A;
     static const QString P_VECTOR_B;
     static const QString P_VECTOR_C;
@@ -43,4 +42,4 @@ public:
     std::unique_ptr<IFormFactor> getOuterShape() const;
 };
 
-#endif // MESOCRYSTALITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_MESOCRYSTALITEM_H

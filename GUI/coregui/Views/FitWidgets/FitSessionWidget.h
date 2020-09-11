@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef FITSESSIONWIDGET_H
-#define FITSESSIONWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONWIDGET_H
 
-#include "FitProgressInfo.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/FitWidgets/FitProgressInfo.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QTabWidget;
@@ -58,4 +58,4 @@ private:
     FitSessionController* m_sessionController;
 };
 
-#endif // FITSUITEWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONWIDGET_H

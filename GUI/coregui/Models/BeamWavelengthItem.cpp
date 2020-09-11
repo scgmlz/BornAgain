@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "BeamWavelengthItem.h"
+#include "GUI/coregui/Models/BeamWavelengthItem.h"
 
 namespace
 {
@@ -28,7 +28,7 @@ BeamWavelengthItem::BeamWavelengthItem(const QString& model_type, const QString&
     valueItem->setLimits(RealLimits::positive());
     valueItem->setDecimals(4);
     valueItem->setValue(default_wl);
-    valueItem->setEditorType(Constants::ScientificSpinBoxType);
+    valueItem->setEditorType("ScientificSpinBox");
 
     initDistributionItem(m_show_mean);
 }
@@ -41,8 +41,7 @@ double BeamWavelengthItem::wavelength() const
 }
 
 SpecularBeamWavelengthItem::SpecularBeamWavelengthItem()
-    : BeamWavelengthItem(Constants::SpecularBeamWavelengthType,
-                         Constants::SymmetricDistributionGroup)
+    : BeamWavelengthItem("SpecularBeamWavelength", "Symmetric distribution group")
 {
 }
 

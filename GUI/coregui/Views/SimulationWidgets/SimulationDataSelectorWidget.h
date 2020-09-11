@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SIMULATIONDATASELECTORWIDGET_H
-#define SIMULATIONDATASELECTORWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONDATASELECTORWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONDATASELECTORWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class ApplicationModels;
@@ -54,4 +54,4 @@ private:
     ApplicationModels* m_applicationModels;
 };
 
-#endif // SIMULATIONDATASELECTORWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONDATASELECTORWIDGET_H

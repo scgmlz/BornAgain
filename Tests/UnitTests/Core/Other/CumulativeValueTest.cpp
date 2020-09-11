@@ -1,13 +1,9 @@
-#include "CumulativeValue.h"
-#include "google_test.h"
+#include "Core/Intensity/CumulativeValue.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class CumulativeValueTest : public ::testing::Test
 {
-protected:
-    ~CumulativeValueTest();
 };
-
-CumulativeValueTest::~CumulativeValueTest() = default;
 
 TEST_F(CumulativeValueTest, InitialState)
 {

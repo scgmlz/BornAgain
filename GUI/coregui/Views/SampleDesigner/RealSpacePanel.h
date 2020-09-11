@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALSPACEPANEL_H
-#define REALSPACEPANEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_REALSPACEPANEL_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_REALSPACEPANEL_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SampleModel;
@@ -37,4 +37,4 @@ private:
     RealSpaceWidget* m_realSpaceWidget;
 };
 
-#endif // REALSPACEPANEL_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_REALSPACEPANEL_H

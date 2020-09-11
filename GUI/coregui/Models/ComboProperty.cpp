@@ -12,8 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "ComboProperty.h"
-#include "GUIHelpers.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -58,7 +59,7 @@ QStringList ComboProperty::getValues() const
 
 void ComboProperty::setValues(const QStringList& values)
 {
-    Q_ASSERT(values.size());
+    ASSERT(values.size());
     QString current = getValue();
     m_values = values;
     setCurrentIndex(m_values.contains(current) ? m_values.indexOf(current) : 0);
@@ -220,10 +221,10 @@ void ComboProperty::setStringOfSelections(const QString& values)
 QString ComboProperty::label() const
 {
     if (m_selected_indices.size() > 1) {
-        return QStringLiteral("Multiple");
+        return "Multiple";
     } else if (m_selected_indices.size() == 1) {
         return getValue();
     } else {
-        return QStringLiteral("None");
+        return "None";
     }
 }

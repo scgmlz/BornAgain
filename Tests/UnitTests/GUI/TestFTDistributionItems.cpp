@@ -1,14 +1,10 @@
-#include "FTDistributionItems.h"
-#include "FTDistributions1D.h"
-#include "google_test.h"
+#include "Core/Correlations/FTDistributions1D.h"
+#include "GUI/coregui/Models/FTDistributionItems.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestFTDistributionItems : public ::testing::Test
 {
-public:
-    ~TestFTDistributionItems();
 };
-
-TestFTDistributionItems::~TestFTDistributionItems() = default;
 
 TEST_F(TestFTDistributionItems, test_FTDistribution1DCauchy)
 {

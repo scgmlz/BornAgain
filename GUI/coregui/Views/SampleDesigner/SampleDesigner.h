@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEDESIGNER_H
-#define SAMPLEDESIGNER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEDESIGNER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEDESIGNER_H
 
-#include "DesignerScene.h"
-#include "DesignerView.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerView.h"
 #include <QObject>
 #include <QStackedWidget>
 
@@ -62,4 +62,4 @@ private:
     DesignerView* m_designerView;   //! graphical representation of scene with object
 };
 
-#endif // SAMPLEDESIGNER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEDESIGNER_H

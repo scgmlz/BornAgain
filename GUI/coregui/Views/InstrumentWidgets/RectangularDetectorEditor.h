@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef RECTANGULARDETECTOREDITOR_H
-#define RECTANGULARDETECTOREDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_RECTANGULARDETECTOREDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_RECTANGULARDETECTOREDITOR_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 class RectangularDetectorItem;
 class ComponentEditor;
 class QGridLayout;
@@ -50,4 +50,4 @@ private:
     QGridLayout* m_gridLayout;
 };
 
-#endif // RECTANGULARDETECTOREDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_RECTANGULARDETECTOREDITOR_H

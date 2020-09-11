@@ -12,14 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef PARAMETERUTILS_H
-#define PARAMETERUTILS_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERUTILS_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
-class ParameterDistribution;
-class ParticleDistribution;
 class IParameterized;
 
 namespace ParameterUtils
@@ -29,11 +27,8 @@ namespace ParameterUtils
 BA_CORE_API_ bool isAngleRelated(const std::string& par_name);
 
 //! Returns units of main parameter.
-BA_CORE_API_ std::string mainParUnits(const ParticleDistribution& distr);
-
-//! Returns units of main parameter.
 BA_CORE_API_ std::string poolParameterUnits(const IParameterized& node, const std::string& parName);
 
 } // namespace ParameterUtils
 
-#endif // PARAMETERPATTERN_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERUTILS_H

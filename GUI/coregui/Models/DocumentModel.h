@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DOCUMENTMODEL_H
-#define DOCUMENTMODEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DOCUMENTMODEL_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DOCUMENTMODEL_H
 
-#include "SessionModel.h"
+#include "GUI/coregui/Models/SessionModel.h"
 
 class SimulationOptionsItem;
 
@@ -32,4 +32,4 @@ public:
     SimulationOptionsItem* simulationOptionsItem();
 };
 
-#endif // DOCUMENTMODEL_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DOCUMENTMODEL_H

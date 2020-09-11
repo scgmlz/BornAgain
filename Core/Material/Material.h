@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIAL_H_
-#define MATERIAL_H_
+#ifndef BORNAGAIN_CORE_MATERIAL_MATERIAL_H
+#define BORNAGAIN_CORE_MATERIAL_MATERIAL_H
 
-#include "BaseMaterialImpl.h"
-#include "Complex.h"
-#include "EigenCore.h"
-#include "Vectors3D.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Material/BaseMaterialImpl.h"
+#include "Core/Vector/EigenCore.h"
+#include "Core/Vector/Vectors3D.h"
 #include <memory>
 #include <vector>
 
@@ -94,7 +94,7 @@ public:
     Eigen::Matrix2cd polarizedSubtrSLD(const WavevectorInfo& wavevectors) const;
 #endif
 
-    Material transformedMaterial(const Transform3D& transform) const;
+    Material rotatedMaterial(const Transform3D& transform) const;
 
     friend BA_CORE_API_ std::ostream& operator<<(std::ostream& ostr, const Material& mat);
 
@@ -108,4 +108,4 @@ BA_CORE_API_ bool operator==(const Material& left, const Material& right);
 //! Comparison operator for material wrapper (inequality check)
 BA_CORE_API_ bool operator!=(const Material& left, const Material& right);
 
-#endif /* MATERIAL_H_ */
+#endif // BORNAGAIN_CORE_MATERIAL_MATERIAL_H

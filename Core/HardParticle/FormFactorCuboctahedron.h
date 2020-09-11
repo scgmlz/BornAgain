@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORCUBOCTAHEDRON_H
-#define FORMFACTORCUBOCTAHEDRON_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCUBOCTAHEDRON_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCUBOCTAHEDRON_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A truncated bifrustum with quadratic base.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorCuboctahedron : public FormFactorPolyhedron
 {
 public:
+    FormFactorCuboctahedron(const std::vector<double> P);
     FormFactorCuboctahedron(double length, double height, double height_ratio, double alpha);
 
     FormFactorCuboctahedron* clone() const override final
@@ -45,10 +46,10 @@ protected:
 private:
     static const PolyhedralTopology topology;
 
-    double m_length;
-    double m_height;
-    double m_height_ratio;
-    double m_alpha;
+    const double& m_length;
+    const double& m_height;
+    const double& m_height_ratio;
+    const double& m_alpha;
 };
 
-#endif // FORMFACTORCUBOCTAHEDRON_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCUBOCTAHEDRON_H

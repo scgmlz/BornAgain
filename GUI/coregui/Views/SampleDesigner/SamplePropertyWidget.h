@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEPROPERTYWIDGET_H
-#define SAMPLEPROPERTYWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEPROPERTYWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEPROPERTYWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QItemSelectionModel;
@@ -44,4 +44,4 @@ private:
     ComponentEditor* m_propertyEditor;
 };
 
-#endif // SAMPLEPROPERTYWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEPROPERTYWIDGET_H

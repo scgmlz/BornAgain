@@ -1,16 +1,12 @@
-#include "Histogram2D.h"
-#include "SpectrumUtils.h"
-#include "google_test.h"
+#include "Core/Instrument/SpectrumUtils.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include "tspectrum.h"
 #include <iostream>
 
 class SpectrumTest : public ::testing::Test
 {
-protected:
-    ~SpectrumTest();
 };
-
-SpectrumTest::~SpectrumTest() = default;
 
 TEST_F(SpectrumTest, arrayPeaks)
 {

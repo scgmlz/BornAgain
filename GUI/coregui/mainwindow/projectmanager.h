@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGER_H
-#define PROJECTMANAGER_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTMANAGER_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTMANAGER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QStringList>
 
@@ -55,9 +55,9 @@ public slots:
     void clearRecentProjects();
     void newProject();
     bool closeCurrentProject();
-    bool saveProject(QString projectFileName = QString());
+    bool saveProject(QString projectFileName = "");
     bool saveProjectAs();
-    void openProject(QString fileName = QString());
+    void openProject(QString fileName = "");
 
 private:
     void createNewProject();
@@ -87,4 +87,4 @@ private:
     SaveService* m_saveService;
 };
 
-#endif // PROJECTMANAGER_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTMANAGER_H

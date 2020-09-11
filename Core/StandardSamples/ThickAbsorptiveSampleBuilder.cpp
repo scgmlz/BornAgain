@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "ThickAbsorptiveSampleBuilder.h"
-#include "Layer.h"
-#include "LayerRoughness.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Units.h"
+#include "Core/StandardSamples/ThickAbsorptiveSampleBuilder.h"
+#include "Core/Basics/Units.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MultiLayer.h"
 
 ThickAbsorptiveSampleBuilder::ThickAbsorptiveSampleBuilder() : IMultiLayerBuilder() {}
 

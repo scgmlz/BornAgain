@@ -23,12 +23,10 @@ set(include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/ImportDataWidgets
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/ImportDataWidgets/CsvImportAssistant
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/CommonWidgets
+    ${CMAKE_CURRENT_SOURCE_DIR}/Views/RealSpaceWidgets
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/SpecularDataWidgets
 )
 
-if(BORNAGAIN_OPENGL)
-    list(APPEND include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/Views/RealSpaceWidgets)
-endif()
 
 set(source_files)
 set(include_files)
@@ -54,7 +52,7 @@ set(include_widgetbox
     "Views/widgetbox/widgetbox_global.h"
 )
 if(WIN32)
-	add_definitions(-DQDESIGNER_UILIB_LIBRARY)
+    add_definitions(-DQDESIGNER_UILIB_LIBRARY)
 endif()
 
 list(APPEND include_files ${include_widgetbox})
@@ -71,7 +69,6 @@ set(resource_files
 
 # --- Qt configuration ---------
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
 qt5_add_resources(RC_SRCS ${resource_files})
 
 # --- definitions ------
@@ -86,11 +83,7 @@ endif()
 
 # --- making library ---------
 
-add_library(
-    ${library_name}
-    SHARED
-    ${source_files} ${RC_SRCS} ${include_files}
-)
+add_library(${library_name} SHARED ${source_files} ${RC_SRCS} ${include_files})
 set_target_properties(${library_name} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${library_name}_LIBRARY_TYPE SHARED)
 # exposing library name and list of include directories outside
@@ -99,10 +92,7 @@ set(${library_name}_LIBRARY ${library_name} PARENT_SCOPE)
 
 
 # --- dependencies ---------
-if(BORNAGAIN_OPENGL)
-target_compile_definitions(${library_name} PUBLIC -DBORNAGAIN_OPENGL)
-endif()
-target_include_directories(${library_name} PUBLIC ${QtAddOn_INCLUDE_DIRS} ${ba3d_INCLUDE_DIRS})
+target_include_directories(${library_name} PUBLIC ${QtAddOn_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
 target_include_directories(${library_name} PUBLIC ${include_dirs})
 target_link_libraries(${library_name} ${QtAddOn_LIBRARIES} ${BornAgainCore_LIBRARY} ${ba3d_LIBRARY})
 target_link_libraries(${library_name}
@@ -151,8 +141,7 @@ if(WIN32)
 
     set(QT_VISTA_STYLE "${QTDIR}/plugins/styles/qwindowsvistastyle.dll")
     if(EXISTS "${QT_VISTA_STYLE}")
-        install(FILES
-		${QT_VISTA_STYLE}
+        install(FILES ${QT_VISTA_STYLE}
                 DESTINATION bin/styles COMPONENT Libraries)
     else(EXISTS "${QT_VISTA_STYLE}")
         MESSAGE(AUTHOR_WARNING "File ${QT_VISTA_STYLE} not found.")

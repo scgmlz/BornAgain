@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 // This file is part of qAccordion. An Accordion widget for Qt
-// Copyright © 2015 Christian Rapp <0x2a at posteo dot org>
+// Copyright (C) 2015 Christian Rapp <0x2a at posteo dot org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONTENTPANE_H
-#define CONTENTPANE_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CONTENTPANE_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CONTENTPANE_H
 
-#include "AccordionWidget.h"
-#include "ClickableFrame.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
+#include "GUI/coregui/Views/AccordionWidget/ClickableFrame.h"
+#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -111,7 +111,7 @@ public:
      * @brief Set the content frame
      * @param content QFrame* with your content
      *
-     * Set / change the content frame of this content pane with \p content. The
+     * Set / change the content frame of this content pane with content. The
      * lifecycle
      */
     void setContentFrame(QFrame* content);
@@ -186,8 +186,7 @@ public:
      * @param stylesheet CSS Style Sheet as string
      *
      * @details
-     * Set a \p stylesheet for the header for a special effect when the mouse
-     * hovers over it.
+     * Set a stylesheet for the header for a special effect when the mouse hovers over it.
      * @sa
      * setHeaderStylesheet() for additional details.
      */
@@ -331,4 +330,4 @@ protected:
     void paintEvent(ATTR_UNUSED QPaintEvent* event);
 };
 
-#endif // CONTENTPANE_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CONTENTPANE_H

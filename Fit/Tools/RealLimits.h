@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALLIMITS_H
-#define REALLIMITS_H
+#ifndef BORNAGAIN_FIT_TOOLS_REALLIMITS_H
+#define BORNAGAIN_FIT_TOOLS_REALLIMITS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <ostream>
 #include <string>
 
@@ -109,4 +109,4 @@ protected:
     double m_upper_limit;   //! maximum allowed value
 };
 
-#endif // REALLIMITS_H
+#endif // BORNAGAIN_FIT_TOOLS_REALLIMITS_H

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Plots intensity data difference stored in BornAgain "*.int" or "*.int.gz" format
 Usage: python plot_intensity_data_diff.py intensity_reference.int.gz intensity_other.int.gz

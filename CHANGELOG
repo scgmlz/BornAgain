@@ -1,3 +1,24 @@
+BornAgain-1.17.99, work in progress
+  > API changes:
+    1) Shorter names for FootprintSquare, FootprintGauss
+    2) FormFactorHollowSphere (moved from soft to hard particles, and renamed)
+    3) FormFactorGaussSphere is now a sphere, not an ellipsoid
+    4) Withdraw three unused, undocumented, incomplete soft-particle form factors
+       (Lorentz, Debye-Bueche, Ornstein-Zernike)
+    5) Removed default argument values from node constructors
+    6) Swap order of arguments gamma and eta in 2D decay and distribution Voigt functions
+    7) FormFactorSphereLogNormalRadius is now positioned at center, not at bottom
+    8) Ripple1 and Ripple2 form factors renamed to CosineRipple and SawtoothRipple
+  > Changes in build configuration:
+    1) Python2 no longer supported
+    2) OpenGL can no longer be deselected
+    3) Eigen3 removed from ThirdParty; it is now a regular external dependence
+  > Internal refactoring and fixes of unreported bugs
+    1) Unit tests now under CTest control, no longer enforced during compilation
+    2) Uniform handling of assertions
+    3) Success of test_nonXMLDataInDir was dependent on test execution order
+    4) Parameter registration now centralized in INode class
+
 BornAgain-1.17.0, released 2020.06.16
   > API changes:
     1) Add Nevot-Croce roughness model.
@@ -20,19 +41,19 @@ BornAgain-1.17.0, released 2020.06.16
   * Bug #2461: GUI: crash in 3D view with lock function
   * Feature #2428: Add Nevot-Croce roughness model
   * Feature #2430: Try switch bindings to swig v4.0.1
-  * Feature #2438: Website: rename "python scripts" and "tutorial examples" menu entries.
+  * Feature #2438: Website: rename "python scripts" and "tutorial examples" menu entries
   * Feature #2443: Create document describing the release procedure.
   * Feature #2445: GUI: fix fancy toolbars under Linux
-  * Feature #2446: GUI: fix HighDPI issues under Windows.
+  * Feature #2446: GUI: fix HighDPI issues under Windows
   * Feature #2447: Update eigen3 submodule URL
   * Feature #2448: Switch Appveyor Windows build to MSVC 2019
   * Feature #2449: Enable Travis MacOS build
   * Feature #2450: Provide Windows compilation with Python 3.8, switch Appveyor to it
   * Feature #2463: Update macmini to High Sierra and provide BornAgain build
-  * Documentation #2431: Website: switch to latest Hugo in website travis based generation.
+  * Documentation #2431: Website: switch to latest Hugo in website travis based generation
   * Documentation #2437: Website: provide citing and news item for BornAgain publication
   * Refactoring #2275: Refactor cmake machinery for consistent Python interpreter/libraries handling
-  * Refactoring #2432: Run code beautifier on the whole codebase.
+  * Refactoring #2432: Run code beautifier on the whole codebase
   * Refactoring #2439: Get rid of all Qt's deprecated compile warnings
   * Refactoring #2454: print q vector if numeric form factor test fails
   * Refactoring #2455: correct and document Ripple form factors
@@ -43,7 +64,7 @@ BornAgain-1.16.0, released 2019.07.31
     1) Python: major changes in SpecularSimulation interface. Please consult web-documentation for details.
     2) GUI: project compatibility with previous versions is broken.
   > Summary:
-    1) Hadnling intensity uncertainties in experimental data
+    1) Handling intensity uncertainties in experimental data
     2) Support for arbitrary resolutions in reflectometry
     3) SLD/refractive index profiles across sample layers
     4) Importing reflectometry data as Qz-Intensity by default
@@ -80,11 +101,11 @@ BornAgain-1.16.0, released 2019.07.31
   * Feature #2373: Remove choice between decoupling approximation and SSCA in GUI layouts
   * Feature #2374: Clean Functionality to Import Typical Reflectometry ASCII Formats
   * Feature #2377: Implement layer editor prototype on the basis of the the new model-view framework
-  * Documentation #2223: Update BornAgain Windows installation documentation on the webpage.
+  * Documentation #2223: Update BornAgain Windows installation documentation on the webpage
   * Documentation #2283: Fix starting value of prism_base_edge in fit example
   * Documentation #2308: Fix Windows PyCharm tutorial
   * Documentation #2325: Proofread Windows installation tutorials
-  * Documentation #2381: Examples present on the website and missing on the BA repo 
+  * Documentation #2381: Examples present on the website and missing on the BA repo
   * Refactoring #2361: Use **kwargs in python plotting routines
   * Testing #2210: Test 1d data import on known file formats
   * Testing #2287: Reflectometry cross-validation
@@ -364,7 +385,7 @@ BornAgain-1.11.0, released 2018.03.02
     9) GUI: Fourier transform of simulation results.
     10) GUI: beam polarization and polarization analysis are now supported.
     11) Documentation: large part of website has been migrated to Hugo website
-    12) Bugfix: BornAgain GUI no longer contains a limit on number of threads. 
+    12) Bugfix: BornAgain GUI no longer contains a limit on number of threads.
     13) Numerous other bugfixes.
 
   * Bug #1871: Prevent using WavelengthIndependentMaterial in computations with material averaging or make universal averaging procedure

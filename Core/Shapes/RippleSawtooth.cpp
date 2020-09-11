@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RippleSawtooth.h"
+#include "Core/Shapes/RippleSawtooth.h"
 
 RippleSawtooth::RippleSawtooth(double length, double width, double height, double asymmetry)
 {

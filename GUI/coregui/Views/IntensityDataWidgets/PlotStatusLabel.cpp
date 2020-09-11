@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "PlotStatusLabel.h"
-#include "ScientificPlot.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
 
 PlotStatusLabel::PlotStatusLabel(ScientificPlot* plot, QWidget* parent) : StatusLabel(parent)
 {

@@ -12,14 +12,16 @@
 //
 // ************************************************************************** //
 
-#ifndef PROFILEHELPER_H
-#define PROFILEHELPER_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_PROFILEHELPER_H
+#define BORNAGAIN_CORE_COMPUTATION_PROFILEHELPER_H
 
-#include "Complex.h"
-#include "Material.h"
-#include "WinDllMacros.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Material/Material.h"
+#include "Wrap/WinDllMacros.h"
 #include <utility>
 #include <vector>
+
+class ProcessedSample;
 
 //! Object that can generate the material profile of a sample as a function of depth.
 //!
@@ -27,8 +29,6 @@
 //! delta and beta for refractive index materials
 //!
 //! @ingroup algorithms_internal
-
-class ProcessedSample;
 
 class BA_CORE_API_ ProfileHelper
 {
@@ -45,4 +45,4 @@ private:
     std::vector<double> m_sigmas;
 };
 
-#endif // PROFILEHELPER_H
+#endif // BORNAGAIN_CORE_COMPUTATION_PROFILEHELPER_H

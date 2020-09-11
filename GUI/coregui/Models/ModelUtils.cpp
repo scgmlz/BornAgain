@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ModelUtils.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/ModelUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
 #include <QAbstractItemModel>
 #include <QModelIndex>
 

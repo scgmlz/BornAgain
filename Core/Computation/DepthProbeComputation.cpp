@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "DepthProbeComputation.h"
-#include "DepthProbeElement.h"
-#include "MultiLayer.h"
-#include "ProgressHandler.h"
+#include "Core/Computation/DepthProbeComputation.h"
+#include "Core/Computation/ProgressHandler.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/SimulationElement/DepthProbeElement.h"
 
 static_assert(std::is_copy_constructible<DepthProbeComputation>::value == false,
               "DepthProbeComputation should not be copy constructible");

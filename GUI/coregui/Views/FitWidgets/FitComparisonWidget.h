@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITCOMPARISONWIDGET_H
-#define FITCOMPARISONWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONWIDGET_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <QMap>
 
 class JobItem;
@@ -66,4 +66,4 @@ private:
     FitComparisonController2D* m_comparisonController;
 };
 
-#endif // FITCOMPARISONWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONWIDGET_H

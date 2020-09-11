@@ -12,20 +12,21 @@
 //
 // ************************************************************************** //
 
-#include "StatusLabel.h"
+#include "GUI/coregui/Views/CommonWidgets/StatusLabel.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QColor>
 #include <QFont>
 #include <QPainter>
-#include "StyleUtils.h"
 
 namespace
 {
-int default_text_size() {
+int default_text_size()
+{
     return StyleUtils::SystemPointSize();
 }
 int default_label_height()
 {
-    return StyleUtils::SizeOfLetterM().height()*1.75;
+    return StyleUtils::SizeOfLetterM().height() * 1.75;
 }
 } // namespace
 

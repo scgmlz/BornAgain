@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTION3DLATTICE_H
-#define INTERFERENCEFUNCTION3DLATTICE_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION3DLATTICE_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION3DLATTICE_H
 
-#include "IInterferenceFunction.h"
-#include "Lattice.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Lattice/Lattice.h"
 
 class IPeakShape;
 
@@ -45,11 +45,11 @@ public:
 
 private:
     double iff_without_dw(const kvector_t q) const override final;
-    InterferenceFunction3DLattice(const InterferenceFunction3DLattice& other);
     void initRecRadius();
-    Lattice m_lattice;
+
+    Lattice m_lattice; // TODO ASAP unique_ptr as in otehr InterferenceFunction%s
     std::unique_ptr<IPeakShape> mP_peak_shape;
     double m_rec_radius; //!< radius in reciprocal space defining the nearest q vectors to use
 };
 
-#endif // INTERFERENCEFUNCTION3DLATTICE_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION3DLATTICE_H

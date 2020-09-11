@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "ParameterPattern.h"
+#include "Core/Parametrization/ParameterPattern.h"
 
 ParameterPattern& ParameterPattern::beginsWith(std::string start_type)
 {

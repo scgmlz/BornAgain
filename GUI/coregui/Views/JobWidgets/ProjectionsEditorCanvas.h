@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTIONSEDITORCANVAS_H
-#define PROJECTIONSEDITORCANVAS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITORCANVAS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITORCANVAS_H
 
-#include "MaskEditorFlags.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
+#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <QWidget>
 
@@ -81,4 +81,4 @@ private:
     bool m_block_update;
 };
 
-#endif // PROJECTIONSEDITORCANVAS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITORCANVAS_H

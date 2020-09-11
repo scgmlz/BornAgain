@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "SimulationOptionsItem.h"
-#include "ComboProperty.h"
+#include "GUI/coregui/Models/SimulationOptionsItem.h"
+#include "GUI/coregui/Models/ComboProperty.h"
 #include <thread>
 
 namespace
@@ -22,10 +22,8 @@ namespace
 QStringList getRunPolicyTooltips()
 {
     QStringList result;
-    result.append(QStringLiteral(
-        "Start simulation immediately, switch to Jobs view automatically when completed"));
-    result.append(
-        QStringLiteral("Start simulation immediately, do not switch to Jobs view when completed"));
+    result.append("Start simulation immediately, switch to Jobs view automatically when completed");
+    result.append("Start simulation immediately, do not switch to Jobs view when completed");
     return result;
 }
 
@@ -49,7 +47,7 @@ const QString SimulationOptionsItem::P_FRESNEL_MATERIAL_METHOD =
     "Material for Fresnel calculations";
 const QString SimulationOptionsItem::P_INCLUDE_SPECULAR_PEAK = "Include specular peak";
 
-SimulationOptionsItem::SimulationOptionsItem() : SessionItem(Constants::SimulationOptionsType)
+SimulationOptionsItem::SimulationOptionsItem() : SessionItem("SimulationOptions")
 {
 
     ComboProperty policy;
@@ -62,18 +60,21 @@ SimulationOptionsItem::SimulationOptionsItem() : SessionItem(Constants::Simulati
     addProperty(P_NTHREADS, nthreads.variant())->setToolTip(tooltip_nthreads);
 
     ComboProperty computationMethod;
-    computationMethod << Constants::SIMULATION_ANALYTICAL << Constants::SIMULATION_MONTECARLO;
+    computationMethod << "Analytical"
+                      << "Monte-Carlo Integration";
     addProperty(P_COMPUTATION_METHOD, computationMethod.variant())->setToolTip(tooltip_computation);
 
     addProperty(P_MC_POINTS, 100)->setEnabled(false);
 
     ComboProperty averageLayerMaterials;
-    averageLayerMaterials << Constants::AMBIENT_LAYER_MATERIAL << Constants::AVERAGE_LAYER_MATERIAL;
+    averageLayerMaterials << "Ambient Layer Material"
+                          << "Average Layer Material";
     addProperty(P_FRESNEL_MATERIAL_METHOD, averageLayerMaterials.variant())
         ->setToolTip(tooltip_ambientmaterial);
 
     ComboProperty includeSpecularPeak;
-    includeSpecularPeak << Constants::No << Constants::Yes;
+    includeSpecularPeak << "No"
+                        << "Yes";
     addProperty(P_INCLUDE_SPECULAR_PEAK, includeSpecularPeak.variant())
         ->setToolTip(tooltip_specularpeak);
 
@@ -81,7 +82,7 @@ SimulationOptionsItem::SimulationOptionsItem() : SessionItem(Constants::Simulati
         if (name == P_COMPUTATION_METHOD && isTag(P_MC_POINTS)) {
             ComboProperty combo = getItemValue(P_COMPUTATION_METHOD).value<ComboProperty>();
 
-            if (combo.getValue() == Constants::SIMULATION_ANALYTICAL) {
+            if (combo.getValue() == "Analytical") {
                 getItem(P_MC_POINTS)->setEnabled(false);
 
             } else {
@@ -103,12 +104,12 @@ int SimulationOptionsItem::getNumberOfThreads() const
 
 bool SimulationOptionsItem::runImmediately() const
 {
-    return runPolicy() == Constants::JOB_RUN_IMMEDIATELY;
+    return runPolicy() == "Immediately";
 }
 
 bool SimulationOptionsItem::runInBackground() const
 {
-    return runPolicy() == Constants::JOB_RUN_IN_BACKGROUND;
+    return runPolicy() == "In background";
 }
 
 void SimulationOptionsItem::setRunPolicy(const QString& policy)
@@ -197,7 +198,8 @@ QStringList SimulationOptionsItem::getCPUUsageOptions()
 QStringList SimulationOptionsItem::getRunPolicyNames()
 {
     QStringList result;
-    result << Constants::JOB_RUN_IMMEDIATELY << Constants::JOB_RUN_IN_BACKGROUND;
+    result << "Immediately"
+           << "In background";
     return result;
 }
 

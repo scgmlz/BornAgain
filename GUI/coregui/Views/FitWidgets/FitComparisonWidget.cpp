@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "FitComparisonWidget.h"
-#include "ColorMap.h"
-#include "ColorMapCanvas.h"
-#include "FitComparisonController.h"
-#include "FitFlowWidget.h"
-#include "FitSuiteItem.h"
-#include "IntensityDataItem.h"
-#include "IntensityDataPropertyWidget.h"
-#include "JobItem.h"
-#include "PlotStatusLabel.h"
-#include "RealDataItem.h"
+#include "GUI/coregui/Views/FitWidgets/FitComparisonWidget.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Views/FitWidgets/FitComparisonController.h"
+#include "GUI/coregui/Views/FitWidgets/FitFlowWidget.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMapCanvas.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataPropertyWidget.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
 #include <QAction>
 #include <QGridLayout>
 #include <QVBoxLayout>

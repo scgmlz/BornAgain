@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef CHISQUAREDMODULE_H
-#define CHISQUAREDMODULE_H
+#ifndef BORNAGAIN_CORE_INSTRUMENT_CHISQUAREDMODULE_H
+#define BORNAGAIN_CORE_INSTRUMENT_CHISQUAREDMODULE_H
 
-#include "IChiSquaredModule.h"
+#include "Core/Instrument/IChiSquaredModule.h"
 
 //! Calculation of chi2 between two data sets.
 //! @ingroup fitting
@@ -32,4 +32,4 @@ public:
     virtual double residual(double a, double b, double weight);
 };
 
-#endif // CHISQUAREDMODULE_H
+#endif // BORNAGAIN_CORE_INSTRUMENT_CHISQUAREDMODULE_H

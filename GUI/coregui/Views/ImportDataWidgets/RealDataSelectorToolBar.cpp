@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "RealDataSelectorToolBar.h"
-#include "RealDataSelectorActions.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorToolBar.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include <QToolButton>
 
 RealDataSelectorToolBar::RealDataSelectorToolBar(RealDataSelectorActions* actions, QWidget* parent)
@@ -22,13 +22,13 @@ RealDataSelectorToolBar::RealDataSelectorToolBar(RealDataSelectorActions* action
 {
     setMinimumSize(minimumHeight(), minimumHeight());
 
-    m_import2dDataButton->setText(QStringLiteral("Import 2D"));
+    m_import2dDataButton->setText("Import 2D");
     m_import2dDataButton->setIcon(QIcon(":/images/import.svg"));
     m_import2dDataButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     m_import2dDataButton->setToolTip("Automatic import of 2D data formats.");
     addWidget(m_import2dDataButton);
 
-    m_import1dDataButton->setText(QStringLiteral("Import 1D"));
+    m_import1dDataButton->setText("Import 1D");
     m_import1dDataButton->setIcon(QIcon(":/images/import.svg"));
     m_import1dDataButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     m_import1dDataButton->setToolTip("Import columnwise ascii files.");

@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "FitActivityPanel.h"
-#include "FitSessionManager.h"
-#include "FitSessionWidget.h"
-#include "JobItem.h"
-#include "JobMessagePanel.h"
-#include "JobModel.h"
-#include "JobRealTimeWidget.h"
-#include "RunFitControlWidget.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/FitWidgets/FitActivityPanel.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/FitWidgets/FitSessionManager.h"
+#include "GUI/coregui/Views/FitWidgets/FitSessionWidget.h"
+#include "GUI/coregui/Views/FitWidgets/RunFitControlWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobMessagePanel.h"
+#include "GUI/coregui/Views/JobWidgets/JobRealTimeWidget.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -51,7 +51,7 @@ FitActivityPanel::FitActivityPanel(JobModel* jobModel, QWidget* parent)
 
 void FitActivityPanel::setRealTimeWidget(JobRealTimeWidget* realTimeWidget)
 {
-    Q_ASSERT(realTimeWidget);
+    ASSERT(realTimeWidget);
     m_realTimeWidget = realTimeWidget;
 }
 

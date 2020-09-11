@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PLANEMULTILAYERBYSLDBUILDER_H_
-#define PLANEMULTILAYERBYSLDBUILDER_H_
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_PLAINMULTILAYERBYSLDBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_PLAINMULTILAYERBYSLDBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! Builds a sample with 10 interchanging homogeneous layers of Ti and Ni on silicone substrate.
 //! Ti is 70 angstroms thick, Ni is 30 angstroms thick.
@@ -40,4 +40,4 @@ protected:
     double m_thick_ni; //!< thickness of Ni layer
 };
 
-#endif /* PLANEMULTILAYERBYSLDBUILDER_H_ */
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_PLAINMULTILAYERBYSLDBUILDER_H

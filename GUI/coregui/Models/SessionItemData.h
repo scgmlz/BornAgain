@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMDATA_H
-#define SESSIONITEMDATA_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMDATA_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMDATA_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QVariant>
 #include <QVector>
 
@@ -34,7 +34,7 @@ private:
     class ItemData
     {
     public:
-        ItemData(int r = -1, const QVariant& v = QVariant());
+        ItemData(int r = -1, const QVariant& v = {});
         int role;
         QVariant data;
         bool operator==(const ItemData& other) const;
@@ -43,4 +43,4 @@ private:
     QVector<ItemData> m_values;
 };
 
-#endif //   SESSIONITEMDATA_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMDATA_H

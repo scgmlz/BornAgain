@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANSFORMFROMDOMAIN_H
-#define TRANSFORMFROMDOMAIN_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMFROMDOMAIN_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMFROMDOMAIN_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 class BeamDistributionItem;
@@ -116,4 +116,4 @@ BA_CORE_API_ void setAxisItem(SessionItem* item, const IAxis& axis, double facto
 
 } // namespace TransformFromDomain
 
-#endif // TRANSFORMFROMDOMAIN_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMFROMDOMAIN_H

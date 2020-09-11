@@ -1,19 +1,14 @@
-#include "ComboProperty.h"
-#include "ExternalProperty.h"
-#include "SessionItem.h"
-#include "SessionItemUtils.h"
-#include "SessionModel.h"
-#include "VectorItem.h"
-#include "google_test.h"
-#include "item_constants.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestSessionItemUtils : public ::testing::Test
 {
-public:
-    ~TestSessionItemUtils();
 };
-
-TestSessionItemUtils::~TestSessionItemUtils() = default;
 
 //! Test SessionItemUtils::ParentVisibleRow utility method.
 
@@ -22,9 +17,9 @@ TEST_F(TestSessionItemUtils, test_ParentVisibleRow)
     SessionModel model("TestModel");
 
     // 3 property items in root, all visible
-    auto item1 = model.insertNewItem(Constants::PropertyType);
-    auto item2 = model.insertNewItem(Constants::PropertyType);
-    auto item3 = model.insertNewItem(Constants::PropertyType);
+    auto item1 = model.insertNewItem("Property");
+    auto item2 = model.insertNewItem("Property");
+    auto item3 = model.insertNewItem("Property");
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item1), 0);
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item2), 1);
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item3), 2);
@@ -36,8 +31,8 @@ TEST_F(TestSessionItemUtils, test_ParentVisibleRow)
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item3), 1);
 
     // two more items
-    auto item4 = model.insertNewItem(Constants::PropertyType);
-    auto item5 = model.insertNewItem(Constants::PropertyType);
+    auto item4 = model.insertNewItem("Property");
+    auto item5 = model.insertNewItem("Property");
     item5->setVisible(false);
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item1), 0);
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item2), -1);
@@ -46,7 +41,7 @@ TEST_F(TestSessionItemUtils, test_ParentVisibleRow)
     EXPECT_EQ(SessionItemUtils::ParentVisibleRow(*item5), -1);
 
     // adding vector item
-    SessionItem* vector = model.insertNewItem(Constants::VectorType);
+    SessionItem* vector = model.insertNewItem("Vector");
     auto x = vector->getItem(VectorItem::P_X);
     auto y = vector->getItem(VectorItem::P_Y);
     auto z = vector->getItem(VectorItem::P_Z);
@@ -65,7 +60,7 @@ TEST_F(TestSessionItemUtils, VariantType)
     EXPECT_FALSE(SessionItemUtils::VariantType(QVariant::fromValue(1.0))
                  == SessionItemUtils::VariantType(QVariant::fromValue(1)));
     EXPECT_FALSE(SessionItemUtils::VariantType(QVariant::fromValue(1.0))
-                 == SessionItemUtils::VariantType(QVariant::fromValue(QString("a"))));
+                 == SessionItemUtils::VariantType(QVariant::fromValue(QString{"a"})));
 
     QVariant v1, v2;
     EXPECT_TRUE(SessionItemUtils::VariantType(v1) == SessionItemUtils::VariantType(v2));
@@ -125,10 +120,10 @@ TEST_F(TestSessionItemUtils, IsTheSameVariant)
     EXPECT_FALSE(SessionItemUtils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(2.0)));
 
     // comparing QVariant based on strings
-    EXPECT_TRUE(SessionItemUtils::IsTheSame(QVariant::fromValue(QString("a")),
-                                            QVariant::fromValue(QString("a"))));
-    EXPECT_FALSE(SessionItemUtils::IsTheSame(QVariant::fromValue(QString("a")),
-                                             QVariant::fromValue(QString("b"))));
+    EXPECT_TRUE(SessionItemUtils::IsTheSame(QVariant::fromValue(QString{"a"}),
+                                            QVariant::fromValue(QString{"a"})));
+    EXPECT_FALSE(SessionItemUtils::IsTheSame(QVariant::fromValue(QString{"a"}),
+                                             QVariant::fromValue(QString{"b"})));
 
     // comparing variants of different type
     EXPECT_FALSE(SessionItemUtils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1)));

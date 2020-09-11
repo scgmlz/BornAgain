@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYER_H
-#define LAYER_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_LAYER_H
+#define BORNAGAIN_CORE_MULTILAYER_LAYER_H
 
-#include "ISample.h"
-#include "Material.h"
-#include "SafePointerVector.h"
+#include "Core/Material/Material.h"
+#include "Core/Scattering/ISample.h"
+#include "Core/Tools/SafePointerVector.h"
 
 class ILayout;
 
@@ -60,4 +60,4 @@ private:
     unsigned int m_n_slices = 1;          //!< number of slices to create for graded layer approach
 };
 
-#endif // LAYER_H
+#endif // BORNAGAIN_CORE_MULTILAYER_LAYER_H

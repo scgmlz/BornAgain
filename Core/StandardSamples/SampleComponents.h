@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLECOMPONENTS_H
-#define SAMPLECOMPONENTS_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_SAMPLECOMPONENTS_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_SAMPLECOMPONENTS_H
 
-#include "FTDistributions2D.h"
-#include "IRegistry.h"
+#include "Core/Correlations/FTDistributions2D.h"
+#include "Core/StandardSamples/IRegistry.h"
 
 //! @class FTDistribution2DComponents
 //! @brief Predefined Fourier transformed distributions for functional tests.
@@ -36,4 +36,4 @@ public:
     FormFactorComponents();
 };
 
-#endif // SAMPLECOMPONENTS_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_SAMPLECOMPONENTS_H

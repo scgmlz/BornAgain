@@ -12,8 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "WarningSign.h"
-#include "WarningSignWidget.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSignWidget.h"
 #include <QAbstractScrollArea>
 #include <QEvent>
 #include <QScrollBar>
@@ -26,8 +27,8 @@ const int ypos_offset = 40;
 } // namespace
 
 WarningSign::WarningSign(QWidget* parent)
-    : QObject(parent), m_warning_header(QStringLiteral("Houston, we have a problem.")),
-      m_warningWidget(0), m_area(nullptr), m_clear_just_had_happened(false)
+    : QObject(parent), m_warning_header("Houston, we have a problem."), m_warningWidget(0),
+      m_area(nullptr), m_clear_just_had_happened(false)
 {
     setArea(parent);
 }
@@ -54,7 +55,7 @@ void WarningSign::setWarningHeader(const QString& warningHeader)
 
 void WarningSign::setWarningMessage(const QString& warningMessage)
 {
-    Q_ASSERT(m_area);
+    ASSERT(m_area);
 
     if (m_clear_just_had_happened) {
         m_clear_just_had_happened = false;
@@ -102,7 +103,7 @@ void WarningSign::updateLabelGeometry()
 
 QPoint WarningSign::positionForWarningSign() const
 {
-    Q_ASSERT(m_area);
+    ASSERT(m_area);
 
     int x = m_area->width() - xpos_offset;
     int y = m_area->height() - ypos_offset;

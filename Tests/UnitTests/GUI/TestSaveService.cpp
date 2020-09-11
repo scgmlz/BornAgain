@@ -1,24 +1,22 @@
-#include "ApplicationModels.h"
-#include "AutosaveController.h"
-#include "GUIHelpers.h"
-#include "InstrumentItems.h"
-#include "InstrumentModel.h"
-#include "IntensityDataItem.h"
-#include "JobItemUtils.h"
-#include "ProjectUtils.h"
-#include "RealDataItem.h"
-#include "RealDataModel.h"
-#include "SaveService.h"
-#include "google_test.h"
-#include "projectdocument.h"
-#include "test_utils.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/mainwindow/AutosaveController.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/mainwindow/SaveService.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/GUI/Utils.h"
 #include <QSignalSpy>
 
 class TestSaveService : public ::testing::Test
 {
 protected:
-    ~TestSaveService();
-
     // helper method to modify something in a model
     void modify_models(ApplicationModels* models)
     {
@@ -28,15 +26,13 @@ protected:
     const int m_save_wait = 10000;
 };
 
-TestSaveService::~TestSaveService() = default;
-
 //! Testing AutosaveController. It watches ProjectDocument and sends autosaveRequest() when
 //! number of document changes has been accumulated.
 
 TEST_F(TestSaveService, test_autoSaveController)
 {
     const QString projectDir("test_autoSaveController");
-    TestUtils::create_dir(projectDir);
+    GuiUnittestUtils::create_dir(projectDir);
 
     const QString projectFileName(projectDir + "/document.pro");
 
@@ -109,7 +105,7 @@ TEST_F(TestSaveService, test_autoSaveControllerNewDocument)
 TEST_F(TestSaveService, test_saveService)
 {
     const QString projectDir("test_saveService");
-    TestUtils::create_dir(projectDir);
+    GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
 
     ApplicationModels models;
@@ -140,12 +136,12 @@ TEST_F(TestSaveService, test_saveService)
 TEST_F(TestSaveService, test_saveServiceWithData)
 {
     const QString projectDir("test_saveServiceWithData");
-    TestUtils::create_dir(projectDir);
+    GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
 
     ApplicationModels models;
-    RealDataItem* realData = TestUtils::createRealData("RealData", *models.realDataModel());
-    Q_ASSERT(realData);
+    RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", *models.realDataModel());
+    ASSERT(realData);
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
                                            models.instrumentModel()->instrumentItem());
@@ -175,11 +171,11 @@ TEST_F(TestSaveService, test_saveServiceWithData)
 TEST_F(TestSaveService, test_autosaveEnabled)
 {
     const QString projectDir("test_autosaveEnabled");
-    TestUtils::create_dir(projectDir);
+    GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
 
     ApplicationModels models;
-    RealDataItem* realData = TestUtils::createRealData("RealData", *models.realDataModel());
+    RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", *models.realDataModel());
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
                                            models.instrumentModel()->instrumentItem());

@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Basics/ICloneable.h
-//! @brief     Defines the standard mix-in ICloneable.
+//! @brief     Defines and implements the standard mix-in ICloneable.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ICLONEABLE_H
-#define ICLONEABLE_H
+#ifndef BORNAGAIN_CORE_BASICS_ICLONEABLE_H
+#define BORNAGAIN_CORE_BASICS_ICLONEABLE_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 //! Interface for polymorphic classes that should not be copied, except by explicit cloning.
 //!
@@ -26,14 +26,14 @@
 class BA_CORE_API_ ICloneable
 {
 public:
-    ICloneable();
-    virtual ~ICloneable();
+    ICloneable() = default;
+    virtual ~ICloneable() = default;
 
     ICloneable(const ICloneable&) = delete;
-    ICloneable& operator=(const ICloneable&) = delete;
+    ICloneable(ICloneable&&) = default;
 
     virtual ICloneable* clone() const = 0;
     virtual void transferToCPP() {} //!< Used for Python overriding of clone (see swig/tweaks.py)
 };
 
-#endif // ICLONEABLE_H
+#endif // BORNAGAIN_CORE_BASICS_ICLONEABLE_H

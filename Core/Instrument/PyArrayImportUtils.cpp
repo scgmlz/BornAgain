@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "PyArrayImportUtils.h"
-#include "ArrayUtils.h"
+#include "Core/Instrument/PyArrayImportUtils.h"
+#include "Core/Intensity/ArrayUtils.h"
 
 OutputData<double>* PyArrayImport::importArrayToOutputData(const std::vector<double>& vec)
 {

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef RIPPLESAWTOOTH_H
-#define RIPPLESAWTOOTH_H
+#ifndef BORNAGAIN_CORE_SHAPES_RIPPLESAWTOOTH_H
+#define BORNAGAIN_CORE_SHAPES_RIPPLESAWTOOTH_H
 
-#include "IShape.h"
+#include "Core/Shapes/IShape.h"
 
 class RippleSawtooth : public IShape
 {
@@ -24,4 +24,4 @@ public:
     ~RippleSawtooth();
 };
 
-#endif // RIPPLESAWTOOTH_H
+#endif // BORNAGAIN_CORE_SHAPES_RIPPLESAWTOOTH_H

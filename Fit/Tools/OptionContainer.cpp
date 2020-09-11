@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "OptionContainer.h"
+#include "Fit/Tools/OptionContainer.h"
 #include <sstream>
 
 //! Returns true if option with such name already exists.

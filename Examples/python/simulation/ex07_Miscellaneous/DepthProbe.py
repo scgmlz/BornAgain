@@ -89,7 +89,7 @@ def get_simulation():
     Returns a depth-probe simulation.
     """
     alpha_distr = ba.DistributionGaussian(0.0, d_ang)
-    footprint = ba.FootprintFactorSquare(beam_sample_ratio)
+    footprint = ba.FootprintSquare(beam_sample_ratio)
     simulation = ba.DepthProbeSimulation()
     simulation.setBeamParameters(wl, n_ai_bins, ai_min, ai_max, footprint)
     simulation.setZSpan(n_z_bins, z_min, z_max)

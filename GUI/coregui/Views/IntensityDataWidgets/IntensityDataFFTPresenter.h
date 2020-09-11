@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTENSITYDATAFFTPRESENTER_H
-#define INTENSITYDATAFFTPRESENTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAFFTPRESENTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAFFTPRESENTER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class SessionModel;
@@ -53,4 +53,4 @@ private:
     bool m_in_fft_mode;
 };
 
-#endif //  INTENSITYDATAFFTPRESENTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAFFTPRESENTER_H

@@ -12,16 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "Data1DViewItem.h"
-#include "AxesItems.h"
-#include "BornAgainNamespace.h"
-#include "ComboProperty.h"
-#include "DataItem.h"
-#include "DataProperties.h"
-#include "DataPropertyContainer.h"
-#include "DataViewUtils.h"
-#include "GUIHelpers.h"
-#include "JobItem.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DataProperties.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/DataViewUtils.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -38,14 +37,14 @@ const QString Data1DViewItem::P_YAXIS = "y-axis";
 const QString Data1DViewItem::P_AXES_UNITS = "Axes Units";
 const QString Data1DViewItem::T_DATA_PROPERTIES = "Data property container";
 
-Data1DViewItem::Data1DViewItem() : SessionItem(Constants::Data1DViewItemType), m_job_item(nullptr)
+Data1DViewItem::Data1DViewItem() : SessionItem("Data1DViewItem"), m_job_item(nullptr)
 {
     addProperty(P_TITLE, QString())->setVisible(false);
 
-    SessionItem* item = addGroupProperty(P_XAXIS, Constants::BasicAxisType);
+    SessionItem* item = addGroupProperty(P_XAXIS, "BasicAxis");
     item->getItem(BasicAxisItem::P_NBINS)->setVisible(false);
 
-    item = addGroupProperty(P_YAXIS, Constants::AmplitudeAxisType);
+    item = addGroupProperty(P_YAXIS, "AmplitudeAxis");
     item->getItem(BasicAxisItem::P_NBINS)->setVisible(false);
     item->getItem(BasicAxisItem::P_TITLE)->setVisible(true);
 
@@ -53,9 +52,9 @@ Data1DViewItem::Data1DViewItem() : SessionItem(Constants::Data1DViewItemType), m
     item->setValue(true);
     item->setVisible(false);
 
-    registerTag(T_DATA_PROPERTIES, 1, 1, QStringList() << Constants::DataPropertyContainerType);
+    registerTag(T_DATA_PROPERTIES, 1, 1, QStringList() << "DataPropertyContainer");
 
-    ComboProperty combo = ComboProperty() << Constants::UnitsNbins;
+    ComboProperty combo = ComboProperty() << "nbins";
     addProperty(P_AXES_UNITS, combo.variant());
 
     mapper()->setOnPropertyChange([this](const QString& name) {
@@ -80,22 +79,22 @@ int Data1DViewItem::getNbins() const
 
 double Data1DViewItem::getLowerX() const
 {
-    return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_MIN).toDouble();
+    return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble();
 }
 
 double Data1DViewItem::getUpperX() const
 {
-    return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_MAX).toDouble();
+    return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble();
 }
 
 double Data1DViewItem::getLowerY() const
 {
-    return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_MIN).toDouble();
+    return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble();
 }
 
 double Data1DViewItem::getUpperY() const
 {
-    return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_MAX).toDouble();
+    return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble();
 }
 
 bool Data1DViewItem::isLog() const
@@ -134,8 +133,8 @@ void Data1DViewItem::setAxesRangeToData()
     if (!data)
         return;
 
-    setLowerX(data->getAxis(BornAgain::X_AXIS_INDEX).getMin());
-    setUpperX(data->getAxis(BornAgain::X_AXIS_INDEX).getMax());
+    setLowerX(data->getAxis(0).getMin());
+    setUpperX(data->getAxis(0).getMax());
 
     auto data_range = dataRange(data.get());
     setLowerY(data_range.first);
@@ -172,7 +171,7 @@ JobItem* Data1DViewItem::jobItem()
 
     auto item = parent();
     do {
-        if (item->modelType() == Constants::JobItemType) {
+        if (item->modelType() == "JobItem") {
             m_job_item = dynamic_cast<JobItem*>(item);
             return m_job_item;
         }
@@ -183,22 +182,22 @@ JobItem* Data1DViewItem::jobItem()
 
 void Data1DViewItem::setLowerX(double xmin)
 {
-    getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_MIN, xmin);
+    getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_MIN_DEG, xmin);
 }
 
 void Data1DViewItem::setUpperX(double xmax)
 {
-    getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_MAX, xmax);
+    getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_MAX_DEG, xmax);
 }
 
 void Data1DViewItem::setLowerY(double ymin)
 {
-    getItem(P_YAXIS)->setItemValue(AmplitudeAxisItem::P_MIN, ymin);
+    getItem(P_YAXIS)->setItemValue(AmplitudeAxisItem::P_MIN_DEG, ymin);
 }
 
 void Data1DViewItem::setUpperY(double ymax)
 {
-    getItem(P_YAXIS)->setItemValue(AmplitudeAxisItem::P_MAX, ymax);
+    getItem(P_YAXIS)->setItemValue(AmplitudeAxisItem::P_MAX_DEG, ymax);
 }
 
 void Data1DViewItem::setLog(bool log_flag)
@@ -224,7 +223,7 @@ BasicAxisItem* Data1DViewItem::xAxisItem()
 const AmplitudeAxisItem* Data1DViewItem::yAxisItem() const
 {
     auto result = dynamic_cast<const AmplitudeAxisItem*>(getItem(P_YAXIS));
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 

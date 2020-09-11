@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITTYPES_H
-#define FITTYPES_H
+#ifndef BORNAGAIN_CORE_FITTING_FITTYPES_H
+#define BORNAGAIN_CORE_FITTING_FITTYPES_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <memory>
 
@@ -30,4 +30,4 @@ using simulation_builder_t = std::function<std::unique_ptr<Simulation>(const Fit
 
 using fit_observer_t = std::function<void(const FitObjective&)>;
 
-#endif
+#endif // BORNAGAIN_CORE_FITTING_FITTYPES_H

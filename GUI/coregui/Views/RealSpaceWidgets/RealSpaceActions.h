@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALSPACEACTIONS_H
-#define REALSPACEACTIONS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEACTIONS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEACTIONS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 //! Collection of actions for RealSpaceWidget.
@@ -28,4 +28,4 @@ public:
     RealSpaceActions(QObject* parent = 0);
 };
 
-#endif // REALSPACEACTIONS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEACTIONS_H

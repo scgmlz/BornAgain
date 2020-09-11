@@ -21,8 +21,8 @@ def get_sample():
     particle_layout.addParticle(box)
 
     # interference function
-    interference = ba.InterferenceFunction2DLattice.createSquare(8*nm)
-    pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm)
+    interference = ba.InterferenceFunction2DLattice.createSquare(8*nm, 0*deg)
+    pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm, 0)
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
 

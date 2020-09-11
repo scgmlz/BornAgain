@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "ParameterTuningDelegate.h"
-#include "ModelPath.h"
-#include "ParameterTreeItems.h"
-#include "ParameterTuningModel.h"
-#include "ScientificSpinBox.h"
-#include "SessionItemUtils.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ParameterTuningDelegate.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
+#include "GUI/coregui/Models/ParameterTuningModel.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
 #include <QAbstractItemModel>
 #include <QApplication>
 #include <QHBoxLayout>

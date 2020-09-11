@@ -1,6 +1,6 @@
-#include "Comparators.h"
-#include "ComboProperty.h"
-#include "ExternalProperty.h"
+#include "Tests/UnitTests/GUI/Comparators.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include <QMetaType>
 
 bool Comparators::m_is_registered = false;

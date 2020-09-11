@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SliderSettingsWidget.h"
+#include "GUI/coregui/Views/JobWidgets/SliderSettingsWidget.h"
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QHBoxLayout>

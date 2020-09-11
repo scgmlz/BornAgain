@@ -1,18 +1,13 @@
-#include "LayerInterface.h"
-#include "BornAgainNamespace.h"
-#include "Layer.h"
-#include "LayerRoughness.h"
-#include "MaterialFactoryFuncs.h"
-#include "google_test.h"
+#include "Core/Multilayer/LayerInterface.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 class LayerInterfaceTest : public ::testing::Test
 {
-protected:
-    ~LayerInterfaceTest();
 };
-
-LayerInterfaceTest::~LayerInterfaceTest() = default;
 
 TEST_F(LayerInterfaceTest, createSmoothInterface)
 {
@@ -41,5 +36,4 @@ TEST_F(LayerInterfaceTest, createRoughInterface)
     EXPECT_EQ(interface->getRoughness()->getSigma(), 1.0);
     std::vector<const INode*> children = interface->getChildren();
     EXPECT_EQ(children.size(), 1u);
-    EXPECT_EQ(children.at(0)->getName(), BornAgain::LayerBasicRoughnessType);
 }

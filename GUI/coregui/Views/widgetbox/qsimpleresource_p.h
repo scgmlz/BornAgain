@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef QSIMPLERESOURCE_P_H
-#define QSIMPLERESOURCE_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QSIMPLERESOURCE_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QSIMPLERESOURCE_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 //#include "abstractformbuilder.h"
 #include <QtCore/QStringList>
 #include <QtDesigner/abstractformbuilder.h>
@@ -154,4 +154,4 @@ public:
 
 QT_END_NAMESPACE
 
-#endif // QSIMPLERESOURCE_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QSIMPLERESOURCE_P_H

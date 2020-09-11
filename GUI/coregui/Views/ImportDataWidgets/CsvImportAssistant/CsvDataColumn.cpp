@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "CsvDataColumn.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvDataColumn.h"
 
 /*Csv Intensity Column*/
 

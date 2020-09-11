@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONTWIN_H
-#define INTERFERENCEFUNCTIONTWIN_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONTWIN_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONTWIN_H
 
-#include "IInterferenceFunction.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
 
 //! Interference function for two particles at a mean distance and given standard deviation
 //! from each other in a given direction.
@@ -35,13 +35,11 @@ public:
     double stdDev() const;
 
 private:
-    InterferenceFunctionTwin(const InterferenceFunctionTwin& other);
     double iff_without_dw(const kvector_t q) const override final;
-    void validateParameters() const;
-    void init_parameters();
+
     kvector_t m_direction;
     double m_distance;
     double m_std_dev;
 };
 
-#endif // INTERFERENCEFUNCTIONTWIN_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONTWIN_H

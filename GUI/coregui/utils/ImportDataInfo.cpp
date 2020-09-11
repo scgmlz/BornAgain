@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "ImportDataInfo.h"
-#include "AxisNames.h"
-#include "GUIHelpers.h"
-#include "ImportDataUtils.h"
-#include "JobItemUtils.h"
-#include "OutputData.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
+#include "Core/Intensity/AxisNames.h"
+#include "Core/Intensity/OutputData.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {

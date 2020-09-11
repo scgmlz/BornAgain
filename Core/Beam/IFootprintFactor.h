@@ -12,23 +12,23 @@
 //
 // ************************************************************************** //
 
-#ifndef IFOOTPRINTFACTOR_H_
-#define IFOOTPRINTFACTOR_H_
+#ifndef BORNAGAIN_CORE_BEAM_IFOOTPRINTFACTOR_H
+#define BORNAGAIN_CORE_BEAM_IFOOTPRINTFACTOR_H
 
-#include "ICloneable.h"
-#include "INode.h"
+#include "Core/Basics/ICloneable.h"
+#include "Core/Parametrization/INode.h"
 
 class MultiLayer;
 class Beam;
 
 //! Abstract base for classes that calculate the beam footprint factor
-//! @ingroup simulation
+//! @ingroup beam
 
 class BA_CORE_API_ IFootprintFactor : public ICloneable, public INode
 {
 public:
+    IFootprintFactor(const NodeMeta& meta, const std::vector<double>& PValues);
     IFootprintFactor() = delete;
-    IFootprintFactor(double width_ratio);
     virtual ~IFootprintFactor();
 
     virtual IFootprintFactor* clone() const = 0;
@@ -43,12 +43,10 @@ public:
     virtual std::string print() const = 0;
 
 protected:
-    IFootprintFactor(const IFootprintFactor& other);
+    const double& m_width_ratio; //! Beam to sample width ratio
 
 private:
     void initialize();
-
-    double m_width_ratio; //! Beam to sample width ratio
 };
 
 inline std::ostream& operator<<(std::ostream& os, const IFootprintFactor& f_factor)
@@ -56,4 +54,4 @@ inline std::ostream& operator<<(std::ostream& os, const IFootprintFactor& f_fact
     return os << f_factor.print();
 }
 
-#endif /* IFOOTPRINTFACTOR_H_ */
+#endif // BORNAGAIN_CORE_BEAM_IFOOTPRINTFACTOR_H

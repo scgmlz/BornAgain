@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SpecularScalarNCStrategy.h"
+#include "Core/Multilayer/SpecularScalarNCStrategy.h"
 #include <Eigen/Dense>
 
 Eigen::Vector2cd SpecularScalarNCStrategy::transition(complex_t kzi, complex_t kzi1, double sigma,

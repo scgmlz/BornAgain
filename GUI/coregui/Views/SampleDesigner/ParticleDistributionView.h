@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLEDISTRIBUTIONVIEW_H
-#define PARTICLEDISTRIBUTIONVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLEDISTRIBUTIONVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLEDISTRIBUTIONVIEW_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 //! Class representing view of distributed particle item
 class BA_CORE_API_ ParticleDistributionView : public ConnectableView
@@ -30,4 +30,4 @@ public:
     void addView(IView* childView, int row = 0);
 };
 
-#endif // PARTICLEDISTRIBUTIONVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLEDISTRIBUTIONVIEW_H

@@ -1,10 +1,24 @@
-#include "SpecularInstrumentEditor.h"
-#include "ColumnResizer.h"
-#include "EnvironmentEditor.h"
-#include "InstrumentItems.h"
-#include "PolarizationAnalysisEditor.h"
-#include "SpecularBeamEditor.h"
-#include "StyleUtils.h"
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      GUI/coregui/Views/InstrumentWidgets/SpecularInstrumentEditor.cpp
+//! @brief     Implements class SpecularInstrumentEditor
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
+#include "GUI/coregui/Views/InstrumentWidgets/SpecularInstrumentEditor.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
+#include "GUI/coregui/Views/InstrumentWidgets/EnvironmentEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/PolarizationAnalysisEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/SpecularBeamEditor.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QVBoxLayout>
 
 SpecularInstrumentEditor::SpecularInstrumentEditor(QWidget* parent)
@@ -33,6 +47,6 @@ void SpecularInstrumentEditor::subscribeToItem()
 SpecularInstrumentItem* SpecularInstrumentEditor::instrumentItem()
 {
     auto result = dynamic_cast<SpecularInstrumentItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }

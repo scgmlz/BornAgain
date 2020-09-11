@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "PropertyRepeater.h"
-#include "IntensityDataItem.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PropertyRepeater.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
 
 PropertyRepeater::PropertyRepeater(QObject* parent, bool repeat_child_properties)
     : QObject(parent), m_block_repeater(false), m_repeat_child_properties(repeat_child_properties)

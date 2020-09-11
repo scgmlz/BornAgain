@@ -12,15 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "OutputDataIOService.h"
-#include "ApplicationModels.h"
-#include "IntensityDataIOFactory.h"
-#include "JobItem.h"
-#include "MessageService.h"
-#include "ModelPath.h"
-#include "ProjectUtils.h"
-#include "SaveLoadInterface.h"
-#include "item_constants.h"
+#include "GUI/coregui/mainwindow/OutputDataIOService.h"
+#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/mainwindow/SaveLoadInterface.h"
+#include "GUI/coregui/utils/MessageService.h"
 
 namespace
 {
@@ -78,8 +77,8 @@ void OutputDataIOService::load(const QString& projectDir, MessageService* messag
             // handling crash of GUI during job run and non-existing file
             if (auto jobItem = parentJobItem(item)) {
                 if (jobItem->isRunning()) {
-                    jobItem->setComments(QString("Possible GUI crash while job was running"));
-                    jobItem->setStatus(Constants::STATUS_FAILED);
+                    jobItem->setComments("Possible GUI crash while job was running");
+                    jobItem->setStatus("Failed");
                 }
             }
 
@@ -88,7 +87,7 @@ void OutputDataIOService::load(const QString& projectDir, MessageService* messag
                 // Handling corrupted file on disk
                 jobItem->setComments(
                     QString("Load of the data from disk failed with '%1'").arg(QString(ex.what())));
-                jobItem->setStatus(Constants::STATUS_FAILED);
+                jobItem->setStatus("Failed");
             }
             if (messageService)
                 messageService->send_warning(this, QString(ex.what()));
@@ -130,8 +129,7 @@ namespace
 JobItem* parentJobItem(SaveLoadInterface* item)
 {
     auto session_item = dynamic_cast<SessionItem*>(item); // sidecast
-    auto jobItem =
-        dynamic_cast<const JobItem*>(ModelPath::ancestor(session_item, Constants::JobItemType));
+    auto jobItem = dynamic_cast<const JobItem*>(ModelPath::ancestor(session_item, "JobItem"));
     return const_cast<JobItem*>(jobItem);
 }
 } // namespace

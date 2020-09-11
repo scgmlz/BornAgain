@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "LayoutUtils.h"
+#include "GUI/coregui/utils/LayoutUtils.h"
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QLayoutItem>

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "Integrator.h"
+#include "Core/Tools/Integrator.h"
 
 RealIntegrator::RealIntegrator()
     : m_gsl_f{m_Cfunction, nullptr}, m_workspace{gsl_integration_workspace_alloc(200)}

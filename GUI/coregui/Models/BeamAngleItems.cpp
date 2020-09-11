@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "BeamAngleItems.h"
-#include "Units.h"
+#include "GUI/coregui/Models/BeamAngleItems.h"
+#include "Core/Basics/Units.h"
 
 BeamAzimuthalAngleItem::BeamAzimuthalAngleItem()
-    : BeamDistributionItem(Constants::BeamAzimuthalAngleType, m_show_mean)
+    : BeamDistributionItem("BeamAzimuthalAngle", m_show_mean)
 {
-    register_distribution_group(Constants::DistributionExtendedGroup);
+    register_distribution_group("Distribution extended group");
 
     SessionItem* valueItem = getGroupItem(P_DISTRIBUTION)->getItem(DistributionNoneItem::P_MEAN);
     valueItem->setLimits(RealLimits::limited(-90.0, 90.0));
@@ -43,9 +43,9 @@ double BeamAzimuthalAngleItem::scaleFactor() const
 // ------------------------------------------------------------------------------------------------
 
 BeamInclinationAngleItem::BeamInclinationAngleItem()
-    : BeamDistributionItem(Constants::BeamInclinationAngleType, m_show_mean)
+    : BeamDistributionItem("BeamInclinationAngle", m_show_mean)
 {
-    register_distribution_group(Constants::DistributionExtendedGroup);
+    register_distribution_group("Distribution extended group");
 
     SessionItem* valueItem = getGroupItem(P_DISTRIBUTION)->getItem(DistributionNoneItem::P_MEAN);
     valueItem->setLimits(RealLimits::limited(0.0, 90.0));

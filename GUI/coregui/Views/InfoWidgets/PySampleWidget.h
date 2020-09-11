@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PYSAMPLEWIDGET_H
-#define PYSAMPLEWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYSAMPLEWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYSAMPLEWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SampleModel;
@@ -62,4 +62,4 @@ private:
     WarningSign* m_warningSign;
 };
 
-#endif // PYSAMPLEWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYSAMPLEWIDGET_H

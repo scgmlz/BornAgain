@@ -12,19 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "ProcessedSample.h"
-#include "HomogeneousRegion.h"
-#include "Layer.h"
-#include "LayerRoughness.h"
-#include "MaterialFactoryFuncs.h"
-#include "MatrixFresnelMap.h"
-#include "MultiLayer.h"
-#include "MultiLayerUtils.h"
-#include "ProcessedLayout.h"
-#include "ScalarFresnelMap.h"
-#include "SimulationOptions.h"
-#include "Slice.h"
-#include "SpecularStrategyBuilder.h"
+#include "Core/Computation/ProcessedSample.h"
+#include "Core/Computation/ProcessedLayout.h"
+#include "Core/Computation/SpecularStrategyBuilder.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MatrixFresnelMap.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/MultiLayerUtils.h"
+#include "Core/Multilayer/ScalarFresnelMap.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/Particle/HomogeneousRegion.h"
 
 namespace
 {

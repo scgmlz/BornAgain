@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ANGULARSPECSCAN_H
-#define ANGULARSPECSCAN_H
+#ifndef BORNAGAIN_CORE_INSTRUMENT_ANGULARSPECSCAN_H
+#define BORNAGAIN_CORE_INSTRUMENT_ANGULARSPECSCAN_H
 
-#include "ISpecularScan.h"
+#include "Core/Instrument/ISpecularScan.h"
 #include <memory>
 
 class ParameterSample;
@@ -128,4 +128,4 @@ private:
     mutable DistrOutput m_inc_res_cache;
 };
 
-#endif // ANGULARSPECSCAN_H
+#endif // BORNAGAIN_CORE_INSTRUMENT_ANGULARSPECSCAN_H

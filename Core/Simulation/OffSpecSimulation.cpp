@@ -12,17 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "OffSpecSimulation.h"
-#include "BornAgainNamespace.h"
-#include "DWBAComputation.h"
-#include "Distributions.h"
-#include "Histogram2D.h"
-#include "IMultiLayerBuilder.h"
-#include "MultiLayer.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
-#include "SimpleUnitConverters.h"
-#include "SimulationElement.h"
+#include "Core/Simulation/OffSpecSimulation.h"
+#include "Core/Computation/DWBAComputation.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
 OffSpecSimulation::OffSpecSimulation()
 {
@@ -135,7 +134,7 @@ void OffSpecSimulation::validateParametrization(const ParameterDistribution& par
     const std::vector<RealParameter*> names =
         parameter_pool->getMatchedParameters(par_distr.getMainParameterName());
     for (const auto par : names)
-        if (par->getName().find(BornAgain::Inclination) != std::string::npos && !zero_mean)
+        if (par->getName().find("InclinationAngle") != std::string::npos && !zero_mean)
             throw std::runtime_error("Error in OffSpecSimulation: parameter distribution of "
                                      "beam inclination angle should have zero mean.");
 }
@@ -191,5 +190,5 @@ void OffSpecSimulation::checkInitialization() const
 
 void OffSpecSimulation::initialize()
 {
-    setName(BornAgain::OffSpecSimulationType);
+    setName("OffSpecSimulation");
 }

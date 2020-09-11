@@ -12,32 +12,32 @@
 //
 // ************************************************************************** //
 
-#include "JobItemUtils.h"
-#include "ComboProperty.h"
-#include "DataItem.h"
-#include "DomainObjectBuilder.h"
-#include "GUIHelpers.h"
-#include "InstrumentItems.h"
-#include "JobItem.h"
-#include "RealDataItem.h"
-#include "Simulation.h"
-#include "UnitConverterUtils.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "Core/Simulation/Simulation.h"
+#include "Core/Simulation/UnitConverterUtils.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DomainObjectBuilder.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QDebug>
 #include <QFileInfo>
 
 namespace
 {
-const std::map<QString, AxesUnits> units_from_names{{Constants::UnitsNbins, AxesUnits::NBINS},
-                                                    {Constants::UnitsRadians, AxesUnits::RADIANS},
-                                                    {Constants::UnitsDegrees, AxesUnits::DEGREES},
-                                                    {Constants::UnitsMm, AxesUnits::MM},
-                                                    {Constants::UnitsQyQz, AxesUnits::QSPACE}};
+const std::map<QString, AxesUnits> units_from_names{{"nbins", AxesUnits::NBINS},
+                                                    {"Radians", AxesUnits::RADIANS},
+                                                    {"Degrees", AxesUnits::DEGREES},
+                                                    {"mm", AxesUnits::MM},
+                                                    {"q-space", AxesUnits::QSPACE}};
 
-const std::map<AxesUnits, QString> names_from_units{{AxesUnits::NBINS, Constants::UnitsNbins},
-                                                    {AxesUnits::RADIANS, Constants::UnitsRadians},
-                                                    {AxesUnits::MM, Constants::UnitsMm},
-                                                    {AxesUnits::QSPACE, Constants::UnitsQyQz},
-                                                    {AxesUnits::DEGREES, Constants::UnitsDegrees}};
+const std::map<AxesUnits, QString> names_from_units{{AxesUnits::NBINS, "nbins"},
+                                                    {AxesUnits::RADIANS, "Radians"},
+                                                    {AxesUnits::MM, "mm"},
+                                                    {AxesUnits::QSPACE, "q-space"},
+                                                    {AxesUnits::DEGREES, "Degrees"}};
 
 //! Updates axes' titles
 void updateAxesTitle(DataItem* intensityItem, const IUnitConverter& converter, AxesUnits units);
@@ -48,7 +48,7 @@ void updateAxesTitle(DataItem* intensityItem, const IUnitConverter& converter, A
 
 void JobItemUtils::updateDataAxes(DataItem* intensityItem, const InstrumentItem* instrumentItem)
 {
-    Q_ASSERT(intensityItem);
+    ASSERT(intensityItem);
 
     if (!instrumentItem) {
         // special case when reading old project files: project failed on load instrument
@@ -132,7 +132,7 @@ ComboProperty JobItemUtils::availableUnits(const IUnitConverter& converter)
     ComboProperty result;
     for (auto units : converter.availableUnits()) {
         auto unit_name = nameFromAxesUnits(units);
-        if (unit_name != QString())
+        if (unit_name != "")
             result << unit_name;
     }
 

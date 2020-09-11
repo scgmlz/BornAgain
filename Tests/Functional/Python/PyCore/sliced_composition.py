@@ -54,7 +54,7 @@ class SlicedSpheresTest(unittest.TestCase):
         Origin of new object is at the bottom of resulting sphere.
         """
 
-        topCup = ba.Particle(top_material, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - bottom_cup_height))
+        topCup = ba.Particle(top_material, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         bottomCup = ba.Particle(bottom_material, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2, sphere_radius*2 - bottom_cup_height))
 
         #  origin of resulting sphere will be at the bottom
@@ -71,8 +71,8 @@ class SlicedSpheresTest(unittest.TestCase):
         Rotation is used to get bottom part
         """
 
-        topCup = ba.Particle(top_material, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - bottom_cup_height))
-        bottomCup = ba.Particle(bottom_material, ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height))
+        topCup = ba.Particle(top_material, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
+        bottomCup = ba.Particle(bottom_material, ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height, 0))
         bottomCup.setRotation(ba.RotationX(180*deg))
 
         #  origin of resulting sphere will be at the bottom
@@ -176,7 +176,7 @@ class SlicedSpheresTest(unittest.TestCase):
         """
 
         # truncated sphere on top of substrate with height 16nm
-        truncatedSphere = ba.Particle(mParticle, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - bottom_cup_height))
+        truncatedSphere = ba.Particle(mParticle, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         reference = self.get_result(truncatedSphere)
 
         # Particle composition, top part made of same material, as particle. Bottom part made of same material as substrate.

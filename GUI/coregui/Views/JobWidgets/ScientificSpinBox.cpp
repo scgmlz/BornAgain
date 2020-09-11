@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "ScientificSpinBox.h"
+#include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
 #include <QLineEdit>
 #include <cmath>
 

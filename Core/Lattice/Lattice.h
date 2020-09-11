@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef LATTICE_H
-#define LATTICE_H
+#ifndef BORNAGAIN_CORE_LATTICE_LATTICE_H
+#define BORNAGAIN_CORE_LATTICE_LATTICE_H
 
-#include "INode.h"
-#include "Vectors3D.h"
+#include "Core/Parametrization/INode.h"
+#include "Core/Vector/Vectors3D.h"
 #include <vector>
 
 class ISelectionRule;
@@ -117,4 +117,4 @@ private:
     mutable bool m_cache_ok;
 };
 
-#endif // LATTICE_H
+#endif // BORNAGAIN_CORE_LATTICE_LATTICE_H

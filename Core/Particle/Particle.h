@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLE_H
-#define PARTICLE_H
+#ifndef BORNAGAIN_CORE_PARTICLE_PARTICLE_H
+#define BORNAGAIN_CORE_PARTICLE_PARTICLE_H
 
-#include "FormFactorDecoratorMaterial.h"
-#include "FormFactorDecoratorRotation.h"
-#include "IParticle.h"
-#include "Material.h"
+#include "Core/Material/Material.h"
+#include "Core/Particle/IParticle.h"
+#include "Core/Scattering/FormFactorDecoratorMaterial.h"
+#include "Core/Scattering/FormFactorDecoratorRotation.h"
 
 //! A particle with a form factor and refractive index.
 //! @ingroup samples
@@ -52,4 +52,4 @@ private:
     void initialize();
 };
 
-#endif // PARTICLE_H
+#endif // BORNAGAIN_CORE_PARTICLE_PARTICLE_H

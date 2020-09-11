@@ -1,18 +1,14 @@
-#include "SimulationArea.h"
-#include "DetectorFunctions.h"
-#include "Rectangle.h"
-#include "SphericalDetector.h"
-#include "google_test.h"
+#include "Core/Detector/SimulationArea.h"
+#include "Core/Detector/DetectorFunctions.h"
+#include "Core/Detector/SphericalDetector.h"
+#include "Core/Mask/Rectangle.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
 
 class SimulationAreaTest : public ::testing::Test
 {
-protected:
-    ~SimulationAreaTest();
 };
-
-SimulationAreaTest::~SimulationAreaTest() = default;
 
 // Iterators test
 

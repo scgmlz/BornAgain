@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceCanvas.h"
-#include "AppSvc.h"
-#include "FilterPropertyProxy.h"
-#include "RealSpaceBuilder.h"
-#include "RealSpaceModel.h"
-#include "RealSpaceView.h"
-#include "SampleModel.h"
-#include "SessionItemUtils.h"
-#include "WarningSign.h"
-#include "projectmanager.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilder.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceModel.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceView.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
 #include <QApplication>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -84,7 +84,7 @@ void RealSpaceCanvas::updateToSelection()
         if (indices.size())
             m_currentSelection = FilterPropertyProxy::toSourceIndex(indices.back());
         else
-            m_currentSelection = QModelIndex();
+            m_currentSelection = {};
         // if no object is selected then display nothing on canvas
 
         updateScene();
@@ -143,7 +143,7 @@ void RealSpaceCanvas::savePicture(const QPixmap& pixmap)
     QString dirname = AppSvc::projectManager()->userExportDir();
     QString defaultExtension = ".png";
     QString selectedFilter("*" + defaultExtension);
-    QString defaultName = dirname + QString("/untitled");
+    QString defaultName = dirname + "/untitled";
     QString fileName = QFileDialog::getSaveFileName(nullptr, "Save 3D real space view", defaultName,
                                                     selectedFilter);
     QString nameToSave =
@@ -208,7 +208,7 @@ void RealSpaceCanvas::resetScene()
 {
     m_realSpaceModel.reset();
     m_view->setModel(nullptr);
-    m_currentSelection = QModelIndex();
+    m_currentSelection = {};
 }
 
 void RealSpaceCanvas::defaultView()
@@ -243,8 +243,8 @@ void RealSpaceCanvas::setConnected(SampleModel* model, bool makeConnected)
         connect(model, &SampleModel::modelReset, this, &RealSpaceCanvas::resetScene,
                 Qt::UniqueConnection);
         connect(
-            model, &SampleModel::modelAboutToBeReset, this,
-            [&]() { m_currentSelection = QModelIndex(); }, Qt::UniqueConnection);
+            model, &SampleModel::modelAboutToBeReset, this, [&]() { m_currentSelection = {}; },
+            Qt::UniqueConnection);
 
     } else {
         disconnect(model, &SampleModel::rowsInserted, this, &RealSpaceCanvas::updateScene);

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYREPEATER_H
-#define PROPERTYREPEATER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PROPERTYREPEATER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PROPERTYREPEATER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QObject>
 #include <QVector>
@@ -48,4 +48,4 @@ private:
     bool m_repeat_child_properties;
 };
 
-#endif // PROPERTYREPEATER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PROPERTYREPEATER_H

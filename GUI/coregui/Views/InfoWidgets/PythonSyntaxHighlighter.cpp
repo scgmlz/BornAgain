@@ -35,7 +35,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OU
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "PythonSyntaxHighlighter.h"
+#include "GUI/coregui/Views/InfoWidgets/PythonSyntaxHighlighter.h"
 
 PythonSyntaxHighlighter::PythonSyntaxHighlighter(QTextDocument* parent) : QSyntaxHighlighter(parent)
 {

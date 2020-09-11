@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef DEPTHPROBEELEMENT_H
-#define DEPTHPROBEELEMENT_H
+#ifndef BORNAGAIN_CORE_SIMULATIONELEMENT_DEPTHPROBEELEMENT_H
+#define BORNAGAIN_CORE_SIMULATIONELEMENT_DEPTHPROBEELEMENT_H
 
 #include <valarray>
 
-#include "Vectors3D.h"
+#include "Core/Vector/Vectors3D.h"
 
 class IAxis;
 
@@ -64,4 +64,4 @@ private:
     bool m_calculation_flag;
 };
 
-#endif // DEPTHPROBEELEMENT_H
+#endif // BORNAGAIN_CORE_SIMULATIONELEMENT_DEPTHPROBEELEMENT_H

@@ -12,23 +12,22 @@
 //
 // ************************************************************************** //
 
-#include "TestComponentView.h"
-#include "ComponentEditor.h"
-#include "ComponentFlatView.h"
-#include "ComponentTreeView.h"
-#include "GUIObjectBuilder.h"
-#include "ISample.h"
-#include "MaterialDataItems.h"
-#include "MaterialItem.h"
-#include "MaterialItemUtils.h"
-#include "MaterialModel.h"
-#include "MultiLayer.h"
-#include "SampleBuilderFactory.h"
-#include "SampleModel.h"
-#include "SessionModelDelegate.h"
-#include "StyleUtils.h"
-#include "item_constants.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/PropertyEditor/TestComponentView.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Scattering/ISample.h"
+#include "Core/StandardSamples/SampleBuilderFactory.h"
+#include "GUI/coregui/Models/GUIObjectBuilder.h"
+#include "GUI/coregui/Models/MaterialDataItems.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionModelDelegate.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentFlatView.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentTreeView.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include "minisplitter.h"
 #include <QBoxLayout>
 #include <QDebug>
@@ -87,7 +86,7 @@ void TestComponentView::onUpdateRequest()
 
 void TestComponentView::onAddItemRequest()
 {
-    m_sampleModel->insertNewItem(Constants::ParticleType);
+    m_sampleModel->insertNewItem("Particle");
 }
 
 void TestComponentView::onExpandRequest()
@@ -120,11 +119,11 @@ void TestComponentView::init_source()
     const std::unique_ptr<MultiLayer> sample(
         factory.createSample("CylindersWithSizeDistributionBuilder"));
     GUIObjectBuilder::populateSampleModel(m_sampleModel, m_materialModel, *sample);
-    m_sampleModel->insertNewItem(Constants::VectorType);
-    m_sampleModel->insertNewItem(Constants::GISASBeamType);
+    m_sampleModel->insertNewItem("Vector");
+    m_sampleModel->insertNewItem("GISASBeam");
 
     // adding intensity data item
-    m_sampleModel->insertNewItem(Constants::IntensityDataType);
+    m_sampleModel->insertNewItem("IntensityData");
 }
 
 void TestComponentView::onSelectionChanged(const QItemSelection& selected, const QItemSelection&)

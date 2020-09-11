@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "ProjectUtils.h"
-#include "AppSvc.h"
-#include "GUIHelpers.h"
-#include "ItemFileNameUtils.h"
-#include "projectdocument.h"
-#include "projectmanager.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/Models/ItemFileNameUtils.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
@@ -37,7 +37,7 @@ QString ProjectUtils::projectDir(const QString& projectFileName)
 
 QString ProjectUtils::autosaveSubdir()
 {
-    return QStringLiteral("autosave");
+    return "autosave";
 }
 
 //! From '/projects/Untitled2/Untitled2.pro' returns '/projects/Untitled2/autosave'.
@@ -98,7 +98,7 @@ bool ProjectUtils::removeRecursively(const QString& dirname)
 
 bool ProjectUtils::removeFile(const QString& dirname, const QString& filename)
 {
-    QString name = dirname + QStringLiteral("/") + filename;
+    QString name = dirname + "/" + filename;
     QFile fin(name);
 
     if (!fin.exists())

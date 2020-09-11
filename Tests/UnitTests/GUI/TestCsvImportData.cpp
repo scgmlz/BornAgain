@@ -1,13 +1,9 @@
-#include "CsvImportTable.h"
-#include "google_test.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestCsvImportData : public ::testing::Test
 {
-public:
-    ~TestCsvImportData() override;
 };
-
-TestCsvImportData::~TestCsvImportData() = default;
 
 TEST_F(TestCsvImportData, test_setting_data)
 {
@@ -112,19 +108,19 @@ TEST_F(TestCsvImportData, test_labels)
     model.setData(test_data);
     model.setColumnAs(0, csv::_theta_);
     model.setColumnAs(1, csv::_intensity_);
-    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), std::string("Intensity"));
-    EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), std::string("theta"));
+    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), "Intensity");
+    EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), "theta");
 
     model.setColumnAs(0, csv::_q_);
-    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), std::string("Intensity"));
-    EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), std::string("q"));
+    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), "Intensity");
+    EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), "q");
 
     model.setColumnAs(1, csv::_intensity_);
-    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), std::string("Intensity"));
-    EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), std::string("q"));
+    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), "Intensity");
+    EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), "q");
 
     model.setColumnAs(0, csv::_intensity_);
-    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), std::string("Intensity"));
+    EXPECT_EQ(model.columnLabel(CsvImportData::Intensity).toStdString(), "Intensity");
     EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), std::string());
 }
 

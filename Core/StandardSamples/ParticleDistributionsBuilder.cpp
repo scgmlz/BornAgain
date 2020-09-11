@@ -12,24 +12,23 @@
 //
 // ************************************************************************** //
 
-#include "ParticleDistributionsBuilder.h"
-#include "BornAgainNamespace.h"
-#include "Distributions.h"
-#include "FormFactorBox.h"
-#include "FormFactorCone.h"
-#include "FormFactorCylinder.h"
-#include "FormFactorFullSphere.h"
-#include "FormFactorPyramid.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "ParameterPattern.h"
-#include "ParameterSample.h"
-#include "Particle.h"
-#include "ParticleDistribution.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/ParticleDistributionsBuilder.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorBox.h"
+#include "Core/HardParticle/FormFactorCone.h"
+#include "Core/HardParticle/FormFactorCylinder.h"
+#include "Core/HardParticle/FormFactorFullSphere.h"
+#include "Core/HardParticle/FormFactorPyramid.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPattern.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleDistribution.h"
 
 CylindersWithSizeDistributionBuilder::CylindersWithSizeDistributionBuilder()
     : m_height(5 * Units::nanometer), m_radius(5 * Units::nanometer)
@@ -56,7 +55,7 @@ MultiLayer* CylindersWithSizeDistributionBuilder::buildSample() const
     double n_sigma = 2.0 * 2.0 * std::sqrt(2.0 * std::log(2.0));
     DistributionGaussian gauss(m_radius, sigma);
     ParameterPattern pattern;
-    pattern.add(BornAgain::ParticleType).add(BornAgain::FFCylinderType).add(BornAgain::Radius);
+    pattern.add("Particle").add("Cylinder").add("Radius");
     ParameterDistribution par_distr(pattern.toStdString(), gauss, static_cast<size_t>(n_samples),
                                     n_sigma);
     ParticleDistribution particle_collection(nano_particle, par_distr);
@@ -109,12 +108,12 @@ MultiLayer* TwoTypesCylindersDistributionBuilder::buildSample() const
 
     // building distribution of nano particles
     ParameterPattern pattern1;
-    pattern1.add(BornAgain::ParticleType).add(BornAgain::FFCylinderType).add(BornAgain::Radius);
+    pattern1.add("Particle").add("Cylinder").add("Radius");
     ParameterDistribution par_distr1(pattern1.toStdString(), gauss1, nbins, n_sigma);
     ParticleDistribution particle_collection1(cylinder1, par_distr1);
     particle_layout.addParticle(particle_collection1, 0.95);
     ParameterPattern pattern2;
-    pattern2.add(BornAgain::ParticleType).add(BornAgain::FFCylinderType).add(BornAgain::Radius);
+    pattern2.add("Particle").add("Cylinder").add("Radius");
     ParameterDistribution par_distr2(pattern2.toStdString(), gauss2, static_cast<size_t>(nbins),
                                      n_sigma);
     ParticleDistribution particle_collection2(cylinder2, par_distr2);

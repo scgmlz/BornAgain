@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "IObserver.h"
+#include "Core/Fitting/IObserver.h"
 
 void IObservable::attachObserver(observer_t obj)
 {

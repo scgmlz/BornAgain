@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceToolBar.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceToolBar.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 
 #include <QCheckBox>
 #include <QToolButton>

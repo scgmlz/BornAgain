@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GISASINSTRUMENTEDITOR_H
-#define GISASINSTRUMENTEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_GISASINSTRUMENTEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_GISASINSTRUMENTEDITOR_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class GISASInstrumentItem;
 class GISASBeamEditor;
@@ -43,4 +43,4 @@ private:
     PolarizationAnalysisEditor* m_polarizationAnalysisEditor;
 };
 
-#endif // GISASINSTRUMENTEDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_GISASINSTRUMENTEDITOR_H

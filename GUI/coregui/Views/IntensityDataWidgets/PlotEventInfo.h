@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef PLOTEVENTINFO_H
-#define PLOTEVENTINFO_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOTEVENTINFO_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOTEVENTINFO_H
 
-#include "ScientificPlot.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 class ColorMap;
@@ -62,4 +62,4 @@ private:
     PLOT_TYPE m_info_type;
 };
 
-#endif // PLOTEVENTINFO_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOTEVENTINFO_H

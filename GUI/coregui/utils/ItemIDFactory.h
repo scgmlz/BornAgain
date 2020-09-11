@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMIDFACTORY_H
-#define ITEMIDFACTORY_H
+#ifndef BORNAGAIN_GUI_COREGUI_UTILS_ITEMIDFACTORY_H
+#define BORNAGAIN_GUI_COREGUI_UTILS_ITEMIDFACTORY_H
 
 #include <QMap>
 #include <QUuid>
@@ -46,4 +46,4 @@ private:
     QMap<SessionItem*, QString> ItemtoIDMap;
 };
 
-#endif // ITEMIDFACTORY_H
+#endif // BORNAGAIN_GUI_COREGUI_UTILS_ITEMIDFACTORY_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORCORESHELL_H
-#define FORMFACTORCORESHELL_H
+#ifndef BORNAGAIN_CORE_PARTICLE_FORMFACTORCORESHELL_H
+#define BORNAGAIN_CORE_PARTICLE_FORMFACTORCORESHELL_H
 
-#include "IFormFactor.h"
+#include "Core/Scattering/IFormFactor.h"
 
 #include <memory>
 
@@ -55,4 +55,4 @@ protected:
     std::unique_ptr<IFormFactor> mP_shell;
 };
 
-#endif // FORMFACTORCORESHELL_H
+#endif // BORNAGAIN_CORE_PARTICLE_FORMFACTORCORESHELL_H

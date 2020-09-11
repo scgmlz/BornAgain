@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef FITPRINTSERVICE_H
-#define FITPRINTSERVICE_H
+#ifndef BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H
+#define BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H
 
-#include "TimeInterval.h"
-#include "WinDllMacros.h"
+#include "Fit/Tools/WallclockTimer.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class FitObjective;
@@ -36,8 +36,8 @@ private:
     std::string parameterString(const FitObjective& objective);
     std::string fitResultString(const FitObjective& objective);
 
-    TimeInterval m_run_time;
-    TimeInterval m_last_call_time;
+    WallclockTimer m_run_time;
+    WallclockTimer m_last_call_time;
 };
 
-#endif
+#endif // BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H

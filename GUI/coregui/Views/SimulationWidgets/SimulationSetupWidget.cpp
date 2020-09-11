@@ -12,18 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "SimulationSetupWidget.h"
-#include "AppSvc.h"
-#include "ApplicationModels.h"
-#include "DocumentModel.h"
-#include "InstrumentItems.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "PythonScriptWidget.h"
-#include "SimulationDataSelectorWidget.h"
-#include "SimulationOptionsWidget.h"
-#include "SimulationSetupAssistant.h"
-#include "projectmanager.h"
+#include "GUI/coregui/Views/SimulationWidgets/SimulationSetupWidget.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/DocumentModel.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/SimulationWidgets/PythonScriptWidget.h"
+#include "GUI/coregui/Views/SimulationWidgets/SimulationDataSelectorWidget.h"
+#include "GUI/coregui/Views/SimulationWidgets/SimulationOptionsWidget.h"
+#include "GUI/coregui/Views/SimulationWidgets/SimulationSetupAssistant.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
 #include <QMessageBox>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -47,7 +47,7 @@ SimulationSetupWidget::SimulationSetupWidget(QWidget* parent)
 
 void SimulationSetupWidget::setApplicationModels(ApplicationModels* model)
 {
-    Q_ASSERT(model);
+    ASSERT(model);
     if (model != m_applicationModels) {
         m_applicationModels = model;
         m_simDataSelectorWidget->setApplicationModels(model);

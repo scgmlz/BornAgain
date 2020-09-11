@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTENSITYDATAITEM_H
-#define INTENSITYDATAITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_INTENSITYDATAITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_INTENSITYDATAITEM_H
 
-#include "DataItem.h"
+#include "GUI/coregui/Models/DataItem.h"
 
 class BasicAxisItem;
 class MaskContainerItem;
@@ -115,4 +115,4 @@ private:
     void updateAxesLabels();
 };
 
-#endif // INTENSITYDATAITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_INTENSITYDATAITEM_H

@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#ifndef KERNEL_H
-#define KERNEL_H
+#ifndef BORNAGAIN_FIT_KERNEL_KERNEL_H
+#define BORNAGAIN_FIT_KERNEL_KERNEL_H
 
-#include "KernelTypes.h"
-#include "MinimizerResult.h"
-#include "Parameters.h"
-#include "TimeInterval.h"
-#include "WinDllMacros.h"
+#include "Fit/Kernel/KernelTypes.h"
+#include "Fit/Kernel/MinimizerResult.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Fit/Tools/WallclockTimer.h"
+#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <memory>
 #include <vector>
@@ -51,9 +51,9 @@ private:
 
     Parameters m_parameters;
     std::unique_ptr<IMinimizer> m_minimizer;
-    TimeInterval m_time_interval;
+    WallclockTimer m_timer;
 };
 
 } // namespace Fit
 
-#endif // KERNEL_H
+#endif // BORNAGAIN_FIT_KERNEL_KERNEL_H

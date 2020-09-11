@@ -1,7 +1,7 @@
-#include "HardParticles.h"
-#include "MathConstants.h"
-#include "FormFactorTest.h"
-#include "google_test.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/includeIncludes/HardParticles.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/Numeric/FormFactorTest.h"
 
 //! Check that form factors are invariant when q is transformed according to particle symmetry.
 
@@ -22,8 +22,8 @@ private:
 protected:
     void run_test(IFormFactorBorn* p, transform_t trafo, double eps, double qmag1, double qmag2)
     {
-        formFactorTest::run_test_for_many_q(
-            [&](cvector_t q) { test_qq_eq(q, p, trafo, eps); }, qmag1, qmag2);
+        formFactorTest::run_test_for_many_q([&](cvector_t q) { test_qq_eq(q, p, trafo, eps); },
+                                            qmag1, qmag2);
     }
 };
 
@@ -41,8 +41,7 @@ TEST_F(FFSymmetryTest, Prism6)
 {
     FormFactorPrism6 p(1.33, .42);
     run_test(
-        &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(M_PI / 3); }, 1e-12, 1e-99,
-        50);
+        &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(M_PI / 3); }, 1e-12, 1e-99, 50);
     run_test(
         &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(-M_TWOPI / 3); }, 3.8e-12,
         1e-99, 50);
@@ -89,7 +88,7 @@ TEST_F(FFSymmetryTest, HemiEllipsoid)
 
 TEST_F(FFSymmetryTest, TruncatedSphere)
 {
-    FormFactorTruncatedSphere p(.79, .34);
+    FormFactorTruncatedSphere p(.79, .34, 0);
     run_test(
         &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(M_PI / 3.13698); }, 1e-10,
         1e-99, 2e2);
@@ -99,8 +98,7 @@ TEST_F(FFSymmetryTest, FullSpheroid)
 {
     FormFactorFullSpheroid p(.73, .36);
     run_test(
-        &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(.123); }, 1e-12,
-        1e-99, 2e2);
+        &p, [](const cvector_t& q) -> cvector_t { return q.rotatedZ(.123); }, 1e-12, 1e-99, 2e2);
 }
 
 // ****** TODO: tests that do not pass for the full q range *********

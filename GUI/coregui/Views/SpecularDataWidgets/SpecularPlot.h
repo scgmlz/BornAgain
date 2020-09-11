@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARPLOT_H
-#define SPECULARPLOT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARPLOT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARPLOT_H
 
-#include "ScientificPlot.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
 #include "qcustomplot.h"
 #include <memory>
 
@@ -109,4 +109,4 @@ private:
     bool m_block_update;
 };
 
-#endif // SPECULARPLOT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARPLOT_H

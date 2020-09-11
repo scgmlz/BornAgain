@@ -1,21 +1,16 @@
-#include "ComponentProxyModel.h"
-#include "ComponentProxyStrategy.h"
-#include "FormFactorItems.h"
-#include "ModelUtils.h"
-#include "ParticleItem.h"
-#include "ProxyModelStrategy.h"
-#include "SessionModel.h"
-#include "VectorItem.h"
-#include "google_test.h"
-#include "item_constants.h"
+#include "GUI/coregui/Models/ComponentProxyModel.h"
+#include "GUI/coregui/Models/ComponentProxyStrategy.h"
+#include "GUI/coregui/Models/FormFactorItems.h"
+#include "GUI/coregui/Models/ModelUtils.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/ProxyModelStrategy.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestProxyModelStrategy : public ::testing::Test
 {
-public:
-    ~TestProxyModelStrategy();
 };
-
-TestProxyModelStrategy::~TestProxyModelStrategy() = default;
 
 //! Checking the mapping in the case of PropertyItem inserted in the source.
 
@@ -34,7 +29,7 @@ TEST_F(TestProxyModelStrategy, test_identityStrategy)
     EXPECT_EQ(strategy.proxySourceParent().size(), 0);
 
     // building map when simple item
-    SessionItem* item = model.insertNewItem(Constants::PropertyType);
+    SessionItem* item = model.insertNewItem("Property");
     strategy.buildModelMap(&model, &proxy);
     EXPECT_EQ(strategy.sourceToProxy().size(), 2);
     EXPECT_EQ(strategy.proxySourceParent().size(), 2);
@@ -75,14 +70,14 @@ TEST_F(TestProxyModelStrategy, test_identityStrategyParticle)
     ComponentProxyModel proxy;
     IndentityProxyStrategy strategy;
 
-    SessionItem* item = model.insertNewItem(Constants::ParticleType);
+    SessionItem* item = model.insertNewItem("Particle");
 
     // building the map of source
     strategy.buildModelMap(&model, &proxy);
     SessionItem* group = item->getItem(ParticleItem::P_FORM_FACTOR);
     SessionItem* ffItem = item->getGroupItem(ParticleItem::P_FORM_FACTOR);
     EXPECT_TRUE(ffItem->parent() == group);
-    EXPECT_TRUE(ffItem->modelType() == Constants::CylinderType);
+    EXPECT_TRUE(ffItem->modelType() == "Cylinder");
 
     // Checking "real" parent of proxy index related to form factor.
     // For identity model we are testing, it has to be just group property.
@@ -106,14 +101,14 @@ TEST_F(TestProxyModelStrategy, test_componentStrategyParticle)
     ComponentProxyModel proxy;
     ComponentProxyStrategy strategy;
 
-    SessionItem* item = model.insertNewItem(Constants::ParticleType);
+    SessionItem* item = model.insertNewItem("Particle");
 
     // building the map of  source
     strategy.buildModelMap(&model, &proxy);
     SessionItem* group = item->getItem(ParticleItem::P_FORM_FACTOR);
     SessionItem* ffItem = item->getGroupItem(ParticleItem::P_FORM_FACTOR);
     EXPECT_TRUE(ffItem->parent() == group);
-    EXPECT_TRUE(ffItem->modelType() == Constants::CylinderType);
+    EXPECT_TRUE(ffItem->modelType() == "Cylinder");
 
     // original indices
     QModelIndex particleIndex = model.indexOfItem(item);
@@ -146,7 +141,7 @@ TEST_F(TestProxyModelStrategy, test_setRootIndex)
     ComponentProxyModel proxy;
     ComponentProxyStrategy strategy;
 
-    SessionItem* item = model.insertNewItem(Constants::ParticleType);
+    SessionItem* item = model.insertNewItem("Particle");
     SessionItem* group = item->getItem(ParticleItem::P_FORM_FACTOR);
     SessionItem* ffItem = item->getGroupItem(ParticleItem::P_FORM_FACTOR);
 

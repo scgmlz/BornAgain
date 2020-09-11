@@ -5,9 +5,15 @@ Here is a list of classes grouped in several categories to create the sample, de
 
 <ul>
 <li> \ref simulation "Simulation" <br>
-List of classes to describe beam, detector and run the simulation
+List of classes to run simulations
      <ul>
-     <li> \ref mask "Detector masks"
+     <li> \ref beam "Beam" <br>
+          List of classes to describe the beam, and its footprint in the sample plane
+     <li> \ref detector "Detector" <br>
+          List of classes to describe detectors
+          <ul>
+               <li> \ref mask "Detector masks"
+          </ul>
      </ul>
 <li> \ref samples "Samples" <br>
 List of classes to describe scattering sample
@@ -38,7 +44,7 @@ Fitting routines
 
 Here is a list of additional classes from internal API.
 <ul>
-<li> \ref simulation_internal "Simulation internals" <br>
+<li> \ref simulation_internal "Simulation and instrument internals" <br>
 <li> \ref samples_internal "Samples internals" <br>
 <li> \ref materials_internal "Materials internals" <br>
 <li> \ref formfactors_internal "Form factors internals" <br>

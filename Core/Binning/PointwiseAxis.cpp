@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "PointwiseAxis.h"
+#include "Core/Binning/PointwiseAxis.h"
 #include <algorithm>
 #include <iomanip>
 #include <stdexcept>

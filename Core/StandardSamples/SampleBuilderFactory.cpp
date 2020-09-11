@@ -12,245 +12,181 @@
 //
 // ************************************************************************** //
 
-#include "SampleBuilderFactory.h"
-#include "BoxCompositionBuilder.h"
-#include "BoxesSquareLatticeBuilder.h"
-#include "CoreShellParticleBuilder.h"
-#include "CustomMorphologyBuilder.h"
-#include "CylindersAndPrismsBuilder.h"
-#include "CylindersBuilder.h"
-#include "HomogeneousMultilayerBuilder.h"
-#include "LatticeBuilder.h"
-#include "LayersWithAbsorptionBuilder.h"
-#include "LayersWithAbsorptionBySLDBuilder.h"
-#include "MagneticLayersBuilder.h"
-#include "MagneticParticlesBuilder.h"
-#include "MesoCrystalBuilder.h"
-#include "MultiLayerWithNCRoughnessBuilder.h"
-#include "MultiLayerWithRoughnessBuilder.h"
-#include "MultipleLayoutBuilder.h"
-#include "ParaCrystalBuilder.h"
-#include "ParticleCompositionBuilder.h"
-#include "ParticleDistributionsBuilder.h"
-#include "ParticleInTheAirBuilder.h"
-#include "PercusYevickBuilder.h"
-#include "PlainMultiLayerBySLDBuilder.h"
-#include "RealParameter.h"
-#include "ResonatorBuilder.h"
-#include "RipplesBuilder.h"
-#include "RotatedPyramidsBuilder.h"
-#include "SizeDistributionModelsBuilder.h"
-#include "SlicedCylindersBuilder.h"
-#include "SlicedParticleBuilder.h"
-#include "ThickAbsorptiveSampleBuilder.h"
-#include "TransformationsBuilder.h"
-#include "TwoDimLatticeBuilder.h"
-#include "TwoLayerRoughnessBuilder.h"
+#include "Core/StandardSamples/SampleBuilderFactory.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/StandardSamples/BoxCompositionBuilder.h"
+#include "Core/StandardSamples/BoxesSquareLatticeBuilder.h"
+#include "Core/StandardSamples/CoreShellParticleBuilder.h"
+#include "Core/StandardSamples/CustomMorphologyBuilder.h"
+#include "Core/StandardSamples/CylindersAndPrismsBuilder.h"
+#include "Core/StandardSamples/CylindersBuilder.h"
+#include "Core/StandardSamples/HomogeneousMultilayerBuilder.h"
+#include "Core/StandardSamples/LatticeBuilder.h"
+#include "Core/StandardSamples/LayersWithAbsorptionBuilder.h"
+#include "Core/StandardSamples/LayersWithAbsorptionBySLDBuilder.h"
+#include "Core/StandardSamples/MagneticLayersBuilder.h"
+#include "Core/StandardSamples/MagneticParticlesBuilder.h"
+#include "Core/StandardSamples/MesoCrystalBuilder.h"
+#include "Core/StandardSamples/MultiLayerWithNCRoughnessBuilder.h"
+#include "Core/StandardSamples/MultiLayerWithRoughnessBuilder.h"
+#include "Core/StandardSamples/MultipleLayoutBuilder.h"
+#include "Core/StandardSamples/ParaCrystalBuilder.h"
+#include "Core/StandardSamples/ParticleCompositionBuilder.h"
+#include "Core/StandardSamples/ParticleDistributionsBuilder.h"
+#include "Core/StandardSamples/ParticleInTheAirBuilder.h"
+#include "Core/StandardSamples/PercusYevickBuilder.h"
+#include "Core/StandardSamples/PlainMultiLayerBySLDBuilder.h"
+#include "Core/StandardSamples/ResonatorBuilder.h"
+#include "Core/StandardSamples/RipplesBuilder.h"
+#include "Core/StandardSamples/RotatedPyramidsBuilder.h"
+#include "Core/StandardSamples/SizeDistributionModelsBuilder.h"
+#include "Core/StandardSamples/SlicedCylindersBuilder.h"
+#include "Core/StandardSamples/SlicedParticleBuilder.h"
+#include "Core/StandardSamples/ThickAbsorptiveSampleBuilder.h"
+#include "Core/StandardSamples/TransformationsBuilder.h"
+#include "Core/StandardSamples/TwoDimLatticeBuilder.h"
+#include "Core/StandardSamples/TwoLayerRoughnessBuilder.h"
 
 SampleBuilderFactory::SampleBuilderFactory()
 {
-    registerItem("CylindersAndPrismsBuilder", create_new<CylindersAndPrismsBuilder>,
-                 "Mixture of cylinders and prisms without interference");
+    registerItem("CylindersAndPrismsBuilder", create_new<CylindersAndPrismsBuilder>);
 
     registerItem("TwoTypesCylindersDistributionBuilder",
-                 create_new<TwoTypesCylindersDistributionBuilder>,
-                 "Mixture of cylinder particles with two types size distribution ");
+                 create_new<TwoTypesCylindersDistributionBuilder>);
 
-    registerItem("CylindersInBABuilder", create_new<CylindersInBABuilder>,
-                 "Cylinder form factor in BA");
-    registerItem("CylindersInDWBABuilder", create_new<CylindersInDWBABuilder>,
-                 "Cylinder form factor in DWBA");
-    registerItem("LargeCylindersInDWBABuilder", create_new<LargeCylindersInDWBABuilder>,
-                 "Large cylinders in DWBA");
+    registerItem("CylindersInBABuilder", create_new<CylindersInBABuilder>);
+    registerItem("CylindersInDWBABuilder", create_new<CylindersInDWBABuilder>);
+    registerItem("LargeCylindersInDWBABuilder", create_new<LargeCylindersInDWBABuilder>);
 
     registerItem("CylindersWithSizeDistributionBuilder",
-                 create_new<CylindersWithSizeDistributionBuilder>,
-                 "Cylinder form factor in BA with size distribution");
+                 create_new<CylindersWithSizeDistributionBuilder>);
 
-    registerItem("RadialParaCrystalBuilder", create_new<RadialParaCrystalBuilder>,
-                 "Interference function of radial paracrystal");
+    registerItem("RadialParaCrystalBuilder", create_new<RadialParaCrystalBuilder>);
 
-    registerItem("HardDiskBuilder", create_new<HardDiskBuilder>,
-                 "Interference function of hard disk Percus-Yevick");
+    registerItem("HardDiskBuilder", create_new<HardDiskBuilder>);
 
-    registerItem("Basic2DParaCrystalBuilder", create_new<Basic2DParaCrystalBuilder>,
-                 "Interference function of 2D basic paracrystal with variety of FT distributions");
+    registerItem("Basic2DParaCrystalBuilder", create_new<Basic2DParaCrystalBuilder>);
 
-    registerItem("HexParaCrystalBuilder", create_new<HexParaCrystalBuilder>,
-                 "Interference function of 2D hexagonal paracrystal");
+    registerItem("HexParaCrystalBuilder", create_new<HexParaCrystalBuilder>);
 
-    registerItem("Lattice1DBuilder", create_new<Lattice1DBuilder>,
-                 "Interference function of 1D lattice");
+    registerItem("Lattice1DBuilder", create_new<Lattice1DBuilder>);
 
-    registerItem("RectParaCrystalBuilder", create_new<RectParaCrystalBuilder>,
-                 "Interference function of 2D rectangular paracrystal");
+    registerItem("RectParaCrystalBuilder", create_new<RectParaCrystalBuilder>);
 
-    registerItem("Basic2DLatticeBuilder", create_new<Basic2DLatticeBuilder>,
-                 "Square lattice with arbitrary parameters");
+    registerItem("Basic2DLatticeBuilder", create_new<Basic2DLatticeBuilder>);
 
-    registerItem("SquareLatticeBuilder", create_new<SquareLatticeBuilder>,
-                 "Interference of square lattice with disordered");
+    registerItem("SquareLatticeBuilder", create_new<SquareLatticeBuilder>);
 
-    registerItem("CenteredSquareLatticeBuilder", create_new<CenteredSquareLatticeBuilder>,
-                 "Interference of centered square lattice");
+    registerItem("CenteredSquareLatticeBuilder", create_new<CenteredSquareLatticeBuilder>);
 
-    registerItem("RotatedSquareLatticeBuilder", create_new<RotatedSquareLatticeBuilder>,
-                 "2D lattice rotated");
+    registerItem("RotatedSquareLatticeBuilder", create_new<RotatedSquareLatticeBuilder>);
 
-    registerItem("FiniteSquareLatticeBuilder", create_new<FiniteSquareLatticeBuilder>,
-                 "Finite 2D lattice");
+    registerItem("FiniteSquareLatticeBuilder", create_new<FiniteSquareLatticeBuilder>);
 
-    registerItem("SuperLatticeBuilder", create_new<SuperLatticeBuilder>, "Superlattice");
+    registerItem("SuperLatticeBuilder", create_new<SuperLatticeBuilder>);
 
-    registerItem("CustomMorphologyBuilder", create_new<CustomMorphologyBuilder>,
-                 "Mixture of different particles a la IsGISAXS morphology file");
+    registerItem("CustomMorphologyBuilder", create_new<CustomMorphologyBuilder>);
 
-    registerItem("RotatedPyramidsBuilder", create_new<RotatedPyramidsBuilder>,
-                 "Rotated pyramids on top of substrate");
+    registerItem("RotatedPyramidsBuilder", create_new<RotatedPyramidsBuilder>);
 
-    registerItem("CoreShellParticleBuilder", create_new<CoreShellParticleBuilder>,
-                 "Core shell nanoparticles");
+    registerItem("CoreShellParticleBuilder", create_new<CoreShellParticleBuilder>);
 
-    registerItem("CoreShellBoxRotateZandYBuilder", create_new<CoreShellBoxRotateZandYBuilder>,
-                 "Rotation and translation of core shell box particle in 3 layers system.");
+    registerItem("CoreShellBoxRotateZandYBuilder", create_new<CoreShellBoxRotateZandYBuilder>);
 
-    registerItem("SizeDistributionDAModelBuilder", create_new<SizeDistributionDAModelBuilder>,
-                 "Size distribution model: decoupling approximation");
+    registerItem("SizeDistributionDAModelBuilder", create_new<SizeDistributionDAModelBuilder>);
 
-    registerItem("SizeDistributionLMAModelBuilder", create_new<SizeDistributionLMAModelBuilder>,
-                 "Size distribution model: local monodisperse approximation");
+    registerItem("SizeDistributionLMAModelBuilder", create_new<SizeDistributionLMAModelBuilder>);
 
-    registerItem("SizeDistributionSSCAModelBuilder", create_new<SizeDistributionSSCAModelBuilder>,
-                 "Size distribution model: size space coupling approximation");
+    registerItem("SizeDistributionSSCAModelBuilder", create_new<SizeDistributionSSCAModelBuilder>);
 
-    registerItem("CylindersInSSCABuilder", create_new<CylindersInSSCABuilder>,
-                 "Size spacing correlation approximation");
+    registerItem("CylindersInSSCABuilder", create_new<CylindersInSSCABuilder>);
 
-    registerItem("MesoCrystalBuilder", create_new<MesoCrystalBuilder>,
-                 "Mesocrystals of cylindrical shape composed by spherical nanoparticles");
+    registerItem("MesoCrystalBuilder", create_new<MesoCrystalBuilder>);
 
-    registerItem("MagneticParticleZeroFieldBuilder", create_new<MagneticParticleZeroFieldBuilder>,
-                 "Polarized DWBA with zero magnetic field");
+    registerItem("MagneticParticleZeroFieldBuilder", create_new<MagneticParticleZeroFieldBuilder>);
 
-    registerItem("MagneticCylindersBuilder", create_new<MagneticCylindersBuilder>,
-                 "Polarized DWBA with non-zero magnetic field");
+    registerItem("MagneticCylindersBuilder", create_new<MagneticCylindersBuilder>);
 
-    registerItem("MagneticSubstrateZeroFieldBuilder", create_new<MagneticSubstrateZeroFieldBuilder>,
-                 "Polarized DWBA with zero field substrate");
+    registerItem("MagneticSubstrateZeroFieldBuilder",
+                 create_new<MagneticSubstrateZeroFieldBuilder>);
 
-    registerItem("MagneticLayerBuilder", create_new<SimpleMagneticLayerBuilder>,
-                 "Sample with one magnetic 10nm-thick layer");
+    registerItem("SimpleMagneticLayerBuilder", create_new<SimpleMagneticLayerBuilder>);
 
-    registerItem("MagnetizedLayerWithSpheresBuilder", create_new<MagneticLayerBuilder>,
-                 "Magnetized particles in a magnetized layer");
+    registerItem("MagneticLayerBuilder", create_new<MagneticLayerBuilder>);
 
-    registerItem("MagneticRotationBuilder", create_new<MagneticRotationBuilder>,
-                 "Rotated magnetic particle in magnetic substrate");
+    registerItem("MagneticRotationBuilder", create_new<MagneticRotationBuilder>);
 
-    registerItem("MagneticSpheresBuilder", create_new<MagneticSpheresBuilder>,
-                 "Spheres with magnetization inside substrate");
+    registerItem("MagneticSpheresBuilder", create_new<MagneticSpheresBuilder>);
 
-    registerItem("MultiLayerWithRoughnessBuilder", create_new<MultiLayerWithRoughnessBuilder>,
-                 "Layer with correlated roughness");
+    registerItem("MultiLayerWithRoughnessBuilder", create_new<MultiLayerWithRoughnessBuilder>);
 
-    registerItem("MultiLayerWithNCRoughnessBuilder", create_new<MultiLayerWithNCRoughnessBuilder>,
-                 "Layer with correlated roughness");
+    registerItem("MultiLayerWithNCRoughnessBuilder", create_new<MultiLayerWithNCRoughnessBuilder>);
 
-    registerItem("TwoLayerRoughnessBuilder", create_new<TwoLayerRoughnessBuilder>,
-                 "Two layers with rough interface");
+    registerItem("TwoLayerRoughnessBuilder", create_new<TwoLayerRoughnessBuilder>);
 
-    registerItem("MultipleLayoutBuilder", create_new<MultipleLayoutBuilder>,
-                 "cylinder and prisms using multiple layouts");
+    registerItem("MultipleLayoutBuilder", create_new<MultipleLayoutBuilder>);
 
-    registerItem("TriangularRippleBuilder", create_new<TriangularRippleBuilder>,
-                 "triangular ripple within the 1D-paracrystal model");
+    registerItem("TriangularRippleBuilder", create_new<TriangularRippleBuilder>);
 
-    registerItem("AsymRippleBuilder", create_new<AsymRippleBuilder>,
-                 "triangular ripple with asymetry within the 1D-paracrystal model");
+    registerItem("AsymRippleBuilder", create_new<AsymRippleBuilder>);
 
-    registerItem("CosineRippleBuilder", create_new<CosineRippleBuilder>,
-                 "cosine ripple within the 1D-paracrystal model");
+    registerItem("CosineRippleBuilder", create_new<CosineRippleBuilder>);
 
-    registerItem("ParticleCompositionBuilder", create_new<ParticleCompositionBuilder>,
-                 "Composition of particles to represent two layers of spheres in hex lattice");
+    registerItem("ParticleCompositionBuilder", create_new<ParticleCompositionBuilder>);
 
-    registerItem("BoxCompositionRotateXBuilder", create_new<BoxCompositionRotateXBuilder>,
-                 "Two boxes in particle composition rotated in X by 90 degrees");
+    registerItem("BoxCompositionRotateXBuilder", create_new<BoxCompositionRotateXBuilder>);
 
-    registerItem("BoxCompositionRotateYBuilder", create_new<BoxCompositionRotateYBuilder>,
-                 "Two boxes in particle composition rotated in Y by 90 degrees");
+    registerItem("BoxCompositionRotateYBuilder", create_new<BoxCompositionRotateYBuilder>);
 
-    registerItem("BoxCompositionRotateZBuilder", create_new<BoxCompositionRotateZBuilder>,
-                 "Two boxes in particle composition rotated in Z by 90 degrees");
+    registerItem("BoxCompositionRotateZBuilder", create_new<BoxCompositionRotateZBuilder>);
 
-    registerItem("BoxCompositionRotateZandYBuilder", create_new<BoxCompositionRotateZandYBuilder>,
-                 "Two boxes in particle composition rotated in Z and Y by 90 degrees");
+    registerItem("BoxCompositionRotateZandYBuilder", create_new<BoxCompositionRotateZandYBuilder>);
 
-    registerItem(
-        "BoxStackCompositionBuilder", create_new<BoxStackCompositionBuilder>,
-        "Two different boxes are first rotated and then composed, composition is then rotated.");
+    registerItem("BoxStackCompositionBuilder", create_new<BoxStackCompositionBuilder>);
 
-    registerItem("ParticleInTheAirBuilder", create_new<ParticleInTheAirBuilder>,
-                 "Particle in the air layer to test form factors");
+    registerItem("ParticleInTheAirBuilder", create_new<ParticleInTheAirBuilder>);
 
-    registerItem("TransformBoxBuilder", create_new<TransformBoxBuilder>,
-                 "Rotated and translated box in 3 layer system");
+    registerItem("TransformBoxBuilder", create_new<TransformBoxBuilder>);
 
-    registerItem("LayersWithAbsorptionBuilder", create_new<LayersWithAbsorptionBuilder>,
-                 "3 layer system with absorption");
+    registerItem("LayersWithAbsorptionBuilder", create_new<LayersWithAbsorptionBuilder>);
 
-    registerItem("LayersWithAbsorptionBySLDBuilder", create_new<LayersWithAbsorptionBySLDBuilder>,
-                 "3 SLD-layer system with absorption");
+    registerItem("LayersWithAbsorptionBySLDBuilder", create_new<LayersWithAbsorptionBySLDBuilder>);
 
-    registerItem("BoxesSquareLatticeBuilder", create_new<BoxesSquareLatticeBuilder>,
-                 "Boxes in a square lattice");
+    registerItem("BoxesSquareLatticeBuilder", create_new<BoxesSquareLatticeBuilder>);
 
-    registerItem("RotatedCylindersBuilder", create_new<RotatedCylindersBuilder>,
-                 "Rotated cylinder in substrate");
+    registerItem("RotatedCylindersBuilder", create_new<RotatedCylindersBuilder>);
 
-    registerItem("SlicedCompositionBuilder", create_new<SlicedCompositionBuilder>,
-                 "Spherical particle made of two different materials crossing interface");
+    registerItem("SlicedCompositionBuilder", create_new<SlicedCompositionBuilder>);
 
     registerItem("RotatedPyramidsDistributionBuilder",
-                 create_new<RotatedPyramidsDistributionBuilder>, "Rotated pyramids distribution");
+                 create_new<RotatedPyramidsDistributionBuilder>);
 
-    registerItem(
-        "SpheresWithLimitsDistributionBuilder", create_new<SpheresWithLimitsDistributionBuilder>,
-        "Spherical particles with the distribution applied to the radius and RealLimits defined");
+    registerItem("SpheresWithLimitsDistributionBuilder",
+                 create_new<SpheresWithLimitsDistributionBuilder>);
 
     registerItem("ConesWithLimitsDistributionBuilder",
-                 create_new<ConesWithLimitsDistributionBuilder>,
-                 "Cones with the distribution applied to the angle and RealLimits defined.");
+                 create_new<ConesWithLimitsDistributionBuilder>);
 
-    registerItem("LinkedBoxDistributionBuilder", create_new<LinkedBoxDistributionBuilder>,
-                 "Distribution of boxes with main parameter and two linked parameters.");
+    registerItem("LinkedBoxDistributionBuilder", create_new<LinkedBoxDistributionBuilder>);
 
-    registerItem("HomogeneousMultilayerBuilder", create_new<HomogeneousMultilayerBuilder>,
-                 "Alternating homogeneous layers of Ti and Ni on silicone substrate.");
+    registerItem("HomogeneousMultilayerBuilder", create_new<HomogeneousMultilayerBuilder>);
 
-    registerItem("PlainMultiLayerBySLDBuilder", create_new<PlainMultiLayerBySLDBuilder>,
-                 "Alternating homogeneous layers of Ti and Ni on silicone substrate "
-                 "(wavelength-independent).");
+    registerItem("PlainMultiLayerBySLDBuilder", create_new<PlainMultiLayerBySLDBuilder>);
 
-    registerItem("ResonatorBuilder", create_new<ResonatorBuilder>,
-                 "Multilayer with bi-layer sequence for OffSpec testing.");
+    registerItem("ResonatorBuilder", create_new<ResonatorBuilder>);
 
-    registerItem("SlicedCylindersBuilder", create_new<SlicedCylindersBuilder>,
-                 "Multilayer with cylinders on substrate (sliced)");
+    registerItem("SlicedCylindersBuilder", create_new<SlicedCylindersBuilder>);
 
-    registerItem("SLDSlicedCylindersBuilder", create_new<SLDSlicedCylindersBuilder>,
-                 "Multilayer with cylinders on substrate (sliced, using sld-based materials)");
+    registerItem("SLDSlicedCylindersBuilder", create_new<SLDSlicedCylindersBuilder>);
 
-    registerItem("AveragedSlicedCylindersBuilder", create_new<AveragedSlicedCylindersBuilder>,
-                 "Manually sliced multilayer with cylinders on substrate (sld-based materials)");
+    registerItem("AveragedSlicedCylindersBuilder", create_new<AveragedSlicedCylindersBuilder>);
 
-    registerItem("ThickAbsorptiveSampleBuilder", create_new<ThickAbsorptiveSampleBuilder>,
-                 "Thick highly-absorptive multilayer with a rough substrate");
+    registerItem("ThickAbsorptiveSampleBuilder", create_new<ThickAbsorptiveSampleBuilder>);
 }
 
 //! Retrieves a SampleBuilder from the registry, does the build, and returns the result.
 
 MultiLayer* SampleBuilderFactory::createSample(const std::string& name)
 {
-    return create(name)->buildSample();
+    return createItemPtr(name)->buildSample();
 }

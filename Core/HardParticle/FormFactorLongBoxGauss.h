@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORLONGBOXGAUSS_H
-#define FORMFACTORLONGBOXGAUSS_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORLONGBOXGAUSS_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORLONGBOXGAUSS_H
 
-#include "IFormFactorBorn.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! The form factor for a long rectangular box.
 //! @ingroup legacyGrating
@@ -27,6 +27,7 @@ public:
     //! @param length of Box's base
     //! @param width of Box's base
     //! @param height of Box
+    FormFactorLongBoxGauss(const std::vector<double> P);
     FormFactorLongBoxGauss(double length, double width, double height);
 
     FormFactorLongBoxGauss* clone() const override final
@@ -49,9 +50,9 @@ protected:
     void onChange() override final;
 
 private:
-    double m_length;
-    double m_width;
-    double m_height;
+    const double& m_length;
+    const double& m_width;
+    const double& m_height;
 };
 
-#endif // FORMFACTORLONGBOXGAUSS_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORLONGBOXGAUSS_H

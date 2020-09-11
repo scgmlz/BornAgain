@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ScalarFresnelMap.h"
-#include "ScalarRTCoefficients.h"
-#include "SimulationElement.h"
-#include "Slice.h"
-#include "Vectors3D.h"
+#include "Core/Multilayer/ScalarFresnelMap.h"
+#include "Core/Multilayer/Slice.h"
+#include "Core/RT/ScalarRTCoefficients.h"
+#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Vector/Vectors3D.h"
 #include <functional>
 
 ScalarFresnelMap::ScalarFresnelMap(std::unique_ptr<ISpecularStrategy> strategy)
@@ -27,8 +27,8 @@ ScalarFresnelMap::ScalarFresnelMap(std::unique_ptr<ISpecularStrategy> strategy)
 ScalarFresnelMap::~ScalarFresnelMap() = default;
 
 //! Returns hash value of a pair of doubles, computed by exclusive-or of the component hash values.
-size_t
-ScalarFresnelMap::Hash2Doubles::operator()(const std::pair<double, double>& doubles) const noexcept
+size_t ScalarFresnelMap::Hash2Doubles::operator()(const std::pair<double, double>& doubles) const
+    noexcept
 {
     return std::hash<double>{}(doubles.first) ^ std::hash<double>{}(doubles.second);
 }

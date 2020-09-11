@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LATTICEBUILDER_H
-#define LATTICEBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_LATTICEBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_LATTICEBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class ISample;
 
@@ -36,4 +36,4 @@ private:
     double m_cylinder_radius;
 };
 
-#endif // LATTICEBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_LATTICEBUILDER_H

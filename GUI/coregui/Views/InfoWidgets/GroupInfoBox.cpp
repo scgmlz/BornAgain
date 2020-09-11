@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "GroupInfoBox.h"
-#include "hostosinfo.h"
+#include "GUI/coregui/Views/InfoWidgets/GroupInfoBox.h"
+#include "GUI/coregui/utils/hostosinfo.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include <QPainter>
@@ -73,7 +73,7 @@ void GroupInfoBox::mouseMoveEvent(QMouseEvent* event)
 void GroupInfoBox::init_box()
 {
     setMouseTracking(true);
-    m_toolTipText = QStringLiteral("Gives access to the extended distribution viewer.");
+    m_toolTipText = "Gives access to the extended distribution viewer.";
 }
 
 void GroupInfoBox::paintEvent(QPaintEvent*)

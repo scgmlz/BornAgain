@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "JobRealTimeWidget.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "ParameterTuningWidget.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/JobWidgets/JobRealTimeWidget.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/JobWidgets/ParameterTuningWidget.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QVBoxLayout>
 
 namespace

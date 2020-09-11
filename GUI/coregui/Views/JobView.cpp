@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "JobView.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "JobOutputDataWidget.h"
-#include "JobProgressAssistant.h"
-#include "JobSelectorWidget.h"
-#include "JobViewDocks.h"
-#include "JobViewFlags.h"
-#include "JobViewStatusBar.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/JobView.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/JobWidgets/JobOutputDataWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobProgressAssistant.h"
+#include "GUI/coregui/Views/JobWidgets/JobSelectorWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewDocks.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewStatusBar.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QMenu>
 
 JobView::JobView(MainWindow* mainWindow)

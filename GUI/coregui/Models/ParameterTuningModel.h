@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARAMETERTUNINGMODEL_H
-#define PARAMETERTUNINGMODEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTUNINGMODEL_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTUNINGMODEL_H
 
-#include "FilterPropertyProxy.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
 
 class ParameterItem;
 
@@ -50,4 +50,4 @@ inline Qt::DropActions ParameterTuningModel::supportedDropActions() const
     return Qt::IgnoreAction;
 }
 
-#endif // PARAMETERTUNINGMODEL_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTUNINGMODEL_H

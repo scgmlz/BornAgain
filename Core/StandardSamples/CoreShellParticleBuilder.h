@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef CORESHELLPARTICLEBUILDER_H
-#define CORESHELLPARTICLEBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_CORESHELLPARTICLEBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_CORESHELLPARTICLEBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class ISample;
 
@@ -39,4 +39,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // CORESHELLPARTICLEBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_CORESHELLPARTICLEBUILDER_H

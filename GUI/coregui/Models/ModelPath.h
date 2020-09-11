@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELPATH_H
-#define MODELPATH_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_MODELPATH_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_MODELPATH_H
 
-#include "ParameterTranslators.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Models/ParameterTranslators.h"
+#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <vector>
 
@@ -39,4 +39,4 @@ BA_CORE_API_ const SessionItem* ancestor(const SessionItem* item, const QString&
 BA_CORE_API_ QString itemPathTranslation(const SessionItem& item, const SessionItem* topItem = 0);
 } // namespace ModelPath
 
-#endif // MODELPATH_H namespace
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_MODELPATH_H

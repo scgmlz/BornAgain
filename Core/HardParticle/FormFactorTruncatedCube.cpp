@@ -12,11 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorTruncatedCube.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "RealParameter.h"
-#include "TruncatedCube.h"
+#include "Core/HardParticle/FormFactorTruncatedCube.h"
+#include "Core/Basics/Exceptions.h"
 
 const PolyhedralTopology FormFactorTruncatedCube::topology = {
     {{{0, 1, 7, 6, 9, 10, 4, 3}, true},
@@ -38,15 +35,20 @@ const PolyhedralTopology FormFactorTruncatedCube::topology = {
 //! Constructor of a truncated cube.
 //! @param length: length of the full cube's edge in nanometers
 //! @param removed_length: removed length from each edge of the cube in nanometers
-FormFactorTruncatedCube::FormFactorTruncatedCube(double length, double removed_length)
-    : FormFactorPolyhedron(), m_length(length), m_removed_length(removed_length)
+FormFactorTruncatedCube::FormFactorTruncatedCube(const std::vector<double> P)
+    : FormFactorPolyhedron({"TruncatedCube",
+                            "class_tooltip",
+                            {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                             {"RemovedLength", "nm", "para_tooltip", 0, +INF, 0}}},
+                           P),
+      m_length(m_P[0]), m_removed_length(m_P[1])
 {
-    setName(BornAgain::FFTruncatedCubeType);
-    registerParameter(BornAgain::Length, &m_length).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::RemovedLength, &m_removed_length)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
     onChange();
+}
+
+FormFactorTruncatedCube::FormFactorTruncatedCube(double length, double removed_length)
+    : FormFactorTruncatedCube(std::vector<double>{length, removed_length})
+{
 }
 
 void FormFactorTruncatedCube::onChange()
@@ -59,7 +61,6 @@ void FormFactorTruncatedCube::onChange()
         ostr << "Check for removed_length <= 0.5*length failed.";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    mP_shape.reset(new TruncatedCube(m_length, m_removed_length));
 
     double a = m_length / 2;
     double b = m_removed_length;

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef ITERATIONINFO_H
-#define ITERATIONINFO_H
+#ifndef BORNAGAIN_CORE_FITTING_ITERATIONINFO_H
+#define BORNAGAIN_CORE_FITTING_ITERATIONINFO_H
 
-#include "Parameters.h"
-#include "WinDllMacros.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Wrap/WinDllMacros.h"
 #include <map>
 #include <string>
 
@@ -46,4 +46,4 @@ private:
     unsigned m_iteration_count;
 };
 
-#endif // ITERATIONINFO_H
+#endif // BORNAGAIN_CORE_FITTING_ITERATIONINFO_H

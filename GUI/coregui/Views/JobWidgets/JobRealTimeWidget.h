@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBREALTIMEWIDGET_H
-#define JOBREALTIMEWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBREALTIMEWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBREALTIMEWIDGET_H
 
-#include "ItemStackPresenter.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemStackPresenter.h"
 
 class JobModel;
 class JobItem;
@@ -44,4 +44,4 @@ private:
     ItemStackPresenter<ParameterTuningWidget>* m_stackedWidget;
 };
 
-#endif // JOBREALTIMEWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBREALTIMEWIDGET_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBMESSAGEPANEL_H
-#define JOBMESSAGEPANEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBMESSAGEPANEL_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBMESSAGEPANEL_H
 
-#include "InfoPanel.h"
+#include "GUI/coregui/Views/CommonWidgets/InfoPanel.h"
 #include <QColor>
 
 class QTextEdit;
@@ -37,4 +37,4 @@ private:
     QTextEdit* m_plainLog;
 };
 
-#endif // JOBMESSAGEPANEL_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBMESSAGEPANEL_H

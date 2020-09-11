@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "Line.h"
-#include "Bin.h"
-#include "Numeric.h"
+#include "Core/Mask/Line.h"
+#include "Core/Binning/Bin.h"
+#include "Fit/TestEngine/Numeric.h"
 
-#include <limits>
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
+#include <limits>
 
 using namespace boost::geometry;
 typedef model::d2::point_xy<double> point_t;

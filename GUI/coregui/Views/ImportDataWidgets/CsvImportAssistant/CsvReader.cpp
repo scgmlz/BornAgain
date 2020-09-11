@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "CsvReader.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvReader.h"
 #include <fstream>
 #include <iostream>
 

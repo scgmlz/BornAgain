@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORTRUNCATEDCUBE_H
-#define FORMFACTORTRUNCATEDCUBE_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDCUBE_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDCUBE_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A cube, with tetrahedral truncation of all corners
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorTruncatedCube : public FormFactorPolyhedron
 {
 public:
+    FormFactorTruncatedCube(const std::vector<double> P);
     FormFactorTruncatedCube(double length, double removed_length);
 
     FormFactorTruncatedCube* clone() const override final
@@ -39,8 +40,8 @@ protected:
 
 private:
     static const PolyhedralTopology topology;
-    double m_length;
-    double m_removed_length;
+    const double& m_length;
+    const double& m_removed_length;
 };
 
-#endif // FORMFACTORTRUNCATEDCUBE_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDCUBE_H

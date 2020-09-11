@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "IAxis.h"
-#include "Exceptions.h"
+#include "Core/Binning/IAxis.h"
+#include "Core/Basics/Exceptions.h"
 
 bool IAxis::equals(const IAxis& other) const
 {

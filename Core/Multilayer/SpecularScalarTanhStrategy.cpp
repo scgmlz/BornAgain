@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SpecularScalarTanhStrategy.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
+#include "Core/Multilayer/SpecularScalarTanhStrategy.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
 #include <Eigen/Dense>
 
 namespace

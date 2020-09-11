@@ -33,7 +33,7 @@ def RunSimulation():
 
     # interference function
     interference = InterferenceFunction2DLattice.createSquare(10.0*nanometer)
-    pdf = FTDecayFunction2DCauchy(300.0*nanometer/2.0/M_PI, 100.0*nanometer/2.0/M_PI)
+    pdf = FTDecayFunction2DCauchy(300.0*nanometer/2.0/M_PI, 100.0*nanometer/2.0/M_PI, 0)
     interference.setDecayFunction(pdf)
     particle_layout1.setInterferenceFunction(interference)
     particle_layout2.setInterferenceFunction(interference)

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPLEX_H
-#define COMPLEX_H
+#ifndef BORNAGAIN_CORE_BASICS_COMPLEX_H
+#define BORNAGAIN_CORE_BASICS_COMPLEX_H
 
 #include <complex>
 
@@ -31,4 +31,4 @@ inline complex_t exp_I(complex_t z)
     return std::exp(complex_t(-z.imag(), z.real()));
 }
 
-#endif // COMPLEX_H
+#endif // BORNAGAIN_CORE_BASICS_COMPLEX_H

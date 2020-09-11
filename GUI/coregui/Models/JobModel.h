@@ -11,10 +11,10 @@
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
 // ************************************************************************** //
-#ifndef JOBMODEL_H
-#define JOBMODEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBMODEL_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_JOBMODEL_H
 
-#include "SessionModel.h"
+#include "GUI/coregui/Models/SessionModel.h"
 class JobQueueData;
 class JobItem;
 class MultiLayerItem;
@@ -65,4 +65,4 @@ private:
     JobQueueData* m_queue_data;
 };
 
-#endif // JOBMODEL_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_JOBMODEL_H

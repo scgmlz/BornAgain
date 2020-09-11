@@ -12,6 +12,6 @@
 //
 // ************************************************************************** //
 
-#include "FitProgressInfo.h"
+#include "GUI/coregui/Views/FitWidgets/FitProgressInfo.h"
 
 FitProgressInfo::FitProgressInfo() : m_chi2(0.0), m_iteration_count(0) {}

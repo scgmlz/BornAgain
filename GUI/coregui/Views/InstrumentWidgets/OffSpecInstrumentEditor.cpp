@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "OffSpecInstrumentEditor.h"
-#include "ColumnResizer.h"
-#include "EnvironmentEditor.h"
-#include "GISASDetectorEditor.h"
-#include "InstrumentItems.h"
-#include "OffSpecBeamEditor.h"
-#include "PolarizationAnalysisEditor.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/InstrumentWidgets/OffSpecInstrumentEditor.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
+#include "GUI/coregui/Views/InstrumentWidgets/EnvironmentEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/GISASDetectorEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/OffSpecBeamEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/PolarizationAnalysisEditor.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QVBoxLayout>
 
 OffSpecInstrumentEditor::OffSpecInstrumentEditor(QWidget* parent)
@@ -52,6 +52,6 @@ void OffSpecInstrumentEditor::subscribeToItem()
 OffSpecInstrumentItem* OffSpecInstrumentEditor::instrumentItem()
 {
     auto result = dynamic_cast<OffSpecInstrumentItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }

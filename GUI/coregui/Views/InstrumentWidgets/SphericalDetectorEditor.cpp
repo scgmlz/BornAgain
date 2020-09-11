@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SphericalDetectorEditor.h"
-#include "ComponentEditor.h"
-#include "SphericalDetectorItem.h"
+#include "GUI/coregui/Views/InstrumentWidgets/SphericalDetectorEditor.h"
+#include "GUI/coregui/Models/SphericalDetectorItem.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QGridLayout>
 
 namespace
@@ -66,6 +66,6 @@ void SphericalDetectorEditor::unsubscribeFromItem()
 SphericalDetectorItem* SphericalDetectorEditor::detectorItem()
 {
     auto result = dynamic_cast<SphericalDetectorItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }

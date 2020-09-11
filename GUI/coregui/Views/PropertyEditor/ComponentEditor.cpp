@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ComponentEditor.h"
-#include "ComponentFlatView.h"
-#include "ComponentTreeView.h"
-#include "ComponentView.h"
-#include "GroupInfoBox.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
+#include "GUI/coregui/Views/InfoWidgets/GroupInfoBox.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentFlatView.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentTreeView.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentView.h"
 #include <QBoxLayout>
 #include <QGroupBox>
 

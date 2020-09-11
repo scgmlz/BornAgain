@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLELAYOUTVIEW_H
-#define PARTICLELAYOUTVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLELAYOUTVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLELAYOUTVIEW_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 class BA_CORE_API_ ParticleLayoutView : public ConnectableView
 {
@@ -27,4 +27,4 @@ public:
     void addView(IView* childView, int row = 0); // to add Particle
 };
 
-#endif // PARTICLELAYOUTVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLELAYOUTVIEW_H

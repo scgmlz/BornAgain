@@ -12,13 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorCone6.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "Pyramid6.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorCone6.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
 
 const PolyhedralTopology FormFactorCone6::topology = {{{{5, 4, 3, 2, 1, 0}, true},
                                                        {{0, 1, 7, 6}, false},
@@ -34,18 +31,21 @@ const PolyhedralTopology FormFactorCone6::topology = {{{{5, 4, 3, 2, 1, 0}, true
 //! @param base_edge: Edge of the regular hexagonal base in nanometers
 //! @param height: height of a truncated pyramid in nanometers
 //! @param alpha: dihedral angle in radians between base and facet
-FormFactorCone6::FormFactorCone6(double base_edge, double height, double alpha)
-    : FormFactorPolyhedron(), m_base_edge(base_edge), m_height(height), m_alpha(alpha)
+FormFactorCone6::FormFactorCone6(const std::vector<double> P)
+    : FormFactorPolyhedron({"Cone6",
+                            "class_tooltip",
+                            {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                           P),
+      m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
-    setName(BornAgain::FFCone6Type);
-    registerParameter(BornAgain::BaseEdge, &m_base_edge)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Alpha, &m_alpha)
-        .setUnit(BornAgain::UnitsRad)
-        .setLimited(0., M_PI_2);
     onChange();
+}
+
+FormFactorCone6::FormFactorCone6(double base_edge, double height, double alpha)
+    : FormFactorCone6(std::vector<double>{base_edge, height, alpha})
+{
 }
 
 IFormFactor* FormFactorCone6::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -72,7 +72,6 @@ void FormFactorCone6::onChange()
         ostr << ", alpha[rad]:" << m_alpha << ")";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    mP_shape.reset(new Pyramid6(m_base_edge, m_height, m_alpha));
 
     double a = m_base_edge;
     double as = a / 2;

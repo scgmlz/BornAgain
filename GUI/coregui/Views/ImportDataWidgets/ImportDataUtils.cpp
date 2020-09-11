@@ -12,18 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "ImportDataUtils.h"
-#include "AppSvc.h"
-#include "AxesItems.h"
-#include "BornAgainNamespace.h"
-#include "CsvImportAssistant.h"
-#include "GUIHelpers.h"
-#include "InstrumentItems.h"
-#include "IntensityDataIOFactory.h"
-#include "IntensityDataItem.h"
-#include "PointwiseAxis.h"
-#include "RealDataItem.h"
-#include "projectmanager.h"
+#include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
+#include "Core/Binning/PointwiseAxis.h"
+#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>

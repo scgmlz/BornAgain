@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "MaterialEditor.h"
-#include "ComponentEditor.h"
-#include "ExternalProperty.h"
-#include "MaterialEditorToolBar.h"
-#include "MaterialItem.h"
-#include "MaterialModel.h"
-#include "SessionDecorationModel.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialEditor.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Models/SessionDecorationModel.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialEditorToolBar.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QListView>
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -51,7 +51,7 @@ MaterialEditor::MaterialEditor(MaterialModel* materialModel, QWidget* parent)
 
 QItemSelectionModel* MaterialEditor::selectionModel()
 {
-    Q_ASSERT(m_listView);
+    ASSERT(m_listView);
     return m_listView->selectionModel();
 }
 

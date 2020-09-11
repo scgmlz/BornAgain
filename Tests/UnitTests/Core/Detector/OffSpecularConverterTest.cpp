@@ -1,30 +1,26 @@
-#include "Beam.h"
-#include "SimpleUnitConverters.h"
-#include "SphericalDetector.h"
-#include "Units.h"
-#include "Vectors3D.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Detector/SphericalDetector.h"
+#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Vector/Vectors3D.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class OffSpecularConverterTest : public ::testing::Test
 {
 public:
     OffSpecularConverterTest();
-    ~OffSpecularConverterTest();
 
 protected:
     SphericalDetector m_detector;
-    Beam m_beam;
     FixedBinAxis m_alpha_i_axis;
+    Beam m_beam;
 };
 
 OffSpecularConverterTest::OffSpecularConverterTest()
     : m_detector(100, 0.0, 5.0 * Units::deg, 70, -2.0 * Units::deg, 1.5),
-      m_alpha_i_axis("alpha_i", 51, 0.0, 7.0 * Units::deg)
+      m_alpha_i_axis("alpha_i", 51, 0.0, 7.0 * Units::deg), m_beam(1.0, 1.0 * Units::deg, 0.0, 1.0)
 {
-    m_beam.setCentralK(1.0, 1.0 * Units::deg, 0.0);
 }
-
-OffSpecularConverterTest::~OffSpecularConverterTest() = default;
 
 TEST_F(OffSpecularConverterTest, OffSpecularConverter)
 {
@@ -66,14 +62,12 @@ TEST_F(OffSpecularConverterTest, OffSpecularConverter)
     auto axis = converter.createConvertedAxis(0, AxesUnits::DEFAULT);
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis.get()));
     EXPECT_EQ(axis->size(), converter.axisSize(0));
-    EXPECT_EQ(axis->getName(), converter.axisName(0));
     EXPECT_EQ(axis->getMin(), converter.calculateMin(0, AxesUnits::DEFAULT));
     EXPECT_EQ(axis->getMax(), converter.calculateMax(0, AxesUnits::DEFAULT));
 
     auto axis2 = converter.createConvertedAxis(1, AxesUnits::RADIANS);
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis2.get()));
     EXPECT_EQ(axis2->size(), converter.axisSize(1));
-    EXPECT_EQ(axis2->getName(), converter.axisName(1, AxesUnits::RADIANS));
     EXPECT_EQ(axis2->getMin(), converter.calculateMin(1, AxesUnits::RADIANS));
     EXPECT_EQ(axis2->getMax(), converter.calculateMax(1, AxesUnits::RADIANS));
 

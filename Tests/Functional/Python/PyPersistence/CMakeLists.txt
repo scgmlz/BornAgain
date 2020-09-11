@@ -21,7 +21,7 @@ function(test_example example tolerance)
     set(example_mod ${OUTPUT_DIR}/${EXAMPLE_NAME}_mod.py)
     configure_file(example_template.py ${example_mod} @ONLY)
 
-    add_test(${test_name} ${Python_EXECUTABLE} "-B" "${example_mod}")
+    add_test(${test_name} ${Python3_EXECUTABLE} "-B" "${example_mod}")
 endfunction()
 
 test_example("simulation/ex01_BasicParticles/CylindersAndPrisms" 2e-10)

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef BOX_H
-#define BOX_H
+#ifndef BORNAGAIN_CORE_SHAPES_BOX_H
+#define BORNAGAIN_CORE_SHAPES_BOX_H
 
-#include "IShape.h"
+#include "Core/Shapes/IShape.h"
 
 class Box : public IShape
 {
@@ -24,4 +24,4 @@ public:
     ~Box();
 };
 
-#endif // BOX_H
+#endif // BORNAGAIN_CORE_SHAPES_BOX_H

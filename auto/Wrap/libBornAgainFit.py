@@ -1837,241 +1837,6 @@ class Parameters(object):
 # Register Parameters in _libBornAgainFit:
 _libBornAgainFit.Parameters_swigregister(Parameters)
 
-class IMinimizer(object):
-    r"""
-
-
-    Pure virtual interface for all kind minimizers.
-
-    C++ includes: IMinimizer.h
-
-    """
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-
-    def __init__(self, *args, **kwargs):
-        raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    __swig_destroy__ = _libBornAgainFit.delete_IMinimizer
-
-    def minimizerName(self):
-        r"""
-        minimizerName(IMinimizer self) -> std::string
-        virtual std::string IMinimizer::minimizerName() const =0
-
-        return name of the minimizer 
-
-        """
-        return _libBornAgainFit.IMinimizer_minimizerName(self)
-
-    def algorithmName(self):
-        r"""
-        algorithmName(IMinimizer self) -> std::string
-        virtual std::string IMinimizer::algorithmName() const =0
-
-        return name of the minimization algorithm 
-
-        """
-        return _libBornAgainFit.IMinimizer_algorithmName(self)
-
-    def minimize_scalar(self, arg2, arg3):
-        r"""
-        minimize_scalar(IMinimizer self, fcn_scalar_t arg2, Parameters arg3) -> MinimizerResult
-        Fit::MinimizerResult IMinimizer::minimize_scalar(fcn_scalar_t, Fit::Parameters)
-
-        run minimization 
-
-        """
-        return _libBornAgainFit.IMinimizer_minimize_scalar(self, arg2, arg3)
-
-    def minimize_residual(self, arg2, arg3):
-        r"""
-        minimize_residual(IMinimizer self, fcn_residual_t arg2, Parameters arg3) -> MinimizerResult
-        Fit::MinimizerResult IMinimizer::minimize_residual(fcn_residual_t, Fit::Parameters)
-
-        """
-        return _libBornAgainFit.IMinimizer_minimize_residual(self, arg2, arg3)
-
-    def clear(self):
-        r"""
-        clear(IMinimizer self)
-        virtual void IMinimizer::clear()
-
-        clear resources (parameters) for consecutives minimizations 
-
-        """
-        return _libBornAgainFit.IMinimizer_clear(self)
-
-    def minValue(self):
-        r"""
-        minValue(IMinimizer self) -> double
-        double IMinimizer::minValue() const
-
-        Returns minimum function value. 
-
-        """
-        return _libBornAgainFit.IMinimizer_minValue(self)
-
-    def setOptions(self, options):
-        r"""
-        setOptions(IMinimizer self, std::string const & options)
-        void IMinimizer::setOptions(const std::string &options)
-
-        Sets option string to the minimizer. 
-
-        """
-        return _libBornAgainFit.IMinimizer_setOptions(self, options)
-
-# Register IMinimizer in _libBornAgainFit:
-_libBornAgainFit.IMinimizer_swigregister(IMinimizer)
-
-class MinimizerCatalogue(object):
-    r"""
-
-
-    Hard-coded information about all minimizers available.
-
-    C++ includes: MinimizerCatalogue.h
-
-    """
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    def __init__(self):
-        r"""
-        __init__(MinimizerCatalogue self) -> MinimizerCatalogue
-        MinimizerCatalogue::MinimizerCatalogue()
-
-        """
-        _libBornAgainFit.MinimizerCatalogue_swiginit(self, _libBornAgainFit.new_MinimizerCatalogue())
-
-    def toString(self):
-        r"""
-        toString(MinimizerCatalogue self) -> std::string
-        std::string MinimizerCatalogue::toString() const
-
-        Returns multiline string representing catalogue content. 
-
-        """
-        return _libBornAgainFit.MinimizerCatalogue_toString(self)
-
-    def minimizerNames(self):
-        r"""
-        minimizerNames(MinimizerCatalogue self) -> vector_string_t
-        std::vector< std::string > MinimizerCatalogue::minimizerNames() const
-
-        """
-        return _libBornAgainFit.MinimizerCatalogue_minimizerNames(self)
-
-    def algorithmNames(self, minimizerName):
-        r"""
-        algorithmNames(MinimizerCatalogue self, std::string const & minimizerName) -> vector_string_t
-        std::vector< std::string > MinimizerCatalogue::algorithmNames(const std::string &minimizerName) const
-
-        Returns list of algorithms defined for the minimizer with a given name. 
-
-        """
-        return _libBornAgainFit.MinimizerCatalogue_algorithmNames(self, minimizerName)
-
-    def algorithmDescriptions(self, minimizerName):
-        r"""
-        algorithmDescriptions(MinimizerCatalogue self, std::string const & minimizerName) -> vector_string_t
-        std::vector< std::string > MinimizerCatalogue::algorithmDescriptions(const std::string &minimizerName) const
-
-        Returns list of algorithm's descriptions for the minimizer with a given name . 
-
-        """
-        return _libBornAgainFit.MinimizerCatalogue_algorithmDescriptions(self, minimizerName)
-
-    def minimizerInfo(self, minimizerName):
-        r"""
-        minimizerInfo(MinimizerCatalogue self, std::string const & minimizerName) -> MinimizerInfo const &
-        const MinimizerInfo & MinimizerCatalogue::minimizerInfo(const std::string &minimizerName) const
-
-        Returns info for minimizer with given name. 
-
-        """
-        return _libBornAgainFit.MinimizerCatalogue_minimizerInfo(self, minimizerName)
-    __swig_destroy__ = _libBornAgainFit.delete_MinimizerCatalogue
-
-# Register MinimizerCatalogue in _libBornAgainFit:
-_libBornAgainFit.MinimizerCatalogue_swigregister(MinimizerCatalogue)
-
-class MinimizerFactory(object):
-    r"""
-
-
-    Factory to create minimizers.
-
-    C++ includes: MinimizerFactory.h
-
-    """
-
-    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
-    __repr__ = _swig_repr
-
-    @staticmethod
-    def createMinimizer(*args):
-        r"""createMinimizer(std::string const & minimizerName, std::string const & algorithmType="", std::string const & optionString="") -> IMinimizer"""
-        return _libBornAgainFit.MinimizerFactory_createMinimizer(*args)
-
-    @staticmethod
-    def printCatalogue():
-        r"""printCatalogue()"""
-        return _libBornAgainFit.MinimizerFactory_printCatalogue()
-
-    @staticmethod
-    def catalogueToString():
-        r"""catalogueToString() -> std::string"""
-        return _libBornAgainFit.MinimizerFactory_catalogueToString()
-
-    @staticmethod
-    def catalogueDetailsToString():
-        r"""catalogueDetailsToString() -> std::string"""
-        return _libBornAgainFit.MinimizerFactory_catalogueDetailsToString()
-
-    @staticmethod
-    def catalogue():
-        r"""catalogue() -> MinimizerCatalogue"""
-        return _libBornAgainFit.MinimizerFactory_catalogue()
-
-    def __init__(self):
-        r"""
-        __init__(MinimizerFactory self) -> MinimizerFactory
-
-
-        Factory to create minimizers.
-
-        C++ includes: MinimizerFactory.h
-
-        """
-        _libBornAgainFit.MinimizerFactory_swiginit(self, _libBornAgainFit.new_MinimizerFactory())
-    __swig_destroy__ = _libBornAgainFit.delete_MinimizerFactory
-
-# Register MinimizerFactory in _libBornAgainFit:
-_libBornAgainFit.MinimizerFactory_swigregister(MinimizerFactory)
-
-def MinimizerFactory_createMinimizer(*args):
-    r"""MinimizerFactory_createMinimizer(std::string const & minimizerName, std::string const & algorithmType="", std::string const & optionString="") -> IMinimizer"""
-    return _libBornAgainFit.MinimizerFactory_createMinimizer(*args)
-
-def MinimizerFactory_printCatalogue():
-    r"""MinimizerFactory_printCatalogue()"""
-    return _libBornAgainFit.MinimizerFactory_printCatalogue()
-
-def MinimizerFactory_catalogueToString():
-    r"""MinimizerFactory_catalogueToString() -> std::string"""
-    return _libBornAgainFit.MinimizerFactory_catalogueToString()
-
-def MinimizerFactory_catalogueDetailsToString():
-    r"""MinimizerFactory_catalogueDetailsToString() -> std::string"""
-    return _libBornAgainFit.MinimizerFactory_catalogueDetailsToString()
-
-def MinimizerFactory_catalogue():
-    r"""MinimizerFactory_catalogue() -> MinimizerCatalogue"""
-    return _libBornAgainFit.MinimizerFactory_catalogue()
-
 class PyCallback(object):
     r"""
 
@@ -2315,6 +2080,241 @@ class Minimizer(object):
 
 # Register Minimizer in _libBornAgainFit:
 _libBornAgainFit.Minimizer_swigregister(Minimizer)
+
+class IMinimizer(object):
+    r"""
+
+
+    Pure virtual interface for all kind minimizers.
+
+    C++ includes: IMinimizer.h
+
+    """
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _libBornAgainFit.delete_IMinimizer
+
+    def minimizerName(self):
+        r"""
+        minimizerName(IMinimizer self) -> std::string
+        virtual std::string IMinimizer::minimizerName() const =0
+
+        return name of the minimizer 
+
+        """
+        return _libBornAgainFit.IMinimizer_minimizerName(self)
+
+    def algorithmName(self):
+        r"""
+        algorithmName(IMinimizer self) -> std::string
+        virtual std::string IMinimizer::algorithmName() const =0
+
+        return name of the minimization algorithm 
+
+        """
+        return _libBornAgainFit.IMinimizer_algorithmName(self)
+
+    def minimize_scalar(self, arg2, arg3):
+        r"""
+        minimize_scalar(IMinimizer self, fcn_scalar_t arg2, Parameters arg3) -> MinimizerResult
+        Fit::MinimizerResult IMinimizer::minimize_scalar(fcn_scalar_t, Fit::Parameters)
+
+        run minimization 
+
+        """
+        return _libBornAgainFit.IMinimizer_minimize_scalar(self, arg2, arg3)
+
+    def minimize_residual(self, arg2, arg3):
+        r"""
+        minimize_residual(IMinimizer self, fcn_residual_t arg2, Parameters arg3) -> MinimizerResult
+        Fit::MinimizerResult IMinimizer::minimize_residual(fcn_residual_t, Fit::Parameters)
+
+        """
+        return _libBornAgainFit.IMinimizer_minimize_residual(self, arg2, arg3)
+
+    def clear(self):
+        r"""
+        clear(IMinimizer self)
+        virtual void IMinimizer::clear()
+
+        clear resources (parameters) for consecutives minimizations 
+
+        """
+        return _libBornAgainFit.IMinimizer_clear(self)
+
+    def minValue(self):
+        r"""
+        minValue(IMinimizer self) -> double
+        double IMinimizer::minValue() const
+
+        Returns minimum function value. 
+
+        """
+        return _libBornAgainFit.IMinimizer_minValue(self)
+
+    def setOptions(self, options):
+        r"""
+        setOptions(IMinimizer self, std::string const & options)
+        void IMinimizer::setOptions(const std::string &options)
+
+        Sets option string to the minimizer. 
+
+        """
+        return _libBornAgainFit.IMinimizer_setOptions(self, options)
+
+# Register IMinimizer in _libBornAgainFit:
+_libBornAgainFit.IMinimizer_swigregister(IMinimizer)
+
+class MinimizerCatalog(object):
+    r"""
+
+
+    Hard-coded information about all minimizers available.
+
+    C++ includes: MinimizerCatalog.h
+
+    """
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self):
+        r"""
+        __init__(MinimizerCatalog self) -> MinimizerCatalog
+        MinimizerCatalog::MinimizerCatalog()
+
+        """
+        _libBornAgainFit.MinimizerCatalog_swiginit(self, _libBornAgainFit.new_MinimizerCatalog())
+
+    def toString(self):
+        r"""
+        toString(MinimizerCatalog self) -> std::string
+        std::string MinimizerCatalog::toString() const
+
+        Returns multiline string representing catalog content. 
+
+        """
+        return _libBornAgainFit.MinimizerCatalog_toString(self)
+
+    def minimizerNames(self):
+        r"""
+        minimizerNames(MinimizerCatalog self) -> vector_string_t
+        std::vector< std::string > MinimizerCatalog::minimizerNames() const
+
+        """
+        return _libBornAgainFit.MinimizerCatalog_minimizerNames(self)
+
+    def algorithmNames(self, minimizerName):
+        r"""
+        algorithmNames(MinimizerCatalog self, std::string const & minimizerName) -> vector_string_t
+        std::vector< std::string > MinimizerCatalog::algorithmNames(const std::string &minimizerName) const
+
+        Returns list of algorithms defined for the minimizer with a given name. 
+
+        """
+        return _libBornAgainFit.MinimizerCatalog_algorithmNames(self, minimizerName)
+
+    def algorithmDescriptions(self, minimizerName):
+        r"""
+        algorithmDescriptions(MinimizerCatalog self, std::string const & minimizerName) -> vector_string_t
+        std::vector< std::string > MinimizerCatalog::algorithmDescriptions(const std::string &minimizerName) const
+
+        Returns list of algorithm's descriptions for the minimizer with a given name . 
+
+        """
+        return _libBornAgainFit.MinimizerCatalog_algorithmDescriptions(self, minimizerName)
+
+    def minimizerInfo(self, minimizerName):
+        r"""
+        minimizerInfo(MinimizerCatalog self, std::string const & minimizerName) -> MinimizerInfo const &
+        const MinimizerInfo & MinimizerCatalog::minimizerInfo(const std::string &minimizerName) const
+
+        Returns info for minimizer with given name. 
+
+        """
+        return _libBornAgainFit.MinimizerCatalog_minimizerInfo(self, minimizerName)
+    __swig_destroy__ = _libBornAgainFit.delete_MinimizerCatalog
+
+# Register MinimizerCatalog in _libBornAgainFit:
+_libBornAgainFit.MinimizerCatalog_swigregister(MinimizerCatalog)
+
+class MinimizerFactory(object):
+    r"""
+
+
+    Factory to create minimizers.
+
+    C++ includes: MinimizerFactory.h
+
+    """
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    @staticmethod
+    def createMinimizer(*args):
+        r"""createMinimizer(std::string const & minimizerName, std::string const & algorithmType="", std::string const & optionString="") -> IMinimizer"""
+        return _libBornAgainFit.MinimizerFactory_createMinimizer(*args)
+
+    @staticmethod
+    def printCatalog():
+        r"""printCatalog()"""
+        return _libBornAgainFit.MinimizerFactory_printCatalog()
+
+    @staticmethod
+    def catalogToString():
+        r"""catalogToString() -> std::string"""
+        return _libBornAgainFit.MinimizerFactory_catalogToString()
+
+    @staticmethod
+    def catalogDetailsToString():
+        r"""catalogDetailsToString() -> std::string"""
+        return _libBornAgainFit.MinimizerFactory_catalogDetailsToString()
+
+    @staticmethod
+    def catalog():
+        r"""catalog() -> MinimizerCatalog"""
+        return _libBornAgainFit.MinimizerFactory_catalog()
+
+    def __init__(self):
+        r"""
+        __init__(MinimizerFactory self) -> MinimizerFactory
+
+
+        Factory to create minimizers.
+
+        C++ includes: MinimizerFactory.h
+
+        """
+        _libBornAgainFit.MinimizerFactory_swiginit(self, _libBornAgainFit.new_MinimizerFactory())
+    __swig_destroy__ = _libBornAgainFit.delete_MinimizerFactory
+
+# Register MinimizerFactory in _libBornAgainFit:
+_libBornAgainFit.MinimizerFactory_swigregister(MinimizerFactory)
+
+def MinimizerFactory_createMinimizer(*args):
+    r"""MinimizerFactory_createMinimizer(std::string const & minimizerName, std::string const & algorithmType="", std::string const & optionString="") -> IMinimizer"""
+    return _libBornAgainFit.MinimizerFactory_createMinimizer(*args)
+
+def MinimizerFactory_printCatalog():
+    r"""MinimizerFactory_printCatalog()"""
+    return _libBornAgainFit.MinimizerFactory_printCatalog()
+
+def MinimizerFactory_catalogToString():
+    r"""MinimizerFactory_catalogToString() -> std::string"""
+    return _libBornAgainFit.MinimizerFactory_catalogToString()
+
+def MinimizerFactory_catalogDetailsToString():
+    r"""MinimizerFactory_catalogDetailsToString() -> std::string"""
+    return _libBornAgainFit.MinimizerFactory_catalogDetailsToString()
+
+def MinimizerFactory_catalog():
+    r"""MinimizerFactory_catalog() -> MinimizerCatalog"""
+    return _libBornAgainFit.MinimizerFactory_catalog()
 
 
 class ParametersIterator(object):

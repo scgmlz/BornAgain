@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef CUSTOMMORPHOLOGYBUILDER_H
-#define CUSTOMMORPHOLOGYBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_CUSTOMMORPHOLOGYBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_CUSTOMMORPHOLOGYBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class ISample;
 
@@ -29,4 +29,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // CUSTOMMORPHOLOGYBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_CUSTOMMORPHOLOGYBUILDER_H

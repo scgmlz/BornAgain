@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERINTERFACE_H
-#define LAYERINTERFACE_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_LAYERINTERFACE_H
+#define BORNAGAIN_CORE_MULTILAYER_LAYERINTERFACE_H
 
-#include "ISample.h"
+#include "Core/Scattering/ISample.h"
 #include <memory>
 
 class LayerRoughness;
@@ -75,4 +75,4 @@ inline const Layer* LayerInterface::bottomLayer() const
     return m_bottomLayer;
 }
 
-#endif // LAYERINTERFACE_H
+#endif // BORNAGAIN_CORE_MULTILAYER_LAYERINTERFACE_H

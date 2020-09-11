@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentEditorWidget.h"
-#include "AdjustingScrollArea.h"
-#include "DetectorItems.h"
-#include "InstrumentItems.h"
-#include "InstrumentPresenter.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentEditorWidget.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Views/CommonWidgets/AdjustingScrollArea.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentPresenter.h"
 #include <QBoxLayout>
 #include <QGroupBox>
 #include <QLabel>

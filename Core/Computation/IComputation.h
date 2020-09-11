@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef ICOMPUTATION_H
-#define ICOMPUTATION_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_ICOMPUTATION_H
+#define BORNAGAIN_CORE_COMPUTATION_ICOMPUTATION_H
 
-#include "ComputationStatus.h"
-#include "SimulationOptions.h"
+#include "Core/Computation/ComputationStatus.h"
+#include "Core/Parametrization/SimulationOptions.h"
 #include <memory>
 #include <vector>
 
@@ -53,4 +53,4 @@ private:
     virtual void runProtected() = 0;
 };
 
-#endif // ICOMPUTATION_H
+#endif // BORNAGAIN_CORE_COMPUTATION_ICOMPUTATION_H

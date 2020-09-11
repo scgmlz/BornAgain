@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTENSITYDATAPROJECTIONSWIDGET_H
-#define INTENSITYDATAPROJECTIONSWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAPROJECTIONSWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAPROJECTIONSWIDGET_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class ProjectionsEditor;
 class IntensityDataItem;
@@ -44,4 +44,4 @@ private:
     ProjectionsEditor* m_projectionsEditor;
 };
 
-#endif // INTENSITYDATAPROJECTIONSWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAPROJECTIONSWIDGET_H

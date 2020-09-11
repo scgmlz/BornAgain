@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef APPLICATIONMODELS_H
-#define APPLICATIONMODELS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_APPLICATIONMODELS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_APPLICATIONMODELS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class SessionModel;
@@ -80,4 +80,4 @@ private:
     MaterialPropertyController* m_materialPropertyController;
 };
 
-#endif // APPLICATIONMODELS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_APPLICATIONMODELS_H

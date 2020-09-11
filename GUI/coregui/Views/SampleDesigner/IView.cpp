@@ -12,9 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "IView.h"
-#include "ModelMapper.h"
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Views/SampleDesigner/IView.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 #include <QString>
 
 IView::IView(QGraphicsItem* parent) : QGraphicsObject(parent), m_item(0)
@@ -31,8 +30,8 @@ IView::~IView()
 
 void IView::setParameterizedItem(SessionItem* item)
 {
-    Q_ASSERT(item);
-    Q_ASSERT(m_item == nullptr);
+    ASSERT(item);
+    ASSERT(m_item == nullptr);
 
     if (toolTip().isEmpty())
         setToolTip(item->toolTip());
@@ -75,7 +74,7 @@ void IView::update_appearance()
 
 void IView::onPropertyChange(const QString& propertyName)
 {
-    Q_ASSERT(m_item);
+    ASSERT(m_item);
     if (propertyName == SessionGraphicsItem::P_XPOS) {
         setX(m_item->getItemValue(SessionGraphicsItem::P_XPOS).toReal());
     } else if (propertyName == SessionGraphicsItem::P_YPOS) {

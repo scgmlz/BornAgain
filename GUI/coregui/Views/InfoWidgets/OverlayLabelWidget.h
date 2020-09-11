@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OVERLAYLABELWIDGET_H
-#define OVERLAYLABELWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELWIDGET_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QRect>
 #include <QString>
 #include <QWidget>
@@ -42,4 +42,4 @@ private:
     QRect m_bounding_rect;
 };
 
-#endif // OVERLAYLABELWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELWIDGET_H

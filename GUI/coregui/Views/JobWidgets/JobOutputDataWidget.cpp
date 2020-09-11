@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "JobOutputDataWidget.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "JobResultsPresenter.h"
-#include "JobViewFlags.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/JobWidgets/JobOutputDataWidget.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/JobWidgets/JobResultsPresenter.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QVBoxLayout>
 
 namespace

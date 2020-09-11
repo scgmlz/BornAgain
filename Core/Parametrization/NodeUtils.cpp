@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "NodeUtils.h"
-#include "Exceptions.h"
-#include "INode.h"
-#include "IterationStrategy.h"
-#include "NodeIterator.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
+#include "Core/Parametrization/NodeUtils.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/INode.h"
+#include "Core/Parametrization/IterationStrategy.h"
+#include "Core/Parametrization/NodeIterator.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
 #include <algorithm>
 #include <functional>
 #include <iterator>

@@ -70,7 +70,7 @@ def get_simulation(scan_size=500):
     """
     Returns a specular simulation with beam and detector defined.
     """
-    footprint = ba.FootprintFactorSquare(beam_sample_ratio)
+    footprint = ba.FootprintSquare(beam_sample_ratio)
     alpha_distr = ba.RangedDistributionGaussian(n_points, n_sig)
 
     scan = ba.AngularSpecScan(wavelength, scan_size, alpha_i_min, alpha_i_max)

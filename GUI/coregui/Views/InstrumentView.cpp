@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentView.h"
-#include "ExtendedDetectorDialog.h"
-#include "InstrumentEditorWidget.h"
-#include "InstrumentModel.h"
-#include "InstrumentSelectorWidget.h"
-#include "InstrumentViewActions.h"
-#include "InstrumentViewToolBar.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/InstrumentView.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Views/InstrumentWidgets/ExtendedDetectorDialog.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentEditorWidget.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentSelectorWidget.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentViewActions.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentViewToolBar.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QBoxLayout>
 
 InstrumentView::InstrumentView(MainWindow* mainWindow)

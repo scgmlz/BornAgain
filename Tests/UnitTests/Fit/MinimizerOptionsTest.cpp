@@ -1,14 +1,10 @@
-#include "MinimizerOptions.h"
-#include "google_test.h"
+#include "Fit/Minimizer/MinimizerOptions.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <exception>
 
 class MinimizerOptionsTest : public ::testing::Test
 {
-protected:
-    ~MinimizerOptionsTest();
 };
-
-MinimizerOptionsTest::~MinimizerOptionsTest() = default;
 
 TEST_F(MinimizerOptionsTest, toOptionString)
 {

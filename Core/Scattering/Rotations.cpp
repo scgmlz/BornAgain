@@ -12,9 +12,18 @@
 //
 // ************************************************************************** //
 
-#include "Rotations.h"
-#include "BornAgainNamespace.h"
-#include "RealParameter.h"
+#include "Core/Scattering/Rotations.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Vector/Transform3D.h"
+
+// ************************************************************************** //
+// interface IRotation
+// ************************************************************************** //
+
+IRotation::IRotation(const NodeMeta& meta, const std::vector<double>& PValues)
+    : INode(meta, PValues)
+{
+}
 
 IRotation* IRotation::createRotation(const Transform3D& transform)
 {
@@ -38,7 +47,7 @@ IRotation* IRotation::createRotation(const Transform3D& transform)
         return new RotationEuler(alpha, beta, gamma);
     }
     }
-    throw std::runtime_error("IRotation::createRotation error: unknown rotation type.");
+    ASSERT(0); // impossible case
 }
 
 IRotation* IRotation::createIdentity()
@@ -46,9 +55,19 @@ IRotation* IRotation::createIdentity()
     return new RotationZ(0.0);
 }
 
+kvector_t IRotation::transformed(const kvector_t& v) const
+{
+    return getTransform3D().transformed(v);
+}
+
 bool IRotation::isIdentity() const
 {
     return getTransform3D().isIdentity();
+}
+
+bool IRotation::zInvariant() const
+{
+    return getTransform3D().isZRotation();
 }
 
 //! Returns concatenated rotation (first right, then left).
@@ -61,78 +80,103 @@ IRotation* createProduct(const IRotation& left, const IRotation& right)
     return p_result;
 }
 
-bool IsZRotation(const IRotation& rot)
-{
-    auto transform = rot.getTransform3D();
-    return transform.isZRotation();
-}
+// ************************************************************************** //
+// class IdentityRotation
+// ************************************************************************** //
 
-// --- IdentityRotation -------------------------------------------------------
+IdentityRotation::IdentityRotation()
+    : IRotation({"IdentityRotation", "Identity rotation, does nothing", {}}, {})
+{
+}
 
 Transform3D IdentityRotation::getTransform3D() const
 {
     return Transform3D::createIdentity();
 }
 
-// --- RotationX --------------------------------------------------------------
+// ************************************************************************** //
+// class RotationX
+// ************************************************************************** //
 
 //! Constructor of rotation around x-axis
 //! @param angle: rotation angle around x-axis in radians
-RotationX::RotationX(double angle) : m_angle(angle)
+RotationX::RotationX(const std::vector<double> P)
+    : IRotation(
+        {"XRotation", "class_tooltip", {{"Angle", "rad", "Angle around x axis", -INF, +INF, 0}}},
+        P),
+      m_angle(m_P[0])
 {
-    setName(BornAgain::XRotationType);
-    registerParameter(BornAgain::Angle, &m_angle).setUnit(BornAgain::UnitsRad);
 }
+
+RotationX::RotationX(double angle) : RotationX(std::vector<double>{angle}) {}
 
 Transform3D RotationX::getTransform3D() const
 {
     return Transform3D::createRotateX(m_angle);
 }
 
-// --- RotationY --------------------------------------------------------------
+// ************************************************************************** //
+// class RotationY
+// ************************************************************************** //
 
 //! Constructor of rotation around y-axis
 //! @param angle: rotation angle around y-axis in radians
-RotationY::RotationY(double angle) : m_angle(angle)
+RotationY::RotationY(const std::vector<double> P)
+    : IRotation(
+        {"YRotation", "class_tooltip", {{"Angle", "rad", "Angle around y axis", -INF, +INF, 0}}},
+        P),
+      m_angle(m_P[0])
 {
-    setName(BornAgain::YRotationType);
-    registerParameter(BornAgain::Angle, &m_angle).setUnit(BornAgain::UnitsRad);
 }
+
+RotationY::RotationY(double angle) : RotationY(std::vector<double>{angle}) {}
 
 Transform3D RotationY::getTransform3D() const
 {
     return Transform3D::createRotateY(m_angle);
 }
 
+// ************************************************************************** //
+// class RotationZ
+// ************************************************************************** //
+
 // --- RotationZ --------------------------------------------------------------
 
 //! Constructor of rotation around z-axis
 //! @param angle: rotation angle around z-axis in radians
-RotationZ::RotationZ(double angle) : m_angle(angle)
+RotationZ::RotationZ(const std::vector<double> P)
+    : IRotation(
+        {"ZRotation", "class_tooltip", {{"Angle", "rad", "Angle around z axis", -INF, +INF, 0}}},
+        P),
+      m_angle(m_P[0])
 {
-    setName(BornAgain::ZRotationType);
-    registerParameter(BornAgain::Angle, &m_angle).setUnit(BornAgain::UnitsRad);
 }
+
+RotationZ::RotationZ(double angle) : RotationZ(std::vector<double>{angle}) {}
 
 Transform3D RotationZ::getTransform3D() const
 {
     return Transform3D::createRotateZ(m_angle);
 }
 
-// --- RotationEuler ----------------------------------------------------------
+// ************************************************************************** //
+// class RotationEuler
+// ************************************************************************** //
 
-//! Constructor of Euler rotation (sequence of three rotations following Euler angles
-//! notation z-x'-z').
-//! @param alpha: first Euler angle in radians
-//! @param beta: second Euler angle in radians
-//! @param gamma: third Euler angle in radians
-RotationEuler::RotationEuler(double alpha, double beta, double gamma)
-    : m_alpha(alpha), m_beta(beta), m_gamma(gamma)
+RotationEuler::RotationEuler(const std::vector<double> P)
+    : IRotation({"EulerRotation",
+                 "Sequence of three rotations around z-x'-z''",
+                 {{"Alpha", "rad", "First Euler angle, rotation around z axis", -INF, +INF, 0},
+                  {"Beta", "rad", "Second Euler angle, rotation around x' axis", -INF, +INF, 0},
+                  {"Gamma", "rad", "Third Euler angle, rotation around z'' axis", -INF, +INF, 0}}},
+                P),
+      m_alpha(m_P[0]), m_beta(m_P[1]), m_gamma(m_P[2])
 {
-    setName(BornAgain::EulerRotationType);
-    registerParameter(BornAgain::Alpha, &m_alpha).setUnit(BornAgain::UnitsRad);
-    registerParameter(BornAgain::Beta, &m_beta).setUnit(BornAgain::UnitsRad);
-    registerParameter(BornAgain::Gamma, &m_gamma).setUnit(BornAgain::UnitsRad);
+}
+
+RotationEuler::RotationEuler(double alpha, double beta, double gamma)
+    : RotationEuler(std::vector<double>{alpha, beta, gamma})
+{
 }
 
 IRotation* RotationEuler::createInverse() const

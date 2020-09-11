@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef DEPTHPROBECOMPUTATIONTERM_H
-#define DEPTHPROBECOMPUTATIONTERM_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATIONTERM_H
+#define BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATIONTERM_H
 
 #include <memory>
 
@@ -37,4 +37,4 @@ private:
     std::unique_ptr<DelayedProgressCounter> mP_progress_counter;
 };
 
-#endif // DEPTHPROBECOMPUTATIONTERM_H
+#endif // BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATIONTERM_H

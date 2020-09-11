@@ -84,7 +84,7 @@ if __name__ == '__main__':
     beam_sample_ratio = 0.01  # beam-to-sample size ratio
     result_with_fp = run_simulation(
         get_simulation(
-            footprint=ba.FootprintFactorSquare(beam_sample_ratio)
+            footprint=ba.FootprintSquare(beam_sample_ratio)
         )
     )
     result_without_fp = run_simulation(get_simulation(footprint=None))

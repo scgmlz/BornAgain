@@ -12,18 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "RipplesBuilder.h"
-#include "BornAgainNamespace.h"
-#include "FormFactorRipple1.h"
-#include "FormFactorRipple2.h"
-#include "InterferenceFunctionRadialParaCrystal.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleLayout.h"
-#include "RealParameter.h"
-#include "Units.h"
+#include "Core/StandardSamples/RipplesBuilder.h"
+#include "Core/Aggregate/InterferenceFunctionRadialParaCrystal.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorCosineRipple.h"
+#include "Core/HardParticle/FormFactorSawtoothRipple.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/Particle.h"
 
 CosineRippleBuilder::CosineRippleBuilder() {}
 
@@ -36,7 +35,7 @@ MultiLayer* CosineRippleBuilder::buildSample() const
     Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
 
     Layer air_layer(air_material);
-    FormFactorRipple1Box ff_ripple1(100.0, 20.0, 4.0);
+    FormFactorCosineRippleBox ff_ripple1(100.0, 20.0, 4.0);
     Particle ripple(particle_material, ff_ripple1);
 
     ParticleLayout particle_layout;
@@ -60,7 +59,7 @@ MultiLayer* CosineRippleBuilder::buildSample() const
 
 TriangularRippleBuilder::TriangularRippleBuilder() : m_d(0.0 * Units::nanometer)
 {
-    init_parameters();
+    registerParameter("asymetry", &m_d);
 }
 
 MultiLayer* TriangularRippleBuilder::buildSample() const
@@ -72,7 +71,7 @@ MultiLayer* TriangularRippleBuilder::buildSample() const
     Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
 
     Layer air_layer(air_material);
-    FormFactorRipple2Box ff_ripple2(100.0, 20.0, 4.0, m_d);
+    FormFactorSawtoothRippleBox ff_ripple2(100.0, 20.0, 4.0, m_d);
     Particle ripple(particle_material, ff_ripple2);
 
     ParticleLayout particle_layout;
@@ -90,11 +89,6 @@ MultiLayer* TriangularRippleBuilder::buildSample() const
     p_multi_layer->addLayer(substrate_layer);
 
     return p_multi_layer;
-}
-
-void TriangularRippleBuilder::init_parameters()
-{
-    registerParameter("asymetry", &m_d);
 }
 
 // ----------------------------------------------------------------------------

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTICOMBOPROPERTYEDITOR_H
-#define MULTICOMBOPROPERTYEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_MULTICOMBOPROPERTYEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_MULTICOMBOPROPERTYEDITOR_H
 
-#include "CustomEditors.h"
+#include "GUI/coregui/Views/PropertyEditor/CustomEditors.h"
 #include <QStyledItemDelegate>
 #include <memory>
 
@@ -66,4 +66,4 @@ public:
                const QModelIndex& index) const;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_MULTICOMBOPROPERTYEDITOR_H

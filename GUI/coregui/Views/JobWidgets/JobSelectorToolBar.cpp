@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "JobSelectorToolBar.h"
-#include "JobSelectorActions.h"
+#include "GUI/coregui/Views/JobWidgets/JobSelectorToolBar.h"
+#include "GUI/coregui/Views/JobWidgets/JobSelectorActions.h"
 #include <QToolButton>
 
 JobSelectorToolBar::JobSelectorToolBar(JobSelectorActions* actions, QWidget* parent)
@@ -21,7 +21,7 @@ JobSelectorToolBar::JobSelectorToolBar(JobSelectorActions* actions, QWidget* par
 {
     setMinimumSize(minimumHeight(), minimumHeight());
 
-    m_runJobButton->setText(QStringLiteral("Run"));
+    m_runJobButton->setText("Run");
     m_runJobButton->setIcon(QIcon(":/images/play.svg"));
     m_runJobButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     m_runJobButton->setToolTip("Run currently selected job");

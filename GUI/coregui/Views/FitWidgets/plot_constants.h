@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PLOT_CONSTANTS_H
-#define PLOT_CONSTANTS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_PLOT_CONSTANTS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_PLOT_CONSTANTS_H
 
-#include "StyleUtils.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QSize>
 
 namespace Constants
@@ -38,4 +38,4 @@ inline int plot_colorbar_size()
 
 } // namespace Constants
 
-#endif // PLOT_CONSTANTS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_PLOT_CONSTANTS_H

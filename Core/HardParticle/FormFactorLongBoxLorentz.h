@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORLONGBOXLORENTZ_H
-#define FORMFACTORLONGBOXLORENTZ_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORLONGBOXLORENTZ_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORLONGBOXLORENTZ_H
 
-#include "IFormFactorBorn.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! The form factor for a long rectangular box.
 //! @ingroup legacyGrating
@@ -27,6 +27,7 @@ public:
     //! @param length of Box's base
     //! @param width of Box's base
     //! @param height of Box
+    FormFactorLongBoxLorentz(const std::vector<double> P);
     FormFactorLongBoxLorentz(double length, double width, double height);
 
     FormFactorLongBoxLorentz* clone() const override final
@@ -50,9 +51,9 @@ protected:
     void onChange() override final;
 
 private:
-    double m_length;
-    double m_width;
-    double m_height;
+    const double& m_length;
+    const double& m_width;
+    const double& m_height;
 };
 
-#endif // FORMFACTORLONGBOXLORENTZ_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORLONGBOXLORENTZ_H

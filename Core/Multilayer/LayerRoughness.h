@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERROUGHNESS_H
-#define LAYERROUGHNESS_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_LAYERROUGHNESS_H
+#define BORNAGAIN_CORE_MULTILAYER_LAYERROUGHNESS_H
 
-#include "ISample.h"
-#include "Vectors3D.h"
+#include "Core/Scattering/ISample.h"
+#include "Core/Vector/Vectors3D.h"
 
 //! A roughness of interface between two layers.
 //!
@@ -29,8 +29,8 @@
 class BA_CORE_API_ LayerRoughness : public ISample
 {
 public:
-    LayerRoughness();
     LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength);
+    LayerRoughness();
 
     LayerRoughness* clone() const
     {
@@ -61,13 +61,10 @@ public:
     //! Returns lateral correlation length
     double getLatteralCorrLength() const { return m_lateralCorrLength; }
 
-protected:
+private:
     double m_sigma;          //!< rms of roughness
     double m_hurstParameter; //!< Hurst parameter which describes how jagged the interface, 0<H<=1
     double m_lateralCorrLength; //!< lateral correlation length of the roughness
-
-private:
-    void initialize();
 };
 
-#endif // LAYERROUGHNESS_H
+#endif // BORNAGAIN_CORE_MULTILAYER_LAYERROUGHNESS_H

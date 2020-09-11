@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONMODELDELEGATE_H
-#define SESSIONMODELDELEGATE_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONMODELDELEGATE_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONMODELDELEGATE_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QStyledItemDelegate>
 
 //! The SessionModelDelegate class presents the content of SessionModel items in
@@ -51,4 +51,4 @@ private:
                           const QModelIndex& index, const QString& text) const;
 };
 
-#endif // SESSIONMODELDELEGATE_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONMODELDELEGATE_H

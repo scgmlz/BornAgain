@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "Parameter.h"
+#include "Fit/Kernel/Parameter.h"
 #include <cmath>
 
 namespace

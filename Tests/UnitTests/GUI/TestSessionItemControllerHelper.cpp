@@ -1,6 +1,6 @@
-#include "TestSessionItemControllerHelper.h"
-#include "SessionItem.h"
-#include "SessionItemController.h"
+#include "Tests/UnitTests/GUI/TestSessionItemControllerHelper.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemController.h"
 
 TestListener::TestListener()
     : m_onItemDestroyedCount(0), m_onPropertyChangeCount(0), m_onWidgetDestroyed(0)

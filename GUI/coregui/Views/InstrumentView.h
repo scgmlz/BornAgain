@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef INSTRUMENTVIEW_H
-#define INSTRUMENTVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTVIEW_H
 
-#include "ItemStackPresenter.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemStackPresenter.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class MainWindow;
@@ -51,4 +51,4 @@ private:
     InstrumentModel* m_instrumentModel;
 };
 
-#endif // INSTRUMENTVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTVIEW_H

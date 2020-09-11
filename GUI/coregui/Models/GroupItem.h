@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef GROUPITEM_H
-#define GROUPITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_GROUPITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_GROUPITEM_H
 
-#include "GroupInfo.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Models/GroupInfo.h"
+#include "GUI/coregui/Models/SessionItem.h"
 #include <memory>
 
 class GroupInfo;
@@ -46,4 +46,4 @@ private:
     std::unique_ptr<GroupItemController> m_controller;
 };
 
-#endif // GROUPITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_GROUPITEM_H

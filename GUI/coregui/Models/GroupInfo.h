@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GROUPINFO_H
-#define GROUPINFO_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_GROUPINFO_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_GROUPINFO_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <QStringList>
 #include <QVector>
@@ -26,7 +26,7 @@
 class BA_CORE_API_ GroupInfo
 {
 public:
-    explicit GroupInfo(const QString& groupType = QString(), bool is_sorted = true);
+    explicit GroupInfo(const QString& groupType = "", bool is_sorted = true);
 
     void add(const QString& itemType, const QString& itemLabel);
 
@@ -51,11 +51,11 @@ private:
 
     //!< Default model type for given group (i.e. FFCylinder for formfactor group)
     QString m_defaultItemType;
-    //!< Unique group name for GroupInfoCatalogue
+    //!< Unique group name for GroupInfoCatalog
     QString m_groupType;
     //!< Info will be sorted if true, otherwise order of insertion will be preserved
     bool is_sorted;
     QVector<TypeAndLabel> m_info;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_GROUPINFO_H

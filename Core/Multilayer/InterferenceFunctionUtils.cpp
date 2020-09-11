@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "InterferenceFunctionUtils.h"
-#include "FormFactorCoherentSum.h"
+#include "Core/Multilayer/InterferenceFunctionUtils.h"
+#include "Core/Multilayer/FormFactorCoherentSum.h"
 
 namespace InterferenceFunctionUtils
 {

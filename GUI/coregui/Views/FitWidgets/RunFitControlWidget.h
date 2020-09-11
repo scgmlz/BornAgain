@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef RUNFITCONTROLWIDGET_H
-#define RUNFITCONTROLWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_RUNFITCONTROLWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_RUNFITCONTROLWIDGET_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <QWidget>
 
 class JobItem;
@@ -68,4 +68,4 @@ private:
     WarningSign* m_warningSign;
 };
 
-#endif // RUNFITCONTROLWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_RUNFITCONTROLWIDGET_H

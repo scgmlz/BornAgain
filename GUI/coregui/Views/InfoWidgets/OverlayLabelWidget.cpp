@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "OverlayLabelWidget.h"
-#include "DesignerHelper.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/InfoWidgets/OverlayLabelWidget.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QColor>
 #include <QFont>
 #include <QPainter>

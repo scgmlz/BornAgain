@@ -1,14 +1,10 @@
-#include "MultiOption.h"
-#include "google_test.h"
+#include "Fit/Tools/MultiOption.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <string>
 
 class MultiOptionTest : public ::testing::Test
 {
-protected:
-    ~MultiOptionTest();
 };
-
-MultiOptionTest::~MultiOptionTest() = default;
 
 TEST_F(MultiOptionTest, Variant)
 {

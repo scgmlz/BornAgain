@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MATRIXFRESNELMAP_H
-#define MATRIXFRESNELMAP_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_MATRIXFRESNELMAP_H
+#define BORNAGAIN_CORE_MULTILAYER_MATRIXFRESNELMAP_H
 
-#include "IFresnelMap.h"
-#include "MatrixRTCoefficients.h"
-#include "MatrixRTCoefficients_v2.h"
-#include "SpecularMagneticStrategy.h"
+#include "Core/Multilayer/IFresnelMap.h"
+#include "Core/Multilayer/SpecularMagneticStrategy.h"
+#include "Core/RT/MatrixRTCoefficients.h"
+#include "Core/RT/MatrixRTCoefficients_v2.h"
 #include <cstddef>
 #include <memory>
 #include <unordered_map>
@@ -72,4 +72,4 @@ private:
                                                                 CoefficientHash& hash_table) const;
 };
 
-#endif // MATRIXFRESNELMAP_H
+#endif // BORNAGAIN_CORE_MULTILAYER_MATRIXFRESNELMAP_H

@@ -39,14 +39,14 @@
 **
 ****************************************************************************/
 
-#include "widgetbox.h"
-#include "qdesigner_dnditem_p.h"
-#include "widgetboxtreewidget.h"
+#include "GUI/coregui/Views/widgetbox/widgetbox.h"
+#include "GUI/coregui/Views/widgetbox/qdesigner_dnditem_p.h"
+#include "GUI/coregui/Views/widgetbox/widgetboxtreewidget.h"
 
 #include <QtDesigner/QDesignerFormEditorInterface>
 #include <QtDesigner/QDesignerFormWindowManagerInterface>
 
-#include <qdesigner_utils_p.h>
+#include "GUI/coregui/Views/widgetbox/qdesigner_utils_p.h"
 //#include <filterwidget_p.h>
 
 #include <QtGui/QDropEvent>
@@ -61,9 +61,9 @@
 
 #include <QtGui/QIcon>
 
-#include "SampleDesigner.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleDesigner.h"
 
-#include "DesignerMimeData.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerMimeData.h"
 
 #include <iostream>
 QT_BEGIN_NAMESPACE

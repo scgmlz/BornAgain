@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "FitLogFlags.h"
+#include "GUI/coregui/Views/FitWidgets/FitLogFlags.h"
 #include <QMap>
 
 namespace

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPONENTEDITOR_H
-#define COMPONENTEDITOR_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTEDITOR_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTEDITOR_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class ComponentView;
@@ -50,7 +50,7 @@ public:
     };
     Q_DECLARE_FLAGS(EditorType, EditorFlags)
 
-    ComponentEditor(EditorType editorType = HeaderTree, const QString& title = QString());
+    ComponentEditor(EditorType editorType = HeaderTree, const QString& title = "");
 
     void setItem(SessionItem* item);
     void clearEditor();
@@ -73,4 +73,4 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(ComponentEditor::EditorType)
 
-#endif // COMPONENTEDITOR_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTEDITOR_H

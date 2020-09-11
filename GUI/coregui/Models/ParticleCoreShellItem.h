@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLECORESHELLITEM_H
-#define PARTICLECORESHELLITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARTICLECORESHELLITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_PARTICLECORESHELLITEM_H
 
-#include "SessionGraphicsItem.h"
+#include "GUI/coregui/Models/SessionGraphicsItem.h"
 
 class ParticleCoreShell;
 
@@ -29,4 +29,4 @@ public:
     QVector<SessionItem*> materialPropertyItems();
 };
 
-#endif // PARTICLECORESHELLITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_PARTICLECORESHELLITEM_H

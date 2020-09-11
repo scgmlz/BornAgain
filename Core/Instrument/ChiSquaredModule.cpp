@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "ChiSquaredModule.h"
-#include "IIntensityFunction.h"
-#include "VarianceFunctions.h"
-#include <cassert>
+#include "Core/Instrument/ChiSquaredModule.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Instrument/VarianceFunctions.h"
+#include "Core/Intensity/IIntensityFunction.h"
 #include <cmath>
 #include <limits>
 

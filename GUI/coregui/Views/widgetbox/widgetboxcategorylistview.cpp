@@ -39,8 +39,9 @@
 **
 ****************************************************************************/
 
-#include "widgetboxcategorylistview.h"
-#include "tooltipdatabase.h"
+#include "GUI/coregui/Views/widgetbox/widgetboxcategorylistview.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/mainwindow/tooltipdatabase.h"
 
 #include <QtDesigner/QDesignerFormEditorInterface>
 #include <QtDesigner/QDesignerWidgetDataBaseInterface>
@@ -166,7 +167,7 @@ private:
 WidgetBoxCategoryModel::WidgetBoxCategoryModel(SampleDesignerInterface* core, QObject* parent)
     : QAbstractListModel(parent),
 #if QT_VERSION >= 0x050000
-      m_classNameRegExp(QStringLiteral("<widget +class *= *\"([^\"]+)\"")),
+      m_classNameRegExp("<widget +class *= *\"([^\"]+)\""),
 #else
       m_classNameRegExp(QString("<widget +class *= *\"([^\"]+)\"")),
 #endif
@@ -174,7 +175,7 @@ WidgetBoxCategoryModel::WidgetBoxCategoryModel(SampleDesignerInterface* core, QO
       //    m_core(core),
       m_viewMode(QListView::ListMode)
 {
-    Q_ASSERT(m_classNameRegExp.isValid());
+    ASSERT(m_classNameRegExp.isValid());
     Q_UNUSED(core);
 }
 
@@ -237,8 +238,7 @@ void WidgetBoxCategoryModel::addWidget(const QDesignerWidgetBoxInterface::Widget
 {
     // build item. Filter on name + class name if it is different and not a layout.
     QString filter = widget.name();
-    if (!filter.contains(QStringLiteral("Layout"))
-        && m_classNameRegExp.indexIn(widget.domXml()) != -1) {
+    if (!filter.contains("Layout") && m_classNameRegExp.indexIn(widget.domXml()) != -1) {
         const QString className = m_classNameRegExp.cap(1);
         if (!filter.contains(className))
             filter += className;
@@ -399,8 +399,8 @@ QWidget* WidgetBoxCategoryEntryDelegate::createEditor(QWidget* parent,
 {
     QWidget* result = QItemDelegate::createEditor(parent, option, index);
     if (QLineEdit* line_edit = qobject_cast<QLineEdit*>(result)) {
-        QRegExp re = QRegExp(QStringLiteral("[_a-zA-Z][_a-zA-Z0-9]*"));
-        Q_ASSERT(re.isValid());
+        QRegExp re = QRegExp("[_a-zA-Z][_a-zA-Z0-9]*");
+        ASSERT(re.isValid());
         line_edit->setValidator(new QRegExpValidator(re, line_edit));
     }
     return result;
@@ -529,9 +529,9 @@ QString WidgetBoxCategoryListView::widgetDomXml(const QDesignerWidgetBoxInterfac
 
     if (domXml.isEmpty()) {
         domXml = QLatin1String(uiOpeningTagC);
-        domXml += QStringLiteral("<widget class=\"");
+        domXml += "<widget class=\"";
         domXml += widget.name();
-        domXml += QStringLiteral("\"/>");
+        domXml += "\"/>";
         domXml += QLatin1String(uiClosingTagC);
     }
     return domXml;

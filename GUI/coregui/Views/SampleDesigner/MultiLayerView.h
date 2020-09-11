@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERVIEW_H
-#define MULTILAYERVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MULTILAYERVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MULTILAYERVIEW_H
 
-#include "ILayerView.h"
+#include "GUI/coregui/Views/SampleDesigner/ILayerView.h"
 
 class DesignerMimeData;
 class QGraphicsSceneDragDropEvent;
@@ -62,4 +62,4 @@ private:
     QList<QLineF> m_interfaces;
 };
 
-#endif // MULTILAYERVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MULTILAYERVIEW_H

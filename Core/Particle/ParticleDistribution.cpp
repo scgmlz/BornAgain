@@ -12,27 +12,27 @@
 //
 // ************************************************************************** //
 
-#include "ParticleDistribution.h"
-#include "BornAgainNamespace.h"
-#include "Distributions.h"
-#include "Exceptions.h"
-#include "IParticle.h"
-#include "ParameterPool.h"
-#include "ParameterSample.h"
-#include "RealParameter.h"
+#include "Core/Particle/ParticleDistribution.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Parametrization/ParameterUtils.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/IParticle.h"
 #include <map>
 
 ParticleDistribution::ParticleDistribution(const IParticle& prototype,
                                            const ParameterDistribution& par_distr)
     : m_par_distribution(par_distr)
 {
-    setName(BornAgain::ParticleDistributionType);
+    setName("ParticleDistribution");
     mP_particle.reset(prototype.clone());
     registerChild(mP_particle.get());
     mP_particle->registerAbundance(false);
     if (auto dist = m_par_distribution.getDistribution())
         registerChild(dist);
-    registerParameter(BornAgain::Abundance, &m_abundance);
+    registerParameter("Abundance", &m_abundance);
 }
 
 ParticleDistribution* ParticleDistribution::clone() const
@@ -87,4 +87,10 @@ std::vector<const INode*> ParticleDistribution::getChildren() const
     if (auto dist = m_par_distribution.getDistribution())
         result.push_back(dist);
     return result;
+}
+
+std::string ParticleDistribution::mainUnits() const
+{
+    return ParameterUtils::poolParameterUnits(prototype(),
+                                              parameterDistribution().getMainParameterName());
 }

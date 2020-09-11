@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef STATUSLABEL_H
-#define STATUSLABEL_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_STATUSLABEL_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_STATUSLABEL_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 
 class QPaintEvent;
@@ -47,4 +47,4 @@ private:
     QFont m_font;
 };
 
-#endif // STATUSLABEL_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_STATUSLABEL_H

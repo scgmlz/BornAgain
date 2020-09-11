@@ -12,35 +12,38 @@
 //
 // ************************************************************************** //
 
-#include "SampleViewFactory.h"
-#include "InterferenceFunctionViews.h"
-#include "LayerView.h"
-#include "MesoCrystalView.h"
-#include "MultiLayerView.h"
-#include "ParticleCompositionView.h"
-#include "ParticleCoreShellView.h"
-#include "ParticleDistributionView.h"
-#include "ParticleLayoutView.h"
-#include "ParticleView.h"
-#include "TransformationView.h"
-#include "item_constants.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleViewFactory.h"
+#include "GUI/coregui/Views/SampleDesigner/InterferenceFunctionViews.h"
+#include "GUI/coregui/Views/SampleDesigner/LayerView.h"
+#include "GUI/coregui/Views/SampleDesigner/MesoCrystalView.h"
+#include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleCompositionView.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleCoreShellView.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleDistributionView.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleLayoutView.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleView.h"
+#include "GUI/coregui/Views/SampleDesigner/TransformationView.h"
 
-QStringList SampleViewFactory::m_valid_item_names =
-    QStringList() << Constants::MultiLayerType << Constants::LayerType
-                  << Constants::ParticleLayoutType << Constants::ParticleType
-                  << Constants::RotationType << Constants::ParticleCoreShellType
-                  << Constants::ParticleCompositionType << Constants::MesoCrystalType
-                  << Constants::ParticleDistributionType
-                  << Constants::InterferenceFunction1DLatticeType
-                  << Constants::InterferenceFunction2DLatticeType
-                  << Constants::InterferenceFunction2DParaCrystalType
-                  << Constants::InterferenceFunctionFinite2DLatticeType
-                  << Constants::InterferenceFunctionHardDiskType
-                  << Constants::InterferenceFunctionRadialParaCrystalType;
+QStringList SampleViewFactory::m_valid_item_names = QStringList()
+                                                    << "MultiLayer"
+                                                    << "Layer"
+                                                    << "ParticleLayout"
+                                                    << "Particle"
+                                                    << "Rotation"
+                                                    << "ParticleCoreShell"
+                                                    << "ParticleComposition"
+                                                    << "MesoCrystal"
+                                                    << "ParticleDistribution"
+                                                    << "Interference1DLattice"
+                                                    << "Interference2DLattice"
+                                                    << "Interference2DParaCrystal"
+                                                    << "InterferenceFinite2DLattice"
+                                                    << "InterferenceHardDisk"
+                                                    << "InterferenceRadialParaCrystal";
 
 bool SampleViewFactory::isValidType(const QString& name)
 {
-    if (name.startsWith(Constants::FormFactorType)) {
+    if (name.startsWith("FormFactor")) {
         return true;
     } else {
         return m_valid_item_names.contains(name);
@@ -49,35 +52,35 @@ bool SampleViewFactory::isValidType(const QString& name)
 
 IView* SampleViewFactory::createSampleView(const QString& name)
 {
-    if (name == Constants::MultiLayerType) {
+    if (name == "MultiLayer") {
         return new MultiLayerView();
-    } else if (name == Constants::LayerType) {
+    } else if (name == "Layer") {
         return new LayerView();
-    } else if (name == Constants::ParticleLayoutType) {
+    } else if (name == "ParticleLayout") {
         return new ParticleLayoutView();
-    } else if (name == Constants::ParticleType) {
+    } else if (name == "Particle") {
         return new ParticleView();
-    } else if (name == Constants::RotationType) {
+    } else if (name == "Rotation") {
         return new TransformationView();
-    } else if (name == Constants::ParticleCoreShellType) {
+    } else if (name == "ParticleCoreShell") {
         return new ParticleCoreShellView();
-    } else if (name == Constants::ParticleCompositionType) {
+    } else if (name == "ParticleComposition") {
         return new ParticleCompositionView();
-    } else if (name == Constants::MesoCrystalType) {
+    } else if (name == "MesoCrystal") {
         return new MesoCrystalView();
-    } else if (name == Constants::ParticleDistributionType) {
+    } else if (name == "ParticleDistribution") {
         return new ParticleDistributionView();
-    } else if (name == Constants::InterferenceFunction1DLatticeType) {
+    } else if (name == "Interference1DLattice") {
         return new InterferenceFunction1DLatticeView();
-    } else if (name == Constants::InterferenceFunction2DLatticeType) {
+    } else if (name == "Interference2DLattice") {
         return new InterferenceFunction2DLatticeView();
-    } else if (name == Constants::InterferenceFunction2DParaCrystalType) {
+    } else if (name == "Interference2DParaCrystal") {
         return new InterferenceFunction2DParaCrystalView();
-    } else if (name == Constants::InterferenceFunctionFinite2DLatticeType) {
+    } else if (name == "InterferenceFinite2DLattice") {
         return new InterferenceFunctionFinite2DLatticeView();
-    } else if (name == Constants::InterferenceFunctionHardDiskType) {
+    } else if (name == "InterferenceHardDisk") {
         return new InterferenceFunctionHardDiskView();
-    } else if (name == Constants::InterferenceFunctionRadialParaCrystalType) {
+    } else if (name == "InterferenceRadialParaCrystal") {
         return new InterferenceFunctionRadialParaCrystalView();
     }
     return 0;

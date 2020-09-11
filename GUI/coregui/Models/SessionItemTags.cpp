@@ -12,10 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "SessionItemTags.h"
-#include "GUIHelpers.h"
-
-SessionItemTags::TagInfo::TagInfo() : min(0), max(-1), childCount(0) {}
+#include "GUI/coregui/Models/SessionItemTags.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 //! Register tag with given parameters. Returns true in case of success. Returns
 //! false if parameters are invalid or such tag was already registered.
@@ -25,18 +23,9 @@ bool SessionItemTags::registerTag(const QString& name, int min, int max,
 {
     if (min < 0 || (min > max && max >= 0))
         return false;
-
     if (name.isEmpty() || isValid(name))
         return false;
-
-    TagInfo info;
-    info.name = name;
-    info.min = min;
-    info.max = max;
-    info.modelTypes = modelTypes;
-
-    m_tags.push_back(info);
-
+    m_tags.push_back({name, min, max, 0, modelTypes});
     return true;
 }
 
@@ -50,11 +39,9 @@ bool SessionItemTags::isValid(const QString& tagName, const QString& modelType) 
         if (tag.name == tagName) {
             if (modelType.isEmpty())
                 return true;
-            else
-                return tag.modelTypes.isEmpty() ? true : tag.modelTypes.contains(modelType);
+            return tag.modelTypes.isEmpty() ? true : tag.modelTypes.contains(modelType);
         }
     }
-
     return false;
 }
 
@@ -73,10 +60,8 @@ int SessionItemTags::tagStartIndex(const QString& tagName) const
     for (const auto& tag : m_tags) {
         if (tag.name == tagName)
             return index;
-        else
-            index += tag.childCount;
+        index += tag.childCount;
     }
-
     throw GUIHelpers::Error("SessionItemTags::tagStartIndex() -> Error. Can';t find start index");
 }
 
@@ -84,11 +69,8 @@ int SessionItemTags::tagStartIndex(const QString& tagName) const
 
 int SessionItemTags::indexFromTagRow(const QString& tagName, int row) const
 {
-    auto& tag = tagInfo(tagName);
-
-    if (row < 0 || row >= tag.childCount)
+    if (row < 0 || row >= tagInfo(tagName).childCount)
         throw GUIHelpers::Error("SessionItemTags::tagIndexFromRow() -> Error. Wrong row");
-
     return tagStartIndex(tagName) + row;
 }
 
@@ -99,31 +81,24 @@ int SessionItemTags::insertIndexFromTagRow(const QString& tagName, int row)
 {
     if (maximumReached(tagName))
         return -1;
-
     auto& tag = tagInfo(tagName);
-
     if (row > tag.childCount)
         return -1;
-
     if (row < 0)
         row = tag.childCount;
-
     return tagStartIndex(tagName) + row;
 }
 
 QString SessionItemTags::tagFromIndex(int index) const
 {
     if (index < 0)
-        return QString();
-
+        return "";
     for (const auto& tag : m_tags) {
         if (index < tag.childCount)
             return tag.name;
-        else
-            index -= tag.childCount;
+        index -= tag.childCount;
     }
-
-    return QString();
+    return "";
 }
 
 int SessionItemTags::childCount(const QString& tagName)
@@ -141,18 +116,15 @@ void SessionItemTags::addChild(const QString& tagName)
     if (maximumReached(tagName))
         throw GUIHelpers::Error("SessionItemTags::addChild() -> Error. Can't exceed maximum"
                                 "allowed number of children.");
-
     tagInfo(tagName).childCount++;
 }
 
 void SessionItemTags::removeChild(const QString& tagName)
 {
     auto& tag = tagInfo(tagName);
-
     if (tag.childCount == 0)
         throw GUIHelpers::Error("SessionItemTags::removeChild() -> Error. Attempt to remove "
                                 "unexisting child.");
-
     tag.childCount--;
 }
 
@@ -160,8 +132,7 @@ bool SessionItemTags::isSingleItemTag(const QString& tagName)
 {
     if (!isValid(tagName))
         return false;
-
-    auto& tag = tagInfo(tagName);
+    const auto& tag = tagInfo(tagName);
     return tag.min == 1 && tag.max == 1 && tag.childCount == 1;
 }
 
@@ -175,16 +146,13 @@ const SessionItemTags::TagInfo& SessionItemTags::tagInfo(const QString& tagName)
     for (const auto& tag : m_tags)
         if (tag.name == tagName)
             return tag;
-
     throw GUIHelpers::Error("SessionItemTags::tagInfo() -> Error. No such tag '" + tagName + "'.");
 }
 
 bool SessionItemTags::maximumReached(const QString& tagName) const
 {
-    auto& tag = tagInfo(tagName);
-
+    const auto& tag = tagInfo(tagName);
     if (tag.max != -1 && tag.max == tag.childCount)
         return true;
-
     return false;
 }

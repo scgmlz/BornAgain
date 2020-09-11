@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef DEPTHPROBECOMPUTATION_H
-#define DEPTHPROBECOMPUTATION_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATION_H
+#define BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATION_H
 
-#include "DepthProbeComputationTerm.h"
-#include "IComputation.h"
-#include "SimulationOptions.h"
+#include "Core/Computation/DepthProbeComputationTerm.h"
+#include "Core/Computation/IComputation.h"
+#include "Core/Parametrization/SimulationOptions.h"
 
 class MultiLayer;
 
@@ -44,4 +44,4 @@ private:
     DepthProbeComputationTerm m_computation_term;
 };
 
-#endif // DEPTHPROBECOMPUTATION_H
+#endif // BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATION_H

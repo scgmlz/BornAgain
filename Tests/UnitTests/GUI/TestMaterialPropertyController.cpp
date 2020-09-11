@@ -1,20 +1,16 @@
-#include "ExternalProperty.h"
-#include "LayerItem.h"
-#include "MaterialItem.h"
-#include "MaterialItemUtils.h"
-#include "MaterialModel.h"
-#include "MaterialPropertyController.h"
-#include "SampleModel.h"
-#include "google_test.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Models/MaterialPropertyController.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <QtTest>
 
 class TestMaterialPropertyController : public ::testing::Test
 {
-public:
-    ~TestMaterialPropertyController();
 };
-
-TestMaterialPropertyController::~TestMaterialPropertyController() = default;
 
 // TEST_F(TestMaterialPropertyController, test_ControllerForLayer)
 //{
@@ -23,7 +19,7 @@ TestMaterialPropertyController::~TestMaterialPropertyController() = default;
 //    materialModel.addRefractiveMaterial("name2", 3.0, 4.0);
 
 //    SampleModel sampleModel;
-//    auto layer = sampleModel.insertNewItem(Constants::LayerType);
+//    auto layer = sampleModel.insertNewItem("Layer");
 
 //    int property_changed(0);
 //    layer->mapper()->setOnPropertyChange(
@@ -73,9 +69,9 @@ TEST_F(TestMaterialPropertyController, test_ControllerInEditorContext)
     auto mat3 = materialModel.addRefractiveMaterial("name3", 1.0, 2.0);
 
     SampleModel sampleModel;
-    auto layer1 = sampleModel.insertNewItem(Constants::LayerType);
-    auto layer2 = sampleModel.insertNewItem(Constants::LayerType);
-    auto layer3 = sampleModel.insertNewItem(Constants::LayerType);
+    auto layer1 = sampleModel.insertNewItem("Layer");
+    auto layer2 = sampleModel.insertNewItem("Layer");
+    auto layer3 = sampleModel.insertNewItem("Layer");
 
     MaterialPropertyController controller;
     controller.setModels(&materialModel, &sampleModel);
@@ -130,5 +126,5 @@ TEST_F(TestMaterialPropertyController, test_ControllerInEditorContext)
 
     // layer3 should have different MaterialProperty name
     property = layer3->getItemValue(LayerItem::P_MATERIAL).value<ExternalProperty>();
-    EXPECT_EQ(property.text(), QString("name3changed"));
+    EXPECT_EQ(property.text(), "name3changed");
 }

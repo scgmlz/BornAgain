@@ -12,14 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTION2DPARACRYSTAL_H
-#define INTERFERENCEFUNCTION2DPARACRYSTAL_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DPARACRYSTAL_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DPARACRYSTAL_H
 
-#include "Complex.h"
-#include "FTDistributions2D.h"
-#include "IInterferenceFunction.h"
-#include "Integrator.h"
-#include "Lattice2D.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Correlations/FTDistributions2D.h"
+#include "Core/Lattice/Lattice2D.h"
 #include <memory>
 
 class IFTDistribution2D;
@@ -30,11 +29,11 @@ class IFTDistribution2D;
 class BA_CORE_API_ InterferenceFunction2DParaCrystal : public IInterferenceFunction
 {
 public:
-    InterferenceFunction2DParaCrystal(const Lattice2D& lattice, double damping_length = 0.0,
-                                      double domain_size_1 = 0.0, double domain_size_2 = 0.0);
+    InterferenceFunction2DParaCrystal(const Lattice2D& lattice, double damping_length,
+                                      double domain_size_1, double domain_size_2);
 
-    InterferenceFunction2DParaCrystal(double length_1, double length_2, double alpha,
-                                      double xi = 0.0, double damping_length = 0.0);
+    InterferenceFunction2DParaCrystal(double length_1, double length_2, double alpha, double xi,
+                                      double damping_length);
 
     ~InterferenceFunction2DParaCrystal() final;
 
@@ -43,13 +42,13 @@ public:
     void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
 
     static InterferenceFunction2DParaCrystal* createSquare(double lattice_length,
-                                                           double damping_length = 0.0,
-                                                           double domain_size_1 = 0.0,
-                                                           double domain_size_2 = 0.0);
+                                                           double damping_length,
+                                                           double domain_size_1,
+                                                           double domain_size_2);
     static InterferenceFunction2DParaCrystal* createHexagonal(double lattice_length,
-                                                              double damping_length = 0.0,
-                                                              double domain_size_1 = 0.0,
-                                                              double domain_size_2 = 0.0);
+                                                              double damping_length,
+                                                              double domain_size_1,
+                                                              double domain_size_2);
 
     void setDomainSizes(double size_1, double size_2);
 
@@ -76,10 +75,8 @@ public:
 
 private:
     double iff_without_dw(const kvector_t q) const override final;
-    InterferenceFunction2DParaCrystal(const InterferenceFunction2DParaCrystal& other);
     void setLattice(const Lattice2D& lattice);
 
-    void init_parameters();
     double interferenceForXi(double xi) const;
     double interference1D(double qx, double qy, double xi, size_t index) const;
     complex_t FTPDF(double qx, double qy, double xi, size_t index) const;
@@ -88,12 +85,11 @@ private:
 
     bool m_integrate_xi; //!< Integrate over the orientation xi
     std::unique_ptr<IFTDistribution2D> m_pdf1, m_pdf2;
-    std::unique_ptr<Lattice2D> m_lattice;
+    std::unique_ptr<Lattice2D> m_lattice; // TODO ASAP name as in other i-fcts
     double m_damping_length;  //!< Damping length for removing delta function singularity at q=0.
     double m_domain_sizes[2]; //!< Coherence domain sizes
     mutable double m_qx;
     mutable double m_qy;
-    mutable RealIntegrator m_integrator;
 };
 
-#endif // INTERFERENCEFUNCTION2DPARACRYSTAL_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DPARACRYSTAL_H

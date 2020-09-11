@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "QSpecScan.h"
-#include "BornAgainNamespace.h"
-#include "FixedBinAxis.h"
-#include "ParameterSample.h"
-#include "PointwiseAxis.h"
-#include "PythonFormatting.h"
-#include "RangedDistributions.h"
-#include "RealLimits.h"
-#include "ScanResolution.h"
-#include "SpecularSimulationElement.h"
+#include "Core/Instrument/QSpecScan.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Binning/PointwiseAxis.h"
+#include "Core/Detector/ScanResolution.h"
+#include "Core/Multilayer/SpecularSimulationElement.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Parametrization/RangedDistributions.h"
+#include "Core/PyIO/PythonFormatting.h"
+#include "Core/Tools/PyFmt.h"
+#include "Fit/Tools/RealLimits.h"
 
 namespace
 {
@@ -112,16 +112,14 @@ QSpecScan::createIntensities(const std::vector<SpecularSimulationElement>& sim_e
 std::string QSpecScan::print() const
 {
     std::stringstream result;
-    const std::string axis_def = PythonFormatting::indent() + "axis = ";
-    result << axis_def
-           << PythonFormatting::printAxis(*coordinateAxis(), BornAgain::UnitsNone, axis_def.size())
-           << "\n";
+    const std::string axis_def = pyfmt::indent() + "axis = ";
+    result << axis_def << pyfmt2::printAxis(*coordinateAxis(), "", axis_def.size()) << "\n";
 
-    result << PythonFormatting::indent() << "scan = ba.QSpecScan(axis)";
+    result << pyfmt::indent() << "scan = ba.QSpecScan(axis)";
     if (!m_resolution->empty()) {
         result << "\n";
         result << *m_resolution << "\n";
-        result << PythonFormatting::indent() << "scan.setQResolution(resolution)";
+        result << pyfmt::indent() << "scan.setQResolution(resolution)";
     }
     return result.str();
 }

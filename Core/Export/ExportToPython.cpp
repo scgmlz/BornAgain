@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "ExportToPython.h"
-#include "GISASSimulation.h"
-#include "SampleToPython.h"
-#include "SimulationToPython.h"
+#include "Core/Export/ExportToPython.h"
+#include "Core/Export/SampleToPython.h"
+#include "Core/Export/SimulationToPython.h"
+#include "Core/Simulation/GISASSimulation.h"
 
 namespace
 {

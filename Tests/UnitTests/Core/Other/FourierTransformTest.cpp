@@ -1,19 +1,11 @@
-#ifndef FOURIERTRANSFORMTEST_H
-#define FOURIERTRANSFORMTEST_H
-
-#include "FourierTransform.h"
-#include "BornAgainNamespace.h"
-#include "MathConstants.h"
-#include "OutputData.h"
-#include "google_test.h"
+#include "Core/Instrument/FourierTransform.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Intensity/OutputData.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class FourierTransformTest : public ::testing::Test
 {
-protected:
-    ~FourierTransformTest();
 };
-
-FourierTransformTest::~FourierTransformTest() = default;
 
 // Testing implementation of 1D FT with with low freuency centering
 TEST_F(FourierTransformTest, fft1DTest)
@@ -171,5 +163,3 @@ TEST_F(FourierTransformTest, fft2DTest6)
         for (size_t j = 0; j < signal[0].size(); ++j)
             EXPECT_NEAR(result[i][j], expected_result[i][j], 1e-6);
 }
-
-#endif // FOURIERTRANSFORMTEST_H

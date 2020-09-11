@@ -13,8 +13,8 @@
 //
 // ************************************************************************** //
 
-#include "FourierTransform.h"
-#include "Exceptions.h"
+#include "Core/Instrument/FourierTransform.h"
+#include "Core/Basics/Exceptions.h"
 #include <algorithm>
 #include <iostream>
 #include <math.h>

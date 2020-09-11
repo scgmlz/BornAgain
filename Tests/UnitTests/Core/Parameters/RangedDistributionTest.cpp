@@ -1,13 +1,11 @@
-#include "Distributions.h"
-#include "ParameterSample.h"
-#include "RangedDistributions.h"
-#include "google_test.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterSample.h"
+#include "Core/Parametrization/RangedDistributions.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class RangedDistributionTest : public ::testing::Test
 {
 protected:
-    ~RangedDistributionTest();
-
     void checkDefaults(const RangedDistribution& distr);
 
     template <class T> void checkThrows();
@@ -18,8 +16,6 @@ protected:
 
     template <class T> void checkZeroWidth();
 };
-
-RangedDistributionTest::~RangedDistributionTest() = default;
 
 void RangedDistributionTest::checkDefaults(const RangedDistribution& distr)
 {

@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "JobListWidget.h"
-#include "ItemSelectorWidget.h"
-#include "JobItem.h"
-#include "JobListViewDelegate.h"
-#include "JobModel.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/JobWidgets/JobListWidget.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemSelectorWidget.h"
+#include "GUI/coregui/Views/JobWidgets/JobListViewDelegate.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QItemSelectionModel>
 #include <QListView>
 #include <QVBoxLayout>
@@ -53,7 +53,7 @@ JobListWidget::JobListWidget(QWidget* parent)
 
 void JobListWidget::setModel(JobModel* model)
 {
-    Q_ASSERT(model);
+    ASSERT(model);
     if (model != m_jobModel) {
         m_jobModel = model;
         m_listView->setModel(model);
@@ -78,7 +78,7 @@ const JobItem* JobListWidget::currentJobItem() const
 
 QSize JobListWidget::sizeHint() const
 {
-    return QSize(StyleUtils::PropertyPanelWidth(), StyleUtils::PropertyPanelWidth()*2);
+    return QSize(StyleUtils::PropertyPanelWidth(), StyleUtils::PropertyPanelWidth() * 2);
 }
 
 QSize JobListWidget::minimumSizeHint() const
@@ -88,7 +88,7 @@ QSize JobListWidget::minimumSizeHint() const
 
 void JobListWidget::makeJobItemSelected(JobItem* jobItem)
 {
-    Q_ASSERT(jobItem);
+    ASSERT(jobItem);
     QModelIndexList selected = m_listView->selectionModel()->selectedIndexes();
 
     // Already selected, but we still will emit the signal to notify widgets.
@@ -111,7 +111,7 @@ void JobListWidget::onItemSelectionChanged(SessionItem* item)
     JobItem* jobItem(nullptr);
     if (item) {
         jobItem = dynamic_cast<JobItem*>(item);
-        Q_ASSERT(jobItem);
+        ASSERT(jobItem);
     }
     emit selectionChanged(jobItem);
 }

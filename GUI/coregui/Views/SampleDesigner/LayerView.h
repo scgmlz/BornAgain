@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERVIEW_H
-#define LAYERVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_LAYERVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_LAYERVIEW_H
 
-#include "ILayerView.h"
+#include "GUI/coregui/Views/SampleDesigner/ILayerView.h"
 
 //! Class that represents view of Layer
 class BA_CORE_API_ LayerView : public ILayerView
@@ -31,4 +31,4 @@ public:
     virtual void addView(IView* childView, int row = 0); // to add ParticleLayout
 };
 
-#endif // LAYERVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_LAYERVIEW_H

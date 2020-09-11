@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef RESIDUALTESTPLAN_H
-#define RESIDUALTESTPLAN_H
+#ifndef BORNAGAIN_TESTS_FUNCTIONAL_FIT_MINIMIZER_RESIDUALTESTPLAN_H
+#define BORNAGAIN_TESTS_FUNCTIONAL_FIT_MINIMIZER_RESIDUALTESTPLAN_H
 
-#include "KernelTypes.h"
-#include "MinimizerTestPlan.h"
+#include "Fit/Kernel/KernelTypes.h"
+#include "Fit/TestEngine/MinimizerTestPlan.h"
 
 class ResidualTestPlan : public MinimizerTestPlan
 {
@@ -24,7 +24,6 @@ public:
     using test_funct_t = std::function<double(double, const std::vector<double>&)>;
 
     ResidualTestPlan(const std::string& name, test_funct_t func);
-    ~ResidualTestPlan();
 
     fcn_residual_t residualFunction();
 
@@ -39,4 +38,4 @@ private:
     test_funct_t m_test_func;
 };
 
-#endif // RESIDUALTESTPLAN_H
+#endif // BORNAGAIN_TESTS_FUNCTIONAL_FIT_MINIMIZER_RESIDUALTESTPLAN_H

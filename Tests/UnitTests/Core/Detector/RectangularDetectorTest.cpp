@@ -1,16 +1,14 @@
-#include "RectangularDetector.h"
-#include "GISASSimulation.h"
-#include "Numeric.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Detector/RectangularDetector.h"
+#include "Core/Basics/Units.h"
+#include "Core/Simulation/GISASSimulation.h"
+#include "Fit/TestEngine/Numeric.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
 
 class RectangularDetectorTest : public ::testing::Test
 {
 protected:
-    ~RectangularDetectorTest();
-
     //    double phi(DetectorElement& element, double wavelength);
     //    double alpha(DetectorElement& element, double wavelength);
     double phi(kvector_t k) { return k.phi() / Units::degree; }
@@ -27,8 +25,6 @@ protected:
         return is_equal;
     }
 };
-
-RectangularDetectorTest::~RectangularDetectorTest() = default;
 
 TEST_F(RectangularDetectorTest, InitialState)
 {

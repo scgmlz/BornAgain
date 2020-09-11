@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
-#define INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
+#ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
+#define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
 
-#include "Complex.h"
-#include "FTDistributions1D.h"
-#include "IInterferenceFunction.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Correlations/FTDistributions1D.h"
 #include <memory>
 
 //! Interference function of radial paracrystal.
@@ -26,7 +26,7 @@
 class BA_CORE_API_ InterferenceFunctionRadialParaCrystal : public IInterferenceFunction
 {
 public:
-    InterferenceFunctionRadialParaCrystal(double peak_distance, double damping_length = 0.0);
+    InterferenceFunctionRadialParaCrystal(double peak_distance, double damping_length);
     InterferenceFunctionRadialParaCrystal* clone() const override final;
 
     void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
@@ -51,7 +51,6 @@ public:
 
 private:
     double iff_without_dw(const kvector_t q) const override final;
-    InterferenceFunctionRadialParaCrystal(const InterferenceFunctionRadialParaCrystal& other);
     void init_parameters();
 
     double m_peak_distance;  //!< the distance to the first neighbor peak
@@ -63,4 +62,4 @@ private:
     double m_domain_size; //!< Size of coherence domain
 };
 
-#endif // INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H
+#endif // BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTIONRADIALPARACRYSTAL_H

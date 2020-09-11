@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "ProjectionsEditorActions.h"
-#include "SaveProjectionsAssistant.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/JobWidgets/ProjectionsEditorActions.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/SaveProjectionsAssistant.h"
 #include <QAction>
 #include <QItemSelectionModel>
 #include <QModelIndexList>
@@ -63,8 +63,8 @@ QList<QAction*> ProjectionsEditorActions::topToolBarActions()
 
 void ProjectionsEditorActions::onDeleteAction()
 {
-    Q_ASSERT(m_model);
-    Q_ASSERT(m_selectionModel);
+    ASSERT(m_model);
+    ASSERT(m_selectionModel);
 
     QModelIndexList indexes = m_selectionModel->selectedIndexes();
     while (indexes.size()) {

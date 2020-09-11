@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SIMULATIONSETUPASSISTANT_H
-#define SIMULATIONSETUPASSISTANT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONSETUPASSISTANT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONSETUPASSISTANT_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 
 class MultiLayerItem;
@@ -45,4 +45,4 @@ private:
     QStringList m_messages;
 };
 
-#endif // SIMULATIONSETUPASSISTANT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONSETUPASSISTANT_H

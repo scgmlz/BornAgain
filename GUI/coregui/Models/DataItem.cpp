@@ -12,12 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "DataItem.h"
-#include "BornAgainNamespace.h"
-#include "ComboProperty.h"
-#include "GUIHelpers.h"
-#include "ImportDataInfo.h"
-#include "IntensityDataIOFactory.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
 
 const QString DataItem::P_FILE_NAME = "FileName";
 const QString DataItem::P_AXES_UNITS = "Axes Units";
@@ -89,9 +88,9 @@ QString DataItem::selectedAxesUnits() const
 DataItem::DataItem(const QString& modelType) : SessionItem(modelType)
 {
     // name of the file used to serialize given IntensityDataItem
-    addProperty(P_FILE_NAME, QStringLiteral("undefined"))->setVisible(false);
+    addProperty(P_FILE_NAME, "undefined")->setVisible(false);
 
-    ComboProperty units = ComboProperty() << Constants::UnitsNbins;
+    ComboProperty units = ComboProperty() << "nbins";
     addProperty(P_AXES_UNITS, units.variant());
 
     mapper()->setOnPropertyChange([this](const QString& name) {

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBVIEWACTIVITIES_H
-#define JOBVIEWACTIVITIES_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWACTIVITIES_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWACTIVITIES_H
 
-#include "JobViewFlags.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QStringList>
 #include <QVector>
@@ -38,4 +38,4 @@ private:
     static activity_map_t m_activityToDocks;
 };
 
-#endif // JOBVIEWACTIVITIES_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWACTIVITIES_H

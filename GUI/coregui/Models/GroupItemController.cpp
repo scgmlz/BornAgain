@@ -12,9 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "GroupItemController.h"
-#include "ComboProperty.h"
-#include "ItemFactory.h"
+#include "GUI/coregui/Models/GroupItemController.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/ItemFactory.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 GroupItemController::GroupItemController(SessionItem* groupItem, GroupInfo groupInfo)
     : m_groupItem(groupItem), m_groupInfo(groupInfo)

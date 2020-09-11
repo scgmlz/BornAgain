@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "OutputDataWriteStrategy.h"
-#include "ArrayUtils.h"
-#include "BornAgainNamespace.h"
-#include "OutputData.h" // needed by some compilers
-#include "TiffHandler.h"
+#include "Core/InputOutput/OutputDataWriteStrategy.h"
+#include "Core/InputOutput/TiffHandler.h"
+#include "Core/Intensity/ArrayUtils.h"
+#include "Core/Intensity/OutputData.h" // needed by some compilers
 #include <cmath>
 #include <iomanip>
 
@@ -33,8 +32,8 @@ double IgnoreDenormalized(double value)
 
 void Write2DRepresentation(const OutputData<double>& data, std::ostream& output_stream)
 {
-    const size_t nrows = data.getAxis(BornAgain::Y_AXIS_INDEX).size();
-    const size_t ncols = data.getAxis(BornAgain::X_AXIS_INDEX).size();
+    const size_t nrows = data.getAxis(1).size();
+    const size_t ncols = data.getAxis(0).size();
 
     output_stream << "# [nrows=" << nrows << ", ncols=" << ncols << "]" << std::endl;
 
@@ -76,7 +75,7 @@ void Write1DRepresentation(const OutputData<double>& data, std::ostream& output_
     output_stream.imbue(std::locale::classic());
     output_stream << std::scientific << std::setprecision(precision);
 
-    const std::vector<double> axis_values = data.getAxis(BornAgain::X_AXIS_INDEX).getBinCenters();
+    const std::vector<double> axis_values = data.getAxis(0).getBinCenters();
 
     // printing coordinate and associated intensity
     for (size_t i = 0, nrows = axis_values.size(); i < nrows; ++i)

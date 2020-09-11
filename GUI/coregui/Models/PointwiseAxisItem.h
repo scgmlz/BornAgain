@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef POINTWISEAXISITEM_H
-#define POINTWISEAXISITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_POINTWISEAXISITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_POINTWISEAXISITEM_H
 
-#include "AxesItems.h"
-#include "SaveLoadInterface.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/mainwindow/SaveLoadInterface.h"
 
 class PointwiseAxis;
 class SpecularInstrumentItem;
@@ -24,7 +24,7 @@ class SpecularInstrumentItem;
 //! Item for non-uniform axis with specified coordinates.
 class BA_CORE_API_ PointwiseAxisItem : public BasicAxisItem, public SaveLoadInterface
 {
-    static const QString P_NATIVE_UNITS;
+    static const QString P_NATIVE_AXIS_UNITS;
 
 public:
     static const QString P_FILE_NAME;
@@ -58,4 +58,4 @@ private:
     QDateTime m_last_modified;
 };
 
-#endif // POINTWISEAXISITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_POINTWISEAXISITEM_H

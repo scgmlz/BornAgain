@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "PropertyWidgetItem.h"
-#include "CustomEditors.h"
-#include "SessionItem.h"
-#include "SessionItemUtils.h"
-#include "SessionModel.h"
-#include "SessionModelDelegate.h"
+#include "GUI/coregui/Views/PropertyEditor/PropertyWidgetItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Models/SessionModelDelegate.h"
+#include "GUI/coregui/Views/PropertyEditor/CustomEditors.h"
 #include <QComboBox>
 #include <QDataWidgetMapper>
 #include <QDebug>
@@ -45,7 +45,7 @@ PropertyWidgetItem::~PropertyWidgetItem()
 
 void PropertyWidgetItem::setItemEditor(const SessionItem* item, QWidget* editor)
 {
-    Q_ASSERT(m_item == nullptr);
+    ASSERT(m_item == nullptr);
     m_item = item;
     m_editor = editor;
 
@@ -71,8 +71,8 @@ void PropertyWidgetItem::setItemEditor(const SessionItem* item, QWidget* editor)
 
 void PropertyWidgetItem::addToGrid(QGridLayout* gridLayout, int nrow)
 {
-    Q_ASSERT(m_label);
-    Q_ASSERT(m_editor);
+    ASSERT(m_label);
+    ASSERT(m_editor);
 
     gridLayout->addWidget(m_label, nrow, 0);
     gridLayout->addWidget(m_editor, nrow, 1);
@@ -80,7 +80,7 @@ void PropertyWidgetItem::addToGrid(QGridLayout* gridLayout, int nrow)
 
 void PropertyWidgetItem::updateItemRoles()
 {
-    Q_ASSERT(m_item);
+    ASSERT(m_item);
     m_label->setEnabled(m_item->isEnabled());
     m_editor->setEnabled(m_item->isEnabled());
     m_label->setToolTip(SessionItemUtils::ToolTipRole(*m_item).toString());

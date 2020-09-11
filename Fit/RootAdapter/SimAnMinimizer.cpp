@@ -12,9 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "SimAnMinimizer.h"
-#include "GSLMultiMinimizer.h"
-#include "MinimizerConstants.h"
+#include "Fit/RootAdapter/SimAnMinimizer.h"
+#include "Fit/RootAdapter/GSLMultiMinimizer.h"
 
 #ifdef _WIN32
 #pragma warning(push)
@@ -32,96 +31,96 @@ SimAnMinimizer::SimAnMinimizer()
     : RootMinimizerAdapter(MinimizerInfo::buildGSLSimAnInfo()),
       m_siman_minimizer(new ROOT::Math::GSLSimAnMinimizer())
 {
-    addOption(OptionNames::PrintLevel, 0, "Minimizer internal print level");
-    addOption(OptionNames::MaxIterations, 100, "Number of points to try for each step");
-    addOption(OptionNames::IterationTemp, 10, "Number of iterations at each temperature");
-    addOption(OptionNames::StepSize, 1.0, "Max step size used in random walk");
-    addOption(OptionNames::BoltzmannK, 1.0, "Boltzmann k");
-    addOption(OptionNames::BoltzmannInitT, 50.0, "Boltzmann initial temperature");
-    addOption(OptionNames::BoltzmannMu, 1.05, "Boltzmann mu");
-    addOption(OptionNames::BoltzmannTmin, 0.1, "Boltzmann minimal temperature");
+    addOption("PrintLevel", 0, "Minimizer internal print level");
+    addOption("MaxIterations", 100, "Number of points to try for each step");
+    addOption("IterationsAtTemp", 10, "Number of iterations at each temperature");
+    addOption("StepSize", 1.0, "Max step size used in random walk");
+    addOption("k", 1.0, "Boltzmann k");
+    addOption("t_init", 50.0, "Boltzmann initial temperature");
+    addOption("mu", 1.05, "Boltzmann mu");
+    addOption("t_min", 0.1, "Boltzmann minimal temperature");
 }
 
 SimAnMinimizer::~SimAnMinimizer() = default;
 
 void SimAnMinimizer::setPrintLevel(int value)
 {
-    setOptionValue(OptionNames::PrintLevel, value);
+    setOptionValue("PrintLevel", value);
 }
 
 int SimAnMinimizer::printLevel() const
 {
-    return optionValue<int>(OptionNames::PrintLevel);
+    return optionValue<int>("PrintLevel");
 }
 
 void SimAnMinimizer::setMaxIterations(int value)
 {
-    setOptionValue(OptionNames::MaxIterations, value);
+    setOptionValue("MaxIterations", value);
 }
 
 int SimAnMinimizer::maxIterations() const
 {
-    return optionValue<int>(OptionNames::MaxIterations);
+    return optionValue<int>("MaxIterations");
 }
 
 void SimAnMinimizer::setIterationsAtEachTemp(int value)
 {
-    setOptionValue(OptionNames::IterationTemp, value);
+    setOptionValue("IterationsAtTemp", value);
 }
 
 int SimAnMinimizer::iterationsAtEachTemp() const
 {
-    return optionValue<int>(OptionNames::IterationTemp);
+    return optionValue<int>("IterationsAtTemp");
 }
 
 void SimAnMinimizer::setStepSize(double value)
 {
-    setOptionValue(OptionNames::StepSize, value);
+    setOptionValue("StepSize", value);
 }
 
 double SimAnMinimizer::stepSize() const
 {
-    return optionValue<double>(OptionNames::StepSize);
+    return optionValue<double>("StepSize");
 }
 
 void SimAnMinimizer::setBoltzmannK(double value)
 {
-    setOptionValue(OptionNames::BoltzmannK, value);
+    setOptionValue("k", value);
 }
 
 double SimAnMinimizer::boltzmannK() const
 {
-    return optionValue<double>(OptionNames::BoltzmannK);
+    return optionValue<double>("k");
 }
 
 void SimAnMinimizer::setBoltzmannInitialTemp(double value)
 {
-    setOptionValue(OptionNames::BoltzmannInitT, value);
+    setOptionValue("t_init", value);
 }
 
 double SimAnMinimizer::boltzmannInitialTemp() const
 {
-    return optionValue<double>(OptionNames::BoltzmannInitT);
+    return optionValue<double>("t_init");
 }
 
 void SimAnMinimizer::setBoltzmannMu(double value)
 {
-    setOptionValue(OptionNames::BoltzmannMu, value);
+    setOptionValue("mu", value);
 }
 
 double SimAnMinimizer::boltzmannMu() const
 {
-    return optionValue<double>(OptionNames::BoltzmannMu);
+    return optionValue<double>("mu");
 }
 
 void SimAnMinimizer::setBoltzmannMinTemp(double value)
 {
-    setOptionValue(OptionNames::BoltzmannTmin, value);
+    setOptionValue("t_min", value);
 }
 
 double SimAnMinimizer::boltzmannMinTemp() const
 {
-    return optionValue<double>(OptionNames::BoltzmannTmin);
+    return optionValue<double>("t_min");
 }
 
 std::map<std::string, std::string> SimAnMinimizer::statusMap() const

@@ -1,23 +1,18 @@
-#include "FTDistributionItems.h"
-#include "FTDistributions2D.h"
-#include "InterferenceFunction2DParaCrystal.h"
-#include "InterferenceFunctionItems.h"
-#include "Lattice2D.h"
-#include "Lattice2DItems.h"
-#include "ParticleLayoutItem.h"
-#include "SampleModel.h"
-#include "TransformFromDomain.h"
-#include "Units.h"
-#include "google_test.h"
-#include "item_constants.h"
+#include "Core/Aggregate/InterferenceFunction2DParaCrystal.h"
+#include "Core/Basics/Units.h"
+#include "Core/Correlations/FTDistributions2D.h"
+#include "Core/Lattice/Lattice2D.h"
+#include "GUI/coregui/Models/FTDistributionItems.h"
+#include "GUI/coregui/Models/InterferenceFunctionItems.h"
+#include "GUI/coregui/Models/Lattice2DItems.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/TransformFromDomain.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestParaCrystalItems : public ::testing::Test
 {
-public:
-    ~TestParaCrystalItems();
 };
-
-TestParaCrystalItems::~TestParaCrystalItems() = default;
 
 TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain)
 {
@@ -48,20 +43,20 @@ TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain)
               orig.integrationOverXi());
 
     SessionItem* latticeItem = item.getGroupItem(InterferenceFunction2DLatticeItem::P_LATTICE_TYPE);
-    EXPECT_EQ(latticeItem->modelType(), Constants::BasicLatticeType);
+    EXPECT_EQ(latticeItem->modelType(), "BasicLattice");
     EXPECT_EQ(latticeItem->getItemValue(BasicLatticeItem::P_LATTICE_LENGTH1).toDouble(), length1);
     EXPECT_EQ(latticeItem->getItemValue(BasicLatticeItem::P_LATTICE_LENGTH2).toDouble(), length2);
     EXPECT_EQ(latticeItem->getItemValue(BasicLatticeItem::P_LATTICE_ANGLE).toDouble(), angle);
     EXPECT_EQ(latticeItem->getItemValue(Lattice2DItem::P_LATTICE_ROTATION_ANGLE).toDouble(), xi);
 
     SessionItem* pdfItem1 = item.getGroupItem(InterferenceFunction2DParaCrystalItem::P_PDF1);
-    EXPECT_EQ(pdfItem1->modelType(), Constants::FTDistribution2DCauchyType);
+    EXPECT_EQ(pdfItem1->modelType(), "FTDistribution2DCauchy");
     EXPECT_EQ(pdfItem1->getItemValue(FTDistribution2DItem::P_OMEGA_X).toDouble(), clength_x);
     EXPECT_EQ(pdfItem1->getItemValue(FTDistribution2DItem::P_OMEGA_Y).toDouble(), clength_y);
     EXPECT_EQ(pdfItem1->getItemValue(FTDistribution2DItem::P_GAMMA).toDouble(), gamma);
 
     SessionItem* pdfItem2 = item.getGroupItem(InterferenceFunction2DParaCrystalItem::P_PDF2);
-    EXPECT_EQ(pdfItem2->modelType(), Constants::FTDistribution2DGaussType);
+    EXPECT_EQ(pdfItem2->modelType(), "FTDistribution2DGauss");
     EXPECT_EQ(pdfItem2->getItemValue(FTDistribution2DItem::P_OMEGA_X).toDouble(), clength_x);
     EXPECT_EQ(pdfItem2->getItemValue(FTDistribution2DItem::P_OMEGA_Y).toDouble(), clength_y);
     EXPECT_EQ(pdfItem2->getItemValue(FTDistribution2DItem::P_GAMMA).toDouble(), gamma);
@@ -82,13 +77,12 @@ TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain)
 TEST_F(TestParaCrystalItems, test_Inference2DRotationAngleToggle)
 {
     SampleModel model;
-    SessionItem* multilayer = model.insertNewItem(Constants::MultiLayerType);
-    SessionItem* layer = model.insertNewItem(Constants::LayerType, multilayer->index());
-    SessionItem* layout = model.insertNewItem(Constants::ParticleLayoutType, layer->index());
+    SessionItem* multilayer = model.insertNewItem("MultiLayer");
+    SessionItem* layer = model.insertNewItem("Layer", multilayer->index());
+    SessionItem* layout = model.insertNewItem("ParticleLayout", layer->index());
 
-    SessionItem* interference =
-        model.insertNewItem(Constants::InterferenceFunction2DParaCrystalType, layout->index(), -1,
-                            ParticleLayoutItem::T_INTERFERENCE);
+    SessionItem* interference = model.insertNewItem("Interference2DParaCrystal", layout->index(),
+                                                    -1, ParticleLayoutItem::T_INTERFERENCE);
 
     // rotation (xi) should be disabled if integration is on
     interference->setItemValue(InterferenceFunction2DParaCrystalItem::P_XI_INTEGRATION, true);

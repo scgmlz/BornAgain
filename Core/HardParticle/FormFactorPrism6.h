@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORPRISM6_H
-#define FORMFACTORPRISM6_H
-#include "FormFactorPolyhedron.h"
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM6_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM6_H
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A prism based on a regular hexagonal.
 //! @ingroup hardParticle
@@ -22,6 +22,7 @@
 class BA_CORE_API_ FormFactorPrism6 : public FormFactorPolygonalPrism
 {
 public:
+    FormFactorPrism6(const std::vector<double> P);
     FormFactorPrism6(double base_edge, double height);
 
     FormFactorPrism6* clone() const override final
@@ -37,9 +38,11 @@ protected:
                                  kvector_t translation) const override final;
 
     void onChange() override final;
+    double height() const final { return m_height; }
 
 private:
-    double m_base_edge;
+    const double& m_base_edge;
+    const double& m_height;
 };
 
-#endif // FORMFACTORPRISM6_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM6_H

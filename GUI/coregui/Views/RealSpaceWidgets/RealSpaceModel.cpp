@@ -12,4 +12,4 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceModel.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceModel.h"

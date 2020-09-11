@@ -1,19 +1,16 @@
-#include "Comparators.h"
-#include "ExternalProperty.h"
-#include "google_test.h"
-#include "test_utils.h"
+#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/GUI/Comparators.h"
+#include "Tests/UnitTests/GUI/Utils.h"
 
 class TestExternalProperty : public ::testing::Test
 {
 public:
-    ~TestExternalProperty();
     ExternalProperty propertyFromXML(const QString& buffer)
     {
-        return TestUtils::propertyFromXML<ExternalProperty>(buffer);
+        return GuiUnittestUtils::propertyFromXML<ExternalProperty>(buffer);
     }
 };
-
-TestExternalProperty::~TestExternalProperty() = default;
 
 TEST_F(TestExternalProperty, test_initialState)
 {
@@ -30,7 +27,7 @@ TEST_F(TestExternalProperty, test_initialState)
     property.setColor(QColor());
     EXPECT_TRUE(property.isValid() == false);
     property.setText("aaa");
-    EXPECT_TRUE(property.text() == QString("aaa"));
+    EXPECT_TRUE(property.text() == "aaa");
     EXPECT_TRUE(property.isValid() == true);
     property.setText(QString());
     EXPECT_TRUE(property.isValid() == false);
@@ -84,7 +81,7 @@ TEST_F(TestExternalProperty, test_toXML)
     ExternalProperty property;
     expected = "<Parameter ParType=\"ExternalProperty\" ParRole=\"0\" Text=\"\" Color=\"\" "
                "Identifier=\"\"/>";
-    EXPECT_EQ(TestUtils::propertyToXML(property), expected);
+    EXPECT_EQ(GuiUnittestUtils::propertyToXML(property), expected);
 
     // from XML to empty property
     EXPECT_EQ(propertyFromXML(expected).text(), property.text());
@@ -98,7 +95,7 @@ TEST_F(TestExternalProperty, test_toXML)
     property.setColor(QColor(Qt::red));
     expected = "<Parameter ParType=\"ExternalProperty\" ParRole=\"0\" Text=\"abc\" "
                "Color=\"#ffff0000\" Identifier=\"{123456}\"/>";
-    EXPECT_EQ(TestUtils::propertyToXML(property), expected);
+    EXPECT_EQ(GuiUnittestUtils::propertyToXML(property), expected);
 
     // from XML to initialized property
     EXPECT_EQ(propertyFromXML(expected).identifier(), property.identifier());

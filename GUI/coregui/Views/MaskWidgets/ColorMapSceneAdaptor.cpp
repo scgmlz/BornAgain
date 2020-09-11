@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ColorMapSceneAdaptor.h"
-#include "ColorMap.h"
+#include "GUI/coregui/Views/MaskWidgets/ColorMapSceneAdaptor.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
 
 ColorMapSceneAdaptor::ColorMapSceneAdaptor() : m_plot(0) {}
 

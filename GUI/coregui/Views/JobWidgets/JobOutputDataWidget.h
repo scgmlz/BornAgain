@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBOUTPUTDATAWIDGET_H
-#define JOBOUTPUTDATAWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBOUTPUTDATAWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBOUTPUTDATAWIDGET_H
 
-#include "ItemStackPresenter.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemStackPresenter.h"
 
 class JobResultsPresenter;
 class JobModel;
@@ -40,4 +40,4 @@ private:
     ItemStackPresenter<JobResultsPresenter>* m_stackedWidget;
 };
 
-#endif // JOBOUTPUTDATAWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBOUTPUTDATAWIDGET_H

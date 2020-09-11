@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANGE_H
-#define TRANGE_H
+#ifndef BORNAGAIN_CORE_PARTICLE_TRANGE_H
+#define BORNAGAIN_CORE_PARTICLE_TRANGE_H
 
 #include <cstddef>
 
@@ -52,4 +52,4 @@ private:
     size_t m_n_samples;
 };
 
-#endif // TRANGE_H
+#endif // BORNAGAIN_CORE_PARTICLE_TRANGE_H

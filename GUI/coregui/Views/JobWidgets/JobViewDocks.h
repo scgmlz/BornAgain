@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBVIEWDOCKS_H
-#define JOBVIEWDOCKS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWDOCKS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWDOCKS_H
 
-#include "DocksController.h"
+#include "GUI/coregui/Views/CommonWidgets/DocksController.h"
 
 class JobView;
 class JobSelectorWidget;
@@ -63,4 +63,4 @@ private:
     JobView* m_jobView;
 };
 
-#endif // JOBVIEWDOCKS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWDOCKS_H

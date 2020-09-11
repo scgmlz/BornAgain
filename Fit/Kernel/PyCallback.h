@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef PYCALLBACK_H
-#define PYCALLBACK_H
+#ifndef BORNAGAIN_FIT_KERNEL_PYCALLBACK_H
+#define BORNAGAIN_FIT_KERNEL_PYCALLBACK_H
 
-#include "Parameters.h"
-#include "WinDllMacros.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Wrap/WinDllMacros.h"
 #include <vector>
 
 //! Base class to wrap Python callable and pass it to C++. Used in swig interface file,
@@ -46,4 +46,4 @@ private:
     CallbackType m_callback_type;
 };
 
-#endif // PYCALLBACK_H
+#endif // BORNAGAIN_FIT_KERNEL_PYCALLBACK_H

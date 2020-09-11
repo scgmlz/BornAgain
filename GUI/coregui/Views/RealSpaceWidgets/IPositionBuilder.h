@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef IPOSITIONBUILDER_H
-#define IPOSITIONBUILDER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_IPOSITIONBUILDER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_IPOSITIONBUILDER_H
 
 #include <memory>
 #include <vector>
@@ -131,4 +131,4 @@ private:
     std::unique_ptr<InterferenceFunctionRadialParaCrystal> mP_iff;
 };
 
-#endif // IPOSITIONBUILDER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_IPOSITIONBUILDER_H

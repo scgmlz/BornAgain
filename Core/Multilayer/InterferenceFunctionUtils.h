@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONUTILS_H
-#define INTERFERENCEFUNCTIONUTILS_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_INTERFERENCEFUNCTIONUTILS_H
+#define BORNAGAIN_CORE_MULTILAYER_INTERFERENCEFUNCTIONUTILS_H
 
-#include "Complex.h"
+#include "Core/Basics/Complex.h"
 #include <Eigen/StdVector>
 #include <vector>
 
@@ -35,4 +35,4 @@ PrecomputePolarizedFormFactors(const SimulationElement& sim_element,
 
 } // namespace InterferenceFunctionUtils
 
-#endif // INTERFERENCEFUNCTIONUTILS_H
+#endif // BORNAGAIN_CORE_MULTILAYER_INTERFERENCEFUNCTIONUTILS_H

@@ -12,13 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "BeamDistributionItem.h"
-#include "Distributions.h"
-#include "GroupItem.h"
-#include "ParameterDistribution.h"
-#include "ParameterTranslators.h"
-#include "RealLimitsItems.h"
-#include "Units.h"
+#include "GUI/coregui/Models/BeamDistributionItem.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Basics/Units.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterDistribution.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/ParameterTranslators.h"
+#include "GUI/coregui/Models/RealLimitsItems.h"
 
 const QString BeamDistributionItem::P_DISTRIBUTION = "Distribution";
 
@@ -27,7 +28,7 @@ BeamDistributionItem::BeamDistributionItem(const QString& name, bool show_mean) 
     addTranslator(DistributionNoneTranslator());
 
     mapper()->setOnChildPropertyChange([this, show_mean](SessionItem* item, const QString&) {
-        if (item->modelType() == Constants::GroupItemType && item->parent() == this)
+        if (item->modelType() == "GroupProperty" && item->parent() == this)
             initDistributionItem(show_mean);
     });
 }
@@ -51,7 +52,7 @@ BeamDistributionItem::getParameterDistributionForName(const std::string& paramet
 
             RealLimitsItem* limitsItem = dynamic_cast<RealLimitsItem*>(
                 distributionItem->getGroupItem(DistributionItem::P_LIMITS));
-            Q_ASSERT(limitsItem);
+            ASSERT(limitsItem);
 
             RealLimits limits = limitsItem->createRealLimits(scaleFactor());
 
@@ -67,11 +68,11 @@ BeamDistributionItem::getParameterDistributionForName(const std::string& paramet
 void BeamDistributionItem::initDistributionItem(bool show_mean)
 {
     GroupItem* groupItem = dynamic_cast<GroupItem*>(getItem(P_DISTRIBUTION));
-    Q_ASSERT(groupItem);
+    ASSERT(groupItem);
 
     SessionItem* distributionNone = nullptr;
     for (auto item : groupItem->getItems(GroupItem::T_ITEMS)) {
-        if (item->modelType() == Constants::DistributionNoneType) {
+        if (item->modelType() == "DistributionNone") {
             distributionNone = item;
             break;
         }
@@ -118,8 +119,8 @@ double BeamDistributionItem::meanValue() const
 void BeamDistributionItem::resetToValue(double value)
 {
     SessionItem* distributionItem =
-        setGroupProperty(BeamDistributionItem::P_DISTRIBUTION, Constants::DistributionNoneType);
-    Q_ASSERT(distributionItem);
+        setGroupProperty(BeamDistributionItem::P_DISTRIBUTION, "DistributionNone");
+    ASSERT(distributionItem);
     distributionItem->setItemValue(DistributionNoneItem::P_MEAN, value);
 }
 
@@ -133,8 +134,8 @@ double BeamDistributionItem::scaleFactor() const
 
 void BeamDistributionItem::register_distribution_group(const QString& group_type)
 {
-    Q_ASSERT(group_type == Constants::DistributionExtendedGroup
-             || group_type == Constants::SymmetricDistributionGroup);
+    ASSERT(group_type == "Distribution extended group"
+           || group_type == "Symmetric distribution group");
     addGroupProperty(P_DISTRIBUTION, group_type);
 }
 

@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "ComponentFlatView.h"
-#include "ComponentUtils.h"
-#include "LayoutUtils.h"
-#include "PropertyEditorFactory.h"
-#include "PropertyWidgetItem.h"
-#include "SessionItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentFlatView.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentUtils.h"
+#include "GUI/coregui/Views/PropertyEditor/PropertyEditorFactory.h"
+#include "GUI/coregui/Views/PropertyEditor/PropertyWidgetItem.h"
+#include "GUI/coregui/utils/LayoutUtils.h"
 #include <QComboBox>
 #include <QDataWidgetMapper>
 #include <QGridLayout>
@@ -74,7 +74,7 @@ void ComponentFlatView::setModel(SessionModel* model)
 
 void ComponentFlatView::clearLayout()
 {
-    Q_ASSERT(m_gridLayout);
+    ASSERT(m_gridLayout);
     LayoutUtils::clearGridLayout(m_gridLayout, false);
 
     for (auto widget : m_widgetItems)
@@ -92,8 +92,8 @@ void ComponentFlatView::onDataChanged(const QModelIndex& topLeft, const QModelIn
 {
     Q_UNUSED(bottomRight);
     SessionItem* item = m_model->itemForIndex(topLeft);
-    Q_ASSERT(item);
-    if (item->modelType() == Constants::GroupItemType)
+    ASSERT(item);
+    if (item->modelType() == "GroupProperty")
         updateItemProperties();
 
     if (roles.contains(SessionFlags::FlagRole))

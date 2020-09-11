@@ -12,10 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "ItemComboWidget.h"
-#include "GUIHelpers.h"
-#include "ItemComboToolBar.h"
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemComboWidget.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemComboToolBar.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QComboBox>
 #include <QEvent>
 #include <QStackedWidget>
@@ -53,16 +54,16 @@ void ItemComboWidget::setPresentation(const QString& presentationType)
 
     m_toolBar->setPresentation(presentationType);
 
-    Q_ASSERT(currentItem());
+    ASSERT(currentItem());
 
     SessionItemWidget* widget = m_presentationTypeToWidget[presentationType];
 
     if (!widget) {
-        widget = m_widgetFactory.create(presentationType).release();
+        widget = m_widgetFactory.createItemPtr(presentationType).release();
         m_stackedWidget->addWidget(widget);
         m_presentationTypeToWidget[presentationType] = widget;
     }
-    Q_ASSERT(widget);
+    ASSERT(widget);
     widget->setItem(currentItem());
     m_toolBar->setActionList(widget->actionList());
     m_stackedWidget->setCurrentWidget(widget);

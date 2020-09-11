@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "JobListViewDelegate.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "hostosinfo.h"
+#include "GUI/coregui/Views/JobWidgets/JobListViewDelegate.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/utils/hostosinfo.h"
 #include "progressbar.h"
 #include <QApplication>
 #include <QMouseEvent>
@@ -27,11 +27,11 @@
 JobListViewDelegate::JobListViewDelegate(QWidget* parent) : QItemDelegate(parent)
 {
     m_buttonState = QStyle::State_Enabled;
-    m_status_to_color[Constants::STATUS_IDLE] = QColor(255, 286, 12);
-    m_status_to_color[Constants::STATUS_RUNNING] = QColor(5, 150, 230);
-    m_status_to_color[Constants::STATUS_COMPLETED] = QColor(5, 150, 230);
-    m_status_to_color[Constants::STATUS_CANCELED] = QColor(186, 0, 0);
-    m_status_to_color[Constants::STATUS_FAILED] = QColor(255, 186, 12);
+    m_status_to_color["Idle"] = QColor(255, 286, 12);
+    m_status_to_color["Running"] = QColor(5, 150, 230);
+    m_status_to_color["Completed"] = QColor(5, 150, 230);
+    m_status_to_color["Canceled"] = QColor(186, 0, 0);
+    m_status_to_color["Failed"] = QColor(255, 186, 12);
 }
 
 void JobListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
@@ -41,10 +41,10 @@ void JobListViewDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
         painter->fillRect(option.rect, option.palette.highlight());
 
     const JobModel* model = static_cast<const JobModel*>(index.model());
-    Q_ASSERT(model);
+    ASSERT(model);
 
     const JobItem* item = model->getJobItemForIndex(index);
-    Q_ASSERT(item);
+    ASSERT(item);
 
     painter->save();
 
@@ -79,10 +79,10 @@ bool JobListViewDelegate::editorEvent(QEvent* event, QAbstractItemModel* model,
     }
 
     const JobModel* jqmodel = static_cast<const JobModel*>(index.model());
-    Q_ASSERT(model);
+    ASSERT(model);
 
     const JobItem* item = jqmodel->getJobItemForIndex(index);
-    Q_ASSERT(item);
+    ASSERT(item);
 
     if (!item->isRunning())
         return false;

@@ -12,10 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MultiLayerItem.h"
-#include "BornAgainNamespace.h"
-#include "LayerItem.h"
-#include "ParameterTranslators.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/ParameterTranslators.h"
 
 namespace
 {
@@ -23,26 +22,26 @@ const QString external_field_tooltip = "External field (A/m)";
 }
 
 const QString MultiLayerItem::P_CROSS_CORR_LENGTH =
-    QString::fromStdString(BornAgain::CrossCorrelationLength);
+    QString::fromStdString("CrossCorrelationLength");
 const QString MultiLayerItem::P_EXTERNAL_FIELD = "ExternalField";
 const QString MultiLayerItem::T_LAYERS = "Layer tag";
 
-MultiLayerItem::MultiLayerItem() : SessionGraphicsItem(Constants::MultiLayerType)
+MultiLayerItem::MultiLayerItem() : SessionGraphicsItem("MultiLayer")
 {
-    setToolTip(QStringLiteral("A multilayer to hold stack of layers"));
-    setItemName(Constants::MultiLayerType);
+    setToolTip("A multilayer to hold stack of layers");
+    setItemName("MultiLayer");
 
     addProperty(P_CROSS_CORR_LENGTH, 0.0)
         ->setDecimals(5)
-        .setToolTip(QStringLiteral("Cross correlation length of roughnesses \n"
-                                   "between interfaces in nanometers"));
-    addGroupProperty(P_EXTERNAL_FIELD, Constants::VectorType)->setToolTip(external_field_tooltip);
+        .setToolTip("Cross correlation length of roughnesses \n"
+                    "between interfaces in nanometers");
+    addGroupProperty(P_EXTERNAL_FIELD, "Vector")->setToolTip(external_field_tooltip);
 
-    registerTag(T_LAYERS, 0, -1, QStringList() << Constants::LayerType);
+    registerTag(T_LAYERS, 0, -1, QStringList() << "Layer");
     setDefaultTag(T_LAYERS);
 
     addTranslator(RoughnessTranslator(this));
-    addTranslator(VectorParameterTranslator(P_EXTERNAL_FIELD, BornAgain::ExternalField));
+    addTranslator(VectorParameterTranslator(P_EXTERNAL_FIELD, "ExternalField"));
 
     mapper()->setOnChildrenChange([this](SessionItem*) { updateLayers(); });
 }
@@ -57,7 +56,7 @@ QVector<SessionItem*> MultiLayerItem::materialPropertyItems()
 
 void MultiLayerItem::updateLayers()
 {
-    QVector<SessionItem*> list = getChildrenOfType(Constants::LayerType);
+    QVector<SessionItem*> list = getChildrenOfType("Layer");
     for (auto it = list.begin(); it != list.end(); ++it) {
         if (it == list.begin())
             (*it)->getItem(LayerItem::P_ROUGHNESS)->setEnabled(false);

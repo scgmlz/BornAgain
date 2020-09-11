@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentViewToolBar.h"
-#include "InstrumentViewActions.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentViewToolBar.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentViewActions.h"
 #include <QMenu>
 #include <QToolButton>
 

@@ -1,28 +1,24 @@
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "ProcessedSample.h"
-#include "SimulationOptions.h"
-#include "SpecularMagneticStrategy.h"
-#include "SpecularScalarTanhStrategy.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Basics/Units.h"
+#include "Core/Computation/ProcessedSample.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Multilayer/SpecularMagneticStrategy.h"
+#include "Core/Multilayer/SpecularScalarTanhStrategy.h"
+#include "Core/Parametrization/SimulationOptions.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 constexpr double eps = 1e-10;
 
 class SpecularMagneticTest_v2 : public ::testing::Test
 {
 protected:
-    ~SpecularMagneticTest_v2();
-
     //! Compares results with scalar case
     void testZeroField(const kvector_t& k, const ProcessedSample& m_layer_scalar,
                        const ProcessedSample& m_layer_zerofield);
 
     void ifEqual(const Eigen::Vector2cd& lhs, const Eigen::Vector2cd& rhs);
 };
-
-SpecularMagneticTest_v2::~SpecularMagneticTest_v2() = default;
 
 void SpecularMagneticTest_v2::testZeroField(const kvector_t& k,
                                             const ProcessedSample& sample_scalar,

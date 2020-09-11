@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORPOLYHEDRON_H
-#define FORMFACTORPOLYHEDRON_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPOLYHEDRON_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPOLYHEDRON_H
 
-#include "IFormFactorBorn.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 #include <memory>
 
 //! For internal use in PolyhedralFace.
@@ -67,7 +67,6 @@ public:
                    bool _sym_S2 = false);
 
     double area() const { return m_area; }
-    kvector_t center() const { return m_center; }
     double pyramidalVolume() const { return m_rperp * m_area / 3; }
     double radius3d() const { return m_radius_3d; }
     //! Returns conj(q)*normal [BasicVector3D::dot is antilinear in 'this' argument]
@@ -88,7 +87,6 @@ private:
     double m_rperp;     //!< distance of this polygon's plane from the origin, along 'm_normal'
     double m_radius_2d; //!< radius of enclosing cylinder
     double m_radius_3d; //!< radius of enclosing sphere
-    kvector_t m_center; //!< center of mass
 
     void decompose_q(cvector_t q, complex_t& qperp, cvector_t& qpa) const;
     complex_t ff_n_core(int m, cvector_t qpa, complex_t qperp) const;
@@ -107,6 +105,10 @@ public:
 #endif
 
     FormFactorPolyhedron() {}
+    FormFactorPolyhedron(const NodeMeta& meta, const std::vector<double>& PValues);
+
+    double bottomZ(const IRotation& rotation) const override final;
+    double topZ(const IRotation& rotation) const override final;
 
     complex_t evaluate_for_q(cvector_t q) const override final;
     complex_t evaluate_centered(cvector_t q) const;
@@ -116,10 +118,10 @@ public:
     void assert_platonic() const;
 
 protected:
-    double m_z_origin;
+    double m_z_bottom;
     bool m_sym_Ci; //!< if true, then faces obtainable by inversion are not provided
 
-    void setPolyhedron(const PolyhedralTopology& topology, double z_origin,
+    void setPolyhedron(const PolyhedralTopology& topology, double z_bottom,
                        const std::vector<kvector_t>& vertices);
 
 private:
@@ -129,6 +131,7 @@ private:
     std::vector<PolyhedralFace> m_faces;
     double m_radius;
     double m_volume;
+    std::vector<kvector_t> m_vertices; //! for topZ, bottomZ computation only
 };
 
 //! A prism with a polygonal base, for form factor computation.
@@ -136,17 +139,22 @@ private:
 class BA_CORE_API_ FormFactorPolygonalPrism : public IFormFactorBorn
 {
 public:
-    FormFactorPolygonalPrism(double height) : m_height(height) {}
+    FormFactorPolygonalPrism() = default;
+    FormFactorPolygonalPrism(const NodeMeta& meta, const std::vector<double>& PValues);
 
-    complex_t evaluate_for_q(cvector_t q) const override final;
-    double volume() const override final;
-    double getHeight() const { return m_height; }
-    double radialExtension() const override final { return std::sqrt(m_base->area()); }
+    double bottomZ(const IRotation& rotation) const override final;
+    double topZ(const IRotation& rotation) const override final;
+
+    virtual complex_t evaluate_for_q(cvector_t q) const override;
+    virtual double volume() const override;
+    double getHeight() const { return height(); }
+    virtual double radialExtension() const override { return std::sqrt(m_base->area()); }
 
 protected:
+    virtual double height() const = 0;
     std::unique_ptr<PolyhedralFace> m_base;
-    double m_height;
     void setPrism(bool symmetry_Ci, const std::vector<kvector_t>& vertices);
+    std::vector<kvector_t> m_vertices; //! for topZ, bottomZ computation only
 };
 
 //! A polygonal surface, for testing form factor computations.
@@ -154,7 +162,8 @@ protected:
 class BA_CORE_API_ FormFactorPolygonalSurface : public IFormFactorBorn
 {
 public:
-    FormFactorPolygonalSurface() {}
+    FormFactorPolygonalSurface() = default;
+    FormFactorPolygonalSurface(const NodeMeta& meta, const std::vector<double>& PValues);
 
     complex_t evaluate_for_q(cvector_t q) const override final;
     double volume() const override { return 0; }
@@ -164,4 +173,4 @@ protected:
     std::unique_ptr<PolyhedralFace> m_base;
 };
 
-#endif // FORMFACTORPOLYHEDRON_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPOLYHEDRON_H

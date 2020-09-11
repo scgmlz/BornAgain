@@ -50,10 +50,10 @@
 // We mean it.
 //
 
-#ifndef FORMWINDOWBASE_P_H
-#define FORMWINDOWBASE_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_FORMWINDOWBASE_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_FORMWINDOWBASE_P_H
 
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 #include <QtDesigner/QDesignerFormWindowInterface>
 
@@ -197,4 +197,4 @@ private:
 
 QT_END_NAMESPACE
 
-#endif // FORMWINDOWBASE_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_FORMWINDOWBASE_P_H

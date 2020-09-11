@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "SimulationResult.h"
-#include "FixedBinAxis.h"
-#include "Histogram2D.h"
-#include "OutputData.h"
+#include "Core/Instrument/SimulationResult.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Intensity/OutputData.h"
 
 SimulationResult::SimulationResult(const OutputData<double>& data,
                                    const IUnitConverter& unit_converter)
@@ -118,6 +118,7 @@ size_t SimulationResult::size() const
     return mP_data ? mP_data->getAllocatedSize() : 0;
 }
 
+#ifdef BORNAGAIN_PYTHON
 PyObject* SimulationResult::array(AxesUnits units) const
 {
     if (!mP_data || !mP_unit_converter)
@@ -125,6 +126,7 @@ PyObject* SimulationResult::array(AxesUnits units) const
             "Error in SimulationResult::array: attempt to access non-initialized data");
     return mP_unit_converter->createConvertedData(*mP_data, units)->getArray();
 }
+#endif
 
 std::vector<double> SimulationResult::axis(AxesUnits units) const
 {

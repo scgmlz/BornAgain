@@ -1,5 +1,5 @@
 find_package(Qt5Widgets REQUIRED)
 
-add_subdirectory(GUIStandardTest)
-add_subdirectory(GUISpecial)
-
+add_subdirectory(Std)
+add_subdirectory(Translate)
+add_subdirectory(Other)

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef REALSPACEBUILDER_H
-#define REALSPACEBUILDER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEBUILDER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEBUILDER_H
 
-#include "../../ba3d/ba3d/view/camera.h"
-#include "WinDllMacros.h"
+#include "GUI/ba3d/view/camera.h"
+#include "Wrap/WinDllMacros.h"
 #include <QVector3D>
 #include <QWidget>
 
@@ -43,23 +43,21 @@ public:
                                                   RealSpace::Vector3D::_z));         // up
 
     void populateMultiLayer(RealSpaceModel* model, const SessionItem& item,
-                            const SceneGeometry& sceneGeometry,
-                            const QVector3D& origin = QVector3D());
+                            const SceneGeometry& sceneGeometry, const QVector3D& origin = {});
 
     void populateLayer(RealSpaceModel* model, const SessionItem& layerItem,
-                       const SceneGeometry& sceneGeometry, const QVector3D& origin = QVector3D(),
+                       const SceneGeometry& sceneGeometry, const QVector3D& origin = {},
                        const bool isTopLayer = false);
 
     void populateLayout(RealSpaceModel* model, const SessionItem& layoutItem,
-                        const SceneGeometry& sceneGeometry, const QVector3D& origin = QVector3D());
+                        const SceneGeometry& sceneGeometry, const QVector3D& origin = {});
 
     void populateParticleFromParticleItem(RealSpaceModel* model,
                                           const SessionItem& particleItem) const;
 
-    void
-    populateParticleFromParticle3DContainer(RealSpaceModel* model,
-                                            const Particle3DContainer& particle3DContainer,
-                                            const QVector3D& lattice_position = QVector3D()) const;
+    void populateParticleFromParticle3DContainer(RealSpaceModel* model,
+                                                 const Particle3DContainer& particle3DContainer,
+                                                 const QVector3D& lattice_position = {}) const;
 };
 
-#endif // REALSPACEBUILDER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEBUILDER_H

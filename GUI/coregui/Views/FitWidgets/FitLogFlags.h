@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITLOGFLAGS_H
-#define FITLOGFLAGS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOGFLAGS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOGFLAGS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QColor>
 #include <QFlags>
 
@@ -32,4 +32,4 @@ public:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(FitLogFlags::MessageType)
 
-#endif //  PROJECTFLAGS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOGFLAGS_H

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "UpdateNotifierWidget.h"
-#include "UpdateNotifier.h"
+#include "GUI/coregui/mainwindow/UpdateNotifierWidget.h"
+#include "GUI/coregui/mainwindow/UpdateNotifier.h"
 #include <QDebug>
 #include <QDesktopServices>
 #include <QHBoxLayout>

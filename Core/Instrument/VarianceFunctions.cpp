@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "VarianceFunctions.h"
+#include "Core/Instrument/VarianceFunctions.h"
 #include <algorithm>
 
 IVarianceFunction::IVarianceFunction() = default;

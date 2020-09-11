@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "SessionModelView.h"
-#include "InstrumentModel.h"
-#include "JobModel.h"
-#include "MaterialModel.h"
-#include "ModelTreeView.h"
-#include "RealDataModel.h"
-#include "SampleModel.h"
-#include "SessionModelDelegate.h"
-#include "TestView.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/SessionModelView.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionModelDelegate.h"
+#include "GUI/coregui/Views/CommonWidgets/ModelTreeView.h"
+#include "GUI/coregui/Views/TestView.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QToolBar>
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -66,7 +66,7 @@ void SessionModelView::onExpandCollapseTree()
 
 void SessionModelView::init_tabs()
 {
-    Q_ASSERT(m_content.empty());
+    ASSERT(m_content.empty());
 
     for (auto model : modelsForTabs()) {
         auto treeView = new ModelTreeView(this, model);

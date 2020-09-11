@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SPHERICALDETECTORITEM_H
-#define SPHERICALDETECTORITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SPHERICALDETECTORITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SPHERICALDETECTORITEM_H
 
-#include "DetectorItems.h"
+#include "GUI/coregui/Models/DetectorItems.h"
 
 class BA_CORE_API_ SphericalDetectorItem : public DetectorItem
 {
@@ -34,4 +34,4 @@ protected:
     double axesToDomainUnitsFactor() const override;
 };
 
-#endif // SPHERICALDETECTORITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SPHERICALDETECTORITEM_H

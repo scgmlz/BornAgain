@@ -12,11 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef ITERATIONSTRATEGY_H
-#define ITERATIONSTRATEGY_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_ITERATIONSTRATEGY_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_ITERATIONSTRATEGY_H
 
-#include "ISample.h"
+#include "Wrap/WinDllMacros.h"
 
+class INode;
 class IteratorMemento;
 
 //! Abstract base class for tree traversal strategies, for use in INodeVisitor.
@@ -26,8 +27,6 @@ class IteratorMemento;
 class BA_CORE_API_ IterationStrategy
 {
 public:
-    virtual ~IterationStrategy() {}
-
     virtual IterationStrategy* clone() const = 0;
 
     virtual IteratorMemento first(const INode* p_root) = 0;
@@ -43,7 +42,6 @@ public:
 
     virtual PreorderStrategy* clone() const;
 
-    virtual ~PreorderStrategy();
     virtual IteratorMemento first(const INode* p_root);
     virtual void next(IteratorMemento& iterator_stack) const;
     virtual bool isDone(IteratorMemento& iterator_stack) const;
@@ -57,10 +55,9 @@ public:
 
     virtual PostorderStrategy* clone() const;
 
-    virtual ~PostorderStrategy();
     virtual IteratorMemento first(const INode* p_root);
     virtual void next(IteratorMemento& iterator_stack) const;
     virtual bool isDone(IteratorMemento& iterator_stack) const;
 };
 
-#endif // ITERATIONSTRATEGY_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_ITERATIONSTRATEGY_H

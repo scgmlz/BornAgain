@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROGRESSHANDLER_H
-#define PROGRESSHANDLER_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_PROGRESSHANDLER_H
+#define BORNAGAIN_CORE_COMPUTATION_PROGRESSHANDLER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <functional>
 
 class MultiLayer;
@@ -61,4 +61,4 @@ private:
     bool defaultMonitorExec(int);
 };
 
-#endif // PROGRESSHANDLER_H
+#endif // BORNAGAIN_CORE_COMPUTATION_PROGRESSHANDLER_H

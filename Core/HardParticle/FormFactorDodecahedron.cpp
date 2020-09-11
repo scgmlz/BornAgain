@@ -12,10 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorDodecahedron.h"
-#include "BornAgainNamespace.h"
-#include "Dodecahedron.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorDodecahedron.h"
 
 const PolyhedralTopology FormFactorDodecahedron::topology = {{// bottom:
                                                               {{0, 4, 3, 2, 1}, false},
@@ -37,16 +34,21 @@ const PolyhedralTopology FormFactorDodecahedron::topology = {{// bottom:
 
 //! Constructor of a dodecahedron.
 //! @param edge: length of the edge in nanometers
-FormFactorDodecahedron::FormFactorDodecahedron(double edge) : FormFactorPolyhedron(), m_edge(edge)
+FormFactorDodecahedron::FormFactorDodecahedron(const std::vector<double> P)
+    : FormFactorPolyhedron(
+        {"Dodecahedron", "class_tooltip", {{"Edge", "nm", "para_tooltip", 0, +INF, 0}}}, P),
+      m_edge(m_P[0])
 {
-    setName(BornAgain::FFDodecahedronType);
-    registerParameter(BornAgain::Edge, &m_edge).setUnit(BornAgain::UnitsNm).setNonnegative();
     onChange();
+}
+
+FormFactorDodecahedron::FormFactorDodecahedron(double edge)
+    : FormFactorDodecahedron(std::vector<double>{edge})
+{
 }
 
 void FormFactorDodecahedron::onChange()
 {
-    mP_shape.reset(new Dodecahedron(m_edge));
     double a = m_edge;
     setPolyhedron(topology, -1.113516364411607 * a,
                   {{0.8506508083520399 * a, 0 * a, -1.113516364411607 * a},

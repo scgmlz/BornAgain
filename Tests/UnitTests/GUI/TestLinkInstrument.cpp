@@ -1,24 +1,20 @@
-#include "AxesItems.h"
-#include "InstrumentItems.h"
-#include "InstrumentModel.h"
-#include "IntensityDataItem.h"
-#include "JobItemUtils.h"
-#include "LinkInstrumentManager.h"
-#include "RealDataItem.h"
-#include "RealDataModel.h"
-#include "RectangularDetectorItem.h"
-#include "google_test.h"
-#include "test_utils.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/Models/RectangularDetectorItem.h"
+#include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/GUI/Utils.h"
 #include <QSignalSpy>
 #include <QTest>
 
 class TestLinkInstrument : public ::testing::Test
 {
-public:
-    ~TestLinkInstrument();
 };
-
-TestLinkInstrument::~TestLinkInstrument() = default;
 
 //! Checks that LinkInstrumentManager listens instrument model.
 
@@ -34,8 +30,8 @@ TEST_F(TestLinkInstrument, test_linkInstrumentManager)
     QSignalSpy spy(&manager, SIGNAL(instrumentMapUpdated()));
 
     // populating instrument model
-    GISASInstrumentItem* instrument = dynamic_cast<GISASInstrumentItem*>(
-        instrumentModel.insertNewItem(Constants::GISASInstrumentType));
+    GISASInstrumentItem* instrument =
+        dynamic_cast<GISASInstrumentItem*>(instrumentModel.insertNewItem("GISASInstrument"));
     QString identifier = instrument->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
 
     // checking that LinkInstrumentManager was notified about new instrument
@@ -61,12 +57,12 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     manager.setModels(&instrumentModel, &realDataModel);
 
     // populating instrument model
-    GISASInstrumentItem* instrument = dynamic_cast<GISASInstrumentItem*>(
-        instrumentModel.insertNewItem(Constants::GISASInstrumentType));
+    GISASInstrumentItem* instrument =
+        dynamic_cast<GISASInstrumentItem*>(instrumentModel.insertNewItem("GISASInstrument"));
     QString identifier = instrument->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
 
     // populating real data model, setting intensity data
-    RealDataItem* realData = TestUtils::createRealData("RealData", realDataModel);
+    RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", realDataModel);
     JobItemUtils::createDefaultDetectorMap(realData->dataItem(), instrument);
 
     QVERIFY(manager.canLinkDataToInstrument(realData, identifier));
@@ -76,7 +72,7 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector type and checking that link remain
-    instrument->setDetectorGroup(Constants::RectangularDetectorType);
+    instrument->setDetectorGroup("RectangularDetector");
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector binning and checking that link is destroyed

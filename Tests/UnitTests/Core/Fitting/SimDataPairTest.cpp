@@ -1,17 +1,11 @@
-#include "SimDataPair.h"
-#include "FittingTestHelper.h"
-#include "Parameters.h"
-#include "google_test.h"
+#include "Core/Fitting/SimDataPair.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/Core/Fitting/FittingTestHelper.h"
 
 class SimDataPairTest : public ::testing::Test
 {
-public:
-    ~SimDataPairTest();
-
-protected:
 };
-
-SimDataPairTest::~SimDataPairTest() = default;
 
 TEST_F(SimDataPairTest, standardPair)
 {

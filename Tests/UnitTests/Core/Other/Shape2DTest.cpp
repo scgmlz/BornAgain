@@ -1,19 +1,15 @@
-#include "Bin.h"
-#include "Ellipse.h"
-#include "Line.h"
-#include "MathConstants.h"
-#include "Rectangle.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Basics/Units.h"
+#include "Core/Binning/Bin.h"
+#include "Core/Mask/Ellipse.h"
+#include "Core/Mask/Line.h"
+#include "Core/Mask/Rectangle.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 class Shape2DTest : public ::testing::Test
 {
-public:
-    ~Shape2DTest();
 };
-
-Shape2DTest::~Shape2DTest() = default;
 
 TEST_F(Shape2DTest, Rectangle)
 {

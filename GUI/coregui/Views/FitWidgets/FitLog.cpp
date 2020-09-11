@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "FitLog.h"
-#include "JobMessagePanel.h"
+#include "GUI/coregui/Views/FitWidgets/FitLog.h"
+#include "GUI/coregui/Views/JobWidgets/JobMessagePanel.h"
 
 FitLog::FitLog() : m_messagePanel(nullptr) {}
 

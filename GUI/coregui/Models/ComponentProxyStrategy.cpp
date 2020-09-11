@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "ComponentProxyStrategy.h"
-#include "ComponentProxyModel.h"
-#include "ComponentUtils.h"
-#include "GroupItem.h"
-#include "ModelPath.h"
-#include "SessionItem.h"
-#include "SessionItemUtils.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/ComponentProxyStrategy.h"
+#include "GUI/coregui/Models/ComponentProxyModel.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentUtils.h"
 
 void ComponentProxyStrategy::onDataChanged(SessionModel* source, ComponentProxyModel* proxy)
 {
@@ -29,7 +29,7 @@ void ComponentProxyStrategy::onDataChanged(SessionModel* source, ComponentProxyM
 
 bool ComponentProxyStrategy::processSourceIndex(const QModelIndex& index)
 {
-    QPersistentModelIndex sourceIndex = QPersistentModelIndex(index);
+    QPersistentModelIndex sourceIndex = {index};
 
     SessionItem* item = m_source->itemForIndex(index);
 
@@ -64,7 +64,7 @@ bool ComponentProxyStrategy::isPropertyRelated(SessionItem* item)
     static QStringList propertyRelated = ComponentUtils::propertyRelatedTypes();
 
     if (m_sourceRootIndex.isValid() && item->parent()->index() == m_sourceRootIndex
-        && item->parent()->modelType() != Constants::GroupItemType)
+        && item->parent()->modelType() != "GroupProperty")
         return propertyRelated.contains(item->modelType()) ? true : false;
 
     return true;
@@ -93,9 +93,9 @@ void ComponentProxyStrategy::processRootItem(SessionItem* item,
 
 bool ComponentProxyStrategy::isSubGroup(SessionItem* item)
 {
-    const SessionItem* ancestor = ModelPath::ancestor(item->parent(), Constants::GroupItemType);
-    if (item->modelType() == Constants::GroupItemType && ancestor
-        && ancestor->modelType() == Constants::GroupItemType) {
+    const SessionItem* ancestor = ModelPath::ancestor(item->parent(), "GroupProperty");
+    if (item->modelType() == "GroupProperty" && ancestor
+        && ancestor->modelType() == "GroupProperty") {
         return true;
     }
 
@@ -106,10 +106,10 @@ bool ComponentProxyStrategy::isSubGroup(SessionItem* item)
 
 bool ComponentProxyStrategy::isGroupChildren(SessionItem* item)
 {
-    if (item->parent() && item->parent()->modelType() == Constants::GroupItemType)
+    if (item->parent() && item->parent()->modelType() == "GroupProperty")
         return true;
 
-    if (const SessionItem* ancestor = ModelPath::ancestor(item, Constants::GroupItemType)) {
+    if (const SessionItem* ancestor = ModelPath::ancestor(item, "GroupProperty")) {
         if (ancestor != item)
             return true;
     }
@@ -122,7 +122,7 @@ bool ComponentProxyStrategy::isGroupChildren(SessionItem* item)
 void ComponentProxyStrategy::processGroupItem(SessionItem* item,
                                               const QPersistentModelIndex& sourceIndex)
 {
-    if (const SessionItem* ancestor = ModelPath::ancestor(item, Constants::GroupItemType)) {
+    if (const SessionItem* ancestor = ModelPath::ancestor(item, "GroupProperty")) {
         if (ancestor == item)
             return;
 
@@ -142,8 +142,7 @@ void ComponentProxyStrategy::processGroupItem(SessionItem* item,
 void ComponentProxyStrategy::processSubGroupItem(SessionItem* item,
                                                  const QPersistentModelIndex& sourceIndex)
 {
-    if (const SessionItem* ancestor =
-            ModelPath::ancestor(item->parent(), Constants::GroupItemType)) {
+    if (const SessionItem* ancestor = ModelPath::ancestor(item->parent(), "GroupProperty")) {
         auto groupItem = dynamic_cast<const GroupItem*>(ancestor);
 
         if (item->parent() == groupItem->currentItem()) {
@@ -159,7 +158,7 @@ void ComponentProxyStrategy::processSubGroupItem(SessionItem* item,
 void ComponentProxyStrategy::processDefaultItem(SessionItem* item,
                                                 const QPersistentModelIndex& sourceIndex)
 {
-    Q_ASSERT(item);
+    ASSERT(item);
     if (!item->isVisible())
         return;
 

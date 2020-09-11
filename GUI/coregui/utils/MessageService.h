@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MESSAGESERVICE_H
-#define MESSAGESERVICE_H
+#ifndef BORNAGAIN_GUI_COREGUI_UTILS_MESSAGESERVICE_H
+#define BORNAGAIN_GUI_COREGUI_UTILS_MESSAGESERVICE_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QStringList>
 
@@ -41,7 +41,7 @@ public:
 
     QStringList senderList() const;
 
-    int messageCount(const QObject* sender, const QString& message_type = QString()) const;
+    int messageCount(const QObject* sender, const QString& message_type = "") const;
     int warningCount(const QObject* sender = 0) const;
     int errorCount(const QObject* sender = 0) const;
 
@@ -51,4 +51,4 @@ private:
     QList<GUIMessage*> m_messages;
 };
 
-#endif // MESSAGESERVICE_H
+#endif // BORNAGAIN_GUI_COREGUI_UTILS_MESSAGESERVICE_H

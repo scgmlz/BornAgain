@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERSWITHABSORPTIONBYSLDBUILDER_H
-#define LAYERSWITHABSORPTIONBYSLDBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_LAYERSWITHABSORPTIONBYSLDBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_LAYERSWITHABSORPTIONBYSLDBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! The LayersWithAbsorptionBySLDBuilder class generates a multilayer with 3 layers with
 //! absorption (refractive index has imaginary part). //! The middle layer is populated with
@@ -30,4 +30,4 @@ public:
     virtual MultiLayer* buildSample() const;
 };
 
-#endif // LAYERSWITHABSORPTIONBYSLDBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_LAYERSWITHABSORPTIONBYSLDBUILDER_H

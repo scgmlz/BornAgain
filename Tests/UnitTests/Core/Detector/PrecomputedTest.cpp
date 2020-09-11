@@ -1,5 +1,5 @@
-#include "Precomputed.h"
-#include "google_test.h"
+#include "Core/Tools/Precomputed.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 namespace
@@ -9,11 +9,7 @@ constexpr auto ReciprocalFactorialArray = Precomputed::GenerateReciprocalFactori
 
 class PrecomputedTest : public ::testing::Test
 {
-public:
-    ~PrecomputedTest();
 };
-
-PrecomputedTest::~PrecomputedTest() = default;
 
 TEST_F(PrecomputedTest, ReciprocalFactorial)
 {

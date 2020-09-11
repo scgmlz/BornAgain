@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORPRISM3_H
-#define FORMFACTORPRISM3_H
-#include "FormFactorPolyhedron.h"
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM3_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM3_H
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A prism based on an equilateral triangle.
 //! @ingroup hardParticle
@@ -22,6 +22,7 @@
 class BA_CORE_API_ FormFactorPrism3 : public FormFactorPolygonalPrism
 {
 public:
+    FormFactorPrism3(const std::vector<double> P);
     FormFactorPrism3(double base_edge, double height);
 
     FormFactorPrism3* clone() const override final
@@ -37,9 +38,11 @@ protected:
                                  kvector_t translation) const override final;
 
     void onChange() override final;
+    double height() const final { return m_height; }
 
 private:
-    double m_base_edge;
+    const double& m_base_edge;
+    const double& m_height;
 };
 
-#endif // FORMFACTORPRISM3_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM3_H

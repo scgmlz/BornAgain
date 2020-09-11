@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORDOT_H
-#define FORMFACTORDOT_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORDOT_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORDOT_H
 
-#include "IFormFactorBorn.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! A dot, with scattering power as a sphere of radius rscat, but with F(q)=const.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorDot : public IFormFactorBorn
 {
 public:
+    FormFactorDot(const std::vector<double> P);
     FormFactorDot(double radius);
 
     FormFactorDot* clone() const override final { return new FormFactorDot(m_radius); }
@@ -33,7 +34,6 @@ public:
     double radialExtension() const override final { return 0; }
 
     double bottomZ(const IRotation&) const override final { return 0; }
-
     double topZ(const IRotation&) const override final { return 0; }
 
     complex_t evaluate_for_q(cvector_t q) const override final;
@@ -42,7 +42,7 @@ protected:
     bool canSliceAnalytically(const IRotation&) const override final { return false; }
 
 private:
-    double m_radius;
+    const double& m_radius;
 };
 
-#endif // FORMFACTORDOT_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORDOT_H

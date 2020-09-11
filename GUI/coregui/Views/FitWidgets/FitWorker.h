@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITWORKER_H
-#define FITWORKER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITWORKER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITWORKER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <memory>
 
@@ -47,4 +47,4 @@ private:
     std::shared_ptr<FitObjectiveBuilder> m_fit_objective;
 };
 
-#endif // FITWORKER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITWORKER_H

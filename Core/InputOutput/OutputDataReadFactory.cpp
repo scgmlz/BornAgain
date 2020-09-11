@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "OutputDataReadFactory.h"
-#include "DataFormatUtils.h"
-#include "Exceptions.h"
+#include "Core/InputOutput/OutputDataReadFactory.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/InputOutput/DataFormatUtils.h"
 
 OutputDataReader* OutputDataReadFactory::getReader(const std::string& file_name)
 {

@@ -14,9 +14,9 @@
 
 #ifdef BORNAGAIN_TIFF_SUPPORT
 
-#include "TiffHandler.h"
-#include "BornAgainNamespace.h"
-#include "SysUtils.h"
+#include "Core/InputOutput/TiffHandler.h"
+#include "Core/Tools/SysUtils.h"
+#include <tiffio.hxx>
 
 TiffHandler::TiffHandler()
     : m_tiff(0), m_width(0), m_height(0), m_bitsPerSample(0), m_samplesPerPixel(0),
@@ -52,8 +52,8 @@ void TiffHandler::write(const OutputData<double>& data, std::ostream& output_str
         throw Exceptions::LogicErrorException("TiffHandler::write -> Error. "
                                               "Only 2-dim arrays supported");
     m_tiff = TIFFStreamOpen("MemTIFF", &output_stream);
-    m_width = m_data->getAxis(BornAgain::X_AXIS_INDEX).size();
-    m_height = m_data->getAxis(BornAgain::Y_AXIS_INDEX).size(); // this does not exist for 1d data
+    m_width = m_data->getAxis(0).size();
+    m_height = m_data->getAxis(1).size(); // this does not exist for 1d data
     write_header();
     write_data();
     close();
@@ -61,7 +61,7 @@ void TiffHandler::write(const OutputData<double>& data, std::ostream& output_str
 
 void TiffHandler::read_header()
 {
-    assert(m_tiff);
+    ASSERT(m_tiff);
     uint32 width(0);
     uint32 height(0);
     if (!TIFFGetField(m_tiff, TIFFTAG_IMAGEWIDTH, &width)
@@ -118,9 +118,9 @@ void TiffHandler::read_header()
 
 void TiffHandler::read_data()
 {
-    assert(m_tiff);
+    ASSERT(m_tiff);
 
-    assert(0 == m_bitsPerSample % 8);
+    ASSERT(0 == m_bitsPerSample % 8);
     uint16 bytesPerSample = m_bitsPerSample / 8;
     tmsize_t buf_size = TIFFScanlineSize(m_tiff);
     tmsize_t expected_size = bytesPerSample * m_width;
@@ -197,7 +197,7 @@ void TiffHandler::read_data()
 
 void TiffHandler::write_header()
 {
-    assert(m_tiff);
+    ASSERT(m_tiff);
     TIFFSetField(m_tiff, TIFFTAG_ARTIST, "BornAgain.IOFactory");
     TIFFSetField(m_tiff, TIFFTAG_DATETIME, SysUtils::getCurrentDateAndTime().c_str());
     TIFFSetField(m_tiff, TIFFTAG_IMAGEDESCRIPTION,
@@ -258,7 +258,7 @@ void TiffHandler::close()
 
 void TiffHandler::create_output_data()
 {
-    assert(m_tiff);
+    ASSERT(m_tiff);
     m_data.reset(new OutputData<double>);
     m_data->addAxis("x", m_width, 0.0, double(m_width));
     m_data->addAxis("y", m_height, 0.0, double(m_height));

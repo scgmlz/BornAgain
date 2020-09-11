@@ -12,16 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "DataPropertyContainer.h"
-#include "DataItem.h"
-#include "DataProperties.h"
-#include "GUIHelpers.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DataProperties.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 const QString DataPropertyContainer::T_CHILDREN = "data links";
 
-DataPropertyContainer::DataPropertyContainer() : SessionItem(Constants::DataPropertyContainerType)
+DataPropertyContainer::DataPropertyContainer() : SessionItem("DataPropertyContainer")
 {
-    registerTag(T_CHILDREN, 0, -1, QStringList() << Constants::DataItem1DPropertiesType);
+    registerTag(T_CHILDREN, 0, -1, QStringList() << "DataItem1DProperties");
     setDefaultTag(T_CHILDREN);
 }
 
@@ -40,7 +40,7 @@ Data1DProperties* DataPropertyContainer::propertyItem(size_t i) const
     if (children.empty())
         return nullptr;
     auto property_item = dynamic_cast<Data1DProperties*>(children[static_cast<int>(i)]);
-    assert(property_item);
+    ASSERT(property_item);
     return property_item;
 }
 
@@ -76,7 +76,7 @@ std::vector<DataItem*> DataPropertyContainer::dataItems()
     std::transform(items.begin(), items.end(), std::back_inserter(result),
                    [](Data1DProperties* item) {
                        auto data_item = item->dataItem();
-                       assert(data_item);
+                       ASSERT(data_item);
                        return data_item;
                    });
     return result;

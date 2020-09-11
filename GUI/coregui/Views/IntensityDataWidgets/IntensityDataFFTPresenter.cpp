@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "IntensityDataFFTPresenter.h"
-#include "GUIHelpers.h"
-#include "IntensityDataFunctions.h"
-#include "IntensityDataItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataFFTPresenter.h"
+#include "Core/Intensity/IntensityDataFunctions.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QAction>
 #include <QApplication>
 #include <QWidget>
@@ -25,8 +25,7 @@ IntensityDataFFTPresenter::IntensityDataFFTPresenter(QWidget* parent)
     : QObject(parent), m_fftAction(nullptr), m_fftModel(new SessionModel("TempFFTModel", this)),
       m_fftItem(nullptr), m_in_fft_mode(false)
 {
-    m_fftItem =
-        dynamic_cast<IntensityDataItem*>(m_fftModel->insertNewItem(Constants::IntensityDataType));
+    m_fftItem = dynamic_cast<IntensityDataItem*>(m_fftModel->insertNewItem("IntensityData"));
 
     m_fftAction = new QAction(this);
     m_fftAction->setText("Fourier");

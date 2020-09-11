@@ -12,27 +12,27 @@
 //
 // ************************************************************************** //
 
-#include "ParticleView.h"
-#include "FormFactorItems.h"
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "ParticleItem.h"
-#include "DesignerHelper.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/SampleDesigner/ParticleView.h"
+#include "GUI/coregui/Models/FormFactorItems.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QObject>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
 ParticleView::ParticleView(QGraphicsItem* parent) : ConnectableView(parent)
 {
-    setName(Constants::ParticleType);
+    setName("Particle");
     setColor(DesignerHelper::getDefaultParticleColor());
     setRectangle(DesignerHelper::getParticleBoundingRect());
     addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::FORM_FACTOR)
-        ->setToolTip(QStringLiteral("Connect to the ParticleLayout"));
+        ->setToolTip("Connect to the ParticleLayout");
     addPort("transformation", NodeEditorPort::INPUT, NodeEditorPort::TRANSFORMATION)
-        ->setToolTip(QStringLiteral("Connect particle rotation to this port, if necessary"));
-    m_label_vspace = StyleUtils::SizeOfLetterM().height()*3.0;
+        ->setToolTip("Connect particle rotation to this port, if necessary");
+    m_label_vspace = StyleUtils::SizeOfLetterM().height() * 3.0;
 }
 
 void ParticleView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)

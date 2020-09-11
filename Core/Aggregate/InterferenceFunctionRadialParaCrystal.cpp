@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "InterferenceFunctionRadialParaCrystal.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
+#include "Core/Aggregate/InterferenceFunctionRadialParaCrystal.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
 #include <limits>
 
 //! Constructor of interference function of radial paracrystal.
@@ -24,32 +23,27 @@
 //! @param damping_length: the damping (coherence) length of the paracrystal in nanometers
 InterferenceFunctionRadialParaCrystal::InterferenceFunctionRadialParaCrystal(double peak_distance,
                                                                              double damping_length)
-    : m_peak_distance(peak_distance), m_damping_length(damping_length), m_use_damping_length(true),
-      m_kappa(0.0), m_domain_size(0.0)
+    : IInterferenceFunction(0), m_peak_distance(peak_distance), m_damping_length(damping_length),
+      m_use_damping_length(true), m_kappa(0.0), m_domain_size(0.0)
 {
-    setName(BornAgain::InterferenceFunctionRadialParaCrystalType);
+    setName("InterferenceRadialParaCrystal");
     if (m_damping_length == 0.0)
         m_use_damping_length = false;
-    init_parameters();
-}
-
-void InterferenceFunctionRadialParaCrystal::init_parameters()
-{
-    registerParameter(BornAgain::PeakDistance, &m_peak_distance)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::DampingLength, &m_damping_length)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::SizeSpaceCoupling, &m_kappa).setNonnegative();
-    registerParameter(BornAgain::DomainSize, &m_domain_size)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
+    registerParameter("PeakDistance", &m_peak_distance).setUnit("nm").setNonnegative();
+    registerParameter("DampingLength", &m_damping_length).setUnit("nm").setNonnegative();
+    registerParameter("SizeSpaceCoupling", &m_kappa).setNonnegative();
+    registerParameter("DomainSize", &m_domain_size).setUnit("nm").setNonnegative();
 }
 
 InterferenceFunctionRadialParaCrystal* InterferenceFunctionRadialParaCrystal::clone() const
 {
-    return new InterferenceFunctionRadialParaCrystal(*this);
+    auto* ret = new InterferenceFunctionRadialParaCrystal(m_peak_distance, m_damping_length);
+    ret->setPositionVariance(m_position_var);
+    if (mP_pdf)
+        ret->setProbabilityDistribution(*mP_pdf);
+    ret->setKappa(m_kappa);
+    ret->setDomainSize(m_domain_size);
+    return ret;
 }
 
 //! Sets size spacing coupling parameter of the Size Spacing Correlation Approximation.
@@ -139,16 +133,4 @@ double InterferenceFunctionRadialParaCrystal::iff_without_dw(const kvector_t q) 
         }
     }
     return result;
-}
-
-InterferenceFunctionRadialParaCrystal::InterferenceFunctionRadialParaCrystal(
-    const InterferenceFunctionRadialParaCrystal& other)
-    : IInterferenceFunction(other), m_peak_distance(other.m_peak_distance),
-      m_damping_length(other.m_damping_length), m_use_damping_length(other.m_use_damping_length),
-      m_kappa(other.m_kappa), m_domain_size(other.m_domain_size)
-{
-    setName(other.getName());
-    init_parameters();
-    if (other.mP_pdf)
-        setProbabilityDistribution(*other.mP_pdf);
 }

@@ -1,19 +1,16 @@
-#include "ComboProperty.h"
-#include "Comparators.h"
-#include "google_test.h"
-#include "test_utils.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "Tests/GTestWrapper/google_test.h"
+#include "Tests/UnitTests/GUI/Comparators.h"
+#include "Tests/UnitTests/GUI/Utils.h"
 
 class TestComboProperty : public ::testing::Test
 {
 public:
-    ~TestComboProperty();
     ComboProperty propertyFromXML(const QString& buffer)
     {
-        return TestUtils::propertyFromXML<ComboProperty>(buffer);
+        return GuiUnittestUtils::propertyFromXML<ComboProperty>(buffer);
     }
 };
-
-TestComboProperty::~TestComboProperty() = default;
 
 TEST_F(TestComboProperty, initialState)
 {
@@ -45,7 +42,7 @@ TEST_F(TestComboProperty, setValues)
                                                << "a2";
     ComboProperty combo = ComboProperty() << expectedValues;
     EXPECT_EQ(combo.getValues(), expectedValues);
-    EXPECT_EQ(combo.getValue(), QString("a1"));
+    EXPECT_EQ(combo.getValue(), "a1");
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({0}));
 
@@ -54,7 +51,7 @@ TEST_F(TestComboProperty, setValues)
                                           << "b2"
                                           << "b3";
     combo.setValues(newValues);
-    EXPECT_EQ(combo.getValue(), QString("b1"));
+    EXPECT_EQ(combo.getValue(), "b1");
     EXPECT_EQ(combo.getValues(), newValues);
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({0}));
@@ -64,7 +61,7 @@ TEST_F(TestComboProperty, setValues)
                               << "b1"
                               << "c2";
     combo.setValues(newValues);
-    EXPECT_EQ(combo.getValue(), QString("b1"));
+    EXPECT_EQ(combo.getValue(), "b1");
     EXPECT_EQ(combo.getValues(), newValues);
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({1}));
@@ -85,7 +82,7 @@ TEST_F(TestComboProperty, setCurrentIndex)
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({1}));
 
     combo.setCurrentIndex(0);
-    EXPECT_EQ(combo.getValue(), QString("c1"));
+    EXPECT_EQ(combo.getValue(), "c1");
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({0}));
 }
 
@@ -95,8 +92,8 @@ TEST_F(TestComboProperty, stringOfValues)
                                                << "a2";
     ComboProperty combo = ComboProperty() << expectedValues;
 
-    EXPECT_EQ(combo.stringOfValues(), QString("a1;a2"));
-    EXPECT_EQ(combo.getValue(), QString("a1"));
+    EXPECT_EQ(combo.stringOfValues(), "a1;a2");
+    EXPECT_EQ(combo.getValue(), "a1");
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({0}));
 
@@ -104,15 +101,15 @@ TEST_F(TestComboProperty, stringOfValues)
     QString stringOfValues("b1;b2;b3");
     combo.setStringOfValues(stringOfValues);
     EXPECT_EQ(combo.stringOfValues(), stringOfValues);
-    EXPECT_EQ(combo.getValue(), QString("b1"));
+    EXPECT_EQ(combo.getValue(), "b1");
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({0}));
 
     // setting new string of values, containing current value. Current values should remain.
-    stringOfValues = QString("c1;b1;c3");
+    stringOfValues = "c1;b1;c3";
     combo.setStringOfValues(stringOfValues);
     EXPECT_EQ(combo.stringOfValues(), stringOfValues);
-    EXPECT_EQ(combo.getValue(), QString("b1"));
+    EXPECT_EQ(combo.getValue(), "b1");
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({1}));
 }
@@ -278,12 +275,12 @@ TEST_F(TestComboProperty, comboXML)
 
     QString expected = "<Parameter ParType=\"ComboProperty\" ParRole=\"0\" ParValue=\"0,2\" "
                        "ParExt=\"a1;a2;a3\"/>";
-    EXPECT_EQ(TestUtils::propertyToXML(combo), expected);
+    EXPECT_EQ(GuiUnittestUtils::propertyToXML(combo), expected);
 
     // reading from XML
     ComboProperty combo_property = propertyFromXML(expected);
-    EXPECT_EQ(combo_property.getValue(), QString("a1"));
-    EXPECT_EQ(combo_property.stringOfValues(), QString("a1;a2;a3"));
-    EXPECT_EQ(combo_property.stringOfSelections(), QString("0,2"));
+    EXPECT_EQ(combo_property.getValue(), "a1");
+    EXPECT_EQ(combo_property.stringOfValues(), "a1;a2;a3");
+    EXPECT_EQ(combo_property.stringOfSelections(), "0,2");
     EXPECT_TRUE(combo_property == combo);
 }

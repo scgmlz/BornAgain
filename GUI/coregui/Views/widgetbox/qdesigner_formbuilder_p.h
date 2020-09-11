@@ -50,11 +50,11 @@
 // We mean it.
 //
 
-#ifndef QDESIGNER_FORMBUILDER_P_H
-#define QDESIGNER_FORMBUILDER_P_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_FORMBUILDER_P_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_FORMBUILDER_P_H
 
-#include "deviceprofile_p.h"
-#include "shared_global_p.h"
+#include "GUI/coregui/Views/widgetbox/deviceprofile_p.h"
+#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 #include <QtDesigner/formbuilder.h>
 
@@ -91,7 +91,7 @@ public:
 
     virtual QWidget* createWidget(DomWidget* ui_widget, QWidget* parentWidget = 0)
     {
-        return QFormBuilder::create(ui_widget, parentWidget);
+        return QFormBuilder::createItemPtr(ui_widget, parentWidget);
     }
 
     inline QDesignerFormEditorInterface* core() const { return m_core; }
@@ -106,7 +106,7 @@ public:
                                   const DeviceProfile& deviceProfile, QString* errorMessage);
     // Convenience that pops up message boxes in case of failures.
     static QWidget* createPreview(const QDesignerFormWindowInterface* fw,
-                                  const QString& styleName = QString());
+                                  const QString& styleName = "");
     //  Create a preview widget (for integrations) or return 0. The widget has to be embedded into a
     //  main window.
     static QWidget* createPreview(const QDesignerFormWindowInterface* fw, const QString& styleName,
@@ -117,18 +117,18 @@ public:
 
     // Create a preview image
     static QPixmap createPreviewPixmap(const QDesignerFormWindowInterface* fw,
-                                       const QString& styleName = QString(),
-                                       const QString& appStyleSheet = QString());
+                                       const QString& styleName = "",
+                                       const QString& appStyleSheet = "");
 
 protected:
     using QFormBuilder::create;
     using QFormBuilder::createDom;
 
-    virtual QWidget* create(DomUI* ui, QWidget* parentWidget);
+    virtual QWidget* createItemPtr(DomUI* ui, QWidget* parentWidget);
     virtual DomWidget* createDom(QWidget* widget, DomWidget* ui_parentWidget,
                                  bool recursive = true);
-    virtual QWidget* create(DomWidget* ui_widget, QWidget* parentWidget);
-    virtual QLayout* create(DomLayout* ui_layout, QLayout* layout, QWidget* parentWidget);
+    virtual QWidget* createItemPtr(DomWidget* ui_widget, QWidget* parentWidget);
+    virtual QLayout* createItemPtr(DomLayout* ui_layout, QLayout* layout, QWidget* parentWidget);
     virtual void createResources(DomResources* resources);
 
     virtual QWidget* createWidget(const QString& widgetName, QWidget* parentWidget,
@@ -180,4 +180,4 @@ protected:
 
 QT_END_NAMESPACE
 
-#endif // QDESIGNER_FORMBUILDER_P_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_FORMBUILDER_P_H

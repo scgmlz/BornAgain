@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALDATAMASKWIDGET_H
-#define REALDATAMASKWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAMASKWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAMASKWIDGET_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 
 class SessionItem;
 class MaskEditor;
@@ -45,4 +45,4 @@ private:
     MaskEditor* m_maskEditor;
 };
 
-#endif // REALDATAMASKWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAMASKWIDGET_H

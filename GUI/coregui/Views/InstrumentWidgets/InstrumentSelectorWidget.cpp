@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentSelectorWidget.h"
-#include "InstrumentModel.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Views/InstrumentWidgets/InstrumentSelectorWidget.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/SessionItem.h"
 #include <QAction>
 #include <QListView>
 #include <QMenu>

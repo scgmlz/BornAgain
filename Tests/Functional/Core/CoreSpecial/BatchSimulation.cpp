@@ -3,7 +3,6 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Tests/Functional/Core/CoreSpecial/BatchSimulation.cpp
-//! @brief     Defines BatchSimulation class.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,23 +11,26 @@
 //
 // ************************************************************************** //
 
-#include "BatchSimulation.h"
-#include "IFunctionalTest.h"
-#include "IntensityDataFunctions.h"
-#include "SampleBuilderFactory.h"
-#include "Simulation.h"
-#include "SimulationFactory.h"
+#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Simulation/Simulation.h"
+#include "Core/Simulation/SimulationFactory.h"
+#include "Core/StandardSamples/SampleBuilderFactory.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
 
-bool BatchSimulation::runTest()
+class BatchSimulation : public ::testing::Test
+{
+};
+
+TEST_F(BatchSimulation, BatchSimulation)
 {
     SimulationFactory sim_registry;
-    const std::unique_ptr<Simulation> simulation = sim_registry.create("MiniGISAS");
+    const std::unique_ptr<Simulation> simulation = sim_registry.createItemPtr("MiniGISAS");
 
     SampleBuilderFactory sampleFactory;
     std::shared_ptr<class IMultiLayerBuilder> builder(
-        sampleFactory.create("CylindersInBABuilder").release());
+        sampleFactory.createItemPtr("CylindersInBABuilder").release());
     simulation->setSampleBuilder(builder);
     simulation->runSimulation();
     auto sim_result = simulation->result();
@@ -53,10 +55,5 @@ bool BatchSimulation::runTest()
 
     double diff = IntensityDataFunctions::getRelativeDifference(*result, *reference);
 
-    std::cout << "BatchSimulation"
-              << " "
-              << "Running simulations in batch mode"
-              << " " << diff << " " << (diff > threshold ? "[FAILED]" : "[OK]") << "\n";
-
-    return diff <= threshold;
+    EXPECT_LE(diff, threshold);
 }

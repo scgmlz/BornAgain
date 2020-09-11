@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "JobViewActivities.h"
-#include "GUIHelpers.h"
-#include "mainwindow_constants.h"
+#include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {

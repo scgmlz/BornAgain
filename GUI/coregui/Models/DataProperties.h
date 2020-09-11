@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DATAPROPERTIES_H
-#define DATAPROPERTIES_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAPROPERTIES_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DATAPROPERTIES_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class DataItem;
 
@@ -25,7 +25,7 @@ class DataItem;
 class BA_CORE_API_ DataProperties : public SessionItem
 {
 public:
-    static const QString P_LINK;
+    static const QString P_DATALINK;
 
     void setDataItem(DataItem* item);
     DataItem* dataItem();
@@ -54,4 +54,4 @@ public:
     static const QString& nextColorName(Data1DProperties* properties);
 };
 
-#endif // DATAPROPERTIES_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DATAPROPERTIES_H

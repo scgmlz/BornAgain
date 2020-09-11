@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "SampleDesigner.h"
-#include "ApplicationModels.h"
-#include "DesignerScene.h"
-#include "DesignerView.h"
-#include "FilterPropertyProxy.h"
-#include "ISample.h"
-#include "MultiLayerView.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleDesigner.h"
+#include "Core/Scattering/ISample.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/FilterPropertyProxy.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerView.h"
+#include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
 
 SampleDesigner::SampleDesigner(QWidget* parent)
     : SampleDesignerInterface(parent), m_designerScene(0), m_designerView(0)

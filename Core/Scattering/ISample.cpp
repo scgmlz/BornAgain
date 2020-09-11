@@ -12,11 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "ISample.h"
-#include "Exceptions.h"
-#include "ParameterPool.h"
+#include "Core/Scattering/ISample.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/ParameterPool.h"
 #include <algorithm>
 #include <sstream>
+
+ISample::ISample(const NodeMeta& meta, const std::vector<double>& PValues) : INode(meta, PValues) {}
 
 std::vector<const Material*> ISample::containedMaterials() const
 {

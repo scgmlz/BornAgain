@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SessionDecorationModel.h"
-#include "MaterialItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/SessionDecorationModel.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
 #include <QColor>
 #include <QIcon>
 #include <QPixmap>
@@ -22,13 +22,13 @@
 namespace
 {
 
-struct IconCatalogue {
+struct IconCatalog {
     QIcon gisasIcon;
     QIcon offspecIcon;
     QIcon specularIcon;
     QIcon depthIcon;
 
-    IconCatalogue()
+    IconCatalog()
     {
         gisasIcon.addPixmap(QPixmap(":/images/gisas_instrument.svg"), QIcon::Selected);
         gisasIcon.addPixmap(QPixmap(":/images/gisas_instrument_shaded.svg"), QIcon::Normal);
@@ -41,9 +41,9 @@ struct IconCatalogue {
     }
 };
 
-IconCatalogue& iconCatalogue()
+IconCatalog& iconCatalog()
 {
-    static IconCatalogue result;
+    static IconCatalog result;
     return result;
 }
 
@@ -62,21 +62,21 @@ QVariant itemIcon(const SessionItem* item)
 
     auto modelType = item->modelType();
 
-    auto& icons = iconCatalogue();
+    auto& icons = iconCatalog();
 
-    if (modelType == Constants::GISASInstrumentType) {
+    if (modelType == "GISASInstrument") {
         return QVariant(icons.gisasIcon);
 
-    } else if (modelType == Constants::OffSpecInstrumentType) {
+    } else if (modelType == "OffSpecInstrument") {
         return QVariant(icons.offspecIcon);
 
-    } else if (modelType == Constants::SpecularInstrumentType) {
+    } else if (modelType == "SpecularInstrument") {
         return QVariant(icons.specularIcon);
 
-    } else if (modelType == Constants::DepthProbeInstrumentType) {
+    } else if (modelType == "DepthProbeInstrument") {
         return QVariant(icons.depthIcon);
 
-    } else if (modelType == Constants::MaterialType) {
+    } else if (modelType == "Material") {
         auto materialItem = dynamic_cast<const MaterialItem*>(item);
         return QVariant(materialIcon(materialItem->color()));
     }

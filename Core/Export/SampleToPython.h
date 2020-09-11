@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLETOPYTHON_H
-#define SAMPLETOPYTHON_H
+#ifndef BORNAGAIN_CORE_EXPORT_SAMPLETOPYTHON_H
+#define BORNAGAIN_CORE_EXPORT_SAMPLETOPYTHON_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <string>
 
@@ -63,4 +63,4 @@ private:
     std::unique_ptr<SampleLabelHandler> m_label;
 };
 
-#endif //  SAMPLETOPYTHON_H
+#endif // BORNAGAIN_CORE_EXPORT_SAMPLETOPYTHON_H

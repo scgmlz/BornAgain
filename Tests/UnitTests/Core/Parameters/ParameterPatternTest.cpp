@@ -1,14 +1,10 @@
-#include "ParameterPattern.h"
-#include "google_test.h"
+#include "Core/Parametrization/ParameterPattern.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <string>
 
 class ParameterPatternTest : public ::testing::Test
 {
-protected:
-    ~ParameterPatternTest();
 };
-
-ParameterPatternTest::~ParameterPatternTest() = default;
 
 TEST_F(ParameterPatternTest, declarationTest)
 {
@@ -61,6 +57,6 @@ TEST_F(ParameterPatternTest, copyTest)
     EXPECT_EQ("/Desktop/BornAgain/Core/Tests", p3.toStdString());
 
     // calls copy constructor
-    ParameterPattern p4 = ParameterPattern(p2);
+    ParameterPattern p4 = {p2};
     EXPECT_EQ("/Desktop/BornAgain/Core/Tests", p4.toStdString());
 }

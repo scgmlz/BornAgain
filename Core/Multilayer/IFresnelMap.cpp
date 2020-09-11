@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "IFresnelMap.h"
-#include "Slice.h"
+#include "Core/Multilayer/IFresnelMap.h"
+#include "Core/Multilayer/Slice.h"
 
 IFresnelMap::IFresnelMap(std::unique_ptr<ISpecularStrategy> strategy)
     : m_use_cache(true), m_Strategy(std::move(strategy))

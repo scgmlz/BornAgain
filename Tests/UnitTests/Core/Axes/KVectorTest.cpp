@@ -1,14 +1,10 @@
-#include "Transform3D.h"
-#include "Vectors3D.h"
-#include "google_test.h"
+#include "Core/Vector/Transform3D.h"
+#include "Core/Vector/Vectors3D.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class KVectorTest : public ::testing::Test
 {
-protected:
-    ~KVectorTest();
 };
-
-KVectorTest::~KVectorTest() = default;
 
 TEST_F(KVectorTest, BasicMethods)
 {
@@ -79,7 +75,7 @@ TEST_F(KVectorTest, BasicArithmetics)
     a = kvector_t(1., 2., 3.);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wself-assign-overloaded"
-// https://stackoverflow.com/a/57646029/1017348: a pretty stupid warning
+    // https://stackoverflow.com/a/57646029/1017348: a pretty stupid warning
     a -= a;
 #pragma clang diagnostic pop
     EXPECT_EQ(double(0.), a.x());

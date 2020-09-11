@@ -12,8 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "OverlayLabelController.h"
-#include "OverlayLabelWidget.h"
+#include "GUI/coregui/Views/InfoWidgets/OverlayLabelController.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/Views/InfoWidgets/OverlayLabelWidget.h"
 #include <QAbstractScrollArea>
 #include <QEvent>
 #include <QRect>
@@ -39,7 +40,7 @@ void OverlayLabelController::setArea(QAbstractScrollArea* area)
 void OverlayLabelController::setShown(bool shown)
 {
     if (shown) {
-        Q_ASSERT(m_area);
+        ASSERT(m_area);
         if (!m_label) {
             m_label = new OverlayLabelWidget(m_area);
             m_label->setText(m_text);

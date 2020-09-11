@@ -12,10 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "IMultiLayerBuilder.h"
-#include "BornAgainNamespace.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 IMultiLayerBuilder::IMultiLayerBuilder()
 {
-    setName(BornAgain::SampleBuilderType);
+    setName("SampleBuilder");
 }

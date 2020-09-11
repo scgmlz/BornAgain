@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef INTERFERENCEFUNCTIONVIEWS_H
-#define INTERFERENCEFUNCTIONVIEWS_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_INTERFERENCEFUNCTIONVIEWS_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_INTERFERENCEFUNCTIONVIEWS_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 class BA_CORE_API_ InterferenceFunction1DLatticeView : public ConnectableView
 {
@@ -65,4 +65,4 @@ public:
     int type() const { return ViewTypes::INTERFERENCE_FUNCTION_RADIAL_PARA; }
 };
 
-#endif // INTERFERENCEFUNCTIONVIEWS_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_INTERFERENCEFUNCTIONVIEWS_H

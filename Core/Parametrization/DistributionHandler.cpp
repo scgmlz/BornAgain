@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "DistributionHandler.h"
-#include "Distributions.h"
-#include "Exceptions.h"
-#include "ParameterPool.h"
-#include "ParameterSample.h"
+#include "Core/Parametrization/DistributionHandler.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/ParameterSample.h"
 
 DistributionHandler::DistributionHandler() : m_nbr_combinations(1)
 {

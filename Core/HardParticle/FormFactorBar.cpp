@@ -12,17 +12,21 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorBar.h"
-#include "Ripples.h"
+#include "Core/HardParticle/FormFactorBar.h"
+#include "Core/HardParticle/Ripples.h"
 
 // ************************************************************************** //
 // class FormFactorBarGauss
 // ************************************************************************** //
 
-FormFactorBarGauss::FormFactorBarGauss(double length, double width, double height)
-    : ProfileBar{length, width, height}
+FormFactorBarGauss::FormFactorBarGauss(const std::vector<double> P)
+    : IProfileRectangularRipple({"BarGauss", "class_tooltip", {}}, P)
 {
-    setName(BornAgain::FFBarGaussType);
+}
+
+FormFactorBarGauss::FormFactorBarGauss(double length, double width, double height)
+    : FormFactorBarGauss(std::vector<double>{length, width, height})
+{
 }
 
 FormFactorBarGauss* FormFactorBarGauss::clone() const
@@ -44,10 +48,14 @@ complex_t FormFactorBarGauss::factor_x(complex_t qx) const
 // class FormFactorBarLorentz
 // ************************************************************************** //
 
-FormFactorBarLorentz::FormFactorBarLorentz(double length, double width, double height)
-    : ProfileBar{length, width, height}
+FormFactorBarLorentz::FormFactorBarLorentz(const std::vector<double> P)
+    : IProfileRectangularRipple({"BarLorentz", "class_tooltip", {}}, P)
 {
-    setName(BornAgain::FFBarLorentzType);
+}
+
+FormFactorBarLorentz::FormFactorBarLorentz(double length, double width, double height)
+    : FormFactorBarLorentz(std::vector<double>{length, width, height})
+{
 }
 
 FormFactorBarLorentz* FormFactorBarLorentz::clone() const

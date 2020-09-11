@@ -12,19 +12,19 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANSFORMTODOMAIN_H
-#define TRANSFORMTODOMAIN_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMTODOMAIN_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMTODOMAIN_H
 
-#include "Beam.h"
-#include "Distributions.h" // for IDistribution1D
-#include "IInterferenceFunction.h"
-#include "IParticle.h"
-#include "Instrument.h"
-#include "Layer.h"
-#include "LayerRoughness.h"
-#include "MultiLayer.h"
-#include "ParticleDistribution.h"
-#include "ParticleLayout.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Instrument/Instrument.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/LayerRoughness.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/Distributions.h" // for IDistribution1D
+#include "Core/Particle/IParticle.h"
+#include "Core/Particle/ParticleDistribution.h"
 #include <memory>
 
 class AngularSpecScan;
@@ -60,4 +60,4 @@ BA_CORE_API_ void setPositionInfo(IParticle* result, const SessionItem& item);
 BA_CORE_API_ void setRotationInfo(IParticle* result, const SessionItem& item);
 } // namespace TransformToDomain
 
-#endif // TRANSFORMTODOMAIN_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_TRANSFORMTODOMAIN_H

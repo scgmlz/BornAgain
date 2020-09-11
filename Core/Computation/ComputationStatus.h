@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPUTATIONSTATUS_H
-#define COMPUTATIONSTATUS_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_COMPUTATIONSTATUS_H
+#define BORNAGAIN_CORE_COMPUTATION_COMPUTATIONSTATUS_H
 
 #include <string>
 
@@ -40,4 +40,4 @@ private:
     std::string m_error_message;
 };
 
-#endif // COMPUTATIONSTATUS_H
+#endif // BORNAGAIN_CORE_COMPUTATION_COMPUTATIONSTATUS_H

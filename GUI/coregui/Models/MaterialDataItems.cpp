@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "MaterialDataItems.h"
+#include "GUI/coregui/Models/MaterialDataItems.h"
 
 MaterialDataItem::MaterialDataItem(const QString& modelType) : SessionItem(modelType)
 {
@@ -25,14 +25,14 @@ const QString MaterialRefractiveDataItem::P_DELTA = "Delta";
 const QString MaterialRefractiveDataItem::P_BETA = "Beta";
 
 MaterialRefractiveDataItem::MaterialRefractiveDataItem()
-    : MaterialDataItem(Constants::MaterialRefractiveDataType)
+    : MaterialDataItem("MaterialRefractiveData")
 {
     addProperty(P_DELTA, 0.0)
-        ->setEditorType(Constants::ScientificEditorType)
+        ->setEditorType("ScientificDouble")
         .setLimits(RealLimits::limitless())
         .setToolTip("Delta of refractive index (n = 1 - delta + i*beta)");
     addProperty(P_BETA, 0.0)
-        ->setEditorType(Constants::ScientificEditorType)
+        ->setEditorType("ScientificDouble")
         .setLimits(RealLimits::limitless())
         .setToolTip("Beta of refractive index (n = 1 - delta + i*beta)");
 }
@@ -42,14 +42,14 @@ MaterialRefractiveDataItem::MaterialRefractiveDataItem()
 const QString MaterialSLDDataItem::P_SLD_REAL = "SLD, real";
 const QString MaterialSLDDataItem::P_SLD_IMAG = "SLD, imaginary";
 
-MaterialSLDDataItem::MaterialSLDDataItem() : MaterialDataItem(Constants::MaterialSLDDataType)
+MaterialSLDDataItem::MaterialSLDDataItem() : MaterialDataItem("MaterialSLDData")
 {
     addProperty(P_SLD_REAL, 0.0)
-        ->setEditorType(Constants::ScientificEditorType)
+        ->setEditorType("ScientificDouble")
         .setLimits(RealLimits::limitless())
         .setToolTip("Real part of SLD (SLD = real - i*imag), AA^{-2}");
     addProperty(P_SLD_IMAG, 0.0)
-        ->setEditorType(Constants::ScientificEditorType)
+        ->setEditorType("ScientificDouble")
         .setLimits(RealLimits::limitless())
         .setToolTip("Imaginary part of SLD (SLD = real - i*imag), AA^{-2}");
 }

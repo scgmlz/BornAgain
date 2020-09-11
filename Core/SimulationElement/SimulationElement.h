@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef SIMULATIONELEMENT_H
-#define SIMULATIONELEMENT_H
+#ifndef BORNAGAIN_CORE_SIMULATIONELEMENT_SIMULATIONELEMENT_H
+#define BORNAGAIN_CORE_SIMULATIONELEMENT_SIMULATIONELEMENT_H
 
-#include "Complex.h"
-#include "IPixel.h"
-#include "PolarizationHandler.h"
-#include "Vectors3D.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Binning/IPixel.h"
+#include "Core/SimulationElement/PolarizationHandler.h"
+#include "Core/Vector/Vectors3D.h"
 #include <memory>
 
 class IPixel;
@@ -97,4 +97,4 @@ private:
     bool m_is_specular;
 };
 
-#endif // SIMULATIONELEMENT_H
+#endif // BORNAGAIN_CORE_SIMULATIONELEMENT_SIMULATIONELEMENT_H

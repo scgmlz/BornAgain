@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "RealDataSelectorHBar.h"
-#include "RealDataSelectorActions.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorHBar.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include <QMenu>
 #include <QToolButton>
 

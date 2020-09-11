@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEUTILS_H
-#define NODEUTILS_H
+#ifndef BORNAGAIN_CORE_PARAMETRIZATION_NODEUTILS_H
+#define BORNAGAIN_CORE_PARAMETRIZATION_NODEUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class INode;
@@ -31,4 +31,4 @@ BA_CORE_API_ std::string nodePath(const INode& node, const INode* root = nullptr
 
 } // namespace NodeUtils
 
-#endif // NODEUTILS_H
+#endif // BORNAGAIN_CORE_PARAMETRIZATION_NODEUTILS_H

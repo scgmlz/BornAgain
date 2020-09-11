@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEVIEW_H
-#define SAMPLEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include "fancymainwindow.h"
 
 class MainWindow;
@@ -65,4 +65,4 @@ private:
     SampleViewStatusBar* m_statusBar;
 };
 
-#endif // SAMPLEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEVIEW_H

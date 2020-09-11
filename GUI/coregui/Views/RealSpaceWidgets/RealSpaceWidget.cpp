@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceWidget.h"
-#include "RealSpaceActions.h"
-#include "RealSpaceCanvas.h"
-#include "RealSpaceToolBar.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceWidget.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceActions.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceToolBar.h"
 #include <QLabel>
 #include <QVBoxLayout>
 

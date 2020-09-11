@@ -12,11 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORTRUNCATEDSPHERE_H
-#define FORMFACTORTRUNCATEDSPHERE_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDSPHERE_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDSPHERE_H
 
-#include "IFormFactorBorn.h"
-#include "Integrator.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! A truncated Sphere.
 //! @ingroup hardParticle
@@ -24,7 +23,8 @@
 class BA_CORE_API_ FormFactorTruncatedSphere : public IFormFactorBorn
 {
 public:
-    FormFactorTruncatedSphere(double radius, double height, double dh = 0.0);
+    FormFactorTruncatedSphere(const std::vector<double> P);
+    FormFactorTruncatedSphere(double radius, double height, double dh);
 
     FormFactorTruncatedSphere* clone() const override final
     {
@@ -50,11 +50,10 @@ private:
     bool check_initialization() const;
     complex_t Integrand(double Z) const;
 
-    double m_radius;
-    double m_height;
-    double m_dh;
+    const double& m_radius;
+    const double& m_height;
+    const double& m_dh;
     mutable cvector_t m_q;
-    mutable ComplexIntegrator m_integrator;
 };
 
-#endif // FORMFACTORTRUNCATEDSPHERE_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDSPHERE_H

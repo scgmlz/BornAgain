@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMUTILS_H
-#define SESSIONITEMUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMUTILS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMUTILS_H
 
-#include "Vectors3D.h"
-#include "WinDllMacros.h"
+#include "Core/Vector/Vectors3D.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <QVariant>
 
@@ -75,4 +75,4 @@ BA_CORE_API_ bool HasOwnAbundance(const SessionItem* item);
 
 } // namespace SessionItemUtils
 
-#endif // SESSIONITEMUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMUTILS_H

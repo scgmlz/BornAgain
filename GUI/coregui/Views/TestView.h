@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TESTVIEW_H
-#define TESTVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_TESTVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_TESTVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class MainWindow;
@@ -37,4 +37,4 @@ private:
     MainWindow* m_mainWindow;
 };
 
-#endif // TESTVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_TESTVIEW_H

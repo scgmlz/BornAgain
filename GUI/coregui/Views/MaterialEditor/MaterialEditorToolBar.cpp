@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MaterialEditorToolBar.h"
-#include "MaterialItem.h"
-#include "MaterialModel.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialEditorToolBar.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/MaterialModel.h"
 #include <QAction>
 #include <QItemSelectionModel>
 #include <QListView>
@@ -33,23 +33,23 @@ MaterialEditorToolBar::MaterialEditorToolBar(MaterialModel* materialModel, QWidg
     setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
     setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
-    m_newMaterialAction = new QAction(QStringLiteral("Add"), parent);
+    m_newMaterialAction = new QAction("Add", parent);
     m_newMaterialAction->setIcon(QIcon(":/images/shape-square-plus.svg"));
-    m_newMaterialAction->setToolTip(QStringLiteral("Add new material"));
+    m_newMaterialAction->setToolTip("Add new material");
     connect(m_newMaterialAction, &QAction::triggered, this,
             &MaterialEditorToolBar::onNewMaterialAction);
     addAction(m_newMaterialAction);
 
-    m_cloneMaterialAction = new QAction(QStringLiteral("Clone"), parent);
+    m_cloneMaterialAction = new QAction("Clone", parent);
     m_cloneMaterialAction->setIcon(QIcon(":/images/content-copy.svg"));
-    m_cloneMaterialAction->setToolTip(QStringLiteral("Clone selected material"));
+    m_cloneMaterialAction->setToolTip("Clone selected material");
     connect(m_cloneMaterialAction, &QAction::triggered, this,
             &MaterialEditorToolBar::onCloneMaterialAction);
     addAction(m_cloneMaterialAction);
 
-    m_removeMaterialAction = new QAction(QStringLiteral("Remove"), parent);
+    m_removeMaterialAction = new QAction("Remove", parent);
     m_removeMaterialAction->setIcon(QIcon(":/images/delete.svg"));
-    m_removeMaterialAction->setToolTip(QStringLiteral("Remove selected material"));
+    m_removeMaterialAction->setToolTip("Remove selected material");
     connect(m_removeMaterialAction, &QAction::triggered, this,
             &MaterialEditorToolBar::onRemoveMaterialAction);
     addAction(m_removeMaterialAction);
@@ -63,7 +63,7 @@ void MaterialEditorToolBar::setSelectionModel(QItemSelectionModel* selectionMode
 void MaterialEditorToolBar::onCustomContextMenuRequested(const QPoint& point)
 {
     QListView* listView = qobject_cast<QListView*>(sender());
-    Q_ASSERT(listView);
+    ASSERT(listView);
     QMenu menu;
     initItemContextMenu(menu);
     menu.exec(listView->mapToGlobal(point));
@@ -84,8 +84,8 @@ void MaterialEditorToolBar::onCloneMaterialAction()
 
 void MaterialEditorToolBar::onRemoveMaterialAction()
 {
-    Q_ASSERT(m_materialModel);
-    Q_ASSERT(m_selectionModel);
+    ASSERT(m_materialModel);
+    ASSERT(m_selectionModel);
 
     auto selected = m_selectionModel->currentIndex();
 

@@ -12,26 +12,26 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
-#include "ApplicationModels.h"
-#include "GUIHelpers.h"
-#include "ImportDataView.h"
-#include "InstrumentView.h"
-#include "JobModel.h"
-#include "JobView.h"
-#include "SampleView.h"
-#include "SessionModelView.h"
-#include "SimulationView.h"
-#include "UpdateNotifier.h"
-#include "WelcomeView.h"
-#include "actionmanager.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
+#include "GUI/coregui/Models/ApplicationModels.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Views/ImportDataView.h"
+#include "GUI/coregui/Views/InstrumentView.h"
+#include "GUI/coregui/Views/JobView.h"
+#include "GUI/coregui/Views/SampleView.h"
+#include "GUI/coregui/Views/SessionModelView.h"
+#include "GUI/coregui/Views/SimulationView.h"
+#include "GUI/coregui/Views/WelcomeView.h"
+#include "GUI/coregui/mainwindow/UpdateNotifier.h"
+#include "GUI/coregui/mainwindow/actionmanager.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/mainwindow/tooltipdatabase.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "GUI/coregui/utils/hostosinfo.h"
 #include "fancytabwidget.h"
-#include "hostosinfo.h"
-#include "mainwindow_constants.h"
 #include "progressbar.h"
-#include "projectmanager.h"
 #include "stylehelper.h"
-#include "tooltipdatabase.h"
 #include <QAction>
 #include <QApplication>
 #include <QCloseEvent>
@@ -205,25 +205,25 @@ void MainWindow::initViews()
 
     m_tabWidget->insertTab(WELCOME, m_welcomeView, QIcon(":/images/main_welcomeview.svg"),
                            "Welcome");
-    m_tabWidget->setTabToolTip(WELCOME, QStringLiteral("Switch to Welcome View"));
+    m_tabWidget->setTabToolTip(WELCOME, "Switch to Welcome View");
 
     m_tabWidget->insertTab(INSTRUMENT, m_instrumentView, QIcon(":/images/main_instrumentview.svg"),
                            "Instrument");
-    m_tabWidget->setTabToolTip(INSTRUMENT, QStringLiteral("Define the beam and the detector"));
+    m_tabWidget->setTabToolTip(INSTRUMENT, "Define the beam and the detector");
 
     m_tabWidget->insertTab(SAMPLE, m_sampleView, QIcon(":/images/main_sampleview.svg"), "Sample");
-    m_tabWidget->setTabToolTip(SAMPLE, QStringLiteral("Build the sample"));
+    m_tabWidget->setTabToolTip(SAMPLE, "Build the sample");
 
     m_tabWidget->insertTab(IMPORT, m_importDataView, QIcon(":/images/main_importview.svg"), "Data");
-    m_tabWidget->setTabToolTip(IMPORT, QStringLiteral("Import intensity data to fit"));
+    m_tabWidget->setTabToolTip(IMPORT, "Import intensity data to fit");
 
     m_tabWidget->insertTab(SIMULATION, m_simulationView, QIcon(":/images/main_simulationview.svg"),
                            "Simulation");
-    m_tabWidget->setTabToolTip(SIMULATION, QStringLiteral("Run simulation"));
+    m_tabWidget->setTabToolTip(SIMULATION, "Run simulation");
 
     m_tabWidget->insertTab(JOB, m_jobView, QIcon(":/images/main_jobview.svg"), "Jobs");
     m_tabWidget->setTabToolTip(
-        JOB, QStringLiteral("Switch to see job results, tune parameters real time,\nfit the data"));
+        JOB, "Switch to see job results, tune parameters real time,\nfit the data");
 
     m_tabWidget->setCurrentIndex(WELCOME);
 

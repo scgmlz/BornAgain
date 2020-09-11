@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SLICEDCYLINDERSBUILDER_H
-#define SLICEDCYLINDERSBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_SLICEDCYLINDERSBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_SLICEDCYLINDERSBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 //! Builds sample: cylinders on a silicon substrate
 //! @ingroup standard_samples
@@ -59,4 +59,4 @@ private:
     double m_par_surf_density;
 };
 
-#endif // SLICEDCYLINDERSBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_SLICEDCYLINDERSBUILDER_H

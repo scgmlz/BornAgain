@@ -1,22 +1,17 @@
-#include "VariableBinAxis.h"
-#include "DataFormatUtils.h"
-#include "Exceptions.h"
-#include "google_test.h"
+#include "Core/Binning/VariableBinAxis.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/InputOutput/DataFormatUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class VariableBinAxisTest : public ::testing::Test
 {
-protected:
-    ~VariableBinAxisTest();
 };
-
-VariableBinAxisTest::~VariableBinAxisTest() = default;
 
 TEST_F(VariableBinAxisTest, VectorOfUnitLength)
 {
     static const double arr[] = {0., 1.};
     std::vector<double> values(arr, arr + sizeof(arr) / sizeof(arr[0]));
     VariableBinAxis axis("name", 1, values);
-    EXPECT_EQ("name", axis.getName());
     EXPECT_EQ(size_t(1), axis.size());
     EXPECT_EQ(0.0, axis.getMin());
     EXPECT_EQ(1.0, axis.getMax());

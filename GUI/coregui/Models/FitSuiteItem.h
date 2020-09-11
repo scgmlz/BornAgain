@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITSUITEITEM_H
-#define FITSUITEITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_FITSUITEITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_FITSUITEITEM_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class FitParameterContainerItem;
 class MinimizerContainerItem;
@@ -27,7 +27,7 @@ public:
     static const QString P_UPDATE_INTERVAL;
     static const QString P_ITERATION_COUNT;
     static const QString P_CHI2;
-    static const QString T_FIT_PARAMETERS;
+    static const QString T_FIT_PARAMETERS_CONTAINER;
     static const QString T_MINIMIZER;
     explicit FitSuiteItem();
 
@@ -35,4 +35,4 @@ public:
     MinimizerContainerItem* minimizerContainerItem();
 };
 
-#endif // FITSUITEITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_FITSUITEITEM_H

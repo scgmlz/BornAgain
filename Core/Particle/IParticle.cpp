@@ -12,11 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "IParticle.h"
-#include "BornAgainNamespace.h"
-#include "FormFactorDecoratorPositionFactor.h"
-#include "MultiLayer.h"
-#include "RealParameter.h"
+#include "Core/Particle/IParticle.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/Scattering/FormFactorDecoratorPositionFactor.h"
 
 IFormFactor* IParticle::createFormFactor() const
 {
@@ -52,7 +50,7 @@ void IParticle::rotate(const IRotation& rotation)
     } else {
         mP_rotation.reset(rotation.clone());
     }
-    m_position = rotation.getTransform3D().transformed(m_position);
+    m_position = rotation.transformed(m_position);
     registerChild(mP_rotation.get());
 }
 
@@ -64,21 +62,21 @@ std::vector<const INode*> IParticle::getChildren() const
 void IParticle::registerAbundance(bool make_registered)
 {
     if (make_registered) {
-        if (!parameter(BornAgain::Abundance))
-            registerParameter(BornAgain::Abundance, &m_abundance);
+        if (!parameter("Abundance"))
+            registerParameter("Abundance", &m_abundance);
     } else {
-        removeParameter(BornAgain::Abundance);
+        removeParameter("Abundance");
     }
 }
 
 void IParticle::registerPosition(bool make_registered)
 {
     if (make_registered) {
-        if (!parameter(XComponentName(BornAgain::Position))) {
-            registerVector(BornAgain::Position, &m_position, BornAgain::UnitsNm);
+        if (!parameter(XComponentName("Position"))) {
+            registerVector("Position", &m_position, "nm");
         }
     } else {
-        removeVector(BornAgain::Position);
+        removeVector("Position");
     }
 }
 
@@ -114,8 +112,7 @@ IRotation* IParticle::createComposedRotation(const IRotation* p_rotation) const
 kvector_t IParticle::composedTranslation(const IRotation* p_rotation, kvector_t translation) const
 {
     if (p_rotation) {
-        Transform3D transform = p_rotation->getTransform3D();
-        return translation + transform.transformed(m_position);
+        return translation + p_rotation->transformed(m_position);
     } else {
         return translation + m_position;
     }

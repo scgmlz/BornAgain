@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "DetailedMessageBox.h"
-#include "DesignerHelper.h"
+#include "GUI/coregui/Views/InfoWidgets/DetailedMessageBox.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include <QApplication>
 #include <QLabel>
 #include <QMessageBox>

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MASKUNITSCONVERTER_H
-#define MASKUNITSCONVERTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKUNITSCONVERTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKUNITSCONVERTER_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 class IntensityDataItem;
 class SessionItem;
@@ -52,4 +52,4 @@ private:
     EConvertionDirection m_direction;
 };
 
-#endif // MASKUNITSCONVERTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKUNITSCONVERTER_H

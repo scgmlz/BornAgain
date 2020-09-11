@@ -12,8 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "MaskDrawingContext.h"
-#include "item_constants.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskDrawingContext.h"
 
 MaskDrawingContext::MaskDrawingContext()
     : m_current_activity(MaskEditorFlags::PAN_ZOOM_MODE), m_mask_value(MaskEditorFlags::MASK_ON),
@@ -124,12 +123,12 @@ bool MaskDrawingContext::isActivityRequiresDrawingCancel(
 QString MaskDrawingContext::activityToModelType() const
 {
     if (isRectangleMode())
-        return Constants::RectangleMaskType;
+        return "RectangleMask";
     if (isEllipseMode())
-        return Constants::EllipseMaskType;
+        return "EllipseMask";
     if (isROIMode())
-        return Constants::RegionOfInterestType;
-    return QString();
+        return "RegionOfInterest";
+    return "";
 }
 
 //! Returns model row corresponding to given activity. All shapes, except ROI, will be added

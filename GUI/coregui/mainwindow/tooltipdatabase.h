@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef TOOLTIPDATABASE_H
-#define TOOLTIPDATABASE_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_TOOLTIPDATABASE_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_TOOLTIPDATABASE_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QObject>
 
@@ -43,4 +43,4 @@ private:
     static QMap<QString, QString> m_tagToToolTip;
 };
 
-#endif // TOOLTIPDATABASE_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_TOOLTIPDATABASE_H

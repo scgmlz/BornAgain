@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef RIPPLECOSINE_H
-#define RIPPLECOSINE_H
+#ifndef BORNAGAIN_CORE_SHAPES_RIPPLECOSINE_H
+#define BORNAGAIN_CORE_SHAPES_RIPPLECOSINE_H
 
-#include "IShape.h"
+#include "Core/Shapes/IShape.h"
 
 class RippleCosine : public IShape
 {
@@ -24,4 +24,4 @@ public:
     ~RippleCosine();
 };
 
-#endif // RIPPLECOSINE_H
+#endif // BORNAGAIN_CORE_SHAPES_RIPPLECOSINE_H

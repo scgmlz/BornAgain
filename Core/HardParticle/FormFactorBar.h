@@ -12,35 +12,37 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORBAR_H
-#define FORMFACTORBAR_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORBAR_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORBAR_H
 
-#include "ProfileBar.h"
+#include "Core/HardParticle/IProfileRipple.h"
 
 //! The form factor of an elongated bar, with Gaussian profile in elongation direction.
 //! @ingroup legacyGrating
-class BA_CORE_API_ FormFactorBarGauss : public ProfileBar
+class BA_CORE_API_ FormFactorBarGauss : public IProfileRectangularRipple
 {
 public:
+    FormFactorBarGauss(const std::vector<double> P);
     FormFactorBarGauss(double length, double width, double height);
-    FormFactorBarGauss* clone() const override final;
-    void accept(INodeVisitor* visitor) const override final;
+    FormFactorBarGauss* clone() const final;
+    void accept(INodeVisitor* visitor) const final;
 
 private:
-    complex_t factor_x(complex_t qx) const override final;
+    complex_t factor_x(complex_t qx) const final;
 };
 
 //! The form factor of an elongated, with Lorentz form factor in elongation direction.
 //! @ingroup legacyGrating
-class BA_CORE_API_ FormFactorBarLorentz : public ProfileBar
+class BA_CORE_API_ FormFactorBarLorentz : public IProfileRectangularRipple
 {
 public:
+    FormFactorBarLorentz(const std::vector<double> P);
     FormFactorBarLorentz(double length, double width, double height);
-    FormFactorBarLorentz* clone() const override final;
-    void accept(INodeVisitor* visitor) const override final;
+    FormFactorBarLorentz* clone() const final;
+    void accept(INodeVisitor* visitor) const final;
 
 private:
-    complex_t factor_x(complex_t qx) const override final;
+    complex_t factor_x(complex_t qx) const final;
 };
 
-#endif // FORMFACTORBAR_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORBAR_H

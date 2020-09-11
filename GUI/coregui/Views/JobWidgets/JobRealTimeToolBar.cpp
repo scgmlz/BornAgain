@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "JobRealTimeToolBar.h"
+#include "GUI/coregui/Views/JobWidgets/JobRealTimeToolBar.h"
 #include <QToolButton>
 
 JobRealTimeToolBar::JobRealTimeToolBar(QWidget* parent)

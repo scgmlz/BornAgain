@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "UpdateTimer.h"
+#include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
 #include <QTimer>
 
 UpdateTimer::UpdateTimer(int timerInterval, QObject* parent)
@@ -31,7 +31,7 @@ void UpdateTimer::reset()
     m_is_busy = false;
 }
 
-void UpdateTimer::setTimeInterval(int timerInterval)
+void UpdateTimer::setWallclockTimer(int timerInterval)
 {
     m_timer_interval = timerInterval;
 }

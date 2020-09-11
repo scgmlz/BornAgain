@@ -1,18 +1,16 @@
-#include "ArrayUtils.h"
-#include "AxisNames.h"
-#include "CsvImportAssistant.h"
-#include "JobItemUtils.h"
-#include "OutputDataReadFactory.h"
-#include "OutputDataWriteFactory.h"
-#include "SpecularDataItem.h"
-#include "google_test.h"
+#include "Core/InputOutput/OutputDataReadFactory.h"
+#include "Core/InputOutput/OutputDataWriteFactory.h"
+#include "Core/Intensity/ArrayUtils.h"
+#include "Core/Intensity/AxisNames.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <vector>
 
 class TestCsvImportAssistant : public ::testing::Test
 {
 protected:
-    ~TestCsvImportAssistant();
-
     const std::string m_testFilename = "tmp_TestCsvImportAssistant.txt";
     const std::vector<std::vector<double>> m_testVector = {
         {0.0, 1.0, 2.0, 3.0},     {4.0, 5.0, 6.0, 7.0},     {8.0, 9.0, 10.0, 11.0},
@@ -49,8 +47,6 @@ protected:
         return data;
     }
 };
-
-TestCsvImportAssistant::~TestCsvImportAssistant() = default;
 
 //! Testing component items of particle item.
 TEST_F(TestCsvImportAssistant, test_readFile)

@@ -8,12 +8,13 @@ from utils import get_difference
 
 from bornagain import *
 
-REFERENCE_DIR = "@TEST_REFERENCE_DIR@/Core"
+REFERENCE_DIR = "@TEST_REFERENCE_DIR@/Python"
 
 # ----------------------------------
 # describe sample and run simulation
 # ----------------------------------
 def getSimulationIntensity(rho_beam, efficiency):
+    print("- simulate", flush=True)
     # defining materials
     mAmbience = HomogeneousMaterial("Air", 0.0, 0.0)
     mSubstrate = HomogeneousMaterial("Substrate", 15e-6, 0.0)
@@ -48,6 +49,7 @@ def getSimulationIntensity(rho_beam, efficiency):
     simulation.setSample(multi_layer)
     simulation.setBeamIntensity(1e9)
     simulation.runSimulation()
+    print("- - simulation done", flush=True)
     return simulation.result()
 
 
@@ -56,12 +58,17 @@ def get_reference_data(filename):
     """
     read and return reference data from file
     """
-    return IntensityDataIOFactory.readIntensityData(os.path.join(REFERENCE_DIR,filename))
+    path = os.path.join(REFERENCE_DIR,filename)
+    print("- read reference from", path, flush=True)
+    ret = IntensityDataIOFactory.readIntensityData(path)
+    print("- - reference read", flush=True)
+    return ret
 
 # --------------------------------------------------------------
 # run test and analyse test results
 # --------------------------------------------------------------
 def run_test():
+    print("run test", flush=True)
     zplus = kvector_t(0.0, 0.0, 1.0)
     zmin = kvector_t(0.0, 0.0, -1.0)
 

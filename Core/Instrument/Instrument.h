@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef INSTRUMENT_H
-#define INSTRUMENT_H
+#ifndef BORNAGAIN_CORE_INSTRUMENT_INSTRUMENT_H
+#define BORNAGAIN_CORE_INSTRUMENT_INSTRUMENT_H
 
-#include "Beam.h"
-#include "IDetector.h"
-#include "INode.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Detector/IDetector.h"
+#include "Core/Parametrization/INode.h"
 #include <memory>
 
 template <class T> class OutputData;
@@ -28,7 +28,7 @@ class IDetector2D;
 class IResolutionFunction2D;
 class SimulationElement;
 
-//! Assembles beam, detector and their relative positions wrt the sample.
+//! Assembles beam, detector and their relative positions with respect to the sample.
 //! @ingroup simulation_internal
 
 class BA_CORE_API_ Instrument : public INode
@@ -96,11 +96,8 @@ public:
     std::vector<const INode*> getChildren() const;
 
 protected:
-    //! Registers some class members for later access via parameter pool
-    virtual void init_parameters() {}
-
     std::unique_ptr<IDetector> mP_detector;
     Beam m_beam;
 };
 
-#endif // INSTRUMENT_H
+#endif // BORNAGAIN_CORE_INSTRUMENT_INSTRUMENT_H

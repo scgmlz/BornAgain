@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SCIENTIFICPLOT_H
-#define SCIENTIFICPLOT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_SCIENTIFICPLOT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_SCIENTIFICPLOT_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <memory>
 
 class PlotEventInfo;
@@ -67,4 +67,4 @@ private:
     ScientificPlotEvent* m_event;
 };
 
-#endif // SCIENTIFICPLOT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_SCIENTIFICPLOT_H

@@ -12,30 +12,30 @@
 //
 // ************************************************************************** //
 
-#include "JobModelFunctions.h"
-#include "Data1DViewItem.h"
-#include "DataPropertyContainer.h"
-#include "DetectorFunctions.h"
-#include "DetectorItems.h"
-#include "DomainObjectBuilder.h"
-#include "FitSuiteItem.h"
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "IDetector2D.h"
-#include "Instrument.h"
-#include "InstrumentItems.h"
-#include "IntensityDataItem.h"
-#include "ItemFileNameUtils.h"
-#include "JobItem.h"
-#include "JobItemUtils.h"
-#include "JobModel.h"
-#include "MaskItems.h"
-#include "MaskUnitsConverter.h"
-#include "MaterialItemContainer.h"
-#include "MaterialItemUtils.h"
-#include "MultiLayerItem.h"
-#include "PointwiseAxisItem.h"
-#include "RealDataItem.h"
+#include "GUI/coregui/Models/JobModelFunctions.h"
+#include "Core/Detector/DetectorFunctions.h"
+#include "Core/Detector/IDetector2D.h"
+#include "Core/Instrument/Instrument.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/DomainObjectBuilder.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/ItemFileNameUtils.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/MaterialItemContainer.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/PointwiseAxisItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskUnitsConverter.h"
+#include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <map>
 
 namespace
@@ -61,20 +61,19 @@ PointwiseAxisItem* getPointwiseAxisItem(const SpecularInstrumentItem* instrument
 
 void JobModelFunctions::initDataView(JobItem* job_item)
 {
-    assert(job_item && job_item->isValidForFitting());
-    assert(job_item->instrumentItem()
-           && job_item->instrumentItem()->modelType() == Constants::SpecularInstrumentType);
-    assert(!job_item->getItem(JobItem::T_DATAVIEW));
+    ASSERT(job_item && job_item->isValidForFitting());
+    ASSERT(job_item->instrumentItem()
+           && job_item->instrumentItem()->modelType() == "SpecularInstrument");
+    ASSERT(!job_item->getItem(JobItem::T_DATAVIEW));
 
     SessionModel* model = job_item->model();
-    auto view_item = dynamic_cast<Data1DViewItem*>(model->insertNewItem(
-        Constants::Data1DViewItemType, job_item->index(), -1, JobItem::T_DATAVIEW));
-    assert(view_item);
+    auto view_item = dynamic_cast<Data1DViewItem*>(
+        model->insertNewItem("Data1DViewItem", job_item->index(), -1, JobItem::T_DATAVIEW));
+    ASSERT(view_item);
 
-    auto property_container = dynamic_cast<DataPropertyContainer*>(
-        model->insertNewItem(Constants::DataPropertyContainerType, view_item->index(), -1,
-                             Data1DViewItem::T_DATA_PROPERTIES));
-    assert(property_container);
+    auto property_container = dynamic_cast<DataPropertyContainer*>(model->insertNewItem(
+        "DataPropertyContainer", view_item->index(), -1, Data1DViewItem::T_DATA_PROPERTIES));
+    ASSERT(property_container);
 
     property_container->addItem(job_item->realDataItem()->dataItem());
     property_container->addItem(job_item->dataItem());
@@ -91,11 +90,11 @@ void JobModelFunctions::setupJobItemSampleData(JobItem* jobItem, const MultiLaye
     auto model = jobItem->model();
     MultiLayerItem* multilayer =
         static_cast<MultiLayerItem*>(model->copyItem(sampleItem, jobItem, JobItem::T_SAMPLE));
-    multilayer->setItemName(Constants::MultiLayerType);
+    multilayer->setItemName("MultiLayer");
 
     // copying materials
     auto container = static_cast<MaterialItemContainer*>(jobItem->model()->insertNewItem(
-        Constants::MaterialContainerType, jobItem->index(), -1, JobItem::T_MATERIAL_CONTAINER));
+        "MaterialContainer", jobItem->index(), -1, JobItem::T_MATERIAL_CONTAINER));
 
     std::map<MaterialItem*, QString> materials;
     for (auto property_item : multilayer->materialPropertyItems()) {
@@ -133,7 +132,7 @@ void JobModelFunctions::setupJobItemInstrument(JobItem* jobItem, const Instrumen
     auto spec_from = static_cast<const SpecularInstrumentItem*>(from);
     auto axis_origin = getPointwiseAxisItem(spec_from);
     const QString current_axis_type = spec_from->beamItem()->inclinationAxisGroup()->currentType();
-    if (current_axis_type == Constants::PointwiseAxisType)
+    if (current_axis_type == "PointwiseAxis")
         spec_to->beamItem()->updateToData(*axis_origin->getAxis(), axis_origin->getUnitsLabel());
     else if (axis_origin->containsNonXMLData())
         getPointwiseAxisItem(spec_to)->init(*axis_origin->getAxis(), axis_origin->getUnitsLabel());
@@ -146,15 +145,12 @@ void JobModelFunctions::setupJobItemOutput(JobItem* jobItem)
     auto model = jobItem->model();
 
     auto instrumentType = jobItem->instrumentItem()->modelType();
-    if (instrumentType == Constants::SpecularInstrumentType) {
-        model->insertNewItem(Constants::SpecularDataType, model->indexOfItem(jobItem), -1,
-                             JobItem::T_OUTPUT);
+    if (instrumentType == "SpecularInstrument") {
+        model->insertNewItem("SpecularData", model->indexOfItem(jobItem), -1, JobItem::T_OUTPUT);
 
-    } else if (instrumentType == Constants::GISASInstrumentType
-               || instrumentType == Constants::OffSpecInstrumentType
-               || instrumentType == Constants::DepthProbeInstrumentType) {
-        model->insertNewItem(Constants::IntensityDataType, model->indexOfItem(jobItem), -1,
-                             JobItem::T_OUTPUT);
+    } else if (instrumentType == "GISASInstrument" || instrumentType == "OffSpecInstrument"
+               || instrumentType == "DepthProbeInstrument") {
+        model->insertNewItem("IntensityData", model->indexOfItem(jobItem), -1, JobItem::T_OUTPUT);
 
     } else {
         throw GUIHelpers::Error("JobModelFunctions::setupJobItemOutput() -> Error. "
@@ -175,9 +171,9 @@ void JobModelFunctions::setupJobItemForFit(JobItem* jobItem, const RealDataItem*
     copyMasksToInstrument(jobItem);
 
     // TODO: remove if when other simulation types are ready for roi & masks
-    if (jobItem->instrumentItem()->modelType() == Constants::GISASInstrumentType)
+    if (jobItem->instrumentItem()->modelType() == "GISASInstrument")
         cropRealData(jobItem);
-    if (jobItem->instrumentItem()->modelType() == Constants::SpecularInstrumentType)
+    if (jobItem->instrumentItem()->modelType() == "SpecularInstrument")
         initDataView(jobItem);
 
     createFitContainers(jobItem);
@@ -203,7 +199,7 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
 
     RealDataItem* realDataItemCopy =
         dynamic_cast<RealDataItem*>(model->copyItem(realDataItem, jobItem, JobItem::T_REALDATA));
-    Q_ASSERT(realDataItemCopy);
+    ASSERT(realDataItemCopy);
 
     realDataItemCopy->dataItem()->setOutputData(realDataItem->dataItem()->getOutputData()->clone());
 
@@ -222,7 +218,7 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
 
 const JobItem* JobModelFunctions::findJobItem(const SessionItem* item)
 {
-    while (item && item->modelType() != Constants::JobItemType)
+    while (item && item->modelType() != "JobItem")
         item = item->parent();
     return static_cast<const JobItem*>(item);
 }
@@ -276,18 +272,17 @@ void createFitContainers(JobItem* jobItem)
                                 "a second FitSuiteItem.");
     }
 
-    fitSuiteItem =
-        model->insertNewItem(Constants::FitSuiteType, jobItem->index(), -1, JobItem::T_FIT_SUITE);
+    fitSuiteItem = model->insertNewItem("FitSuite", jobItem->index(), -1, JobItem::T_FIT_SUITE);
 
-    SessionItem* parsContainerItem = fitSuiteItem->getItem(FitSuiteItem::T_FIT_PARAMETERS);
+    SessionItem* parsContainerItem =
+        fitSuiteItem->getItem(FitSuiteItem::T_FIT_PARAMETERS_CONTAINER);
     if (parsContainerItem != nullptr) {
         throw GUIHelpers::Error("JobModel::createFitContainers() -> Error. Attempt to create "
                                 "a second FitParameterContainer.");
     }
 
-    parsContainerItem =
-        model->insertNewItem(Constants::FitParameterContainerType, fitSuiteItem->index(), -1,
-                             FitSuiteItem::T_FIT_PARAMETERS);
+    parsContainerItem = model->insertNewItem("FitParameterContainer", fitSuiteItem->index(), -1,
+                                             FitSuiteItem::T_FIT_PARAMETERS_CONTAINER);
 
     // Minimizer settings
     SessionItem* minimizerContainerItem = fitSuiteItem->getItem(FitSuiteItem::T_MINIMIZER);
@@ -296,14 +291,13 @@ void createFitContainers(JobItem* jobItem)
                                 "a second MinimizerContainer.");
     }
 
-    minimizerContainerItem = model->insertNewItem(
-        Constants::MinimizerContainerType, fitSuiteItem->index(), -1, FitSuiteItem::T_MINIMIZER);
+    minimizerContainerItem = model->insertNewItem("MinimizerContainer", fitSuiteItem->index(), -1,
+                                                  FitSuiteItem::T_MINIMIZER);
 }
 
 PointwiseAxisItem* getPointwiseAxisItem(const SpecularInstrumentItem* instrument)
 {
     return dynamic_cast<PointwiseAxisItem*>(
-        instrument->beamItem()->inclinationAxisGroup()->getChildOfType(
-            Constants::PointwiseAxisType));
+        instrument->beamItem()->inclinationAxisGroup()->getChildOfType("PointwiseAxis"));
 }
 } // namespace

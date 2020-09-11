@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "Kernel.h"
-#include "IMinimizer.h"
-#include "MinimizerFactory.h"
+#include "Fit/Kernel/Kernel.h"
+#include "Fit/Minimizer/IMinimizer.h"
+#include "Fit/Minimizer/MinimizerFactory.h"
 
 using namespace Fit;
 
@@ -46,15 +46,15 @@ MinimizerResult Kernel::minimize(fcn_scalar_t fcn, const Parameters& parameters)
 {
     setParameters(parameters);
 
-    m_time_interval.start();
+    m_timer.start();
     if (m_minimizer->requiresResiduals())
         throw std::runtime_error(
             "Error in Kernel::minimize: the chosen minimizer requires residuals computation. "
             "Please use FitObjective::evaluate_residuals with this minimizer.");
     auto result = m_minimizer->minimize_scalar(fcn, parameters);
-    m_time_interval.stop();
+    m_timer.stop();
 
-    result.setDuration(m_time_interval.runTime());
+    result.setDuration(m_timer.runTime());
     return result;
 }
 
@@ -62,11 +62,11 @@ MinimizerResult Kernel::minimize(fcn_residual_t fcn, const Parameters& parameter
 {
     setParameters(parameters);
 
-    m_time_interval.start();
+    m_timer.start();
     auto result = m_minimizer->minimize_residual(fcn, parameters);
-    m_time_interval.stop();
+    m_timer.stop();
 
-    result.setDuration(m_time_interval.runTime());
+    result.setDuration(m_timer.runTime());
     return result;
 }
 

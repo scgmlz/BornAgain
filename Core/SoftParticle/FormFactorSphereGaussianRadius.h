@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORSPHEREGAUSSIANRADIUS_H
-#define FORMFACTORSPHEREGAUSSIANRADIUS_H
+#ifndef BORNAGAIN_CORE_SOFTPARTICLE_FORMFACTORSPHEREGAUSSIANRADIUS_H
+#define BORNAGAIN_CORE_SOFTPARTICLE_FORMFACTORSPHEREGAUSSIANRADIUS_H
 
-#include "FormFactorFullSphere.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 #include <memory>
 
 //! A sphere with gaussian radius distribution.
@@ -24,6 +24,7 @@
 class BA_CORE_API_ FormFactorSphereGaussianRadius : public IFormFactorBorn
 {
 public:
+    FormFactorSphereGaussianRadius(const std::vector<double> P);
     FormFactorSphereGaussianRadius(double mean, double sigma);
 
     FormFactorSphereGaussianRadius* clone() const override final
@@ -43,10 +44,9 @@ protected:
 private:
     double calculateMeanR3() const;
 
-    double m_mean; //!< This is the mean radius
-    double m_sigma;
+    const double& m_mean; //!< This is the mean radius
+    const double& m_sigma;
     double m_mean_r3; //!< This is the radius that gives the mean volume
-    std::unique_ptr<FormFactorFullSphere> P_ff_sphere;
 };
 
-#endif // FORMFACTORSPHEREGAUSSIANRADIUS_H
+#endif // BORNAGAIN_CORE_SOFTPARTICLE_FORMFACTORSPHEREGAUSSIANRADIUS_H

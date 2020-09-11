@@ -12,17 +12,20 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARSCALARTANHSTRATEGY_H
-#define SPECULARSCALARTANHSTRATEGY_H
+#ifndef BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARTANHSTRATEGY_H
+#define BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARTANHSTRATEGY_H
 
-#include "SpecularScalarStrategy.h"
+#include "Core/Multilayer/SpecularScalarStrategy.h"
 
 class Slice;
 
-//! Implements method 'execute' to compute refraction angles and transmission/reflection
-//! coefficients for coherent wave propagation in a multilayer.
+//! Implements an tanh transition function to model roughness in a scaler computation.
+//!
+//! Implements the transition function that includes the analytical roughness model
+//! of an tanh interface transition in the computation of the coefficients for
+//! coherent wave propagation in a multilayer by applying modified Fresnel coefficients.
+//!
 //! @ingroup algorithms_internal
-
 class BA_CORE_API_ SpecularScalarTanhStrategy : public SpecularScalarStrategy
 {
 private:
@@ -32,4 +35,4 @@ private:
                                         const Eigen::Vector2cd& t_r1) const override;
 };
 
-#endif // SPECULARSCALARTANHSTRATEGY_H
+#endif // BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARTANHSTRATEGY_H

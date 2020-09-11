@@ -1,18 +1,32 @@
-#include "DataViewUtils.h"
-#include "Data1DViewItem.h"
-#include "DataItem.h"
-#include "DataPropertyContainer.h"
-#include "DomainObjectBuilder.h"
-#include "JobItem.h"
-#include "JobItemUtils.h"
-#include "UnitConverterUtils.h"
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      GUI/coregui/Models/DataViewUtils.cpp
+//! @brief     Implements functions in namespace DataViewUtils
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
+#include "GUI/coregui/Models/DataViewUtils.h"
+#include "Core/Simulation/UnitConverterUtils.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/DomainObjectBuilder.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
 
 namespace
 {
 std::unique_ptr<IUnitConverter> getConverter(Data1DViewItem* view_item)
 {
     auto job_item = view_item->jobItem();
-    assert(job_item->instrumentItem());
+    ASSERT(job_item->instrumentItem());
 
     return DomainObjectBuilder::createUnitConverter(job_item->instrumentItem());
 }

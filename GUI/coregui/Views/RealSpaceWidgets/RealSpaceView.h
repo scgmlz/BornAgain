@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALSPACEVIEW_H
-#define REALSPACEVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEVIEW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class RealSpaceModel;
@@ -47,4 +47,4 @@ private:
     RealSpace::Widget3D* m_3dview;
 };
 
-#endif // REALSPACEVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEVIEW_H

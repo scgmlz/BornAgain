@@ -12,8 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SaveThread.h"
-#include "projectdocument.h"
+#include "GUI/coregui/mainwindow/SaveThread.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/mainwindow/projectdocument.h"
 
 SaveThread::SaveThread(QObject* parent) : QThread(parent), m_document(nullptr) {}
 
@@ -24,7 +25,7 @@ SaveThread::~SaveThread()
 
 void SaveThread::run()
 {
-    Q_ASSERT(m_document);
+    ASSERT(m_document);
     m_document->save_project_data(m_projectFile);
     emit saveReady();
 }

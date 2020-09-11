@@ -12,26 +12,27 @@
 //
 // ************************************************************************** //
 
-#ifndef BASEMATERIALIMPL_H_
-#define BASEMATERIALIMPL_H_
+#ifndef BORNAGAIN_CORE_MATERIAL_BASEMATERIALIMPL_H
+#define BORNAGAIN_CORE_MATERIAL_BASEMATERIALIMPL_H
 
-#include "Complex.h"
-#include "EigenCore.h"
-#include "INamed.h"
-#include "Vectors3D.h"
+#include "Core/Basics/Complex.h"
+#include "Core/Vector/EigenCore.h"
+#include "Core/Vector/Vectors3D.h"
 
 class Transform3D;
 class WavevectorInfo;
 
 enum class MATERIAL_TYPES { InvalidMaterialType = -1, RefractiveMaterial = 0, MaterialBySLD };
 
+//! Interface for material implementation classes.
+//! Inherited by MagneticMaterialImpl, which has further children.
 //! @ingroup materials
 
-class BA_CORE_API_ BaseMaterialImpl : public INamed
+class BA_CORE_API_ BaseMaterialImpl
 {
 public:
     //! Constructs basic material with name
-    BaseMaterialImpl(const std::string& name) : INamed(name) {}
+    BaseMaterialImpl(const std::string& name) : m_name(name) {}
 
     virtual ~BaseMaterialImpl() = default;
 
@@ -68,10 +69,16 @@ public:
     //! Returns (\f$ \pi/\lambda^2 \f$ - sld) matrix with magnetization corrections
     virtual Eigen::Matrix2cd polarizedSubtrSLD(const WavevectorInfo& wavevectors) const = 0;
 
-    virtual BaseMaterialImpl* transformedMaterial(const Transform3D& transform) const = 0;
+    virtual BaseMaterialImpl* rotatedMaterial(const Transform3D& transform) const = 0;
 
     //! Prints object data
     virtual void print(std::ostream& ostr) const = 0;
+
+    //! Returns name of the material
+    const std::string& getName() const { return m_name; }
+
+private:
+    const std::string m_name;
 };
 
-#endif /* BASEMATERIALIMPL_H_ */
+#endif // BORNAGAIN_CORE_MATERIAL_BASEMATERIALIMPL_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FIXEDBINAXIS_H
-#define FIXEDBINAXIS_H
+#ifndef BORNAGAIN_CORE_BINNING_FIXEDBINAXIS_H
+#define BORNAGAIN_CORE_BINNING_FIXEDBINAXIS_H
 
-#include "IAxis.h"
+#include "Core/Binning/IAxis.h"
 
 //! Axis with fixed bin size.
 //! @ingroup tools
@@ -62,4 +62,4 @@ private:
     double m_end;
 };
 
-#endif // FIXEDBINAXIS_H
+#endif // BORNAGAIN_CORE_BINNING_FIXEDBINAXIS_H

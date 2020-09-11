@@ -12,15 +12,15 @@
 //
 // ************************************************************************** //
 
-#include "LinkInstrumentManager.h"
-#include "AxesItems.h"
-#include "DetectorItems.h"
-#include "ImportDataUtils.h"
-#include "InstrumentItems.h"
-#include "InstrumentModel.h"
-#include "MaskItems.h"
-#include "RealDataItem.h"
-#include "RealDataModel.h"
+#include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/DetectorItems.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
 #include <QMessageBox>
 #include <QPushButton>
 
@@ -89,7 +89,7 @@ int LinkInstrumentManager::instrumentComboIndex(const QString& identifier)
 
 QString LinkInstrumentManager::instrumentIdentifier(int comboIndex)
 {
-    Q_ASSERT(comboIndex >= 0 && comboIndex < m_instrumentVec.size());
+    ASSERT(comboIndex >= 0 && comboIndex < m_instrumentVec.size());
     return m_instrumentVec[comboIndex].m_identifier;
 }
 

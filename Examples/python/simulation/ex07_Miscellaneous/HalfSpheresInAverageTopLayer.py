@@ -20,14 +20,14 @@ def get_sample():
     m_particle = ba.HomogeneousMaterial("Particle", 3e-5, 2e-8)
 
     # cylindrical particle
-    half_sphere_ff = ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius)
+    half_sphere_ff = ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius, 0)
     half_sphere = ba.Particle(m_particle, half_sphere_ff)
     particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(half_sphere)
 
     # interference function
-    interference = ba.InterferenceFunction2DLattice.createSquare(10*nm)
-    pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm)
+    interference = ba.InterferenceFunction2DLattice.createSquare(10*nm, 0*deg)
+    pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm, 0)
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
 

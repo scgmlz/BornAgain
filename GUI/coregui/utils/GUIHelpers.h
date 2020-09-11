@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef GUIHELPERS_H
-#define GUIHELPERS_H
+#ifndef BORNAGAIN_GUI_COREGUI_UTILS_GUIHELPERS_H
+#define BORNAGAIN_GUI_COREGUI_UTILS_GUIHELPERS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <QWidget>
 #include <memory>
@@ -44,14 +44,14 @@ private:
 };
 
 BA_CORE_API_ void information(QWidget* parent, const QString& title, const QString& text,
-                              const QString& detailedText = QString());
+                              const QString& detailedText = "");
 BA_CORE_API_ void warning(QWidget* parent, const QString& title, const QString& text,
-                          const QString& detailedText = QString());
+                          const QString& detailedText = "");
 BA_CORE_API_ bool question(QWidget* parent, const QString& title, const QString& text,
-                           const QString& detailedText = QString(), const QString& yesText = "&Yes",
+                           const QString& detailedText = "", const QString& yesText = "&Yes",
                            const QString& noText = "&No");
 BA_CORE_API_ bool okToDelete(QWidget* parent, const QString& title, const QString& text,
-                             const QString& detailedText = QString());
+                             const QString& detailedText = "");
 
 BA_CORE_API_ QString getBornAgainVersionString();
 
@@ -87,4 +87,4 @@ inline std::ostream& operator<<(std::ostream& stream, const QString& str)
     return stream;
 }
 
-#endif // GUIHELPERS_H
+#endif // BORNAGAIN_GUI_COREGUI_UTILS_GUIHELPERS_H

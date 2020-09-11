@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "TransformationItem.h"
+#include "GUI/coregui/Models/TransformationItem.h"
 
 const QString TransformationItem::P_ROT = "Rotation type";
 
-TransformationItem::TransformationItem() : SessionGraphicsItem(Constants::RotationType)
+TransformationItem::TransformationItem() : SessionGraphicsItem("Rotation")
 {
-    setToolTip(QStringLiteral("Rotation applied to particles"));
-    addGroupProperty(P_ROT, Constants::RotationGroup);
+    setToolTip("Rotation applied to particles");
+    addGroupProperty(P_ROT, "Rotation group");
 }

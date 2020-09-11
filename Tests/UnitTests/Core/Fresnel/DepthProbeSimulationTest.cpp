@@ -1,22 +1,21 @@
-#include "DepthProbeSimulation.h"
-#include "Distributions.h"
-#include "FixedBinAxis.h"
-#include "Histogram2D.h"
-#include "IMultiLayerBuilder.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MathConstants.h"
-#include "MultiLayer.h"
-#include "ParameterPattern.h"
-#include "RealParameter.h"
-#include "Units.h"
-#include "google_test.h"
+#include "Core/Simulation/DepthProbeSimulation.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Basics/Units.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Parametrization/Distributions.h"
+#include "Core/Parametrization/ParameterPattern.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class DepthProbeSimulationTest : public ::testing::Test
 {
 protected:
     DepthProbeSimulationTest();
-    ~DepthProbeSimulationTest();
 
     std::unique_ptr<DepthProbeSimulation> defaultSimulation();
     void checkBeamState(const DepthProbeSimulation& sim);
@@ -40,8 +39,6 @@ DepthProbeSimulationTest::DepthProbeSimulationTest()
     multilayer.addLayer(layer2);
 }
 
-DepthProbeSimulationTest::~DepthProbeSimulationTest() = default;
-
 std::unique_ptr<DepthProbeSimulation> DepthProbeSimulationTest::defaultSimulation()
 {
     std::unique_ptr<DepthProbeSimulation> result = std::make_unique<DepthProbeSimulation>();
@@ -53,7 +50,7 @@ std::unique_ptr<DepthProbeSimulation> DepthProbeSimulationTest::defaultSimulatio
 
 void DepthProbeSimulationTest::checkBeamState(const DepthProbeSimulation& sim)
 {
-    const auto* inclination = sim.getInstrument().getBeam().parameter(BornAgain::Inclination);
+    const auto* inclination = sim.getInstrument().getBeam().parameter("InclinationAngle");
     const auto test_limits = RealLimits::limited(-M_PI_2, M_PI_2);
     EXPECT_EQ(test_limits, inclination->limits());
     EXPECT_EQ(0.0, inclination->value());
@@ -197,11 +194,11 @@ TEST_F(DepthProbeSimulationTest, AddingBeamDistributions)
     DistributionGaussian distribution(1.0, 2.0);
 
     ParameterPattern wl_pattern;
-    wl_pattern.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Wavelength);
+    wl_pattern.beginsWith("*").add("Beam").add("Wavelength");
     ParameterPattern incl_ang_pattern;
-    incl_ang_pattern.beginsWith("*").add(BornAgain::BeamType).add(BornAgain::Inclination);
+    incl_ang_pattern.beginsWith("*").add("Beam").add("InclinationAngle");
     ParameterPattern beam_pattern;
-    beam_pattern.beginsWith("*").add(BornAgain::BeamType).add("*");
+    beam_pattern.beginsWith("*").add("Beam").add("*");
 
     EXPECT_THROW(sim->addParameterDistribution(incl_ang_pattern.toStdString(), distribution, 5),
                  std::runtime_error);

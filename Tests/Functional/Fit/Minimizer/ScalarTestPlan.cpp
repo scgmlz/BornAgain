@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "ScalarTestPlan.h"
-#include "Minimizer.h"
+#include "Tests/Functional/Fit/Minimizer/ScalarTestPlan.h"
+#include "Fit/Kernel/Minimizer.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>

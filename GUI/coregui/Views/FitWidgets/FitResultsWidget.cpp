@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "FitResultsWidget.h"
+#include "GUI/coregui/Views/FitWidgets/FitResultsWidget.h"
 
 FitResultsWidget::FitResultsWidget(QWidget* parent) : QWidget(parent)
 {

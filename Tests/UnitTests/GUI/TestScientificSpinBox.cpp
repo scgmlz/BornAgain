@@ -1,17 +1,10 @@
-#include "ScientificSpinBox.h"
-#include "google_test.h"
+#include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <limits>
 
 class TestScientificSpinBox : public ::testing::Test
 {
-public:
-    TestScientificSpinBox();
-    ~TestScientificSpinBox() override;
 };
-
-TestScientificSpinBox::TestScientificSpinBox() {}
-
-TestScientificSpinBox::~TestScientificSpinBox() = default;
 
 TEST_F(TestScientificSpinBox, testValueFromText)
 {
@@ -28,16 +21,16 @@ TEST_F(TestScientificSpinBox, testValueFromText)
     };
 
     // translation fails
-    EXPECT_EQ(0.1, to_value(QString("abcd")));
-    EXPECT_EQ(0.1, to_value(QString("1,2")));
-    EXPECT_EQ(0.1, to_value(QString("100,000,000.2")));
-    EXPECT_EQ(0.1, to_value(QString("100.000.000.2")));
-    EXPECT_EQ(0.1, to_value(QString("1e+2345")));
-    EXPECT_EQ(0.1, to_value(QString("-1e+2345")));
-    EXPECT_EQ(0.1, to_value(QString("1e-2345")));
-    EXPECT_EQ(0.1, to_value(QString("-1e-2345")));
-    EXPECT_EQ(0.1, to_value(QString("--0.1")));
-    EXPECT_EQ(0.1, to_value(QString("-.e-12")));
+    EXPECT_EQ(0.1, to_value("abcd"));
+    EXPECT_EQ(0.1, to_value("1,2"));
+    EXPECT_EQ(0.1, to_value("100,000,000.2"));
+    EXPECT_EQ(0.1, to_value("100.000.000.2"));
+    EXPECT_EQ(0.1, to_value("1e+2345"));
+    EXPECT_EQ(0.1, to_value("-1e+2345"));
+    EXPECT_EQ(0.1, to_value("1e-2345"));
+    EXPECT_EQ(0.1, to_value("-1e-2345"));
+    EXPECT_EQ(0.1, to_value("--0.1"));
+    EXPECT_EQ(0.1, to_value("-.e-12"));
     EXPECT_EQ(0.1, to_value(QString()));
 
     auto to_value_2 = [&validator](QString text) {
@@ -45,18 +38,18 @@ TEST_F(TestScientificSpinBox, testValueFromText)
     };
 
     // translation fails due to out-of-bounds condition
-    EXPECT_EQ(0.1, to_value_2(QString("-0.2")));
-    EXPECT_EQ(0.1, to_value_2(QString("-0.1e+1")));
-    EXPECT_EQ(0.1, to_value_2(QString("1e+8")));
+    EXPECT_EQ(0.1, to_value_2("-0.2"));
+    EXPECT_EQ(0.1, to_value_2("-0.1e+1"));
+    EXPECT_EQ(0.1, to_value_2("1e+8"));
 
     // legitimate values
-    EXPECT_EQ(-0.0999, to_value_2(QString("-0.0999")));
-    EXPECT_EQ(-1e-13, to_value_2(QString("-.1e-12")));
-    EXPECT_EQ(0.0, to_value_2(QString("0")));
-    EXPECT_EQ(0.123, to_value_2(QString("0.123")));
-    EXPECT_EQ(1e+6, to_value_2(QString("1e+6")));
-    EXPECT_EQ(1.1e+6, to_value_2(QString("1.1e+6")));
-    EXPECT_EQ(0.012, to_value_2(QString("0.012")));
+    EXPECT_EQ(-0.0999, to_value_2("-0.0999"));
+    EXPECT_EQ(-1e-13, to_value_2("-.1e-12"));
+    EXPECT_EQ(0.0, to_value_2("0"));
+    EXPECT_EQ(0.123, to_value_2("0.123"));
+    EXPECT_EQ(1e+6, to_value_2("1e+6"));
+    EXPECT_EQ(1.1e+6, to_value_2("1.1e+6"));
+    EXPECT_EQ(0.012, to_value_2("0.012"));
 }
 
 TEST_F(TestScientificSpinBox, testTextFromValue)
@@ -64,47 +57,47 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     int decimals = 3;
     auto to_string = [&decimals](double val) { return ScientificSpinBox::toString(val, decimals); };
 
-    EXPECT_EQ(std::string("-1.235e+2"), to_string(-123.45).toStdString());
-    EXPECT_EQ(std::string("-100"), to_string(-99.9999).toStdString());
-    EXPECT_EQ(std::string("-99.999"), to_string(-99.9994).toStdString());
-    EXPECT_EQ(std::string("-10.123"), to_string(-10.12345).toStdString());
-    EXPECT_EQ(std::string("-1"), to_string(-1.).toStdString());
-    EXPECT_EQ(std::string("-0.1"), to_string(-0.1).toStdString());
-    EXPECT_EQ(std::string("-0.1"), to_string(-0.1).toStdString());
-    EXPECT_EQ(std::string("-9.99e-2"), to_string(-9.99e-2).toStdString());
-    EXPECT_EQ(std::string("-1.266e-12"), to_string(-1.26555e-12).toStdString());
-    EXPECT_EQ(std::string("0"), to_string(-0.0).toStdString());
-    EXPECT_EQ(std::string("0"), to_string(0.0).toStdString());
-    EXPECT_EQ(std::string("1e-12"), to_string(1.e-12).toStdString());
-    EXPECT_EQ(std::string("1.23e-12"), to_string(1.23e-12).toStdString());
-    EXPECT_EQ(std::string("1e-2"), to_string(1.e-2).toStdString());
-    EXPECT_EQ(std::string("1.5e-2"), to_string(1.5e-2).toStdString());
-    EXPECT_EQ(std::string("1.523e-2"), to_string(1.5234e-2).toStdString());
-    EXPECT_EQ(std::string("9.99e-2"), to_string(9.99e-2).toStdString());
-    EXPECT_EQ(std::string("1e-1"), to_string(9.9999e-2).toStdString());
-    EXPECT_EQ(std::string("0.1"), to_string(0.1).toStdString());
-    EXPECT_EQ(std::string("1"), to_string(1.).toStdString());
-    EXPECT_EQ(std::string("1.1"), to_string(1.1).toStdString());
-    EXPECT_EQ(std::string("1.123"), to_string(1.12345).toStdString());
-    EXPECT_EQ(std::string("10.123"), to_string(10.12345).toStdString());
-    EXPECT_EQ(std::string("99.9"), to_string(99.9).toStdString());
-    EXPECT_EQ(std::string("99.999"), to_string(99.9994).toStdString());
-    EXPECT_EQ(std::string("100"), to_string(99.9999).toStdString());
-    EXPECT_EQ(std::string("1.235e+2"), to_string(123.45).toStdString());
-    EXPECT_EQ(std::string("1e+4"), to_string(1.e+4).toStdString());
-    EXPECT_EQ(std::string("1.265e+12"), to_string(1.265e+12).toStdString());
-    EXPECT_EQ(std::string("1.266e+12"), to_string(1.26555e+12).toStdString());
+    EXPECT_EQ("-1.235e+2", to_string(-123.45).toStdString());
+    EXPECT_EQ("-100", to_string(-99.9999).toStdString());
+    EXPECT_EQ("-99.999", to_string(-99.9994).toStdString());
+    EXPECT_EQ("-10.123", to_string(-10.12345).toStdString());
+    EXPECT_EQ("-1", to_string(-1.).toStdString());
+    EXPECT_EQ("-0.1", to_string(-0.1).toStdString());
+    EXPECT_EQ("-0.1", to_string(-0.1).toStdString());
+    EXPECT_EQ("-9.99e-2", to_string(-9.99e-2).toStdString());
+    EXPECT_EQ("-1.266e-12", to_string(-1.26555e-12).toStdString());
+    EXPECT_EQ("0", to_string(-0.0).toStdString());
+    EXPECT_EQ("0", to_string(0.0).toStdString());
+    EXPECT_EQ("1e-12", to_string(1.e-12).toStdString());
+    EXPECT_EQ("1.23e-12", to_string(1.23e-12).toStdString());
+    EXPECT_EQ("1e-2", to_string(1.e-2).toStdString());
+    EXPECT_EQ("1.5e-2", to_string(1.5e-2).toStdString());
+    EXPECT_EQ("1.523e-2", to_string(1.5234e-2).toStdString());
+    EXPECT_EQ("9.99e-2", to_string(9.99e-2).toStdString());
+    EXPECT_EQ("1e-1", to_string(9.9999e-2).toStdString());
+    EXPECT_EQ("0.1", to_string(0.1).toStdString());
+    EXPECT_EQ("1", to_string(1.).toStdString());
+    EXPECT_EQ("1.1", to_string(1.1).toStdString());
+    EXPECT_EQ("1.123", to_string(1.12345).toStdString());
+    EXPECT_EQ("10.123", to_string(10.12345).toStdString());
+    EXPECT_EQ("99.9", to_string(99.9).toStdString());
+    EXPECT_EQ("99.999", to_string(99.9994).toStdString());
+    EXPECT_EQ("100", to_string(99.9999).toStdString());
+    EXPECT_EQ("1.235e+2", to_string(123.45).toStdString());
+    EXPECT_EQ("1e+4", to_string(1.e+4).toStdString());
+    EXPECT_EQ("1.265e+12", to_string(1.265e+12).toStdString());
+    EXPECT_EQ("1.266e+12", to_string(1.26555e+12).toStdString());
 
     decimals = 5;
-    EXPECT_EQ(std::string("1.23e-12"), to_string(1.23e-12).toStdString());
-    EXPECT_EQ(std::string("1.52346e-2"), to_string(1.523456e-2).toStdString());
-    EXPECT_EQ(std::string("1e-1"), to_string(9.999999e-2).toStdString());
-    EXPECT_EQ(std::string("1.12346"), to_string(1.123455).toStdString());
-    EXPECT_EQ(std::string("10.12346"), to_string(10.123456).toStdString());
-    EXPECT_EQ(std::string("99.9"), to_string(99.9).toStdString());
-    EXPECT_EQ(std::string("100"), to_string(99.999999).toStdString());
-    EXPECT_EQ(std::string("1.2345e+2"), to_string(123.45).toStdString());
-    EXPECT_EQ(std::string("1.26556e+12"), to_string(1.265556e+12).toStdString());
+    EXPECT_EQ("1.23e-12", to_string(1.23e-12).toStdString());
+    EXPECT_EQ("1.52346e-2", to_string(1.523456e-2).toStdString());
+    EXPECT_EQ("1e-1", to_string(9.999999e-2).toStdString());
+    EXPECT_EQ("1.12346", to_string(1.123455).toStdString());
+    EXPECT_EQ("10.12346", to_string(10.123456).toStdString());
+    EXPECT_EQ("99.9", to_string(99.9).toStdString());
+    EXPECT_EQ("100", to_string(99.999999).toStdString());
+    EXPECT_EQ("1.2345e+2", to_string(123.45).toStdString());
+    EXPECT_EQ("1.26556e+12", to_string(1.265556e+12).toStdString());
 }
 
 TEST_F(TestScientificSpinBox, testRound)

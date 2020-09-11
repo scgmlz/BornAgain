@@ -12,13 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorTruncatedSpheroid.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
-#include "TruncatedEllipsoid.h"
+#include "Core/HardParticle/FormFactorTruncatedSpheroid.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Shapes/TruncatedEllipsoid.h"
+#include "Core/Tools/Integrator.h"
+#include "Core/Tools/MathFunctions.h"
 #include <limits>
 
 //! Constructor of a spheroidal dome.
@@ -26,17 +25,24 @@
 //! @param height: height of the truncated spheroid in nanometers
 //! @param height_flattening: ratio of the height of the corresponding full spheroid to its diameter
 //! @param dh: length of cup truncated from the top
+FormFactorTruncatedSpheroid::FormFactorTruncatedSpheroid(const std::vector<double> P)
+    : IFormFactorBorn({"TruncatedSpheroid",
+                       "class_tooltip",
+                       {{"Radius", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                        {"HeightFlattening", "", "para_tooltip", 0, +INF, 0},
+                        {"DeltaHeight", "nm", "para_tooltip", 0, +INF, 0}}},
+                      P),
+      m_radius(m_P[0]), m_height(m_P[1]), m_height_flattening(m_P[2]), m_dh(m_P[3])
+{
+    check_initialization();
+    onChange();
+}
+
 FormFactorTruncatedSpheroid::FormFactorTruncatedSpheroid(double radius, double height,
                                                          double height_flattening, double dh)
-    : m_radius(radius), m_height(height), m_height_flattening(height_flattening), m_dh(dh)
+    : FormFactorTruncatedSpheroid(std::vector<double>{radius, height, height_flattening, dh})
 {
-    setName(BornAgain::FFTruncatedSpheroidType);
-    check_initialization();
-    registerParameter(BornAgain::Radius, &m_radius).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::HeightFlattening, &m_height_flattening).setNonnegative();
-    registerParameter(BornAgain::DeltaHeight, &m_dh).setUnit(BornAgain::UnitsNm).setNonnegative();
-    onChange();
 }
 
 bool FormFactorTruncatedSpheroid::check_initialization() const
@@ -78,8 +84,8 @@ complex_t FormFactorTruncatedSpheroid::evaluate_for_q(cvector_t q) const
         return M_PI / 3. / fp * (H * H * (3. * R - H / fp) - m_dh * m_dh * (3. * R - m_dh / fp));
     complex_t z_part = std::exp(complex_t(0.0, 1.0) * m_q.z() * (H - fp * R));
     return M_TWOPI * z_part
-           * m_integrator.integrate([&](double Z) { return Integrand(Z); }, fp * R - H,
-                                    fp * R - m_dh);
+           * ComplexIntegrator().integrate([&](double Z) { return Integrand(Z); }, fp * R - H,
+                                           fp * R - m_dh);
 }
 
 IFormFactor* FormFactorTruncatedSpheroid::sliceFormFactor(ZLimits limits, const IRotation& rot,

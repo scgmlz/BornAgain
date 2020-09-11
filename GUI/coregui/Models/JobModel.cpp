@@ -12,22 +12,22 @@
 //
 // ************************************************************************** //
 
-#include "JobModel.h"
-#include "AxesItems.h"
-#include "FitSuiteItem.h"
-#include "GUIHelpers.h"
-#include "GroupItem.h"
-#include "InstrumentItems.h"
-#include "IntensityDataItem.h"
-#include "JobItem.h"
-#include "JobItemUtils.h"
-#include "JobModelFunctions.h"
-#include "JobQueueData.h"
-#include "MultiLayerItem.h"
-#include "ParameterTreeItems.h"
-#include "ParameterTreeUtils.h"
-#include "RealDataItem.h"
-#include "SimulationOptionsItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/FitSuiteItem.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/JobModelFunctions.h"
+#include "GUI/coregui/Models/JobQueueData.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
+#include "GUI/coregui/Models/ParameterTreeUtils.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SimulationOptionsItem.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 JobModel::JobModel(QObject* parent)
     : SessionModel(SessionXML::JobModelTag, parent), m_queue_data(nullptr)
@@ -46,14 +46,14 @@ JobModel::~JobModel()
 const JobItem* JobModel::getJobItemForIndex(const QModelIndex& index) const
 {
     const JobItem* result = dynamic_cast<const JobItem*>(itemForIndex(index));
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
 JobItem* JobModel::getJobItemForIndex(const QModelIndex& index)
 {
     JobItem* result = dynamic_cast<JobItem*>(itemForIndex(index));
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
@@ -74,11 +74,11 @@ JobItem* JobModel::addJob(const MultiLayerItem* multiLayerItem,
                           const InstrumentItem* instrumentItem, const RealDataItem* realDataItem,
                           const SimulationOptionsItem* optionItem)
 {
-    Q_ASSERT(multiLayerItem);
-    Q_ASSERT(instrumentItem);
-    Q_ASSERT(optionItem);
+    ASSERT(multiLayerItem);
+    ASSERT(instrumentItem);
+    ASSERT(optionItem);
 
-    JobItem* jobItem = dynamic_cast<JobItem*>(insertNewItem(Constants::JobItemType));
+    JobItem* jobItem = dynamic_cast<JobItem*>(insertNewItem("JobItem"));
     jobItem->setItemName(generateJobName());
     jobItem->setIdentifier(GUIHelpers::createUuid());
 
@@ -86,7 +86,7 @@ JobItem* JobModel::addJob(const MultiLayerItem* multiLayerItem,
     JobModelFunctions::setupJobItemInstrument(jobItem, instrumentItem);
 
     // TODO: remove when specular instrument is ready for magnetization
-    if (instrumentItem->modelType() == Constants::SpecularInstrumentType)
+    if (instrumentItem->modelType() == "SpecularInstrument")
         JobModelFunctions::muteMagnetizationData(jobItem);
     copyItem(optionItem, jobItem, JobItem::T_SIMULATION_OPTIONS);
 
@@ -112,7 +112,7 @@ bool JobModel::hasUnfinishedJobs()
 {
     bool result = m_queue_data->hasUnfinishedJobs();
     for (auto jobItem : topItems<JobItem>()) {
-        if (jobItem->getStatus() == Constants::STATUS_FITTING)
+        if (jobItem->getStatus() == "Fitting")
             result = true;
     }
 
@@ -146,7 +146,7 @@ QVector<SessionItem*> JobModel::nonXMLData() const
             dynamic_cast<SpecularInstrumentItem*>(jobItem->getItem(JobItem::T_INSTRUMENT));
         if (instrument) {
             auto axis_group = instrument->beamItem()->inclinationAxisGroup();
-            result.push_back(axis_group->getChildOfType(Constants::PointwiseAxisType));
+            result.push_back(axis_group->getChildOfType("PointwiseAxis"));
         }
     }
 
@@ -182,7 +182,7 @@ void JobModel::cancelJob(const QModelIndex& index)
 void JobModel::removeJob(const QModelIndex& index)
 {
     JobItem* jobItem = getJobItemForIndex(index);
-    Q_ASSERT(jobItem);
+    ASSERT(jobItem);
     m_queue_data->removeJob(jobItem->getIdentifier());
 
     emit aboutToDeleteJobItem(jobItem);
@@ -198,7 +198,7 @@ QString JobModel::generateJobName()
         QModelIndex itemIndex = index(i_row, 0, parentIndex);
 
         if (SessionItem* item = itemForIndex(itemIndex)) {
-            if (item->modelType() == Constants::JobItemType) {
+            if (item->modelType() == "JobItem") {
                 QString jobName = item->itemName();
                 if (jobName.startsWith("job")) {
                     int job_index = jobName.remove(0, 3).toInt();

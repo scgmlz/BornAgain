@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef CONSTANTBACKGROUND_H
-#define CONSTANTBACKGROUND_H
+#ifndef BORNAGAIN_CORE_COMPUTATION_CONSTANTBACKGROUND_H
+#define BORNAGAIN_CORE_COMPUTATION_CONSTANTBACKGROUND_H
 
-#include "IBackground.h"
+#include "Core/Computation/IBackground.h"
 
 //! Class representing a constant background signal
 //!
@@ -24,8 +24,9 @@
 class BA_CORE_API_ ConstantBackground : public IBackground
 {
 public:
+    ConstantBackground(const std::vector<double> P);
     ConstantBackground(double background_value);
-    ~ConstantBackground();
+
     ConstantBackground* clone() const override final;
 
     double backgroundValue() const { return m_background_value; }
@@ -35,9 +36,7 @@ public:
     double addBackGround(double intensity) const override final;
 
 private:
-    void init_parameters();
-
-    double m_background_value;
+    const double& m_background_value;
 };
 
-#endif // CONSTANTBACKGROUND_H
+#endif // BORNAGAIN_CORE_COMPUTATION_CONSTANTBACKGROUND_H

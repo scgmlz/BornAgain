@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DETECTORPRESENTER_H
-#define DETECTORPRESENTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORPRESENTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORPRESENTER_H
 
-#include "ItemComboWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemComboWidget.h"
 
 //! Contains stack of detector editors and the logic to show proper editor for certain type
 //! of detector item (SphericalDetectorEditor or RectangularDetectorEditor).
@@ -33,4 +33,4 @@ protected:
     QStringList activePresentationList(SessionItem* item) override;
 };
 
-#endif // DETECTORPRESENTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORPRESENTER_H

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DATAITEMUTILS_H
-#define DATAITEMUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAITEMUTILS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DATAITEMUTILS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 class IntensityDataItem;
 class SessionItem;
@@ -32,4 +32,4 @@ BA_CORE_API_ IntensityDataItem* intensityDataItem(SessionItem* parent);
 BA_CORE_API_ SpecularDataItem* specularDataItem(SessionItem* parent);
 } // namespace DataItemUtils
 
-#endif //  DATAITEMUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DATAITEMUTILS_H

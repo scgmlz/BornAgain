@@ -12,24 +12,26 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorPrism3.h"
-#include "BornAgainNamespace.h"
-#include "Pyramid3.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorPrism3.h"
 #include <iostream>
 
 //! Constructor of a prism with an equilaterial triangle base.
 //! @param base_edge: length of the base edge in nanometers
 //! @param height: height in nanometers
-FormFactorPrism3::FormFactorPrism3(double base_edge, double height)
-    : FormFactorPolygonalPrism(height), m_base_edge(base_edge)
+FormFactorPrism3::FormFactorPrism3(const std::vector<double> P)
+    : FormFactorPolygonalPrism({"Prism3",
+                                "class_tooltip",
+                                {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                                 {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                               P),
+      m_base_edge(m_P[0]), m_height(m_P[1])
 {
-    setName(BornAgain::FFPrism3Type);
-    registerParameter(BornAgain::BaseEdge, &m_base_edge)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
     onChange();
+}
+
+FormFactorPrism3::FormFactorPrism3(double base_edge, double height)
+    : FormFactorPrism3(std::vector<double>{base_edge, height})
+{
 }
 
 IFormFactor* FormFactorPrism3::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -42,7 +44,6 @@ IFormFactor* FormFactorPrism3::sliceFormFactor(ZLimits limits, const IRotation& 
 
 void FormFactorPrism3::onChange()
 {
-    mP_shape.reset(new Pyramid3(m_base_edge, m_height, M_PI_2));
     double a = m_base_edge;
     double as = a / 2;
     double ac = a / sqrt(3) / 2;

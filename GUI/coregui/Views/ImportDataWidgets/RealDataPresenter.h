@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef REALDATAPRESENTER_H
-#define REALDATAPRESENTER_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPRESENTER_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPRESENTER_H
 
-#include "ItemComboWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemComboWidget.h"
 
 class RealDataMaskWidget;
 class QAction;
@@ -35,4 +35,4 @@ protected:
     QStringList activePresentationList(SessionItem* item);
 };
 
-#endif // REALDATAPRESENTER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPRESENTER_H

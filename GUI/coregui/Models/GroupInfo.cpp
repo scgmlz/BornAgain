@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "GroupInfo.h"
-#include "GUIHelpers.h"
+#include "GUI/coregui/Models/GroupInfo.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 GroupInfo::GroupInfo(const QString& groupType, bool is_sorted)
     : m_groupType(groupType), is_sorted(is_sorted)
@@ -39,7 +39,7 @@ void GroupInfo::add(const QString& itemType, const QString& itemLabel)
 
 QString GroupInfo::defaultType() const
 {
-    if (m_defaultItemType == QString() && m_info.size() != 0)
+    if (m_defaultItemType == "" && m_info.size() != 0)
         return m_info[0].m_itemType;
     return m_defaultItemType;
 }

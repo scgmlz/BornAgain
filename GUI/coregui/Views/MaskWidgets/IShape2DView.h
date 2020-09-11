@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef ISHAPE2DVIEW_H
-#define ISHAPE2DVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ISHAPE2DVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ISHAPE2DVIEW_H
 
-#include "MaskEditorHelper.h"
-#include "WinDllMacros.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
+#include "Wrap/WinDllMacros.h"
 #include <QGraphicsObject>
 
 class SessionItem;
@@ -73,4 +73,4 @@ private:
     void onItemPropertyChange(const QString& propertyName);
 };
 
-#endif // ISHAPE2DVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ISHAPE2DVIEW_H

@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef BOOST_STREAMS_H
-#define BOOST_STREAMS_H
+#ifndef BORNAGAIN_CORE_INPUTOUTPUT_BOOST_STREAMS_H
+#define BORNAGAIN_CORE_INPUTOUTPUT_BOOST_STREAMS_H
 
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
@@ -27,4 +27,4 @@
 #pragma warning(pop)
 #endif
 
-#endif // BOOST_STREAMS_H
+#endif // BORNAGAIN_CORE_INPUTOUTPUT_BOOST_STREAMS_H

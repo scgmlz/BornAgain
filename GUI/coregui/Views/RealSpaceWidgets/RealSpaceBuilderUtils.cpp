@@ -12,41 +12,41 @@
 //
 // ************************************************************************** //
 
-#include "RealSpaceBuilderUtils.h"
-#include "Exceptions.h"
-#include "FormFactorCrystal.h"
-#include "IFormFactorDecorator.h"
-#include "IParticle.h"
-#include "InterferenceFunctionItems.h"
-#include "InterferenceFunctions.h"
-#include "Lattice2DItems.h"
-#include "LayerItem.h"
-#include "MaterialItem.h"
-#include "MaterialModel.h"
-#include "MesoCrystal.h"
-#include "MesoCrystalItem.h"
-#include "MultiLayerItem.h"
-#include "Particle.h"
-#include "Particle3DContainer.h"
-#include "ParticleCompositionItem.h"
-#include "ParticleCoreShell.h"
-#include "ParticleCoreShellItem.h"
-#include "ParticleDistribution.h"
-#include "ParticleDistributionItem.h"
-#include "ParticleItem.h"
-#include "ParticleLayoutItem.h"
-#include "RealSpaceBuilder.h"
-#include "RealSpaceCanvas.h"
-#include "RealSpaceMesoCrystalUtils.h"
-#include "RealSpaceModel.h"
-#include "RotationItems.h"
-#include "Rotations.h"
-#include "SessionItem.h"
-#include "TransformTo3D.h"
-#include "TransformationItem.h"
-#include "Units.h"
-#include "VectorItem.h"
-#include <AppSvc.h>
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilderUtils.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/Units.h"
+#include "Core/Particle/FormFactorCrystal.h"
+#include "Core/Particle/IParticle.h"
+#include "Core/Particle/MesoCrystal.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Particle/ParticleCoreShell.h"
+#include "Core/Particle/ParticleDistribution.h"
+#include "Core/Scattering/IFormFactorDecorator.h"
+#include "Core/Scattering/Rotations.h"
+#include "Core/includeIncludes/InterferenceFunctions.h"
+#include "GUI/coregui/Models/InterferenceFunctionItems.h"
+#include "GUI/coregui/Models/Lattice2DItems.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/MaterialItem.h"
+#include "GUI/coregui/Models/MaterialModel.h"
+#include "GUI/coregui/Models/MesoCrystalItem.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParticleCompositionItem.h"
+#include "GUI/coregui/Models/ParticleCoreShellItem.h"
+#include "GUI/coregui/Models/ParticleDistributionItem.h"
+#include "GUI/coregui/Models/ParticleItem.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
+#include "GUI/coregui/Models/RotationItems.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Models/TransformationItem.h"
+#include "GUI/coregui/Models/VectorItem.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilder.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceMesoCrystalUtils.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceModel.h"
+#include "GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
 
 namespace
 {
@@ -232,11 +232,11 @@ RealSpaceBuilderUtils::particle3DContainerVector(const SessionItem& layoutItem,
 
         Particle3DContainer particle3DContainer;
 
-        if (particleItem->modelType() == Constants::ParticleType) {
+        if (particleItem->modelType() == "Particle") {
             auto pItem = dynamic_cast<const ParticleItem*>(particleItem);
             auto particle = pItem->createParticle();
             particle3DContainer = singleParticle3DContainer(*particle, total_abundance, origin);
-        } else if (particleItem->modelType() == Constants::ParticleCoreShellType) {
+        } else if (particleItem->modelType() == "ParticleCoreShell") {
             auto particleCoreShellItem = dynamic_cast<const ParticleCoreShellItem*>(particleItem);
             // If there is no CORE or SHELL to populate inside ParticleCoreShellItem
             if (!particleCoreShellItem->getItem(ParticleCoreShellItem::T_CORE)
@@ -245,7 +245,7 @@ RealSpaceBuilderUtils::particle3DContainerVector(const SessionItem& layoutItem,
             auto particleCoreShell = particleCoreShellItem->createParticleCoreShell();
             particle3DContainer =
                 particleCoreShell3DContainer(*particleCoreShell, total_abundance, origin);
-        } else if (particleItem->modelType() == Constants::ParticleCompositionType) {
+        } else if (particleItem->modelType() == "ParticleComposition") {
             auto particleCompositionItem =
                 dynamic_cast<const ParticleCompositionItem*>(particleItem);
             // If there is no particle to populate inside ParticleCompositionItem
@@ -254,7 +254,7 @@ RealSpaceBuilderUtils::particle3DContainerVector(const SessionItem& layoutItem,
             auto particleComposition = particleCompositionItem->createParticleComposition();
             particle3DContainer =
                 particleComposition3DContainer(*particleComposition, total_abundance, origin);
-        } else if (particleItem->modelType() == Constants::ParticleDistributionType) {
+        } else if (particleItem->modelType() == "ParticleDistribution") {
             auto particleDistributionItem =
                 dynamic_cast<const ParticleDistributionItem*>(particleItem);
             // If there is no particle to populate inside ParticleDistributionItem
@@ -269,7 +269,7 @@ RealSpaceBuilderUtils::particle3DContainerVector(const SessionItem& layoutItem,
                 particle3DContainer_vector.emplace_back(std::move(pd_ContainerVector[i]));
             }
             continue;
-        } else if (particleItem->modelType() == Constants::MesoCrystalType) {
+        } else if (particleItem->modelType() == "MesoCrystal") {
             auto mesoCrystalItem = dynamic_cast<const MesoCrystalItem*>(particleItem);
             // If there is no particle to populate inside MesoCrystalItem
             if (!mesoCrystalItem->getItem(MesoCrystalItem::T_BASIS_PARTICLE))
@@ -302,7 +302,7 @@ Particle3DContainer RealSpaceBuilderUtils::singleParticle3DContainer(const Parti
     Particle3DContainer singleParticle3DContainer;
     singleParticle3DContainer.addParticle(particle3D.release(), false);
     singleParticle3DContainer.setCumulativeAbundance(P_clone->abundance() / total_abundance);
-    singleParticle3DContainer.setParticleType(Constants::ParticleType);
+    singleParticle3DContainer.setParticleType("Particle");
 
     return singleParticle3DContainer;
 }
@@ -340,7 +340,7 @@ RealSpaceBuilderUtils::particleCoreShell3DContainer(const ParticleCoreShell& par
     particleCoreShell3DContainer.addParticle(coreParticle3D.release(), false); // index 0
     particleCoreShell3DContainer.addParticle(shellParticle3D.release(), true); // index 1
     particleCoreShell3DContainer.setCumulativeAbundance(PCS_clone->abundance() / total_abundance);
-    particleCoreShell3DContainer.setParticleType(Constants::ParticleCoreShellType);
+    particleCoreShell3DContainer.setParticleType("ParticleCoreShell");
 
     return particleCoreShell3DContainer;
 }
@@ -381,7 +381,7 @@ Particle3DContainer RealSpaceBuilderUtils::particleComposition3DContainer(
     }
     // set the correct abundance for the entire ParticleComposition
     particleComposition3DContainer.setCumulativeAbundance(PC_clone->abundance() / total_abundance);
-    particleComposition3DContainer.setParticleType(Constants::ParticleCompositionType);
+    particleComposition3DContainer.setParticleType("ParticleComposition");
     return particleComposition3DContainer;
 }
 

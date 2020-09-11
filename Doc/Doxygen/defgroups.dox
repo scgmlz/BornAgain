@@ -3,6 +3,12 @@
 \defgroup simulation Simulation description
 @brief Classes to describe beam, detector and run the simulation.
 
+\defgroup beam
+@brief Classes to describe the incoming beam and its footprint in the sample plane
+
+\defgroup detector
+@brief Classes to describe a detector
+
 \defgroup mask Detector masks
 @brief Classes to construct a two-dimensional mask.
 
@@ -37,8 +43,8 @@
 
 \defgroup paramDistribution Parameter distributions
 
-\defgroup simulation_internal Simulation internals
-@brief Simulation internal classes.
+\defgroup simulation_internal Simulation and instrument internals
+@brief Internal classes concerned with simulations and instrument
 
 \defgroup samples_internal Sample internals
 @brief Sample internal classes.

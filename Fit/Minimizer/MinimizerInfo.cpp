@@ -12,37 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "MinimizerInfo.h"
-#include "MinimizerConstants.h"
+#include "Fit/Minimizer/MinimizerInfo.h"
 #include <sstream>
 #include <stdexcept>
-
-InfoItem::InfoItem() = default;
-
-InfoItem::InfoItem(const std::string& itemName, const std::string& itemDescription)
-    : m_itemName(itemName), m_itemDescription(itemDescription)
-{
-}
-
-std::string InfoItem::name() const
-{
-    return m_itemName;
-}
-
-std::string InfoItem::description() const
-{
-    return m_itemDescription;
-}
-
-// ----------------------------------------------------------------------------
-
-MinimizerInfo::MinimizerInfo() = default;
-
-MinimizerInfo::MinimizerInfo(const std::string& minimizerType,
-                             const std::string& minimizerDescription)
-    : InfoItem(minimizerType, minimizerDescription)
-{
-}
 
 void MinimizerInfo::setAlgorithmName(const std::string& algorithmName)
 {
@@ -60,11 +32,6 @@ void MinimizerInfo::setAlgorithmName(const std::string& algorithmName)
         msg << algo.name() << " ";
     msg << ")";
     throw std::runtime_error(msg.str());
-}
-
-std::string MinimizerInfo::algorithmName() const
-{
-    return m_current_algorithm;
 }
 
 //! Return list of defined algorithm names.
@@ -91,27 +58,25 @@ std::vector<std::string> MinimizerInfo::algorithmDescriptions() const
 
 MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string& defaultAlgo)
 {
-    MinimizerInfo result(MinimizerNames::Minuit2, "Minuit2 minimizer from ROOT library");
+    MinimizerInfo result("Minuit2", "Minuit2 minimizer from ROOT library");
 
     result.addAlgorithm(
-        AlgorithmNames::Migrad,
+        "Migrad",
         "Variable-metric method with inexact line search, best minimizer according to ROOT.");
 
-    result.addAlgorithm(AlgorithmNames::Simplex, "Simplex method of Nelder and Meadh, robust "
-                                                 "against big fluctuations in objective function.");
+    result.addAlgorithm("Simplex", "Simplex method of Nelder and Meadh, robust "
+                                   "against big fluctuations in objective function.");
 
-    result.addAlgorithm(AlgorithmNames::Combined,
-                        "Combination of Migrad and Simplex (if Migrad fails).");
+    result.addAlgorithm("Combined", "Combination of Migrad and Simplex (if Migrad fails).");
 
-    result.addAlgorithm(AlgorithmNames::Scan,
-                        "Simple objective function scan, one parameter at a time.");
+    result.addAlgorithm("Scan", "Simple objective function scan, one parameter at a time.");
 
-    result.addAlgorithm(AlgorithmNames::Fumili, "Gradient descent minimizer similar to "
-                                                "Levenberg-Margquardt, sometimes can be better "
-                                                "than all others.");
+    result.addAlgorithm("Fumili", "Gradient descent minimizer similar to "
+                                  "Levenberg-Margquardt, sometimes can be better "
+                                  "than all others.");
 
     if (defaultAlgo.empty())
-        result.setAlgorithmName(AlgorithmNames::Migrad);
+        result.setAlgorithmName("Migrad");
     else
         result.setAlgorithmName(defaultAlgo);
 
@@ -122,16 +87,16 @@ MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string& defaultAlgo)
 
 MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string& defaultAlgo)
 {
-    MinimizerInfo result(MinimizerNames::GSLMultiMin, "MultiMin minimizer from GSL library");
+    MinimizerInfo result("GSLMultiMin", "MultiMin minimizer from GSL library");
 
-    result.addAlgorithm(AlgorithmNames::SteepestDescent, "Steepest descent");
-    result.addAlgorithm(AlgorithmNames::ConjugateFR, "Fletcher-Reeves conjugate gradient");
-    result.addAlgorithm(AlgorithmNames::ConjugatePR, "Polak-Ribiere conjugate gradient");
-    result.addAlgorithm(AlgorithmNames::BFGS, "BFGS conjugate gradient");
-    result.addAlgorithm(AlgorithmNames::BFGS2, "BFGS conjugate gradient (Version 2)");
+    result.addAlgorithm("SteepestDescent", "Steepest descent");
+    result.addAlgorithm("ConjugateFR", "Fletcher-Reeves conjugate gradient");
+    result.addAlgorithm("ConjugatePR", "Polak-Ribiere conjugate gradient");
+    result.addAlgorithm("BFGS", "BFGS conjugate gradient");
+    result.addAlgorithm("BFGS2", "BFGS conjugate gradient (Version 2)");
 
     if (defaultAlgo.empty())
-        result.setAlgorithmName(AlgorithmNames::ConjugateFR);
+        result.setAlgorithmName("ConjugateFR");
     else
         result.setAlgorithmName(defaultAlgo);
 
@@ -142,8 +107,8 @@ MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string& defaultAlgo
 
 MinimizerInfo MinimizerInfo::buildGSLLMAInfo()
 {
-    MinimizerInfo result(MinimizerNames::GSLLMA, "Levenberg-Marquardt from GSL library");
-    result.addAlgorithm(AlgorithmNames::Default, "Default algorithm");
+    MinimizerInfo result("GSLLMA", "Levenberg-Marquardt from GSL library");
+    result.addAlgorithm("Default", "Default algorithm");
     return result;
 }
 
@@ -151,9 +116,8 @@ MinimizerInfo MinimizerInfo::buildGSLLMAInfo()
 
 MinimizerInfo MinimizerInfo::buildGSLSimAnInfo()
 {
-    MinimizerInfo result(MinimizerNames::GSLSimAn,
-                         "Simmulated annealing minimizer from GSL library");
-    result.addAlgorithm(AlgorithmNames::Default, "Default algorithm");
+    MinimizerInfo result("GSLSimAn", "Simmulated annealing minimizer from GSL library");
+    result.addAlgorithm("Default", "Default algorithm");
     return result;
 }
 
@@ -161,8 +125,8 @@ MinimizerInfo MinimizerInfo::buildGSLSimAnInfo()
 
 MinimizerInfo MinimizerInfo::buildGeneticInfo()
 {
-    MinimizerInfo result(MinimizerNames::Genetic, "Genetic minimizer from TMVA library");
-    result.addAlgorithm(AlgorithmNames::Default, "Default algorithm");
+    MinimizerInfo result("Genetic", "Genetic minimizer from TMVA library");
+    result.addAlgorithm("Default", "Default algorithm");
     return result;
 }
 
@@ -170,8 +134,8 @@ MinimizerInfo MinimizerInfo::buildGeneticInfo()
 
 MinimizerInfo MinimizerInfo::buildTestMinimizerInfo()
 {
-    MinimizerInfo result(MinimizerNames::Test, "One-shot minimizer to test whole chain");
-    result.addAlgorithm(AlgorithmNames::Default, "Default algorithm");
+    MinimizerInfo result("Test", "One-shot minimizer to test whole chain");
+    result.addAlgorithm("Default", "Default algorithm");
     return result;
 }
 

@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef BOXCOMPOSITIONBUILDER_H
-#define BOXCOMPOSITIONBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_BOXCOMPOSITIONBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_BOXCOMPOSITIONBUILDER_H
 
-#include "IMultiLayerBuilder.h"
-#include "Material.h"
+#include "Core/Material/Material.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class MultiLayer;
 class ParticleComposition;
@@ -90,4 +90,4 @@ public:
     MultiLayer* buildSample() const;
 };
 
-#endif // BOXCOMPOSITIONBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_BOXCOMPOSITIONBUILDER_H

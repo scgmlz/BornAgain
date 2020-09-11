@@ -25,13 +25,13 @@ env:
 
 on:
   push:
-    branches: [ master, develop]    
-    paths-ignore: 
-      - 'Doc/**'    
+    branches: [ master, develop]
+    paths-ignore:
+      - 'Doc/**'
   pull_request:
     branches: [ master, develop ]
-    paths-ignore: 
-      - 'Doc/**'    
+    paths-ignore:
+      - 'Doc/**'
 
 jobs:
   build:
@@ -43,14 +43,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with: 
-        submodules: true    
-    
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.python-version }}
-        
+        submodules: true
+
+    - name: Set up Python3
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
     - name: setup dependencies
       shell: powershell
       run: |
@@ -59,19 +59,32 @@ jobs:
         cd ${{github.workspace}}
         mkdir deps
         Get-Date -Format G
-        wget http://apps.jcns.fz-juelich.de/src/WinLibs/bornagain_deps_20200604.zip -O ${{runner.temp}}\local_x64.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libboost1.65.win64.zip -O ${{runner.temp}}\libboost.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libcerf1.13.mingw64.zip -O ${{runner.temp}}\libcerf.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libfftw3.win64.zip -O ${{runner.temp}}\libfftw.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libgsl-static.win64.zip -O ${{runner.temp}}\libgsl.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libtiff.win64.zip -O ${{runner.temp}}\libtiff.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/libyaml.win64.zip -O ${{runner.temp}}\libyaml.zip
+        wget http://apps.jcns.fz-juelich.de/src/WinLibs/eigen3.3.7.zip -O ${{runner.temp}}\eigen.zip
         Get-Date -Format G
-        7z x ${{runner.temp}}\local_x64.zip -odeps
+        7z x ${{runner.temp}}\libboost.zip -odeps
+        7z x ${{runner.temp}}\libcerf.zip -odeps
+        7z x ${{runner.temp}}\libfftw.zip -odeps
+        7z x ${{runner.temp}}\libgsl.zip -odeps
+        7z x ${{runner.temp}}\libtiff.zip -odeps
+        7z x ${{runner.temp}}\libyaml.zip -odeps
+        7z x ${{runner.temp}}\eigen.zip -odeps
         Get-Date -Format G
         dir deps
-        dir deps/local_x64
-        
+        dir deps/include
+        dir deps/lib
+
     - name: Install Python packages
       run: |
         python -m pip install --upgrade pip
         python -m pip install wheel setuptools
         python -m pip install numpy matplotlib
-        
+
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -85,22 +98,18 @@ jobs:
         mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
         cached: 'false'
 
-    - name: Download ccache and Ninja
+    - name: Download ccache, Ninja, Nsis
       id: ccache
       shell: cmake -P {0}
       run: |
         set(ccache_url "https://github.com/cristianadam/ccache/releases/download/v$ENV{CCACHE_VERSION}/${{ runner.os }}.tar.xz")
         file(DOWNLOAD "${ccache_url}" ./ccache.tar.xz SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ccache.tar.xz)
-        
+
         set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v$ENV{NINJA_VERSION}/ninja-win.zip")
         file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
 
-    - name: Download Nsis
-      id: nsis
-      shell: cmake -P {0}
-      run: |
         set(nsis_url "https://sourceforge.net/projects/nsis/files/NSIS%203/3.04/nsis-3.04.zip")
         file(DOWNLOAD "${nsis_url}" ./nsis.zip SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./nsis.zip)
@@ -111,7 +120,7 @@ jobs:
       run: |
         string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
         message("::set-output name=timestamp::${current_date}")
-        
+
     - name: ccache cache files for BornAgain
       uses: actions/cache@v1.1.0
       with:
@@ -119,7 +128,7 @@ jobs:
         key: ba-windows-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
         restore-keys: |
           ba-windows-ccache-
-          
+
     - name: Build BornAgain
       shell: cmd
       env:
@@ -130,7 +139,8 @@ jobs:
         CCACHE_MAXSIZE: "1000M"
       run: |
         call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-        set OPTLIBS=${{github.workspace}}\deps\local_x64
+        set OPTLIBS=${{github.workspace}}\deps
+        set EIGENDIR=${{github.workspace}}\eigen\eigen-3.3.7
         set QTDIR=${{github.workspace}}\qt5\Qt\5.14.2\msvc2017_64
         set PATH=${{github.workspace}};%OPTLIBS%\lib;%QTDIR%\bin;%PATH%
         cd ${{github.workspace}}
@@ -141,13 +151,13 @@ jobs:
         ccache -z
         ccache -p
         cmake --build . --config Release -j4
-        
+
     - name: Testing
       shell: cmd
       run: |
         echo %QTDIR%
         echo %OPTLIBS%
-        set OPTLIBS=${{github.workspace}}\deps\local_x64
+        set OPTLIBS=${{github.workspace}}\deps
         set PATH=%OPTLIBS%\lib;%QTDIR%\bin;%PATH%
         echo %PATH%
         cd ${{github.workspace}}\build
@@ -159,7 +169,7 @@ jobs:
       if: failure()
       with:
          name: LastTest.log
-         path: ./build/Testing/Temporary/LastTest.log  
+         path: ./build/Testing/Temporary/LastTest.log
 
     - name: Build package
       if: success()
@@ -167,7 +177,14 @@ jobs:
       run: |
         cd ${{github.workspace}}\build
         set PATH=${{github.workspace}}\nsis-3.04;%PATH%
-        cpack -c Release
+        cpack --debug -c Release
+
+    - name: Upload CPack log
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+         name: CPack.log
+         path: ./build/_CPack_Packages/win64/NSIS/NSISOutput.log
 
     - name: Upload package
       uses: actions/upload-artifact@v2

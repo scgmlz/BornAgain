@@ -1,15 +1,11 @@
-#include "ObjectiveMetric.h"
-#include "ObjectiveMetricUtils.h"
-#include "google_test.h"
+#include "Core/Fitting/ObjectiveMetric.h"
+#include "Core/Fitting/ObjectiveMetricUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 
 class ObjectiveMetricTest : public ::testing::Test
 {
-public:
-    ~ObjectiveMetricTest() override;
 };
-
-ObjectiveMetricTest::~ObjectiveMetricTest() = default;
 
 TEST_F(ObjectiveMetricTest, Chi2WellFormed)
 {

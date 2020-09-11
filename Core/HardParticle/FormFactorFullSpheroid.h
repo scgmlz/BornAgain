@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORFULLSPHEROID_H
-#define FORMFACTORFULLSPHEROID_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORFULLSPHEROID_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORFULLSPHEROID_H
 
-#include "IFormFactorBorn.h"
+#include "Core/Scattering/IFormFactorBorn.h"
 
 //! A full spheroid (an ellipsoid with two equal axes, hence with circular cross section)
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorFullSpheroid : public IFormFactorBorn
 {
 public:
+    FormFactorFullSpheroid(const std::vector<double> P);
     FormFactorFullSpheroid(double radius, double height);
 
     FormFactorFullSpheroid* clone() const override final
@@ -45,8 +46,8 @@ protected:
     void onChange() override final;
 
 private:
-    double m_radius;
-    double m_height;
+    const double& m_radius;
+    const double& m_height;
 };
 
-#endif // FORMFACTORFULLSPHEROID_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORFULLSPHEROID_H

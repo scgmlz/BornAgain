@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "MessageService.h"
-#include "GUIMessage.h"
+#include "GUI/coregui/utils/MessageService.h"
+#include "GUI/coregui/utils/GUIMessage.h"
 #include <QObject>
 #include <QSet>
 

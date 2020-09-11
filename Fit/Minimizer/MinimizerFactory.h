@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MINIMIZERFACTORY_H
-#define MINIMIZERFACTORY_H
+#ifndef BORNAGAIN_FIT_MINIMIZER_MINIMIZERFACTORY_H
+#define BORNAGAIN_FIT_MINIMIZER_MINIMIZERFACTORY_H
 
-#include "MinimizerCatalogue.h"
-#include "WinDllMacros.h"
+#include "Fit/Minimizer/MinimizerCatalog.h"
+#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class IMinimizer;
@@ -31,13 +31,13 @@ public:
                                        const std::string& algorithmType = "",
                                        const std::string& optionString = "");
 
-    static void printCatalogue();
+    static void printCatalog();
 
-    static std::string catalogueToString();
+    static std::string catalogToString();
 
-    static std::string catalogueDetailsToString();
+    static std::string catalogDetailsToString();
 
-    static const MinimizerCatalogue& catalogue();
+    static const MinimizerCatalog& catalog();
 };
 
-#endif // MINIMIZERFACTORY_H
+#endif // BORNAGAIN_FIT_MINIMIZER_MINIMIZERFACTORY_H

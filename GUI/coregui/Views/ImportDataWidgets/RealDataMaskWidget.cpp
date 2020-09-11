@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "RealDataMaskWidget.h"
-#include "IntensityDataItem.h"
-#include "MaskEditor.h"
-#include "MaskItems.h"
-#include "RealDataItem.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/ImportDataWidgets/RealDataMaskWidget.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Models/MaskItems.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditor.h"
 #include <QAction>
 #include <QBoxLayout>
 
@@ -61,7 +61,7 @@ void RealDataMaskWidget::unsubscribeFromItem()
 IntensityDataItem* RealDataMaskWidget::intensityDataItem()
 {
     IntensityDataItem* result = dynamic_cast<RealDataItem*>(currentItem())->intensityDataItem();
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
@@ -69,8 +69,8 @@ MaskContainerItem* RealDataMaskWidget::maskContainer(IntensityDataItem* intensit
 {
     auto containerItem = intensityData->getItem(IntensityDataItem::T_MASKS);
     if (!containerItem)
-        containerItem = intensityData->model()->insertNewItem(Constants::MaskContainerType,
-                                                              intensityData->index());
+        containerItem =
+            intensityData->model()->insertNewItem("MaskContainer", intensityData->index());
 
     MaskContainerItem* result = dynamic_cast<MaskContainerItem*>(containerItem);
     return result;

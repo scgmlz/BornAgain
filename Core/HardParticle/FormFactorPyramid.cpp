@@ -12,13 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorPyramid.h"
-#include "AnisoPyramid.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorPyramid.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
 
 const PolyhedralTopology FormFactorPyramid::topology = {{
                                                             {{3, 2, 1, 0}, true}, // TODO -> true
@@ -34,16 +31,21 @@ const PolyhedralTopology FormFactorPyramid::topology = {{
 //! @param base_edge: length of the square base in nanometers
 //! @param height: height of the pyramid in nanometers
 //! @param alpha: dihedral angle between the base and a side face in radians
-FormFactorPyramid::FormFactorPyramid(double base_edge, double height, double alpha)
-    : FormFactorPolyhedron(), m_base_edge(base_edge), m_height(height), m_alpha(alpha)
+FormFactorPyramid::FormFactorPyramid(const std::vector<double> P)
+    : FormFactorPolyhedron({"Pyramid",
+                            "class_tooltip",
+                            {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Alpha", "rad", "para_tooltip", 0., M_PI, 0}}},
+                           P),
+      m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
-    setName(BornAgain::FFPyramidType);
-    registerParameter(BornAgain::BaseEdge, &m_base_edge)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Alpha, &m_alpha).setUnit(BornAgain::UnitsRad).setLimited(0., M_PI);
     onChange();
+}
+
+FormFactorPyramid::FormFactorPyramid(double base_edge, double height, double alpha)
+    : FormFactorPyramid(std::vector<double>{base_edge, height, alpha})
+{
 }
 
 IFormFactor* FormFactorPyramid::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -71,7 +73,6 @@ void FormFactorPyramid::onChange()
         ostr << "Check for 'height <= base_edge*tan(alpha)' failed.";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    mP_shape.reset(new AnisoPyramid(m_base_edge, m_base_edge, m_height, m_alpha));
 
     double a = m_base_edge / 2;
     double b = a * (1 - r);

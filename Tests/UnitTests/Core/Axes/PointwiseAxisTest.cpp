@@ -1,16 +1,12 @@
-#include "PointwiseAxis.h"
-#include "DataFormatUtils.h"
-#include "FixedBinAxis.h"
-#include "google_test.h"
+#include "Core/Binning/PointwiseAxis.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/InputOutput/DataFormatUtils.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 
 class PointwiseAxisTest : public ::testing::Test
 {
-public:
-    ~PointwiseAxisTest();
 };
-
-PointwiseAxisTest::~PointwiseAxisTest() = default;
 
 TEST_F(PointwiseAxisTest, Construction)
 {
@@ -28,7 +24,6 @@ TEST_F(PointwiseAxisTest, BasicProperties)
 {
     std::vector<double> coordinates{0.0, 1.0, 4.0, 8.0};
     PointwiseAxis a1("length", coordinates);
-    EXPECT_EQ(std::string("length"), a1.getName());
     EXPECT_EQ(4u, a1.size());
     EXPECT_EQ(0.0, a1.getMin());
     EXPECT_EQ(8.0, a1.getMax());

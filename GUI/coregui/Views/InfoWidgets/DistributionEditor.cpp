@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "DistributionEditor.h"
-#include "ComponentFlatView.h"
-#include "DistributionItems.h"
-#include "DistributionWidget.h"
-#include "GroupItem.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Views/InfoWidgets/DistributionEditor.h"
+#include "GUI/coregui/Models/DistributionItems.h"
+#include "GUI/coregui/Models/GroupItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/InfoWidgets/DistributionWidget.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentFlatView.h"
 #include <QBoxLayout>
 
 namespace
@@ -68,14 +68,14 @@ void DistributionEditor::onPropertyChanged(const QString& property_name)
 GroupItem* DistributionEditor::groupItem()
 {
     auto result = dynamic_cast<GroupItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
 DistributionItem* DistributionEditor::distributionItem()
 {
     auto result = dynamic_cast<DistributionItem*>(groupItem()->currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 

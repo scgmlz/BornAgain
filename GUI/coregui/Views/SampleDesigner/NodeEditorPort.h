@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEEDITORPORT_H
-#define NODEEDITORPORT_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITORPORT_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITORPORT_H
 
 /*
  * Node editor: original code is taken from
@@ -21,8 +21,8 @@
  * Copyright (c) 2012, STANISLAW ADASZEWSKI
  */
 
-#include "WinDllMacros.h"
-#include "ViewTypes.h"
+#include "GUI/coregui/Views/SampleDesigner/ViewTypes.h"
+#include "Wrap/WinDllMacros.h"
 #include <QGraphicsPathItem>
 #include <QString>
 
@@ -38,7 +38,7 @@ public:
     //! port direction
     enum EPortDirection { INPUT, OUTPUT };
 
-    NodeEditorPort(QGraphicsItem* parent = 0, const QString& name = QString("unnamed"),
+    NodeEditorPort(QGraphicsItem* parent = 0, const QString& name = "unnamed",
                    EPortDirection direction = INPUT, EPortType port_type = DEFAULT);
 
     virtual ~NodeEditorPort();
@@ -97,4 +97,4 @@ inline NodeEditorPort::EPortType NodeEditorPort::getPortType() const
     return m_port_type;
 }
 
-#endif // NODEEDITORPORT_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_NODEEDITORPORT_H

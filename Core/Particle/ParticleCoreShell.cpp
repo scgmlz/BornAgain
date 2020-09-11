@@ -12,15 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "ParticleCoreShell.h"
-#include "BornAgainNamespace.h"
-#include "FormFactorCoreShell.h"
-#include "Particle.h"
+#include "Core/Particle/ParticleCoreShell.h"
+#include "Core/Particle/FormFactorCoreShell.h"
+#include "Core/Particle/Particle.h"
 
 ParticleCoreShell::ParticleCoreShell(const Particle& shell, const Particle& core,
                                      kvector_t relative_core_position)
 {
-    setName(BornAgain::ParticleCoreShellType);
+    setName("ParticleCoreShell");
     registerParticleProperties();
     addAndRegisterCore(core, relative_core_position);
     addAndRegisterShell(shell);
@@ -107,5 +106,5 @@ void ParticleCoreShell::addAndRegisterShell(const Particle& shell)
 
 ParticleCoreShell::ParticleCoreShell() : mp_shell{nullptr}, mp_core{nullptr}
 {
-    setName(BornAgain::ParticleCoreShellType);
+    setName("ParticleCoreShell");
 }

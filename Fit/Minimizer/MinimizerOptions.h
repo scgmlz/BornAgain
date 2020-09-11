@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MINIMIZEROPTIONS_H
-#define MINIMIZEROPTIONS_H
+#ifndef BORNAGAIN_FIT_MINIMIZER_MINIMIZEROPTIONS_H
+#define BORNAGAIN_FIT_MINIMIZER_MINIMIZEROPTIONS_H
 
-#include "OptionContainer.h"
+#include "Fit/Tools/OptionContainer.h"
 
 //! Collection of internal minimizer settings.
 //! @ingroup fitting_internal
@@ -33,4 +33,4 @@ private:
     void processCommand(const std::string& command);
 };
 
-#endif // MINIMIZEROPTIONS_H
+#endif // BORNAGAIN_FIT_MINIMIZER_MINIMIZEROPTIONS_H

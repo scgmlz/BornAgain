@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "MultiLayerView.h"
-#include "DesignerHelper.h"
-#include "DesignerMimeData.h"
-#include "DesignerScene.h"
-#include "LayerView.h"
-#include "SampleModel.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
+#include "GUI/coregui/Models/SampleModel.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerMimeData.h"
+#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
+#include "GUI/coregui/Views/SampleDesigner/LayerView.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -27,7 +27,7 @@ MultiLayerView::MultiLayerView(QGraphicsItem* parent) : ILayerView(parent)
 {
     setColor(QColor(Qt::blue));
 
-    setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::MultiLayerType));
+    setRectangle(DesignerHelper::getDefaultBoundingRect("MultiLayer"));
     setAcceptHoverEvents(false);
     setAcceptDrops(true);
     connect(this, SIGNAL(childrenChanged()), this, SLOT(updateHeight()));
@@ -61,7 +61,7 @@ void MultiLayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
 void MultiLayerView::addView(IView* childView, int row)
 {
     ILayerView* layer = dynamic_cast<ILayerView*>(childView);
-    Q_ASSERT(layer);
+    ASSERT(layer);
 
     if (!childItems().contains(layer)) {
         addNewLayer(layer, row);
@@ -90,13 +90,13 @@ void MultiLayerView::addNewLayer(ILayerView* layer, int row)
 void MultiLayerView::onLayerAboutToBeDeleted()
 {
     ILayerView* layer = qobject_cast<ILayerView*>(sender());
-    Q_ASSERT(layer);
+    ASSERT(layer);
     removeLayer(layer);
 }
 
 void MultiLayerView::removeLayer(ILayerView* layer)
 {
-    Q_ASSERT(m_layers.contains(layer));
+    ASSERT(m_layers.contains(layer));
     disconnect(layer, SIGNAL(heightChanged()), this, SLOT(updateHeight()));
     disconnect(layer, SIGNAL(aboutToBeDeleted()), this, SLOT(onLayerAboutToBeDeleted()));
     m_layers.removeOne(layer);

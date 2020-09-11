@@ -12,15 +12,16 @@
 //
 // ************************************************************************** //
 
-#include "OutputDataIOHistory.h"
-#include "GUIHelpers.h"
-#include "SaveLoadInterface.h"
+#include "GUI/coregui/mainwindow/OutputDataIOHistory.h"
+#include "Core/Basics/Assert.h"
+#include "GUI/coregui/mainwindow/SaveLoadInterface.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 //! Static method to create info for just saved item.
 
 OutputDataSaveInfo OutputDataSaveInfo::createSaved(const SaveLoadInterface* item)
 {
-    Q_ASSERT(item);
+    ASSERT(item);
 
     OutputDataSaveInfo result;
     result.m_data = item;
@@ -112,7 +113,7 @@ bool OutputDataIOHistory::wasModifiedSinceLastSave(const QString& dirname,
 
 void OutputDataIOHistory::setHistory(const QString& dirname, const OutputDataDirHistory& history)
 {
-    Q_ASSERT(dirname.isEmpty() == false);
+    ASSERT(dirname.isEmpty() == false);
 
     m_dir_history[dirname] = history;
 }

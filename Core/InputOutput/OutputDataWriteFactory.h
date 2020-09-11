@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef OUTPUTDATAWRITEFACTORY_H
-#define OUTPUTDATAWRITEFACTORY_H
+#ifndef BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAWRITEFACTORY_H
+#define BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAWRITEFACTORY_H
 
-#include "OutputDataWriter.h"
+#include "Core/InputOutput/OutputDataWriter.h"
 
 //! Creates writer appropariate for given type of files.
 //! @ingroup input_output_internal
@@ -29,4 +29,4 @@ private:
     static IOutputDataWriteStrategy* getWriteStrategy(const std::string& file_name);
 };
 
-#endif // OUTPUTDATAWRITEFACTORY_H
+#endif // BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAWRITEFACTORY_H

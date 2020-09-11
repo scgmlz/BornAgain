@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef GISASSIMULATION_H
-#define GISASSIMULATION_H
+#ifndef BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H
+#define BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H
 
-#include "Simulation2D.h"
-#include "SimulationElement.h"
+#include "Core/Simulation/Simulation2D.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
 class MultiLayer;
 class IMultiLayerBuilder;
@@ -59,4 +59,4 @@ private:
     void initialize();
 };
 
-#endif // GISASSIMULATION_H
+#endif // BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H

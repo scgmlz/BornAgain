@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "Plot1DCanvas.h"
-#include "FontScalingEvent.h"
-#include "Plot1D.h"
-#include "PlotStatusLabel.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/Plot1DCanvas.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/FontScalingEvent.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/Plot1D.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotStatusLabel.h"
 #include <QVBoxLayout>
 
 Plot1DCanvas::Plot1DCanvas(QWidget* parent)

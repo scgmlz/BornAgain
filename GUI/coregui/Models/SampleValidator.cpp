@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "SampleValidator.h"
-#include "LayerItem.h"
-#include "MultiLayerItem.h"
-#include "ParticleCompositionItem.h"
-#include "ParticleCoreShellItem.h"
-#include "ParticleDistributionItem.h"
-#include "ParticleLayoutItem.h"
+#include "GUI/coregui/Models/SampleValidator.h"
+#include "GUI/coregui/Models/LayerItem.h"
+#include "GUI/coregui/Models/MultiLayerItem.h"
+#include "GUI/coregui/Models/ParticleCompositionItem.h"
+#include "GUI/coregui/Models/ParticleCoreShellItem.h"
+#include "GUI/coregui/Models/ParticleDistributionItem.h"
+#include "GUI/coregui/Models/ParticleLayoutItem.h"
 
 SampleValidator::SampleValidator() : m_valid_sample(true) {}
 
@@ -43,20 +43,20 @@ void SampleValidator::validateItem(const SessionItem* item)
 
     QString diagnosis;
 
-    if (item->modelType() == Constants::MultiLayerType) {
+    if (item->modelType() == "MultiLayer") {
         diagnosis = validateMultiLayerItem(item);
-    } else if (item->modelType() == Constants::ParticleLayoutType) {
+    } else if (item->modelType() == "ParticleLayout") {
         diagnosis = validateParticleLayoutItem(item);
-    } else if (item->modelType() == Constants::ParticleCoreShellType) {
+    } else if (item->modelType() == "ParticleCoreShell") {
         diagnosis = validateParticleCoreShellItem(item);
-    } else if (item->modelType() == Constants::ParticleCompositionType) {
+    } else if (item->modelType() == "ParticleComposition") {
         diagnosis = validateParticleCompositionItem(item);
-    } else if (item->modelType() == Constants::ParticleDistributionType) {
+    } else if (item->modelType() == "ParticleDistribution") {
         diagnosis = validateParticleDistributionItem(item);
     }
     if (!diagnosis.isEmpty()) {
         m_valid_sample = false;
-        m_validation_message += QString("* ") + diagnosis + QString("\n");
+        m_validation_message += QString("* ") + diagnosis + "\n";
     }
 }
 
@@ -67,11 +67,10 @@ QString SampleValidator::validateMultiLayerItem(const SessionItem* item)
     QVector<SessionItem*> layers = item->getItems(MultiLayerItem::T_LAYERS);
 
     if (layers.isEmpty()) {
-        result = QStringLiteral("MultiLayer should contain at least one layer.");
+        result = "MultiLayer should contain at least one layer.";
     } else if (layers.size() == 1) {
         if (layers.front()->getItems(LayerItem::T_LAYOUTS).isEmpty()) {
-            result = QStringLiteral(
-                "The single layer in your MultiLayer should contain ParticleLayout.");
+            result = "The single layer in your MultiLayer should contain ParticleLayout.";
         }
     }
     return result;
@@ -83,7 +82,7 @@ QString SampleValidator::validateParticleLayoutItem(const SessionItem* item)
 
     QVector<SessionItem*> particles = item->getItems(ParticleLayoutItem::T_PARTICLES);
     if (particles.isEmpty())
-        result = QStringLiteral("ParticleLayout doesn't contain any particles.");
+        result = "ParticleLayout doesn't contain any particles.";
 
     return result;
 }
@@ -96,7 +95,7 @@ QString SampleValidator::validateParticleCoreShellItem(const SessionItem* item)
     const SessionItem* shell = item->getItem(ParticleCoreShellItem::T_SHELL);
 
     if (core == nullptr || shell == nullptr)
-        result = QStringLiteral("ParticleCoreShell doesn't have either core or shell defined.");
+        result = "ParticleCoreShell doesn't have either core or shell defined.";
 
     return result;
 }
@@ -105,7 +104,7 @@ QString SampleValidator::validateParticleCompositionItem(const SessionItem* item
 {
     QString result;
     if (item->getItems(ParticleCompositionItem::T_PARTICLES).isEmpty())
-        result = QStringLiteral("ParticleComposition doesn't have any particles.");
+        result = "ParticleComposition doesn't have any particles.";
 
     return result;
 }
@@ -114,7 +113,7 @@ QString SampleValidator::validateParticleDistributionItem(const SessionItem* ite
 {
     QString result;
     if (item->getItems(ParticleDistributionItem::T_PARTICLES).isEmpty())
-        result = QStringLiteral("ParticleDistribution doesn't have any particle.");
+        result = "ParticleDistribution doesn't have any particle.";
 
     return result;
 }
@@ -127,8 +126,8 @@ bool SampleValidator::isValidMultiLayer(const MultiLayerItem* multilayer)
     iterateItems(multilayer);
 
     if (!m_valid_sample) {
-        m_validation_message = QStringLiteral("Can't setup DWBA simulation for given MultiLayer.\n")
-                               + m_validation_message;
+        m_validation_message =
+            "Can't setup DWBA simulation for given MultiLayer.\n" + m_validation_message;
     }
     return m_valid_sample;
 }

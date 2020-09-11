@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "JobProgressAssistant.h"
-#include "JobModel.h"
-#include "JobQueueData.h"
-#include "mainwindow.h"
+#include "GUI/coregui/Views/JobWidgets/JobProgressAssistant.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/JobQueueData.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include "progressbar.h"
 
 JobProgressAssistant::JobProgressAssistant(MainWindow* mainWindow)
@@ -30,7 +30,7 @@ JobProgressAssistant::JobProgressAssistant(MainWindow* mainWindow)
 
 void JobProgressAssistant::onGlobalProgress(int progress)
 {
-    Q_ASSERT(m_mainWindow->progressBar());
+    ASSERT(m_mainWindow->progressBar());
     if (progress < 0 || progress >= 100) {
         m_mainWindow->progressBar()->setFinished(true);
         m_mainWindow->progressBar()->hide();

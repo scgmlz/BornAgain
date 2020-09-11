@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "CsvImportTable.h"
-#include "ScientificSpinBox.h"
+#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h"
+#include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
 
 namespace
 {
@@ -161,7 +161,7 @@ double CsvImportData::multiplier(CsvImportData::DATA_TYPE type) const
 QString CsvImportData::columnLabel(CsvImportData::DATA_TYPE type) const
 {
     if (m_selected_cols.find(type) == m_selected_cols.end())
-        return QString();
+        return "";
     return csv::HeaderLabels[m_selected_cols.at(type).name()];
 }
 

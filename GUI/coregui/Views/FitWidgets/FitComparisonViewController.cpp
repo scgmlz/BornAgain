@@ -1,13 +1,27 @@
-#include "FitComparisonViewController.h"
-#include "AxesItems.h"
-#include "Data1DViewItem.h"
-#include "DataItem.h"
-#include "DataPropertyContainer.h"
-#include "IntensityDataFunctions.h"
-#include "JobItem.h"
-#include "PropertyRepeater.h"
-#include "RealDataItem.h"
-#include "SessionModel.h"
+// ************************************************************************** //
+//
+//  BornAgain: simulate and fit scattering at grazing incidence
+//
+//! @file      GUI/coregui/Views/FitWidgets/FitComparisonViewController.cpp
+//! @brief     Implements classes DiffItemController, FitComparison1DViewController
+//!
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//
+// ************************************************************************** //
+
+#include "GUI/coregui/Views/FitWidgets/FitComparisonViewController.h"
+#include "Core/Intensity/IntensityDataFunctions.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PropertyRepeater.h"
 
 namespace
 {
@@ -16,8 +30,7 @@ const double relative_diff_max_1d = 4.0;
 } // namespace
 
 FitComparison1DViewController::FitComparison1DViewController(QObject* parent)
-    : QObject(parent),
-      m_diff_item_controller(new DiffItemController(Constants::SpecularDataType, this)),
+    : QObject(parent), m_diff_item_controller(new DiffItemController("SpecularData", this)),
       m_diff_view_item(nullptr), m_appearanceRepeater(new PropertyRepeater(this)),
       m_xAxisRepeater(new PropertyRepeater(this))
 {
@@ -30,7 +43,7 @@ Data1DViewItem* FitComparison1DViewController::diffItemView()
 
 void FitComparison1DViewController::setItem(JobItem* job_item)
 {
-    assert(job_item);
+    ASSERT(job_item);
 
     clear();
     m_diff_item_controller->setJobItem(job_item);
@@ -76,10 +89,9 @@ void FitComparison1DViewController::clear()
 void FitComparison1DViewController::createDiffViewItem(JobItem* job_item)
 {
     m_diff_view_item = dynamic_cast<Data1DViewItem*>(
-        m_diff_item_controller->model()->insertNewItem(Constants::Data1DViewItemType));
-    auto container = m_diff_view_item->model()->insertNewItem(Constants::DataPropertyContainerType,
-                                                              m_diff_view_item->index(), -1,
-                                                              Data1DViewItem::T_DATA_PROPERTIES);
+        m_diff_item_controller->model()->insertNewItem("Data1DViewItem"));
+    auto container = m_diff_view_item->model()->insertNewItem(
+        "DataPropertyContainer", m_diff_view_item->index(), -1, Data1DViewItem::T_DATA_PROPERTIES);
     dynamic_cast<DataPropertyContainer*>(container)->addItem(m_diff_item_controller->diffItem());
 
     m_diff_view_item->setJobItem(job_item);
@@ -92,7 +104,7 @@ void FitComparison1DViewController::deleteDiffViewItem()
 {
     auto parent = m_diff_view_item->parent();
     auto old_view_item = parent->takeRow(parent->rowOfChild(m_diff_view_item));
-    assert(old_view_item == m_diff_view_item);
+    ASSERT(old_view_item == m_diff_view_item);
     delete (old_view_item);
     m_diff_view_item = nullptr;
 }
@@ -102,7 +114,7 @@ DiffItemController::DiffItemController(const QString& data_type, QObject* parent
       m_private_model(new SessionModel("TempIntensityDataModel", this)),
       m_diff_item(dynamic_cast<DataItem*>(m_private_model->insertNewItem(data_type)))
 {
-    assert(m_diff_item);
+    ASSERT(m_diff_item);
 }
 
 DiffItemController::~DiffItemController()
@@ -112,7 +124,7 @@ DiffItemController::~DiffItemController()
 
 void DiffItemController::setJobItem(JobItem* job_item)
 {
-    assert(job_item);
+    ASSERT(job_item);
     if (m_current_item)
         unsubscribe();
     m_current_item = job_item;
@@ -122,11 +134,11 @@ void DiffItemController::setJobItem(JobItem* job_item)
 
 void DiffItemController::updateDiffData()
 {
-    assert(m_current_item);
+    ASSERT(m_current_item);
 
     auto sim_data = m_current_item->dataItem();
     auto real_data = m_current_item->realDataItem()->dataItem();
-    assert(sim_data && real_data);
+    ASSERT(sim_data && real_data);
 
     if (!sim_data->getOutputData()) // job failed
         return;
@@ -139,7 +151,7 @@ void DiffItemController::updateDiffData()
 void DiffItemController::subscribe()
 {
     if (!m_current_item) {
-        assert(false);
+        ASSERT(false);
         return;
     }
 

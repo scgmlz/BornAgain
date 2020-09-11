@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MAGNETICPARTICLESBUILDER_H
-#define MAGNETICPARTICLESBUILDER_H
+#ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MAGNETICPARTICLESBUILDER_H
+#define BORNAGAIN_CORE_STANDARDSAMPLES_MAGNETICPARTICLESBUILDER_H
 
-#include "IMultiLayerBuilder.h"
+#include "Core/Multilayer/IMultiLayerBuilder.h"
 
 class ISample;
 
@@ -60,4 +60,4 @@ private:
     double m_sphere_radius;
 };
 
-#endif // MAGNETICPARTICLESBUILDER_H
+#endif // BORNAGAIN_CORE_STANDARDSAMPLES_MAGNETICPARTICLESBUILDER_H

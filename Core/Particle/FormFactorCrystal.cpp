@@ -12,18 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorCrystal.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "WavevectorInfo.h"
+#include "Core/Particle/FormFactorCrystal.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Vector/WavevectorInfo.h"
 
 FormFactorCrystal::FormFactorCrystal(const Lattice& lattice, const IFormFactor& basis_form_factor,
                                      const IFormFactor& meso_form_factor, double position_variance)
     : m_lattice(lattice), mp_basis_form_factor(basis_form_factor.clone()),
       mp_meso_form_factor(meso_form_factor.clone()), m_position_variance(position_variance)
 {
-    setName(BornAgain::FormFactorCrystalType);
+    setName("FormFactorCrystal");
     calculateLargestReciprocalDistance();
 }
 

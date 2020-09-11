@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#include "MaskEditor.h"
-#include "MaskEditorActions.h"
-#include "MaskEditorCanvas.h"
-#include "MaskEditorPropertyPanel.h"
-#include "MaskEditorToolBar.h"
-#include "MaskGraphicsScene.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditor.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorActions.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorCanvas.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorPropertyPanel.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskEditorToolBar.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskGraphicsScene.h"
 #include "minisplitter.h"
 #include <QBoxLayout>
 #include <QContextMenuEvent>
@@ -29,7 +29,7 @@ MaskEditor::MaskEditor(QWidget* parent)
       m_editorPropertyPanel(new MaskEditorPropertyPanel), m_editorCanvas(new MaskEditorCanvas),
       m_splitter(new Manhattan::MiniSplitter)
 {
-    setObjectName(QStringLiteral("MaskEditor"));
+    setObjectName("MaskEditor");
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     m_splitter->addWidget(m_editorCanvas);
@@ -50,9 +50,9 @@ void MaskEditor::setMaskContext(SessionModel* model, const QModelIndex& maskCont
 {
     m_editorPropertyPanel->setMaskContext(model, maskContainerIndex, intensityItem);
 
-    Q_ASSERT(intensityItem);
-    Q_ASSERT(maskContainerIndex.isValid());
-    Q_ASSERT(model->itemForIndex(maskContainerIndex)->modelType() == Constants::MaskContainerType);
+    ASSERT(intensityItem);
+    ASSERT(maskContainerIndex.isValid());
+    ASSERT(model->itemForIndex(maskContainerIndex)->modelType() == "MaskContainer");
 
     m_editorCanvas->setSelectionModel(m_editorPropertyPanel->selectionModel());
     m_editorCanvas->setMaskContext(model, maskContainerIndex, intensityItem);

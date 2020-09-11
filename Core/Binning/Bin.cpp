@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "Bin.h"
+#include "Core/Binning/Bin.h"
 
 bool BinContains(const Bin1D& bin, double value)
 {

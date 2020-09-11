@@ -1,16 +1,12 @@
-############################################################################
-# Fit unit tests
-############################################################################
+include(GoogleTest) # provides gtest_discover_tests
 
 set(test UnitTestFit)
 
 include_directories(${CMAKE_SOURCE_DIR}/Tests/UnitTests/utilities)
 
-file(GLOB source_files "*.cpp" "../utilities/TestAll.cpp")
-file(GLOB include_files "*.h")
+file(GLOB source_files "*.cpp" ${CMAKE_SOURCE_DIR}/Tests/GTestWrapper/TestAll.cpp)
 
-add_executable(${test} ${source_files} ${include_files})
+add_executable(${test} ${source_files})
 target_link_libraries(${test} ${BornAgainFit_LIBRARY} gtest)
 
-# add execution of TestCore just after compilation
-add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
+gtest_discover_tests(${test} DISCOVERY_TIMEOUT 300 TEST_PREFIX Fit.Unit.)

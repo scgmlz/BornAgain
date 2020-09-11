@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FITPARAMETERWIDGET_H
-#define FITPARAMETERWIDGET_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPARAMETERWIDGET_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPARAMETERWIDGET_H
 
-#include "SessionItemWidget.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <memory>
 
 class JobItem;
@@ -96,4 +96,4 @@ private:
     OverlayLabelController* m_infoLabel;
 };
 
-#endif // FITPARAMETERWIDGET_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPARAMETERWIDGET_H

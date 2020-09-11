@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONGRAPHICSITEM_H
-#define SESSIONGRAPHICSITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONGRAPHICSITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONGRAPHICSITEM_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class BA_CORE_API_ SessionGraphicsItem : public SessionItem
 {
@@ -25,7 +25,7 @@ public:
     static const QString P_YPOS;
 
 protected:
-    explicit SessionGraphicsItem(const QString& model_type = QString());
+    explicit SessionGraphicsItem(const QString& model_type = "");
 };
 
-#endif // SESSIONGRAPHICSITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONGRAPHICSITEM_H

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Draws two dimensional numpy array using ROOT
 # Usage: python show2d.py file_name
 

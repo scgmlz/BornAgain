@@ -12,20 +12,21 @@
 //
 // ************************************************************************** //
 
-#include "PyImportAssistant.h"
-#include "AppSvc.h"
+#ifdef BORNAGAIN_PYTHON
+
+#include "GUI/coregui/mainwindow/PyImportAssistant.h"
 #include "BABuild.h"
-#include "BornAgainNamespace.h"
-#include "ComboSelectorDialog.h"
-#include "DetailedMessageBox.h"
-#include "GUIHelpers.h"
-#include "GUIObjectBuilder.h"
-#include "MultiLayer.h"
-#include "ProjectUtils.h"
-#include "PyImport.h"
-#include "SysUtils.h"
-#include "mainwindow.h"
-#include "projectmanager.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/PyIO/PyImport.h"
+#include "Core/Tools/SysUtils.h"
+#include "GUI/coregui/Models/GUIObjectBuilder.h"
+#include "GUI/coregui/Views/InfoWidgets/ComboSelectorDialog.h"
+#include "GUI/coregui/Views/InfoWidgets/DetailedMessageBox.h"
+#include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/ProjectUtils.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
+#include "GUI/coregui/mainwindow/projectmanager.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QApplication>
 #include <QDebug>
 #include <QFileDialog>
@@ -49,11 +50,11 @@ std::string bornagainDir()
 QString getCandidate(const QStringList& funcNames)
 {
     if (funcNames.isEmpty())
-        return QString();
+        return "";
 
     for (auto str : funcNames) {
         QString name = str.toLower();
-        if (name.contains(QStringLiteral("sample")) || name.contains(QStringLiteral("multilayer")))
+        if (name.contains("sample") || name.contains("multilayer"))
             return str;
     }
 
@@ -150,7 +151,7 @@ QString PyImportAssistant::getPySampleFunctionName(const QString& snippet)
         DetailedMessageBox warning(m_mainWindow, "Python failure", message, details);
         warning.exec();
 
-        return QString();
+        return "";
     }
     QApplication::restoreOverrideCursor();
 
@@ -215,7 +216,7 @@ void PyImportAssistant::populateModels(const MultiLayer& multilayer, const QStri
 {
     try {
         QString name = sampleName;
-        if (multilayer.getName() != BornAgain::MultiLayerType)
+        if (multilayer.getName() != "MultiLayer")
             name = QString::fromStdString(multilayer.getName());
 
         GUIObjectBuilder::populateSampleModel(m_mainWindow->sampleModel(),
@@ -233,3 +234,5 @@ void PyImportAssistant::populateModels(const MultiLayer& multilayer, const QStri
         warning.exec();
     }
 }
+
+#endif // BORNAGAIN_PYTHON

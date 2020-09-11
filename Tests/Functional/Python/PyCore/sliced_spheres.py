@@ -57,7 +57,7 @@ class SlicedSpheresTest(unittest.TestCase):
         sphere_shift = 4.0  # shift beneath interface in absolute units
 
         # truncated sphere on top of substrate with height 16nm
-        truncatedSphere = ba.Particle(mSubstrate, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - sphere_shift))
+        truncatedSphere = ba.Particle(mSubstrate, ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2 - sphere_shift, 0))
         reference = self.get_result(truncatedSphere)
 
         # sphere crossing interface to look like truncated sphere above

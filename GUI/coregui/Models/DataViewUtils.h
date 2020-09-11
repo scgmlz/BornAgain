@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DATAVIEWUTILS_H
-#define DATAVIEWUTILS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAVIEWUTILS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_DATAVIEWUTILS_H
 
-#include "IUnitConverter.h"
+#include "Core/Intensity/IUnitConverter.h"
 #include <QString>
 #include <memory>
 
@@ -32,4 +32,4 @@ std::unique_ptr<OutputData<double>> getTranslatedData(Data1DViewItem* view_item,
                                                       DataItem* data_item);
 }; // namespace DataViewUtils
 
-#endif // DATAVIEWUTILS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_DATAVIEWUTILS_H

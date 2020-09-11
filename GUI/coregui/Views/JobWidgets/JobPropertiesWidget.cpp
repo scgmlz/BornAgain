@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "JobPropertiesWidget.h"
-#include "ComponentEditor.h"
-#include "JobItem.h"
-#include "mainwindow_constants.h"
-#include "StyleUtils.h"
+#include "GUI/coregui/Views/JobWidgets/JobPropertiesWidget.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
+#include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include "GUI/coregui/utils/StyleUtils.h"
 #include <QTabBar>
 #include <QTabWidget>
 #include <QTextEdit>
@@ -91,7 +91,7 @@ void JobPropertiesWidget::updateItem()
         return;
 
     if (JobItem* item = jobItem()) {
-        if (item->getStatus() == Constants::STATUS_FAILED)
+        if (item->getStatus() == "Failed")
             m_tabWidget->tabBar()->setTabTextColor(JOB_COMMENTS, Qt::red);
         else
             m_tabWidget->tabBar()->setTabTextColor(JOB_COMMENTS, Qt::black);

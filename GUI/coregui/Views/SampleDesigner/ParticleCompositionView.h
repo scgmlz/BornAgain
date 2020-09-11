@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PARTICLECOMPOSITIONVIEW_H
-#define PARTICLECOMPOSITIONVIEW_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLECOMPOSITIONVIEW_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLECOMPOSITIONVIEW_H
 
-#include "ConnectableView.h"
+#include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 //! Class representing view of Particle item
 class BA_CORE_API_ ParticleCompositionView : public ConnectableView
@@ -30,4 +30,4 @@ public:
     void addView(IView* childView, int row = 0);
 };
 
-#endif // PARTICLECOMPOSITIONVIEW_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_PARTICLECOMPOSITIONVIEW_H

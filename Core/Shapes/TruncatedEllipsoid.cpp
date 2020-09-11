@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "TruncatedEllipsoid.h"
+#include "Core/Shapes/TruncatedEllipsoid.h"
 
 #include <algorithm>
 #include <cmath>

@@ -12,21 +12,19 @@
 //
 // ************************************************************************** //
 
-#include "Instrument.h"
-#include "Beam.h"
-#include "BornAgainNamespace.h"
-#include "DetectorFunctions.h"
-#include "Histogram2D.h"
-#include "IResolutionFunction2D.h"
-#include "SimulationElement.h"
-#include "SphericalDetector.h"
+#include "Core/Instrument/Instrument.h"
+#include "Core/Beam/Beam.h"
+#include "Core/Detector/DetectorFunctions.h"
+#include "Core/Detector/IResolutionFunction2D.h"
+#include "Core/Detector/SphericalDetector.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/SimulationElement/SimulationElement.h"
 
-Instrument::Instrument() : mP_detector(new SphericalDetector)
+Instrument::Instrument() : mP_detector(new SphericalDetector), m_beam(Beam::horizontalBeam())
 {
-    setName(BornAgain::InstrumentType);
+    setName("Instrument");
     registerChild(mP_detector.get());
     registerChild(&m_beam);
-    init_parameters();
 }
 
 Instrument::Instrument(const Instrument& other) : m_beam(other.m_beam)
@@ -35,7 +33,6 @@ Instrument::Instrument(const Instrument& other) : m_beam(other.m_beam)
         setDetector(*other.mP_detector);
     registerChild(&m_beam);
     setName(other.getName());
-    init_parameters();
 }
 
 Instrument::~Instrument() {}
@@ -47,7 +44,6 @@ Instrument& Instrument::operator=(const Instrument& other)
         registerChild(&m_beam);
         if (other.mP_detector)
             setDetector(*other.mP_detector);
-        init_parameters();
     }
     return *this;
 }

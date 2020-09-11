@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "ItemStackWidget.h"
-#include "GUIHelpers.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Views/CommonWidgets/ItemStackWidget.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QStackedWidget>
 #include <QVBoxLayout>
 

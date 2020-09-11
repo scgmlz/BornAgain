@@ -31,7 +31,8 @@
 %include "ignores.i"
 %include "renameFit.i"
 %include "directors.i"
-%include "../../auto/Wrap/doxygen_fit.i"
+
+%include "auto/Wrap/doxygen_fit.i"
 
 %template(vdouble1d_t) std::vector<double>;
 %template(vdouble2d_t) std::vector< std::vector<double> >;
@@ -56,35 +57,34 @@ import_array();
 #define BORNAGAIN_PYTHON
 #endif
 
-%import "WinDllMacros.h"
+%import "Wrap/WinDllMacros.h"
 
 %{
-#include "RealLimits.h"
-#include "AttLimits.h"
-#include "Parameter.h"
-#include "Parameters.h"
-#include "IMinimizer.h"
-#include "MinimizerCatalogue.h"
-#include "MinimizerFactory.h"
+#include "Fit/Tools/RealLimits.h"
+#include "Fit/Tools/AttLimits.h"
+#include "Fit/Kernel/Parameter.h"
+#include "Fit/Kernel/Parameters.h"
+#include "Fit/Minimizer/IMinimizer.h"
+#include "Fit/Minimizer/MinimizerCatalog.h"
+#include "Fit/Minimizer/MinimizerFactory.h"
 
-#include "PyCallback.h"
-#include "MinimizerResult.h"
-#include "Minimizer.h"
+#include "Fit/Kernel/PyCallback.h"
+#include "Fit/Kernel/MinimizerResult.h"
+#include "Fit/Kernel/Minimizer.h"
 %}
 
 // The following goes verbatim from libBornAgainFit.i to libBornAgainFit_wrap.cxx.
 // Note that the order matters, as base classes must be included before derived classes.
 
-%include "RealLimits.h"
-%include "AttLimits.h"
-%include "Parameter.h"
-%include "Parameters.h"
-%include "IMinimizer.h"
-%include "MinimizerCatalogue.h"
-%include "MinimizerFactory.h"
-
-%include "PyCallback.h"
-%include "MinimizerResult.h"
-%include "Minimizer.h"
+%include "Fit/Tools/RealLimits.h"
+%include "Fit/Tools/AttLimits.h"
+%include "Fit/Kernel/Parameter.h"
+%include "Fit/Kernel/Parameters.h"
+%include "Fit/Kernel/PyCallback.h"
+%include "Fit/Kernel/MinimizerResult.h"
+%include "Fit/Kernel/Minimizer.h"
+%include "Fit/Minimizer/IMinimizer.h"
+%include "Fit/Minimizer/MinimizerCatalog.h"
+%include "Fit/Minimizer/MinimizerFactory.h"
 
 %include "extendFit.i"

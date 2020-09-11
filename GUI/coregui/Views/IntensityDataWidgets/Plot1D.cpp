@@ -12,17 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "Plot1D.h"
-#include "AxesItems.h"
-#include "ColorMapUtils.h"
-#include "Data1DViewItem.h"
-#include "DataItem.h"
-#include "DataProperties.h"
-#include "DataPropertyContainer.h"
-#include "MathConstants.h"
-#include "PlotEventInfo.h"
-#include "UpdateTimer.h"
-#include "plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/Plot1D.h"
+#include "Core/Basics/MathConstants.h"
+#include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/Data1DViewItem.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/DataProperties.h"
+#include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
+#include "GUI/coregui/Views/FitWidgets/plot_constants.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/PlotEventInfo.h"
 
 namespace
 {
@@ -198,7 +198,7 @@ void Plot1D::refreshPlotData()
     m_block_update = true;
 
     auto view_item = viewItem();
-    assert(view_item);
+    ASSERT(view_item);
 
     setAxesRangeFromItem(view_item);
     setAxesLabelsFromItem(view_item);
@@ -229,7 +229,7 @@ void Plot1D::setAxesLabelsFromItem(Data1DViewItem* item)
 
 void Plot1D::setLabel(const BasicAxisItem* item, QCPAxis* axis, QString label)
 {
-    assert(item && axis);
+    ASSERT(item && axis);
     if (item->getItemValue(BasicAxisItem::P_TITLE_IS_VISIBLE).toBool())
         axis->setLabel(std::move(label));
     else
@@ -259,7 +259,7 @@ Data1DViewItem* Plot1D::viewItem()
 const Data1DViewItem* Plot1D::viewItem() const
 {
     const auto result = dynamic_cast<const Data1DViewItem*>(currentItem());
-    Q_ASSERT(result);
+    ASSERT(result);
     return result;
 }
 
@@ -275,14 +275,14 @@ void Plot1D::modifyAxesProperties(const QString& axisName, const QString& proper
     }
 
     if (axisName == Data1DViewItem::P_XAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setAxesRangeConnected(false);
             m_custom_plot->xAxis->setRange(viewItem()->getLowerX(), viewItem()->getUpperX());
             setAxesRangeConnected(true);
             replot();
         }
     } else if (axisName == Data1DViewItem::P_YAXIS) {
-        if (propertyName == BasicAxisItem::P_MIN || propertyName == BasicAxisItem::P_MAX) {
+        if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG) {
             setAxesRangeConnected(false);
             m_custom_plot->yAxis->setRange(viewItem()->getLowerY(), viewItem()->getUpperY());
             setAxesRangeConnected(true);

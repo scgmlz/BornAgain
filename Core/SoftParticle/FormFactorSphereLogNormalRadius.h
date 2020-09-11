@@ -12,12 +12,11 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORSPHERELOGNORMALRADIUS_H
-#define FORMFACTORSPHERELOGNORMALRADIUS_H
+#ifndef BORNAGAIN_CORE_SOFTPARTICLE_FORMFACTORSPHERELOGNORMALRADIUS_H
+#define BORNAGAIN_CORE_SOFTPARTICLE_FORMFACTORSPHERELOGNORMALRADIUS_H
 
-#include "Distributions.h"
-#include "FormFactorFullSphere.h"
-#include "SafePointerVector.h"
+#include "Core/Scattering/IFormFactorBorn.h"
+#include "Core/Tools/SafePointerVector.h"
 #include <memory>
 
 //! A sphere with log normal radius distribution.
@@ -26,12 +25,11 @@
 class BA_CORE_API_ FormFactorSphereLogNormalRadius : public IFormFactorBorn
 {
 public:
+    FormFactorSphereLogNormalRadius(const std::vector<double> P, size_t n_samples = 0);
     FormFactorSphereLogNormalRadius(double mean, double scale_param, size_t n_samples);
 
-    FormFactorSphereLogNormalRadius* clone() const override final
-    {
-        return new FormFactorSphereLogNormalRadius(m_mean, m_scale_param, m_n_samples);
-    }
+    FormFactorSphereLogNormalRadius* clone() const override final;
+
     void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
 
     double radialExtension() const override final { return m_mean; }
@@ -42,14 +40,12 @@ protected:
     void onChange() override final;
 
 private:
-    double m_mean;
-    double m_scale_param;
+    const double& m_mean;
+    const double& m_scale_param;
     size_t m_n_samples;
 
-    std::unique_ptr<DistributionLogNormal> mP_distribution;
-
-    SafePointerVector<IFormFactorBorn> m_form_factors;
+    std::vector<double> m_radii;
     std::vector<double> m_probabilities;
 };
 
-#endif // FORMFACTORSPHERELOGNORMALRADIUS_H
+#endif // BORNAGAIN_CORE_SOFTPARTICLE_FORMFACTORSPHERELOGNORMALRADIUS_H

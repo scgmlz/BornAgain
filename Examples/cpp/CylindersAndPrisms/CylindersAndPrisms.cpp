@@ -13,18 +13,18 @@
 //
 // ********************************************************************************************** //
 
-#include "FormFactorCylinder.h"
-#include "FormFactorPrism3.h"
-#include "GISASSimulation.h"
-#include "Histogram2D.h"
-#include "IntensityDataIOFactory.h"
-#include "Layer.h"
-#include "MaterialFactoryFuncs.h"
-#include "MultiLayer.h"
-#include "Particle.h"
-#include "ParticleLayout.h"
-#include "Simulation.h"
-#include "Units.h"
+#include "Core/Aggregate/ParticleLayout.h"
+#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorCylinder.h"
+#include "Core/HardParticle/FormFactorPrism3.h"
+#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Core/Intensity/Histogram2D.h"
+#include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/Layer.h"
+#include "Core/Multilayer/MultiLayer.h"
+#include "Core/Particle/Particle.h"
+#include "Core/Simulation/GISASSimulation.h"
+#include "Core/Simulation/Simulation.h"
 
 int main()
 {
@@ -39,11 +39,11 @@ int main()
     Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
 
     Particle cylinder(particle_material,
-                      FormFactorCylinder(5*Units::nanometer, 5*Units::nanometer));
+                      FormFactorCylinder(5 * Units::nanometer, 5 * Units::nanometer));
     particle_layout.addParticle(cylinder, 0.5);
 
     Particle prism(particle_material,
-                   FormFactorPrism3(10*Units::nanometer, 5*Units::nanometer));
+                   FormFactorPrism3(10 * Units::nanometer, 5 * Units::nanometer));
     particle_layout.addParticle(prism, 0.5);
 
     air_layer.addLayout(particle_layout);
@@ -54,9 +54,9 @@ int main()
 
     // Define the simulation
     GISASSimulation simulation;
-    simulation.setDetectorParameters(400, -1.0*Units::degree, 1.0*Units::degree,
-                                     400,  0.0*Units::degree, 2.0*Units::degree);
-    simulation.setBeamParameters(1.0*Units::angstrom, 0.2*Units::degree, 0.0*Units::degree);
+    simulation.setDetectorParameters(400, -1.0 * Units::degree, 1.0 * Units::degree, 400,
+                                     0.0 * Units::degree, 2.0 * Units::degree);
+    simulation.setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
     simulation.setSample(sample);
 
     // Run the simulation, and store the result

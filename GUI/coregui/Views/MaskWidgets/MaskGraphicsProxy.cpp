@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "MaskGraphicsProxy.h"
-#include "ColorMap.h"
-#include "ColorMapSceneAdaptor.h"
-#include "IntensityDataItem.h"
+#include "GUI/coregui/Views/MaskWidgets/MaskGraphicsProxy.h"
+#include "GUI/coregui/Models/IntensityDataItem.h"
+#include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
+#include "GUI/coregui/Views/MaskWidgets/ColorMapSceneAdaptor.h"
 #include <QGraphicsSceneMouseEvent>
 
 MaskGraphicsProxy::MaskGraphicsProxy()

@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MINIMIZERITEM_H
-#define MINIMIZERITEM_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_MINIMIZERITEM_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_MINIMIZERITEM_H
 
-#include "SessionItem.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class IMinimizer;
 class ObjectiveMetric;
@@ -125,4 +125,4 @@ public:
     std::unique_ptr<IMinimizer> createMinimizer() const;
 };
 
-#endif // MINIMIZERITEM_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_MINIMIZERITEM_H

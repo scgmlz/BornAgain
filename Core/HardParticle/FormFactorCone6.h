@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORCONE6_H
-#define FORMFACTORCONE6_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCONE6_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCONE6_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A frustum (truncated pyramid) with regular hexagonal base.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorCone6 : public FormFactorPolyhedron
 {
 public:
+    FormFactorCone6(const std::vector<double> P);
     FormFactorCone6(double base_edge, double height, double alpha);
 
     FormFactorCone6* clone() const override final
@@ -43,9 +44,9 @@ protected:
 
 private:
     static const PolyhedralTopology topology;
-    double m_base_edge;
-    double m_height;
-    double m_alpha;
+    const double& m_base_edge;
+    const double& m_height;
+    const double& m_alpha;
 };
 
-#endif // FORMFACTORCONE6_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCONE6_H

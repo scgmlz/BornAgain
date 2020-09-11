@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "DataProperties.h"
-#include "ComboProperty.h"
-#include "DataItem.h"
-#include "GUIHelpers.h"
-#include "ModelPath.h"
-#include "SessionModel.h"
+#include "GUI/coregui/Models/DataProperties.h"
+#include "GUI/coregui/Models/ComboProperty.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -40,23 +40,23 @@ struct ColorNameComparator {
 ComboProperty defaultColorCombo();
 } // namespace
 
-const QString DataProperties::P_LINK = "data link";
+const QString DataProperties::P_DATALINK = "data link";
 
 DataProperties::DataProperties(const QString& model_type) : SessionItem(model_type)
 {
-    addProperty(P_LINK, "");
+    addProperty(P_DATALINK, "");
 }
 
 void DataProperties::setDataItem(DataItem* item)
 {
     const QString& path = ModelPath::getPathFromIndex(item->index());
-    setItemValue(P_LINK, path);
+    setItemValue(P_DATALINK, path);
 }
 
 DataItem* DataProperties::dataItem()
 {
     SessionModel* hosting_model = this->model();
-    const QString& path = getItemValue(P_LINK).toString();
+    const QString& path = getItemValue(P_DATALINK).toString();
     auto item_index = ModelPath::getIndexFromPath(hosting_model, path);
     if (!item_index.isValid()) {
         std::stringstream os;
@@ -70,7 +70,7 @@ DataItem* DataProperties::dataItem()
 
 const QString Data1DProperties::P_COLOR = "Color";
 
-Data1DProperties::Data1DProperties() : DataProperties(Constants::DataItem1DPropertiesType)
+Data1DProperties::Data1DProperties() : DataProperties("DataItem1DProperties")
 {
     addProperty(P_COLOR, defaultColorCombo().variant());
 }

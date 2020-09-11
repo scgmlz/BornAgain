@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "GUIMessage.h"
+#include "GUI/coregui/utils/GUIMessage.h"
 #include <QObject>
 
 GUIMessage::GUIMessage(const QString& senderName, const QString& messageType,

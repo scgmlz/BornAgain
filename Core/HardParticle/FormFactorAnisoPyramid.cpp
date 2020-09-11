@@ -12,13 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorAnisoPyramid.h"
-#include "AnisoPyramid.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorAnisoPyramid.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
 
 const PolyhedralTopology FormFactorAnisoPyramid::topology = {{{{3, 2, 1, 0}, true},
                                                               {{0, 1, 5, 4}, false},
@@ -33,18 +30,23 @@ const PolyhedralTopology FormFactorAnisoPyramid::topology = {{{{3, 2, 1, 0}, tru
 //! @param width: width of the rectangular base in nm
 //! @param height: height of pyramid in nm
 //! @param alpha: dihedral angle in radians between base and facet
+FormFactorAnisoPyramid::FormFactorAnisoPyramid(const std::vector<double> P)
+    : FormFactorPolyhedron({"AnisoPyramid",
+                            "class_tooltip",
+                            {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Width", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                           P),
+      m_length(m_P[0]), m_width(m_P[1]), m_height(m_P[2]), m_alpha(m_P[3])
+{
+    onChange();
+}
+
 FormFactorAnisoPyramid::FormFactorAnisoPyramid(double length, double width, double height,
                                                double alpha)
-    : FormFactorPolyhedron(), m_length(length), m_width(width), m_height(height), m_alpha(alpha)
+    : FormFactorAnisoPyramid(std::vector<double>{length, width, height, alpha})
 {
-    setName(BornAgain::FFAnisoPyramidType);
-    registerParameter(BornAgain::Length, &m_length).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Width, &m_width).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Alpha, &m_alpha)
-        .setUnit(BornAgain::UnitsRad)
-        .setLimited(0., M_PI_2);
-    onChange();
 }
 
 IFormFactor* FormFactorAnisoPyramid::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -74,7 +76,6 @@ void FormFactorAnisoPyramid::onChange()
         ostr << "Check for '2*height <= (length,width)*tan(alpha)' failed.";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    mP_shape.reset(new AnisoPyramid(m_length, m_width, m_height, m_alpha));
 
     double D = m_length / 2;
     double d = m_length / 2 * (1 - r);

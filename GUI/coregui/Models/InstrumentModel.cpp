@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "InstrumentModel.h"
-#include "InstrumentItems.h"
-#include "SpecularBeamInclinationItem.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
 
 InstrumentModel::InstrumentModel(QObject* parent)
     : SessionModel(SessionXML::InstrumentModelTag, parent)
@@ -40,7 +40,7 @@ QVector<SessionItem*> InstrumentModel::nonXMLData() const
                               ->getItem(BeamItem::P_INCLINATION_ANGLE)
                               ->getItem(SpecularBeamInclinationItem::P_ALPHA_AXIS);
 
-        if (auto pointwise_axis = axis_group->getChildOfType(Constants::PointwiseAxisType))
+        if (auto pointwise_axis = axis_group->getChildOfType("PointwiseAxis"))
             result.push_back(pointwise_axis);
     }
 

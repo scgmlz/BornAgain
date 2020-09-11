@@ -23,7 +23,7 @@ def RunSimulation():
     mParticle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
-    semisphere_ff = FormFactorTruncatedSphere(radius, radius)
+    semisphere_ff = FormFactorTruncatedSphere(radius, radius, 0)
     semisphere = Particle(mParticle, semisphere_ff)
     particle_layout = ParticleLayout()
     particle_layout.addParticle(semisphere)

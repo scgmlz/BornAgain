@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef FTDISTRIBUTIONITEMS_H
-#define FTDISTRIBUTIONITEMS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MODELS_FTDISTRIBUTIONITEMS_H
+#define BORNAGAIN_GUI_COREGUI_MODELS_FTDISTRIBUTIONITEMS_H
 
-#include "FTDistributions1D.h"
-#include "FTDistributions2D.h"
-#include "SessionItem.h"
+#include "Core/Correlations/FTDistributions1D.h"
+#include "Core/Correlations/FTDistributions2D.h"
+#include "GUI/coregui/Models/SessionItem.h"
 
 class BA_CORE_API_ FTDistribution1DItem : public SessionItem
 {
@@ -128,4 +128,4 @@ public:
     std::unique_ptr<IFTDistribution2D> createFTDistribution() const;
 };
 
-#endif // FTDISTRIBUTIONITEMS_H
+#endif // BORNAGAIN_GUI_COREGUI_MODELS_FTDISTRIBUTIONITEMS_H

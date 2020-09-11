@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "SessionItemData.h"
-#include "SessionItemUtils.h"
+#include "GUI/coregui/Models/SessionItemData.h"
+#include "GUI/coregui/Models/SessionItemUtils.h"
 
 SessionItemData::ItemData::ItemData(int r, const QVariant& v) : role(r), data(v) {}
 

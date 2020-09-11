@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTOREDGETRUNCATEDCUBE_H
-#define FORMFACTOREDGETRUNCATEDCUBE_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCANTELLATEDCUBE_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCANTELLATEDCUBE_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A cube, with truncation of all edges and corners, as in Croset (2017) Fig 7
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorCantellatedCube : public FormFactorPolyhedron
 {
 public:
+    FormFactorCantellatedCube(const std::vector<double> P);
     FormFactorCantellatedCube(double length, double removed_length);
 
     FormFactorCantellatedCube* clone() const override final
@@ -39,8 +40,8 @@ protected:
 
 private:
     static const PolyhedralTopology topology;
-    double m_length;
-    double m_removed_length;
+    const double& m_length;
+    const double& m_removed_length;
 };
 
-#endif // FORMFACTOREDGETRUNCATEDCUBE_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCANTELLATEDCUBE_H

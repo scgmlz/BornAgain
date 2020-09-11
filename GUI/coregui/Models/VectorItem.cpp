@@ -12,23 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "VectorItem.h"
+#include "GUI/coregui/Models/VectorItem.h"
 
 const QString VectorItem::P_X = "X";
 const QString VectorItem::P_Y = "Y";
 const QString VectorItem::P_Z = "Z";
 
-VectorItem::VectorItem() : SessionItem(Constants::VectorType)
+VectorItem::VectorItem() : SessionItem("Vector")
 {
-    addProperty(P_X, 0.0)
-        ->setLimits(RealLimits::limitless())
-        .setToolTip(QStringLiteral("x-coordinate"));
-    addProperty(P_Y, 0.0)
-        ->setLimits(RealLimits::limitless())
-        .setToolTip(QStringLiteral("y-coordinate"));
-    addProperty(P_Z, 0.0)
-        ->setLimits(RealLimits::limitless())
-        .setToolTip(QStringLiteral("z-coordinate"));
+    addProperty(P_X, 0.0)->setLimits(RealLimits::limitless()).setToolTip("x-coordinate");
+    addProperty(P_Y, 0.0)->setLimits(RealLimits::limitless()).setToolTip("y-coordinate");
+    addProperty(P_Z, 0.0)->setLimits(RealLimits::limitless()).setToolTip("z-coordinate");
 
     mapper()->setOnPropertyChange([this](const QString&) { updateLabel(); });
 

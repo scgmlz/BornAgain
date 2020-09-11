@@ -12,9 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "IterationStrategy.h"
-#include "Exceptions.h"
-#include "NodeIterator.h"
+#include "Core/Parametrization/IterationStrategy.h"
+#include "Core/Basics/Assert.h"
+#include "Core/Parametrization/INode.h"
+#include "Core/Parametrization/NodeIterator.h"
 
 PreorderStrategy::PreorderStrategy() {}
 
@@ -22,8 +23,6 @@ PreorderStrategy* PreorderStrategy::clone() const
 {
     return new PreorderStrategy();
 }
-
-PreorderStrategy::~PreorderStrategy() {}
 
 IteratorMemento PreorderStrategy::first(const INode* p_root)
 {
@@ -34,12 +33,9 @@ IteratorMemento PreorderStrategy::first(const INode* p_root)
 
 void PreorderStrategy::next(IteratorMemento& iterator_stack) const
 {
-    const INode* p_sample = iterator_stack.getCurrent();
-    if (!p_sample) {
-        throw Exceptions::NullPointerException("CompositeIteratorPreorderStrategy::next(): "
-                                               "Error! Null object in the tree of objects");
-    }
-    std::vector<const INode*> children = p_sample->getChildren();
+    const INode* node = iterator_stack.getCurrent();
+    ASSERT(node);
+    std::vector<const INode*> children = node->getChildren();
     if (children.size() > 0) {
         iterator_stack.push_state(IteratorState(children));
         return;
@@ -63,8 +59,6 @@ PostorderStrategy* PostorderStrategy::clone() const
 {
     return new PostorderStrategy();
 }
-
-PostorderStrategy::~PostorderStrategy() {}
 
 IteratorMemento PostorderStrategy::first(const INode* p_root)
 {

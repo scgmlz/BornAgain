@@ -12,13 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorTetrahedron.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "Pyramid3.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorTetrahedron.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/Tools/MathFunctions.h"
 
 const PolyhedralTopology FormFactorTetrahedron::topology = {{{{2, 1, 0}, false},
                                                              {{0, 1, 4, 3}, false},
@@ -31,18 +28,21 @@ const PolyhedralTopology FormFactorTetrahedron::topology = {{{{2, 1, 0}, false},
 //! @param base_edge: length of one edge of the equilateral triangular base in nanometers
 //! @param height: height of the tetrahedron in nanometers
 //! @param alpha: dihedral angle in radians between base and facet
-FormFactorTetrahedron::FormFactorTetrahedron(double base_edge, double height, double alpha)
-    : FormFactorPolyhedron(), m_base_edge(base_edge), m_height(height), m_alpha(alpha)
+FormFactorTetrahedron::FormFactorTetrahedron(const std::vector<double> P)
+    : FormFactorPolyhedron({"Tetrahedron",
+                            "class_tooltip",
+                            {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                           P),
+      m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
-    setName(BornAgain::FFTetrahedronType);
-    registerParameter(BornAgain::BaseEdge, &m_base_edge)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Alpha, &m_alpha)
-        .setUnit(BornAgain::UnitsRad)
-        .setLimited(0., M_PI_2);
     onChange();
+}
+
+FormFactorTetrahedron::FormFactorTetrahedron(double base_edge, double height, double alpha)
+    : FormFactorTetrahedron(std::vector<double>{base_edge, height, alpha})
+{
 }
 
 IFormFactor* FormFactorTetrahedron::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -69,7 +69,6 @@ void FormFactorTetrahedron::onChange()
         ostr << ", alpha[rad]:" << m_alpha << ")";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    mP_shape.reset(new Pyramid3(m_base_edge, m_height, m_alpha));
 
     double a = m_base_edge;
     double as = a / 2;

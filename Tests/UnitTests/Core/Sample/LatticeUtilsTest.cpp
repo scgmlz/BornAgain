@@ -1,14 +1,10 @@
-#include "LatticeUtils.h"
-#include "ILatticeOrientation.h"
-#include "google_test.h"
+#include "Core/Lattice/LatticeUtils.h"
+#include "Core/Lattice/ILatticeOrientation.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class LatticeUtilsTest : public ::testing::Test
 {
-protected:
-    ~LatticeUtilsTest();
 };
-
-LatticeUtilsTest::~LatticeUtilsTest() = default;
 
 // tests the creation of an FCC lattice with the primitive cube aligned along the q-axes
 TEST_F(LatticeUtilsTest, cubeAlignedFCCTest)

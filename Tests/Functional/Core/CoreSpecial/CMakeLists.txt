@@ -1,22 +1,18 @@
+include(GoogleTest) # provides gtest_discover_tests
+
 set(test TestCoreSpecial)
 
-set(test_cases
-    BatchSimulation
-    FourierTransformation
-    MultilayerPerformance
-#    CoreIOPerformance
-#    MesoPerformance
-#    CoreIOPath
-#    MultiThreadPerformance
-)
+set(source_files
+    BatchSimulation.cpp
+    FourierTransformationTest.cpp
+    CoreIOPathTest.cpp
+    )
 
-# build executables for each test case
-file(GLOB source_files "*.cpp")
-file(GLOB include_files "*.h")
-add_executable(${test} ${include_files} ${source_files})
-target_link_libraries(${test} BornAgainCore BornAgainTestMachinery)
+add_executable(${test} ${source_files} ${CMAKE_SOURCE_DIR}/Tests/GTestWrapper/TestAll.cpp)
+target_include_directories(${test}
+    PUBLIC
+    ${CMAKE_SOURCE_DIR}/Tests/UnitTests/utilities
+    ${CMAKE_SOURCE_DIR}/ThirdParty/common/gtest/gtest-1.8.0/include)
+target_link_libraries(${test} ${BornAgainCore_LIBRARY} gtest)
 
-# create test cases
-foreach(test_case ${test_cases})
-    add_test(${test}/${test_case} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${test} ${test_case})
-endforeach()
+gtest_discover_tests(${test} DISCOVERY_TIMEOUT 300 TEST_PREFIX Core:Special:)

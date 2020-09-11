@@ -12,20 +12,25 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorLongBoxGauss.h"
-#include "BornAgainNamespace.h"
-#include "Box.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorLongBoxGauss.h"
+#include "Core/Shapes/Box.h"
+#include "Core/Tools/MathFunctions.h"
+
+FormFactorLongBoxGauss::FormFactorLongBoxGauss(const std::vector<double> P)
+    : IFormFactorBorn({"FormFactorLongBoxGauss",
+                       "class_tooltip",
+                       {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Width", "nm", "para_tooltip", 0, +INF, 0},
+                        {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                      P),
+      m_length(m_P[0]), m_width(m_P[1]), m_height(m_P[2])
+{
+    onChange();
+}
 
 FormFactorLongBoxGauss::FormFactorLongBoxGauss(double length, double width, double height)
-    : m_length(length), m_width(width), m_height(height)
+    : FormFactorLongBoxGauss(std::vector<double>{length, width, height})
 {
-    setName(BornAgain::FFLongBoxGaussType);
-    registerParameter(BornAgain::Length, &m_length).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Width, &m_width).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    onChange();
 }
 
 complex_t FormFactorLongBoxGauss::evaluate_for_q(cvector_t q) const

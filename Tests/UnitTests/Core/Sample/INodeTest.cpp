@@ -1,9 +1,9 @@
-#include "INode.h"
-#include "Exceptions.h"
-#include "NodeUtils.h"
-#include "ParameterPool.h"
-#include "RealParameter.h"
-#include "google_test.h"
+#include "Core/Parametrization/INode.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Parametrization/NodeUtils.h"
+#include "Core/Parametrization/ParameterPool.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
 namespace
@@ -16,8 +16,6 @@ const double test_par1_value(1.0);
 class INodeTest : public ::testing::Test
 {
 public:
-    ~INodeTest();
-
     class TestClass : public INode
     {
     public:
@@ -50,8 +48,6 @@ public:
         double m_parameter1;
     };
 };
-
-INodeTest::~INodeTest() = default;
 
 TEST_F(INodeTest, initialState)
 {
@@ -92,8 +88,6 @@ TEST_F(INodeTest, parentship)
 TEST_F(INodeTest, displayName)
 {
     INodeTest::TestClass node;
-    EXPECT_EQ(node.getName(), test_class_name);
-    EXPECT_EQ(node.getName(), node.displayName());
 
     // Adding first child and checking its displayName
     INodeTest::TestClass* child0 = new INodeTest::TestClass();

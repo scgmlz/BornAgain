@@ -1,24 +1,20 @@
-#include "GUIHelpers.h"
-#include "google_test.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class TestGUIHelpers : public ::testing::Test
 {
-public:
-    ~TestGUIHelpers();
 };
-
-TestGUIHelpers::~TestGUIHelpers() = default;
 
 TEST_F(TestGUIHelpers, test_VersionString)
 {
     int vmajor(0), vminor(0), vpatch(0);
 
-    EXPECT_EQ(true, GUIHelpers::parseVersion(QString("1.5.0"), vmajor, vminor, vpatch));
+    EXPECT_EQ(true, GUIHelpers::parseVersion("1.5.0", vmajor, vminor, vpatch));
     EXPECT_EQ(1, vmajor);
     EXPECT_EQ(5, vminor);
     EXPECT_EQ(0, vpatch);
 
-    EXPECT_FALSE(GUIHelpers::parseVersion(QString("15.0"), vmajor, vminor, vpatch));
+    EXPECT_FALSE(GUIHelpers::parseVersion("15.0", vmajor, vminor, vpatch));
 
     QString min_version("1.5.0");
     EXPECT_EQ(GUIHelpers::isVersionMatchMinimal("1.5.0", min_version), true);

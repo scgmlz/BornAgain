@@ -12,13 +12,13 @@
 //
 // ************************************************************************** //
 
-#ifndef TRANSFORMTO3D_H
-#define TRANSFORMTO3D_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_TRANSFORMTO3D_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_TRANSFORMTO3D_H
 
-#include "WinDllMacros.h"
-#include <Vectors3D.h>
-#include <ba3d/model/layer.h>
-#include <ba3d/model/particles.h>
+#include "Core/Vector/Vectors3D.h"
+#include "GUI/ba3d/model/layer.h"
+#include "GUI/ba3d/model/particles.h"
+#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class SessionItem;
@@ -36,7 +36,7 @@ BA_CORE_API_ double visualLayerThickness(const SessionItem& layerItem,
 BA_CORE_API_
 std::unique_ptr<RealSpace::Layer> createLayer(const SessionItem& layerItem,
                                               const SceneGeometry& sceneGeometry,
-                                              const QVector3D& origin = QVector3D());
+                                              const QVector3D& origin = {});
 
 BA_CORE_API_
 std::unique_ptr<RealSpace::Particles::Particle> createParticle3D(const SessionItem& particleItem);
@@ -47,4 +47,4 @@ createParticlefromIFormFactor(const IFormFactor* ff);
 
 } // namespace TransformTo3D
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_TRANSFORMTO3D_H

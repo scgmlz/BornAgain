@@ -12,11 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "DetectorPresenter.h"
-#include "GUIHelpers.h"
-#include "RectangularDetectorEditor.h"
-#include "SessionItem.h"
-#include "SphericalDetectorEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/DetectorPresenter.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/Views/InstrumentWidgets/RectangularDetectorEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/SphericalDetectorEditor.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
@@ -36,9 +36,9 @@ QString DetectorPresenter::itemPresentation() const
     if (!currentItem())
         return {};
 
-    if (currentItem()->modelType() == Constants::SphericalDetectorType)
+    if (currentItem()->modelType() == "SphericalDetector")
         return SphericalDetectorPresentation;
-    else if (currentItem()->modelType() == Constants::RectangularDetectorType)
+    else if (currentItem()->modelType() == "RectangularDetector")
         return RectangularDetectorPresentation;
     else
         throw GUIHelpers::Error("DetectorPresenter::itemPresentation() -> Error. Wrong item "

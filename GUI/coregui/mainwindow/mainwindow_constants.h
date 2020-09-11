@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_CONSTANTS_H
-#define MAINWINDOW_CONSTANTS_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_CONSTANTS_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_CONSTANTS_H
 
 #include <QString>
 
@@ -81,4 +81,4 @@ const int styled_toolbar_height = 25;
 
 } // namespace Constants
 
-#endif // MAINWINDOW_CONSTANTS_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_CONSTANTS_H

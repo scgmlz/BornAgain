@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "RealDataModel.h"
-#include "DataItem.h"
-#include "RealDataItem.h"
+#include "GUI/coregui/Models/RealDataModel.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/RealDataItem.h"
 
 RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDataModelTag, parent)
 {

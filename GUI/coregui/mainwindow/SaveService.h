@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef SAVESERVICE_H
-#define SAVESERVICE_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVESERVICE_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVESERVICE_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QQueue>
 
@@ -63,4 +63,4 @@ private:
     ProjectDocument* m_document;
 };
 
-#endif
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVESERVICE_H

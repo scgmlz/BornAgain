@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "RoughnessModels.h"
+#include "Core/Multilayer/RoughnessModels.h"
 
 #include <map>
 
@@ -26,8 +26,5 @@ const std::map<RoughnessModel, std::string> roughnessModelNames = {
 
 std::string RoughnessModelWrap::roughnessModelName(RoughnessModel model)
 {
-    auto iter = roughnessModelNames.find(model);
-    if (iter != roughnessModelNames.end())
-        return iter->second;
-    return "Invalid roughness model";
+    return roughnessModelNames.at(model);
 }

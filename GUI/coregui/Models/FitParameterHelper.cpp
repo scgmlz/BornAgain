@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#include "FitParameterHelper.h"
-#include "FitParameterItems.h"
-#include "JobItem.h"
-#include "JobModel.h"
-#include "ModelPath.h"
-#include "ParameterTreeItems.h"
+#include "GUI/coregui/Models/FitParameterHelper.h"
+#include "GUI/coregui/Models/FitParameterItems.h"
+#include "GUI/coregui/Models/JobItem.h"
+#include "GUI/coregui/Models/JobModel.h"
+#include "GUI/coregui/Models/ModelPath.h"
+#include "GUI/coregui/Models/ParameterTreeItems.h"
 
 //! Creates fit parameter from given ParameterItem, sets starting value to the value
 //! of ParameterItem, copies link.
@@ -25,17 +25,16 @@
 void FitParameterHelper::createFitParameter(FitParameterContainerItem* container,
                                             ParameterItem* parameterItem)
 {
-    Q_ASSERT(container);
-    Q_ASSERT(parameterItem);
+    ASSERT(container);
+    ASSERT(parameterItem);
 
     removeFromFitParameters(container, parameterItem);
 
     FitParameterItem* fitPar = dynamic_cast<FitParameterItem*>(
-        container->model()->insertNewItem(Constants::FitParameterType, container->index()));
-    Q_ASSERT(fitPar);
-    fitPar->setDisplayName(QStringLiteral("par"));
-    SessionItem* link =
-        fitPar->model()->insertNewItem(Constants::FitParameterLinkType, fitPar->index());
+        container->model()->insertNewItem("FitParameter", container->index()));
+    ASSERT(fitPar);
+    fitPar->setDisplayName("par");
+    SessionItem* link = fitPar->model()->insertNewItem("FitParameterLink", fitPar->index());
     fitPar->setItemValue(FitParameterItem::P_START_VALUE, parameterItem->value());
     link->setItemValue(FitParameterLinkItem::P_LINK, getParameterItemPath(parameterItem));
 
@@ -66,13 +65,12 @@ void FitParameterHelper::removeFromFitParameters(FitParameterContainerItem* cont
 void FitParameterHelper::addToFitParameter(FitParameterContainerItem* container,
                                            ParameterItem* parameterItem, const QString& fitParName)
 {
-    Q_ASSERT(container);
+    ASSERT(container);
 
     removeFromFitParameters(container, parameterItem);
     for (auto fitPar : container->getItems(FitParameterContainerItem::T_FIT_PARAMETERS)) {
         if (fitPar->displayName() == fitParName) {
-            SessionItem* link =
-                fitPar->model()->insertNewItem(Constants::FitParameterLinkType, fitPar->index());
+            SessionItem* link = fitPar->model()->insertNewItem("FitParameterLink", fitPar->index());
             link->setItemValue(FitParameterLinkItem::P_LINK, getParameterItemPath(parameterItem));
             break;
         }
@@ -84,7 +82,7 @@ void FitParameterHelper::addToFitParameter(FitParameterContainerItem* container,
 FitParameterItem* FitParameterHelper::getFitParameterItem(FitParameterContainerItem* container,
                                                           ParameterItem* parameterItem)
 {
-    Q_ASSERT(container);
+    ASSERT(container);
     return container->fitParameterItem(getParameterItemPath(parameterItem));
 }
 
@@ -92,7 +90,7 @@ FitParameterItem* FitParameterHelper::getFitParameterItem(FitParameterContainerI
 
 QStringList FitParameterHelper::getFitParameterNames(FitParameterContainerItem* container)
 {
-    Q_ASSERT(container);
+    ASSERT(container);
     QStringList result;
     for (auto item : container->getItems(FitParameterContainerItem::T_FIT_PARAMETERS)) {
         result.append(item->displayName());
@@ -105,7 +103,7 @@ QStringList FitParameterHelper::getFitParameterNames(FitParameterContainerItem* 
 QString FitParameterHelper::getParameterItemPath(const ParameterItem* parameterItem)
 {
     QString result = ModelPath::getPathFromIndex(parameterItem->index());
-    QString containerPrefix = Constants::ParameterContainerType + "/";
+    QString containerPrefix = "Parameter Container/";
     int containerEnd = result.indexOf(containerPrefix) + containerPrefix.size();
     result = result.mid(containerEnd);
     return result;
@@ -118,12 +116,12 @@ ParameterItem* FitParameterHelper::getParameterItem(FitParameterContainerItem* c
                                                     const QString& link)
 {
     SessionItem* cur = container;
-    while (cur && cur->modelType() != Constants::JobItemType) {
+    while (cur && cur->modelType() != "JobItem") {
         cur = cur->parent();
     }
-    Q_ASSERT(cur && cur->modelType() == Constants::JobItemType);
+    ASSERT(cur && cur->modelType() == "JobItem");
     JobItem* jobItem = dynamic_cast<JobItem*>(cur);
-    Q_ASSERT(jobItem);
+    ASSERT(jobItem);
     return dynamic_cast<ParameterItem*>(
         ModelPath::getItemFromPath(link, jobItem->parameterContainerItem()));
 }

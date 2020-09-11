@@ -11,9 +11,9 @@
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
 // ************************************************************************** //
-#include "OutputDataWriteFactory.h"
-#include "DataFormatUtils.h"
-#include "Exceptions.h"
+#include "Core/InputOutput/OutputDataWriteFactory.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/InputOutput/DataFormatUtils.h"
 
 OutputDataWriter* OutputDataWriteFactory::getWriter(const std::string& file_name)
 {

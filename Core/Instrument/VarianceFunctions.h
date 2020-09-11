@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef VARIANCEFUNCTIONS_H
-#define VARIANCEFUNCTIONS_H
+#ifndef BORNAGAIN_CORE_INSTRUMENT_VARIANCEFUNCTIONS_H
+#define BORNAGAIN_CORE_INSTRUMENT_VARIANCEFUNCTIONS_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 
 //! Variance function interface.
 //! @ingroup fitting_internal
@@ -56,4 +56,4 @@ private:
     double m_epsilon;
 };
 
-#endif // VARIANCEFUNCTIONS_H
+#endif // BORNAGAIN_CORE_INSTRUMENT_VARIANCEFUNCTIONS_H

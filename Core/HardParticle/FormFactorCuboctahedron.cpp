@@ -12,14 +12,11 @@
 //
 // ************************************************************************** //
 
-#include "FormFactorCuboctahedron.h"
-#include "BiPyramid.h"
-#include "BornAgainNamespace.h"
-#include "Exceptions.h"
-#include "FormFactorPyramid.h"
-#include "MathConstants.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
+#include "Core/HardParticle/FormFactorCuboctahedron.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Basics/MathConstants.h"
+#include "Core/HardParticle/FormFactorPyramid.h"
+#include "Core/Tools/MathFunctions.h"
 
 const PolyhedralTopology FormFactorCuboctahedron::topology = {{{{3, 2, 1, 0}, true},
                                                                {{0, 1, 5, 4}, false},
@@ -39,21 +36,23 @@ const PolyhedralTopology FormFactorCuboctahedron::topology = {{{{3, 2, 1, 0}, tr
 //! @param height: height of the lower pyramid in nanometers
 //! @param height_ratio: ratio of heights of top to bottom pyramids
 //! @param alpha: dihedral angle in radians between base and facet
+FormFactorCuboctahedron::FormFactorCuboctahedron(const std::vector<double> P)
+    : FormFactorPolyhedron({"Cuboctahedron",
+                            "class_tooltip",
+                            {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                             {"HeightRatio", "nm", "para_tooltip", 0, +INF, 0},
+                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                           P),
+      m_length(m_P[0]), m_height(m_P[1]), m_height_ratio(m_P[2]), m_alpha(m_P[3])
+{
+    onChange();
+}
+
 FormFactorCuboctahedron::FormFactorCuboctahedron(double length, double height, double height_ratio,
                                                  double alpha)
-    : FormFactorPolyhedron(), m_length(length), m_height(height), m_height_ratio(height_ratio),
-      m_alpha(alpha)
+    : FormFactorCuboctahedron(std::vector<double>{length, height, height_ratio, alpha})
 {
-    setName(BornAgain::FFCuboctahedronType);
-    registerParameter(BornAgain::Length, &m_length).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::Height, &m_height).setUnit(BornAgain::UnitsNm).setNonnegative();
-    registerParameter(BornAgain::HeightRatio, &m_height_ratio)
-        .setUnit(BornAgain::UnitsNm)
-        .setNonnegative();
-    registerParameter(BornAgain::Alpha, &m_alpha)
-        .setUnit(BornAgain::UnitsRad)
-        .setLimited(0., M_PI_2);
-    onChange();
 }
 
 IFormFactor* FormFactorCuboctahedron::sliceFormFactor(ZLimits limits, const IRotation& rot,
@@ -96,7 +95,6 @@ void FormFactorCuboctahedron::onChange()
         ostr << "Check for '2.*height <= length*tan(alpha)*min(1.,1.0/height_ratio)' failed.";
         throw Exceptions::ClassInitializationException(ostr.str());
     }
-    mP_shape.reset(new BiPyramid(m_length, m_height, m_height_ratio, m_alpha));
 
     double a = m_length / 2 * (1 - r);
     double b = m_length / 2;

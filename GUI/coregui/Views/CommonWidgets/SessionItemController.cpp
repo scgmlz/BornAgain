@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "SessionItemController.h"
-#include "GUIHelpers.h"
-#include "SessionItem.h"
+#include "GUI/coregui/Views/CommonWidgets/SessionItemController.h"
+#include "GUI/coregui/Models/SessionItem.h"
+#include "GUI/coregui/utils/GUIHelpers.h"
 
 SessionItemController::SessionItemController(QObject* prt)
     : QObject(prt), m_item(nullptr), m_parent_subscribed(false)
 {
-    Q_ASSERT(parent());
+    ASSERT(parent());
 }
 
 SessionItemController::~SessionItemController()
@@ -101,8 +101,8 @@ void SessionItemController::onControllerDestroy()
 
 void SessionItemController::subscribeParent()
 {
-    Q_ASSERT(m_subscribe_callback);
-    Q_ASSERT(m_parent_subscribed == false);
+    ASSERT(m_subscribe_callback);
+    ASSERT(m_parent_subscribed == false);
     m_subscribe_callback();
     m_parent_subscribed = true;
 }
@@ -111,8 +111,8 @@ void SessionItemController::subscribeParent()
 
 void SessionItemController::unsubscribeParent()
 {
-    Q_ASSERT(m_unsubscribe_callback);
-    Q_ASSERT(m_parent_subscribed == true);
+    ASSERT(m_unsubscribe_callback);
+    ASSERT(m_parent_subscribed == true);
     m_unsubscribe_callback();
     m_parent_subscribed = false;
 }

@@ -12,12 +12,12 @@
 //
 // ************************************************************************** //
 
-#ifndef SPECULARSIMULATION_H
-#define SPECULARSIMULATION_H
+#ifndef BORNAGAIN_CORE_SIMULATION_SPECULARSIMULATION_H
+#define BORNAGAIN_CORE_SIMULATION_SPECULARSIMULATION_H
 
-#include "ILayerRTCoefficients.h"
-#include "OutputData.h"
-#include "Simulation.h"
+#include "Core/Intensity/OutputData.h"
+#include "Core/RT/ILayerRTCoefficients.h"
+#include "Core/Simulation/Simulation.h"
 
 class IAxis;
 class IComputation;
@@ -116,4 +116,4 @@ private:
     std::vector<double> m_cache;
 };
 
-#endif // SPECULARSIMULATION_H
+#endif // BORNAGAIN_CORE_SIMULATION_SPECULARSIMULATION_H

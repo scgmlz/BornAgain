@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef DOCKWIDGETINFO_H
-#define DOCKWIDGETINFO_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DOCKWIDGETINFO_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DOCKWIDGETINFO_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <qnamespace.h>
 
 class QDockWidget;
@@ -39,4 +39,4 @@ private:
     Qt::DockWidgetArea m_area;
 };
 
-#endif //  DOCKSCONTROLLER_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DOCKWIDGETINFO_H

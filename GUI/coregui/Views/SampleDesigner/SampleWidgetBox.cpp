@@ -12,9 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "SampleWidgetBox.h"
+#include "GUI/coregui/Views/SampleDesigner/SampleWidgetBox.h"
+#include "GUI/coregui/Views/widgetbox/widgetbox.h"
 #include "styledbar.h"
-#include "widgetbox.h"
 #include <QVBoxLayout>
 
 #if QT_VERSION < 0x050000
@@ -31,7 +31,7 @@ SampleWidgetBox::SampleWidgetBox(SampleDesignerInterface* core, QWidget* parent)
     setWindowTitle("Items Toolbox");
 
     m_widgetBox = new qdesigner_internal::WidgetBox(m_core, this);
-    m_widgetBox->setFileName(QStringLiteral(":/widgetbox/widgetbox.xml"));
+    m_widgetBox->setFileName(":/widgetbox/widgetbox.xml");
     m_widgetBox->load();
 
     QVBoxLayout* layout = new QVBoxLayout;

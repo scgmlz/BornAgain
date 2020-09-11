@@ -1,19 +1,16 @@
-#include "FixedBinAxis.h"
-#include "OutputData.h"
-#include "OutputDataReadStrategy.h"
-#include "OutputDataWriteStrategy.h"
-#include "google_test.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Core/InputOutput/OutputDataReadStrategy.h"
+#include "Core/InputOutput/OutputDataWriteStrategy.h"
+#include "Core/Intensity/OutputData.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class IOStrategyTest : public ::testing::Test
 {
 protected:
     IOStrategyTest();
-    ~IOStrategyTest() override;
 
     OutputData<double> m_model_data;
 };
-
-IOStrategyTest::~IOStrategyTest() = default;
 
 IOStrategyTest::IOStrategyTest()
 {

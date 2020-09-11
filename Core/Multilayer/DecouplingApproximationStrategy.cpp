@@ -12,14 +12,14 @@
 //
 // ************************************************************************** //
 
-#include "DecouplingApproximationStrategy.h"
-#include "Exceptions.h"
-#include "FormFactorCoherentSum.h"
-#include "IInterferenceFunction.h"
-#include "InterferenceFunctionUtils.h"
-#include "MathFunctions.h"
-#include "RealParameter.h"
-#include "SimulationElement.h"
+#include "Core/Multilayer/DecouplingApproximationStrategy.h"
+#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Core/Basics/Exceptions.h"
+#include "Core/Multilayer/FormFactorCoherentSum.h"
+#include "Core/Multilayer/InterferenceFunctionUtils.h"
+#include "Core/Parametrization/RealParameter.h"
+#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Tools/MathFunctions.h"
 
 using InterferenceFunctionUtils::PrecomputePolarizedFormFactors;
 using InterferenceFunctionUtils::PrecomputeScalarFormFactors;

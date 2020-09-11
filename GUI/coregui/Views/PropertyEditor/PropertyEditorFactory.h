@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYEDITORFACTORY_H
-#define PROPERTYEDITORFACTORY_H
+#ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_PROPERTYEDITORFACTORY_H
+#define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_PROPERTYEDITORFACTORY_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 class QModelIndex;
@@ -39,4 +39,4 @@ BA_CORE_API_ QWidget* CreateEditor(const SessionItem& item, QWidget* parent = nu
 
 } // namespace PropertyEditorFactory
 
-#endif //  PROPERTYEDITORFACTORY_H
+#endif // BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_PROPERTYEDITORFACTORY_H

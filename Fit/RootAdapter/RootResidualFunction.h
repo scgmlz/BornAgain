@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef ROOTRESIDUALFUNCTION_H
-#define ROOTRESIDUALFUNCTION_H
+#ifndef BORNAGAIN_FIT_ROOTADAPTER_ROOTRESIDUALFUNCTION_H
+#define BORNAGAIN_FIT_ROOTADAPTER_ROOTRESIDUALFUNCTION_H
 
-#include "KernelTypes.h"
+#include "Fit/Kernel/KernelTypes.h"
 
 #ifdef _WIN32
 #include "Math/FitMethodFunction.h"
@@ -59,4 +59,4 @@ private:
     size_t m_datasize;
 };
 
-#endif //  ROOTRESIDUALFUNCTION_H
+#endif // BORNAGAIN_FIT_ROOTADAPTER_ROOTRESIDUALFUNCTION_H

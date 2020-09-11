@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "ProgressHandler.h"
+#include "Core/Computation/ProgressHandler.h"
 #include <mutex>
 #include <stdexcept>
 

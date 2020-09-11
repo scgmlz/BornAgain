@@ -1,15 +1,11 @@
-#include "MatrixRTCoefficients.h"
-#include "google_test.h"
+#include "Core/RT/MatrixRTCoefficients.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class MatrixRTCoefficientsTest : public ::testing::Test
 {
 protected:
-    ~MatrixRTCoefficientsTest();
-
     MatrixRTCoefficients mrtcDefault;
 };
-
-MatrixRTCoefficientsTest::~MatrixRTCoefficientsTest() = default;
 
 TEST_F(MatrixRTCoefficientsTest, T1plus)
 {

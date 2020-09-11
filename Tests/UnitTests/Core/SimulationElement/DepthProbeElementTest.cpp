@@ -1,12 +1,9 @@
-#include "DepthProbeElement.h"
-#include "FixedBinAxis.h"
-#include "google_test.h"
+#include "Core/SimulationElement/DepthProbeElement.h"
+#include "Core/Binning/FixedBinAxis.h"
+#include "Tests/GTestWrapper/google_test.h"
 
 class DepthProbeElementTest : public ::testing::Test
 {
-public:
-    ~DepthProbeElementTest();
-
 protected:
     DepthProbeElementTest();
     DepthProbeElement createDefaultElement();
@@ -15,8 +12,6 @@ protected:
 
     std::unique_ptr<FixedBinAxis> m_z_positions;
 };
-
-DepthProbeElementTest::~DepthProbeElementTest() = default;
 
 DepthProbeElementTest::DepthProbeElementTest() : m_z_positions(new FixedBinAxis("z", 10, 0.0, 10.0))
 {

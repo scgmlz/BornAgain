@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
+#define BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 
-#include "WinDllMacros.h"
+#include "Wrap/WinDllMacros.h"
 #include "fancymainwindow.h"
 
 namespace Manhattan
@@ -101,4 +101,4 @@ private:
     SessionModelView* m_sessionModelView;
 };
 
-#endif // MAINWINDOW_H
+#endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H

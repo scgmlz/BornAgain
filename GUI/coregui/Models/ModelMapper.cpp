@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "SessionModel.h"
+#include "GUI/coregui/Models/SessionModel.h"
 
 ModelMapper::ModelMapper(QObject* parent)
     : QObject(parent), m_active(true), m_model(nullptr), m_item(nullptr)
@@ -34,10 +34,7 @@ void ModelMapper::setOnValueChange(std::function<void(void)> f, const void* call
 
 void ModelMapper::setOnPropertyChange(std::function<void(QString)> f, const void* caller)
 {
-    auto ff = [=](SessionItem* item, const QString& property) {
-        (void)item;
-        f(property);
-    };
+    auto ff = [=](SessionItem* /*item*/, const QString& property) { f(property); };
     m_onPropertyChange.push_back(call_item_str_t(ff, caller));
 }
 

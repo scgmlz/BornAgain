@@ -12,10 +12,10 @@
 //
 // ************************************************************************** //
 
-#ifndef FORMFACTORANISOPYRAMID_H
-#define FORMFACTORANISOPYRAMID_H
+#ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORANISOPYRAMID_H
+#define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORANISOPYRAMID_H
 
-#include "FormFactorPolyhedron.h"
+#include "Core/HardParticle/FormFactorPolyhedron.h"
 
 //! A frustum (truncated pyramid) with rectangular base.
 //! @ingroup hardParticle
@@ -23,6 +23,7 @@
 class BA_CORE_API_ FormFactorAnisoPyramid : public FormFactorPolyhedron
 {
 public:
+    FormFactorAnisoPyramid(const std::vector<double> P);
     FormFactorAnisoPyramid(double length, double width, double height, double alpha);
 
     FormFactorAnisoPyramid* clone() const override final
@@ -45,10 +46,10 @@ protected:
 private:
     static const PolyhedralTopology topology;
 
-    double m_length;
-    double m_width;
-    double m_height;
-    double m_alpha;
+    const double& m_length;
+    const double& m_width;
+    const double& m_height;
+    const double& m_alpha;
 };
 
-#endif // FORMFACTORANISOPYRAMID_H
+#endif // BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORANISOPYRAMID_H
