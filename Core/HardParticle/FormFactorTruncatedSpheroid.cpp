@@ -70,7 +70,7 @@ complex_t FormFactorTruncatedSpheroid::Integrand(double Z) const
     complex_t qrRz = std::sqrt(m_q.x() * m_q.x() + m_q.y() * m_q.y()) * Rz;
     complex_t J1_qrRz_div_qrRz = MathFunctions::Bessel_J1c(qrRz);
 
-    return Rz * Rz * J1_qrRz_div_qrRz * std::exp(complex_t(0.0, 1.0) * m_q.z() * Z);
+    return Rz * Rz * J1_qrRz_div_qrRz * exp_I(m_q.z() * Z);
 }
 
 complex_t FormFactorTruncatedSpheroid::evaluate_for_q(cvector_t q) const
@@ -82,7 +82,7 @@ complex_t FormFactorTruncatedSpheroid::evaluate_for_q(cvector_t q) const
 
     if (std::abs(m_q.mag()) <= std::numeric_limits<double>::epsilon())
         return M_PI / 3. / fp * (H * H * (3. * R - H / fp) - m_dh * m_dh * (3. * R - m_dh / fp));
-    complex_t z_part = std::exp(complex_t(0.0, 1.0) * m_q.z() * (H - fp * R));
+    complex_t z_part = exp_I(m_q.z() * (H - fp * R));
     return M_TWOPI * z_part
            * ComplexIntegrator().integrate([&](double Z) { return Integrand(Z); }, fp * R - H,
                                            fp * R - m_dh);

@@ -13,8 +13,8 @@ import sys
 def plot_intensity_data_diff(filename1, filename2):
     intensity_ref = ba.IntensityDataIOFactory.readIntensityData(filename1)
     intensity_other = ba.IntensityDataIOFactory.readIntensityData(filename2)
-    data = 2 * np.abs(intensity_ref.getArray() - intensity_other.getArray()) \
-           / (np.abs(intensity_ref.getArray()) + np.abs(intensity_other.getArray()))
+    data = 2 * np.abs(intensity_ref.array() - intensity_other.array()) \
+           / (np.abs(intensity_ref.array()) + np.abs(intensity_other.array()))
     if data.max() == 0:
         exit("Both data sets are equal, there is nothing to plot.")
     rank = intensity_ref.getRank()

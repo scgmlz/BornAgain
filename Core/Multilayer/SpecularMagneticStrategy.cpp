@@ -27,7 +27,6 @@ complex_t GetImExponential(complex_t exponent);
 // The factor 1e-18 is here to have unit: 1/T*nm^-2
 constexpr double magnetic_prefactor = PhysConsts::m_n * PhysConsts::g_factor_n * PhysConsts::mu_N
                                       / PhysConsts::h_bar / PhysConsts::h_bar * 1e-18;
-constexpr complex_t I(0.0, 1.0);
 } // namespace
 
 ISpecularStrategy::coeffs_t SpecularMagneticStrategy::Execute(const std::vector<Slice>& slices,
@@ -78,8 +77,7 @@ SpecularMagneticStrategy::computeTR(const std::vector<Slice>& slices,
 
     std::for_each(result.begin(), result.end(), [](auto& coeff) { calculateTR(coeff); });
     nullifyBottomReflection(result.back());
-    propagateBackwards(result, slices);
-    propagateForwards(result, findNormalizationCoefficients(result.front()));
+    propagateBackwardsForwards(result, slices);
 
     return result;
 }
@@ -177,24 +175,71 @@ void SpecularMagneticStrategy::nullifyBottomReflection(MatrixRTCoefficients_v2& 
     coeff.m_w_plus(3) = 0.0;
 }
 
-void SpecularMagneticStrategy::propagateBackwards(std::vector<MatrixRTCoefficients_v2>& coeff,
-                                                  const std::vector<Slice>& slices)
+void SpecularMagneticStrategy::propagateBackwardsForwards(
+    std::vector<MatrixRTCoefficients_v2>& coeff, const std::vector<Slice>& slices)
 {
     const int size = static_cast<int>(coeff.size());
+    std::vector<Eigen::Matrix2cd> SMatrices(coeff.size());
+    std::vector<complex_t> Normalization(coeff.size());
+
     for (int index = size - 2; index >= 0; --index) {
         const size_t i = static_cast<size_t>(index);
         const double t = slices[i].thickness();
         const auto kz = coeff[i].getKz();
-        Eigen::Matrix4cd l = coeff[i].R1 * GetImExponential(kz(0) * t)
+        const Eigen::Matrix4cd l = coeff[i].R1 * GetImExponential(kz(0) * t)
                              + coeff[i].T1 * GetImExponential(-kz(0) * t)
                              + coeff[i].R2 * GetImExponential(kz(1) * t)
                              + coeff[i].T2 * GetImExponential(-kz(1) * t);
         coeff[i].m_w_plus = l * coeff[i + 1].m_w_plus;
         coeff[i].m_w_min = l * coeff[i + 1].m_w_min;
+
+        // rotate and normalize polarization
+        const auto Snorm = findNormalizationCoefficients(coeff[i]);
+        auto S = Snorm.first;
+        auto norm = Snorm.second;
+
+        SMatrices[i] = S;
+        Normalization[i] = norm;
+
+        const complex_t a_plus = S(0, 0) / norm;
+        const complex_t b_plus = S(1, 0) / norm;
+        const complex_t a_min = S(0, 1) / norm;
+        const complex_t b_min = S(1, 1) / norm;
+
+        const Eigen::Vector4cd w_plus = a_plus * coeff[i].m_w_plus + b_plus * coeff[i].m_w_min;
+        const Eigen::Vector4cd w_min = a_min * coeff[i].m_w_plus + b_min * coeff[i].m_w_min;
+
+        coeff[i].m_w_plus = std::move(w_plus);
+        coeff[i].m_w_min = std::move(w_min);
+    }
+
+    complex_t dumpingFactor = 1;
+    Eigen::Matrix2cd S = Eigen::Matrix2cd::Identity();
+    for (size_t i = 1; i < coeff.size(); ++i) {
+        dumpingFactor = dumpingFactor * Normalization[i - 1];
+        S = SMatrices[i - 1] * S;
+
+        if (std::isinf(std::norm(dumpingFactor))) {
+            // not entirely sure, whether this is the correct edge case
+            std::for_each(coeff.begin() + i, coeff.end(),
+                          [](auto& coeff) { setNoTransmission(coeff); });
+            break;
+        }
+
+        const complex_t a_plus = S(0, 0) / dumpingFactor;
+        const complex_t b_plus = S(1, 0) / dumpingFactor;
+        const complex_t a_min = S(0, 1) / dumpingFactor;
+        const complex_t b_min = S(1, 1) / dumpingFactor;
+
+        Eigen::Vector4cd w_plus = a_plus * coeff[i].m_w_plus + b_plus * coeff[i].m_w_min;
+        Eigen::Vector4cd w_min = a_min * coeff[i].m_w_plus + b_min * coeff[i].m_w_min;
+
+        coeff[i].m_w_plus = std::move(w_plus);
+        coeff[i].m_w_min = std::move(w_min);
     }
 }
 
-Eigen::Matrix2cd
+std::pair<Eigen::Matrix2cd, complex_t>
 SpecularMagneticStrategy::findNormalizationCoefficients(const MatrixRTCoefficients_v2& coeff)
 {
     const Eigen::Vector2cd Ta = coeff.T1plus() + coeff.T2plus();
@@ -203,27 +248,13 @@ SpecularMagneticStrategy::findNormalizationCoefficients(const MatrixRTCoefficien
     Eigen::Matrix2cd S;
     S << Ta(0), Tb(0), Ta(1), Tb(1);
 
-    Eigen::Matrix2cd result;
-    result << S(1, 1), -S(0, 1), -S(1, 0), S(0, 0);
-    result /= S(0, 0) * S(1, 1) - S(1, 0) * S(0, 1);
+    Eigen::Matrix2cd SInverse;
+    SInverse << S(1, 1), -S(0, 1), -S(1, 0), S(0, 0);
+    const complex_t d1 = S(1, 1) - S(0, 1);
+    const complex_t d2 = S(1, 0) - S(0, 0);
+    const complex_t denominator = S(0, 0) * d1 - d2 * S(0, 1);
 
-    return result;
-}
-
-void SpecularMagneticStrategy::propagateForwards(std::vector<MatrixRTCoefficients_v2>& coeff,
-                                                 const Eigen::Matrix2cd& weights)
-{
-    const complex_t a_plus = weights(0, 0);
-    const complex_t b_plus = weights(1, 0);
-    const complex_t a_min = weights(0, 1);
-    const complex_t b_min = weights(1, 1);
-
-    for (auto& term : coeff) {
-        Eigen::Vector4cd w_plus = a_plus * term.m_w_plus + b_plus * term.m_w_min;
-        Eigen::Vector4cd w_min = a_min * term.m_w_plus + b_min * term.m_w_min;
-        term.m_w_plus = std::move(w_plus);
-        term.m_w_min = std::move(w_min);
-    }
+    return {SInverse, denominator};
 }
 
 namespace

@@ -44,10 +44,10 @@ ScalarFresnelMap::getCoefficients(const kvector_t& kvec, size_t layer_index) con
 {
     if (!m_use_cache) {
         auto coeffs = m_Strategy->Execute(m_slices, kvec);
-        return ISpecularStrategy::single_coeff_t(coeffs[layer_index]->clone());
+        return ISpecularStrategy::coefficient_pointer_type(coeffs[layer_index]->clone());
     }
     const auto& coef_vector = getCoefficientsFromCache(kvec);
-    return ISpecularStrategy::single_coeff_t(coef_vector[layer_index]->clone());
+    return ISpecularStrategy::coefficient_pointer_type(coef_vector[layer_index]->clone());
 }
 
 const ISpecularStrategy::coeffs_t& ScalarFresnelMap::getCoefficientsFromCache(kvector_t kvec) const

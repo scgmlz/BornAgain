@@ -47,6 +47,8 @@ public:
     //! Returns z-part of the two wavevector eigenmodes
     Eigen::Vector2cd getKz() const override;
 
+    Eigen::Matrix2cd getReflectionMatrix() const override;
+
 private:
     double m_kz_sign; //! wave propagation direction (-1 for direct one, 1 for time reverse)
     Eigen::Vector2cd m_lambda; //!< eigenvalues for wave propagation

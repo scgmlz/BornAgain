@@ -33,6 +33,10 @@ class Slice;
 class BA_CORE_API_ SpecularMagneticStrategy : public ISpecularStrategy
 {
 public:
+    using coefficient_type = MatrixRTCoefficients_v2;
+    using coefficient_pointer_type = std::unique_ptr<const coefficient_type>;
+    using coeffs_t = std::vector<coefficient_pointer_type>;
+
     //! Computes refraction angle reflection/transmission coefficients
     //! for given sliced multilayer and wavevector k
     ISpecularStrategy::coeffs_t Execute(const std::vector<Slice>& slices, const kvector_t& k) const;
@@ -42,6 +46,7 @@ public:
     ISpecularStrategy::coeffs_t Execute(const std::vector<Slice>& slices,
                                         const std::vector<complex_t>& kz) const;
 
+private:
     static std::vector<MatrixRTCoefficients_v2> computeTR(const std::vector<Slice>& slices,
                                                           const std::vector<complex_t>& kzs);
 
@@ -56,18 +61,16 @@ public:
 
     //! Propagates boundary conditions from the bottom to the top of the layer stack.
     //! Used to compute boundary conditions from the bottom one (with nullified reflection)
-    static void propagateBackwards(std::vector<MatrixRTCoefficients_v2>& coeff,
-                                   const std::vector<Slice>& slices);
+    //! simultaneously propagates amplitudes forward again
+    //! Due to the use of temporary objects this is combined into one function now
+    static void propagateBackwardsForwards(std::vector<MatrixRTCoefficients_v2>& coeff,
+                                           const std::vector<Slice>& slices);
 
     //! finds linear coefficients for normalizing transmitted wave to unity.
     //! The left column of the returned matrix corresponds to the coefficients for pure spin-up
     //! wave, while the right column - to the coefficients for the spin-down one.
-    static Eigen::Matrix2cd findNormalizationCoefficients(const MatrixRTCoefficients_v2& coeff);
-
-    //! makes a linear combination of boundary conditions with using the given weights for each
-    //! coefficient in the vector.
-    static void propagateForwards(std::vector<MatrixRTCoefficients_v2>& coeff,
-                                  const Eigen::Matrix2cd& weights);
+    static std::pair<Eigen::Matrix2cd, complex_t>
+    findNormalizationCoefficients(const MatrixRTCoefficients_v2& coeff);
 };
 
 #endif // BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICSTRATEGY_H

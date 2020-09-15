@@ -29,8 +29,13 @@ class BA_CORE_API_ ISpecularStrategy
 {
 public:
     virtual ~ISpecularStrategy() = default;
-    using single_coeff_t = std::unique_ptr<const ILayerRTCoefficients>;
-    using coeffs_t = std::vector<single_coeff_t>;
+    ISpecularStrategy() = default;
+    ISpecularStrategy& operator=(const ISpecularStrategy& other) = delete;
+    ISpecularStrategy(const ISpecularStrategy& other) = delete;
+
+    using coefficient_type         = ILayerRTCoefficients;
+    using coefficient_pointer_type = std::unique_ptr<const coefficient_type>;
+    using coeffs_t = std::vector<coefficient_pointer_type>;
 
     virtual coeffs_t Execute(const std::vector<Slice>& slices, const kvector_t& k) const = 0;
 

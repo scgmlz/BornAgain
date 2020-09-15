@@ -69,15 +69,12 @@ void SpecularMatrixTerm::eval(SpecularSimulationElement& elem,
 }
 
 double SpecularMatrixTerm::intensity(const SpecularSimulationElement& elem,
-                                     ISpecularStrategy::single_coeff_t& coeff) const
+                                     const ISpecularStrategy::coefficient_pointer_type& coeff) const
 {
     const auto& polarization = elem.polarizationHandler().getPolarization();
     const auto& analyzer = elem.polarizationHandler().getAnalyzerOperator();
 
-    // constructing reflection operator
-    Eigen::Matrix2cd R;
-    R.col(0) = coeff->R1plus() + coeff->R2plus();
-    R.col(1) = coeff->R1min() + coeff->R2min();
+    auto R = coeff->getReflectionMatrix();
 
     const complex_t result = (polarization * R.adjoint() * analyzer * R).trace();
 

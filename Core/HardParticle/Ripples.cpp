@@ -60,13 +60,13 @@ complex_t ripples::profile_yz_cosine(complex_t qy, complex_t qz, double width, d
 
     // numerical integration otherwise
     const complex_t ay = qy * width / M_TWOPI;
-    const complex_t az = complex_t(0, 1) * qz * (height / 2);
+    const complex_t az = qz * (height / 2);
 
     const auto integrand = [&](double u) -> complex_t {
-        return sin(u) * exp(az * std::cos(u)) * (ay == 0. ? u : sin(ay * u) / ay);
+        return sin(u) * exp_I(az * std::cos(u)) * (ay == 0. ? u : sin(ay * u) / ay);
     };
     complex_t integral = ComplexIntegrator().integrate(integrand, 0, M_PI);
-    return factor * integral * exp(az) * (height / 2);
+    return factor * integral * exp_I(az) * (height / 2);
 }
 
 //! Complex form factor of triangular ripple.

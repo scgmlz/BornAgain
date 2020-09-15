@@ -60,6 +60,11 @@ public:
         throw Exceptions::NotImplementedException("ILayerRTCoefficients::"
                                                   "getScalarKz(): coefficients are not scalar.");
     }
+
+    virtual Eigen::Matrix2cd getReflectionMatrix() const
+    {
+        throw Exceptions::NotImplementedException("Only defined for Matrix coefficeints");
+    }
 };
 
 #endif // BORNAGAIN_CORE_RT_ILAYERRTCOEFFICIENTS_H

@@ -26,7 +26,6 @@
 
 namespace
 {
-const complex_t I = {0., 1.};
 const double eps = 2e-16;
 constexpr auto ReciprocalFactorialArray = Precomputed::GenerateReciprocalFactorialArray<171>();
 } // namespace

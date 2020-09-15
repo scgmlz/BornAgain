@@ -5261,6 +5261,7 @@ class WavevectorInfo(object):
 
 # Register WavevectorInfo in _libBornAgainCore:
 _libBornAgainCore.WavevectorInfo_swigregister(WavevectorInfo)
+I = cvar.I
 nanometer = cvar.nanometer
 angstrom = cvar.angstrom
 micrometer = cvar.micrometer
