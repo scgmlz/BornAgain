@@ -1,4 +1,4 @@
-BornAgain-1.17.99, work in progress
+BornAgain-1.17.99, work in progress xxx
   > API changes:
     1) Shorter names for FootprintSquare, FootprintGauss
     2) FormFactorHollowSphere (moved from soft to hard particles, and renamed)
