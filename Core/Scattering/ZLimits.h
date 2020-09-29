@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_SCATTERING_ZLIMITS_H
 #define BORNAGAIN_CORE_SCATTERING_ZLIMITS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <iostream>
 
 //! Vertical extension of a particle, specified by bottom and top z coordinate.
@@ -28,7 +27,7 @@ struct ParticleLimits {
 //!
 //! @ingroup intern
 
-struct BA_CORE_API_ OneSidedLimit {
+struct OneSidedLimit {
     bool m_limitless;
     double m_value;
 };
@@ -38,7 +37,7 @@ struct BA_CORE_API_ OneSidedLimit {
 //!
 //! @ingroup intern
 
-class BA_CORE_API_ ZLimits
+class ZLimits
 {
 public:
     ZLimits();
@@ -62,10 +61,10 @@ bool operator!=(const OneSidedLimit& left, const OneSidedLimit& right);
 
 std::ostream& operator<<(std::ostream& ostr, const OneSidedLimit& limit);
 
-BA_CORE_API_ ZLimits ConvexHull(const ZLimits& left, const ZLimits& right);
-BA_CORE_API_ bool operator==(const ZLimits& left, const ZLimits& right);
-BA_CORE_API_ bool operator!=(const ZLimits& left, const ZLimits& right);
+ZLimits ConvexHull(const ZLimits& left, const ZLimits& right);
+bool operator==(const ZLimits& left, const ZLimits& right);
+bool operator!=(const ZLimits& left, const ZLimits& right);
 
-BA_CORE_API_ std::ostream& operator<<(std::ostream& ostr, const ZLimits& limits);
+std::ostream& operator<<(std::ostream& ostr, const ZLimits& limits);
 
 #endif // BORNAGAIN_CORE_SCATTERING_ZLIMITS_H

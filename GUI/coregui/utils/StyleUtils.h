@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_STYLEUTILS_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_STYLEUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QFont>
 #include <QString>
 
@@ -28,37 +27,35 @@ namespace StyleUtils
 {
 
 //! Sets style for the tree to use in property editors.
-BA_CORE_API_ void setPropertyStyle(QTreeView* tree);
+void setPropertyStyle(QTreeView* tree);
 
 //! Returns string representing the style of QTreeView intended for property editor.
-BA_CORE_API_ QString propertyTreeStyle();
+QString propertyTreeStyle();
 
 //! Returns font for sections.
-BA_CORE_API_ QFont sectionFont(bool bold = false);
+QFont sectionFont(bool bold = false);
 
 //! Returns font for labels.
-BA_CORE_API_ QFont labelFont(bool bold = false);
+QFont labelFont(bool bold = false);
 
 //! Make modal dialog resizable.
-BA_CORE_API_ void setResizable(QDialog* dialog);
+void setResizable(QDialog* dialog);
 
 //! Creates details widget holding user content inside.
-BA_CORE_API_ QWidget* createDetailsWidget(QWidget* content, const QString& name,
-                                          bool expanded = true);
+QWidget* createDetailsWidget(QWidget* content, const QString& name, bool expanded = true);
 
 //! Creates details widget holding user layout inside.
-BA_CORE_API_ QWidget* createDetailsWidget(QLayout* content, const QString& name,
-                                          bool expanded = true);
+QWidget* createDetailsWidget(QLayout* content, const QString& name, bool expanded = true);
 
 //! Returns size of largest letter of default system font.
-BA_CORE_API_ QSize SizeOfLetterM(const QWidget* widget = nullptr);
+QSize SizeOfLetterM(const QWidget* widget = nullptr);
 
 //! Returns size in points of default system font.
-BA_CORE_API_ int SystemPointSize();
+int SystemPointSize();
 
 //! Returns typical width of the vertical property panel.
 
-BA_CORE_API_ int PropertyPanelWidth();
+int PropertyPanelWidth();
 
 } // namespace StyleUtils
 

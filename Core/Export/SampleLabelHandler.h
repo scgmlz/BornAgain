@@ -42,7 +42,7 @@ template <class Key> class LabelMap : public OrderedMap<Key, std::string>
 //! The handler which construct labels for sample variables during python script generation.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ SampleLabelHandler
+class SampleLabelHandler
 {
 public:
     typedef LabelMap<const Crystal*> crystals_t;

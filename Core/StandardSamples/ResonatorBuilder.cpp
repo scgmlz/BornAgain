@@ -20,7 +20,7 @@
 #include "Core/Multilayer/MultiLayer.h"
 #include <memory>
 
-ResonatorBuilder::ResonatorBuilder() : IMultiLayerBuilder(), m_l_ti(13.0 * Units::nm)
+ResonatorBuilder::ResonatorBuilder() : ISampleBuilder(), m_l_ti(13.0 * Units::nm)
 {
     registerParameter("ti_thickness", &m_l_ti);
 }

@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_KERNEL_PARAMETER_H
 
 #include "Fit/Tools/AttLimits.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 namespace Fit
@@ -25,7 +24,7 @@ namespace Fit
 //! A fittable parameter with value, error, step, and limits.
 //! @ingroup fitting
 
-class BA_CORE_API_ Parameter
+class Parameter
 {
 public:
     Parameter();

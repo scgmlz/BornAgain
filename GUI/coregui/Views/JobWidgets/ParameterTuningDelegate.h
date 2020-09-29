@@ -25,7 +25,7 @@ class ParameterItem;
 class ScientificSpinBox;
 class SessionItem;
 
-class BA_CORE_API_ ParameterTuningDelegate : public QItemDelegate
+class ParameterTuningDelegate : public QItemDelegate
 {
     Q_OBJECT
 

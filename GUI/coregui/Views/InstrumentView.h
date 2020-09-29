@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTVIEW_H
 
 #include "GUI/coregui/Views/CommonWidgets/ItemStackPresenter.h"
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class MainWindow;
@@ -27,7 +26,7 @@ class InstrumentSelectorWidget;
 class InstrumentEditorWidget;
 class InstrumentModel;
 
-class BA_CORE_API_ InstrumentView : public QWidget
+class InstrumentView : public QWidget
 {
     Q_OBJECT
 

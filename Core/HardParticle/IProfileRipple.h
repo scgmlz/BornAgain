@@ -19,7 +19,7 @@
 
 //! Base class for form factors with a cosine ripple profile in the yz plane.
 
-class BA_CORE_API_ IProfileRipple : public IFormFactorBorn
+class IProfileRipple : public IFormFactorBorn
 {
 public:
     IProfileRipple(const NodeMeta& meta, const std::vector<double>& PValues);
@@ -44,7 +44,7 @@ protected:
 
 //! Base class for form factors with a rectangular ripple (bar) profile in the yz plane.
 
-class BA_CORE_API_ IProfileRectangularRipple : public IProfileRipple
+class IProfileRectangularRipple : public IProfileRipple
 {
 public:
     IProfileRectangularRipple(const NodeMeta& meta, const std::vector<double>& PValues);
@@ -56,7 +56,7 @@ private:
 
 //! Base class for form factors with a cosine ripple profile in the yz plane.
 
-class BA_CORE_API_ ICosineRipple : public IProfileRipple
+class ICosineRipple : public IProfileRipple
 {
 public:
     ICosineRipple(const NodeMeta& meta, const std::vector<double>& PValues);
@@ -68,7 +68,7 @@ private:
 
 //! Base class for form factors with a triangular ripple profile in the yz plane.
 
-class BA_CORE_API_ ISawtoothRipple : public IProfileRipple
+class ISawtoothRipple : public IProfileRipple
 {
 public:
     ISawtoothRipple(const NodeMeta& meta, const std::vector<double>& PValues);

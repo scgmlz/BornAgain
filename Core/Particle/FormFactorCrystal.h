@@ -21,7 +21,7 @@
 //! The form factor of a MesoCrystal.
 //! @ingroup formfactors
 
-class BA_CORE_API_ FormFactorCrystal : public IFormFactor
+class FormFactorCrystal : public IFormFactor
 {
 public:
     FormFactorCrystal(const Lattice& lattice, const IFormFactor& basis_form_factor,

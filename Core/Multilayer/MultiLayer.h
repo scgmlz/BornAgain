@@ -41,7 +41,7 @@ class LayerRoughness;
 //!  ---------   interface #2    z=-60.0
 //!  substrate   layer #3
 
-class BA_CORE_API_ MultiLayer : public ISample
+class MultiLayer : public ISample
 {
 public:
     MultiLayer();

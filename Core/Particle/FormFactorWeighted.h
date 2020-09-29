@@ -25,7 +25,7 @@
 
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ FormFactorWeighted : public IFormFactor
+class FormFactorWeighted : public IFormFactor
 {
 public:
     FormFactorWeighted();

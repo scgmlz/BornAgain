@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_ITEMFILENAMEUTILS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_ITEMFILENAMEUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 class InstrumentItem;
@@ -27,19 +26,19 @@ class RealDataItem;
 namespace ItemFileNameUtils
 {
 
-BA_CORE_API_ QString jobResultsFileName(const JobItem& jobItem);
+QString jobResultsFileName(const JobItem& jobItem);
 
-BA_CORE_API_ QString jobReferenceFileName(const JobItem& jobItem);
+QString jobReferenceFileName(const JobItem& jobItem);
 
-BA_CORE_API_ QString jobNativeDataFileName(const JobItem& jobItem);
+QString jobNativeDataFileName(const JobItem& jobItem);
 
-BA_CORE_API_ QString realDataFileName(const RealDataItem& realDataItem);
+QString realDataFileName(const RealDataItem& realDataItem);
 
-BA_CORE_API_ QString nativeDataFileName(const RealDataItem& realDataItem);
+QString nativeDataFileName(const RealDataItem& realDataItem);
 
-BA_CORE_API_ QString instrumentDataFileName(const InstrumentItem& instrumentItem);
+QString instrumentDataFileName(const InstrumentItem& instrumentItem);
 
-BA_CORE_API_ QStringList nonXMLFileNameFilters();
+QStringList nonXMLFileNameFilters();
 
 } // namespace ItemFileNameUtils
 

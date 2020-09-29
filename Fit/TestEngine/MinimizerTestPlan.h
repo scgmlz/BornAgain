@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_TESTENGINE_MINIMIZERTESTPLAN_H
 
 #include "Fit/TestEngine/ParameterPlan.h"
-#include "Wrap/WinDllMacros.h"
 #include <vector>
 
 namespace Fit
@@ -29,7 +28,7 @@ class Minimizer;
 //! Defines objective function to fit, expected minimum, initial fit parameters and
 //! expected values of fit parameters at minimum.
 
-class BA_CORE_API_ MinimizerTestPlan
+class MinimizerTestPlan
 {
 public:
     MinimizerTestPlan(const std::string& name);

@@ -26,7 +26,7 @@ class ScanResolution;
 //! as coordinate values. Wavelength and incident angles
 //! are not accessible separately.
 
-class BA_CORE_API_ QSpecScan : public ISpecularScan
+class QSpecScan : public ISpecularScan
 {
 public:
     //! Accepts qz-value vector (in inverse nm)

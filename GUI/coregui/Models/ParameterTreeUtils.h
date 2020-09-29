@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEUTILS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTREEUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QPair>
 #include <QString>
 #include <functional>
@@ -31,26 +30,23 @@ class ParameterItem;
 namespace ParameterTreeUtils
 {
 
-BA_CORE_API_ void createParameterTree(JobItem* jobItem);
+void createParameterTree(JobItem* jobItem);
 
-BA_CORE_API_ void populateParameterContainer(SessionItem* container, const SessionItem* source);
+void populateParameterContainer(SessionItem* container, const SessionItem* source);
 
-BA_CORE_API_ void visitParameterContainer(SessionItem* container,
-                                          std::function<void(ParameterItem*)> fun);
+void visitParameterContainer(SessionItem* container, std::function<void(ParameterItem*)> fun);
 
-BA_CORE_API_ QStringList parameterTreeNames(const SessionItem* source);
+QStringList parameterTreeNames(const SessionItem* source);
 
-BA_CORE_API_ QStringList translatedParameterTreeNames(const SessionItem* source);
+QStringList translatedParameterTreeNames(const SessionItem* source);
 
-BA_CORE_API_ QVector<QPair<QString, QString>> parameterDictionary(const SessionItem* source);
+QVector<QPair<QString, QString>> parameterDictionary(const SessionItem* source);
 
-BA_CORE_API_ QString domainNameToParameterName(const QString& domainName,
-                                               const SessionItem* source);
+QString domainNameToParameterName(const QString& domainName, const SessionItem* source);
 
-BA_CORE_API_ QString parameterNameToDomainName(const QString& parName, const SessionItem* source);
+QString parameterNameToDomainName(const QString& parName, const SessionItem* source);
 
-BA_CORE_API_ SessionItem* parameterNameToLinkedItem(const QString& parName,
-                                                    const SessionItem* source);
+SessionItem* parameterNameToLinkedItem(const QString& parName, const SessionItem* source);
 
 } // namespace ParameterTreeUtils
 

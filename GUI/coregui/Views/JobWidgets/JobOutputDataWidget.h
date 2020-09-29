@@ -23,7 +23,7 @@ class JobItem;
 
 //! The JobOutputDataWidget class is a central widget of JobView, shows results of the simulation.
 
-class BA_CORE_API_ JobOutputDataWidget : public QWidget
+class JobOutputDataWidget : public QWidget
 {
     Q_OBJECT
 public:

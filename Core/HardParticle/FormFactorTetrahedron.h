@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTETRAHEDRON_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTETRAHEDRON_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A frustum with equilateral trigonal base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorTetrahedron : public FormFactorPolyhedron
+class FormFactorTetrahedron : public IFormFactorPolyhedron
 {
 public:
     FormFactorTetrahedron(const std::vector<double> P);

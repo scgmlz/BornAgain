@@ -25,7 +25,7 @@ elseif(APPLE)
 elseif(UNIX AND BUILD_DEBIAN) # one can build debian package only on UNIX system
     include(CPackDebian)
 else()
-  set(CPACK_GENERATOR "STGZ;TGZ")
+  set(CPACK_GENERATOR "TGZ")
 endif()
 
 

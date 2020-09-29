@@ -11,8 +11,8 @@ class LayerInterfaceTest : public ::testing::Test
 
 TEST_F(LayerInterfaceTest, createSmoothInterface)
 {
-    std::unique_ptr<Layer> layer0(new Layer(HomogeneousMaterial("air", 0.0, 0.0)));
-    std::unique_ptr<Layer> layer1(new Layer(HomogeneousMaterial("air", 0.0, 0.0)));
+    std::unique_ptr<Layer> layer0(new Layer(HomogeneousMaterial("Vacuum", 0.0, 0.0)));
+    std::unique_ptr<Layer> layer1(new Layer(HomogeneousMaterial("Vacuum", 0.0, 0.0)));
 
     std::unique_ptr<LayerInterface> interface(
         LayerInterface::createSmoothInterface(layer0.get(), layer1.get()));
@@ -25,8 +25,8 @@ TEST_F(LayerInterfaceTest, createSmoothInterface)
 
 TEST_F(LayerInterfaceTest, createRoughInterface)
 {
-    std::unique_ptr<Layer> layer0(new Layer(HomogeneousMaterial("air", 0.0, 0.0)));
-    std::unique_ptr<Layer> layer1(new Layer(HomogeneousMaterial("air", 0.0, 0.0)));
+    std::unique_ptr<Layer> layer0(new Layer(HomogeneousMaterial("Vacuum", 0.0, 0.0)));
+    std::unique_ptr<Layer> layer1(new Layer(HomogeneousMaterial("Vacuum", 0.0, 0.0)));
 
     std::unique_ptr<LayerInterface> interface(LayerInterface::createRoughInterface(
         layer0.get(), layer1.get(), LayerRoughness(1.0, 2.0, 3.0)));

@@ -25,7 +25,7 @@ class Transform3D;
 //! A lattice with three basis vectors.
 //! @ingroup samples
 
-class BA_CORE_API_ Lattice : public INode
+class Lattice : public INode
 {
 public:
     Lattice();
@@ -35,7 +35,7 @@ public:
 
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
-    //! Create transformed lattice
+    //! Creates transformed lattice
     Lattice createTransformedLattice(const Transform3D& transform) const;
 
     //! Initializes cached data

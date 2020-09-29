@@ -15,22 +15,15 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_ROTATEDPYRAMIDSBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_ROTATEDPYRAMIDSBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: Pyramids, rotated pyramids on top of substrate (IsGISAXS example #9)
 //! @ingroup standard_samples
 
-class BA_CORE_API_ RotatedPyramidsBuilder : public IMultiLayerBuilder
+class RotatedPyramidsBuilder : public ISampleBuilder
 {
 public:
-    RotatedPyramidsBuilder();
     MultiLayer* buildSample() const;
-
-private:
-    double m_length;
-    double m_height;
-    double m_alpha;
-    double m_zangle;
 };
 
 #endif // BORNAGAIN_CORE_STANDARDSAMPLES_ROTATEDPYRAMIDSBUILDER_H

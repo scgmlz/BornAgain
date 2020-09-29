@@ -29,7 +29,7 @@ class ParameterSample;
 //! Interface for one-dimensional distributions.
 //! @ingroup distribution_internal
 
-class BA_CORE_API_ IDistribution1D : public ICloneable, public INode
+class IDistribution1D : public ICloneable, public INode
 {
 public:
     IDistribution1D(const NodeMeta& meta, const std::vector<double>& PValues);
@@ -82,7 +82,7 @@ protected:
 //! Uniform distribution function with half width hwhm.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ DistributionGate : public IDistribution1D
+class DistributionGate : public IDistribution1D
 {
 public:
     DistributionGate(const std::vector<double> P);
@@ -116,7 +116,7 @@ private:
 //! Lorentz distribution with half width hwhm.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ DistributionLorentz : public IDistribution1D
+class DistributionLorentz : public IDistribution1D
 {
 public:
     DistributionLorentz(const std::vector<double> P);
@@ -149,7 +149,7 @@ private:
 //! Gaussian distribution with standard deviation std_dev.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ DistributionGaussian : public IDistribution1D
+class DistributionGaussian : public IDistribution1D
 {
 public:
     DistributionGaussian(const std::vector<double> P);
@@ -185,7 +185,7 @@ private:
 //! Log-normal distribution.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ DistributionLogNormal : public IDistribution1D
+class DistributionLogNormal : public IDistribution1D
 {
 public:
     DistributionLogNormal(const std::vector<double> P);
@@ -224,7 +224,7 @@ private:
 //! Cosine distribution.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ DistributionCosine : public IDistribution1D
+class DistributionCosine : public IDistribution1D
 {
 public:
     DistributionCosine(const std::vector<double> P);
@@ -257,7 +257,7 @@ private:
 //! Trapezoidal distribution.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ DistributionTrapezoid : public IDistribution1D
+class DistributionTrapezoid : public IDistribution1D
 {
 public:
     DistributionTrapezoid(const std::vector<double> P);

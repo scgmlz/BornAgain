@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_TOOLS_SYSUTILS_H
 #define BORNAGAIN_CORE_TOOLS_SYSUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 //! Utility functions getCurrentDateAndTime, enableFloatingPointExceptions.
@@ -23,16 +22,16 @@
 namespace SysUtils
 {
 
-BA_CORE_API_ std::string getCurrentDateAndTime();
+std::string getCurrentDateAndTime();
 
 //! Enables exception throw in the case of NaN, Inf.
-BA_CORE_API_ void enableFloatingPointExceptions();
+void enableFloatingPointExceptions();
 
 //! Returns environment variable.
-BA_CORE_API_ std::string getenv(const std::string& name);
+std::string getenv(const std::string& name);
 
 //! Returns true if operation system is Windows.
-BA_CORE_API_ bool isWindowsHost();
+bool isWindowsHost();
 
 } // namespace SysUtils
 

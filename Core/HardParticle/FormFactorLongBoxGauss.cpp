@@ -49,7 +49,7 @@ IFormFactor* FormFactorLongBoxGauss::sliceFormFactor(ZLimits limits, const IRota
     auto effects = computeSlicingEffects(limits, translation, m_height);
     FormFactorLongBoxGauss slicedff(m_length, m_width,
                                     m_height - effects.dz_bottom - effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorLongBoxGauss::onChange()

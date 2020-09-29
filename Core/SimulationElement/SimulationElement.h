@@ -26,7 +26,7 @@ class IPixel;
 //! Data stucture containing both input and output of a single detector cell.
 //! @ingroup simulation
 
-class BA_CORE_API_ SimulationElement
+class SimulationElement
 {
 public:
     SimulationElement(double wavelength, double alpha_i, double phi_i,

@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_INSTRUMENT_SPECTRUMUTILS_H
 
 #include "Core/Intensity/Histogram2D.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
@@ -27,10 +26,9 @@ class Histogram2D;
 namespace SpectrumUtils
 {
 
-BA_CORE_API_ std::vector<std::pair<double, double>> FindPeaks(const Histogram2D& hist,
-                                                              double sigma = 2,
-                                                              const std::string& option = {},
-                                                              double threshold = 0.05);
+std::vector<std::pair<double, double>> FindPeaks(const Histogram2D& hist, double sigma = 2,
+                                                 const std::string& option = {},
+                                                 double threshold = 0.05);
 }
 
 #endif // BORNAGAIN_CORE_INSTRUMENT_SPECTRUMUTILS_H

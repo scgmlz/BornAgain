@@ -17,7 +17,6 @@
 
 #include "Core/Basics/Complex.h"
 #include "Core/Material/Material.h"
-#include "Wrap/WinDllMacros.h"
 #include <utility>
 #include <vector>
 
@@ -30,7 +29,7 @@ class ProcessedSample;
 //!
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ ProfileHelper
+class ProfileHelper
 {
 public:
     ProfileHelper(const ProcessedSample& sample);

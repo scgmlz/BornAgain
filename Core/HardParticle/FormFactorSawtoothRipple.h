@@ -19,7 +19,7 @@
 
 //! The form factor for a cosine ripple, with box profile in elongation direction.
 //! @ingroup legacyGrating
-class BA_CORE_API_ FormFactorSawtoothRippleBox : public ISawtoothRipple
+class FormFactorSawtoothRippleBox : public ISawtoothRipple
 {
 public:
     FormFactorSawtoothRippleBox(const std::vector<double> P);
@@ -33,7 +33,7 @@ private:
 
 //! The form factor for a cosine ripple, with Gaussian profile in elongation direction.
 //! @ingroup legacyGrating
-class BA_CORE_API_ FormFactorSawtoothRippleGauss : public ISawtoothRipple
+class FormFactorSawtoothRippleGauss : public ISawtoothRipple
 {
 public:
     FormFactorSawtoothRippleGauss(const std::vector<double> P);
@@ -47,7 +47,7 @@ private:
 
 //! The form factor for a cosine ripple, with Lorentz form factor in elongation direction.
 //! @ingroup legacyGrating
-class BA_CORE_API_ FormFactorSawtoothRippleLorentz : public ISawtoothRipple
+class FormFactorSawtoothRippleLorentz : public ISawtoothRipple
 {
 public:
     FormFactorSawtoothRippleLorentz(const std::vector<double> P);

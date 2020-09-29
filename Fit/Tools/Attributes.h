@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_FIT_TOOLS_ATTRIBUTES_H
 #define BORNAGAIN_FIT_TOOLS_ATTRIBUTES_H
 
-#include "Wrap/WinDllMacros.h"
 #include <ostream>
 
 //! Attributes for a fit parameter. Currently, the only attribute is fixed/free.
 //! @ingroup fitting
 
-class BA_CORE_API_ Attributes
+class Attributes
 {
 public:
     Attributes() : m_is_fixed(false) {}

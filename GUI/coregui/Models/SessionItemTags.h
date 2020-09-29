@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMTAGS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMTAGS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <QStringList>
 #include <QVector>
 
 //! Holds all tag info for SessionItem.
 
-class BA_CORE_API_ SessionItemTags
+class SessionItemTags
 {
 public:
     bool registerTag(const QString& name, int min, int max, const QStringList& modelTypes);

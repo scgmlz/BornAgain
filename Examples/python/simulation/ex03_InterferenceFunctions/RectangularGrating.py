@@ -14,7 +14,7 @@ def get_sample(lattice_rotation_angle=0.0*deg):
     lattice_rotation_angle = 90*deg - beam perpendicular to grating lines
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_si = ba.HomogeneousMaterial("Si", 5.78164736e-6, 1.02294578e-7)
 
     box_length, box_width, box_height = 50*micrometer, 70*nm, 50*nm
@@ -36,8 +36,8 @@ def get_sample(lattice_rotation_angle=0.0*deg):
     particle_layout.setInterferenceFunction(interference)
 
     # assembling the sample
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
     substrate_layer = ba.Layer(m_si)
 
     roughness = ba.LayerRoughness()
@@ -46,7 +46,7 @@ def get_sample(lattice_rotation_angle=0.0*deg):
     roughness.setLatteralCorrLength(10.0 * nm)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayerWithTopRoughness(substrate_layer, roughness)
     return multi_layer
 

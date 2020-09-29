@@ -26,7 +26,7 @@
 //! The size of the rectangle always matches axes viewport at any zoom level.
 //! All MasksViews are added to MaskContainerView as children.
 
-class BA_CORE_API_ MaskContainerView : public IShape2DView
+class MaskContainerView : public IShape2DView
 {
     Q_OBJECT
 

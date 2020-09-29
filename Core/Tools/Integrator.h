@@ -16,12 +16,11 @@
 #define BORNAGAIN_CORE_TOOLS_INTEGRATOR_H
 
 #include "Core/Basics/Complex.h"
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <gsl/gsl_integration.h>
 
 //! To integrate a real function of a real variable.
-class BA_CORE_API_ RealIntegrator
+class RealIntegrator
 {
 public:
     RealIntegrator();
@@ -38,7 +37,7 @@ private:
 };
 
 //! To integrate a complex function of a real variable.
-class BA_CORE_API_ ComplexIntegrator
+class ComplexIntegrator
 {
 public:
     complex_t integrate(const std::function<complex_t(double)>& f, double lmin, double lmax);

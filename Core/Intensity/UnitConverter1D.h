@@ -26,7 +26,7 @@ class QSpecScan;
 
 //! Conversion of axis units for the case of 1D simulation result.
 
-class BA_CORE_API_ UnitConverter1D : public IUnitConverter
+class UnitConverter1D : public IUnitConverter
 {
 public:
     //! Factory function to create unit converter for particular type of specular data
@@ -60,7 +60,7 @@ protected:
 };
 
 //! Conversion of axis units for the case of conventional (angle-based) reflectometry.
-class BA_CORE_API_ UnitConverterConvSpec : public UnitConverter1D
+class UnitConverterConvSpec : public UnitConverter1D
 {
 public:
     //! Constructs the object for unit conversion.
@@ -99,7 +99,7 @@ protected:
 };
 
 //! Conversion of axis units for the case of q-defined reflectometry.
-class BA_CORE_API_ UnitConverterQSpec : public UnitConverter1D
+class UnitConverterQSpec : public UnitConverter1D
 {
 public:
     UnitConverterQSpec(const QSpecScan& handler);

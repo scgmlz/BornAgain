@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_FIT_TOOLS_REALLIMITS_H
 #define BORNAGAIN_FIT_TOOLS_REALLIMITS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <ostream>
 #include <string>
 
 //! Limits for a real fit parameter.
 //! @ingroup fitting
 
-class BA_CORE_API_ RealLimits
+class RealLimits
 {
 public:
     RealLimits();

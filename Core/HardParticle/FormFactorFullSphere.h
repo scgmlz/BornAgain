@@ -20,7 +20,7 @@
 //! A full sphere.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorFullSphere : public IFormFactorBorn
+class FormFactorFullSphere : public IFormFactorBorn
 {
 public:
     FormFactorFullSphere(const std::vector<double> P, bool position_at_center = false);

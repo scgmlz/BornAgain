@@ -25,7 +25,7 @@ class SimulationElement;
 //! Information about particle form factor and abundance.
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ FormFactorCoherentSum
+class FormFactorCoherentSum
 {
 public:
     FormFactorCoherentSum(double abundance);

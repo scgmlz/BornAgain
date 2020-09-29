@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_PARAMETRIZATION_NODEUTILS_H
 #define BORNAGAIN_CORE_PARAMETRIZATION_NODEUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class INode;
@@ -24,10 +23,10 @@ namespace NodeUtils
 {
 
 //! Returns multiline string representing tree structure starting from given node.
-BA_CORE_API_ std::string nodeToString(const INode& node);
+std::string nodeToString(const INode& node);
 
 //! Returns path composed of node's displayName, with respect to root node
-BA_CORE_API_ std::string nodePath(const INode& node, const INode* root = nullptr);
+std::string nodePath(const INode& node, const INode* root = nullptr);
 
 } // namespace NodeUtils
 

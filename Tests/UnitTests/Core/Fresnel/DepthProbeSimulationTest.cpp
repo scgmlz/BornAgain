@@ -4,12 +4,12 @@
 #include "Core/Binning/FixedBinAxis.h"
 #include "Core/Intensity/Histogram2D.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Parametrization/Distributions.h"
 #include "Core/Parametrization/ParameterPattern.h"
 #include "Core/Parametrization/RealParameter.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class DepthProbeSimulationTest : public ::testing::Test

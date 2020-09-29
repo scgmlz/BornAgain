@@ -17,7 +17,6 @@
 
 #include "GUI/coregui/Views/SampleDesigner/IView.h"
 #include "GUI/coregui/Views/SampleDesigner/NodeEditorPort.h"
-#include "Wrap/WinDllMacros.h"
 
 class QPainter;
 class QStyleOptionGraphicsItem;
@@ -25,7 +24,7 @@ class QWidget;
 class NodeEditorPort;
 
 //! view of ISample's with rectangular shape and node functionality
-class BA_CORE_API_ ConnectableView : public IView
+class ConnectableView : public IView
 {
     Q_OBJECT
 public:

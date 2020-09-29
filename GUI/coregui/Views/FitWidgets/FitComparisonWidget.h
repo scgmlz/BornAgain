@@ -32,7 +32,7 @@ class FitComparisonController2D;
 //! The FitComparisonWidget class plots realdata, simulated data and relative difference map
 //! during the course of the fit.
 
-class BA_CORE_API_ FitComparisonWidget : public SessionItemWidget
+class FitComparisonWidget : public SessionItemWidget
 {
     Q_OBJECT
 

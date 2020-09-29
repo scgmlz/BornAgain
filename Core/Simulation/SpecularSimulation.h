@@ -22,7 +22,7 @@
 class IAxis;
 class IComputation;
 class IFootprintFactor;
-class IMultiLayerBuilder;
+class ISampleBuilder;
 class ISample;
 class ISpecularScan;
 class MultiLayer;
@@ -31,12 +31,12 @@ class SpecularSimulationElement;
 //! Main class to run a specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ SpecularSimulation : public Simulation
+class SpecularSimulation : public Simulation
 {
 public:
     SpecularSimulation();
     SpecularSimulation(const MultiLayer& sample);
-    SpecularSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder);
+    SpecularSimulation(const std::shared_ptr<ISampleBuilder> sample_builder);
     ~SpecularSimulation() override;
 
     SpecularSimulation* clone() const override;

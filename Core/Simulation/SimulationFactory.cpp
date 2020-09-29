@@ -110,9 +110,17 @@ SimulationFactory::SimulationFactory()
 
     registerItem("BasicSpecularMM", StandardSimulations::BasicSpecularMM);
 
+    registerItem("BasicSpecularPM", StandardSimulations::BasicSpecularPM);
+
+    registerItem("BasicSpecularMP", StandardSimulations::BasicSpecularMP);
+
     registerItem("BasicQSpecularPP", StandardSimulations::BasicSpecularQPP);
 
     registerItem("BasicQSpecularMM", StandardSimulations::BasicSpecularQMM);
+
+    registerItem("BasicQSpecularPM", StandardSimulations::BasicSpecularQPM);
+
+    registerItem("BasicQSpecularMP", StandardSimulations::BasicSpecularQMP);
 
     // depth probe simulations
 

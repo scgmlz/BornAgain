@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDCUBE_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORTRUNCATEDCUBE_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A cube, with tetrahedral truncation of all corners
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorTruncatedCube : public FormFactorPolyhedron
+class FormFactorTruncatedCube : public IFormFactorPolyhedron
 {
 public:
     FormFactorTruncatedCube(const std::vector<double> P);

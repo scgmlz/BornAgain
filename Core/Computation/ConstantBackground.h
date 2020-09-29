@@ -21,7 +21,7 @@
 //!
 //! @ingroup simulation
 
-class BA_CORE_API_ ConstantBackground : public IBackground
+class ConstantBackground : public IBackground
 {
 public:
     ConstantBackground(const std::vector<double> P);

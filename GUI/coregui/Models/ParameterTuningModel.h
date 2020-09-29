@@ -25,7 +25,7 @@ class ParameterItem;
 //! to the FitParametersWidget.
 //!
 
-class BA_CORE_API_ ParameterTuningModel : public FilterPropertyProxy
+class ParameterTuningModel : public FilterPropertyProxy
 {
     Q_OBJECT
 

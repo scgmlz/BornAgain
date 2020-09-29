@@ -21,7 +21,7 @@
 //! of 2x2 matrix interactions between the layers and the scattered particle.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ MatrixRTCoefficients : public ILayerRTCoefficients
+class MatrixRTCoefficients : public ILayerRTCoefficients
 {
 public:
     MatrixRTCoefficients() : m_kt(0.0) {}

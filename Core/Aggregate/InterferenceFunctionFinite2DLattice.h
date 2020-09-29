@@ -21,7 +21,7 @@
 //! Interference function of a finite 2D lattice.
 //! @ingroup interference
 
-class BA_CORE_API_ InterferenceFunctionFinite2DLattice : public IInterferenceFunction
+class InterferenceFunctionFinite2DLattice : public IInterferenceFunction
 {
 public:
     InterferenceFunctionFinite2DLattice(const Lattice2D& lattice, unsigned N_1, unsigned N_2);

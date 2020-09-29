@@ -41,7 +41,7 @@ def get_sample(formfactor):
     Returns a one-layer sample that contains particles with given form factor.
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
@@ -49,11 +49,11 @@ def get_sample(formfactor):
     particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(particle, 1.0)
 
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     return multi_layer
 
 

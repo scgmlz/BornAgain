@@ -23,7 +23,7 @@
 //! of magnetic interactions between the scattered particle and the layer.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ MatrixRTCoefficients_v2 : public ILayerRTCoefficients
+class MatrixRTCoefficients_v2 : public ILayerRTCoefficients
 {
 public:
     friend class SpecularMagneticStrategy;
@@ -46,6 +46,8 @@ public:
     Eigen::Vector2cd R2min() const override;
     //! Returns z-part of the two wavevector eigenmodes
     Eigen::Vector2cd getKz() const override;
+
+    Eigen::Matrix2cd getReflectionMatrix() const override;
 
 private:
     double m_kz_sign; //! wave propagation direction (-1 for direct one, 1 for time reverse)

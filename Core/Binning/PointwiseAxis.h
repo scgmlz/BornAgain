@@ -29,7 +29,7 @@
 //! values passed to the constructor.
 //! @ingroup tools
 
-class BA_CORE_API_ PointwiseAxis : public IAxis
+class PointwiseAxis : public IAxis
 {
 public:
     template <class String, class Vector>

@@ -24,7 +24,7 @@ class ScanResolution;
 
 //! Scan type with inclination angles as coordinate
 //! values and a unique wavelength. Features footprint correction.
-class BA_CORE_API_ AngularSpecScan : public ISpecularScan
+class AngularSpecScan : public ISpecularScan
 {
 public:
     AngularSpecScan(double wl, std::vector<double> inc_angle);

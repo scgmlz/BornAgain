@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_FIT_TOOLS_MULTIOPTION_H
 #define BORNAGAIN_FIT_TOOLS_MULTIOPTION_H
 
-#include "Wrap/WinDllMacros.h"
 #include <boost/variant.hpp>
 #include <string>
 
@@ -23,7 +22,7 @@
 //! Relies on boost::variant, will be switched to std::variant in C++-17.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ MultiOption
+class MultiOption
 {
 public:
     using variant_t = boost::variant<int, double, std::string>;

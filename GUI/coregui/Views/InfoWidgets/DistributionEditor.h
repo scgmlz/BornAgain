@@ -26,7 +26,7 @@ class DistributionItem;
 //! The DistributionEditor class, being a child of DistributionDialog, contains a widget
 //! to show Distribution1D and property editor to change distribution parameters.
 
-class BA_CORE_API_ DistributionEditor : public SessionItemWidget
+class DistributionEditor : public SessionItemWidget
 {
     Q_OBJECT
 public:

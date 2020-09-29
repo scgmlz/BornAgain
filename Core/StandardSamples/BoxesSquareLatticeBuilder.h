@@ -15,22 +15,15 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_BOXESSQUARELATTICEBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_BOXESSQUARELATTICEBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-
-class ISample;
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: square boxes in a square lattice
 //! @ingroup standard_samples
 
-class BA_CORE_API_ BoxesSquareLatticeBuilder : public IMultiLayerBuilder
+class BoxesSquareLatticeBuilder : public ISampleBuilder
 {
 public:
-    BoxesSquareLatticeBuilder();
     MultiLayer* buildSample() const;
-
-private:
-    double m_length;
-    double m_height;
 };
 
 #endif // BORNAGAIN_CORE_STANDARDSAMPLES_BOXESSQUARELATTICEBUILDER_H

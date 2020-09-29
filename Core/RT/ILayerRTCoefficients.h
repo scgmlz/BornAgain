@@ -22,7 +22,7 @@
 //! Interface to access reflection/transmission coefficients.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ ILayerRTCoefficients
+class ILayerRTCoefficients
 {
 public:
     virtual ~ILayerRTCoefficients() {}
@@ -59,6 +59,11 @@ public:
     {
         throw Exceptions::NotImplementedException("ILayerRTCoefficients::"
                                                   "getScalarKz(): coefficients are not scalar.");
+    }
+
+    virtual Eigen::Matrix2cd getReflectionMatrix() const
+    {
+        throw Exceptions::NotImplementedException("Only defined for Matrix coefficeints");
     }
 };
 

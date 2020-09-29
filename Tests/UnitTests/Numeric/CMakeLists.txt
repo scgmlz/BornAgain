@@ -16,4 +16,4 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(${test} PUBLIC "-Wno-deprecated-copy")
 endif()
 
-gtest_discover_tests(${test} DISCOVERY_TIMEOUT 300 TEST_PREFIX Numeric:)
+gtest_discover_tests(${test} DISCOVERY_TIMEOUT 300 TEST_PREFIX "Numeric.")

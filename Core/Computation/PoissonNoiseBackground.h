@@ -21,7 +21,7 @@
 //!
 //! @ingroup simulation
 
-class BA_CORE_API_ PoissonNoiseBackground : public IBackground
+class PoissonNoiseBackground : public IBackground
 {
 public:
     PoissonNoiseBackground();

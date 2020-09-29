@@ -24,7 +24,7 @@ class IIntensityFunction;
 //! Interface residual calculations.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ IChiSquaredModule : public ICloneable
+class IChiSquaredModule : public ICloneable
 {
 public:
     IChiSquaredModule();

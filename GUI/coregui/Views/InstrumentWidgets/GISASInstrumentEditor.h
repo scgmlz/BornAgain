@@ -24,7 +24,7 @@ class EnvironmentEditor;
 class PolarizationAnalysisEditor;
 class ColumnResizer;
 
-class BA_CORE_API_ GISASInstrumentEditor : public SessionItemWidget
+class GISASInstrumentEditor : public SessionItemWidget
 {
     Q_OBJECT
 

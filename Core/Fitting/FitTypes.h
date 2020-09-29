@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_FITTING_FITTYPES_H
 #define BORNAGAIN_CORE_FITTING_FITTYPES_H
 
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <memory>
 

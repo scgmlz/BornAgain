@@ -89,7 +89,7 @@ IFormFactor* FormFactorTruncatedSphere::sliceFormFactor(ZLimits limits, const IR
     auto effects = computeSlicingEffects(limits, translation, height);
     FormFactorTruncatedSphere slicedff(m_radius, m_height - effects.dz_bottom,
                                        effects.dz_top + m_dh);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorTruncatedSphere::onChange()

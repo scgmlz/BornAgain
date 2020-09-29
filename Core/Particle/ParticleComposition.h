@@ -21,7 +21,7 @@
 //! A composition of particles at fixed positions
 //! @ingroup samples
 
-class BA_CORE_API_ ParticleComposition : public IParticle
+class ParticleComposition : public IParticle
 {
 public:
     ParticleComposition();

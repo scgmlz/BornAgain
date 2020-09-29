@@ -49,7 +49,7 @@ SimulationElement::SimulationElement(SimulationElement&& other) noexcept
 {
 }
 
-SimulationElement::~SimulationElement() = default;
+SimulationElement::~SimulationElement() = default; // here because of forward declared members
 
 SimulationElement& SimulationElement::operator=(const SimulationElement& other)
 {

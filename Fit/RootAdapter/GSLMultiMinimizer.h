@@ -28,7 +28,7 @@ class GSLMinimizer;
 //! Wrapper for the CERN ROOT facade of the GSL multi minimizer family (gradient descent based).
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ GSLMultiMinimizer : public RootMinimizerAdapter
+class GSLMultiMinimizer : public RootMinimizerAdapter
 {
 public:
     explicit GSLMultiMinimizer(const std::string& algorithmName = "ConjugateFR");

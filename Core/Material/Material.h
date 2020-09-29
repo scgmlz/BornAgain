@@ -28,7 +28,7 @@ class WavevectorInfo;
 //! A wrapper for underlying material implementation
 //! @ingroup materials
 
-class BA_CORE_API_ Material
+class Material
 {
 public:
     //! Material copy-constructor
@@ -96,16 +96,16 @@ public:
 
     Material rotatedMaterial(const Transform3D& transform) const;
 
-    friend BA_CORE_API_ std::ostream& operator<<(std::ostream& ostr, const Material& mat);
+    friend std::ostream& operator<<(std::ostream& ostr, const Material& mat);
 
 private:
     std::unique_ptr<BaseMaterialImpl> m_material_impl;
 };
 
 //! Comparison operator for material wrapper (equality check)
-BA_CORE_API_ bool operator==(const Material& left, const Material& right);
+bool operator==(const Material& left, const Material& right);
 
 //! Comparison operator for material wrapper (inequality check)
-BA_CORE_API_ bool operator!=(const Material& left, const Material& right);
+bool operator!=(const Material& left, const Material& right);
 
 #endif // BORNAGAIN_CORE_MATERIAL_MATERIAL_H

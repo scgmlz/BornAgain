@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORACTIONS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORACTIONS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <QObject>
 
@@ -28,7 +27,7 @@ class QMenu;
 //! The JobSelectorActions class contains actions to run/remove jobs. Actions are used by the
 //! toolbar and JobSelectorList's context menu.
 
-class BA_CORE_API_ JobSelectorActions : public QObject
+class JobSelectorActions : public QObject
 {
     Q_OBJECT
 public:

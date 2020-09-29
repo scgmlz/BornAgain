@@ -24,7 +24,7 @@
 const double INF = std::numeric_limits<double>::infinity();
 
 //! Metadata of one model parameter.
-struct BA_CORE_API_ ParaMeta {
+struct ParaMeta {
     std::string name;
     std::string unit;
     std::string tooltip;
@@ -34,7 +34,7 @@ struct BA_CORE_API_ ParaMeta {
 };
 
 //! Metadata of one model node.
-struct BA_CORE_API_ NodeMeta {
+struct NodeMeta {
     std::string className;
     std::string tooltip;
     std::vector<ParaMeta> paraMeta;
@@ -45,7 +45,7 @@ NodeMeta nodeMetaUnion(const std::vector<ParaMeta>& base, const NodeMeta& other)
 //! Base class for tree-like structures containing parameterized objects.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ INode : public IParameterized
+class INode : public IParameterized
 {
 public:
     INode() : m_NP{0} {}

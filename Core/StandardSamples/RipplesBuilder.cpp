@@ -18,25 +18,16 @@
 #include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorCosineRipple.h"
 #include "Core/HardParticle/FormFactorSawtoothRipple.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Particle/Particle.h"
-
-CosineRippleBuilder::CosineRippleBuilder() {}
+#include "Core/StandardSamples/ReferenceMaterials.h"
 
 MultiLayer* CosineRippleBuilder::buildSample() const
 {
-    MultiLayer* p_multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
-    Layer air_layer(air_material);
+    Layer vacuum_layer(refMat::Vacuum);
     FormFactorCosineRippleBox ff_ripple1(100.0, 20.0, 4.0);
-    Particle ripple(particle_material, ff_ripple1);
+    Particle ripple(refMat::Particle, ff_ripple1);
 
     ParticleLayout particle_layout;
     particle_layout.addParticle(ripple, 1.0);
@@ -45,34 +36,28 @@ MultiLayer* CosineRippleBuilder::buildSample() const
     interference_function.setProbabilityDistribution(pdf);
     particle_layout.setInterferenceFunction(interference_function);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
 
-    p_multi_layer->addLayer(air_layer);
+    Layer substrate_layer(refMat::Substrate);
 
-    Layer substrate_layer(substrate_material);
-    p_multi_layer->addLayer(substrate_layer);
-
-    return p_multi_layer;
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
+    multi_layer->addLayer(substrate_layer);
+    return multi_layer;
 }
 
 // ----------------------------------------------------------------------------
 
 TriangularRippleBuilder::TriangularRippleBuilder() : m_d(0.0 * Units::nanometer)
 {
-    registerParameter("asymetry", &m_d);
+    registerParameter("asymmetry", &m_d);
 }
 
 MultiLayer* TriangularRippleBuilder::buildSample() const
 {
-    MultiLayer* p_multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
-    Layer air_layer(air_material);
+    Layer vacuum_layer(refMat::Vacuum);
     FormFactorSawtoothRippleBox ff_ripple2(100.0, 20.0, 4.0, m_d);
-    Particle ripple(particle_material, ff_ripple2);
+    Particle ripple(refMat::Particle, ff_ripple2);
 
     ParticleLayout particle_layout;
     particle_layout.addParticle(ripple, 1.0);
@@ -81,14 +66,13 @@ MultiLayer* TriangularRippleBuilder::buildSample() const
     interference_function.setProbabilityDistribution(pdf);
     particle_layout.setInterferenceFunction(interference_function);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
+    Layer substrate_layer(refMat::Substrate);
 
-    p_multi_layer->addLayer(air_layer);
-
-    Layer substrate_layer(substrate_material);
-    p_multi_layer->addLayer(substrate_layer);
-
-    return p_multi_layer;
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
+    multi_layer->addLayer(substrate_layer);
+    return multi_layer;
 }
 
 // ----------------------------------------------------------------------------
@@ -96,6 +80,6 @@ MultiLayer* TriangularRippleBuilder::buildSample() const
 MultiLayer* AsymRippleBuilder::buildSample() const
 {
     TriangularRippleBuilder builder;
-    builder.setParameterValue("asymetry", -3.0);
+    builder.setParameterValue("asymmetry", -3.0);
     return builder.buildSample();
 }

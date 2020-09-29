@@ -14,12 +14,13 @@
 
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM3_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM3_H
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+
+#include "Core/HardParticle/IFormFactorPrism.h"
 
 //! A prism based on an equilateral triangle.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorPrism3 : public FormFactorPolygonalPrism
+class FormFactorPrism3 : public IFormFactorPrism
 {
 public:
     FormFactorPrism3(const std::vector<double> P);

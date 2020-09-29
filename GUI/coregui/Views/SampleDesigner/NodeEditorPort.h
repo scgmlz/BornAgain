@@ -22,14 +22,13 @@
  */
 
 #include "GUI/coregui/Views/SampleDesigner/ViewTypes.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsPathItem>
 #include <QString>
 
 class NodeEditorConnection;
 class IView;
 
-class BA_CORE_API_ NodeEditorPort : public QGraphicsPathItem
+class NodeEditorPort : public QGraphicsPathItem
 {
 public:
     //! type of ports, same type can be connected together

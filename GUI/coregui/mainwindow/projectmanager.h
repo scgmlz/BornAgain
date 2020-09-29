@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTMANAGER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QStringList>
 
@@ -26,7 +25,7 @@ class SaveService;
 
 //! Handles activity related to opening/save projects.
 
-class BA_CORE_API_ ProjectManager : public QObject
+class ProjectManager : public QObject
 {
     Q_OBJECT
 public:

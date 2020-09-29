@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERUTILS_H
 #define BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class IParameterized;
@@ -24,10 +23,10 @@ namespace ParameterUtils
 {
 
 //! Returns true if given parameter name is related to angles.
-BA_CORE_API_ bool isAngleRelated(const std::string& par_name);
+bool isAngleRelated(const std::string& par_name);
 
 //! Returns units of main parameter.
-BA_CORE_API_ std::string poolParameterUnits(const IParameterized& node, const std::string& parName);
+std::string poolParameterUnits(const IParameterized& node, const std::string& parName);
 
 } // namespace ParameterUtils
 

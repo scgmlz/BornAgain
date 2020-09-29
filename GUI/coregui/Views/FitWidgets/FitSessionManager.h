@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONMANAGER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QObject>
 
@@ -27,7 +26,7 @@ class JobMessagePanel;
 
 //! Handles all activity related to the simultaneous running of fitting jobs.
 
-class BA_CORE_API_ FitSessionManager : public QObject
+class FitSessionManager : public QObject
 {
     Q_OBJECT
 public:

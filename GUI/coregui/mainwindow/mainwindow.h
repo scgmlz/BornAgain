@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 
-#include "Wrap/WinDllMacros.h"
 #include "fancymainwindow.h"
 
 namespace Manhattan
@@ -43,7 +42,7 @@ class ActionManager;
 class ToolTipDataBase;
 class UpdateNotifier;
 
-class BA_CORE_API_ MainWindow : public Manhattan::FancyMainWindow
+class MainWindow : public Manhattan::FancyMainWindow
 {
     Q_OBJECT
 

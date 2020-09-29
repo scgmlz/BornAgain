@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACECANVAS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACECANVAS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QItemSelectionModel>
 #include <QModelIndex>
 #include <QWidget>
@@ -56,7 +55,7 @@ private:
 };
 
 //! Provides 3D object generation for RealSpaceWidget.
-class BA_CORE_API_ RealSpaceCanvas : public QWidget
+class RealSpaceCanvas : public QWidget
 {
     Q_OBJECT
 

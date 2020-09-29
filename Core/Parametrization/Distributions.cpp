@@ -125,11 +125,11 @@ IDistribution1D::generateSamplesFromValues(const std::vector<double>& sample_val
 // ************************************************************************** //
 
 DistributionGate::DistributionGate(const std::vector<double> P)
-    : IDistribution1D(
-        {"DistributionGate",
-         "class_tooltip",
-         {{"Min", "", "para_tooltip", -INF, +INF, 0}, {"Max", "", "para_tooltip", -INF, +INF, 0}}},
-        P),
+    : IDistribution1D({"DistributionGate",
+                       "class_tooltip",
+                       {{"Min", "", "para_tooltip", -INF, +INF, 0},
+                        {"Max", "", "para_tooltip", -INF, +INF, 0}}},
+                      P),
       m_min(m_P[0]), m_max(m_P[1])
 {
     if (m_max < m_min)

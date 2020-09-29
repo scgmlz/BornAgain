@@ -15,15 +15,14 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_APPSVC_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_APPSVC_H
 
-#include "Core/Basics/ISingleton.h"
-#include "Wrap/WinDllMacros.h"
+#include "GUI/coregui/mainwindow/ISingleton.h"
 
 class ProjectManager;
 class MaterialModel;
 
 //! The AppSvc class provides common access for key components of the GUI.
 
-class BA_CORE_API_ AppSvc : public ISingleton<AppSvc>
+class AppSvc : public ISingleton<AppSvc>
 {
     friend class ISingleton<AppSvc>;
 

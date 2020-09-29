@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
 #define BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -25,16 +24,15 @@
 namespace MinimizerUtils
 {
 
-BA_CORE_API_ std::string toString(const std::vector<std::string>& v, const std::string& delim = "");
+std::string toString(const std::vector<std::string>& v, const std::string& delim = "");
 
-BA_CORE_API_ std::map<int, std::string> gslErrorDescriptionMap();
+std::map<int, std::string> gslErrorDescriptionMap();
 
-BA_CORE_API_ std::string gslErrorDescription(int errorCode);
+std::string gslErrorDescription(int errorCode);
 
-BA_CORE_API_ bool numbersDiffer(double a, double b, double tol);
+bool numbersDiffer(double a, double b, double tol);
 
-BA_CORE_API_ std::string sectionString(const std::string& sectionName = "",
-                                       size_t report_width = 80);
+std::string sectionString(const std::string& sectionName = "", size_t report_width = 80);
 
 } // namespace MinimizerUtils
 

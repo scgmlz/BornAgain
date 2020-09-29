@@ -20,7 +20,7 @@
 //! One dimensional histogram.
 //! @ingroup tools
 
-class BA_CORE_API_ Histogram1D : public IHistogram
+class Histogram1D : public IHistogram
 {
 public:
     //! Constructor for fix bin size histograms.
@@ -65,7 +65,7 @@ public:
     PyObject* getBinErrorsNumpy() const;
 #endif
 
-    //! Create new histogram by applying crop on axis.
+    //! Creates new histogram by applying crop on axis.
     Histogram1D* crop(double xmin, double xmax);
 };
 

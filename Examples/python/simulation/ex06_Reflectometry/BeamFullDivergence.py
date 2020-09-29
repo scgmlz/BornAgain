@@ -32,17 +32,17 @@ def get_sample():
     # defining materials
     # this example implies beam divergence in the wavelength,
     # thus MaterialBySLD must be used to provide correct result
-    m_air = ba.MaterialBySLD("Air", 0.0, 0.0)
+    m_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
     m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0.0)
     m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0.0)
     m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0.0)
 
-    air_layer = ba.Layer(m_air)
+    vacuum_layer = ba.Layer(m_vacuum)
     ni_layer = ba.Layer(m_ni, d_ni)
     ti_layer = ba.Layer(m_ti, d_ti)
     substrate_layer = ba.Layer(m_substrate)
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     for i in range(n_repetitions):
         multi_layer.addLayer(ti_layer)
         multi_layer.addLayer(ni_layer)

@@ -24,7 +24,7 @@
 //! Reads/write tiff files, should be used through TiffReadStrategy.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ TiffHandler
+class TiffHandler
 {
 public:
     TiffHandler();

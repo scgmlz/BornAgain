@@ -29,7 +29,7 @@ TEST_F(BatchSimulation, BatchSimulation)
     const std::unique_ptr<Simulation> simulation = sim_registry.createItemPtr("MiniGISAS");
 
     SampleBuilderFactory sampleFactory;
-    std::shared_ptr<class IMultiLayerBuilder> builder(
+    std::shared_ptr<class ISampleBuilder> builder(
         sampleFactory.createItemPtr("CylindersInBABuilder").release());
     simulation->setSampleBuilder(builder);
     simulation->runSimulation();

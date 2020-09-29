@@ -61,12 +61,9 @@ bool GUIPerformanceTest::runTest()
     std::cout << "GUIPerformanceTest -> Running ..." << mult << std::endl;
     Benchmark bench;
 
-    bench.test_method(
-        "domain2gui", [this]() { test_domain_to_gui(); }, 300 * mult);
-    bench.test_method(
-        "gui2domain", [this]() { test_gui_to_domain(); }, 100 * mult);
-    bench.test_method(
-        "realTime", [this]() { test_real_time(); }, 2 * mult);
+    bench.test_method("domain2gui", [this]() { test_domain_to_gui(); }, 300 * mult);
+    bench.test_method("gui2domain", [this]() { test_gui_to_domain(); }, 100 * mult);
+    bench.test_method("realTime", [this]() { test_real_time(); }, 2 * mult);
 
     std::cout << bench.report() << std::endl;
     return true;
@@ -81,7 +78,7 @@ void GUIPerformanceTest::test_domain_to_gui()
     if (!sample) {
         m_models->resetModels();
         SampleBuilderFactory factory;
-        sample.reset(factory.createSample(m_sample_name.toStdString()));
+        sample.reset(factory.createSampleByName(m_sample_name.toStdString()));
     }
 
     m_models->sampleModel()->clear();
@@ -101,7 +98,8 @@ void GUIPerformanceTest::test_gui_to_domain()
         m_models->resetModels();
 
         SampleBuilderFactory factory;
-        const std::unique_ptr<MultiLayer> sample(factory.createSample(m_sample_name.toStdString()));
+        const std::unique_ptr<MultiLayer> sample(
+            factory.createSampleByName(m_sample_name.toStdString()));
 
         GUIObjectBuilder::populateSampleModel(m_models->sampleModel(), m_models->materialModel(),
                                               *sample);
@@ -121,7 +119,8 @@ void GUIPerformanceTest::test_real_time()
         SimulationOptionsItem* optionsItem = m_models->documentModel()->simulationOptionsItem();
 
         SampleBuilderFactory factory;
-        const std::unique_ptr<MultiLayer> sample(factory.createSample(m_sample_name.toStdString()));
+        const std::unique_ptr<MultiLayer> sample(
+            factory.createSampleByName(m_sample_name.toStdString()));
 
         GUIObjectBuilder::populateSampleModel(m_models->sampleModel(), m_models->materialModel(),
                                               *sample);

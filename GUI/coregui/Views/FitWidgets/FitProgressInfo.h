@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPROGRESSINFO_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPROGRESSINFO_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
 //! The FitProgressInfo class contains all essential information about fit progress.
 //! It is send from GUIFitObserver to FitSuiteWidget on every nth iteration.
 
-class BA_CORE_API_ FitProgressInfo
+class FitProgressInfo
 {
 public:
     FitProgressInfo();

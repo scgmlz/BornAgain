@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTEDITOR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTEDITOR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class ComponentView;
@@ -25,7 +24,7 @@ class QBoxLayout;
 //! Component editor for SessionItem. Can have various appearance depending
 //! on EditorFlags
 
-class BA_CORE_API_ ComponentEditor : public QWidget
+class ComponentEditor : public QWidget
 {
     Q_OBJECT
 public:

@@ -17,7 +17,6 @@
 
 #include "Core/Basics/Complex.h"
 #include "Core/Vector/EigenCore.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class IFresnelMap;
@@ -27,7 +26,7 @@ class SimulationElement;
 //! Information about single particle form factor and specular info of the embedding layer.
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ FormFactorCoherentPart
+class FormFactorCoherentPart
 {
 public:
     FormFactorCoherentPart(IFormFactor* p_ff);

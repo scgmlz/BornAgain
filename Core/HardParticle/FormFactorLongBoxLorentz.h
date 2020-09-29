@@ -20,7 +20,7 @@
 //! The form factor for a long rectangular box.
 //! @ingroup legacyGrating
 
-class BA_CORE_API_ FormFactorLongBoxLorentz : public IFormFactorBorn
+class FormFactorLongBoxLorentz : public IFormFactorBorn
 {
 public:
     //! @brief Box constructor

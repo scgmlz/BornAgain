@@ -16,14 +16,13 @@
 #define BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H
 
 #include "Fit/Tools/WallclockTimer.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class FitObjective;
 
 //! Prints fit statistics to standard output during minimizer iterations.
 
-class BA_CORE_API_ FitPrintService
+class FitPrintService
 {
 public:
     FitPrintService();

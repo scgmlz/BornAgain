@@ -1375,28 +1375,28 @@ Internal state of a  WallclockTimer object.
 ";
 
 
-// File: namespace_0d11.xml
+// File: namespace_0D11.xml
 
 
-// File: namespace_0d25.xml
+// File: namespace_0D25.xml
 
 
-// File: namespace_0d29.xml
+// File: namespace_0D29.xml
 
 
-// File: namespace_0d31.xml
+// File: namespace_0D31.xml
 
 
-// File: namespace_0d35.xml
+// File: namespace_0D35.xml
 
 
-// File: namespace_0d37.xml
+// File: namespace_0D37.xml
 
 
-// File: namespace_0d4.xml
+// File: namespace_0D4.xml
 
 
-// File: namespace_0d41.xml
+// File: namespace_0D41.xml
 
 
 // File: namespaceFit.xml
@@ -1436,22 +1436,22 @@ Returns horizontal line of 80 characters length with section name in it.
 
 
 // File: namespaceNumeric.xml
-%feature("docstring")  Numeric::AreAlmostEqual "bool BA_CORE_API_ Numeric::AreAlmostEqual(double a, double b, double tolerance)
+%feature("docstring")  Numeric::AreAlmostEqual "bool Numeric::AreAlmostEqual(double a, double b, double tolerance)
 
 Returns true if two doubles agree within epsilon*tolerance. 
 ";
 
-%feature("docstring")  Numeric::GetAbsoluteDifference "double BA_CORE_API_ Numeric::GetAbsoluteDifference(double a, double b)
+%feature("docstring")  Numeric::GetAbsoluteDifference "double Numeric::GetAbsoluteDifference(double a, double b)
 
 Returns the absolute value of the difference between a and b. 
 ";
 
-%feature("docstring")  Numeric::GetRelativeDifference "double BA_CORE_API_ Numeric::GetRelativeDifference(double a, double b)
+%feature("docstring")  Numeric::GetRelativeDifference "double Numeric::GetRelativeDifference(double a, double b)
 
 Returns the safe relative difference, which is 2(|a-b|)/(|a|+|b|) except in special cases. 
 ";
 
-%feature("docstring")  Numeric::GetLogDifference "double BA_CORE_API_ Numeric::GetLogDifference(double a, double b)
+%feature("docstring")  Numeric::GetLogDifference "double Numeric::GetLogDifference(double a, double b)
 
 Returns the difference of the logarithm; input values are truncated at the minimum positive value 
 ";

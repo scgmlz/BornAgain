@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_OVERLAYLABELWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QRect>
 #include <QString>
 #include <QWidget>
@@ -23,7 +22,7 @@
 //! The OverlayLabelWidget is a semi-transparent overlay label to place on top of other
 //! widgets outside of any layout context.
 
-class BA_CORE_API_ OverlayLabelWidget : public QWidget
+class OverlayLabelWidget : public QWidget
 {
     Q_OBJECT
 public:

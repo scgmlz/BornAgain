@@ -30,7 +30,7 @@ Plan::~Plan() = default;
 
 bool Plan::checkMinimizer(Fit::Minimizer& minimizer)
 {
-    auto fit_objective = createFitObjective();
+    std::unique_ptr<FitObjective> fit_objective = createFitObjective();
 
     fcn_scalar_t scalar_func = [&](const Fit::Parameters& params) {
         return fit_objective->evaluate(params);
@@ -40,7 +40,6 @@ bool Plan::checkMinimizer(Fit::Minimizer& minimizer)
         return fit_objective->evaluate_residuals(params);
     };
 
-    bool success(true);
     Fit::MinimizerResult result;
 
     if (m_residual_based)
@@ -51,7 +50,7 @@ bool Plan::checkMinimizer(Fit::Minimizer& minimizer)
     fit_objective->finalize(result);
 
     std::cout << "Plan::checkResult() -> " << name() << std::endl;
-    success &= valuesAsExpected(result.parameters().values());
+    bool success = valuesAsExpected(result.parameters().values());
     std::cout << std::endl;
 
     return success;
@@ -93,20 +92,16 @@ std::unique_ptr<Simulation> Plan::buildSimulation(const Fit::Parameters& params)
 
 //! Creates simulation for given set of fit parameters. No sample yets.
 
-std::unique_ptr<Simulation> Plan::createSimulation(const Fit::Parameters& params) const
+std::unique_ptr<Simulation> Plan::createSimulation(const Fit::Parameters&) const
 {
-    (void)params;
-    SimulationFactory factory;
-    auto simulation = factory.createItemPtr(m_simulation_name);
-    return simulation;
+    return SimulationFactory().createItemPtr(m_simulation_name);
 }
 
 //! Creates sample for given set of fit parameters.
 
 std::unique_ptr<MultiLayer> Plan::createMultiLayer(const Fit::Parameters& params) const
 {
-    SampleBuilderFactory factory;
-    auto sample_builder = factory.createItemPtr(m_sample_builder_name);
+    auto sample_builder = SampleBuilderFactory().createItemPtr(m_sample_builder_name);
 
     // propagating current values of fit parameters to sample builder before building the sample
     for (const auto& par : params)

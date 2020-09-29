@@ -10,7 +10,7 @@ def get_sample():
     Returns a sample with cylinders of two different sizes on a substrate.
     The cylinder positions are modelled in Local Monodisperse Approximation.
     """
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -46,12 +46,12 @@ def get_sample():
     particle_layout2.addParticle(cylinder2, 0.2)
     particle_layout2.setInterferenceFunction(interference2)
 
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout1)
-    air_layer.addLayout(particle_layout2)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout1)
+    vacuum_layer.addLayout(particle_layout2)
     substrate_layer = ba.Layer(m_substrate)
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
     return multi_layer
 

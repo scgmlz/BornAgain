@@ -25,7 +25,7 @@ class SpecularPlot;
 //! The SpecularPlotCanvas class contains SpecularPlot for specular data presentation, and provides
 //! status string appearance.
 
-class BA_CORE_API_ SpecularPlotCanvas : public SessionItemWidget
+class SpecularPlotCanvas : public SessionItemWidget
 {
     Q_OBJECT
 

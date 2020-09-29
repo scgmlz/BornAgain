@@ -39,7 +39,7 @@ IFormFactor* IFormFactor::createSlicedFormFactor(ZLimits limits, const IRotation
                                                  kvector_t translation) const
 {
     if (ShapeIsContainedInLimits(*this, limits, rot, translation))
-        return CreateTransformedFormFactor(*this, rot, translation);
+        return createTransformedFormFactor(*this, rot, translation);
     if (ShapeOutsideLimits(*this, limits, rot, translation))
         return nullptr;
     if (canSliceAnalytically(rot))
@@ -77,7 +77,7 @@ IFormFactor* IFormFactor::sliceFormFactor(ZLimits, const IRotation&, kvector_t) 
     throw std::runtime_error(getName() + "::sliceFormFactor error: not implemented!");
 }
 
-IFormFactor* CreateTransformedFormFactor(const IFormFactor& formfactor, const IRotation& rot,
+IFormFactor* createTransformedFormFactor(const IFormFactor& formfactor, const IRotation& rot,
                                          kvector_t translation)
 {
     std::unique_ptr<IFormFactor> P_fftemp, P_result;

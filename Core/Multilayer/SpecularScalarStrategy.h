@@ -31,9 +31,13 @@ class Slice;
 //! Inherited by SpecularScalarNCStrategy, SpecularScalarTanhStrategy
 //!
 //! @ingroup algorithms_internal
-class BA_CORE_API_ SpecularScalarStrategy : public ISpecularStrategy
+class SpecularScalarStrategy : public ISpecularStrategy
 {
 public:
+    using coefficient_type = ScalarRTCoefficients;
+    using coefficient_pointer_type = std::unique_ptr<const coefficient_type>;
+    using coeffs_t = std::vector<coefficient_pointer_type>;
+
     //! Computes refraction angles and transmission/reflection coefficients
     //! for given coherent wave propagation in a multilayer.
     virtual ISpecularStrategy::coeffs_t Execute(const std::vector<Slice>& slices,
@@ -43,17 +47,17 @@ public:
                                                 const std::vector<complex_t>& kz) const override;
 
 private:
-    virtual Eigen::Vector2cd transition(complex_t kzi, complex_t kzi1, double sigma,
-                                        double thickness, const Eigen::Vector2cd& t_r1) const = 0;
+    virtual std::pair<complex_t, complex_t> transition(complex_t kzi, complex_t kzi1,
+                                                       double sigma) const = 0;
 
     std::vector<ScalarRTCoefficients> computeTR(const std::vector<Slice>& slices,
                                                 const std::vector<complex_t>& kz) const;
 
     static void setZeroBelow(std::vector<ScalarRTCoefficients>& coeff, size_t current_layer);
 
-    bool calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
-                              const std::vector<Slice>& slices, const std::vector<complex_t>& kz,
-                              size_t slice_index) const;
+    void calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
+                              const std::vector<Slice>& slices,
+                              const std::vector<complex_t>& kz) const;
 };
 
 #endif // BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARSTRATEGY_H

@@ -12,7 +12,7 @@ def get_sample():
     forming a 1D Paracrystal.
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -30,12 +30,12 @@ def get_sample():
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
 
-    # air layer with particles and substrate form multi layer
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout)
+    # vacuum layer with particles and substrate form multi layer
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
     substrate_layer = ba.Layer(m_substrate, 0)
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
 
     return multi_layer

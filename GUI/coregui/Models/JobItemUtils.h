@@ -30,27 +30,24 @@ class Simulation;
 namespace JobItemUtils
 {
 //! updates axes of OutputData in IntensityData item
-BA_CORE_API_ void updateDataAxes(DataItem* intensityItem, const InstrumentItem* instrumentItem);
+void updateDataAxes(DataItem* intensityItem, const InstrumentItem* instrumentItem);
 
 //! returns axes units names from their domain counterpart
-BA_CORE_API_ QString nameFromAxesUnits(AxesUnits units);
+QString nameFromAxesUnits(AxesUnits units);
 
 //! returns domain axes units type from their GUI name
-BA_CORE_API_ AxesUnits axesUnitsFromName(const QString& name);
+AxesUnits axesUnitsFromName(const QString& name);
 
-BA_CORE_API_ void setIntensityItemAxesUnits(DataItem* intensityItem,
-                                            const InstrumentItem* instrumentItem);
+void setIntensityItemAxesUnits(DataItem* intensityItem, const InstrumentItem* instrumentItem);
 
-BA_CORE_API_ void setIntensityItemAxesUnits(DataItem* intensityItem,
-                                            const IUnitConverter& converter);
+void setIntensityItemAxesUnits(DataItem* intensityItem, const IUnitConverter& converter);
 
-BA_CORE_API_ void createDefaultDetectorMap(DataItem* intensityItem,
-                                           const InstrumentItem* instrumentItem);
+void createDefaultDetectorMap(DataItem* intensityItem, const InstrumentItem* instrumentItem);
 
 //! Sets simulation results into the DataItem
-BA_CORE_API_ void setResults(DataItem* intensityItem, const Simulation* simulation);
+void setResults(DataItem* intensityItem, const Simulation* simulation);
 
-BA_CORE_API_ ComboProperty availableUnits(const IUnitConverter& converter);
+ComboProperty availableUnits(const IUnitConverter& converter);
 } // namespace JobItemUtils
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_JOBITEMUTILS_H

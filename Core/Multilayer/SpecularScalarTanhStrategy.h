@@ -26,13 +26,12 @@ class Slice;
 //! coherent wave propagation in a multilayer by applying modified Fresnel coefficients.
 //!
 //! @ingroup algorithms_internal
-class BA_CORE_API_ SpecularScalarTanhStrategy : public SpecularScalarStrategy
+class SpecularScalarTanhStrategy : public SpecularScalarStrategy
 {
 private:
     //! Roughness is modelled by tanh profile [see e.g. Phys. Rev. B, vol. 47 (8), p. 4385 (1993)].
-    virtual Eigen::Vector2cd transition(complex_t kzi, complex_t kzi1, double sigma,
-                                        double thickness,
-                                        const Eigen::Vector2cd& t_r1) const override;
+    virtual std::pair<complex_t, complex_t> transition(complex_t kzi, complex_t kzi1,
+                                                       double sigma) const override;
 };
 
 #endif // BORNAGAIN_CORE_MULTILAYER_SPECULARSCALARTANHSTRATEGY_H

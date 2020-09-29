@@ -20,7 +20,7 @@
 //! Calculates footprint coefficient for a square beam
 //! @ingroup beam
 
-class BA_CORE_API_ FootprintSquare : public IFootprintFactor
+class FootprintSquare : public IFootprintFactor
 {
 public:
     FootprintSquare(const std::vector<double> P);

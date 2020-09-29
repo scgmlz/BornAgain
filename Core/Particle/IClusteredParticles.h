@@ -25,7 +25,7 @@ class IRotation;
 //! An ordered assembly of particles. Currently, the only child class is Crystal.
 //! @ingroup samples_internal
 
-class BA_CORE_API_ IClusteredParticles : public ISample
+class IClusteredParticles : public ISample
 {
 public:
     IClusteredParticles* clone() const override = 0;

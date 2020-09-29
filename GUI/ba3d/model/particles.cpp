@@ -350,8 +350,8 @@ TruncatedSphere::TruncatedSphere(float R, float H, float deltaH)
 }
 
 TruncatedSpheroid::TruncatedSpheroid(float R, float H, float fp, float deltaH)
-    : Particle(
-        Key(BaseShape::Sphere, 1 - H / fp / R / 2, (H - fp * R) / fp / R / 2, deltaH / fp / R / 2))
+    : Particle(Key(BaseShape::Sphere, 1 - H / fp / R / 2, (H - fp * R) / fp / R / 2,
+                   deltaH / fp / R / 2))
 {
     isNull = (R <= 0 || H <= 0 || fp <= 0);
     scale = Vector3D(R * 2, R * 2, fp * R * 2);

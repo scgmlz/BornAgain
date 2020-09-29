@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_MODELS_ITEMCATALOG_H
 
 #include "Fit/TestEngine/IFactory.h"
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <memory>
 
@@ -24,7 +23,7 @@ class SessionItem;
 
 //! Catalog of SessionItem%s. A single instance is created and used in ItemFactory.cpp.
 
-class BA_CORE_API_ ItemCatalog
+class ItemCatalog
 {
 public:
     ItemCatalog();

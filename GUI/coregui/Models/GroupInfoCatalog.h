@@ -19,7 +19,7 @@
 
 //! Catalog to hold info for GroupProperty creation.
 
-class BA_CORE_API_ GroupInfoCatalog
+class GroupInfoCatalog
 {
 public:
     GroupInfoCatalog();

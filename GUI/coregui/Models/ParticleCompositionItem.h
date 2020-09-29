@@ -21,7 +21,7 @@
 class BA_CORE_API_ ParticleCompositionItem : public SessionGraphicsItem
 {
 public:
-    const static QString T_PARTICLES;
+    static const QString T_PARTICLES;
     ParticleCompositionItem();
     std::unique_ptr<ParticleComposition> createParticleComposition() const;
 };

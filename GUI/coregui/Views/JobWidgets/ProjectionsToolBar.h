@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSTOOLBAR_H
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
-#include "Wrap/WinDllMacros.h"
 #include <QToolBar>
 
 class ProjectionsEditorActions;

@@ -32,12 +32,12 @@ const PolyhedralTopology FormFactorPyramid::topology = {{
 //! @param height: height of the pyramid in nanometers
 //! @param alpha: dihedral angle between the base and a side face in radians
 FormFactorPyramid::FormFactorPyramid(const std::vector<double> P)
-    : FormFactorPolyhedron({"Pyramid",
-                            "class_tooltip",
-                            {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Alpha", "rad", "para_tooltip", 0., M_PI, 0}}},
-                           P),
+    : IFormFactorPolyhedron({"Pyramid",
+                             "class_tooltip",
+                             {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Alpha", "rad", "para_tooltip", 0., M_PI, 0}}},
+                            P),
       m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
     onChange();
@@ -55,7 +55,7 @@ IFormFactor* FormFactorPyramid::sliceFormFactor(ZLimits limits, const IRotation&
     double dbase_edge = 2 * effects.dz_bottom * MathFunctions::cot(m_alpha);
     FormFactorPyramid slicedff(m_base_edge - dbase_edge,
                                m_height - effects.dz_bottom - effects.dz_top, m_alpha);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorPyramid::onChange()

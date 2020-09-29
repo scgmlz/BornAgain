@@ -91,8 +91,8 @@ void ICosineRipple::onChange()
 
 ISawtoothRipple::ISawtoothRipple(const NodeMeta& meta, const std::vector<double>& PValues)
     : IProfileRipple(
-        nodeMetaUnion({{"AsymmetryLength", "nm", "Asymmetry of width", -INF, INF, 0.}}, meta),
-        PValues),
+          nodeMetaUnion({{"AsymmetryLength", "nm", "Asymmetry of width", -INF, INF, 0.}}, meta),
+          PValues),
       m_asymmetry(m_P[3])
 {
     onChange();

@@ -27,7 +27,7 @@ class QCPGraph;
 
 //! A customplot based widget to display projections of IntensityDataItem on X,Y axes.
 
-class BA_CORE_API_ ProjectionsPlot : public SessionItemWidget
+class ProjectionsPlot : public SessionItemWidget
 {
     Q_OBJECT
 

@@ -26,7 +26,7 @@ class SessionItem;
 //! The ItemStackPresenter templated class extends ItemStackWidget so it could operate with
 //! SesionItem editor's of specified type, while still keeping signal/slots alive.
 
-template <class T> class BA_CORE_API_ ItemStackPresenter : public ItemStackWidget
+template <class T> class ItemStackPresenter : public ItemStackWidget
 {
 public:
     ItemStackPresenter(bool single_widget = false) : m_single_widget(single_widget) {}

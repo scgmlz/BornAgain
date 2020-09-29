@@ -21,10 +21,10 @@
 //! Material implementation based on refractive coefficiencts (valid for one wavelength value only)
 //! @ingroup materials
 
-class BA_CORE_API_ RefractiveMaterialImpl : public MagneticMaterialImpl
+class RefractiveMaterialImpl : public MagneticMaterialImpl
 {
 public:
-    friend BA_CORE_API_ Material HomogeneousMaterial(const std::string&, double, double, kvector_t);
+    friend Material HomogeneousMaterial(const std::string&, double, double, kvector_t);
 
     virtual ~RefractiveMaterialImpl() = default;
 

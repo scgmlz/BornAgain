@@ -27,7 +27,7 @@ template <class T> class OutputData;
 //! Defines rectangular area for the detector which will be simulated/fitted.
 //! @ingroup detector
 
-class BA_CORE_API_ RegionOfInterest : public ICloneable
+class RegionOfInterest : public ICloneable
 {
 public:
     RegionOfInterest(const IDetector2D& detector, double xlow, double ylow, double xup, double yup);

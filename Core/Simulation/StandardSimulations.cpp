@@ -538,6 +538,22 @@ SpecularSimulation* StandardSimulations::BasicSpecularPP()
     return simulation.release();
 }
 
+SpecularSimulation* StandardSimulations::BasicSpecularPM()
+{
+    std::unique_ptr<SpecularSimulation> simulation(BasicSpecular());
+    simulation->setBeamPolarization({0.0, 1.0, 0.0});
+    simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    return simulation.release();
+}
+
+SpecularSimulation* StandardSimulations::BasicSpecularMP()
+{
+    std::unique_ptr<SpecularSimulation> simulation(BasicSpecular());
+    simulation->setBeamPolarization({0.0, -1.0, 0.0});
+    simulation->setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
+    return simulation.release();
+}
+
 SpecularSimulation* StandardSimulations::BasicSpecularMM()
 {
     std::unique_ptr<SpecularSimulation> simulation(BasicSpecular());
@@ -559,6 +575,22 @@ SpecularSimulation* StandardSimulations::BasicSpecularQMM()
     std::unique_ptr<SpecularSimulation> simulation(BasicSpecularQ());
     simulation->setBeamPolarization({0.0, -1.0, 0.0});
     simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    return simulation.release();
+}
+
+SpecularSimulation* StandardSimulations::BasicSpecularQPM()
+{
+    std::unique_ptr<SpecularSimulation> simulation(BasicSpecularQ());
+    simulation->setBeamPolarization({0.0, 1.0, 0.0});
+    simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    return simulation.release();
+}
+
+SpecularSimulation* StandardSimulations::BasicSpecularQMP()
+{
+    std::unique_ptr<SpecularSimulation> simulation(BasicSpecularQ());
+    simulation->setBeamPolarization({0.0, -1.0, 0.0});
+    simulation->setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
     return simulation.release();
 }
 

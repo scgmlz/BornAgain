@@ -16,13 +16,12 @@
 #define BORNAGAIN_FIT_KERNEL_PYCALLBACK_H
 
 #include "Fit/Kernel/Parameters.h"
-#include "Wrap/WinDllMacros.h"
 #include <vector>
 
 //! Base class to wrap Python callable and pass it to C++. Used in swig interface file,
 //! intended to be overloaded from Python.
 
-class BA_CORE_API_ PyCallback
+class PyCallback
 {
 public:
     enum CallbackType { SCALAR, RESIDUAL };

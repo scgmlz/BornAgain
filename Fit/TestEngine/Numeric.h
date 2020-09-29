@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_FIT_TESTENGINE_NUMERIC_H
 #define BORNAGAIN_FIT_TESTENGINE_NUMERIC_H
 
-#include "Wrap/WinDllMacros.h"
 #include <limits>
 
 //! Floating-point epsilon, tolerances, almost-equal.
@@ -23,13 +22,13 @@
 namespace Numeric
 {
 
-bool BA_CORE_API_ AreAlmostEqual(double a, double b, double tolerance_factor = 1.0);
+bool AreAlmostEqual(double a, double b, double tolerance_factor = 1.0);
 
-double BA_CORE_API_ GetAbsoluteDifference(double a, double b);
+double GetAbsoluteDifference(double a, double b);
 
-double BA_CORE_API_ GetRelativeDifference(double a, double b);
+double GetRelativeDifference(double a, double b);
 
-double BA_CORE_API_ GetLogDifference(double a, double b);
+double GetLogDifference(double a, double b);
 
 } // namespace Numeric
 

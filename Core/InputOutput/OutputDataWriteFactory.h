@@ -20,7 +20,7 @@
 //! Creates writer appropariate for given type of files.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataWriteFactory
+class OutputDataWriteFactory
 {
 public:
     static OutputDataWriter* getWriter(const std::string& file_name);

@@ -21,7 +21,7 @@
 //!   obtained by truncating a full ellipsoid in the middle plane spanned by two principal axes.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorHemiEllipsoid : public IFormFactorBorn
+class FormFactorHemiEllipsoid : public IFormFactorBorn
 {
 public:
     FormFactorHemiEllipsoid(const std::vector<double> P);

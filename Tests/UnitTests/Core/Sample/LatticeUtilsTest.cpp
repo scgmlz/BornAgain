@@ -11,7 +11,7 @@ TEST_F(LatticeUtilsTest, cubeAlignedFCCTest)
 {
     MillerIndexOrientation q_aligned(MillerIndexOrientation::QZ, {0, 0, 1},
                                      MillerIndexOrientation::QY, {0, 1, 0});
-    auto lattice = LatticeUtils::CreateFCCLattice(2.0, q_aligned);
+    auto lattice = LatticeUtils::createFCCLattice(2.0, q_aligned);
     auto a1 = lattice.getBasisVectorA();
     auto a2 = lattice.getBasisVectorB();
     auto a3 = lattice.getBasisVectorC();
@@ -30,7 +30,7 @@ TEST_F(LatticeUtilsTest, diagonalAlignedFCCTest)
 {
     MillerIndexOrientation diagonal_aligned(MillerIndexOrientation::QZ, {1, 1, 1},
                                             MillerIndexOrientation::QX, {1, 1, 0});
-    auto lattice = LatticeUtils::CreateFCCLattice(2.0, diagonal_aligned);
+    auto lattice = LatticeUtils::createFCCLattice(2.0, diagonal_aligned);
     auto a1 = lattice.getBasisVectorA();
     auto a2 = lattice.getBasisVectorB();
     auto a3 = lattice.getBasisVectorC();
@@ -46,7 +46,7 @@ TEST_F(LatticeUtilsTest, trivialAlignedHCPTest)
 {
     MillerIndexOrientation trivial_aligned(MillerIndexOrientation::QZ, {0, 0, 1},
                                            MillerIndexOrientation::QX, {2, -1, 0});
-    auto lattice = LatticeUtils::CreateHCPLattice(2.0, 4.0, trivial_aligned);
+    auto lattice = LatticeUtils::createHCPLattice(2.0, 4.0, trivial_aligned);
     auto a1 = lattice.getBasisVectorA();
     auto a2 = lattice.getBasisVectorB();
     auto a3 = lattice.getBasisVectorC();
@@ -65,7 +65,7 @@ TEST_F(LatticeUtilsTest, tetraAlignedFCCTest)
 {
     MillerIndexOrientation q_aligned(MillerIndexOrientation::QZ, {0, 0, 1},
                                      MillerIndexOrientation::QY, {0, 1, 0});
-    auto lattice = LatticeUtils::CreateBCTLattice(2.0, 2.0, q_aligned);
+    auto lattice = LatticeUtils::createBCTLattice(2.0, 2.0, q_aligned);
     auto a1 = lattice.getBasisVectorA();
     auto a2 = lattice.getBasisVectorB();
     auto a3 = lattice.getBasisVectorC();
@@ -84,7 +84,7 @@ TEST_F(LatticeUtilsTest, diagonalAlignedBCTTest)
 {
     MillerIndexOrientation diagonal_aligned(MillerIndexOrientation::QZ, {1, 1, 1},
                                             MillerIndexOrientation::QX, {1, 1, 0});
-    auto lattice = LatticeUtils::CreateBCTLattice(2.0, 2.0, diagonal_aligned);
+    auto lattice = LatticeUtils::createBCTLattice(2.0, 2.0, diagonal_aligned);
     auto a1 = lattice.getBasisVectorA();
     auto a2 = lattice.getBasisVectorB();
     auto a3 = lattice.getBasisVectorC();

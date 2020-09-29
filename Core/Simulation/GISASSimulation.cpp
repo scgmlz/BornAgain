@@ -16,8 +16,8 @@
 #include "Core/Computation/DWBAComputation.h"
 #include "Core/Computation/IBackground.h"
 #include "Core/Intensity/Histogram2D.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/MultiLayer.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/Simulation/UnitConverterUtils.h"
 #include "Core/SimulationElement/SimulationElement.h"
 
@@ -31,7 +31,7 @@ GISASSimulation::GISASSimulation(const MultiLayer& p_sample) : Simulation2D(p_sa
     initialize();
 }
 
-GISASSimulation::GISASSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
+GISASSimulation::GISASSimulation(const std::shared_ptr<ISampleBuilder> p_sample_builder)
     : Simulation2D(p_sample_builder)
 {
     initialize();
@@ -66,12 +66,8 @@ void GISASSimulation::setBeamParameters(double wavelength, double alpha_i, doubl
 
 size_t GISASSimulation::intensityMapSize() const
 {
-    auto detector = getInstrument().getDetector();
-    if (!detector)
-        throw std::runtime_error(
-            "Error in GISASSimulation::intensityMapSize: attempt to access non-initialized data.");
     size_t result = 0;
-    detector->iterate([&result](IDetector::const_iterator) { ++result; }, true);
+    getInstrument().detector().iterate([&result](IDetector::const_iterator) { ++result; }, true);
     return result;
 }
 

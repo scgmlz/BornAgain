@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_UPDATENOTIFIER_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_UPDATENOTIFIER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QNetworkAccessManager;
 class QNetworkReply;
 
-class BA_CORE_API_ UpdateNotifier : public QObject
+class UpdateNotifier : public QObject
 {
     Q_OBJECT
 public:

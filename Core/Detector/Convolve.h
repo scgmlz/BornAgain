@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_CONVOLVE_H
 #define BORNAGAIN_CORE_DETECTOR_CONVOLVE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <fftw3.h>
 #include <vector>
 
@@ -31,7 +30,7 @@
 //! by Jeremy Fix, May 30, 2011
 //!
 //! @ingroup tools_internal
-class BA_CORE_API_ Convolve
+class Convolve
 {
 public:
     //! definition of 1d vector of double

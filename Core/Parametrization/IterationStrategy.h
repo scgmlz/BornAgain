@@ -15,8 +15,6 @@
 #ifndef BORNAGAIN_CORE_PARAMETRIZATION_ITERATIONSTRATEGY_H
 #define BORNAGAIN_CORE_PARAMETRIZATION_ITERATIONSTRATEGY_H
 
-#include "Wrap/WinDllMacros.h"
-
 class INode;
 class IteratorMemento;
 
@@ -24,7 +22,7 @@ class IteratorMemento;
 //!
 //! For definition of different strategies see https://en.wikipedia.org/wiki/Tree_traversal.
 
-class BA_CORE_API_ IterationStrategy
+class IterationStrategy
 {
 public:
     virtual IterationStrategy* clone() const = 0;
@@ -35,7 +33,7 @@ public:
 };
 
 //! Traverse tree; visit parents before their children.
-class BA_CORE_API_ PreorderStrategy : public IterationStrategy
+class PreorderStrategy : public IterationStrategy
 {
 public:
     PreorderStrategy();
@@ -48,7 +46,7 @@ public:
 };
 
 //! Traverse tree; visit children before their parents.
-class BA_CORE_API_ PostorderStrategy : public IterationStrategy
+class PostorderStrategy : public IterationStrategy
 {
 public:
     PostorderStrategy();

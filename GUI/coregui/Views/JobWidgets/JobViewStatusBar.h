@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWSTATUSBAR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBVIEWSTATUSBAR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class MainWindow;
@@ -25,7 +24,7 @@ class QComboBox;
 //! Narrow status bar at very bottom of JobView to switch between activities.
 //! Added to the status bar of MainWindow when JobView is shown.
 
-class BA_CORE_API_ JobViewStatusBar : public QWidget
+class JobViewStatusBar : public QWidget
 {
     Q_OBJECT
 public:

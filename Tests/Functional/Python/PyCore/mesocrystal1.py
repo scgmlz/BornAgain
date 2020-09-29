@@ -10,9 +10,9 @@ from bornagain import *
 # ----------------------------------------------------------------------------
 # Sample builder to build mixture of cylinders and prisms on top of substrate
 # ----------------------------------------------------------------------------
-class MySampleBuilder(IMultiLayerBuilder):
+class MySampleBuilder(ISampleBuilder):
     def __init__(self):
-        IMultiLayerBuilder.__init__(self)
+        ISampleBuilder.__init__(self)
         self.sample = None
         # parameters describing the sample
         self.lattice_length_a = ctypes.c_double(6.2091e+00*nm)
@@ -51,10 +51,10 @@ class MySampleBuilder(IMultiLayerBuilder):
         n_air = complex(1.0, 0.0)
         n_substrate = complex(1.0-7.57e-6, 1.73e-7)
 
-        p_air_material = HomogeneousMaterial("Air", n_air)
+        p_vacuum_material = HomogeneousMaterial("Vacuum", n_air)
         p_average_layer_material = HomogeneousMaterial("Averagelayer", n_avg)
         p_substrate_material = HomogeneousMaterial("Substrate", n_substrate)
-        air_layer = Layer(p_air_material)
+        vacuum_layer = Layer(p_vacuum_material)
         avg_layer = Layer(p_average_layer_material, self.meso_height.value)
         substrate_layer = Layer(p_substrate_material)
         p_interference_function = InterferenceFunctionNone()
@@ -82,7 +82,7 @@ class MySampleBuilder(IMultiLayerBuilder):
 
         roughness = LayerRoughness(self.roughness.value, 0.3, 500.0*nm)
 
-        p_multi_layer.addLayer(air_layer)
+        p_multi_layer.addLayer(vacuum_layer)
         p_multi_layer.addLayer(avg_layer)
         p_multi_layer.addLayerWithTopRoughness(substrate_layer, roughness)
 

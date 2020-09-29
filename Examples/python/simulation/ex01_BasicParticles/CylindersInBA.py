@@ -7,11 +7,11 @@ from bornagain import deg, angstrom, nm
 
 def get_sample():
     """
-    Returns a sample with cylinders in a homogeneous environment ("air"),
+    Returns a sample with cylinders in a homogeneous environment ("Vacuum"),
     implying a simulation in plain Born approximation.
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
@@ -20,11 +20,11 @@ def get_sample():
     particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(cylinder, 1.0)
 
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     return multi_layer
 
 

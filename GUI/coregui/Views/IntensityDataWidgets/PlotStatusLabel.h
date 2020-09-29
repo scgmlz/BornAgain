@@ -26,7 +26,7 @@ class QResizeEvent;
 //! depending on available space in parent layout. Also doesn't trigger layout resize,
 //! being happy with place it has.
 
-class BA_CORE_API_ PlotStatusLabel : public StatusLabel
+class PlotStatusLabel : public StatusLabel
 {
     Q_OBJECT
 public:

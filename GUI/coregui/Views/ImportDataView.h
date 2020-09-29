@@ -27,7 +27,7 @@ class MiniSplitter;
 
 //! The ImportDataView class is a main view for importing experimental data.
 
-class BA_CORE_API_ ImportDataView : public QWidget
+class ImportDataView : public QWidget
 {
     Q_OBJECT
 

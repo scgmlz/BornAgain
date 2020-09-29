@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MODELMAPPER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MODELMAPPER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <functional>
 
 class SessionModel;
 class SessionItem;
 
-class BA_CORE_API_ ModelMapper : public QObject
+class ModelMapper : public QObject
 {
     Q_OBJECT
 

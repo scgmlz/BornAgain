@@ -23,7 +23,7 @@
 
 //! Limitation: this class assumes that the data points are evenly distributed on each axis
 
-class BA_CORE_API_ ConvolutionDetectorResolution : public IDetectorResolution
+class ConvolutionDetectorResolution : public IDetectorResolution
 {
 public:
     typedef double (*cumulative_DF_1d)(double);

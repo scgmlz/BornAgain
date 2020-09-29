@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONSETUPASSISTANT_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SIMULATIONWIDGETS_SIMULATIONSETUPASSISTANT_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 
 class MultiLayerItem;
@@ -25,7 +24,7 @@ class RealDataItem;
 //! The SimulationSetupAssistant class provides sample, instrument and real data validation before
 //! submitting the job.
 
-class BA_CORE_API_ SimulationSetupAssistant
+class SimulationSetupAssistant
 {
 public:
     SimulationSetupAssistant();

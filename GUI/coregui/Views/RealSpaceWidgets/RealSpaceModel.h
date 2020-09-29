@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEMODEL_H
 
 #include "GUI/ba3d/model/model.h"
-#include "Wrap/WinDllMacros.h"
 
 class RealSpaceModel : public RealSpace::Model
 {

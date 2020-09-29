@@ -22,7 +22,7 @@ class MultiLayerCandidate;
 
 //! Base class for LayerView and MultiLayerView
 //! Provides functionality for moving view on top of MultiLayer.
-class BA_CORE_API_ ILayerView : public ConnectableView
+class ILayerView : public ConnectableView
 {
     Q_OBJECT
 

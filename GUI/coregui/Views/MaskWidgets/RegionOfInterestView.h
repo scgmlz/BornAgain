@@ -19,7 +19,7 @@
 
 //! The RegionOfInterest class represent view of RegionOfInterestItem on graphics scene.
 
-class BA_CORE_API_ RegionOfInterestView : public RectangleView
+class RegionOfInterestView : public RectangleView
 {
     Q_OBJECT
 

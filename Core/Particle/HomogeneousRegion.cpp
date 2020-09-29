@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Particle/HomogeneousRegion.cpp
-//! @brief     Implements fct CreateAveragedMaterial
+//! @brief     Implements fct createAveragedMaterial
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -35,7 +35,7 @@ T averageData(const Material& layer_mat, const std::vector<HomogeneousRegion>& r
 
 } // namespace
 
-Material CreateAveragedMaterial(const Material& layer_mat,
+Material createAveragedMaterial(const Material& layer_mat,
                                 const std::vector<HomogeneousRegion>& regions)
 {
     // determine the type of returned material

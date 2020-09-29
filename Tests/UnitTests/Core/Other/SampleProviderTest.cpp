@@ -1,8 +1,8 @@
-#include "Core/Multilayer/SampleProvider.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/SampleProvider.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Parametrization/ParameterPool.h"
 #include "Core/Parametrization/RealParameter.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
@@ -27,7 +27,7 @@ public:
             registerChild(&m_provider);
         }
 
-        TestSimulation(const TestSimulation& other) : m_provider(other.m_provider)
+        TestSimulation(const TestSimulation& other) : INode(), m_provider(other.m_provider)
         {
             setName("TestSimulation");
             registerChild(&m_provider);
@@ -42,7 +42,7 @@ public:
     };
 
     //! Test sample builder
-    class TestBuilder : public IMultiLayerBuilder
+    class TestBuilder : public ISampleBuilder
     {
     public:
         explicit TestBuilder(double length = 42.0) : m_length(length)
@@ -85,7 +85,7 @@ TEST_F(SampleProviderTest, sampleBuilder)
     provider.setSample(*SampleProviderTest::testMultiLayer(42.0));
 
     // Setting sample builder, original sample should gone.
-    std::shared_ptr<IMultiLayerBuilder> builder(new SampleProviderTest::TestBuilder(33.0));
+    std::shared_ptr<ISampleBuilder> builder(new SampleProviderTest::TestBuilder(33.0));
     EXPECT_EQ(builder.use_count(), 1);
     provider.setSampleBuilder(builder);
     EXPECT_EQ(builder.use_count(), 2);
@@ -152,7 +152,7 @@ TEST_F(SampleProviderTest, builderInSimulationContext)
     SampleProviderTest::TestSimulation sim;
     SampleProvider& provider = sim.m_provider;
 
-    std::shared_ptr<IMultiLayerBuilder> builder(new SampleProviderTest::TestBuilder(33.0));
+    std::shared_ptr<ISampleBuilder> builder(new SampleProviderTest::TestBuilder(33.0));
     provider.setSampleBuilder(builder);
     provider.updateSample();
 

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MODELUTILS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MODELUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <functional>
 
@@ -26,16 +25,16 @@ class SessionModel;
 namespace ModelUtils
 {
 //! Returns list of top iten manes.
-BA_CORE_API_ QStringList topItemNames(SessionModel* model, const QString& modelType = "");
+QStringList topItemNames(SessionModel* model, const QString& modelType = "");
 
 //! Iterates through all model indices and calls user function.
-BA_CORE_API_ void iterate(const QModelIndex& index, const QAbstractItemModel* model,
-                          const std::function<void(const QModelIndex&)>& fun);
+void iterate(const QModelIndex& index, const QAbstractItemModel* model,
+             const std::function<void(const QModelIndex&)>& fun);
 
 //! Iterates through all model indices and calls user function.
 //! If function returns false for given index, iteration will not go down to children.
-BA_CORE_API_ void iterate_if(const QModelIndex& index, const QAbstractItemModel* model,
-                             const std::function<bool(const QModelIndex&)>& fun);
+void iterate_if(const QModelIndex& index, const QAbstractItemModel* model,
+                const std::function<bool(const QModelIndex&)>& fun);
 
 } // namespace ModelUtils
 

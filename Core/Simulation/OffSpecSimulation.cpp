@@ -16,11 +16,11 @@
 #include "Core/Computation/DWBAComputation.h"
 #include "Core/Intensity/Histogram2D.h"
 #include "Core/Intensity/SimpleUnitConverters.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Parametrization/Distributions.h"
 #include "Core/Parametrization/ParameterPool.h"
 #include "Core/Parametrization/RealParameter.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/SimulationElement/SimulationElement.h"
 
 OffSpecSimulation::OffSpecSimulation()
@@ -33,7 +33,7 @@ OffSpecSimulation::OffSpecSimulation(const MultiLayer& p_sample) : Simulation2D(
     initialize();
 }
 
-OffSpecSimulation::OffSpecSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
+OffSpecSimulation::OffSpecSimulation(const std::shared_ptr<ISampleBuilder> p_sample_builder)
     : Simulation2D(p_sample_builder)
 {
     initialize();
@@ -54,13 +54,9 @@ size_t OffSpecSimulation::numberOfSimulationElements() const
 SimulationResult OffSpecSimulation::result() const
 {
     auto data = std::unique_ptr<OutputData<double>>(m_intensity_map.clone());
-    auto p_det = dynamic_cast<const IDetector2D*>(getInstrument().getDetector());
-    if (p_det) {
-        OffSpecularConverter converter(*p_det, getInstrument().getBeam(), *mP_alpha_i_axis);
-        return SimulationResult(*data, converter);
-    }
-    throw std::runtime_error("Error in OffSpecSimulation::result: "
-                             "wrong or absent detector type");
+    OffSpecularConverter converter(getInstrument().detector2D(), getInstrument().getBeam(),
+                                   *mP_alpha_i_axis);
+    return SimulationResult(*data, converter);
 }
 
 void OffSpecSimulation::setBeamParameters(double wavelength, const IAxis& alpha_axis, double phi_i)
@@ -81,12 +77,11 @@ const IAxis* OffSpecSimulation::beamAxis() const
 
 std::unique_ptr<IUnitConverter> OffSpecSimulation::createUnitConverter() const
 {
-    const IDetector* detector = getInstrument().getDetector();
     const IAxis* axis = beamAxis();
-    if (!detector || !axis)
-        throw std::runtime_error("Error in OffSpecSimulation::createUnitConverter: missing detector"
-                                 "or inclination angle axis");
-    return std::make_unique<OffSpecularConverter>(static_cast<const IDetector2D&>(*detector),
+    if (!axis)
+        throw std::runtime_error("Error in OffSpecSimulation::createUnitConverter:"
+                                 " missing inclination angle axis");
+    return std::make_unique<OffSpecularConverter>(getInstrument().detector2D(),
                                                   getInstrument().getBeam(), *axis);
 }
 

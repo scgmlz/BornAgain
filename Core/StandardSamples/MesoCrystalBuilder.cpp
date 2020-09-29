@@ -14,33 +14,18 @@
 
 #include "Core/StandardSamples/MesoCrystalBuilder.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/MathConstants.h"
 #include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
 #include "Core/HardParticle/FormFactorFullSphere.h"
-#include "Core/Lattice/ISelectionRule.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/LayerInterface.h"
-#include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Particle/Crystal.h"
 #include "Core/Particle/MesoCrystal.h"
 #include "Core/Particle/Particle.h"
-#include "Core/Particle/ParticleComposition.h"
-
-MesoCrystalBuilder::MesoCrystalBuilder() {}
+#include "Core/StandardSamples/ReferenceMaterials.h"
 
 MultiLayer* MesoCrystalBuilder::buildSample() const
 {
-    MultiLayer* p_multi_layer = new MultiLayer();
-
-    // defining materials
-    auto air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    auto substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    auto particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
     // mesocrystal lattice
     kvector_t lattice_basis_a(5.0, 0.0, 0.0);
     kvector_t lattice_basis_b(0.0, 5.0, 0.0);
@@ -49,7 +34,7 @@ MultiLayer* MesoCrystalBuilder::buildSample() const
 
     // spherical particle that forms the base of the mesocrystal
     FormFactorFullSphere sphere_ff(2.0);
-    Particle sphere(particle_material, sphere_ff);
+    Particle sphere(refMat::Particle, sphere_ff);
 
     // crystal structure
     Crystal crystal(sphere, lattice);
@@ -61,11 +46,12 @@ MultiLayer* MesoCrystalBuilder::buildSample() const
     ParticleLayout particle_layout;
     particle_layout.addParticle(meso);
 
-    Layer air_layer(air_material);
-    air_layer.addLayout(particle_layout);
-    Layer substrate_layer(substrate_material);
+    Layer vacuum_layer(refMat::Vacuum);
+    vacuum_layer.addLayout(particle_layout);
+    Layer substrate_layer(refMat::Substrate);
 
-    p_multi_layer->addLayer(air_layer);
-    p_multi_layer->addLayer(substrate_layer);
-    return p_multi_layer;
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
+    multi_layer->addLayer(substrate_layer);
+    return multi_layer;
 }

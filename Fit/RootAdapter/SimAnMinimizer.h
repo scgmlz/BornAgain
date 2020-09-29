@@ -28,7 +28,7 @@ class GSLSimAnMinimizer;
 //! Wrapper for the CERN ROOT facade of the GSL simmulated annealing minimizer.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ SimAnMinimizer : public RootMinimizerAdapter
+class SimAnMinimizer : public RootMinimizerAdapter
 {
 public:
     SimAnMinimizer();

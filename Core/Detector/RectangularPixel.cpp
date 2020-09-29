@@ -35,14 +35,12 @@ RectangularPixel* RectangularPixel::clone() const
 
 RectangularPixel* RectangularPixel::createZeroSizePixel(double x, double y) const
 {
-    kvector_t position = m_corner_pos + x * m_width + y * m_height;
-    kvector_t null_vector;
-    return new RectangularPixel(position, null_vector, null_vector);
+    return new RectangularPixel(getPosition(x, y), kvector_t(), kvector_t());
 }
 
 kvector_t RectangularPixel::getK(double x, double y, double wavelength) const
 {
-    kvector_t direction = m_corner_pos + x * m_width + y * m_height;
+    kvector_t direction = getPosition(x, y);
     double length = M_TWOPI / wavelength;
     return normalizeLength(direction, length);
 }
@@ -56,7 +54,7 @@ double RectangularPixel::getIntegrationFactor(double x, double y) const
 {
     if (m_solid_angle == 0.0)
         return 1.0;
-    kvector_t position = m_corner_pos + x * m_width + y * m_height;
+    kvector_t position = getPosition(x, y);
     double length = position.mag();
     return std::abs(position.dot(m_normal)) / std::pow(length, 3) / m_solid_angle;
 }
@@ -73,7 +71,7 @@ kvector_t RectangularPixel::normalizeLength(const kvector_t direction, double le
 
 double RectangularPixel::calculateSolidAngle() const
 {
-    kvector_t position = m_corner_pos + 0.5 * m_width + 0.5 * m_height;
+    kvector_t position = getPosition(0.5, 0.5);
     double length = position.mag();
     return std::abs(position.dot(m_normal)) / std::pow(length, 3);
 }

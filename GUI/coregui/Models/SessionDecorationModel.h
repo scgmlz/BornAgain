@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONDECORATIONMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONDECORATIONMODEL_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QIdentityProxyModel>
 
 class SessionModel;
@@ -25,7 +24,7 @@ class SessionItem;
 //! It is implemented as identity proxy model, so it has one-to-one data structure as in
 //! source SessionModel.
 
-class BA_CORE_API_ SessionDecorationModel : public QIdentityProxyModel
+class SessionDecorationModel : public QIdentityProxyModel
 {
     Q_OBJECT
 public:

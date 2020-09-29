@@ -21,13 +21,13 @@
 #include "Core/Lattice/Lattice.h"
 #include "Core/Material/Material.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Particle/Crystal.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleComposition.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/Simulation/GISASSimulation.h"
 #include "Core/SoftParticle/FormFactorSphereLogNormalRadius.h"
 #include <iostream>
@@ -68,7 +68,7 @@ using Units::nm;
 
 //! Runs heavy mesocrystal simulation to investigate where it spends time.
 
-class MesoCrystalPerformanceBuilder : public IMultiLayerBuilder
+class MesoCrystalPerformanceBuilder : public ISampleBuilder
 {
 public:
     MesoCrystalPerformanceBuilder();
@@ -124,10 +124,10 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
 
     auto multi_layer = new MultiLayer;
 
-    auto air_material = HomogeneousMaterial("Air", 0.0, 0.0);
+    auto vacuum_material = HomogeneousMaterial("Vacuum", 0.0, 0.0);
     auto substrate_material = HomogeneousMaterial("Substrate", 7.57e-6, 1.73e-7);
     auto average_layer_material = HomogeneousMaterial("AverageLayer", n_avg);
-    Layer air_layer(air_material);
+    Layer vacuum_layer(vacuum_material);
     Layer avg_layer(average_layer_material, m_meso_height);
     Layer substrate_layer(substrate_material);
     ParticleLayout particle_decoration;
@@ -156,7 +156,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
 
     LayerRoughness roughness(m_roughness, 0.3, 500.0 * nm);
 
-    multi_layer->addLayer(air_layer);
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(avg_layer);
     multi_layer->addLayerWithTopRoughness(substrate_layer, roughness);
 
@@ -203,7 +203,7 @@ int main()
     simulation.setBeamParameters(1.77 * Units::angstrom, 0.4 * Units::deg, 0.0);
     simulation.setBeamIntensity(6.1e+12);
 
-    std::shared_ptr<IMultiLayerBuilder> builder(new MesoCrystalPerformanceBuilder);
+    std::shared_ptr<ISampleBuilder> builder(new MesoCrystalPerformanceBuilder);
     simulation.setSampleBuilder(builder);
 
     simulation.setRegionOfInterest(40.0, 40.0, 41.0, 41.0);

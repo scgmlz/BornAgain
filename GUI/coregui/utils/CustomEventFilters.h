@@ -15,12 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_CUSTOMEVENTFILTERS_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_CUSTOMEVENTFILTERS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 //! Filter out space bar key events, which is special case for dialog windows.
 
-class BA_CORE_API_ SpaceKeyEater : public QObject
+class SpaceKeyEater : public QObject
 {
     Q_OBJECT
 public:
@@ -33,7 +32,7 @@ protected:
 //! Event filter to install on combo boxes and spin boxes to not
 //! to react on wheel events during scrolling of InstrumentComponentWidget.
 
-class BA_CORE_API_ WheelEventEater : public QObject
+class WheelEventEater : public QObject
 {
     Q_OBJECT
 public:
@@ -60,7 +59,7 @@ signals:
 
 //! Event filter to prevent lost of focus by custom material editor.
 
-class BA_CORE_API_ LostFocusFilter : public QObject
+class LostFocusFilter : public QObject
 {
     Q_OBJECT
 public:
@@ -72,7 +71,7 @@ protected:
 
 //! Event filter for global tracking of shortcodes.
 
-class BA_CORE_API_ ShortcodeFilter : public QObject
+class ShortcodeFilter : public QObject
 {
     Q_OBJECT
 public:
@@ -89,7 +88,7 @@ protected:
 
 //! Filter out right mouse button events.
 
-class BA_CORE_API_ RightMouseButtonEater : public QObject
+class RightMouseButtonEater : public QObject
 {
     Q_OBJECT
 public:
@@ -101,7 +100,7 @@ protected:
 
 //! Propagate tab events from focusProxy to parent.
 
-class BA_CORE_API_ TabFromFocusProxy : public QObject
+class TabFromFocusProxy : public QObject
 {
     Q_OBJECT
 public:

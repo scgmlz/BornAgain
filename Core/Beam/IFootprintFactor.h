@@ -24,7 +24,7 @@ class Beam;
 //! Abstract base for classes that calculate the beam footprint factor
 //! @ingroup beam
 
-class BA_CORE_API_ IFootprintFactor : public ICloneable, public INode
+class IFootprintFactor : public ICloneable, public INode
 {
 public:
     IFootprintFactor(const NodeMeta& meta, const std::vector<double>& PValues);

@@ -19,7 +19,7 @@
 
 //! A container to hold ProjectionItems, intended to store projections of color map on X, Y axes.
 
-class BA_CORE_API_ ProjectionContainerItem : public SessionItem
+class ProjectionContainerItem : public SessionItem
 {
 public:
     ProjectionContainerItem();

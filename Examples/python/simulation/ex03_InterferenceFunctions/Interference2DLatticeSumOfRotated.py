@@ -9,11 +9,11 @@ def get_sample():
     Returns a sample with cylinders on a substrate,
     forming a 2D lattice with different disorder rotated lattice
     """
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    air_layer = ba.Layer(m_ambience)
+    vacuum_layer = ba.Layer(m_vacuum)
     substrate_layer = ba.Layer(m_substrate)
 
     p_interference_function = \
@@ -30,10 +30,10 @@ def get_sample():
     particle_layout.addParticle(cylinder, 1.0)
     particle_layout.setInterferenceFunction(p_interference_function)
 
-    air_layer.addLayout(particle_layout)
+    vacuum_layer.addLayout(particle_layout)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
     return multi_layer
 

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_PARTICLE3DCONTAINER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_PARTICLE3DCONTAINER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <memory>
 #include <vector>
@@ -28,7 +27,7 @@ class Particle;
 }
 } // namespace RealSpace
 
-class BA_CORE_API_ Particle3DContainer
+class Particle3DContainer
 {
 public:
     Particle3DContainer() : m_cumulativeAbundance(0) {}

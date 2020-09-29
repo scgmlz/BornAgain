@@ -15,21 +15,14 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MESOCRYSTALBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_MESOCRYSTALBUILDER_H
 
-#include "Core/Basics/Complex.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-
-class IFormFactor;
-class ISample;
-class Lattice;
-class MesoCrystal;
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: cylindrical mesocrystal composed of spheres in a cubic lattice.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ MesoCrystalBuilder : public IMultiLayerBuilder
+class MesoCrystalBuilder : public ISampleBuilder
 {
 public:
-    MesoCrystalBuilder();
     MultiLayer* buildSample() const;
 };
 

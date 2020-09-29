@@ -29,7 +29,7 @@ class JobMessagePanel;
 //! The RunFitControlWidget contains elements to start/stop fitting and to provide minimal
 //! diagnostic. Part of FitSuiteWidget.
 
-class BA_CORE_API_ RunFitControlWidget : public SessionItemWidget
+class RunFitControlWidget : public SessionItemWidget
 {
     Q_OBJECT
 public:

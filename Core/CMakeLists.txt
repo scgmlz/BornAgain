@@ -248,6 +248,21 @@ if(WIN32)
     install(FILES ${UTF_PATH}/${UTF_BASE_NAME}.dll
         DESTINATION ${destination_lib} COMPONENT Libraries)
 
+    set(Cerf_LIB ${Cerf_LIBRARIES}) # we take for granted that there is only one cerf.lib
+    get_filename_component(DIR ${Cerf_LIB} DIRECTORY)
+    get_filename_component(cerf ${Cerf_LIB} NAME_WE)
+
+    set(DLL_MSG "")
+    foreach(LIB IN ITEMS ${cerf} libgcc_s_seh-1 libstdc++-6 libwinpthread-1)
+        set(DLL "${DIR}/${LIB}.dll")
+        if (NOT EXISTS ${DLL})
+            message(FATAL_ERROR "Dynamic load library ${DLL} (needed for cerf) does not exist")
+        endif()
+        install(FILES ${DLL} DESTINATION ${destination_lib} COMPONENT Libraries)
+        string(APPEND DLL_MSG " ${DLL}")
+    endforeach()
+    message(STATUS "Cerf dlls: ${DLL_MSG}")
+
     set(DLL_MSG "")
     foreach(LIB IN LISTS FFTW3_LIBRARIES TIFF_LIBRARIES)
         string(REPLACE ".lib" ".dll" DLL "${LIB}")

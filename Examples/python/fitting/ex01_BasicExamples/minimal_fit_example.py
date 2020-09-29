@@ -14,7 +14,7 @@ def get_simulation(params):
     sphere = ba.Particle(ba.HomogeneousMaterial("Particle", 6e-4, 2e-8),
                          ba.FormFactorFullSphere(radius))
 
-    layer = ba.Layer(ba.HomogeneousMaterial("Air", 0.0, 0.0))
+    layer = ba.Layer(ba.HomogeneousMaterial("Vacuum", 0.0, 0.0))
     layer.addLayout(ba.ParticleLayout(sphere))
     multi_layer = ba.MultiLayer()
     multi_layer.addLayer(layer)

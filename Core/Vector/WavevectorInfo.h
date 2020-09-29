@@ -22,7 +22,7 @@ class Transform3D;
 //! Holds all wavevector information relevant for calculating form factors.
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ WavevectorInfo
+class WavevectorInfo
 {
 public:
     static WavevectorInfo GetZeroQ();

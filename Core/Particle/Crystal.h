@@ -23,7 +23,7 @@
 //! Used in MesoCrystal, where it is given an outer shape.
 //! @ingroup samples
 
-class BA_CORE_API_ Crystal : public IClusteredParticles
+class Crystal : public IClusteredParticles
 {
 public:
     Crystal(const IParticle& lattice_basis, const Lattice& lattice);

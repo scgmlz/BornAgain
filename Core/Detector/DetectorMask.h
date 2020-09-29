@@ -25,7 +25,7 @@ class Histogram2D;
 //! Collection of detector masks.
 //! @ingroup detector
 
-class BA_CORE_API_ DetectorMask
+class DetectorMask
 {
 public:
     DetectorMask();

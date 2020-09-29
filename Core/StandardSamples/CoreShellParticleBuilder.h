@@ -15,27 +15,23 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_CORESHELLPARTICLEBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_CORESHELLPARTICLEBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-
-class ISample;
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: Core Shell Nanoparticles (IsGISAXS example #11).
 //! @ingroup standard_samples
 
-class BA_CORE_API_ CoreShellParticleBuilder : public IMultiLayerBuilder
+class CoreShellParticleBuilder : public ISampleBuilder
 {
 public:
-    CoreShellParticleBuilder() {}
     MultiLayer* buildSample() const;
 };
 
 //! Rotation and translation of core shell box particle in 3 layers system.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ CoreShellBoxRotateZandYBuilder : public IMultiLayerBuilder
+class CoreShellBoxRotateZandYBuilder : public ISampleBuilder
 {
 public:
-    CoreShellBoxRotateZandYBuilder() {}
     MultiLayer* buildSample() const;
 };
 

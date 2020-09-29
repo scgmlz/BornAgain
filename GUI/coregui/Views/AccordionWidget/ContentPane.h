@@ -33,7 +33,6 @@
 
 #include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
 #include "GUI/coregui/Views/AccordionWidget/ClickableFrame.h"
-#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -74,7 +73,7 @@
  * @details
  * The animation speed is influenceable setAnimationDuration().
  */
-class BA_CORE_API_ ContentPane : public QWidget
+class ContentPane : public QWidget
 {
     Q_OBJECT
 public:

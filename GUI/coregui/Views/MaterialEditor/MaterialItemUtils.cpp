@@ -48,7 +48,7 @@ std::map<QString, QString> get_tag_map()
 
 QColor MaterialItemUtils::suggestMaterialColor(const QString& name)
 {
-    if (name.contains("Air")) {
+    if (name.contains("Vacuum")) {
         return QColor(179, 242, 255);
     } else if (name.contains("Substrate")) {
         return QColor(205, 102, 0);

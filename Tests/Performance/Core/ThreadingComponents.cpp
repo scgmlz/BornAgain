@@ -35,7 +35,7 @@ namespace
 //! Returns multilayer spheres distribution at lattice points.
 std::unique_ptr<MultiLayer> createSampleSpheresDistribution(int nspheres)
 {
-    auto material_1 = HomogeneousMaterial("example06_Air", 0.0, 0.0);
+    auto material_1 = HomogeneousMaterial("example06_Vacuum", 0.0, 0.0);
     auto material_2 = HomogeneousMaterial("example08_Particle", 0.0006, 2e-08);
     auto material_3 = HomogeneousMaterial("example06_Substrate", 6e-06, 2e-08);
 

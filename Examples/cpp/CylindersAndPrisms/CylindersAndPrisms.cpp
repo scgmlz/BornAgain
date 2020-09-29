@@ -29,10 +29,10 @@
 int main()
 {
     // Define the sample
-    Material air_material = HomogeneousMaterial("Air", 0., 0.);
+    Material vacuum_material = HomogeneousMaterial("Vacuum", 0., 0.);
     Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
 
-    Layer air_layer(air_material);
+    Layer vacuum_layer(vacuum_material);
     Layer substrate_layer(substrate_material);
 
     ParticleLayout particle_layout;
@@ -46,10 +46,10 @@ int main()
                    FormFactorPrism3(10 * Units::nanometer, 5 * Units::nanometer));
     particle_layout.addParticle(prism, 0.5);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
 
     MultiLayer sample;
-    sample.addLayer(air_layer);
+    sample.addLayer(vacuum_layer);
     sample.addLayer(substrate_layer);
 
     // Define the simulation

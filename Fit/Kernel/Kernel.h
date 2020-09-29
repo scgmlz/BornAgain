@@ -19,7 +19,6 @@
 #include "Fit/Kernel/MinimizerResult.h"
 #include "Fit/Kernel/Parameters.h"
 #include "Fit/Tools/WallclockTimer.h"
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <memory>
 #include <vector>
@@ -32,7 +31,7 @@ namespace Fit
 //! A main class to run fitting.
 //! @ingroup fitting
 
-class BA_CORE_API_ Kernel
+class Kernel
 {
 public:
     Kernel();

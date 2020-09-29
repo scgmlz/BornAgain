@@ -37,7 +37,7 @@ Lattice::Lattice(const kvector_t a1, const kvector_t a2, const kvector_t a3)
 }
 
 Lattice::Lattice(const Lattice& lattice)
-    : mp_selection_rule(nullptr), m_a(lattice.m_a), m_b(lattice.m_b), m_c(lattice.m_c),
+    : INode(), mp_selection_rule(nullptr), m_a(lattice.m_a), m_b(lattice.m_b), m_c(lattice.m_c),
       m_cache_ok(false)
 {
     setName("Lattice");

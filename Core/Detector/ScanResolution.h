@@ -25,7 +25,7 @@ class RangedDistribution;
 class RealLimits;
 
 //! Container for reflectivity resolution data.
-class BA_CORE_API_ ScanResolution : public ICloneable
+class ScanResolution : public ICloneable
 {
 protected:
     using DistrOutput = std::vector<std::vector<ParameterSample>>;

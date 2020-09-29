@@ -29,7 +29,7 @@ template <class T> class OutputData;
 //! @ingroup detector
 
 // workaround for SWIG (instead of just writing enum class AxesUnits...)
-struct BA_CORE_API_ AxesUnitsWrap {
+struct AxesUnitsWrap {
     enum AxesUnits { DEFAULT, NBINS, RADIANS, DEGREES, MM, QSPACE, QXQY, RQ4 };
 #ifndef SWIG
     // TODO: to automatize enum to string convertion, one can possibly use this solution
@@ -42,7 +42,7 @@ typedef AxesUnitsWrap::AxesUnits AxesUnits;
 //! Interface to provide axis translations to different units for simulation output
 //! @ingroup simulation_internal
 
-class BA_CORE_API_ IUnitConverter : public ICloneable
+class IUnitConverter : public ICloneable
 {
 public:
     virtual ~IUnitConverter();

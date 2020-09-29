@@ -28,6 +28,7 @@ template <class T> class OutputData;
 class FitObjective;
 
 //! Contains all logic to construct FitObjective, setup Minimizer and check minimization results.
+//! Parent of various *Plan classes in source file PlanCases.
 
 class Plan : public MinimizerTestPlan
 {

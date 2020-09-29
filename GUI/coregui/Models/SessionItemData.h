@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMDATA_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMDATA_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QVariant>
 #include <QVector>
 
 //! Handles all data roles for SessionItem.
 
-class BA_CORE_API_ SessionItemData
+class SessionItemData
 {
 public:
     QVector<int> roles() const;

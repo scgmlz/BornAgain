@@ -16,7 +16,7 @@ def get_sample():
     # defining materials
     particle_material = ba.HomogeneousMaterial("Particle", 2e-5, 4e-7,
                                                magnetization_particle)
-    air_material = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    vacuum_material = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     substrate_material = ba.HomogeneousMaterial("Substrate", 7e-6, 1.8e-7)
 
     # spherical magnetic particle
@@ -27,13 +27,13 @@ def get_sample():
     particle_layout.addParticle(sphere, 1.0, position)
 
     # defining layers
-    air_layer = ba.Layer(air_material)
+    vacuum_layer = ba.Layer(vacuum_material)
     substrate_layer = ba.Layer(substrate_material)
     substrate_layer.addLayout(particle_layout)
 
     # defining the multilayer
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
 
     return multi_layer

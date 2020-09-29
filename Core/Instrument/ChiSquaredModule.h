@@ -20,7 +20,7 @@
 //! Calculation of chi2 between two data sets.
 //! @ingroup fitting
 
-class BA_CORE_API_ ChiSquaredModule : public IChiSquaredModule
+class ChiSquaredModule : public IChiSquaredModule
 {
 public:
     ChiSquaredModule() {}

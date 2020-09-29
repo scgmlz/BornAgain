@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITORCANVAS_H
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
-#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <QWidget>
 

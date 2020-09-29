@@ -13,7 +13,7 @@ function(test_example example tolerance)
     get_filename_component(EXAMPLE_NAME ${script_path} NAME_WE)
     get_filename_component(EXAMPLE_DIR ${script_path} DIRECTORY)
 
-    set(test_name PyPersistence/${EXAMPLE_NAME})
+    set(test_name PyPersistence.${EXAMPLE_NAME})
 
     set(PYPERSIST_TOLERANCE ${tolerance})
 

@@ -15,22 +15,21 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_RIPPLESBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_RIPPLESBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: cosine ripple within the 1D-paracrystal model.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ CosineRippleBuilder : public IMultiLayerBuilder
+class CosineRippleBuilder : public ISampleBuilder
 {
 public:
-    CosineRippleBuilder();
     MultiLayer* buildSample() const;
 };
 
 //! Builds sample: triangular ripple within the 1D-paracrystal model (from PRB 85, 235415, 2012).
 //! @ingroup standard_samples
 
-class BA_CORE_API_ TriangularRippleBuilder : public IMultiLayerBuilder
+class TriangularRippleBuilder : public ISampleBuilder
 {
 public:
     TriangularRippleBuilder();
@@ -40,7 +39,7 @@ private:
     double m_d;
 };
 
-class BA_CORE_API_ AsymRippleBuilder : public IMultiLayerBuilder
+class AsymRippleBuilder : public ISampleBuilder
 {
 public:
     MultiLayer* buildSample() const;

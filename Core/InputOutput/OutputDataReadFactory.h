@@ -20,7 +20,7 @@
 //! Creates reader appropariate for given type of files.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataReadFactory
+class OutputDataReadFactory
 {
 public:
     static OutputDataReader* getReader(const std::string& file_name);

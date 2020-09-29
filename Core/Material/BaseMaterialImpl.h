@@ -28,7 +28,7 @@ enum class MATERIAL_TYPES { InvalidMaterialType = -1, RefractiveMaterial = 0, Ma
 //! Inherited by MagneticMaterialImpl, which has further children.
 //! @ingroup materials
 
-class BA_CORE_API_ BaseMaterialImpl
+class BaseMaterialImpl
 {
 public:
     //! Constructs basic material with name

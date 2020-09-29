@@ -29,24 +29,24 @@ namespace MaterialUtils
 //! Function for calculating the reduced potential, used for obtaining the Fresnel coefficients
 //! (non-polarized material case)
 
-BA_CORE_API_ complex_t ScalarReducedPotential(complex_t n, kvector_t k, double n_ref);
+complex_t ScalarReducedPotential(complex_t n, kvector_t k, double n_ref);
 
 //! Function for calculating the reduced potential, used for obtaining the Fresnel coefficients
 //! (polarized material case)
 
-BA_CORE_API_ Eigen::Matrix2cd PolarizedReducedPotential(complex_t n, kvector_t b_field, kvector_t k,
-                                                        double n_ref);
+Eigen::Matrix2cd PolarizedReducedPotential(complex_t n, kvector_t b_field, kvector_t k,
+                                           double n_ref);
 
 //! Utility to compute magnetization correction for reduced potential and scattering length density
 
 template <typename T>
-BA_CORE_API_ Eigen::Matrix2cd MagnetizationCorrection(complex_t unit_factor, double magnetic_factor,
-                                                      BasicVector3D<T> polarization);
+Eigen::Matrix2cd MagnetizationCorrection(complex_t unit_factor, double magnetic_factor,
+                                         BasicVector3D<T> polarization);
 
 //! Checks if all non-default materials in _materials_ are of the same type and returns this type.
 //! If several types of materials are involved, InvalidMaterialType identifier is returned.
 
-BA_CORE_API_ MATERIAL_TYPES checkMaterialTypes(const std::vector<const Material*>& materials);
+MATERIAL_TYPES checkMaterialTypes(const std::vector<const Material*>& materials);
 
 } // namespace MaterialUtils
 

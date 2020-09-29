@@ -30,7 +30,7 @@ class GSLNLSMinimizer;
 //! (http://www.gnu.org/software/gsl/manual/html_node/Nonlinear-Least_002dSquares-Fitting.html).
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ GSLLevenbergMarquardtMinimizer : public RootMinimizerAdapter
+class GSLLevenbergMarquardtMinimizer : public RootMinimizerAdapter
 {
 public:
     GSLLevenbergMarquardtMinimizer();

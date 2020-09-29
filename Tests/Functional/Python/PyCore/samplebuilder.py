@@ -9,7 +9,7 @@ initial_width = 42
 initial_length = 42
 
 
-class SampleBuilder(ba.IMultiLayerBuilder):
+class SampleBuilder(ba.ISampleBuilder):
     """
     Test class with one registered parameter and onChange() counter
     """
@@ -25,7 +25,7 @@ class SampleBuilder(ba.IMultiLayerBuilder):
         self.m_onchange_counter += 1
 
 
-class BuilderPrototype(ba.IMultiLayerBuilder):
+class BuilderPrototype(ba.ISampleBuilder):
     """
     Prototype demonstrating new way of parameter registration
     """

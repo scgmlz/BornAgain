@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class RealSpaceModel;
@@ -28,7 +27,7 @@ class Camera;
 
 //! Contains 3D view.
 
-class BA_CORE_API_ RealSpaceView : public QWidget
+class RealSpaceView : public QWidget
 {
     Q_OBJECT
 

@@ -22,7 +22,7 @@
 //! of \f[ \exp{-1/2} \f] from the peak intensity.
 //! @ingroup beam
 
-class BA_CORE_API_ FootprintGauss : public IFootprintFactor
+class FootprintGauss : public IFootprintFactor
 {
 public:
     FootprintGauss(const std::vector<double> P);

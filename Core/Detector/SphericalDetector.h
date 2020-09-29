@@ -23,7 +23,7 @@ class SphericalPixel;
 //! A spherical detector with axes and resolution function.
 //! @ingroup detector
 
-class BA_CORE_API_ SphericalDetector : public IDetector2D
+class SphericalDetector : public IDetector2D
 {
 public:
     SphericalDetector();
@@ -50,7 +50,7 @@ public:
     AxesUnits defaultAxesUnits() const override;
 
 protected:
-    //! Create an IPixel for the given OutputData object and index
+    //! Creates an IPixel for the given OutputData object and index
     IPixel* createPixel(size_t index) const override;
 
     //! Returns the name for the axis with given index
@@ -59,7 +59,7 @@ protected:
     //! Returns index of pixel that contains the specular wavevector.
     //! If no pixel contains this specular wavevector, the number of pixels is
     //! returned. This corresponds to an overflow index.
-    size_t getIndexOfSpecular(const Beam& beam) const override;
+    size_t indexOfSpecular(const Beam& beam) const override;
 };
 
 #endif // BORNAGAIN_CORE_DETECTOR_SPHERICALDETECTOR_H

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_COMPUTATION_PROGRESSHANDLER_H
 #define BORNAGAIN_CORE_COMPUTATION_PROGRESSHANDLER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 
 class MultiLayer;
@@ -28,7 +27,7 @@ class MultiLayer;
 //!
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ ProgressHandler
+class ProgressHandler
 {
 public:
     typedef std::function<bool(size_t)> Callback_t;

@@ -28,7 +28,7 @@ class IInterferenceFunction;
 
 // NOTE: When domain structures are implemented, this interface would probably undergo
 // major changes, because a domain layout would not contain particles
-class BA_CORE_API_ ILayout : public ISample
+class ILayout : public ISample
 {
 public:
     ILayout();

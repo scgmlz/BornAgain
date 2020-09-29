@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_COMBOPROPERTY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_COMBOPROPERTY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <QVariant>
 #include <QVector>
@@ -23,7 +22,7 @@
 //! Custom property to define list of string values with multiple selections.
 //! Intended for QVariant.
 
-class BA_CORE_API_ ComboProperty
+class ComboProperty
 {
 public:
     ComboProperty();

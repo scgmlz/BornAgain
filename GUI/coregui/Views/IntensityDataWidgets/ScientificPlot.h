@@ -24,7 +24,7 @@ class ScientificPlotEvent;
 
 //! Common interface for plot-descriptor interaction
 
-class BA_CORE_API_ ScientificPlot : public SessionItemWidget
+class ScientificPlot : public SessionItemWidget
 {
     Q_OBJECT
 

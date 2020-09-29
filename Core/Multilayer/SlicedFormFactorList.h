@@ -36,7 +36,7 @@ public:
     SlicedFormFactorList& operator=(SlicedFormFactorList&& other) = default;
     ~SlicedFormFactorList() = default;
 
-    static SlicedFormFactorList CreateSlicedFormFactors(const IParticle& particle,
+    static SlicedFormFactorList createSlicedFormFactors(const IParticle& particle,
                                                         const std::vector<Slice>& slices,
                                                         double z_ref);
 

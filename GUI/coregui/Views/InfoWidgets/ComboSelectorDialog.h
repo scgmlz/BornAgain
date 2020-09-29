@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_COMBOSELECTORDIALOG_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_COMBOSELECTORDIALOG_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 #include <QString>
 
@@ -25,7 +24,7 @@ class QBoxLayout;
 
 //! A dialog similar to standard QMessageBox with combo box selector.
 
-class BA_CORE_API_ ComboSelectorDialog : public QDialog
+class ComboSelectorDialog : public QDialog
 {
     Q_OBJECT
 public:

@@ -117,7 +117,7 @@ void TestComponentView::init_source()
 {
     SampleBuilderFactory factory;
     const std::unique_ptr<MultiLayer> sample(
-        factory.createSample("CylindersWithSizeDistributionBuilder"));
+        factory.createSampleByName("CylindersWithSizeDistributionBuilder"));
     GUIObjectBuilder::populateSampleModel(m_sampleModel, m_materialModel, *sample);
     m_sampleModel->insertNewItem("Vector");
     m_sampleModel->insertNewItem("GISASBeam");

@@ -24,7 +24,7 @@ class Material;
 //! Pure virtual base class for sample components and properties related to scattering.
 //! @ingroup samples_internal
 
-class BA_CORE_API_ ISample : public ICloneable, public INode
+class ISample : public ICloneable, public INode
 {
 public:
     ISample() = default;

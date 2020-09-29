@@ -25,7 +25,7 @@ class QComboBox;
 //! ComboBox to switch ItemComboWidget, and dynamic list of actions, which are updated
 //! according to current state of ItemComboWidget.
 
-class BA_CORE_API_ ItemComboToolBar : public StyledToolBar
+class ItemComboToolBar : public StyledToolBar
 {
     Q_OBJECT
 

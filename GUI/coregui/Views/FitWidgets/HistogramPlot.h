@@ -15,11 +15,10 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_HISTOGRAMPLOT_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_HISTOGRAMPLOT_H
 
-#include "Wrap/WinDllMacros.h"
 #include "qcustomplot.h"
 #include <QWidget>
 
-class BA_CORE_API_ HistogramPlot : public QWidget
+class HistogramPlot : public QWidget
 {
     Q_OBJECT
 public:

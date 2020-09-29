@@ -22,7 +22,7 @@ foreach(example ${examples})
     set(script_path ${example})
 
     get_filename_component(script_name ${script_path} NAME_WE)
-    set(test_name PyExamples/${script_name})
+    set(test_name PyExamples.${script_name})
 
     add_test(${test_name} ${Python3_EXECUTABLE} ${test_script} ${script_path})
     set_tests_properties(${test_name} PROPERTIES LABELS "Fullcheck")

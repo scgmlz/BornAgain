@@ -25,7 +25,7 @@ class ColumnResizer;
 //! Environment editor (i.e. background) for instrument editors.
 //! Operates on InstrumentItem.
 
-class BA_CORE_API_ EnvironmentEditor : public SessionItemWidget
+class EnvironmentEditor : public SessionItemWidget
 {
     Q_OBJECT
 

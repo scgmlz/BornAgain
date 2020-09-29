@@ -25,7 +25,7 @@ class ProcessedLayout;
 //! Methods to generate a simulation strategy for a ParticleLayoutComputation.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ LayoutStrategyBuilder
+class LayoutStrategyBuilder
 {
 public:
     LayoutStrategyBuilder(const ProcessedLayout* p_layout, const SimulationOptions& sim_params,

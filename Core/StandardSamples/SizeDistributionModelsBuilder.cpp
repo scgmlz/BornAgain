@@ -17,34 +17,27 @@
 #include "Core/Aggregate/ParticleLayout.h"
 #include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Parametrization/Distributions.h"
 #include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleDistribution.h"
+#include "Core/StandardSamples/ReferenceMaterials.h"
 
 MultiLayer* SizeDistributionDAModelBuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material m_ambience = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material m_substrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material m_particle = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
     // cylindrical particle 1
     double radius1(5 * Units::nanometer);
     double height1 = radius1;
     FormFactorCylinder cylinder_ff1(radius1, height1);
-    Particle cylinder1(m_particle, cylinder_ff1);
+    Particle cylinder1(refMat::Particle, cylinder_ff1);
 
     // cylindrical particle 2
     double radius2(8 * Units::nanometer);
     double height2(radius2);
     FormFactorCylinder cylinder_ff2(radius2, height2);
-    Particle cylinder2(m_particle, cylinder_ff2);
+    Particle cylinder2(refMat::Particle, cylinder_ff2);
 
     // interference function
     InterferenceFunctionRadialParaCrystal interference(18.0 * Units::nanometer,
@@ -58,11 +51,12 @@ MultiLayer* SizeDistributionDAModelBuilder::buildSample() const
     particle_layout.addParticle(cylinder2, 0.2);
     particle_layout.setInterferenceFunction(interference);
 
-    Layer air_layer(m_ambience);
-    air_layer.addLayout(particle_layout);
-    Layer substrate_layer(m_substrate);
+    Layer vacuum_layer(refMat::Vacuum);
+    vacuum_layer.addLayout(particle_layout);
+    Layer substrate_layer(refMat::Substrate);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
     return multi_layer;
 }
@@ -71,23 +65,17 @@ MultiLayer* SizeDistributionDAModelBuilder::buildSample() const
 
 MultiLayer* SizeDistributionLMAModelBuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material m_ambience = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material m_substrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material m_particle = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
     // cylindrical particle 1
     double radius1(5 * Units::nanometer);
     double height1 = radius1;
     FormFactorCylinder cylinder_ff1(radius1, height1);
-    Particle cylinder1(m_particle, cylinder_ff1);
+    Particle cylinder1(refMat::Particle, cylinder_ff1);
 
     // cylindrical particle 2
     double radius2(8 * Units::nanometer);
     double height2(radius2);
     FormFactorCylinder cylinder_ff2(radius2, height2);
-    Particle cylinder2(m_particle, cylinder_ff2);
+    Particle cylinder2(refMat::Particle, cylinder_ff2);
 
     // interference function1
     InterferenceFunctionRadialParaCrystal interference1(16.8 * Units::nanometer,
@@ -109,14 +97,14 @@ MultiLayer* SizeDistributionLMAModelBuilder::buildSample() const
     particle_layout2.addParticle(cylinder2, 0.2);
     particle_layout2.setInterferenceFunction(interference2);
 
-    Layer air_layer(m_ambience);
-    air_layer.addLayout(particle_layout1);
-    air_layer.addLayout(particle_layout2);
-    Layer substrate_layer(m_substrate);
+    Layer vacuum_layer(refMat::Vacuum);
+    vacuum_layer.addLayout(particle_layout1);
+    vacuum_layer.addLayout(particle_layout2);
+    Layer substrate_layer(refMat::Substrate);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
-
     return multi_layer;
 }
 
@@ -124,23 +112,17 @@ MultiLayer* SizeDistributionLMAModelBuilder::buildSample() const
 
 MultiLayer* SizeDistributionSSCAModelBuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material m_ambience = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material m_substrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material m_particle = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
     // cylindrical particle 1
     double radius1(5 * Units::nanometer);
     double height1 = radius1;
     FormFactorCylinder cylinder_ff1(radius1, height1);
-    Particle cylinder1(m_particle, cylinder_ff1);
+    Particle cylinder1(refMat::Particle, cylinder_ff1);
 
     // cylindrical particle 2
     double radius2(8 * Units::nanometer);
     double height2(radius2);
     FormFactorCylinder cylinder_ff2(radius2, height2);
-    Particle cylinder2(m_particle, cylinder_ff2);
+    Particle cylinder2(refMat::Particle, cylinder_ff2);
 
     // interference function
     InterferenceFunctionRadialParaCrystal interference(18.0 * Units::nanometer,
@@ -155,13 +137,13 @@ MultiLayer* SizeDistributionSSCAModelBuilder::buildSample() const
     particle_layout.addParticle(cylinder2, 0.2);
     particle_layout.setInterferenceFunction(interference);
 
-    Layer air_layer(m_ambience);
-    air_layer.addLayout(particle_layout);
-    Layer substrate_layer(m_substrate);
+    Layer vacuum_layer(refMat::Vacuum);
+    vacuum_layer.addLayout(particle_layout);
+    Layer substrate_layer(refMat::Substrate);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
-
     return multi_layer;
 }
 
@@ -169,12 +151,7 @@ MultiLayer* SizeDistributionSSCAModelBuilder::buildSample() const
 
 MultiLayer* CylindersInSSCABuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
-    Layer air_layer(air_material);
+    Layer vacuum_layer(refMat::Vacuum);
 
     InterferenceFunctionRadialParaCrystal interference_function(15.0 * Units::nanometer,
                                                                 1e3 * Units::nanometer);
@@ -184,7 +161,7 @@ MultiLayer* CylindersInSSCABuilder::buildSample() const
     ParticleLayout particle_layout;
 
     FormFactorCylinder ff_cylinder(5.0 * Units::nanometer, 5.0 * Units::nanometer);
-    Particle particle_prototype(particle_material, ff_cylinder);
+    Particle particle_prototype(refMat::Particle, ff_cylinder);
 
     DistributionGaussian gauss(5.0 * Units::nanometer, 1.25 * Units::nanometer);
     ParameterPattern pattern_radius;
@@ -198,8 +175,9 @@ MultiLayer* CylindersInSSCABuilder::buildSample() const
 
     particle_layout.setInterferenceFunction(interference_function);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     return multi_layer;
 }

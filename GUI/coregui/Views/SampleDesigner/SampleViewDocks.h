@@ -28,7 +28,7 @@ class QAction;
 
 //! Holds all docked widgets for SampleView.
 
-class BA_CORE_API_ SampleViewDocks : public DocksController
+class SampleViewDocks : public DocksController
 {
     Q_OBJECT
 

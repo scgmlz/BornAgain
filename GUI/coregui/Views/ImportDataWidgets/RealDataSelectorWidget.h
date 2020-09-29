@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class RealDataPropertiesWidget;
@@ -36,7 +35,7 @@ class MiniSplitter;
 //! select data set (ItemSelectorWidget) and properties of currently selected data
 //! (RealDataPropertiesWidget).
 
-class BA_CORE_API_ RealDataSelectorWidget : public QWidget
+class RealDataSelectorWidget : public QWidget
 {
     Q_OBJECT
 

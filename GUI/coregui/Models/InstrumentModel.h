@@ -19,7 +19,7 @@
 
 class InstrumentItem;
 
-class BA_CORE_API_ InstrumentModel : public SessionModel
+class InstrumentModel : public SessionModel
 {
     Q_OBJECT
 

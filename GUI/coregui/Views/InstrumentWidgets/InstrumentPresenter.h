@@ -20,7 +20,7 @@
 //! Contains stack of instrument editors and the logic to show proper editor for certain type
 //! of instrument (GISAS, OffSpec and Specular). Main component of InstrumentEditorWidget.
 
-class BA_CORE_API_ InstrumentPresenter : public ItemComboWidget
+class InstrumentPresenter : public ItemComboWidget
 {
     Q_OBJECT
 

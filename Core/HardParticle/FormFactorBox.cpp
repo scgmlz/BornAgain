@@ -20,12 +20,12 @@
 //! @param width: width of the base in nanometers
 //! @param height: height of the box in nanometers
 FormFactorBox::FormFactorBox(const std::vector<double> P)
-    : FormFactorPolygonalPrism({"Box",
-                                "class_tooltip",
-                                {{"Length", "nm", "para_tooltip", 0, +INF, 0},
-                                 {"Width", "nm", "para_tooltip", 0, +INF, 0},
-                                 {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
-                               P),
+    : IFormFactorPrism({"Box",
+                        "class_tooltip",
+                        {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                         {"Width", "nm", "para_tooltip", 0, +INF, 0},
+                         {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                       P),
       m_length(m_P[0]), m_width(m_P[1]), m_height(m_P[2])
 {
     onChange();
@@ -49,7 +49,7 @@ IFormFactor* FormFactorBox::sliceFormFactor(ZLimits limits, const IRotation& rot
 {
     auto effects = computeSlicingEffects(limits, translation, m_height);
     FormFactorBox slicedff(m_length, m_width, m_height - effects.dz_bottom - effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorBox::onChange()

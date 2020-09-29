@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTUTILS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QList>
 #include <QStringList>
 
@@ -27,10 +26,10 @@ namespace ComponentUtils
 {
 
 //! Returns list of strings representing modelTypes suitable for editing in component editors.
-BA_CORE_API_ QStringList propertyRelatedTypes();
+QStringList propertyRelatedTypes();
 
 //! Returns list of SessionItem's children suitable for editing in property editors.
-BA_CORE_API_ QList<const SessionItem*> componentItems(const SessionItem& item);
+QList<const SessionItem*> componentItems(const SessionItem& item);
 
 } // namespace ComponentUtils
 

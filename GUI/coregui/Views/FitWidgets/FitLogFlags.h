@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOGFLAGS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOGFLAGS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QColor>
 #include <QFlags>
 
 //! Flags for log records related to fitting.
 
-class BA_CORE_API_ FitLogFlags
+class FitLogFlags
 {
 public:
     enum EMessageType { DEFAULT, SUCCESS, HIGHLIGHT, WARNING, ERROR };

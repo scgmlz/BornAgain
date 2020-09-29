@@ -27,14 +27,14 @@ namespace UnitConverterUtils
 {
 
 //! Returns zero-valued output data array in specified units
-BA_CORE_API_ std::unique_ptr<OutputData<double>> createOutputData(const IUnitConverter& converter,
-                                                                  AxesUnits units);
+std::unique_ptr<OutputData<double>> createOutputData(const IUnitConverter& converter,
+                                                     AxesUnits units);
 
 //! Helper factory function to use in GISASSimulation. Depending on the type of detector,
 //! returns either RectangularConverter or SphericalConverter.
-BA_CORE_API_ std::unique_ptr<IUnitConverter> createConverterForGISAS(const Instrument& instrument);
+std::unique_ptr<IUnitConverter> createConverterForGISAS(const Instrument& instrument);
 
-BA_CORE_API_ std::unique_ptr<IUnitConverter> createConverter(const Simulation& simulation);
+std::unique_ptr<IUnitConverter> createConverter(const Simulation& simulation);
 } // namespace UnitConverterUtils
 
 #endif // BORNAGAIN_CORE_SIMULATION_UNITCONVERTERUTILS_H

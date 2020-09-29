@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_UPDATENOTIFIERWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_UPDATENOTIFIERWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class UpdateNotifier;
@@ -24,7 +23,7 @@ class QShowEvent;
 
 //! Small on WelcomeView for notofications about updates.
 
-class BA_CORE_API_ UpdateNotifierWidget : public QWidget
+class UpdateNotifierWidget : public QWidget
 {
     Q_OBJECT
 public:

@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCUBOCTAHEDRON_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCUBOCTAHEDRON_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A truncated bifrustum with quadratic base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorCuboctahedron : public FormFactorPolyhedron
+class FormFactorCuboctahedron : public IFormFactorPolyhedron
 {
 public:
     FormFactorCuboctahedron(const std::vector<double> P);

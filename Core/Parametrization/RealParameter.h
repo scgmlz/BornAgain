@@ -28,7 +28,7 @@ class ParameterPool;
 //! this class holds Limits, Attributes (currently only fixed or not), and a Unit.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ RealParameter : public IParameter<double>
+class RealParameter : public IParameter<double>
 {
 public:
     RealParameter(const std::string& name, double* par, const std::string& parent_name = "",

@@ -30,7 +30,7 @@ class Minuit2Minimizer;
 //! See Minuit2 user manual https://root.cern.ch/root/htmldoc/guides/minuit2/Minuit2.pdf.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ Minuit2Minimizer : public RootMinimizerAdapter
+class Minuit2Minimizer : public RootMinimizerAdapter
 {
 public:
     Minuit2Minimizer(const std::string& algorithmName = "Migrad");

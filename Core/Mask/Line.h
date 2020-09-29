@@ -20,7 +20,7 @@
 //! A line segment.
 //! @ingroup mask
 
-class BA_CORE_API_ Line : public IShape2D
+class Line : public IShape2D
 {
 public:
     Line(double x1, double y1, double x2, double y2);
@@ -36,7 +36,7 @@ private:
 //! An infinite vertical line.
 //! @ingroup mask
 
-class BA_CORE_API_ VerticalLine : public IShape2D
+class VerticalLine : public IShape2D
 {
 public:
     VerticalLine(double x);
@@ -54,7 +54,7 @@ private:
 //! An infinite horizontal line.
 //! @ingroup mask
 
-class BA_CORE_API_ HorizontalLine : public IShape2D
+class HorizontalLine : public IShape2D
 {
 public:
     HorizontalLine(double y);

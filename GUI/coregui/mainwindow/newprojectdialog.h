@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_NEWPROJECTDIALOG_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_NEWPROJECTDIALOG_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 #include <QLineEdit>
 
 class QLabel;
 
 //! new project dialog window
-class BA_CORE_API_ NewProjectDialog : public QDialog
+class NewProjectDialog : public QDialog
 {
     Q_OBJECT
 public:

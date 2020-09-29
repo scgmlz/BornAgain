@@ -27,7 +27,7 @@ class DetectorContext;
 //! Abstract 2D detector interface.
 //! @ingroup detector
 
-class BA_CORE_API_ IDetector2D : public IDetector
+class IDetector2D : public IDetector
 {
 public:
     IDetector2D();
@@ -70,13 +70,13 @@ public:
     //! Returns vector of unmasked detector indices.
     std::vector<size_t> active_indices() const;
 
-    //! Create an IPixel for the given OutputData object and index
+    //! Creates an IPixel for the given OutputData object and index
     virtual IPixel* createPixel(size_t index) const = 0;
 
     //! Returns index of pixel that contains the specular wavevector.
     //! If no pixel contains this specular wavevector, the number of pixels is
     //! returned. This corresponds to an overflow index.
-    virtual size_t getIndexOfSpecular(const Beam& beam) const = 0;
+    virtual size_t indexOfSpecular(const Beam& beam) const = 0;
 
 #ifndef SWIG
     std::unique_ptr<DetectorContext> createContext() const;

@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_FIT_TOOLS_WALLCLOCKTIMER_H
 #define BORNAGAIN_FIT_TOOLS_WALLCLOCKTIMER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 struct WallclockTimerState;
 
 //! A timer for measuring real (wall-clock) time spent between 'start' and 'stop' commands.
 
-class BA_CORE_API_ WallclockTimer
+class WallclockTimer
 {
 public:
     WallclockTimer();

@@ -63,7 +63,7 @@ IFormFactor* FormFactorFullSpheroid::sliceFormFactor(ZLimits limits, const IRota
     auto effects = computeSlicingEffects(limits, translation, m_height);
     FormFactorTruncatedSpheroid slicedff(m_radius, m_height - effects.dz_bottom, flattening,
                                          effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorFullSpheroid::onChange()

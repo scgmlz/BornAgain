@@ -23,7 +23,7 @@ class SessionItem;
 
 //! Provides logic for manipulating items belonging to GroupItem parent.
 
-class BA_CORE_API_ GroupItemController
+class GroupItemController
 {
 public:
     GroupItemController(SessionItem* groupItem, GroupInfo groupInfo);

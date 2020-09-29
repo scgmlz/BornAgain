@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Binning/IPixel.h
-//! @brief     Defines interface IPixel.
+//! @brief     Defines pure virtual interface IPixel (has no cpp file)
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -16,12 +16,11 @@
 #define BORNAGAIN_CORE_BINNING_IPIXEL_H
 
 #include "Core/Vector/Vectors3D.h"
-#include "Wrap/WinDllMacros.h"
 
 //! Interface for a function that maps [0,1]x[0,1] to the kvectors in a pixel.
 //! @ingroup detector
 
-class BA_CORE_API_ IPixel
+class IPixel
 {
 public:
     virtual ~IPixel() {}

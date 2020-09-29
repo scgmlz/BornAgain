@@ -18,37 +18,35 @@
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/RealParameter.h"
-
-MultiLayerWithRoughnessBuilder::MultiLayerWithRoughnessBuilder()
-    : m_thicknessA(2.5 * Units::nanometer), m_thicknessB(5.0 * Units::nanometer),
-      m_sigma(1.0 * Units::nanometer), m_hurst(0.3), m_lateralCorrLength(5.0 * Units::nanometer),
-      m_crossCorrLength(10.0 * Units::nanometer)
-{
-}
 
 MultiLayer* MultiLayerWithRoughnessBuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-    Material air_material = HomogeneousMaterial("Air", 0., 0.);
+    const double thicknessA(2.5 * Units::nanometer);
+    const double thicknessB(5.0 * Units::nanometer);
+    const double sigma(1.0 * Units::nanometer);
+    const double hurst(0.3);
+    const double lateralCorrLength(5.0 * Units::nanometer);
+    const double crossCorrLength(10.0 * Units::nanometer);
+
+    Material vacuum_material = HomogeneousMaterial("Vacuum", 0., 0.);
     Material substrate_material = HomogeneousMaterial("Substrate", 15e-6, 0.0);
     Material part_a_material = HomogeneousMaterial("PartA", 5e-6, 0.0);
     Material part_b_material = HomogeneousMaterial("PartB", 10e-6, 0.0);
 
-    Layer air_layer(air_material, 0);
-    Layer partA_layer(part_a_material, m_thicknessA);
-    Layer partB_layer(part_b_material, m_thicknessB);
+    Layer vacuum_layer(vacuum_material, 0);
+    Layer partA_layer(part_a_material, thicknessA);
+    Layer partB_layer(part_b_material, thicknessB);
     Layer substrate_layer(substrate_material, 0);
 
-    LayerRoughness roughness(m_sigma, m_hurst, m_lateralCorrLength);
+    LayerRoughness roughness(sigma, hurst, lateralCorrLength);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     for (int i = 0; i < 5; ++i) {
         multi_layer->addLayerWithTopRoughness(partA_layer, roughness);
         multi_layer->addLayerWithTopRoughness(partB_layer, roughness);
     }
-
     multi_layer->addLayerWithTopRoughness(substrate_layer, roughness);
-    multi_layer->setCrossCorrLength(m_crossCorrLength);
+    multi_layer->setCrossCorrLength(crossCorrLength);
     return multi_layer;
 }

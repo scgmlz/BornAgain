@@ -22,8 +22,8 @@ class ParticleCoreShell;
 class BA_CORE_API_ ParticleCoreShellItem : public SessionGraphicsItem
 {
 public:
-    const static QString T_CORE;
-    const static QString T_SHELL;
+    static const QString T_CORE;
+    static const QString T_SHELL;
     ParticleCoreShellItem();
     std::unique_ptr<ParticleCoreShell> createParticleCoreShell() const;
     QVector<SessionItem*> materialPropertyItems();

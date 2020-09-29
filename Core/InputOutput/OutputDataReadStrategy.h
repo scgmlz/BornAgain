@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADSTRATEGY_H
 #define BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAREADSTRATEGY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <istream>
 
 template <class T> class OutputData;
@@ -23,7 +22,7 @@ template <class T> class OutputData;
 //! Interface for reading strategy of OutputData from file.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ IOutputDataReadStrategy
+class IOutputDataReadStrategy
 {
 public:
     virtual ~IOutputDataReadStrategy() {}
@@ -33,7 +32,7 @@ public:
 //! Strategy to read BornAgain native IntensityData from ASCII file.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataReadINTStrategy : public IOutputDataReadStrategy
+class OutputDataReadINTStrategy : public IOutputDataReadStrategy
 {
 public:
     OutputData<double>* readOutputData(std::istream& input_stream);
@@ -42,7 +41,7 @@ public:
 //! Strategy to read Reflectometry data from ASCII file.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataReadReflectometryStrategy : public IOutputDataReadStrategy
+class OutputDataReadReflectometryStrategy : public IOutputDataReadStrategy
 {
 public:
     OutputData<double>* readOutputData(std::istream& input_stream);
@@ -51,7 +50,7 @@ public:
 //! Strategy to read OutputData from simple ASCII file with the layout as in numpy.savetxt.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataReadNumpyTXTStrategy : public IOutputDataReadStrategy
+class OutputDataReadNumpyTXTStrategy : public IOutputDataReadStrategy
 {
 public:
     OutputData<double>* readOutputData(std::istream& input_stream);
@@ -64,7 +63,7 @@ class TiffHandler;
 //! Strategy to read a TIFF file.
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataReadTiffStrategy : public IOutputDataReadStrategy
+class OutputDataReadTiffStrategy : public IOutputDataReadStrategy
 {
 public:
     OutputDataReadTiffStrategy();

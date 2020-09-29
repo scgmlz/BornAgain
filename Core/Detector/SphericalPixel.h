@@ -21,7 +21,7 @@ struct Bin1D;
 
 //! A pixel in a SphericalDetector
 
-class BA_CORE_API_ SphericalPixel : public IPixel
+class SphericalPixel : public IPixel
 {
 public:
     SphericalPixel(const Bin1D& alpha_bin, const Bin1D& phi_bin);

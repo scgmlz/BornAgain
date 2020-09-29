@@ -18,12 +18,11 @@
 #include "Core/Parametrization/INode.h"
 #include "Core/Vector/EigenCore.h"
 #include "Core/Vector/Vectors3D.h"
-#include "Wrap/WinDllMacros.h"
 
 //! Detector properties (efficiency, transmission).
 //! @ingroup detector
 
-class BA_CORE_API_ DetectionProperties : public INode
+class DetectionProperties : public INode
 {
 public:
     DetectionProperties(kvector_t direction, double efficiency, double total_transmission);

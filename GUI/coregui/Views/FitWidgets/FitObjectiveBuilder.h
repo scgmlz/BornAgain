@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITOBJECTIVEBUILDER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITOBJECTIVEBUILDER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class JobItem;
@@ -30,7 +29,7 @@ class IMinimizer;
 class GUIFitObserver;
 class IChiSquaredModule;
 
-class BA_CORE_API_ FitObjectiveBuilder
+class FitObjectiveBuilder
 {
 public:
     FitObjectiveBuilder(JobItem* jobItem);

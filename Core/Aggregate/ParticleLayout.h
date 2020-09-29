@@ -27,7 +27,7 @@ class IParticle;
 //! Decorator class that adds particles to ISample objects.
 //! @ingroup samples
 
-class BA_CORE_API_ ParticleLayout : public ILayout
+class ParticleLayout : public ILayout
 {
 public:
     ParticleLayout();

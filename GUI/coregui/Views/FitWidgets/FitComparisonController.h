@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONCONTROLLER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONCONTROLLER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class DataItem;
@@ -28,7 +27,7 @@ class SpecularDataItem;
 //! Provides synchronization between certain properties of fit related IntensityDataItems.
 //! Used solely in FitComparisonWidget.
 
-class BA_CORE_API_ FitComparisonController2D : public QObject
+class FitComparisonController2D : public QObject
 {
 public:
     class DiffItemController;

@@ -15,10 +15,9 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ITEMTREEVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ITEMTREEVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QTreeView>
 
-class BA_CORE_API_ ItemTreeView : public QTreeView
+class ItemTreeView : public QTreeView
 {
     Q_OBJECT
 public:

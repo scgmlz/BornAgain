@@ -26,7 +26,7 @@
 //!
 //! @ingroup samples
 
-class BA_CORE_API_ LayerRoughness : public ISample
+class LayerRoughness : public ISample
 {
 public:
     LayerRoughness(double sigma, double hurstParameter, double lateralCorrLength);

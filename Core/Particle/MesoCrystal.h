@@ -22,7 +22,7 @@ class IClusteredParticles;
 //! A particle with an internal structure of smaller particles.
 //! @ingroup samples
 
-class BA_CORE_API_ MesoCrystal : public IParticle
+class MesoCrystal : public IParticle
 {
 public:
     MesoCrystal(const IClusteredParticles& particle_structure, const IFormFactor& form_factor);

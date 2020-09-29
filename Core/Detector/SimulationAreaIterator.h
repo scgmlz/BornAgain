@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_SIMULATIONAREAITERATOR_H
 #define BORNAGAIN_CORE_DETECTOR_SIMULATIONAREAITERATOR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <cstdlib>
 class SimulationArea;
 
 //! An iterator for SimulationArea.
 //! @ingroup detector
 
-class BA_CORE_API_ SimulationAreaIterator
+class SimulationAreaIterator
 {
 public:
     explicit SimulationAreaIterator(const SimulationArea* area, size_t start_at_index);

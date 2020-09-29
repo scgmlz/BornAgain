@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERSCENE_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERSCENE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsScene>
 #include <QMap>
 #include <QModelIndex>
@@ -35,7 +34,7 @@ class FilterPropertyProxy;
 class MaterialModel;
 
 //! Main class which represents SessionModel on graphics scene
-class BA_CORE_API_ DesignerScene : public QGraphicsScene
+class DesignerScene : public QGraphicsScene
 {
     Q_OBJECT
 

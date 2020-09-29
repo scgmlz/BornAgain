@@ -27,7 +27,7 @@ class ColumnResizer;
 //! Polarization analysis editor (beam polarization, analyzer properies) for GISASInstrumentEditor.
 //! Operates on GISASInstrumentItem.
 
-class BA_CORE_API_ PolarizationAnalysisEditor : public SessionItemWidget
+class PolarizationAnalysisEditor : public SessionItemWidget
 {
     Q_OBJECT
 

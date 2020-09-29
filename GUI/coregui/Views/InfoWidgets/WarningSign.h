@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class WarningSignWidget;

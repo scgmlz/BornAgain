@@ -17,7 +17,6 @@
 
 #include "Core/Intensity/IUnitConverter.h"
 #include "Core/Tools/PyObject.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <vector>
 
@@ -38,7 +37,7 @@ struct AxisInfo {
 //! Wrapper around OutputData<double> that also provides unit conversions.
 //! @ingroup detector
 
-class BA_CORE_API_ SimulationResult
+class SimulationResult
 {
 public:
     SimulationResult() = default;

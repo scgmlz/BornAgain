@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCONE6_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCONE6_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A frustum (truncated pyramid) with regular hexagonal base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorCone6 : public FormFactorPolyhedron
+class FormFactorCone6 : public IFormFactorPolyhedron
 {
 public:
     FormFactorCone6(const std::vector<double> P);

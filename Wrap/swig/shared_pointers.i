@@ -1,1 +1,1 @@
-%shared_ptr(IMultiLayerBuilder)
+%shared_ptr(ISampleBuilder)

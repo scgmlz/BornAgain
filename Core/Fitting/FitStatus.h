@@ -18,7 +18,6 @@
 #include "Core/Fitting/FitObserver.h"
 #include "Core/Fitting/FitTypes.h"
 #include "Core/Fitting/IterationInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <vector>
 
@@ -33,7 +32,7 @@ class FitPrintService;
 //! information which has to be collected during the fit.
 //! Owned by FitObjective.
 
-class BA_CORE_API_ FitStatus
+class FitStatus
 {
 public:
     FitStatus(const FitObjective* fit_objective);

@@ -21,7 +21,7 @@
 //! An ellipsoid with two equal axis, truncated by a plane perpendicular to the third axis.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorTruncatedSpheroid : public IFormFactorBorn
+class FormFactorTruncatedSpheroid : public IFormFactorBorn
 {
 public:
     FormFactorTruncatedSpheroid(const std::vector<double> P);

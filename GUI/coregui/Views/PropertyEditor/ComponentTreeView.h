@@ -31,7 +31,7 @@ class ComponentTreeActions;
 //! Component property tree for SessionItems.
 //! Shows only PropertyItems and current items of GroupProperties.
 
-class BA_CORE_API_ ComponentTreeView : public ComponentView
+class ComponentTreeView : public ComponentView
 {
     Q_OBJECT
 public:

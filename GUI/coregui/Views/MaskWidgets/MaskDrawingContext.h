@@ -16,11 +16,10 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKDRAWINGCONTEXT_H
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
-#include "Wrap/WinDllMacros.h"
 
 //! Helper class for MaskGraphicsScene to hold drawing conditions
 
-class BA_CORE_API_ MaskDrawingContext
+class MaskDrawingContext
 {
 public:
     MaskDrawingContext();

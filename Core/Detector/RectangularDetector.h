@@ -23,7 +23,7 @@ class RectangularPixel;
 //! A flat rectangular detector with axes and resolution function.
 //! @ingroup detector
 
-class BA_CORE_API_ RectangularDetector : public IDetector2D
+class RectangularDetector : public IDetector2D
 {
 public:
     enum EDetectorArrangement {
@@ -55,9 +55,9 @@ public:
                      const kvector_t direction = kvector_t(0.0, -1.0, 0.0));
 
     void setPerpendicularToSampleX(double distance, double u0, double v0);
-
     void setPerpendicularToDirectBeam(double distance, double u0, double v0);
     void setPerpendicularToReflectedBeam(double distance, double u0 = 0.0, double v0 = 0.0);
+
     void setDirectBeamPosition(double u0, double v0);
 
     double getWidth() const;
@@ -79,7 +79,7 @@ public:
     RectangularPixel* regionOfInterestPixel() const;
 
 protected:
-    //! Create an IPixel for the given OutputData object and index
+    //! Creates an IPixel for the given OutputData object and index
     IPixel* createPixel(size_t index) const override;
 
     //! Returns the name for the axis with given index
@@ -88,7 +88,7 @@ protected:
     //! Returns index of pixel that contains the specular wavevector.
     //! If no pixel contains this specular wavevector, the number of pixels is
     //! returned. This corresponds to an overflow index.
-    size_t getIndexOfSpecular(const Beam& beam) const override;
+    size_t indexOfSpecular(const Beam& beam) const override;
 
     //! swap function
     void swapContent(RectangularDetector& other);

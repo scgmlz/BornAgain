@@ -24,12 +24,12 @@
 #include "Core/Intensity/Histogram1D.h"
 #include "Core/Intensity/UnitConverter1D.h"
 #include "Core/Material/MaterialUtils.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Multilayer/SpecularSimulationElement.h"
 #include "Core/Parametrization/Distributions.h"
 #include "Core/Parametrization/ParameterPool.h"
 #include "Core/Parametrization/RealParameter.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 namespace
 {
@@ -52,7 +52,7 @@ SpecularSimulation::SpecularSimulation(const MultiLayer& sample) : Simulation(sa
     initialize();
 }
 
-SpecularSimulation::SpecularSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder)
+SpecularSimulation::SpecularSimulation(const std::shared_ptr<ISampleBuilder> sample_builder)
     : Simulation(sample_builder)
 {
     initialize();
@@ -150,7 +150,7 @@ SpecularSimulation::generateSimulationElements(const Beam& beam)
 
     // add polarization and analyzer operators
     const auto& polarization = beam.getPolarization();
-    const auto& analyzer = m_instrument.getDetector()->detectionProperties().analyzerOperator();
+    const auto& analyzer = m_instrument.detector().detectionProperties().analyzerOperator();
 
     for (auto& elem : elements)
         elem.setPolarizationHandler({polarization, analyzer});
@@ -271,9 +271,8 @@ std::vector<double> SpecularSimulation::rawResults() const
 {
     std::vector<double> result;
     result.resize(m_sim_elements.size());
-    for (unsigned i = 0; i < m_sim_elements.size(); ++i) {
+    for (unsigned i = 0; i < m_sim_elements.size(); ++i)
         result[i] = m_sim_elements[i].getIntensity();
-    }
     return result;
 }
 
@@ -283,9 +282,8 @@ void SpecularSimulation::setRawResults(const std::vector<double>& raw_data)
     if (raw_data.size() != m_sim_elements.size())
         throw std::runtime_error("SpecularSimulation::setRawResults: size of vector passed as "
                                  "argument doesn't match number of elements in this simulation");
-    for (unsigned i = 0; i < raw_data.size(); i++) {
+    for (unsigned i = 0; i < raw_data.size(); i++)
         m_sim_elements[i].setIntensity(raw_data[i]);
-    }
     transferResultsToIntensityMap();
 }
 

@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_UTILS_IMPORTDATAINFO_H
 
 #include "Core/Intensity/IUnitConverter.h"
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <memory>
 
@@ -24,7 +23,7 @@ template <class T> class OutputData;
 
 //! Carries information about loaded data.
 
-class BA_CORE_API_ ImportDataInfo
+class ImportDataInfo
 {
 public:
     ImportDataInfo();

@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_DETECTOR_SIMULATIONAREA_H
 
 #include "Core/Detector/SimulationAreaIterator.h"
-#include "Wrap/WinDllMacros.h"
 
 class IDetector;
 
@@ -24,7 +23,7 @@ class IDetector;
 //! and RegionOfInterest defined.
 //! @ingroup detector
 
-class BA_CORE_API_ SimulationArea
+class SimulationArea
 {
 public:
     using iterator = SimulationAreaIterator;
@@ -59,7 +58,7 @@ inline size_t SimulationArea::totalSize() const
 //! to SimulationArea class, iterates also over masked areas.
 //! @ingroup detector
 
-class BA_CORE_API_ SimulationRoiArea : public SimulationArea
+class SimulationRoiArea : public SimulationArea
 {
 public:
     explicit SimulationRoiArea(const IDetector* detector);

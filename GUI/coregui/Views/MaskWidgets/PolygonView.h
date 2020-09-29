@@ -20,7 +20,7 @@
 
 //! This is a View of polygon mask (represented by PolygonItem) on GraphicsScene.
 
-class BA_CORE_API_ PolygonView : public IShape2DView
+class PolygonView : public IShape2DView
 {
     Q_OBJECT
 

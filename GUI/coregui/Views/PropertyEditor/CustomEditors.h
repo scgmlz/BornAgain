@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_CUSTOMEDITORS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_CUSTOMEDITORS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QVariant>
 #include <QWidget>
 
@@ -26,7 +25,7 @@ class RealLimits;
 
 //! Base class for all custom variants editors.
 
-class BA_CORE_API_ CustomEditor : public QWidget
+class CustomEditor : public QWidget
 {
     Q_OBJECT
 public:
@@ -49,7 +48,7 @@ protected:
 
 //! Editor for ExternalProperty variant.
 
-class BA_CORE_API_ ExternalPropertyEditor : public CustomEditor
+class ExternalPropertyEditor : public CustomEditor
 {
     Q_OBJECT
 public:
@@ -72,7 +71,7 @@ private:
 
 //! Editor for ComboProperty variant.
 
-class BA_CORE_API_ ComboPropertyEditor : public CustomEditor
+class ComboPropertyEditor : public CustomEditor
 {
     Q_OBJECT
 public:
@@ -96,7 +95,7 @@ protected:
 
 //! Editor for ScientificDoubleProperty variant.
 
-class BA_CORE_API_ ScientificDoublePropertyEditor : public CustomEditor
+class ScientificDoublePropertyEditor : public CustomEditor
 {
     Q_OBJECT
 public:
@@ -117,7 +116,7 @@ private:
 
 //! Editor for Double variant.
 
-class BA_CORE_API_ DoubleEditor : public CustomEditor
+class DoubleEditor : public CustomEditor
 {
     Q_OBJECT
 public:
@@ -138,7 +137,7 @@ private:
 
 //! Editor for Double variant using ScientificSpinBox.
 
-class BA_CORE_API_ ScientificSpinBoxEditor : public CustomEditor
+class ScientificSpinBoxEditor : public CustomEditor
 {
     Q_OBJECT
 public:
@@ -160,7 +159,7 @@ private:
 
 //! Editor for Int variant.
 
-class BA_CORE_API_ IntEditor : public CustomEditor
+class IntEditor : public CustomEditor
 {
     Q_OBJECT
 public:
@@ -182,7 +181,7 @@ private:
 
 class QCheckBox;
 
-class BA_CORE_API_ BoolEditor : public CustomEditor
+class BoolEditor : public CustomEditor
 {
     Q_OBJECT
 public:

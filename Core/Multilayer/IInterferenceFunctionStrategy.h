@@ -38,7 +38,7 @@ class SimulationElement;
 //!
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IInterferenceFunctionStrategy
+class IInterferenceFunctionStrategy
 {
 public:
     IInterferenceFunctionStrategy(const SimulationOptions& sim_params, bool polarized);

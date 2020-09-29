@@ -24,7 +24,7 @@ class Transform3D;
 //! Pure virtual interface for rotations.
 //! @ingroup samples
 
-class BA_CORE_API_ IRotation : public ICloneable, public INode
+class IRotation : public ICloneable, public INode
 {
 public:
     static IRotation* createRotation(const Transform3D& transform);
@@ -48,11 +48,11 @@ public:
     bool zInvariant() const;
 };
 
-BA_CORE_API_ IRotation* createProduct(const IRotation& left, const IRotation& right);
+IRotation* createProduct(const IRotation& left, const IRotation& right);
 
 //! The identity rotation, which leaves everything in place.
 
-class BA_CORE_API_ IdentityRotation : public IRotation // TODO get rid of this class
+class IdentityRotation : public IRotation // TODO get rid of this class
 {
 public:
     IdentityRotation();
@@ -69,7 +69,7 @@ public:
 
 //! A rotation about the x axis.
 
-class BA_CORE_API_ RotationX : public IRotation
+class RotationX : public IRotation
 {
 public:
     RotationX(const std::vector<double> P);
@@ -90,7 +90,7 @@ protected:
 
 //! A rotation about the y axis.
 
-class BA_CORE_API_ RotationY : public IRotation
+class RotationY : public IRotation
 {
 public:
     RotationY(const std::vector<double> P);
@@ -111,7 +111,7 @@ protected:
 
 //! A rotation about the z axis.
 
-class BA_CORE_API_ RotationZ : public IRotation
+class RotationZ : public IRotation
 {
 public:
     RotationZ(const std::vector<double> P);
@@ -132,7 +132,7 @@ protected:
 
 //! A sequence of rotations about the z-x'-z'' axes.
 
-class BA_CORE_API_ RotationEuler : public IRotation
+class RotationEuler : public IRotation
 {
 public:
     RotationEuler(const std::vector<double> P);

@@ -55,7 +55,7 @@ IFormFactor* FormFactorCylinder::sliceFormFactor(ZLimits limits, const IRotation
 {
     auto effects = computeSlicingEffects(limits, translation, m_height);
     FormFactorCylinder slicedff(m_radius, m_height - effects.dz_bottom - effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorCylinder::onChange()

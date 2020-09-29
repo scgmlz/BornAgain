@@ -19,11 +19,11 @@
 //! @param base_edge: length of the base edge in nanometers
 //! @param height: height in nanometers
 FormFactorPrism3::FormFactorPrism3(const std::vector<double> P)
-    : FormFactorPolygonalPrism({"Prism3",
-                                "class_tooltip",
-                                {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                                 {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
-                               P),
+    : IFormFactorPrism({"Prism3",
+                        "class_tooltip",
+                        {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                         {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                       P),
       m_base_edge(m_P[0]), m_height(m_P[1])
 {
     onChange();
@@ -39,7 +39,7 @@ IFormFactor* FormFactorPrism3::sliceFormFactor(ZLimits limits, const IRotation& 
 {
     auto effects = computeSlicingEffects(limits, translation, m_height);
     FormFactorPrism3 slicedff(m_base_edge, m_height - effects.dz_bottom - effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorPrism3::onChange()

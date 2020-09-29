@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_MATERIALEDITORDIALOG_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_MATERIALEDITORDIALOG_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 #include <memory>
 
@@ -28,7 +27,7 @@ class QBoxLayout;
 //! It's main function is to return MaterialModel to original state, if user decided to cancel
 //! changes.
 
-class BA_CORE_API_ MaterialEditorDialog : public QDialog
+class MaterialEditorDialog : public QDialog
 {
     Q_OBJECT
 

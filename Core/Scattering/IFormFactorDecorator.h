@@ -25,7 +25,7 @@
 //!
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ IFormFactorDecorator : public IFormFactor
+class IFormFactorDecorator : public IFormFactor
 {
 public:
     IFormFactorDecorator(const IFormFactor& form_factor) : mp_form_factor(form_factor.clone()) {}

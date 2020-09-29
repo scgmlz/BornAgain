@@ -85,7 +85,7 @@ void ApplicationModels::resetModels()
 
     m_materialModel->clear();
     m_materialModel->addRefractiveMaterial("Default", 1e-3, 1e-5);
-    m_materialModel->addRefractiveMaterial("Air", 0.0, 0.0);
+    m_materialModel->addRefractiveMaterial("Vacuum", 0.0, 0.0);
     m_materialModel->addRefractiveMaterial("Particle", 6e-4, 2e-8);
     m_materialModel->addRefractiveMaterial("Substrate", 6e-6, 2e-8);
 
@@ -160,7 +160,8 @@ void ApplicationModels::createJobModel()
 void ApplicationModels::createTestSample()
 {
     SampleBuilderFactory factory;
-    const std::unique_ptr<MultiLayer> P_sample(factory.createSample("CylindersAndPrismsBuilder"));
+    const std::unique_ptr<MultiLayer> P_sample(
+        factory.createSampleByName("CylindersAndPrismsBuilder"));
 
     GUIObjectBuilder::populateSampleModel(m_sampleModel, m_materialModel, *P_sample);
 

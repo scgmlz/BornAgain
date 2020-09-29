@@ -20,7 +20,7 @@
 //! A spherical detector used for validation with IsGISAXS results.
 //! @ingroup detector
 
-class BA_CORE_API_ IsGISAXSDetector : public SphericalDetector
+class IsGISAXSDetector : public SphericalDetector
 {
 public:
     IsGISAXSDetector();
@@ -40,7 +40,7 @@ protected:
     //! Returns index of pixel that contains the specular wavevector.
     //! If no pixel contains this specular wavevector, the number of pixels is
     //! returned. This corresponds to an overflow index.
-    size_t getIndexOfSpecular(const Beam& beam) const override;
+    size_t indexOfSpecular(const Beam& beam) const override;
 };
 
 #endif // BORNAGAIN_CORE_DETECTOR_ISGISAXSDETECTOR_H

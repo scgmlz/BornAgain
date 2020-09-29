@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORDODECAHEDRON_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORDODECAHEDRON_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A regular dodecahedron.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorDodecahedron : public FormFactorPolyhedron
+class FormFactorDodecahedron : public IFormFactorPolyhedron
 {
 public:
     //! @brief Constructs a regular dodecahedron

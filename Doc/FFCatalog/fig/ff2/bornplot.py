@@ -120,7 +120,7 @@ def get_sample(ff, trafo):
     :param trafo: Optional rotation
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_particle = ba.HomogeneousMaterial("Particle", 1e-5, 0)
 
     # collection of particles
@@ -132,11 +132,11 @@ def get_sample(ff, trafo):
     else:
         particle_layout.addParticle(particle)
 
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     return multi_layer
 
 

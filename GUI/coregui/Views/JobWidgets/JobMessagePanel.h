@@ -23,7 +23,7 @@ class QTextEdit;
 //! The JobMessagePanel class shows log messages from FitActivityPanel at the
 //! bottom part of JobView.
 
-class BA_CORE_API_ JobMessagePanel : public InfoPanel
+class JobMessagePanel : public InfoPanel
 {
     Q_OBJECT
 public:

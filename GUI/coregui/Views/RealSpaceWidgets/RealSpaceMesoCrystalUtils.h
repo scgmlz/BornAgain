@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEMESOCRYSTALUTILS_H
 
 #include "Core/Scattering/Rotations.h"
-#include "Wrap/WinDllMacros.h"
 #include <QVector3D>
 
 class Particle;

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_ACTIONMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_ACTIONMANAGER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QMenu;
@@ -26,7 +25,7 @@ class QShortcut;
 
 //! Class to handle MainWindow's menu and corresponding actions
 
-class BA_CORE_API_ ActionManager : public QObject
+class ActionManager : public QObject
 {
     Q_OBJECT
 public:

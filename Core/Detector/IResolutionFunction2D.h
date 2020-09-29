@@ -21,7 +21,7 @@
 //! Interface providing two-dimensional resolution function.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IResolutionFunction2D : public ICloneable, public INode
+class IResolutionFunction2D : public ICloneable, public INode
 {
 public:
     IResolutionFunction2D() = default;

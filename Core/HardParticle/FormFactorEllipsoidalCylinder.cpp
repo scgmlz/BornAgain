@@ -63,7 +63,7 @@ IFormFactor* FormFactorEllipsoidalCylinder::sliceFormFactor(ZLimits limits, cons
     auto effects = computeSlicingEffects(limits, translation, m_height);
     FormFactorEllipsoidalCylinder slicedff(m_radius_x, m_radius_y,
                                            m_height - effects.dz_bottom - effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorEllipsoidalCylinder::onChange()

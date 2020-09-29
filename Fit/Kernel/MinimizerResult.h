@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_KERNEL_MINIMIZERRESULT_H
 
 #include "Fit/Kernel/Parameters.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 namespace Fit
@@ -24,7 +23,7 @@ namespace Fit
 
 //! Result of minimization round.
 
-class BA_CORE_API_ MinimizerResult
+class MinimizerResult
 {
 public:
     MinimizerResult();

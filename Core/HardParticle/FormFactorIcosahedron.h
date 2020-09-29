@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORICOSAHEDRON_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORICOSAHEDRON_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A regular icosahedron.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorIcosahedron : public FormFactorPolyhedron
+class FormFactorIcosahedron : public IFormFactorPolyhedron
 {
 public:
     FormFactorIcosahedron(const std::vector<double> P);

@@ -15,12 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEACTIONS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEACTIONS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 //! Collection of actions for RealSpaceWidget.
 
-class BA_CORE_API_ RealSpaceActions : public QObject
+class RealSpaceActions : public QObject
 {
     Q_OBJECT
 

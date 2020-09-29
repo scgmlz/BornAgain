@@ -20,7 +20,7 @@ class RectangularDetectorItem;
 class ComponentEditor;
 class QGridLayout;
 
-class BA_CORE_API_ RectangularDetectorEditor : public SessionItemWidget
+class RectangularDetectorEditor : public SessionItemWidget
 {
     Q_OBJECT
 

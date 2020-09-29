@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_TOOLS_OPTIONCONTAINER_H
 
 #include "Fit/Tools/MultiOption.h"
-#include "Wrap/WinDllMacros.h"
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -25,7 +24,7 @@
 //! Stores multi option (int,double,string) in a container.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ OptionContainer
+class OptionContainer
 {
 public:
     using option_t = std::shared_ptr<MultiOption>;

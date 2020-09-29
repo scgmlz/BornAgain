@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERHELPER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERHELPER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 
 class ParameterItem;
@@ -25,7 +24,7 @@ class FitParameterContainerItem;
 //! The FitParameterHelper class contains set of convenience static methods to handle
 //! various fitting items in given JobItem.
 
-class BA_CORE_API_ FitParameterHelper
+class FitParameterHelper
 {
 public:
     static void createFitParameter(FitParameterContainerItem* container,

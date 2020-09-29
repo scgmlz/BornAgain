@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEWIDGETBOX_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLEWIDGETBOX_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QDesignerWidgetBoxInterface;
 class SampleDesignerInterface;
 
 //! widget box and tool window on the left side of SampleView
-class BA_CORE_API_ SampleWidgetBox : public QWidget
+class SampleWidgetBox : public QWidget
 {
 public:
     explicit SampleWidgetBox(SampleDesignerInterface* core, QWidget* parent);

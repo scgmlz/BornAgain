@@ -20,7 +20,7 @@
 #include "GUI/coregui/Models/SessionXML.h"
 #include <QStringList>
 
-class BA_CORE_API_ SessionModel : public QAbstractItemModel
+class SessionModel : public QAbstractItemModel
 {
     Q_OBJECT
     friend class SessionItem;

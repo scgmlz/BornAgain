@@ -1,136 +1,134 @@
 #include "Core/Basics/Units.h"
 #include "Core/Computation/ProcessedSample.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
+#include "Core/Multilayer/KzComputation.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Multilayer/SpecularMagneticOldStrategy.h"
+#include "Core/Multilayer/SpecularMagneticNewTanhStrategy.h"
+#include "Core/Multilayer/SpecularMagneticStrategy.h"
 #include "Core/Multilayer/SpecularScalarTanhStrategy.h"
 #include "Core/Parametrization/SimulationOptions.h"
 #include "Tests/GTestWrapper/google_test.h"
+#include <utility>
+
+constexpr double eps = 1e-10;
 
 class SpecularMagneticTest : public ::testing::Test
 {
+protected:
+    std::unique_ptr<ProcessedSample> sample_zerofield();
+
+    std::unique_ptr<ProcessedSample> sample_degenerate();
+    //! Compares results with scalar case
+    template <typename Strategy>
+    void testZeroField(const kvector_t& k, const ProcessedSample& sample);
+    template <typename Strategy> void testcase_zerofield(std::vector<double>&& angles);
+
+    template <typename Strategy> void test_degenerate();
 };
 
-TEST_F(SpecularMagneticTest, initial)
+template <> void SpecularMagneticTest::test_degenerate<SpecularMagneticNewTanhStrategy>()
 {
-    MultiLayer mLayer;
     kvector_t v;
 
-    // @Error: Throws exception (Layer index is out of bounds)
-    // matrix.execute(mLayer, v, coeff);
+    Eigen::Vector2cd T1p{0.0, 0.0};
+    Eigen::Vector2cd T2p{1.0, 0.0};
+    Eigen::Vector2cd R1p{0.0, 0.0};
+    Eigen::Vector2cd R2p{0.0, 0.0};
+    Eigen::Vector2cd T1m{0.0, 1.0};
+    Eigen::Vector2cd T2m{0.0, 0.0};
+    Eigen::Vector2cd R1m{0.0, 0.0};
+    Eigen::Vector2cd R2m{0.0, 0.0};
 
-    Material air = HomogeneousMaterial("air", 0, 1.0);
-    Layer layer0(air, 0 * Units::nanometer);
-    mLayer.addLayer(layer0);
+    auto sample = sample_degenerate();
+    auto result = std::make_unique<SpecularMagneticNewTanhStrategy>()->Execute(sample->slices(), v);
+    for (auto& coeff : result) {
+        EXPECT_NEAR_VECTOR2CD(coeff->T1plus(), T1p, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->T2plus(), T2p, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->T1min(), T1m, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->T2min(), T2m, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->R1plus(), R1p, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->R2plus(), R2p, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->R1min(), R1m, eps);
+        EXPECT_NEAR_VECTOR2CD(coeff->R2min(), R2m, eps);
+    }
+}
+
+template <typename Strategy>
+void SpecularMagneticTest::testZeroField(const kvector_t& k, const ProcessedSample& sample)
+{
+    auto coeffs_scalar = std::make_unique<SpecularScalarTanhStrategy>()->Execute(
+        sample.slices(), KzComputation::computeKzFromRefIndices(sample.slices(), k));
+    auto coeffs_zerofield = std::make_unique<Strategy>()->Execute(
+        sample.slices(), KzComputation::computeKzFromRefIndices(sample.slices(), k));
+
+    EXPECT_EQ(coeffs_scalar.size(), coeffs_zerofield.size());
+
+    for (size_t i = 0; i < coeffs_scalar.size(); ++i) {
+        const ScalarRTCoefficients& RTScalar =
+            *dynamic_cast<const ScalarRTCoefficients*>(coeffs_scalar[i].get());
+
+        auto& RTMatrix =
+            *dynamic_cast<const typename Strategy::coefficient_type*>(coeffs_zerofield[i].get());
+
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.T1plus(), RTScalar.T1plus(), eps);
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.T2plus(), RTScalar.T2plus(), eps);
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.R1plus(), RTScalar.R1plus(), eps);
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.R2plus(), RTScalar.R2plus(), eps);
+
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.T1min(), RTScalar.T1min(), eps);
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.T2min(), RTScalar.T2min(), eps);
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.R1min(), RTScalar.R1min(), eps);
+        EXPECT_NEAR_VECTOR2CD(RTMatrix.R2min(), RTScalar.R2min(), eps);
+
+        EXPECT_NEAR_VECTOR2CD(RTScalar.getKz(), RTMatrix.getKz(), eps);
+    }
+}
+
+std::unique_ptr<ProcessedSample> SpecularMagneticTest::sample_degenerate()
+{
+    MultiLayer mLayer;
+    Material air = HomogeneousMaterial("Vacuum", 0, 1.0);
+    mLayer.addLayer(Layer(air, 0 * Units::nanometer));
+    return std::make_unique<ProcessedSample>(mLayer, SimulationOptions());
+}
+
+TEST_F(SpecularMagneticTest, degenerate_new)
+{
+    test_degenerate<SpecularMagneticNewTanhStrategy>();
+}
+
+std::unique_ptr<ProcessedSample> SpecularMagneticTest::sample_zerofield()
+{
+    MultiLayer multi_layer_scalar;
+    Material substr_material_scalar = HomogeneousMaterial("Substrate", 7e-6, 2e-8);
+    Layer vacuum_layer(HomogeneousMaterial("Vacuum", 0.0, 0.0));
+    Layer substr_layer_scalar(substr_material_scalar);
+    multi_layer_scalar.addLayer(vacuum_layer);
+    multi_layer_scalar.addLayer(substr_layer_scalar);
+
     SimulationOptions options;
-    ProcessedSample sample(mLayer, options);
-    std::make_unique<SpecularMagneticOldStrategy>()->Execute(sample.slices(), v);
+    auto sample_scalar = std::make_unique<ProcessedSample>(multi_layer_scalar, options);
+
+    return sample_scalar;
+}
+
+template <typename Strategy>
+void SpecularMagneticTest::testcase_zerofield(std::vector<double>&& angles)
+{
+    for (auto& angle : angles) {
+        auto sample = sample_zerofield();
+        kvector_t k = vecOfLambdaAlphaPhi(1.0, angle * Units::deg, 0.0);
+        testZeroField<Strategy>(k, *sample);
+    }
 }
 
 TEST_F(SpecularMagneticTest, zerofield)
 {
-    double eps = 1e-10;
+    testcase_zerofield<SpecularMagneticStrategy>({-0.1, -2.0, -10.0});
+}
 
-    kvector_t substr_field(0.0, 0.0, 0.0);
-    kvector_t k1 = vecOfLambdaAlphaPhi(1.0, -0.1 * Units::deg, 0.0);
-    kvector_t k2 = vecOfLambdaAlphaPhi(1.0, -2.0 * Units::deg, 0.0);
-    kvector_t k3 = vecOfLambdaAlphaPhi(1.0, -10.0 * Units::deg, 0.0);
-
-    MultiLayer multi_layer_scalar;
-    Material substr_material_scalar = HomogeneousMaterial("Substrate", 7e-6, 2e-8);
-    Layer air_layer(HomogeneousMaterial("Air", 0.0, 0.0));
-    Layer substr_layer_scalar(substr_material_scalar);
-    multi_layer_scalar.addLayer(air_layer);
-    multi_layer_scalar.addLayer(substr_layer_scalar);
-
-    MultiLayer multi_layer_zerofield;
-    Material substr_material_zerofield = HomogeneousMaterial("Substrate", 7e-6, 2e-8, substr_field);
-    Layer substr_layer_zerofield(substr_material_zerofield);
-    multi_layer_zerofield.addLayer(air_layer);
-    multi_layer_zerofield.addLayer(substr_layer_zerofield);
-
-    SimulationOptions options;
-    ProcessedSample sample_scalar(multi_layer_scalar, options);
-    ProcessedSample sample_zerofield(multi_layer_zerofield, options);
-
-    // k1
-    auto coeffs_scalar =
-        std::make_unique<SpecularScalarTanhStrategy>()->Execute(sample_scalar.slices(), k1);
-    ScalarRTCoefficients RTScalar =
-        *dynamic_cast<const ScalarRTCoefficients*>(coeffs_scalar[1].get());
-    Eigen::Vector2cd TPS = RTScalar.T1plus() + RTScalar.T2plus();
-    Eigen::Vector2cd RPS = RTScalar.R1plus() + RTScalar.R2plus();
-    Eigen::Vector2cd TMS = RTScalar.T1min() + RTScalar.T2min();
-    Eigen::Vector2cd RMS = RTScalar.R1min() + RTScalar.R2min();
-
-    auto coeffs_zerofield =
-        std::make_unique<SpecularMagneticOldStrategy>()->Execute(sample_zerofield.slices(), k1);
-    MatrixRTCoefficients RTMatrix =
-        *dynamic_cast<const MatrixRTCoefficients*>(coeffs_zerofield[1].get());
-    Eigen::Vector2cd TPM = RTMatrix.T1plus() + RTMatrix.T2plus();
-    Eigen::Vector2cd RPM = RTMatrix.R1plus() + RTMatrix.R2plus();
-    Eigen::Vector2cd TMM = RTMatrix.T1min() + RTMatrix.T2min();
-    Eigen::Vector2cd RMM = RTMatrix.R1min() + RTMatrix.R2min();
-
-    EXPECT_NEAR(0.0, std::abs(TPS(0) - TPM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(TPS(1) - TPM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(RPS(0) - RPM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(RPS(1) - RPM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(TMS(0) - TMM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(TMS(1) - TMM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(RMS(0) - RMM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(RMS(1) - RMM(1)), eps);
-
-    // k2
-    coeffs_scalar =
-        std::make_unique<SpecularScalarTanhStrategy>()->Execute(sample_scalar.slices(), k2);
-    RTScalar = *dynamic_cast<const ScalarRTCoefficients*>(coeffs_scalar[1].get());
-    TPS = RTScalar.T1plus() + RTScalar.T2plus();
-    RPS = RTScalar.R1plus() + RTScalar.R2plus();
-    TMS = RTScalar.T1min() + RTScalar.T2min();
-    RMS = RTScalar.R1min() + RTScalar.R2min();
-
-    coeffs_zerofield =
-        std::make_unique<SpecularMagneticOldStrategy>()->Execute(sample_zerofield.slices(), k2);
-    RTMatrix = *dynamic_cast<const MatrixRTCoefficients*>(coeffs_zerofield[1].get());
-    TPM = RTMatrix.T1plus() + RTMatrix.T2plus();
-    RPM = RTMatrix.R1plus() + RTMatrix.R2plus();
-    TMM = RTMatrix.T1min() + RTMatrix.T2min();
-    RMM = RTMatrix.R1min() + RTMatrix.R2min();
-
-    EXPECT_NEAR(0.0, std::abs(TPS(0) - TPM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(TPS(1) - TPM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(RPS(0) - RPM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(RPS(1) - RPM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(TMS(0) - TMM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(TMS(1) - TMM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(RMS(0) - RMM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(RMS(1) - RMM(1)), eps);
-
-    // k3
-    coeffs_scalar =
-        std::make_unique<SpecularScalarTanhStrategy>()->Execute(sample_scalar.slices(), k3);
-    RTScalar = *dynamic_cast<const ScalarRTCoefficients*>(coeffs_scalar[1].get());
-    TPS = RTScalar.T1plus() + RTScalar.T2plus();
-    RPS = RTScalar.R1plus() + RTScalar.R2plus();
-    TMS = RTScalar.T1min() + RTScalar.T2min();
-    RMS = RTScalar.R1min() + RTScalar.R2min();
-
-    coeffs_zerofield =
-        std::make_unique<SpecularMagneticOldStrategy>()->Execute(sample_zerofield.slices(), k3);
-    RTMatrix = *dynamic_cast<const MatrixRTCoefficients*>(coeffs_zerofield[1].get());
-    TPM = RTMatrix.T1plus() + RTMatrix.T2plus();
-    RPM = RTMatrix.R1plus() + RTMatrix.R2plus();
-    TMM = RTMatrix.T1min() + RTMatrix.T2min();
-    RMM = RTMatrix.R1min() + RTMatrix.R2min();
-
-    EXPECT_NEAR(0.0, std::abs(TPS(0) - TPM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(TPS(1) - TPM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(RPS(0) - RPM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(RPS(1) - RPM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(TMS(0) - TMM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(TMS(1) - TMM(1)), eps);
-    EXPECT_NEAR(0.0, std::abs(RMS(0) - RMM(0)), eps);
-    EXPECT_NEAR(0.0, std::abs(RMS(1) - RMM(1)), eps);
+TEST_F(SpecularMagneticTest, zerofield_new)
+{
+    testcase_zerofield<SpecularMagneticNewTanhStrategy>({-0.0, -1.e-9, -1.e-5, -0.1, -2.0, -10.0});
 }

@@ -16,12 +16,11 @@
 #define BORNAGAIN_CORE_SIMULATIONELEMENT_POLARIZATIONHANDLER_H
 
 #include "Core/Vector/EigenCore.h"
-#include "Wrap/WinDllMacros.h"
 
 //! Convenience class for handling polarization density matrix and polarization analyzer operator
 //! @ingroup simulation
 
-class BA_CORE_API_ PolarizationHandler
+class PolarizationHandler
 {
 public:
     PolarizationHandler();

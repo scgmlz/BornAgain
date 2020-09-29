@@ -15,78 +15,50 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_BOXCOMPOSITIONBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_BOXCOMPOSITIONBUILDER_H
 
-#include "Core/Material/Material.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-
-class MultiLayer;
-class ParticleComposition;
-
-//! Parent class to test all kind of compositions made out of boxes.
-//! Reproduces Python functional test transform_BoxComposition.py
-//! @ingroup standard_samples
-
-class BA_CORE_API_ BoxCompositionBuilder : public IMultiLayerBuilder
-{
-public:
-    BoxCompositionBuilder();
-    virtual ~BoxCompositionBuilder();
-
-protected:
-    MultiLayer* createMultiLayer(const ParticleComposition& composition) const;
-    const Material m_particleMaterial;
-    const double m_layer_thickness;
-    const double m_length;
-    const double m_width;
-    const double m_height;
-};
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Two boxes in particle composition rotated in X by 90 degrees.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ BoxCompositionRotateXBuilder : public BoxCompositionBuilder
+class BoxCompositionRotateXBuilder : public ISampleBuilder
 {
 public:
-    BoxCompositionRotateXBuilder() {}
     MultiLayer* buildSample() const;
 };
 
 //! Two boxes in particle composition rotated in Y by 90 degrees.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ BoxCompositionRotateYBuilder : public BoxCompositionBuilder
+class BoxCompositionRotateYBuilder : public ISampleBuilder
 {
 public:
-    BoxCompositionRotateYBuilder() {}
     MultiLayer* buildSample() const;
 };
 
 //! Two boxes in particle composition rotated in Z by 90 degrees.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ BoxCompositionRotateZBuilder : public BoxCompositionBuilder
+class BoxCompositionRotateZBuilder : public ISampleBuilder
 {
 public:
-    BoxCompositionRotateZBuilder() {}
     MultiLayer* buildSample() const;
 };
 
 //! Two boxes in particle composition rotated in Z and Y by 90 degrees.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ BoxCompositionRotateZandYBuilder : public BoxCompositionBuilder
+class BoxCompositionRotateZandYBuilder : public ISampleBuilder
 {
 public:
-    BoxCompositionRotateZandYBuilder() {}
     MultiLayer* buildSample() const;
 };
 
 //! Two different boxes are first rotated and then composed, composition is then rotated.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ BoxStackCompositionBuilder : public BoxCompositionBuilder
+class BoxStackCompositionBuilder : public ISampleBuilder
 {
 public:
-    BoxStackCompositionBuilder() {}
     MultiLayer* buildSample() const;
 };
 

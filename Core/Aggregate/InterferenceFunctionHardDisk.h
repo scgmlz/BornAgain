@@ -24,7 +24,7 @@
 //! DOI: 10.1080/00268979500101211
 //! @ingroup interference
 
-class BA_CORE_API_ InterferenceFunctionHardDisk : public IInterferenceFunction
+class InterferenceFunctionHardDisk : public IInterferenceFunction
 {
 public:
     InterferenceFunctionHardDisk(double radius, double density, double position_var = 0);

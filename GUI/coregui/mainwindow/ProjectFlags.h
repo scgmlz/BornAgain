@@ -15,10 +15,9 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTFLAGS_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTFLAGS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QFlags>
 
-class BA_CORE_API_ ProjectFlags
+class ProjectFlags
 {
 public:
     enum EDocumentStatus {

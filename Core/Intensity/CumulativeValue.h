@@ -15,12 +15,10 @@
 #ifndef BORNAGAIN_CORE_INTENSITY_CUMULATIVEVALUE_H
 #define BORNAGAIN_CORE_INTENSITY_CUMULATIVEVALUE_H
 
-#include "Wrap/WinDllMacros.h"
-
 //! The cumulative value with average and rms on-the-flight calculations.
 //! @ingroup tools
 
-class BA_CORE_API_ CumulativeValue
+class CumulativeValue
 {
 public:
     CumulativeValue() { clear(); }
@@ -42,7 +40,7 @@ private:
     double m_sum_of_weights;
 };
 
-BA_CORE_API_ bool operator<(const CumulativeValue& lhs, const CumulativeValue& rhs);
-BA_CORE_API_ bool operator>(const CumulativeValue& lhs, const CumulativeValue& rhs);
+bool operator<(const CumulativeValue& lhs, const CumulativeValue& rhs);
+bool operator>(const CumulativeValue& lhs, const CumulativeValue& rhs);
 
 #endif // BORNAGAIN_CORE_INTENSITY_CUMULATIVEVALUE_H

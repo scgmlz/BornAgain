@@ -25,7 +25,7 @@
 
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ FormFactorCoreShell : public IFormFactor
+class FormFactorCoreShell : public IFormFactor
 {
 public:
     FormFactorCoreShell(IFormFactor* core, IFormFactor* shell);

@@ -16,13 +16,12 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATACANVAS_H
 
 #include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SpecularDataItem;
 class SpecularPlotCanvas;
 
-class BA_CORE_API_ SpecularDataCanvas : public SessionItemWidget
+class SpecularDataCanvas : public SessionItemWidget
 {
     Q_OBJECT
 public:

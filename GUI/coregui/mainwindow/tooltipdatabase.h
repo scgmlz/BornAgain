@@ -15,12 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_TOOLTIPDATABASE_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_TOOLTIPDATABASE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QObject>
 
 //! The MaterialEditor is the main class to access materials.
-class BA_CORE_API_ ToolTipDataBase : public QObject
+class ToolTipDataBase : public QObject
 {
     Q_OBJECT
 public:

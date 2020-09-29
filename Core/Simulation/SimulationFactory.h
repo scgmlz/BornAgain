@@ -23,7 +23,7 @@
 //! Used in functional tests, performance measurements, etc.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SimulationFactory : public IFactory<std::string, Simulation>
+class SimulationFactory : public IFactory<std::string, Simulation>
 {
 public:
     SimulationFactory();

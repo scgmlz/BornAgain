@@ -23,7 +23,7 @@ class QTabWidget;
 
 //! Holds tabs of vertical and horizontal projections, located at the bottom of ProjectionsEditor.
 
-class BA_CORE_API_ ProjectionsWidget : public SessionItemWidget
+class ProjectionsWidget : public SessionItemWidget
 {
     Q_OBJECT
 

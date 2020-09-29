@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include "qcustomplot.h"
 #include <QMap>
 #include <QMargins>
@@ -29,32 +28,32 @@ class ColorMap;
 namespace ColorMapUtils
 {
 
-BA_CORE_API_ QCPColorGradient getGradient(const QString& gradientName);
-BA_CORE_API_ QCPColorGradient itemGradient(const IntensityDataItem* item);
+QCPColorGradient getGradient(const QString& gradientName);
+QCPColorGradient itemGradient(const IntensityDataItem* item);
 
 //! Returns x-axis range.
-BA_CORE_API_ QCPRange itemXrange(const IntensityDataItem* item);
+QCPRange itemXrange(const IntensityDataItem* item);
 
 //! Returns x-axis vizible range (zoom).
-BA_CORE_API_ QCPRange itemZoomX(const IntensityDataItem* item);
+QCPRange itemZoomX(const IntensityDataItem* item);
 
 //! Returns y-axis range.
-BA_CORE_API_ QCPRange itemYrange(const IntensityDataItem* item);
+QCPRange itemYrange(const IntensityDataItem* item);
 
 //! Returns y-axis vizible range (zoom).
-BA_CORE_API_ QCPRange itemZoomY(const IntensityDataItem* item);
+QCPRange itemZoomY(const IntensityDataItem* item);
 
 //! Returns z-axis data range.
-BA_CORE_API_ QCPRange itemDataRange(const IntensityDataItem* item);
+QCPRange itemDataRange(const IntensityDataItem* item);
 
 //! Returns z-axis visible range (zoom).
-BA_CORE_API_ QCPRange itemDataZoom(const IntensityDataItem* item);
+QCPRange itemDataZoom(const IntensityDataItem* item);
 
-BA_CORE_API_ void setLogz(QCPColorScale* scale, bool isLogz);
-BA_CORE_API_ void setLogz(QCPAxis* axis, bool isLogz);
+void setLogz(QCPColorScale* scale, bool isLogz);
+void setLogz(QCPAxis* axis, bool isLogz);
 
 //! Sets default margins for axes rectangle plot.
-BA_CORE_API_ void setDefaultMargins(QCustomPlot* customPlot);
+void setDefaultMargins(QCustomPlot* customPlot);
 
 } // namespace ColorMapUtils
 

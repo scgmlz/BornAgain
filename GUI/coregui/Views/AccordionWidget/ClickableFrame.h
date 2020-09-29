@@ -31,7 +31,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 #include <QGraphicsView>
 #include <QHBoxLayout>
@@ -61,7 +60,7 @@ const char* const CARRET_ICON_OPENED =
  * This class represents a clickable QFrame. It is used by a ContentPane. The class
  * is used internally.
  */
-class BA_CORE_API_ ClickableFrame : public QFrame
+class ClickableFrame : public QFrame
 {
 
     Q_OBJECT

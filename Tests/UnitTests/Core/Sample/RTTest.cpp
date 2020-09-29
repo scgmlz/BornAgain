@@ -30,7 +30,7 @@ protected:
         EXPECT_NEAR(coeff1.t_r(1).real(), coeff2.t_r(1).real(), 1e-10);
         EXPECT_NEAR(coeff1.t_r(1).imag(), coeff2.t_r(1).imag(), 1e-10);
     }
-    std::vector<ScalarRTCoefficients> getCoeffs(SpecularScalarTanhStrategy::coeffs_t&& inputCoeffs)
+    std::vector<ScalarRTCoefficients> getCoeffs(ISpecularStrategy::coeffs_t&& inputCoeffs)
     {
         std::vector<ScalarRTCoefficients> result;
         for (auto& coeff : inputCoeffs)
@@ -38,7 +38,7 @@ protected:
 
         return result;
     }
-    const Material air = HomogeneousMaterial("air", 1e-8, 1e-8);
+    const Material air = HomogeneousMaterial("Air", 1e-8, 1e-8);
     const Material amat = HomogeneousMaterial("material A", 2e-6, 8e-7);
     const Material bmat = HomogeneousMaterial("material B (high absorption)", 3e-5, 2e-4);
     const Material stone = HomogeneousMaterial("substrate material", 1e-6, 1e-7);
@@ -85,7 +85,7 @@ TEST_F(RTTest, SplitBilayers)
 {
     // With exaggerated values of #layers, layer thickness, and absorption
     // so that we also test correct handling of floating-point overflow.
-    const int n = 200;
+    const int n = 250;
 
     sample1.addLayer(topLayer);
     for (size_t i = 0; i < n; ++i) {

@@ -20,7 +20,7 @@
 //! A truncated Sphere.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorTruncatedSphere : public IFormFactorBorn
+class FormFactorTruncatedSphere : public IFormFactorBorn
 {
 public:
     FormFactorTruncatedSphere(const std::vector<double> P);

@@ -16,11 +16,11 @@
 #include "Core/Computation/IBackground.h"
 #include "Core/Computation/IComputation.h"
 #include "Core/Detector/DetectorFunctions.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Multilayer/MultiLayerUtils.h"
 #include "Core/Parametrization/ParameterPool.h"
 #include "Core/Parametrization/ParameterSample.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/Simulation/MPISimulation.h"
 #include "Core/Simulation/UnitConverterUtils.h"
 #include "Fit/Tools/StringUtils.h"
@@ -48,14 +48,14 @@ Simulation::Simulation(const MultiLayer& p_sample)
     m_sample_provider.setSample(p_sample);
 }
 
-Simulation::Simulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder)
+Simulation::Simulation(const std::shared_ptr<ISampleBuilder> p_sample_builder)
 {
     initialize();
     m_sample_provider.setSampleBuilder(p_sample_builder);
 }
 
 Simulation::Simulation(const Simulation& other)
-    : m_sample_provider(other.m_sample_provider), m_options(other.m_options),
+    : ICloneable(), INode(), m_sample_provider(other.m_sample_provider), m_options(other.m_options),
       m_distribution_handler(other.m_distribution_handler), m_progress(other.m_progress),
       m_instrument(other.m_instrument)
 {
@@ -113,7 +113,7 @@ void Simulation::setBeamPolarization(const kvector_t bloch_vector)
 
 void Simulation::prepareSimulation()
 {
-    updateSample();
+    m_sample_provider.updateSample();
     if (!MultiLayerUtils::ContainsCompatibleMaterials(*m_sample_provider.sample()))
         throw std::runtime_error(
             "Error in Simulation::prepareSimulation(): non-default materials of"
@@ -174,7 +174,7 @@ const MultiLayer* Simulation::sample() const
     return m_sample_provider.sample();
 }
 
-void Simulation::setSampleBuilder(const std::shared_ptr<class IMultiLayerBuilder> p_sample_builder)
+void Simulation::setSampleBuilder(const std::shared_ptr<class ISampleBuilder> p_sample_builder)
 {
     m_sample_provider.setSampleBuilder(p_sample_builder);
 }
@@ -207,11 +207,6 @@ void Simulation::addParameterDistribution(const ParameterDistribution& par_distr
 {
     validateParametrization(par_distr);
     m_distribution_handler.addParameterDistribution(par_distr);
-}
-
-void Simulation::updateSample()
-{
-    m_sample_provider.updateSample();
 }
 
 //! Runs a single simulation with fixed parameter values.
@@ -260,12 +255,12 @@ SimulationResult Simulation::convertData(const OutputData<double>& data,
     auto roi_data =
         UnitConverterUtils::createOutputData(*converter.get(), converter->defaultUnits());
 
-    auto detector = getInstrument().getDetector();
+    const IDetector& detector = getInstrument().detector();
 
     if (roi_data->hasSameDimensions(data)) {
         // data is already cropped to ROI
         if (put_masked_areas_to_zero) {
-            detector->iterate(
+            detector.iterate(
                 [&](IDetector::const_iterator it) {
                     (*roi_data)[it.roiIndex()] = data[it.roiIndex()];
                 },
@@ -274,9 +269,9 @@ SimulationResult Simulation::convertData(const OutputData<double>& data,
             roi_data->setRawDataVector(data.getRawDataVector());
         }
 
-    } else if (DetectorFunctions::hasSameDimensions(*detector, data)) {
+    } else if (DetectorFunctions::hasSameDimensions(detector, data)) {
         // exp data has same shape as the detector, we have to put orig data to smaller roi map
-        detector->iterate(
+        detector.iterate(
             [&](IDetector::const_iterator it) {
                 (*roi_data)[it.roiIndex()] = data[it.detectorIndex()];
             },

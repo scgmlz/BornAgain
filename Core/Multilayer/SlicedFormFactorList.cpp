@@ -29,7 +29,7 @@ ZLimits SlicesZLimits(const std::vector<Slice>& slices, size_t slice_index);
 void ScaleRegions(std::vector<HomogeneousRegion>& regions, double factor);
 } // namespace
 
-SlicedFormFactorList SlicedFormFactorList::CreateSlicedFormFactors(const IParticle& particle,
+SlicedFormFactorList SlicedFormFactorList::createSlicedFormFactors(const IParticle& particle,
                                                                    const std::vector<Slice>& slices,
                                                                    double z_ref)
 {

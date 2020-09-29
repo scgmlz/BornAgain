@@ -20,7 +20,7 @@
 //! A conical frustum (cone truncated parallel to the base) with circular base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorCone : public IFormFactorBorn
+class FormFactorCone : public IFormFactorBorn
 {
 public:
     FormFactorCone(const std::vector<double> P);

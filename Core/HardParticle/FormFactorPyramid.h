@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPYRAMID_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPYRAMID_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A frustum with a quadratic base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorPyramid : public FormFactorPolyhedron
+class FormFactorPyramid : public IFormFactorPolyhedron
 {
 public:
     FormFactorPyramid(const std::vector<double> P);

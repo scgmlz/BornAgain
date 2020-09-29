@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PROJECTLOADWARNINGDIALOG_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PROJECTLOADWARNINGDIALOG_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 #include <QStringList>
 
@@ -28,7 +27,7 @@ class QTableWidgetItem;
 //! @class ProjectLoadWarningDialog
 //! @brief The dialog to inform user about encountered problems during the loading of old project
 
-class BA_CORE_API_ ProjectLoadWarningDialog : public QDialog
+class ProjectLoadWarningDialog : public QDialog
 {
     Q_OBJECT
 

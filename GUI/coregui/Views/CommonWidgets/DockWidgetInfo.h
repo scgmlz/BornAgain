@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DOCKWIDGETINFO_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DOCKWIDGETINFO_H
 
-#include "Wrap/WinDllMacros.h"
 #include <qnamespace.h>
 
 class QDockWidget;
@@ -23,7 +22,7 @@ class QWidget;
 
 //! Holds information about the widget and its dock.
 
-class BA_CORE_API_ DockWidgetInfo
+class DockWidgetInfo
 {
 public:
     DockWidgetInfo();

@@ -22,7 +22,7 @@ class InstrumentItem;
 class RealDataItem;
 class SimulationOptionsItem;
 
-class BA_CORE_API_ JobModel : public SessionModel
+class JobModel : public SessionModel
 {
     Q_OBJECT
 

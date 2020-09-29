@@ -21,7 +21,7 @@
 //! Interface for one-dimensional axes.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ IAxis
+class IAxis
 {
 public:
     //! constructors

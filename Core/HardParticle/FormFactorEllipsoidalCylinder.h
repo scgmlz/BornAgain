@@ -20,7 +20,7 @@
 //! A cylinder with elliptical base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorEllipsoidalCylinder : public IFormFactorBorn
+class FormFactorEllipsoidalCylinder : public IFormFactorBorn
 {
 public:
     FormFactorEllipsoidalCylinder(const std::vector<double> P);

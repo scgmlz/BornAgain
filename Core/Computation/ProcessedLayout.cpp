@@ -96,7 +96,7 @@ FormFactorCoherentSum ProcessedLayout::ProcessParticle(const IParticle& particle
                                                        double z_ref)
 {
     double abundance = particle.abundance();
-    auto sliced_ffs = SlicedFormFactorList::CreateSlicedFormFactors(particle, slices, z_ref);
+    auto sliced_ffs = SlicedFormFactorList::createSlicedFormFactors(particle, slices, z_ref);
     auto region_map = sliced_ffs.regionMap();
     ScaleRegionMap(region_map, abundance);
     mergeRegionMap(region_map);

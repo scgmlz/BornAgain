@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERPROXYMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERPROXYMODEL_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QAbstractItemModel>
 #include <QStringList>
 
@@ -27,7 +26,7 @@ class SessionItem;
 //! in 5 column tree view.
 //! It is derived from QAbstractItemModel (and not from QAbstractProxyModel).
 
-class BA_CORE_API_ FitParameterProxyModel : public QAbstractItemModel
+class FitParameterProxyModel : public QAbstractItemModel
 {
     Q_OBJECT
 

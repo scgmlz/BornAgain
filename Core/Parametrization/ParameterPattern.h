@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERPATTERN_H
 #define BORNAGAIN_CORE_PARAMETRIZATION_PARAMETERPATTERN_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 //! Helper class for constructing parameter patterns.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ ParameterPattern
+class ParameterPattern
 {
 public:
     ParameterPattern() {}

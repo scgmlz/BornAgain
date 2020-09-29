@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_SESSIONITEMCONTROLLER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_SESSIONITEMCONTROLLER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <functional>
 
@@ -24,7 +23,7 @@ class SessionItem;
 //! Provides subscribe/unsubscribe mechanism for any QObject to track
 //! time of life of SessionItem. Mainly intended for SessionItemWidget.
 
-class BA_CORE_API_ SessionItemController : public QObject
+class SessionItemController : public QObject
 {
     Q_OBJECT
 public:

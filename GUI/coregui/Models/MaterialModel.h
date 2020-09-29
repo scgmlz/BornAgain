@@ -20,7 +20,7 @@
 class MaterialItem;
 class ExternalProperty;
 
-class BA_CORE_API_ MaterialModel : public SessionModel
+class MaterialModel : public SessionModel
 {
     Q_OBJECT
 

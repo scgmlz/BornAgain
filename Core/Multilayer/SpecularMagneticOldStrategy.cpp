@@ -28,7 +28,6 @@ void CalculateTransferAndBoundary(const std::vector<Slice>& slices,
                                   std::vector<MatrixRTCoefficients>& coeff);
 void SetForNoTransmission(std::vector<MatrixRTCoefficients>& coeff);
 complex_t GetImExponential(complex_t exponent);
-const complex_t I(0, 1);
 } // namespace
 
 ISpecularStrategy::coeffs_t SpecularMagneticOldStrategy::Execute(const std::vector<Slice>& slices,

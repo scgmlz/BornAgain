@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_TOOLS_PYFMT_H
 
 #include "Core/Vector/Vectors3D.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class RealLimits;
@@ -26,31 +25,30 @@ class RealLimits;
 namespace pyfmt
 {
 
-BA_CORE_API_ std::string scriptPreamble();
-BA_CORE_API_ std::string getSampleFunctionName();
+std::string scriptPreamble();
+std::string getSampleFunctionName();
 
-BA_CORE_API_ std::string printInt(int value);
-BA_CORE_API_ std::string printBool(double value);
-BA_CORE_API_ std::string printDouble(double input);
-BA_CORE_API_ std::string printNm(double input);
-BA_CORE_API_ std::string printNm2(double input);
-BA_CORE_API_ std::string printScientificDouble(double input);
-BA_CORE_API_ std::string printDegrees(double input);
-BA_CORE_API_ std::string printValue(double value, const std::string& units = "");
-BA_CORE_API_ std::string printString(const std::string& value);
+std::string printInt(int value);
+std::string printBool(double value);
+std::string printDouble(double input);
+std::string printNm(double input);
+std::string printNm2(double input);
+std::string printScientificDouble(double input);
+std::string printDegrees(double input);
+std::string printValue(double value, const std::string& units = "");
+std::string printString(const std::string& value);
 
-BA_CORE_API_ std::string printRealLimits(const RealLimits& limits, const std::string& units = "");
-BA_CORE_API_ std::string printRealLimitsArg(const RealLimits& limits,
-                                            const std::string& units = "");
+std::string printRealLimits(const RealLimits& limits, const std::string& units = "");
+std::string printRealLimitsArg(const RealLimits& limits, const std::string& units = "");
 
-BA_CORE_API_ bool isSquare(double length1, double length2, double angle);
-BA_CORE_API_ bool isHexagonal(double length1, double length2, double angle);
-BA_CORE_API_ std::string printKvector(const kvector_t value);
-BA_CORE_API_ bool isDefaultDirection(const kvector_t direction);
+bool isSquare(double length1, double length2, double angle);
+bool isHexagonal(double length1, double length2, double angle);
+std::string printKvector(const kvector_t value);
+bool isDefaultDirection(const kvector_t direction);
 
 //! Returns a string of blanks with given width. By default
 //! the width equals standard offset in python files.
-BA_CORE_API_ std::string indent(size_t width = 4u);
+std::string indent(size_t width = 4u);
 
 } // namespace pyfmt
 

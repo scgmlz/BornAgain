@@ -15,15 +15,13 @@
 #ifndef BORNAGAIN_FIT_KERNEL_IFUNCTIONADAPTER_H
 #define BORNAGAIN_FIT_KERNEL_IFUNCTIONADAPTER_H
 
-#include "Wrap/WinDllMacros.h"
-
 namespace Fit
 {
 
 //! Base class for objective function adapters, which converts user functions
 //! to minimize into the function which minimization machinery expects.
 
-class BA_CORE_API_ IFunctionAdapter
+class IFunctionAdapter
 {
 public:
     IFunctionAdapter();

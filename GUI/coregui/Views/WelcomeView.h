@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WELCOMEVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WELCOMEVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QPushButton;
@@ -28,7 +27,7 @@ class UpdateNotifierWidget;
 class QLabel;
 class QFrame;
 
-class BA_CORE_API_ WelcomeView : public QWidget
+class WelcomeView : public QWidget
 {
     Q_OBJECT
 public:

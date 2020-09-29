@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ADJUSTINGSCROLLAREA_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ADJUSTINGSCROLLAREA_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QScrollArea>
 
 //! Modification of standard scroll area, which makes widget with dynamic layout ocuupy whole
 //! available space.
 
-class BA_CORE_API_ AdjustingScrollArea : public QScrollArea
+class AdjustingScrollArea : public QScrollArea
 {
     Q_OBJECT
 

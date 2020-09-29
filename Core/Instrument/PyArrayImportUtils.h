@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_INSTRUMENT_PYARRAYIMPORTUTILS_H
 #define BORNAGAIN_CORE_INSTRUMENT_PYARRAYIMPORTUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <vector>
 
 template <class T> class OutputData;
@@ -27,10 +26,9 @@ namespace PyArrayImport
 {
 
 //! for importing 1D array of doubles from python into OutputData
-BA_CORE_API_ OutputData<double>* importArrayToOutputData(const std::vector<double>& vec);
+OutputData<double>* importArrayToOutputData(const std::vector<double>& vec);
 //! for importing 2D array of doubles from python into OutputData
-BA_CORE_API_ OutputData<double>*
-importArrayToOutputData(const std::vector<std::vector<double>>& vec);
+OutputData<double>* importArrayToOutputData(const std::vector<std::vector<double>>& vec);
 
 } // namespace PyArrayImport
 

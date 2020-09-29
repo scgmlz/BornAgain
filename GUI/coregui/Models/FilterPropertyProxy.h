@@ -14,7 +14,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QSortFilterProxyModel>
 
 //!
@@ -22,7 +21,7 @@
 //! SessionModel to have only top level items
 //!
 
-class BA_CORE_API_ FilterPropertyProxy : public QSortFilterProxyModel
+class FilterPropertyProxy : public QSortFilterProxyModel
 {
     Q_OBJECT
 

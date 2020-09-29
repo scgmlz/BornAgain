@@ -28,7 +28,7 @@ class PropertyWidgetItem;
 //! properties are presented as widgets in grid layout.
 //! Shows only PropertyItems and current items of GroupProperties.
 
-class BA_CORE_API_ ComponentFlatView : public ComponentView
+class ComponentFlatView : public ComponentView
 {
     Q_OBJECT
 public:

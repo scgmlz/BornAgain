@@ -17,7 +17,7 @@
 
 #include "GUI/coregui/Models/SessionItem.h"
 
-class BA_CORE_API_ PropertyItem : public SessionItem
+class PropertyItem : public SessionItem
 {
 
 public:

@@ -47,8 +47,8 @@
 %template(vector_complex_t) std::vector< std::complex<double>>;
 %template(vector_string_t) std::vector<std::string>;
 %template(map_string_double_t) std::map<std::string, double>;
-%template(pair_double_t) std::pair<double, double>;
-%template(vector_pair_double_t) std::vector<std::pair<double, double>>;
+%template(pvacuum_double_t) std::pair<double, double>;
+%template(vector_pvacuum_double_t) std::vector<std::pair<double, double>>;
 %nodefaultctor ParameterPool;
 
 #define SWIG_FILE_WITH_INIT
@@ -95,7 +95,6 @@
 #include "Core/Aggregate/ParticleLayout.h"
 #include "Core/Basics/Complex.h"
 #include "Core/Basics/ICloneable.h"
-#include "Core/Basics/ISingleton.h"
 #include "Core/Beam/Beam.h"
 #include "Core/Beam/FootprintGauss.h"
 #include "Core/Beam/FootprintSquare.h"
@@ -140,8 +139,8 @@
 #include "Core/HardParticle/FormFactorIcosahedron.h"
 #include "Core/HardParticle/FormFactorLongBoxGauss.h"
 #include "Core/HardParticle/FormFactorLongBoxLorentz.h"
-#include "Core/HardParticle/FormFactorPolyhedron.h"
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPrism.h"
 #include "Core/HardParticle/FormFactorPrism3.h"
 #include "Core/HardParticle/FormFactorPrism6.h"
 #include "Core/HardParticle/FormFactorPyramid.h"
@@ -178,7 +177,7 @@
 #include "Core/Mask/Polygon.h"
 #include "Core/Mask/Rectangle.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerInterface.h"
 #include "Core/Multilayer/LayerRoughness.h"
@@ -277,7 +276,7 @@
 %template(vector_IFormFactorPtr_t) std::vector<IFormFactor*>;
 
 %include "Fit/TestEngine/IFactory.h"
-%template(SampleBuilderFactoryTemp) IFactory<std::string, IMultiLayerBuilder>;
+%template(SampleBuilderFactoryTemp) IFactory<std::string, ISampleBuilder>;
 %template(SimulationFactoryTemp) IFactory<std::string, Simulation>;
 
 %include "Core/Vector/BasicVector3D.h"
@@ -312,7 +311,6 @@
 
 // need to tell SWIG explicitly to instantiate these templates with given types
 %include "Core/Basics/ICloneable.h"
-%include "Core/Basics/ISingleton.h"
 %include "Core/Basics/Complex.h"
 %include "Core/Basics/Units.h"
 
@@ -393,7 +391,7 @@
 %include "Core/Beam/FootprintGauss.h"
 %include "Core/Beam/FootprintSquare.h"
 
-%include "Core/Multilayer/IMultiLayerBuilder.h"
+%include "Core/SampleBuilderEngine/ISampleBuilder.h"
 %include "Core/Multilayer/Layer.h"
 %include "Core/Multilayer/LayerRoughness.h"
 %include "Core/Multilayer/MultiLayer.h"
@@ -402,8 +400,8 @@
 %rename(RoughnessModel) RoughnessModelWrap;
 %include "Core/Multilayer/RoughnessModels.h"
 
-%include "Core/HardParticle/FormFactorPolyhedron.h"
-%include "Core/HardParticle/FormFactorPolyhedron.h"
+%include "Core/HardParticle/IFormFactorPolyhedron.h"
+%include "Core/HardParticle/IFormFactorPrism.h"
 %include "Core/HardParticle/IProfileRipple.h"
 
 %include "Core/HardParticle/FormFactorAnisoPyramid.h"

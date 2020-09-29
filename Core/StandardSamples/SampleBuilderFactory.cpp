@@ -13,13 +13,13 @@
 // ************************************************************************** //
 
 #include "Core/StandardSamples/SampleBuilderFactory.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/StandardSamples/BoxCompositionBuilder.h"
 #include "Core/StandardSamples/BoxesSquareLatticeBuilder.h"
 #include "Core/StandardSamples/CoreShellParticleBuilder.h"
 #include "Core/StandardSamples/CustomMorphologyBuilder.h"
 #include "Core/StandardSamples/CylindersAndPrismsBuilder.h"
 #include "Core/StandardSamples/CylindersBuilder.h"
+#include "Core/StandardSamples/FeNiBilayerBuilder.h"
 #include "Core/StandardSamples/HomogeneousMultilayerBuilder.h"
 #include "Core/StandardSamples/LatticeBuilder.h"
 #include "Core/StandardSamples/LayersWithAbsorptionBuilder.h"
@@ -33,15 +33,15 @@
 #include "Core/StandardSamples/ParaCrystalBuilder.h"
 #include "Core/StandardSamples/ParticleCompositionBuilder.h"
 #include "Core/StandardSamples/ParticleDistributionsBuilder.h"
-#include "Core/StandardSamples/ParticleInTheAirBuilder.h"
+#include "Core/StandardSamples/ParticleInVacuumBuilder.h"
 #include "Core/StandardSamples/PercusYevickBuilder.h"
 #include "Core/StandardSamples/PlainMultiLayerBySLDBuilder.h"
 #include "Core/StandardSamples/ResonatorBuilder.h"
 #include "Core/StandardSamples/RipplesBuilder.h"
 #include "Core/StandardSamples/RotatedPyramidsBuilder.h"
 #include "Core/StandardSamples/SizeDistributionModelsBuilder.h"
+#include "Core/StandardSamples/SlicedCompositionBuilder.h"
 #include "Core/StandardSamples/SlicedCylindersBuilder.h"
-#include "Core/StandardSamples/SlicedParticleBuilder.h"
 #include "Core/StandardSamples/ThickAbsorptiveSampleBuilder.h"
 #include "Core/StandardSamples/TransformationsBuilder.h"
 #include "Core/StandardSamples/TwoDimLatticeBuilder.h"
@@ -112,7 +112,21 @@ SampleBuilderFactory::SampleBuilderFactory()
 
     registerItem("SimpleMagneticLayerBuilder", create_new<SimpleMagneticLayerBuilder>);
 
+    registerItem("SimpleMagneticRotationBuilder", create_new<SimpleMagneticRotationBuilder>);
+
     registerItem("MagneticLayerBuilder", create_new<MagneticLayerBuilder>);
+
+    registerItem("FeNiBilayerBuilder", create_new<FeNiBilayerBuilder>);
+
+    registerItem("FeNiBilayerTanhBuilder", create_new<FeNiBilayerTanhBuilder>);
+
+    registerItem("FeNiBilayerNCBuilder", create_new<FeNiBilayerNCBuilder>);
+
+    registerItem("FeNiBilayerSpinFlipBuilder", create_new<FeNiBilayerSpinFlipBuilder>);
+
+    registerItem("FeNiBilayerSpinFlipTanhBuilder", create_new<FeNiBilayerSpinFlipTanhBuilder>);
+
+    registerItem("FeNiBilayerSpinFlipNCBuilder", create_new<FeNiBilayerSpinFlipNCBuilder>);
 
     registerItem("MagneticRotationBuilder", create_new<MagneticRotationBuilder>);
 
@@ -144,7 +158,7 @@ SampleBuilderFactory::SampleBuilderFactory()
 
     registerItem("BoxStackCompositionBuilder", create_new<BoxStackCompositionBuilder>);
 
-    registerItem("ParticleInTheAirBuilder", create_new<ParticleInTheAirBuilder>);
+    registerItem("ParticleInVacuumBuilder", create_new<ParticleInVacuumBuilder>);
 
     registerItem("TransformBoxBuilder", create_new<TransformBoxBuilder>);
 
@@ -186,7 +200,7 @@ SampleBuilderFactory::SampleBuilderFactory()
 
 //! Retrieves a SampleBuilder from the registry, does the build, and returns the result.
 
-MultiLayer* SampleBuilderFactory::createSample(const std::string& name)
+MultiLayer* SampleBuilderFactory::createSampleByName(const std::string& name)
 {
     return createItemPtr(name)->buildSample();
 }

@@ -18,7 +18,7 @@
 #include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 //! Class representing view of distributed particle item
-class BA_CORE_API_ ParticleDistributionView : public ConnectableView
+class ParticleDistributionView : public ConnectableView
 {
     Q_OBJECT
 

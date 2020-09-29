@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKVIEWFACTORY_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKVIEWFACTORY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 class IShape2DView;
@@ -24,7 +23,7 @@ class ISceneAdaptor;
 
 //! Factory to construct views out of MaskItems for MaskGraphicsScene
 
-class BA_CORE_API_ MaskViewFactory
+class MaskViewFactory
 {
 public:
     static IShape2DView* createMaskView(SessionItem* item, ISceneAdaptor* adaptor = 0);

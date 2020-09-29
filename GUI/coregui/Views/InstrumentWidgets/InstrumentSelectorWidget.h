@@ -21,7 +21,7 @@ class InstrumentModel;
 
 //! Instrument selector on the left side of InstrumentView.
 
-class BA_CORE_API_ InstrumentSelectorWidget : public ItemSelectorWidget
+class InstrumentSelectorWidget : public ItemSelectorWidget
 {
     Q_OBJECT
 

@@ -36,18 +36,17 @@ namespace KzComputation
  * This function is used in GISAS and off-spec computations mainly for back-compatibility
  * reasons and should be replaced with computeKzFromRefIndices.
  */
-BA_CORE_API_ std::vector<complex_t> computeReducedKz(const std::vector<Slice>& slices, kvector_t k);
+std::vector<complex_t> computeReducedKz(const std::vector<Slice>& slices, kvector_t k);
 
 /* Computes kz values from kz of the incoming beam known at a distant point in vacuum.
  * It is assumed, that the beam penetrates fronting medium from a side.
  */
-BA_CORE_API_ std::vector<complex_t> computeKzFromSLDs(const std::vector<Slice>& slices, double kz);
+std::vector<complex_t> computeKzFromSLDs(const std::vector<Slice>& slices, double kz);
 
 /* Computes kz values from k-vector of the incoming beam known at a distant point in vacuum.
  * It is assumed, that the beam penetrates fronting medium from a side.
  */
-BA_CORE_API_ std::vector<complex_t> computeKzFromRefIndices(const std::vector<Slice>& slices,
-                                                            kvector_t k);
+std::vector<complex_t> computeKzFromRefIndices(const std::vector<Slice>& slices, kvector_t k);
 } // namespace KzComputation
 
 #endif // BORNAGAIN_CORE_MULTILAYER_KZCOMPUTATION_H

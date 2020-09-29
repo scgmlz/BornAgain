@@ -27,7 +27,8 @@ IDetector::IDetector()
 }
 
 IDetector::IDetector(const IDetector& other)
-    : m_axes(other.m_axes), m_detection_properties(other.m_detection_properties)
+    : ICloneable(), INode(), m_axes(other.m_axes),
+      m_detection_properties(other.m_detection_properties)
 {
     if (other.mP_detector_resolution)
         setDetectorResolution(*other.mP_detector_resolution);
@@ -81,9 +82,8 @@ size_t IDetector::totalSize() const
     if (dim == 0)
         return 0;
     size_t result = 1;
-    for (size_t i_axis = 0; i_axis < dim; ++i_axis) {
+    for (size_t i_axis = 0; i_axis < dim; ++i_axis)
         result *= m_axes[i_axis]->size();
-    }
     return result;
 }
 

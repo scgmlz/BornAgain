@@ -164,7 +164,7 @@ std::istringstream getAxisStringRepresentation(std::istream& input_stream)
     return std::istringstream(line);
 }
 
-//! Create one of FixedBinAxis from string representation
+//! Creates one of FixedBinAxis from string representation
 //! FixedBinAxis("axis0", 10, -1, 1)
 //! ConstKBinAxis("axis0", 10, -1, 1)
 //! CustomBinAxis("axis0", 10, -1, 1)
@@ -186,7 +186,7 @@ template <class Axis> std::unique_ptr<IAxis> createFixedBinLikeAxis(std::istring
     return std::make_unique<Axis>(name, nbins, boundaries[0], boundaries[1]);
 }
 
-//! Create VariableBinAxis from string representation
+//! Creates VariableBinAxis from string representation
 //! VariableBinAxis("axis0", 4, [-1, -0.5, 0.5, 1, 2])
 std::unique_ptr<IAxis> createVariableBinAxis(std::istringstream iss)
 {
@@ -205,7 +205,7 @@ std::unique_ptr<IAxis> createVariableBinAxis(std::istringstream iss)
     return std::make_unique<VariableBinAxis>(name, nbins, boundaries);
 }
 
-//! Create createPointwiseAxis from string representation
+//! Creates createPointwiseAxis from string representation
 //! PointwiseAxis("axis0", [-0.5, 0.5, 1, 2])
 std::unique_ptr<IAxis> createPointwiseAxis(std::istringstream iss)
 {

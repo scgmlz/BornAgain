@@ -24,12 +24,12 @@ class DetectorContext;
 //! Holds the common implementations for simulations with a 2D detector
 //! @ingroup simulation
 
-class BA_CORE_API_ Simulation2D : public Simulation
+class Simulation2D : public Simulation
 {
 public:
     Simulation2D();
     Simulation2D(const MultiLayer& p_sample);
-    Simulation2D(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder);
+    Simulation2D(const std::shared_ptr<ISampleBuilder> p_sample_builder);
     ~Simulation2D() override;
 
     Simulation2D* clone() const override = 0;
@@ -96,11 +96,11 @@ protected:
 
     std::vector<SimulationElement> m_sim_elements;
     std::vector<double> m_cache;
-    std::unique_ptr<DetectorContext> detector_context;
 
 private:
     std::vector<double> rawResults() const override;
     void setRawResults(const std::vector<double>& raw_data) override;
+    std::unique_ptr<DetectorContext> m_detector_context;
 };
 
 #endif // BORNAGAIN_CORE_SIMULATION_SIMULATION2D_H

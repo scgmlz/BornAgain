@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPROPERTIESWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPROPERTIESWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class LinkInstrumentManager;
@@ -31,7 +30,7 @@ class QLabel;
 //! The RealDataPropertiesWidget class holds instrument selector to link with RealDataItem.
 //! Part of RealDataSelectorWidget, resides at lower left corner of ImportDataView.
 
-class BA_CORE_API_ RealDataPropertiesWidget : public QWidget
+class RealDataPropertiesWidget : public QWidget
 {
     Q_OBJECT
 public:

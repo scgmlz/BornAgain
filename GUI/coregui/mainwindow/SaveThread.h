@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVETHREAD_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVETHREAD_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QThread>
 
@@ -23,7 +22,7 @@ class ProjectDocument;
 
 //! Performs saving of heavy intensity data in a thread.
 
-class BA_CORE_API_ SaveThread : public QThread
+class SaveThread : public QThread
 {
     Q_OBJECT
 public:

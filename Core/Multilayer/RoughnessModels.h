@@ -17,10 +17,8 @@
 
 #include <string>
 
-#include "Wrap/WinDllMacros.h"
-
 // workaround for SWIG (instead of just writing enum class RoughnessModel ...)
-struct BA_CORE_API_ RoughnessModelWrap {
+struct RoughnessModelWrap {
     enum RoughnessModel { DEFAULT, TANH, NEVOT_CROCE };
 #ifndef SWIG
     // TODO: to automatize enum to string convertion, one can possibly use this solution

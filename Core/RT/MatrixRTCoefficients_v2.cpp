@@ -18,8 +18,6 @@ namespace
 {
 Eigen::Vector2cd waveVector(const Eigen::Matrix4cd& frob_matrix,
                             const Eigen::Vector4cd& boundary_cond);
-
-constexpr complex_t I = complex_t(0.0, 1.0);
 } // namespace
 
 MatrixRTCoefficients_v2::MatrixRTCoefficients_v2(double kz_sign, Eigen::Vector2cd eigenvalues,
@@ -100,6 +98,15 @@ Eigen::Vector2cd MatrixRTCoefficients_v2::R2min() const
 Eigen::Vector2cd MatrixRTCoefficients_v2::getKz() const
 {
     return -I * m_kz_sign * m_lambda;
+}
+
+Eigen::Matrix2cd MatrixRTCoefficients_v2::getReflectionMatrix() const
+{
+    Eigen::Matrix2cd R;
+    R.col(0) = R1plus() + R2plus();
+    R.col(1) = R1min() + R2min();
+
+    return R;
 }
 
 namespace

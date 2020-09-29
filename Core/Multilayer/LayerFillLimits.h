@@ -27,7 +27,7 @@
 //! layers, only N-1 coordinates need to be passed (the last layer is assumed to be semi-infinite).
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ LayerFillLimits
+class LayerFillLimits
 {
 public:
     LayerFillLimits(std::vector<double> layers_bottomz);

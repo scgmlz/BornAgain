@@ -15,33 +15,25 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_SLICEDCYLINDERSBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_SLICEDCYLINDERSBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: cylinders on a silicon substrate
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SlicedCylindersBuilder : public IMultiLayerBuilder
+class SlicedCylindersBuilder : public ISampleBuilder
 {
 public:
-    SlicedCylindersBuilder();
-    MultiLayer* buildSample() const override;
-
-protected:
-    double m_height;
-    double m_radius;
-    double m_wavelength;
-    unsigned m_n_slices;
+    MultiLayer* buildSample() const;
 };
 
 //! Provides exactly the same sample as SlicedCylindersBuilder, but with
 //! sld-based materials. Assumed wavelength is 1.54 Angstrom.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SLDSlicedCylindersBuilder : public SlicedCylindersBuilder
+class SLDSlicedCylindersBuilder : public ISampleBuilder
 {
 public:
-    SLDSlicedCylindersBuilder();
-    MultiLayer* buildSample() const override;
+    MultiLayer* buildSample() const;
 };
 
 //! Provides exactly the same sample as SLDSlicedCylindersBuilder, but with
@@ -49,14 +41,10 @@ public:
 //! Assumed wavelength is 1.54 Angstrom.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ AveragedSlicedCylindersBuilder : public SlicedCylindersBuilder
+class AveragedSlicedCylindersBuilder : public ISampleBuilder
 {
 public:
-    AveragedSlicedCylindersBuilder();
-    MultiLayer* buildSample() const override;
-
-private:
-    double m_par_surf_density;
+    MultiLayer* buildSample() const;
 };
 
 #endif // BORNAGAIN_CORE_STANDARDSAMPLES_SLICEDCYLINDERSBUILDER_H

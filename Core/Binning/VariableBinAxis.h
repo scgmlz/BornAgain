@@ -20,7 +20,7 @@
 //! Axis with variable bin size.
 //! @ingroup tools
 
-class BA_CORE_API_ VariableBinAxis : public IAxis
+class VariableBinAxis : public IAxis
 {
 public:
     //! VariableBinAxis constructor.

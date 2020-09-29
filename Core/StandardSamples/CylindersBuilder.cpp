@@ -16,13 +16,12 @@
 #include "Core/Aggregate/ParticleLayout.h"
 #include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerInterface.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Scattering/Rotations.h"
+#include "Core/StandardSamples/ReferenceMaterials.h"
 
 // -----------------------------------------------------------------------------
 // Cylinders in DWBA
@@ -34,25 +33,19 @@ CylindersInDWBABuilder::CylindersInDWBABuilder()
 
 MultiLayer* CylindersInDWBABuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
-    Layer air_layer(air_material);
-    Layer substrate_layer(substrate_material);
+    Layer vacuum_layer(refMat::Vacuum);
+    Layer substrate_layer(refMat::Substrate);
 
     FormFactorCylinder ff_cylinder(m_radius, m_height);
 
-    Particle particle(particle_material, ff_cylinder);
+    Particle particle(refMat::Particle, ff_cylinder);
     ParticleLayout particle_layout(particle);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
-
     return multi_layer;
 }
 
@@ -68,21 +61,17 @@ CylindersInBABuilder::CylindersInBABuilder()
 
 MultiLayer* CylindersInBABuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
-    Layer air_layer(air_material);
+    Layer vacuum_layer(refMat::Vacuum);
 
     FormFactorCylinder ff_cylinder(m_radius, m_height);
-    Particle cylinder(particle_material, ff_cylinder);
+    Particle cylinder(refMat::Particle, ff_cylinder);
 
     ParticleLayout particle_layout(cylinder);
 
-    air_layer.addLayout(particle_layout);
-    multi_layer->addLayer(air_layer);
+    vacuum_layer.addLayout(particle_layout);
 
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     return multi_layer;
 }
 
@@ -96,25 +85,19 @@ LargeCylindersInDWBABuilder::LargeCylindersInDWBABuilder()
 
 MultiLayer* LargeCylindersInDWBABuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
-    Layer air_layer(air_material);
-    Layer substrate_layer(substrate_material);
+    Layer vacuum_layer(refMat::Vacuum);
+    Layer substrate_layer(refMat::Substrate);
 
     FormFactorCylinder ff_cylinder(m_radius, m_height);
 
-    Particle particle(particle_material, ff_cylinder);
+    Particle particle(refMat::Particle, ff_cylinder);
     ParticleLayout particle_layout(particle);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
-
     return multi_layer;
 }
 
@@ -128,26 +111,18 @@ RotatedCylindersBuilder::RotatedCylindersBuilder()
 
 MultiLayer* RotatedCylindersBuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
-
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-
     FormFactorCylinder ff_cylinder(m_radius, m_height);
-    RotationY rotation(M_PI);
-    kvector_t position(0, 0, 0);
 
-    Particle particle(particle_material, ff_cylinder);
+    Particle particle(refMat::Particle, ff_cylinder);
     ParticleLayout particle_layout;
-    particle_layout.addParticle(particle, 1.0, position, rotation);
+    particle_layout.addParticle(particle, 1.0, kvector_t(), RotationY(M_PI));
 
-    Layer air_layer(air_material);
-    Layer substrate_layer(substrate_material);
+    Layer vacuum_layer(refMat::Vacuum);
+    Layer substrate_layer(refMat::Substrate);
     substrate_layer.addLayout(particle_layout);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
-
     return multi_layer;
 }

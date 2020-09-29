@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCANTELLATEDCUBE_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORCANTELLATEDCUBE_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A cube, with truncation of all edges and corners, as in Croset (2017) Fig 7
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorCantellatedCube : public FormFactorPolyhedron
+class FormFactorCantellatedCube : public IFormFactorPolyhedron
 {
 public:
     FormFactorCantellatedCube(const std::vector<double> P);

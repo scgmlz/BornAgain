@@ -37,13 +37,13 @@ const PolyhedralTopology FormFactorCuboctahedron::topology = {{{{3, 2, 1, 0}, tr
 //! @param height_ratio: ratio of heights of top to bottom pyramids
 //! @param alpha: dihedral angle in radians between base and facet
 FormFactorCuboctahedron::FormFactorCuboctahedron(const std::vector<double> P)
-    : FormFactorPolyhedron({"Cuboctahedron",
-                            "class_tooltip",
-                            {{"Length", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                             {"HeightRatio", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
-                           P),
+    : IFormFactorPolyhedron({"Cuboctahedron",
+                             "class_tooltip",
+                             {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                              {"HeightRatio", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                            P),
       m_length(m_P[0]), m_height(m_P[1]), m_height_ratio(m_P[2]), m_alpha(m_P[3])
 {
     onChange();
@@ -64,17 +64,17 @@ IFormFactor* FormFactorCuboctahedron::sliceFormFactor(ZLimits limits, const IRot
         FormFactorPyramid slicedff(
             m_length - dbase_edge,
             m_height * (1 + m_height_ratio) - effects.dz_bottom - effects.dz_top, m_alpha);
-        return CreateTransformedFormFactor(slicedff, rot, effects.position);
+        return createTransformedFormFactor(slicedff, rot, effects.position);
     } else if (effects.dz_top > m_height_ratio * m_height) {
         double dbase_edge = 2 * (m_height - effects.dz_bottom) * MathFunctions::cot(m_alpha);
         FormFactorPyramid slicedff(
             m_length - dbase_edge,
             m_height * (1 + m_height_ratio) - effects.dz_bottom - effects.dz_top, M_PI - m_alpha);
-        return CreateTransformedFormFactor(slicedff, rot, effects.position);
+        return createTransformedFormFactor(slicedff, rot, effects.position);
     } else {
         FormFactorCuboctahedron slicedff(m_length, m_height - effects.dz_bottom,
                                          m_height_ratio * m_height - effects.dz_top, m_alpha);
-        return CreateTransformedFormFactor(slicedff, rot, effects.position);
+        return createTransformedFormFactor(slicedff, rot, effects.position);
     }
 }
 

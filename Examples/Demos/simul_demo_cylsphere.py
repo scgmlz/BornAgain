@@ -12,7 +12,7 @@ from bornagain import *
 # ----------------------------------
 def RunSimulation():
     # defining materials
-    mAir = HomogeneousMaterial("Air", 0.0, 0.0)
+    mVacuum = HomogeneousMaterial("Vacuum", 0.0, 0.0)
     mSubstrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     mParticle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -29,12 +29,12 @@ def RunSimulation():
     interference.setProbabilityDistribution(pdf)
     particle_layout.setInterferenceFunction(interference)
 
-    # air layer with particles and substrate form multi layer
-    air_layer = Layer(mAir)
-    air_layer.addLayout(particle_layout)
+    # vacuum layer with particles and substrate form multi layer
+    vacuum_layer = Layer(mVacuum)
+    vacuum_layer.addLayout(particle_layout)
     substrate_layer = Layer(mSubstrate)
     multi_layer = MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
 
     # build and run experiment

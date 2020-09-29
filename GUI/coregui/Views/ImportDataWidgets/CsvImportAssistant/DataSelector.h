@@ -20,7 +20,6 @@
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h"
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvNamespace.h"
 #include "GUI/coregui/utils/ImportDataInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <QAction>
 #include <QComboBox>
 #include <QDialog>

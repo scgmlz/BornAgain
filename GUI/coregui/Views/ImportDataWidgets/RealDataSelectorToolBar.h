@@ -23,7 +23,7 @@ class QToolButton;
 //! The RealDataSelectorToolBar class represents a narrow toolbar on top of
 //! RealDataSelectorWidget (ImportDataView)
 
-class BA_CORE_API_ RealDataSelectorToolBar : public StyledToolBar
+class RealDataSelectorToolBar : public StyledToolBar
 {
     Q_OBJECT
 public:

@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DOCKSCONTROLLER_H
 
 #include "GUI/coregui/Views/CommonWidgets/DockWidgetInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QSize>
 #include <map>
@@ -28,7 +27,7 @@ class FancyMainWindow;
 
 //! Handles appearance of docked widgets in the context of FancyMainWindow.
 
-class BA_CORE_API_ DocksController : public QObject
+class DocksController : public QObject
 {
     Q_OBJECT
 

@@ -21,7 +21,7 @@
 //! A sphere with gaussian radius distribution.
 //! @ingroup softParticle
 
-class BA_CORE_API_ FormFactorSphereGaussianRadius : public IFormFactorBorn
+class FormFactorSphereGaussianRadius : public IFormFactorBorn
 {
 public:
     FormFactorSphereGaussianRadius(const std::vector<double> P);

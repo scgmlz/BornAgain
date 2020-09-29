@@ -1,6 +1,6 @@
 """
 3 layers system (substrate, teflon, air).
-Air layer is populated with spheres with size distribution.
+Vacuum layer is populated with spheres with size distribution.
 """
 import bornagain as ba
 
@@ -42,7 +42,7 @@ class SampleBuilder:
         """
 
         # defining materials
-        m_air = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+        m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
         m_Si = ba.HomogeneousMaterial("Si", 5.78164736e-6, 1.02294578e-7)
         m_Ag = ba.HomogeneousMaterial("Ag", 2.24749529E-5, 1.61528396E-6)
         m_PTFE = ba.HomogeneousMaterial("PTFE", 5.20508729E-6, 1.96944292E-8)
@@ -81,7 +81,7 @@ class SampleBuilder:
         r_hmdso = ba.LayerRoughness(1.1*ba.nm, 0.3, 5.0*ba.nm)
 
         # layers
-        air_layer = ba.Layer(m_air)
+        vacuum_layer = ba.Layer(m_vacuum)
         hmdso_layer = ba.Layer(m_HMDSO, self.hmdso_thickness)
         hmdso_layer.addLayout(layout)
         ptfe_layer = ba.Layer(m_PTFE, self.ptfe_thickness)
@@ -89,7 +89,7 @@ class SampleBuilder:
 
         # assembling multilayer
         multi_layer = ba.MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayerWithTopRoughness(hmdso_layer, r_hmdso)
         multi_layer.addLayerWithTopRoughness(ptfe_layer, r_ptfe)
         multi_layer.addLayer(substrate_layer)

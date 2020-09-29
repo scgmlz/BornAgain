@@ -15,12 +15,10 @@
 #ifndef BORNAGAIN_CORE_PARAMETRIZATION_THREADINFO_H
 #define BORNAGAIN_CORE_PARAMETRIZATION_THREADINFO_H
 
-#include "Wrap/WinDllMacros.h"
-
 //! Information to run simulation with dedicated number of threads.
 //! @ingroup simulation
 
-struct BA_CORE_API_ ThreadInfo {
+struct ThreadInfo {
     ThreadInfo();
     unsigned n_threads;
     unsigned n_batches;

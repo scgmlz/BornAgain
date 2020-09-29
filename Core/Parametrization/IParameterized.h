@@ -25,7 +25,7 @@ class RealParameter;
 //! Manages a local parameter pool, and a tree of child pools.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ IParameterized
+class IParameterized
 {
 public:
     IParameterized(const std::string& name = "");

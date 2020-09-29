@@ -23,7 +23,7 @@
 //! of scalar interactions between the layers and the scattered particle.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ ScalarRTCoefficients : public ILayerRTCoefficients
+class ScalarRTCoefficients : public ILayerRTCoefficients
 {
 public:
     ScalarRTCoefficients();

@@ -32,7 +32,7 @@ class SimulationElement;
 //! Implementation of IFresnelMap for matrix valued reflection/transmission coefficients.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ MatrixFresnelMap : public IFresnelMap
+class MatrixFresnelMap : public IFresnelMap
 {
 public:
     MatrixFresnelMap(std::unique_ptr<ISpecularStrategy> strategy);

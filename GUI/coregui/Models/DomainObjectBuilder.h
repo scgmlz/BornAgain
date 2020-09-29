@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DOMAINOBJECTBUILDER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DOMAINOBJECTBUILDER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class MultiLayer;
@@ -29,16 +28,14 @@ class IUnitConverter;
 
 namespace DomainObjectBuilder
 {
-BA_CORE_API_ std::unique_ptr<MultiLayer> buildMultiLayer(const SessionItem& multilayer_item);
-BA_CORE_API_ std::unique_ptr<Layer> buildLayer(const SessionItem& item);
-BA_CORE_API_ std::unique_ptr<ParticleLayout> buildParticleLayout(const SessionItem& item);
-BA_CORE_API_ std::unique_ptr<IInterferenceFunction>
-buildInterferenceFunction(const SessionItem& item);
-BA_CORE_API_ std::unique_ptr<Instrument> buildInstrument(const InstrumentItem& instrumentItem);
+std::unique_ptr<MultiLayer> buildMultiLayer(const SessionItem& multilayer_item);
+std::unique_ptr<Layer> buildLayer(const SessionItem& item);
+std::unique_ptr<ParticleLayout> buildParticleLayout(const SessionItem& item);
+std::unique_ptr<IInterferenceFunction> buildInterferenceFunction(const SessionItem& item);
+std::unique_ptr<Instrument> buildInstrument(const InstrumentItem& instrumentItem);
 
 //! Creates a unit converter corresponding to the given instrument item
-BA_CORE_API_ std::unique_ptr<IUnitConverter>
-createUnitConverter(const InstrumentItem* instrumentItem);
+std::unique_ptr<IUnitConverter> createUnitConverter(const InstrumentItem* instrumentItem);
 }; // namespace DomainObjectBuilder
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_DOMAINOBJECTBUILDER_H

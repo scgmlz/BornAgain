@@ -24,15 +24,15 @@
 
 namespace AxisNames
 {
-BA_CORE_API_ std::map<AxesUnits, std::string> InitSphericalAxis0();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitSphericalAxis1();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitRectangularAxis0();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitRectangularAxis1();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitOffSpecAxis0();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitOffSpecAxis1();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitSpecAxis();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitSpecAxisQ();
-BA_CORE_API_ std::map<AxesUnits, std::string> InitSampleDepthAxis();
+std::map<AxesUnits, std::string> InitSphericalAxis0();
+std::map<AxesUnits, std::string> InitSphericalAxis1();
+std::map<AxesUnits, std::string> InitRectangularAxis0();
+std::map<AxesUnits, std::string> InitRectangularAxis1();
+std::map<AxesUnits, std::string> InitOffSpecAxis0();
+std::map<AxesUnits, std::string> InitOffSpecAxis1();
+std::map<AxesUnits, std::string> InitSpecAxis();
+std::map<AxesUnits, std::string> InitSpecAxisQ();
+std::map<AxesUnits, std::string> InitSampleDepthAxis();
 } // namespace AxisNames
 
 #endif // BORNAGAIN_CORE_INTENSITY_AXISNAMES_H

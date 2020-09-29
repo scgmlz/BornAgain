@@ -24,7 +24,7 @@ class PolarizationAnalysisEditor;
 class ColumnResizer;
 class QVBoxLayout;
 
-class BA_CORE_API_ SpecularInstrumentEditor : public SessionItemWidget
+class SpecularInstrumentEditor : public SessionItemWidget
 {
     Q_OBJECT
 

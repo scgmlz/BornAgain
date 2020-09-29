@@ -49,8 +49,8 @@ SpecularSimulationElement::SpecularSimulationElement(SpecularSimulationElement&&
 
 SpecularSimulationElement::~SpecularSimulationElement() = default;
 
-SpecularSimulationElement&
-SpecularSimulationElement::operator=(const SpecularSimulationElement& other)
+SpecularSimulationElement& SpecularSimulationElement::
+operator=(const SpecularSimulationElement& other)
 {
     if (this != &other) {
         SpecularSimulationElement tmp(other);

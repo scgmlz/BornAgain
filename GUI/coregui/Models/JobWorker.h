@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBWORKER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_JOBWORKER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class Simulation;
 
 //! The JobWorker class provides running the domain simulation in a thread.
 
-class BA_CORE_API_ JobWorker : public QObject
+class JobWorker : public QObject
 {
     Q_OBJECT
 public:

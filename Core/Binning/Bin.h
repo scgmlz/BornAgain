@@ -17,7 +17,7 @@
 
 #include "Core/Vector/Vectors3D.h"
 
-struct BA_CORE_API_ Bin1D {
+struct Bin1D {
     Bin1D() : m_lower(0), m_upper(0) {}
     Bin1D(double lower, double upper) : m_lower(lower), m_upper(upper) {}
     double m_lower; //!< lower bound of the bin
@@ -33,7 +33,7 @@ bool BinContains(const Bin1D& bin, double value);
 //! An one-dimensional range of kvector_t's.
 //! @ingroup tools_internal
 
-struct BA_CORE_API_ Bin1DKVector {
+struct Bin1DKVector {
     Bin1DKVector() : m_q_lower(), m_q_upper() {}
     Bin1DKVector(const kvector_t lower, const kvector_t upper) : m_q_lower(lower), m_q_upper(upper)
     {
@@ -49,7 +49,7 @@ struct BA_CORE_API_ Bin1DKVector {
 //! An one-dimensional range of cvector_t's.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ Bin1DCVector
+class Bin1DCVector
 {
 public:
     Bin1DCVector() : m_q_lower(), m_q_upper() {}

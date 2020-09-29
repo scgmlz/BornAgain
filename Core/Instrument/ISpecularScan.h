@@ -26,7 +26,7 @@ class IFootprintFactor;
 class SpecularSimulationElement;
 
 //! Base abstract class for all types of specular scans.
-class BA_CORE_API_ ISpecularScan : public ICloneable
+class ISpecularScan : public ICloneable
 {
 public:
     enum SPECULAR_DATA_TYPE { angle, q };

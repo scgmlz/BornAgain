@@ -23,7 +23,7 @@ struct Bin1D;
 //! Basic class for all shapes in 2D.
 //! @ingroup tools
 
-class BA_CORE_API_ IShape2D : public ICloneable
+class IShape2D : public ICloneable
 {
 public:
     IShape2D(const char* name) : m_name(name) {}

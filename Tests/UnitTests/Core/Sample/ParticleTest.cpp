@@ -32,7 +32,7 @@ TEST_F(ParticleTest, Clone)
 
 TEST_F(ParticleTest, Constructors)
 {
-    Material mat = HomogeneousMaterial("Air", 0, 0);
+    Material mat = HomogeneousMaterial("Vacuum", 0, 0);
     FormFactorFullSphere sphere(1.0);
     RotationZ transform(45. * Units::degree);
 
@@ -56,7 +56,7 @@ TEST_F(ParticleTest, Constructors)
 
 TEST_F(ParticleTest, setters)
 {
-    Material mat = HomogeneousMaterial("Air", 0, 0);
+    Material mat = HomogeneousMaterial("Vacuum", 0, 0);
     FormFactorFullSphere sphere(2.1);
     RotationY transform(45. * Units::degree);
 
@@ -75,7 +75,7 @@ TEST_F(ParticleTest, setters)
 
 TEST_F(ParticleTest, getChildren)
 {
-    Material mat = HomogeneousMaterial("Air", 0, 0);
+    Material mat = HomogeneousMaterial("Vacuum", 0, 0);
     FormFactorFullSphere sphere(2.1);
 
     // Checking children of particle (no rotation)

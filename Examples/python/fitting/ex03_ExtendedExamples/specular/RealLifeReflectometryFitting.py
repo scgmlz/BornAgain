@@ -109,7 +109,7 @@ def buildSample(arg_dict):
     Creates sample and returns it
     """
     # defining materials
-    m_air = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_si_o2 = ba.HomogeneousMaterial("SiO2",
         8.57040868e-06 * arg_dict["concentration"],
         1.11016654e-07 * arg_dict["concentration"])
@@ -119,13 +119,13 @@ def buildSample(arg_dict):
     r_si = ba.LayerRoughness(arg_dict["roughness"], 0, 0)
 
     # layers
-    air_layer = ba.Layer(m_air)
+    vacuum_layer = ba.Layer(m_vacuum)
     oxide_layer = ba.Layer(m_si_o2, arg_dict["thickness"])
     substrate_layer = ba.Layer(m_si)
 
     # assembling multilayer
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayerWithTopRoughness(oxide_layer, r_si)
     multi_layer.addLayerWithTopRoughness(substrate_layer, r_si)
 

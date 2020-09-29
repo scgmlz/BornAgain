@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_EXPORT_SAMPLETOPYTHON_H
 #define BORNAGAIN_CORE_EXPORT_SAMPLETOPYTHON_H
 
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <string>
 
@@ -25,7 +24,7 @@ class SampleLabelHandler;
 
 //! Generates Python code snippet from domain (C++) objects representing sample construction.
 
-class BA_CORE_API_ SampleToPython
+class SampleToPython
 {
 public:
     SampleToPython();

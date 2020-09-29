@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_INTENSITY_ARRAYUTILS_H
 
 #include "Core/Intensity/OutputData.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <stdexcept>
 #include <vector>

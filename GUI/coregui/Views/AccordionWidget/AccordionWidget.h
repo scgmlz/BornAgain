@@ -33,7 +33,6 @@
 
 #include "GUI/coregui/Views/AccordionWidget/ClickableFrame.h"
 #include "GUI/coregui/Views/AccordionWidget/ContentPane.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -76,7 +75,7 @@ class ContentPane;
  * Currently Headers have to be unique
  *
  */
-class BA_CORE_API_ AccordionWidget : public QWidget
+class AccordionWidget : public QWidget
 {
     Q_OBJECT
 public:

@@ -16,12 +16,11 @@
 #define BORNAGAIN_FIT_TESTENGINE_PARAMETERPLAN_H
 
 #include "Fit/Kernel/Parameter.h"
-#include "Wrap/WinDllMacros.h"
 
 //! Defines initial settings of single fit parameter and the final value which has to be found
 //! in the course of the fit.
 
-class BA_CORE_API_ ParameterPlan
+class ParameterPlan
 {
 public:
     ParameterPlan(const Fit::Parameter& param, double expected_value, double tolerance = 0.01)

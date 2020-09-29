@@ -10,7 +10,7 @@ def get_sample(cyl_height=5*nm):
     Returns a sample with cylinders on a substrate.
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_layer = ba.HomogeneousMaterial("Layer", 3e-6, 2e-8)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 3e-5, 2e-8)
@@ -28,13 +28,13 @@ def get_sample(cyl_height=5*nm):
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
 
-    air_layer = ba.Layer(m_ambience)
+    vacuum_layer = ba.Layer(m_vacuum)
     intermediate_layer = ba.Layer(m_layer, 5*nm)
     intermediate_layer.addLayout(particle_layout)
     substrate_layer = ba.Layer(m_substrate)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(intermediate_layer)
     multi_layer.addLayer(substrate_layer)
     return multi_layer

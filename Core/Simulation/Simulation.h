@@ -19,15 +19,15 @@
 #include "Core/Detector/IDetector2D.h"
 #include "Core/Instrument/Instrument.h"
 #include "Core/Instrument/SimulationResult.h"
-#include "Core/Multilayer/SampleProvider.h"
 #include "Core/Parametrization/DistributionHandler.h"
 #include "Core/Parametrization/INode.h"
 #include "Core/Parametrization/SimulationOptions.h"
+#include "Core/SampleBuilderEngine/SampleProvider.h"
 
 template <class T> class OutputData;
 class IBackground;
 class IComputation;
-class IMultiLayerBuilder;
+class ISampleBuilder;
 class MultiLayer;
 
 //! Pure virtual base class of OffSpecularSimulation, GISASSimulation and SpecularSimulation.
@@ -35,12 +35,12 @@ class MultiLayer;
 //! weighting over parameter distributions, ...
 //! @ingroup simulation
 
-class BA_CORE_API_ Simulation : public ICloneable, public INode
+class Simulation : public ICloneable, public INode
 {
 public:
     Simulation();
     Simulation(const MultiLayer& p_sample);
-    Simulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder);
+    Simulation(const std::shared_ptr<ISampleBuilder> p_sample_builder);
     virtual ~Simulation();
 
     virtual Simulation* clone() const = 0;
@@ -72,7 +72,7 @@ public:
     void setSample(const MultiLayer& sample);
     const MultiLayer* sample() const;
 
-    void setSampleBuilder(const std::shared_ptr<IMultiLayerBuilder> sample_builder);
+    void setSampleBuilder(const std::shared_ptr<ISampleBuilder> sample_builder);
 
     void setBackground(const IBackground& bg);
     const IBackground* background() const { return mP_background.get(); }
@@ -129,9 +129,6 @@ protected:
 
 private:
     void initialize();
-
-    //! Update the sample by calling the sample builder, if present
-    void updateSample();
 
     void runSingleSimulation(size_t batch_start, size_t batch_size, double weight = 1.0);
 

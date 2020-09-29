@@ -22,13 +22,12 @@
  */
 
 #include "GUI/coregui/Views/SampleDesigner/ViewTypes.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsPathItem>
 
 class NodeEditorPort;
 class ConnectableView;
 
-class BA_CORE_API_ NodeEditorConnection : public QGraphicsPathItem
+class NodeEditorConnection : public QGraphicsPathItem
 {
 public:
     NodeEditorConnection(QGraphicsItem* parent = 0, QGraphicsScene* scene = 0);

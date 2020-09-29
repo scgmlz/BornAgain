@@ -23,7 +23,7 @@
 //! Interference function of a 2D lattice.
 //! @ingroup interference
 
-class BA_CORE_API_ InterferenceFunction2DLattice : public IInterferenceFunction
+class InterferenceFunction2DLattice : public IInterferenceFunction
 {
 public:
     InterferenceFunction2DLattice(double length_1, double length_2, double alpha, double xi);

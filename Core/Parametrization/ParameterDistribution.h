@@ -25,7 +25,7 @@ class IDistribution1D;
 
 //! A parametric distribution function, for use with any model parameter.
 
-class BA_CORE_API_ ParameterDistribution : public IParameterized
+class ParameterDistribution : public IParameterized
 {
 public:
     ParameterDistribution(const std::string& par_name, const IDistribution1D& distribution,

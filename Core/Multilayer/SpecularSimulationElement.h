@@ -29,7 +29,7 @@ class Slice;
 //! for specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ SpecularSimulationElement
+class SpecularSimulationElement
 {
 public:
     SpecularSimulationElement(double kz);

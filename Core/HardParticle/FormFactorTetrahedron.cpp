@@ -29,12 +29,12 @@ const PolyhedralTopology FormFactorTetrahedron::topology = {{{{2, 1, 0}, false},
 //! @param height: height of the tetrahedron in nanometers
 //! @param alpha: dihedral angle in radians between base and facet
 FormFactorTetrahedron::FormFactorTetrahedron(const std::vector<double> P)
-    : FormFactorPolyhedron({"Tetrahedron",
-                            "class_tooltip",
-                            {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
-                           P),
+    : IFormFactorPolyhedron({"Tetrahedron",
+                             "class_tooltip",
+                             {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                            P),
       m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
     onChange();
@@ -52,7 +52,7 @@ IFormFactor* FormFactorTetrahedron::sliceFormFactor(ZLimits limits, const IRotat
     double dbase_edge = 2 * sqrt(3) * effects.dz_bottom * MathFunctions::cot(m_alpha);
     FormFactorTetrahedron slicedff(m_base_edge - dbase_edge,
                                    m_height - effects.dz_bottom - effects.dz_top, m_alpha);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorTetrahedron::onChange()

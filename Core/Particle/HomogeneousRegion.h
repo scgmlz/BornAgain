@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Core/Particle/HomogeneousRegion.h
-//! @brief     Defines struct HomogeneousRegion, and declares fct CreateAveragedMaterial
+//! @brief     Defines struct HomogeneousRegion, and declares fct createAveragedMaterial
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -35,8 +35,8 @@ struct HomogeneousRegion {
 
 //! Creates averaged material. Square refractive index of returned material is arithmetic mean over
 //! _regions_ and _layer_mat_. Magnetization (if present) is averaged linearly.
-BA_CORE_API_ Material CreateAveragedMaterial(const Material& layer_mat,
-                                             const std::vector<HomogeneousRegion>& regions);
+Material createAveragedMaterial(const Material& layer_mat,
+                                const std::vector<HomogeneousRegion>& regions);
 
 #endif // SWIG
 

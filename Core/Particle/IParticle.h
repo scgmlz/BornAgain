@@ -28,16 +28,16 @@
 //!
 //! @ingroup samples
 
-class BA_CORE_API_ IParticle : public IAbstractParticle
+class IParticle : public IAbstractParticle
 {
 public:
     ~IParticle() {}
     IParticle* clone() const override = 0;
 
-    //! Create a form factor for this particle
+    //! Creates a form factor for this particle
     virtual IFormFactor* createFormFactor() const;
 
-    //! Create a sliced form factor for this particle
+    //! Creates a sliced form factor for this particle
     virtual SlicedParticle createSlicedParticle(ZLimits limits) const;
 
     //! Returns particle position.

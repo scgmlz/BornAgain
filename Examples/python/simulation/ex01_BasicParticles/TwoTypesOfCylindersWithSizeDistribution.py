@@ -7,11 +7,11 @@ from bornagain import deg, angstrom, nm
 
 def get_sample():
     """
-    Returns a sample with cylinders in a homogeneous medium ("air").
+    Returns a sample with cylinders in a homogeneous medium ("Vacuum").
     The cylinders are a 95:5 mixture of two different size distributions.
     """
     # defining materials
-    m_air = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles #1
@@ -53,11 +53,11 @@ def get_sample():
     particle_layout.addParticle(part_coll1, 0.95)
     particle_layout.addParticle(part_coll2, 0.05)
 
-    air_layer = ba.Layer(m_air)
-    air_layer.addLayout(particle_layout)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     return multi_layer
 
 

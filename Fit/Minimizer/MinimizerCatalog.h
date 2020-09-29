@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_MINIMIZER_MINIMIZERCATALOG_H
 
 #include "Fit/Minimizer/MinimizerInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <map>
 
 //! Hard-coded information about all minimizers available.
@@ -34,7 +33,7 @@ Genetic        | Default
 Test           | Default
 */
 
-class BA_CORE_API_ MinimizerCatalog
+class MinimizerCatalog
 {
 public:
     MinimizerCatalog();

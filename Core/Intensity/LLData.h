@@ -71,7 +71,7 @@ private:
 };
 
 #ifndef SWIG
-template <> BA_CORE_API_ Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const;
+template <> Eigen::Matrix2d LLData<Eigen::Matrix2d>::getZeroElement() const;
 #endif
 
 // Global helper functions for arithmetic

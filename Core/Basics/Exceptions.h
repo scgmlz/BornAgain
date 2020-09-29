@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_BASICS_EXCEPTIONS_H
 #define BORNAGAIN_CORE_BASICS_EXCEPTIONS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <stdexcept>
 #include <string>
 
@@ -31,79 +30,79 @@
 namespace Exceptions
 {
 
-class BA_CORE_API_ NotImplementedException : public std::logic_error
+class NotImplementedException : public std::logic_error
 {
 public:
     NotImplementedException(const std::string& message);
 };
 
-class BA_CORE_API_ NullPointerException : public std::logic_error
+class NullPointerException : public std::logic_error
 {
 public:
     NullPointerException(const std::string& message);
 };
 
-class BA_CORE_API_ OutOfBoundsException : public std::logic_error
+class OutOfBoundsException : public std::logic_error
 {
 public:
     OutOfBoundsException(const std::string& message);
 };
 
-class BA_CORE_API_ ClassInitializationException : public std::runtime_error
+class ClassInitializationException : public std::runtime_error
 {
 public:
     ClassInitializationException(const std::string& message);
 };
 
-class BA_CORE_API_ UnknownClassRegistrationException : public std::runtime_error
+class UnknownClassRegistrationException : public std::runtime_error
 {
 public:
     UnknownClassRegistrationException(const std::string& message);
 };
 
-class BA_CORE_API_ ExistingClassRegistrationException : public std::runtime_error
+class ExistingClassRegistrationException : public std::runtime_error
 {
 public:
     ExistingClassRegistrationException(const std::string& message);
 };
 
-class BA_CORE_API_ LogicErrorException : public std::logic_error
+class LogicErrorException : public std::logic_error
 {
 public:
     LogicErrorException(const std::string& message);
 };
 
-class BA_CORE_API_ RuntimeErrorException : public std::runtime_error
+class RuntimeErrorException : public std::runtime_error
 {
 public:
     RuntimeErrorException(const std::string& message);
 };
 
-class BA_CORE_API_ DivisionByZeroException : public std::runtime_error
+class DivisionByZeroException : public std::runtime_error
 {
 public:
     DivisionByZeroException(const std::string& message);
 };
 
-class BA_CORE_API_ DomainErrorException : public std::domain_error
+class DomainErrorException : public std::domain_error
 {
 public:
     DomainErrorException(const std::string& message);
 };
 
-class BA_CORE_API_ FileNotIsOpenException : public std::runtime_error
+class FileNotIsOpenException : public std::runtime_error
 {
 public:
     FileNotIsOpenException(const std::string& message);
 };
 
-class BA_CORE_API_ FileIsBadException : public std::runtime_error
+class FileIsBadException : public std::runtime_error
 {
 public:
     FileIsBadException(const std::string& message);
 };
 
-class BA_CORE_API_ FormatErrorException : public std::runtime_error
+class FormatErrorException : public std::runtime_error
 {
 public:
     FormatErrorException(const std::string& message);

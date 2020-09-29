@@ -29,7 +29,7 @@ class IntensityDataFFTPresenter;
 //! A common widget to display color map (IntensityDataCanvas) and properties
 //! (IntensityDataPropertyWidget) of intensity data item.
 
-class BA_CORE_API_ IntensityDataWidget : public SessionItemWidget
+class IntensityDataWidget : public SessionItemWidget
 {
     Q_OBJECT
 

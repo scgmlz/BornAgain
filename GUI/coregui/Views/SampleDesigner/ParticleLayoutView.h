@@ -17,7 +17,7 @@
 
 #include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
-class BA_CORE_API_ ParticleLayoutView : public ConnectableView
+class ParticleLayoutView : public ConnectableView
 {
 public:
     ParticleLayoutView(QGraphicsItem* parent = 0);

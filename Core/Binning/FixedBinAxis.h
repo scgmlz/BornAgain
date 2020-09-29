@@ -20,7 +20,7 @@
 //! Axis with fixed bin size.
 //! @ingroup tools
 
-class BA_CORE_API_ FixedBinAxis : public IAxis
+class FixedBinAxis : public IAxis
 {
 public:
     //! FixedBinAxis constructor.

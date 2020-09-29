@@ -27,7 +27,7 @@ Instrument::Instrument() : mP_detector(new SphericalDetector), m_beam(Beam::hori
     registerChild(&m_beam);
 }
 
-Instrument::Instrument(const Instrument& other) : m_beam(other.m_beam)
+Instrument::Instrument(const Instrument& other) : INode(), m_beam(other.m_beam)
 {
     if (other.mP_detector)
         setDetector(*other.mP_detector);
@@ -35,7 +35,7 @@ Instrument::Instrument(const Instrument& other) : m_beam(other.m_beam)
     setName(other.getName());
 }
 
-Instrument::~Instrument() {}
+Instrument::~Instrument() = default;
 
 Instrument& Instrument::operator=(const Instrument& other)
 {
@@ -60,7 +60,7 @@ void Instrument::initDetector()
     if (!mP_detector)
         throw Exceptions::RuntimeErrorException(
             "Instrument::initDetector() -> Error. Detector is not initialized.");
-    getDetector()->init(getBeam());
+    mP_detector->init(getBeam());
 }
 
 std::vector<const INode*> Instrument::getChildren() const
@@ -102,7 +102,7 @@ void Instrument::setBeamParameters(double wavelength, double alpha_i, double phi
 
 const DetectorMask* Instrument::getDetectorMask() const
 {
-    return getDetector()->detectorMask();
+    return mP_detector->detectorMask();
 }
 
 void Instrument::setBeam(const Beam& beam)
@@ -129,12 +129,38 @@ double Instrument::getBeamIntensity() const
 
 const IDetector* Instrument::getDetector() const
 {
+    ASSERT(mP_detector);
     return mP_detector.get();
 }
 
-IDetector* Instrument::getDetector()
+const IDetector& Instrument::detector() const
 {
-    return mP_detector.get();
+    ASSERT(mP_detector);
+    return *mP_detector;
+}
+
+IDetector& Instrument::detector()
+{
+    ASSERT(mP_detector);
+    return *mP_detector;
+}
+
+IDetector2D& Instrument::detector2D()
+{
+    ASSERT(mP_detector);
+    IDetector2D* p = dynamic_cast<IDetector2D*>(mP_detector.get());
+    if (!p)
+        throw std::runtime_error("Error: Detector is not twodimensional");
+    return *p;
+}
+
+const IDetector2D& Instrument::detector2D() const
+{
+    ASSERT(mP_detector);
+    IDetector2D* const p = dynamic_cast<IDetector2D* const>(mP_detector.get());
+    if (!p)
+        throw std::runtime_error("Error: Detector is not twodimensional");
+    return *p;
 }
 
 const IAxis& Instrument::getDetectorAxis(size_t index) const

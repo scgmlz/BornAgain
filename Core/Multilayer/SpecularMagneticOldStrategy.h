@@ -27,7 +27,7 @@ class Slice;
 //! the coherent wave solution in a multilayer with magnetization.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ SpecularMagneticOldStrategy : public ISpecularStrategy
+class SpecularMagneticOldStrategy : public ISpecularStrategy
 {
 public:
     //! Computes refraction angle reflection/transmission coefficients

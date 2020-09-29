@@ -17,13 +17,12 @@
 
 #include "Fit/Tools/Attributes.h"
 #include "Fit/Tools/RealLimits.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 //! Attributes and limits of a fit parameter, and coupling between these properties.
 //! @ingroup fitting
 
-class BA_CORE_API_ AttLimits
+class AttLimits
 {
 public:
     AttLimits();

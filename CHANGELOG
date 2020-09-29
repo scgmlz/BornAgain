@@ -9,6 +9,9 @@ BornAgain-1.17.99, work in progress
     6) Swap order of arguments gamma and eta in 2D decay and distribution Voigt functions
     7) FormFactorSphereLogNormalRadius is now positioned at center, not at bottom
     8) Ripple1 and Ripple2 form factors renamed to CosineRipple and SawtoothRipple
+    9) Support for structural roughness (Tanh + Névot-Croce) in polarized computations
+  > Important changes in examples and tests:
+    1) Renamed "Air" -> "Vacuum"
   > Changes in build configuration:
     1) Python2 no longer supported
     2) OpenGL can no longer be deselected
@@ -18,6 +21,8 @@ BornAgain-1.17.99, work in progress
     2) Uniform handling of assertions
     3) Success of test_nonXMLDataInDir was dependent on test execution order
     4) Parameter registration now centralized in INode class
+    5) New, and more stable, implementation of polarized Fresnel computation
+    6) Scalar Fresnel computation unified with polarized implementation
 
 BornAgain-1.17.0, released 2020.06.16
   > API changes:

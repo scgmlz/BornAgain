@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITORACTIONS_H
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
-#include "Wrap/WinDllMacros.h"
 #include <QList>
 #include <QModelIndex>
 #include <QObject>
@@ -31,7 +30,7 @@ class QMenu;
 //! lower/rize mask in the stack, delete mask). If more than one MaskItem is selected,
 //! action will be applied to the whole selection, if possible.
 
-class BA_CORE_API_ MaskEditorActions : public QObject
+class MaskEditorActions : public QObject
 {
     Q_OBJECT
 public:

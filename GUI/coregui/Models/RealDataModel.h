@@ -19,7 +19,7 @@
 
 //! The RealDataModel class is a model to store all imported RealDataItem's.
 
-class BA_CORE_API_ RealDataModel : public SessionModel
+class RealDataModel : public SessionModel
 {
     Q_OBJECT
 

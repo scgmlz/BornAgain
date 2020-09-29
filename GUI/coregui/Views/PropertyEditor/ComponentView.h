@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_COMPONENTVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SessionItem;
 
 //! Base class for ComponentTreeView and ComponentFlatView.
 
-class BA_CORE_API_ ComponentView : public QWidget
+class ComponentView : public QWidget
 {
     Q_OBJECT
 public:

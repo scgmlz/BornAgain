@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H
 #define BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class MultiLayer;
@@ -26,9 +25,9 @@ class Simulation;
 namespace ExportToPython
 {
 
-BA_CORE_API_ std::string generateSampleCode(const MultiLayer& multilayer);
-BA_CORE_API_ std::string generateSimulationCode(const Simulation& simulation);
-BA_CORE_API_ std::string generatePyExportTest(const Simulation& simulation);
+std::string generateSampleCode(const MultiLayer& multilayer);
+std::string generateSimulationCode(const Simulation& simulation);
+std::string generatePyExportTest(const Simulation& simulation);
 
 } // namespace ExportToPython
 

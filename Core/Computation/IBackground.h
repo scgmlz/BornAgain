@@ -22,7 +22,7 @@
 //!
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IBackground : public ICloneable, public INode
+class IBackground : public ICloneable, public INode
 {
 public:
     IBackground(const NodeMeta& meta, const std::vector<double>& PValues);

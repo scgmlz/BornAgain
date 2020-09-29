@@ -179,8 +179,8 @@ std::unique_ptr<IDistribution2DSampler> FTDistribution2DCone::createSampler() co
 
 FTDistribution2DVoigt::FTDistribution2DVoigt(const std::vector<double> P)
     : IFTDistribution2D(
-        {"FTDistribution2DVoigt", "class_tooltip", {{"Eta", "", "para_tooltip", -INF, +INF, 0}}},
-        P),
+          {"FTDistribution2DVoigt", "class_tooltip", {{"Eta", "", "para_tooltip", -INF, +INF, 0}}},
+          P),
       m_eta(m_P[3])
 {
 }

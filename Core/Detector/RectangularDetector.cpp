@@ -59,6 +59,7 @@ void RectangularDetector::setPosition(const kvector_t normal_to_detector, double
 {
     m_detector_arrangement = GENERIC;
     m_normal_to_detector = normal_to_detector;
+    m_distance = m_normal_to_detector.mag();
     m_u0 = u0;
     m_v0 = v0;
     m_direction = direction;
@@ -209,25 +210,26 @@ std::string RectangularDetector::axisName(size_t index) const
     }
 }
 
-size_t RectangularDetector::getIndexOfSpecular(const Beam& beam) const
+size_t RectangularDetector::indexOfSpecular(const Beam& beam) const
 {
     if (dimension() != 2)
         return totalSize();
-    double alpha = beam.getAlpha();
-    double phi = beam.getPhi();
-    kvector_t k_spec = vecOfLambdaAlphaPhi(beam.getWavelength(), alpha, phi);
-    kvector_t normal_unit = m_normal_to_detector.unit();
-    double kd = k_spec.dot(normal_unit);
+    const double alpha = beam.getAlpha();
+    const double phi = beam.getPhi();
+    const kvector_t k_spec = vecOfLambdaAlphaPhi(beam.getWavelength(), alpha, phi);
+    const kvector_t normal_unit = m_normal_to_detector.unit();
+    const double kd = k_spec.dot(normal_unit);
     if (kd <= 0.0)
         return totalSize();
-    kvector_t k_orth = (k_spec / kd - normal_unit) * m_distance;
-    double u = k_orth.dot(m_u_unit) + m_u0;
-    double v = k_orth.dot(m_v_unit) + m_v0;
-    const IAxis& u_axis = getAxis(0);
-    const IAxis& v_axis = getAxis(1);
-    if (u_axis.contains(u) && v_axis.contains(v))
-        return getGlobalIndex(u_axis.findClosestIndex(u), v_axis.findClosestIndex(v));
-    return totalSize();
+    ASSERT(m_distance != 0);
+    const kvector_t rpix = k_spec * (m_distance / kd);
+    const double u = rpix.dot(m_u_unit) + m_u0;
+    const double v = rpix.dot(m_v_unit) + m_v0;
+    const IAxis& u_axis = getAxis(0); // the x axis, GISAS only
+    const IAxis& v_axis = getAxis(1); // the y axis, in reflectometer plane
+    if (!u_axis.contains(u) || !v_axis.contains(v))
+        return totalSize();
+    return getGlobalIndex(u_axis.findClosestIndex(u), v_axis.findClosestIndex(v));
 }
 
 void RectangularDetector::setDistanceAndOffset(double distance, double u0, double v0)

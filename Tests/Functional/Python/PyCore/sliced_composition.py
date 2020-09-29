@@ -11,7 +11,7 @@ import bornagain as ba
 from bornagain import deg, kvector_t, nm
 
 mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
-mAmbience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
 mParticle = ba.HomogeneousMaterial("Ag", 1.245e-5, 5.419e-7)
 sphere_radius = 10.0
 bottom_cup_height = 4.0
@@ -25,11 +25,11 @@ class SlicedSpheresTest(unittest.TestCase):
         by the user.
         """
 
-        air_layer = ba.Layer(mAmbience)
+        vacuum_layer = ba.Layer(mAmbience)
         if particle_to_air:
             layout = ba.ParticleLayout()
             layout.addParticle(particle_to_air)
-            air_layer.addLayout(layout)
+            vacuum_layer.addLayout(layout)
 
         substrate = ba.Layer(mSubstrate)
         if particle_to_substrate:
@@ -38,7 +38,7 @@ class SlicedSpheresTest(unittest.TestCase):
             substrate.addLayout(layout)
 
         multi_layer = ba.MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayer(substrate)
         return multi_layer
 
@@ -125,7 +125,7 @@ class SlicedSpheresTest(unittest.TestCase):
         Compares two simulation intended to  provide identical results.
         Simulation #1: no particles at all
         Simulation #2: spherical composition on top of substrate crossing the interface
-        Bottom part of composition is made of substrate material, top part from air layer material
+        Bottom part of composition is made of substrate material, top part from vacuum layer material
         """
 
         shift = bottom_cup_height
@@ -147,7 +147,7 @@ class SlicedSpheresTest(unittest.TestCase):
         Compares two simulation intended to  provide identical results.
         Simulation #1: spherical particle on top of substrate
         Simulation #2: spherical composition on top of substrate, where top and bottom are made of same material
-        Both particles are inserted in air layer with shift to go below interface
+        Both particles are inserted in vacuum layer with shift to go below interface
         """
 
         shift = 3*nm

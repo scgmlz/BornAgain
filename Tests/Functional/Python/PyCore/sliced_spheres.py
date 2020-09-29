@@ -11,7 +11,7 @@ import bornagain as ba
 from bornagain import deg, kvector_t
 
 mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
-mAmbience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
 
 class SlicedSpheresTest(unittest.TestCase):
 
@@ -21,11 +21,11 @@ class SlicedSpheresTest(unittest.TestCase):
         by the user.
         """
 
-        air_layer = ba.Layer(mAmbience)
+        vacuum_layer = ba.Layer(mAmbience)
         if particle_to_air:
             layout = ba.ParticleLayout()
             layout.addParticle(particle_to_air)
-            air_layer.addLayout(layout)
+            vacuum_layer.addLayout(layout)
 
         substrate = ba.Layer(mSubstrate)
         if particle_to_substrate:
@@ -34,7 +34,7 @@ class SlicedSpheresTest(unittest.TestCase):
             substrate.addLayout(layout)
 
         multi_layer = ba.MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayer(substrate)
         return multi_layer
 
@@ -71,8 +71,8 @@ class SlicedSpheresTest(unittest.TestCase):
 
     def testSphericalLacuneInSubstrate(self):
         """
-        Similar to previous. Truncated sphere and sphere are made of air material.
-        From scattering point of view, both cases should look like an air lacune in substrate.
+        Similar to previous. Truncated sphere and sphere are made of vacuum material.
+        From scattering point of view, both cases should look like an vacuum lacune in substrate.
         """
 
         sphere_radius = 10.0
@@ -95,7 +95,7 @@ class SlicedSpheresTest(unittest.TestCase):
     def testSpheresCrossingInterface(self):
         """
         Compares two simulation intended to  provide identical results.
-        Simulation #1: full sphere inserted in air layer to cross interface
+        Simulation #1: full sphere inserted in vacuum layer to cross interface
         Simulation #2: full sphere inserted in substrate layer to cross interface
         Both spheres are made of same material.
         """
@@ -104,7 +104,7 @@ class SlicedSpheresTest(unittest.TestCase):
         sphere_radius = 10.0
         sphere_shift = 4.0  # shift beneath interface in absolute units
 
-        # Sphere intended for air layer and crossing interface
+        # Sphere intended for vacuum layer and crossing interface
         sphere1 = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
         sphere1.setPosition(0, 0, -sphere_shift)
         reference = self.get_result(particle_to_air=sphere1)

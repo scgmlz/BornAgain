@@ -19,7 +19,6 @@
 #include "Core/Multilayer/Slice.h"
 #include "Core/RT/ILayerRTCoefficients.h"
 #include "Core/Vector/Vectors3D.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <vector>
 
@@ -30,7 +29,7 @@ class SimulationElement;
 //! (these amplitudes correspond to the specular part of the wavefunction).
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IFresnelMap
+class IFresnelMap
 {
 public:
     IFresnelMap(std::unique_ptr<ISpecularStrategy> strategy);

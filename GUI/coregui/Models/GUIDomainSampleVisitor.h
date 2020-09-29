@@ -29,7 +29,7 @@ class MultiLayer;
 
 //! Visits domain sample tree to build GUI presentation.
 
-class BA_CORE_API_ GUIDomainSampleVisitor : public INodeVisitor
+class GUIDomainSampleVisitor : public INodeVisitor
 {
 public:
     GUIDomainSampleVisitor();

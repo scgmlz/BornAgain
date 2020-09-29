@@ -26,7 +26,7 @@ class RealParameter;
 //! Container with parameters for IParameterized object.
 //! @ingroup tools_internal
 
-class BA_CORE_API_ ParameterPool : public ICloneable
+class ParameterPool : public ICloneable
 {
 public:
     ParameterPool();

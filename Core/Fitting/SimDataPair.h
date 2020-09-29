@@ -22,7 +22,7 @@ template <class T> class OutputData;
 
 //! Holds pair of simulation/experimental data to fit.
 
-class BA_CORE_API_ SimDataPair
+class SimDataPair
 {
 public:
     //! Constructs simulation/data pair for later fit.

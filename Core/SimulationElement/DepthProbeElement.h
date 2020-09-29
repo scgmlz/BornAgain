@@ -21,7 +21,7 @@
 
 class IAxis;
 
-class BA_CORE_API_ DepthProbeElement
+class DepthProbeElement
 {
 public:
     DepthProbeElement(double wavelength, double alpha_i, const IAxis* z_positions);

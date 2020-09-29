@@ -19,7 +19,7 @@
 
 class ComponentEditor;
 
-class BA_CORE_API_ ProjectionsPropertyPanel : public SessionItemWidget
+class ProjectionsPropertyPanel : public SessionItemWidget
 {
     Q_OBJECT
 

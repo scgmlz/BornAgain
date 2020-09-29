@@ -26,7 +26,7 @@
 //! The size of the rectangle always matches axes viewport at any zoom level.
 //! All MasksViews are added to IntensityDataView as children.
 
-class BA_CORE_API_ IntensityDataView : public IShape2DView
+class IntensityDataView : public IShape2DView
 {
     Q_OBJECT
 public:

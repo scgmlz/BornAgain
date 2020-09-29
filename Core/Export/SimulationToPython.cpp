@@ -135,62 +135,59 @@ std::string SimulationToPython::defineSpecularSimulation(const SpecularSimulatio
 
 std::string SimulationToPython::defineDetector(const Simulation* simulation) const
 {
-    const IDetector* iDetector = simulation->getInstrument().getDetector();
-
-    if (iDetector->dimension() != 2)
+    const IDetector* const detector = simulation->getInstrument().getDetector();
+    if (detector->dimension() != 2)
         throw Exceptions::RuntimeErrorException("SimulationToPython::defineDetector: "
                                                 "detector must be two-dimensional for GISAS");
     std::ostringstream result;
     result << std::setprecision(12);
 
-    if (auto detector = dynamic_cast<const SphericalDetector*>(iDetector)) {
+    if (const auto* const det = dynamic_cast<const SphericalDetector*>(detector)) {
         result << pyfmt::indent() << "simulation.setDetectorParameters(";
-        for (size_t index = 0; index < detector->dimension(); ++index) {
+        for (size_t index = 0; index < det->dimension(); ++index) {
             if (index != 0)
                 result << ", ";
-            result << detector->getAxis(index).size() << ", "
-                   << pyfmt::printDegrees(detector->getAxis(index).getMin()) << ", "
-                   << pyfmt::printDegrees(detector->getAxis(index).getMax());
+            result << det->getAxis(index).size() << ", "
+                   << pyfmt::printDegrees(det->getAxis(index).getMin()) << ", "
+                   << pyfmt::printDegrees(det->getAxis(index).getMax());
         }
         result << ")\n";
-    } else if (auto detector = dynamic_cast<const RectangularDetector*>(iDetector)) {
+    } else if (const auto* const det = dynamic_cast<const RectangularDetector*>(detector)) {
         result << pyfmt::indent() << "\n";
-        result << pyfmt::indent() << "detector = ba.RectangularDetector(" << detector->getNbinsX()
-               << ", " << pyfmt::printDouble(detector->getWidth()) << ", " << detector->getNbinsY()
-               << ", " << pyfmt::printDouble(detector->getHeight()) << ")\n";
-        if (detector->getDetectorArrangment() == RectangularDetector::GENERIC) {
+        result << pyfmt::indent() << "detector = ba.RectangularDetector(" << det->getNbinsX()
+               << ", " << pyfmt::printDouble(det->getWidth()) << ", " << det->getNbinsY() << ", "
+               << pyfmt::printDouble(det->getHeight()) << ")\n";
+        if (det->getDetectorArrangment() == RectangularDetector::GENERIC) {
             result << pyfmt::indent() << "detector.setPosition("
-                   << pyfmt::printKvector(detector->getNormalVector()) << ", "
-                   << pyfmt::printDouble(detector->getU0()) << ", "
-                   << pyfmt::printDouble(detector->getV0());
-            if (!pyfmt::isDefaultDirection(detector->getDirectionVector()))
-                result << ", " << pyfmt::printKvector(detector->getDirectionVector());
+                   << pyfmt::printKvector(det->getNormalVector()) << ", "
+                   << pyfmt::printDouble(det->getU0()) << ", " << pyfmt::printDouble(det->getV0());
+            if (!pyfmt::isDefaultDirection(det->getDirectionVector()))
+                result << ", " << pyfmt::printKvector(det->getDirectionVector());
             result << ")\n";
-        } else if (detector->getDetectorArrangment()
-                   == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
+        } else if (det->getDetectorArrangment() == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
             result << pyfmt::indent() << "detector.setPerpendicularToSampleX("
-                   << pyfmt::printDouble(detector->getDistance()) << ", "
-                   << pyfmt::printDouble(detector->getU0()) << ", "
-                   << pyfmt::printDouble(detector->getV0()) << ")\n";
-        } else if (detector->getDetectorArrangment()
+                   << pyfmt::printDouble(det->getDistance()) << ", "
+                   << pyfmt::printDouble(det->getU0()) << ", " << pyfmt::printDouble(det->getV0())
+                   << ")\n";
+        } else if (det->getDetectorArrangment()
                    == RectangularDetector::PERPENDICULAR_TO_DIRECT_BEAM) {
             result << pyfmt::indent() << "detector.setPerpendicularToDirectBeam("
-                   << pyfmt::printDouble(detector->getDistance()) << ", "
-                   << pyfmt::printDouble(detector->getU0()) << ", "
-                   << pyfmt::printDouble(detector->getV0()) << ")\n";
-        } else if (detector->getDetectorArrangment()
+                   << pyfmt::printDouble(det->getDistance()) << ", "
+                   << pyfmt::printDouble(det->getU0()) << ", " << pyfmt::printDouble(det->getV0())
+                   << ")\n";
+        } else if (det->getDetectorArrangment()
                    == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM) {
             result << pyfmt::indent() << "detector.setPerpendicularToReflectedBeam("
-                   << pyfmt::printDouble(detector->getDistance()) << ", "
-                   << pyfmt::printDouble(detector->getU0()) << ", "
-                   << pyfmt::printDouble(detector->getV0()) << ")\n";
-        } else if (detector->getDetectorArrangment()
+                   << pyfmt::printDouble(det->getDistance()) << ", "
+                   << pyfmt::printDouble(det->getU0()) << ", " << pyfmt::printDouble(det->getV0())
+                   << ")\n";
+        } else if (det->getDetectorArrangment()
                    == RectangularDetector::PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
             result << pyfmt::indent() << "detector.setPerpendicularToReflectedBeam("
-                   << pyfmt::printDouble(detector->getDistance()) << ")\n";
+                   << pyfmt::printDouble(det->getDistance()) << ")\n";
             result << pyfmt::indent() << "detector.setDirectBeamPosition("
-                   << pyfmt::printDouble(detector->getDirectBeamU0()) << ", "
-                   << pyfmt::printDouble(detector->getDirectBeamV0()) << ")\n";
+                   << pyfmt::printDouble(det->getDirectBeamU0()) << ", "
+                   << pyfmt::printDouble(det->getDirectBeamV0()) << ")\n";
         } else
             throw Exceptions::RuntimeErrorException(
                 "SimulationToPython::defineDetector() -> Error. Unknown alignment.");
@@ -199,12 +196,12 @@ std::string SimulationToPython::defineDetector(const Simulation* simulation) con
     } else
         throw Exceptions::RuntimeErrorException("SimulationToPython::defineDetector() -> Error. "
                                                 "Unknown detector");
-    if (iDetector->regionOfInterest()) {
+    if (detector->regionOfInterest()) {
         result << pyfmt::indent() << "simulation.setRegionOfInterest("
-               << printFunc(iDetector)(iDetector->regionOfInterest()->getXlow()) << ", "
-               << printFunc(iDetector)(iDetector->regionOfInterest()->getYlow()) << ", "
-               << printFunc(iDetector)(iDetector->regionOfInterest()->getXup()) << ", "
-               << printFunc(iDetector)(iDetector->regionOfInterest()->getYup()) << ")\n";
+               << printFunc(detector)(detector->regionOfInterest()->getXlow()) << ", "
+               << printFunc(detector)(detector->regionOfInterest()->getYlow()) << ", "
+               << printFunc(detector)(detector->regionOfInterest()->getXup()) << ", "
+               << printFunc(detector)(detector->regionOfInterest()->getYup()) << ")\n";
     }
     result << pyfmt::indent() << "\n";
     return result.str();

@@ -22,7 +22,7 @@ class Particle;
 //! A particle with a core/shell geometry.
 //! @ingroup samples
 
-class BA_CORE_API_ ParticleCoreShell : public IParticle
+class ParticleCoreShell : public IParticle
 {
 public:
     ParticleCoreShell(const Particle& shell, const Particle& core,

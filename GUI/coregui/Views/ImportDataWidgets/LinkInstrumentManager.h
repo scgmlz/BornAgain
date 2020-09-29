@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QList>
 #include <QObject>
 #include <QStringList>
@@ -32,7 +31,7 @@ class SessionModel;
 //! RealDataModel. Particularly, it notifies RealDataItem about changes in linked instruments
 //! to adjust axes of IntensityDataItem.
 
-class BA_CORE_API_ LinkInstrumentManager : public QObject
+class LinkInstrumentManager : public QObject
 {
     Q_OBJECT
 

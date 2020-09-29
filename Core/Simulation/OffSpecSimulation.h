@@ -23,12 +23,12 @@ class Histogram2D;
 //! Main class to run an off-specular simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ OffSpecSimulation : public Simulation2D
+class OffSpecSimulation : public Simulation2D
 {
 public:
     OffSpecSimulation();
     OffSpecSimulation(const MultiLayer& p_sample);
-    OffSpecSimulation(const std::shared_ptr<class IMultiLayerBuilder> p_sample_builder);
+    OffSpecSimulation(const std::shared_ptr<class ISampleBuilder> p_sample_builder);
 
     ~OffSpecSimulation() final {}
 

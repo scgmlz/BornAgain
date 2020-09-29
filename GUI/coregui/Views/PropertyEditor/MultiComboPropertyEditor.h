@@ -25,7 +25,7 @@ class QStyleOptionViewItem;
 
 //! Provides custom editor for ComboProperty with multi-select option.
 
-class BA_CORE_API_ MultiComboPropertyEditor : public CustomEditor
+class MultiComboPropertyEditor : public CustomEditor
 {
     Q_OBJECT
 public:

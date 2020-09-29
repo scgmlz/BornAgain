@@ -32,7 +32,7 @@ class PyObserverCallback;
 //! Holds vector of `SimDataPair`s (experimental data and simulation results) for use in fitting.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ FitObjective
+class FitObjective
 {
     static simulation_builder_t simulationBuilder(PyBuilderCallback& callback);
 

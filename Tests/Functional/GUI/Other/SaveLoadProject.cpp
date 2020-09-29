@@ -87,7 +87,7 @@ int GUISaveLoadProject::run_job()
     SimulationOptionsItem* optionsItem = m_models->documentModel()->simulationOptionsItem();
 
     SampleBuilderFactory factory;
-    const std::unique_ptr<MultiLayer> sample(factory.createSample(sample_name.toStdString()));
+    const std::unique_ptr<MultiLayer> sample(factory.createSampleByName(sample_name.toStdString()));
 
     GUIObjectBuilder::populateSampleModel(m_models->sampleModel(), m_models->materialModel(),
                                           *sample);

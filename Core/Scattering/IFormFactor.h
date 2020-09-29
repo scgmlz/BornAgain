@@ -37,7 +37,7 @@ class WavevectorInfo;
 
 //! @ingroup formfactors_internal
 
-class BA_CORE_API_ IFormFactor : public ISample
+class IFormFactor : public ISample
 {
 public:
     IFormFactor() = default;
@@ -89,7 +89,7 @@ protected:
                                          kvector_t translation) const;
 };
 
-IFormFactor* CreateTransformedFormFactor(const IFormFactor& formfactor, const IRotation& rot,
+IFormFactor* createTransformedFormFactor(const IFormFactor& formfactor, const IRotation& rot,
                                          kvector_t translation);
 
 #endif // BORNAGAIN_CORE_SCATTERING_IFORMFACTOR_H

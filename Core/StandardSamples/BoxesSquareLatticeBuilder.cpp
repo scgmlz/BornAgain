@@ -17,31 +17,18 @@
 #include "Core/Aggregate/ParticleLayout.h"
 #include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorBox.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Particle/Particle.h"
-
-// -----------------------------------------------------------------------------
-// Boxes in square lattice
-// -----------------------------------------------------------------------------
-
-BoxesSquareLatticeBuilder::BoxesSquareLatticeBuilder()
-    : m_length(5 * Units::nanometer), m_height(10 * Units::nanometer)
-{
-}
+#include "Core/StandardSamples/ReferenceMaterials.h"
 
 MultiLayer* BoxesSquareLatticeBuilder::buildSample() const
 {
-    MultiLayer* multi_layer = new MultiLayer();
+    const double length = 5 * Units::nanometer;
+    const double height = 10 * Units::nanometer;
 
-    Material particle_material = HomogeneousMaterial("Particle", 6e-4, 2e-8);
-    Material air_material = HomogeneousMaterial("Air", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 6e-6, 2e-8);
-
-    Layer air_layer(air_material);
-    Layer substrate_layer(substrate_material);
+    Layer vacuum_layer(refMat::Vacuum);
+    Layer substrate_layer(refMat::Substrate);
 
     std::unique_ptr<InterferenceFunction2DLattice> P_interference_function(
         InterferenceFunction2DLattice::createSquare(8 * Units::nanometer, 0));
@@ -51,16 +38,16 @@ MultiLayer* BoxesSquareLatticeBuilder::buildSample() const
 
     // particles
     ParticleLayout particle_layout;
-    FormFactorBox ff_box(m_length, m_length, m_height);
-    Particle particle(particle_material, ff_box);
+    FormFactorBox ff_box(length, length, height);
+    Particle particle(refMat::Particle, ff_box);
     particle_layout.addParticle(particle, 1.0);
 
     particle_layout.setInterferenceFunction(*P_interference_function);
 
-    air_layer.addLayout(particle_layout);
+    vacuum_layer.addLayout(particle_layout);
 
-    multi_layer->addLayer(air_layer);
+    MultiLayer* multi_layer = new MultiLayer();
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(substrate_layer);
-
     return multi_layer;
 }

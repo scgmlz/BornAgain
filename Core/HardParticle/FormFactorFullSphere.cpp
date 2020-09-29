@@ -23,7 +23,7 @@
 //! @param radius: radius of the sphere in nanometers
 FormFactorFullSphere::FormFactorFullSphere(const std::vector<double> P, bool position_at_center)
     : IFormFactorBorn(
-        {"FullSphere", "class_tooltip", {{"Radius", "nm", "para_tooltip", 0, +INF, 0}}}, P),
+          {"FullSphere", "class_tooltip", {{"Radius", "nm", "para_tooltip", 0, +INF, 0}}}, P),
       m_radius(m_P[0]), m_position_at_center(position_at_center)
 {
     onChange();
@@ -71,7 +71,7 @@ IFormFactor* FormFactorFullSphere::sliceFormFactor(ZLimits limits, const IRotati
     double height = 2.0 * m_radius;
     auto effects = computeSlicingEffects(limits, new_translation, height);
     FormFactorTruncatedSphere slicedff(m_radius, height - effects.dz_bottom, effects.dz_top);
-    return CreateTransformedFormFactor(slicedff, *P_identity, effects.position);
+    return createTransformedFormFactor(slicedff, *P_identity, effects.position);
 }
 
 void FormFactorFullSphere::onChange() {}

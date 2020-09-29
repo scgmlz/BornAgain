@@ -87,7 +87,7 @@ QBoxLayout* ComboSelectorDialog::createLogoLayout()
     return result;
 }
 
-//! Create right layout with text and QComboBox selection.
+//! Creates right layout with text and QComboBox selection.
 
 QBoxLayout* ComboSelectorDialog::createInfoLayout()
 {

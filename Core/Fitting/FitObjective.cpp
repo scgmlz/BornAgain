@@ -64,7 +64,7 @@ simulation_builder_t FitObjective::simulationBuilder(PyBuilderCallback& callback
 
 FitObjective::FitObjective()
     : m_metric_module(
-        std::make_unique<ObjectiveMetricWrapper>(std::make_unique<PoissonLikeMetric>())),
+          std::make_unique<ObjectiveMetricWrapper>(std::make_unique<PoissonLikeMetric>())),
       m_fit_status(std::make_unique<FitStatus>(this))
 {
 }

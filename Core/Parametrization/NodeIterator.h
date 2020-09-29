@@ -86,7 +86,7 @@ protected:
 //!     }
 //! @ingroup samples_internal
 
-template <class Strategy> class BA_CORE_API_ NodeIterator
+template <class Strategy> class NodeIterator
 {
 public:
     NodeIterator(const INode* root);

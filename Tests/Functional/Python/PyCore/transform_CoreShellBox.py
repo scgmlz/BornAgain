@@ -17,20 +17,20 @@ layer_thickness = 100.0
 class TransformCoreShellBoxTest(unittest.TestCase):
 
     def get_sample(self, particle):
-        mAmbience = HomogeneousMaterial("Air", 0.0, 0.0)
+        mAmbience = HomogeneousMaterial("Vacuum", 0.0, 0.0)
         mMiddle= HomogeneousMaterial("Teflon", 2.900e-6, 6.019e-9)
         mSubstrate = HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
 
         layout = ParticleLayout()
         layout.addParticle(particle)
 
-        air_layer = Layer(mAmbience)
+        vacuum_layer = Layer(mAmbience)
         middle_layer = Layer(mMiddle, layer_thickness)
         middle_layer.addLayout(layout)
         substrate = Layer(mSubstrate)
 
         multi_layer = MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayer(middle_layer)
         multi_layer.addLayer(substrate)
         return multi_layer

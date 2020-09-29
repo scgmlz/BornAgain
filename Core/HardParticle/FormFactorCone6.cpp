@@ -32,12 +32,12 @@ const PolyhedralTopology FormFactorCone6::topology = {{{{5, 4, 3, 2, 1, 0}, true
 //! @param height: height of a truncated pyramid in nanometers
 //! @param alpha: dihedral angle in radians between base and facet
 FormFactorCone6::FormFactorCone6(const std::vector<double> P)
-    : FormFactorPolyhedron({"Cone6",
-                            "class_tooltip",
-                            {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
-                           P),
+    : IFormFactorPolyhedron({"Cone6",
+                             "class_tooltip",
+                             {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                            P),
       m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
     onChange();
@@ -55,7 +55,7 @@ IFormFactor* FormFactorCone6::sliceFormFactor(ZLimits limits, const IRotation& r
     double dbase_edge = effects.dz_bottom * MathFunctions::cot(m_alpha);
     FormFactorCone6 slicedff(m_base_edge - dbase_edge,
                              m_height - effects.dz_bottom - effects.dz_top, m_alpha);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorCone6::onChange()

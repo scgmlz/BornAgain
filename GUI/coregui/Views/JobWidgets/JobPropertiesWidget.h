@@ -25,7 +25,7 @@ class ComponentEditor;
 //! The JobPropertiesWidget class holds component editor for JobItem. Part of JobSelectorWidget,
 //! resides at lower left corner of JobView.
 
-class BA_CORE_API_ JobPropertiesWidget : public SessionItemWidget
+class JobPropertiesWidget : public SessionItemWidget
 {
     Q_OBJECT
 public:

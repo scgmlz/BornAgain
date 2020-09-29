@@ -17,7 +17,6 @@
 
 #include "Core/Binning/IPixel.h"
 #include "Core/Vector/EigenCore.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <vector>
 
@@ -26,7 +25,7 @@ class IDetector2D;
 //! Holds precalculated information for faster SimulationElement generation.
 //! @ingroup detector
 
-class BA_CORE_API_ DetectorContext
+class DetectorContext
 {
 public:
     DetectorContext(const IDetector2D* detector);

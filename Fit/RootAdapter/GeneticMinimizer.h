@@ -28,7 +28,7 @@ class GeneticMinimizer;
 //! Wrapper for the CERN ROOT Genetic minimizer.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ GeneticMinimizer : public RootMinimizerAdapter
+class GeneticMinimizer : public RootMinimizerAdapter
 {
 public:
     GeneticMinimizer();

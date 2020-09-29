@@ -20,7 +20,7 @@
 //! Ellipse shape.
 //! @ingroup tools
 
-class BA_CORE_API_ Ellipse : public IShape2D
+class Ellipse : public IShape2D
 {
 public:
     Ellipse(double xcenter, double ycenter, double xradius, double yradius, double theta = 0.0);

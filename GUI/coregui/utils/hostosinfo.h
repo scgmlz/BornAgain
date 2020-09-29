@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_HOSTOSINFO_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_HOSTOSINFO_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 namespace GUI_OS_Utils
@@ -25,7 +24,7 @@ namespace GUI_OS_Utils
 
 enum EOsType { WINDOWS_OS, LINUX_OS, MAC_OS, OTHER_UNIX_OS, OTHER_OS };
 
-class BA_CORE_API_ OsSpecificAspects
+class OsSpecificAspects
 {
 public:
     OsSpecificAspects(EOsType osType) : m_osType(osType) {}
@@ -54,7 +53,7 @@ private:
     const EOsType m_osType;
 };
 
-class BA_CORE_API_ HostOsInfo
+class HostOsInfo
 {
 public:
     static inline EOsType hostOs();
@@ -91,7 +90,7 @@ private:
     static OsSpecificAspects hostOsAspects() { return OsSpecificAspects(hostOs()); }
 };
 
-BA_CORE_API_ EOsType HostOsInfo::hostOs()
+EOsType HostOsInfo::hostOs()
 {
 #if defined(Q_OS_WIN)
     return WINDOWS_OS;
@@ -106,7 +105,7 @@ BA_CORE_API_ EOsType HostOsInfo::hostOs()
 #endif
 }
 
-BA_CORE_API_ bool HostOsInfo::isAnyUnixHost()
+bool HostOsInfo::isAnyUnixHost()
 {
 #ifdef Q_OS_UNIX
     return true;

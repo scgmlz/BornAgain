@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MATERIALPROPERTYCONTROLLER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MATERIALPROPERTYCONTROLLER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class MaterialModel;
@@ -25,7 +24,7 @@ class SessionItem;
 //! Listens MaterialModel for changes in MaterialItems and then
 //! updates MaterialProperties in all related items in SampleModel.
 
-class BA_CORE_API_ MaterialPropertyController : public QObject
+class MaterialPropertyController : public QObject
 {
     Q_OBJECT
 public:

@@ -21,7 +21,7 @@
 //! Pure virtual base class of interference functions.
 //! @ingroup distribution_internal
 
-class BA_CORE_API_ IInterferenceFunction : public ISample
+class IInterferenceFunction : public ISample
 {
 public:
     IInterferenceFunction(const NodeMeta& meta, const std::vector<double>& PValues);

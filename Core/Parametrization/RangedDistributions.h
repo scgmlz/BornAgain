@@ -33,7 +33,7 @@ class ParameterSample;
 //! (except for RangedDistributionLorentz which uses median and hwhm).
 //! @ingroup distribution_internal
 
-class BA_CORE_API_ RangedDistribution : public ICloneable
+class RangedDistribution : public ICloneable
 {
 public:
     RangedDistribution();
@@ -95,7 +95,7 @@ private:
 //! Uniform distribution function.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ RangedDistributionGate : public RangedDistribution
+class RangedDistributionGate : public RangedDistribution
 {
 public:
     RangedDistributionGate();
@@ -120,7 +120,7 @@ protected:
 //! Lorentz distribution with median and hwhm.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ RangedDistributionLorentz : public RangedDistribution
+class RangedDistributionLorentz : public RangedDistribution
 {
 public:
     RangedDistributionLorentz();
@@ -145,7 +145,7 @@ protected:
 //! Gaussian distribution with standard deviation std_dev.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ RangedDistributionGaussian : public RangedDistribution
+class RangedDistributionGaussian : public RangedDistribution
 {
 public:
     RangedDistributionGaussian();
@@ -170,7 +170,7 @@ protected:
 //! Log-normal distribution.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ RangedDistributionLogNormal : public RangedDistribution
+class RangedDistributionLogNormal : public RangedDistribution
 {
 public:
     RangedDistributionLogNormal();
@@ -195,7 +195,7 @@ protected:
 //! Cosine distribution.
 //! @ingroup paramDistribution
 
-class BA_CORE_API_ RangedDistributionCosine : public RangedDistribution
+class RangedDistributionCosine : public RangedDistribution
 {
 public:
     RangedDistributionCosine();

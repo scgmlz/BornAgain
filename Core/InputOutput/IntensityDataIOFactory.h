@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_INPUTOUTPUT_INTENSITYDATAIOFACTORY_H
 #define BORNAGAIN_CORE_INPUTOUTPUT_INTENSITYDATAIOFACTORY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 template <class T> class OutputData;
@@ -44,7 +43,7 @@ IntensityDataIOFactory.writeIntensityData(histogram, "filename.tif.bz2")
 \endcode
 */
 
-class BA_CORE_API_ IntensityDataIOFactory
+class IntensityDataIOFactory
 {
 public:
     //! Reads file and returns newly created OutputData object

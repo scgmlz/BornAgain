@@ -23,7 +23,7 @@ class LayerRoughness;
 //! Interface between two layers, possibly with roughness.
 //! @ingroup samples_internal
 
-class BA_CORE_API_ LayerInterface : public ISample
+class LayerInterface : public ISample
 {
 public:
     virtual ~LayerInterface();

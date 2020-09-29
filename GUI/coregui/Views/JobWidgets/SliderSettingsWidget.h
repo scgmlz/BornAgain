@@ -15,13 +15,12 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_SLIDERSETTINGSWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_SLIDERSETTINGSWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QRadioButton;
 class QCheckBox;
 
-class BA_CORE_API_ SliderSettingsWidget : public QWidget
+class SliderSettingsWidget : public QWidget
 {
     Q_OBJECT
 

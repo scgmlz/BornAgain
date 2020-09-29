@@ -23,7 +23,7 @@
 //! A particle with a form factor and refractive index.
 //! @ingroup samples
 
-class BA_CORE_API_ Particle : public IParticle
+class Particle : public IParticle
 {
 public:
     Particle();

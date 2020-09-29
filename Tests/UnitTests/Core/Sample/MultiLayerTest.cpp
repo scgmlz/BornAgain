@@ -18,7 +18,7 @@ class MultiLayerTest : public ::testing::Test
 protected:
     MultiLayerTest()
         // The following delta, beta are all unphysical. Values don't matter here.
-        : air(HomogeneousMaterial("air", 1e-6, 9e-4)),
+        : air(HomogeneousMaterial("Vacuum", 1e-6, 9e-4)),
           iron(HomogeneousMaterial("iron", 2e-5, 8e-5)),
           chromium(HomogeneousMaterial("chromium", 3e-7, 7e-6)),
           stone(HomogeneousMaterial("stone", 4e-4, 8e-7)), topLayer(air, 0 * Units::nanometer),

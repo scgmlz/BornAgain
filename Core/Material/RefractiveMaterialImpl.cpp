@@ -18,9 +18,10 @@
 RefractiveMaterialImpl::RefractiveMaterialImpl(const std::string& name, double delta, double beta,
                                                kvector_t magnetization)
     : MagneticMaterialImpl(name, magnetization), m_delta(delta),
-      m_beta(beta < 0. ? throw std::runtime_error(
-                 "The imaginary part of the refractive index must be greater or equal zero")
-                       : beta)
+      m_beta(beta < 0.
+                 ? throw std::runtime_error(
+                       "The imaginary part of the refractive index must be greater or equal zero")
+                 : beta)
 {
 }
 

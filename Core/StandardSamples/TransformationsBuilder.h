@@ -15,15 +15,14 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_TRANSFORMATIONSBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_TRANSFORMATIONSBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Rotated box in 3 layers system.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ TransformBoxBuilder : public IMultiLayerBuilder
+class TransformBoxBuilder : public ISampleBuilder
 {
 public:
-    TransformBoxBuilder() {}
     MultiLayer* buildSample() const;
 };
 

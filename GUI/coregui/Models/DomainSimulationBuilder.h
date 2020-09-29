@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DOMAINSIMULATIONBUILDER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DOMAINSIMULATIONBUILDER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class Simulation;
@@ -30,9 +29,9 @@ namespace DomainSimulationBuilder
 
 //! Creates domain simulation from sample and instrument items.
 
-BA_CORE_API_ std::unique_ptr<Simulation>
-createSimulation(const MultiLayerItem* sampleItem, const InstrumentItem* instrumentItem,
-                 const SimulationOptionsItem* optionsItem = nullptr);
+std::unique_ptr<Simulation> createSimulation(const MultiLayerItem* sampleItem,
+                                             const InstrumentItem* instrumentItem,
+                                             const SimulationOptionsItem* optionsItem = nullptr);
 }; // namespace DomainSimulationBuilder
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_DOMAINSIMULATIONBUILDER_H

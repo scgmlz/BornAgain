@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_APPLICATIONMODELS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_APPLICATIONMODELS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class SessionModel;
@@ -29,7 +28,7 @@ class JobModel;
 class MaterialPropertyController;
 class MessageService;
 
-class BA_CORE_API_ ApplicationModels : public QObject
+class ApplicationModels : public QObject
 {
     Q_OBJECT
 public:

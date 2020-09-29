@@ -18,7 +18,6 @@
 //! Collection of wrapper classes to call Python callable from C++.
 
 #include "Fit/Kernel/Parameters.h"
-#include "Wrap/WinDllMacros.h"
 
 class Simulation;
 
@@ -26,7 +25,7 @@ class Simulation;
 //! Base class to wrap Python callable and pass it to C++. Used in swig interface file,
 //! intended to be overloaded from Python.
 
-class BA_CORE_API_ PyBuilderCallback
+class PyBuilderCallback
 {
 public:
     PyBuilderCallback();
@@ -41,7 +40,7 @@ class FitObjective;
 //! Base class to wrap Python callable and pass it to C++. Used in swig interface file,
 //! intended to be overloaded from Python.
 
-class BA_CORE_API_ PyObserverCallback
+class PyObserverCallback
 {
 public:
     PyObserverCallback();

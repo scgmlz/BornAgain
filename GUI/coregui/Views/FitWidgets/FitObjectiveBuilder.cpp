@@ -15,11 +15,7 @@
 #include "GUI/coregui/Views/FitWidgets/FitObjectiveBuilder.h"
 #include "Core/Fitting/FitObjective.h"
 #include "Core/Fitting/ObjectiveMetric.h"
-#include "Core/Instrument/ChiSquaredModule.h"
-#include "Core/Instrument/VarianceFunctions.h"
-#include "Core/Intensity/IIntensityFunction.h"
 #include "Core/Intensity/OutputData.h"
-#include "Core/Multilayer/MultiLayer.h"
 #include "Core/Simulation/Simulation.h"
 #include "Fit/Kernel/KernelTypes.h"
 #include "Fit/Kernel/Minimizer.h"
@@ -63,13 +59,13 @@ void FitObjectiveBuilder::runFit()
     auto result =
         requires_residuals
             ? minimizer.minimize(
-                [&](const Fit::Parameters& params) {
-                    return m_fit_objective->evaluate_residuals(params);
-                },
-                createParameters())
+                  [&](const Fit::Parameters& params) {
+                      return m_fit_objective->evaluate_residuals(params);
+                  },
+                  createParameters())
             : minimizer.minimize(
-                [&](const Fit::Parameters& params) { return m_fit_objective->evaluate(params); },
-                createParameters());
+                  [&](const Fit::Parameters& params) { return m_fit_objective->evaluate(params); },
+                  createParameters());
     m_fit_objective->finalize(result);
 }
 
@@ -88,14 +84,12 @@ std::unique_ptr<FitObjective> FitObjectiveBuilder::createFitObjective() const
 
 std::unique_ptr<IMinimizer> FitObjectiveBuilder::createMinimizer() const
 {
-    auto fitSuiteItem = m_jobItem->fitSuiteItem();
-    return fitSuiteItem->minimizerContainerItem()->createMinimizer();
+    return m_jobItem->fitSuiteItem()->minimizerContainerItem()->createMinimizer();
 }
 
 Fit::Parameters FitObjectiveBuilder::createParameters() const
 {
-    auto fitSuiteItem = m_jobItem->fitSuiteItem();
-    return fitSuiteItem->fitParameterContainerItem()->createParameters();
+    return m_jobItem->fitSuiteItem()->fitParameterContainerItem()->createParameters();
 }
 
 void FitObjectiveBuilder::attachObserver(std::shared_ptr<GUIFitObserver> observer)

@@ -22,7 +22,7 @@ class QCheckBox;
 
 //! Thin toolbar on top of RealSpaceWidget.
 
-class BA_CORE_API_ RealSpaceToolBar : public StyledToolBar
+class RealSpaceToolBar : public StyledToolBar
 {
     Q_OBJECT
 

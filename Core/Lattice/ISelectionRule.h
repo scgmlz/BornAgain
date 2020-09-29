@@ -20,7 +20,7 @@
 //! Pure virtual base class for selection rules.
 //! @ingroup samples_internal
 
-class BA_CORE_API_ ISelectionRule
+class ISelectionRule
 {
 public:
     virtual ~ISelectionRule() {}

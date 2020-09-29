@@ -24,7 +24,7 @@ class ILayout;
 //! A layer, with thickness (in nanometer) and material.
 //! @ingroup samples
 
-class BA_CORE_API_ Layer : public ISample
+class Layer : public ISample
 {
 public:
     Layer(Material material, double thickness = 0);

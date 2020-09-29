@@ -29,8 +29,6 @@ const Eigen::Matrix2cd Unit_Matrix(Eigen::Matrix2cd::Identity());
 // Imaginary unit
 namespace
 {
-const complex_t I(0, 1);
-
 // Pauli matrices
 const Eigen::Matrix2cd Pauli_X((Eigen::Matrix2cd() << 0, 1, 1, 0).finished());
 const Eigen::Matrix2cd Pauli_Y((Eigen::Matrix2cd() << 0, -I, I, 0).finished());

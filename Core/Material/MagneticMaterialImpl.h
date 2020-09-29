@@ -28,7 +28,7 @@ class WavevectorInfo;
 //! Incorporates data and methods required to handle material magnetization.
 //! @ingroup materials
 
-class BA_CORE_API_ MagneticMaterialImpl : public BaseMaterialImpl
+class MagneticMaterialImpl : public BaseMaterialImpl
 {
 public:
     //! Constructs basic material with name and magnetization

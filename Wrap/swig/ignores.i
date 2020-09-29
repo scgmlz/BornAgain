@@ -32,11 +32,8 @@
 // need this to play nicely with ctypes
 %ignore IParameterized::addParametersToExternalPool(const std::string&, ParameterPool*, int) const;
 %ignore IParameterized::addParametersToExternalPool(const std::string&, ParameterPool*) const;
-%ignore IMultiLayerBuilder::addParametersToExternalPool(const std::string&, ParameterPool*, int) const;
-%ignore IMultiLayerBuilder::addParametersToExternalPool(const std::string&, ParameterPool*) const;
-
-// for determining if clone is neccesary after buildSample() call
-%ignore IMultiLayerBuilder::isPythonBuilder();
+%ignore ISampleBuilder::addParametersToExternalPool(const std::string&, ParameterPool*, int) const;
+%ignore ISampleBuilder::addParametersToExternalPool(const std::string&, ParameterPool*) const;
 
 // ignored to avoid error (todo: check whether this is really necessary)
 %ignore Crystal::getTransformedLattice(const IRotation*) const;

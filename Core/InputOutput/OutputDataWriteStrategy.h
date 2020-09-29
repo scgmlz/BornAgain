@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAWRITESTRATEGY_H
 #define BORNAGAIN_CORE_INPUTOUTPUT_OUTPUTDATAWRITESTRATEGY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <istream>
 
 template <class T> class OutputData;
@@ -23,7 +22,7 @@ template <class T> class OutputData;
 //! Strategy interface to write OututData in file
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ IOutputDataWriteStrategy
+class IOutputDataWriteStrategy
 {
 public:
     IOutputDataWriteStrategy() {}
@@ -35,7 +34,7 @@ public:
 //! Strategy to write OutputData to special BornAgain ASCII format
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataWriteINTStrategy : public IOutputDataWriteStrategy
+class OutputDataWriteINTStrategy : public IOutputDataWriteStrategy
 {
 public:
     virtual void writeOutputData(const OutputData<double>& data, std::ostream& output_stream);
@@ -44,7 +43,7 @@ public:
 //! Strategy to write OutputData to simple ASCII file with the layout as in numpy.savetxt
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataWriteNumpyTXTStrategy : public IOutputDataWriteStrategy
+class OutputDataWriteNumpyTXTStrategy : public IOutputDataWriteStrategy
 {
 public:
     virtual void writeOutputData(const OutputData<double>& data, std::ostream& output_stream);
@@ -57,7 +56,7 @@ class TiffHandler;
 //! Strategy to write OutputData to tiff files
 //! @ingroup input_output_internal
 
-class BA_CORE_API_ OutputDataWriteTiffStrategy : public IOutputDataWriteStrategy
+class OutputDataWriteTiffStrategy : public IOutputDataWriteStrategy
 {
 public:
     OutputDataWriteTiffStrategy();

@@ -22,7 +22,7 @@ TEST_F(ParticleCompositionTest, ParticleCompositionClone)
     ParticleComposition composition;
     Particle particle;
     kvector_t position = kvector_t(1.0, 1.0, 1.0);
-    Material material = HomogeneousMaterial("Air", 0.0, 0.0);
+    Material material = HomogeneousMaterial("Vacuum", 0.0, 0.0);
     composition.addParticle(particle, position);
 
     std::unique_ptr<ParticleComposition> clone(composition.clone());
@@ -35,7 +35,7 @@ TEST_F(ParticleCompositionTest, ParticleCompositionClone)
 
 TEST_F(ParticleCompositionTest, getChildren)
 {
-    Material material = HomogeneousMaterial("Air", 0.0, 0.0);
+    Material material = HomogeneousMaterial("Vacuum", 0.0, 0.0);
 
     ParticleComposition composition;
     composition.addParticle(Particle(material, FormFactorFullSphere(1.0)));

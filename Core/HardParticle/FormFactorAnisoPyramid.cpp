@@ -31,13 +31,13 @@ const PolyhedralTopology FormFactorAnisoPyramid::topology = {{{{3, 2, 1, 0}, tru
 //! @param height: height of pyramid in nm
 //! @param alpha: dihedral angle in radians between base and facet
 FormFactorAnisoPyramid::FormFactorAnisoPyramid(const std::vector<double> P)
-    : FormFactorPolyhedron({"AnisoPyramid",
-                            "class_tooltip",
-                            {{"Length", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Width", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                             {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
-                           P),
+    : IFormFactorPolyhedron({"AnisoPyramid",
+                             "class_tooltip",
+                             {{"Length", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Width", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
+                              {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                            P),
       m_length(m_P[0]), m_width(m_P[1]), m_height(m_P[2]), m_alpha(m_P[3])
 {
     onChange();
@@ -56,7 +56,7 @@ IFormFactor* FormFactorAnisoPyramid::sliceFormFactor(ZLimits limits, const IRota
     double dbase_edge = 2 * effects.dz_bottom * MathFunctions::cot(m_alpha);
     FormFactorAnisoPyramid slicedff(m_length - dbase_edge, m_width - dbase_edge,
                                     m_height - effects.dz_bottom - effects.dz_top, m_alpha);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorAnisoPyramid::onChange()

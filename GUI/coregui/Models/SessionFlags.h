@@ -15,12 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONFLAGS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONFLAGS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <qnamespace.h>
 
 //! Collection of flags for SessionModel and SessionItem.
 
-class BA_CORE_API_ SessionFlags
+class SessionFlags
 {
 public:
     // SessionModel columns

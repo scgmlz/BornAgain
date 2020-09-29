@@ -15,17 +15,15 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MAGNETICLAYERSBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_MAGNETICLAYERSBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-
-class ISample;
+#include "Core/Multilayer/RoughnessModels.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Builds sample: spheres in substrate layer with a zero magnetic field.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ MagneticSubstrateZeroFieldBuilder : public IMultiLayerBuilder
+class MagneticSubstrateZeroFieldBuilder : public ISampleBuilder
 {
 public:
-    MagneticSubstrateZeroFieldBuilder();
     MultiLayer* buildSample() const;
 
 private:
@@ -35,37 +33,47 @@ private:
 //! Builds sample: ambient and one magnetized layer on a non-magnetized substrate.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SimpleMagneticLayerBuilder : public IMultiLayerBuilder
+class SimpleMagneticLayerBuilder : public ISampleBuilder
 {
 public:
-    SimpleMagneticLayerBuilder();
     MultiLayer* buildSample() const;
 };
 
 //! Builds sample: magnetic spheres in a magnetized layer on a non-magnetized substrate.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ MagneticLayerBuilder : public IMultiLayerBuilder
+class MagneticLayerBuilder : public ISampleBuilder
 {
 public:
-    MagneticLayerBuilder();
     MultiLayer* buildSample() const;
 
 private:
     double m_sphere_radius;
 };
 
+//! Builds sample: magnetic layer on a magnetic substrate with the fields rotated by 90°
+//! @ingroup standard_samples
+
+class SimpleMagneticRotationBuilder : public ISampleBuilder
+{
+public:
+    MultiLayer* buildSample() const override;
+
+    MultiLayer* createSampleByIndex(size_t index) override;
+    size_t size() override;
+
+private:
+    MultiLayer* builder(double sigmaRoughness = 0.,
+                        RoughnessModel roughnessModel = RoughnessModel::TANH) const;
+};
+
 //! Builds sample: rotated magnetic spheres in substrate layer with a unit magnetic field.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ MagneticRotationBuilder : public IMultiLayerBuilder
+class MagneticRotationBuilder : public ISampleBuilder
 {
 public:
-    MagneticRotationBuilder();
     MultiLayer* buildSample() const;
-
-private:
-    double m_sphere_radius;
 };
 
 #endif // BORNAGAIN_CORE_STANDARDSAMPLES_MAGNETICLAYERSBUILDER_H

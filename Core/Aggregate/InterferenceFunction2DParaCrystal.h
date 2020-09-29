@@ -26,7 +26,7 @@ class IFTDistribution2D;
 //! Interference function of a 2D paracrystal.
 //! @ingroup interference
 
-class BA_CORE_API_ InterferenceFunction2DParaCrystal : public IInterferenceFunction
+class InterferenceFunction2DParaCrystal : public IInterferenceFunction
 {
 public:
     InterferenceFunction2DParaCrystal(const Lattice2D& lattice, double damping_length,

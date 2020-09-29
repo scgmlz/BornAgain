@@ -106,10 +106,10 @@ double MathFunctions::erf(double arg)
 namespace MathFunctions
 {
 //! Computes complex Bessel function J0(z), using power series and asymptotic expansion
-BA_CORE_API_ complex_t Bessel_J0_PowSer(const complex_t z);
+complex_t Bessel_J0_PowSer(const complex_t z);
 
 //! Computes complex Bessel function J0(z), using power series and asymptotic expansion
-BA_CORE_API_ complex_t Bessel_J1_PowSer(const complex_t z);
+complex_t Bessel_J1_PowSer(const complex_t z);
 } // namespace MathFunctions
 
 double MathFunctions::Bessel_J0(double x)

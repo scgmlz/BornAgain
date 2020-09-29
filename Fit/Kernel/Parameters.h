@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_KERNEL_PARAMETERS_H
 
 #include "Fit/Kernel/Parameter.h"
-#include "Wrap/WinDllMacros.h"
 #include <vector>
 
 namespace Fit
@@ -25,7 +24,7 @@ namespace Fit
 //! A collection of fit parameters.
 //! @ingroup fitting
 
-class BA_CORE_API_ Parameters
+class Parameters
 {
 public:
     using parameters_t = std::vector<Parameter>;

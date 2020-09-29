@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEBUILDER_H
 
 #include "GUI/ba3d/view/camera.h"
-#include "Wrap/WinDllMacros.h"
 #include <QVector3D>
 #include <QWidget>
 
@@ -26,7 +25,7 @@ class Shape3D;
 class SceneGeometry;
 class Particle3DContainer;
 
-class BA_CORE_API_ RealSpaceBuilder : public QWidget
+class RealSpaceBuilder : public QWidget
 {
     Q_OBJECT
 

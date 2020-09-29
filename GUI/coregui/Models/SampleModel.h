@@ -21,7 +21,7 @@ class MultiLayerItem;
 
 //! Main model to hold sample items.
 
-class BA_CORE_API_ SampleModel : public SessionModel
+class SampleModel : public SessionModel
 {
     Q_OBJECT
 

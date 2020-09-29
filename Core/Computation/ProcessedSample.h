@@ -36,7 +36,7 @@ class SimulationOptions;
 //!
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ ProcessedSample
+class ProcessedSample
 {
 public:
     ProcessedSample(const MultiLayer& sample, const SimulationOptions& options);

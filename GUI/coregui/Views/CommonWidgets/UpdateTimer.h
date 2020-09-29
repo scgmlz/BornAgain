@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_UPDATETIMER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_UPDATETIMER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QTimer;
@@ -25,7 +24,7 @@ class QTimer;
 
 //! Used in ColorMap plot to avoid often replot of CustomPlot.
 
-class BA_CORE_API_ UpdateTimer : public QObject
+class UpdateTimer : public QObject
 {
     Q_OBJECT
 public:

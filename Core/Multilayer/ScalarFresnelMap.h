@@ -30,7 +30,7 @@ class Slice;
 //! Implementation of IFresnelMap for scalar valued reflection/transmission coefficients.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ ScalarFresnelMap : public IFresnelMap
+class ScalarFresnelMap : public IFresnelMap
 {
 public:
     ScalarFresnelMap(std::unique_ptr<ISpecularStrategy> strategy);

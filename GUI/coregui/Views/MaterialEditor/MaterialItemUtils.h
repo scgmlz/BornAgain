@@ -27,35 +27,31 @@ class MaterialItemContainer;
 namespace MaterialItemUtils
 {
 
-BA_CORE_API_ QColor suggestMaterialColor(const QString& name);
-BA_CORE_API_ ExternalProperty defaultMaterialProperty();
+QColor suggestMaterialColor(const QString& name);
+ExternalProperty defaultMaterialProperty();
 
-BA_CORE_API_ std::unique_ptr<Material>
-createDomainMaterial(const ExternalProperty& material_property);
-BA_CORE_API_ std::unique_ptr<Material>
-createDomainMaterial(const ExternalProperty& material_property,
-                     const MaterialItemContainer& container);
-BA_CORE_API_ MaterialItem* findMaterial(const ExternalProperty& material_property);
+std::unique_ptr<Material> createDomainMaterial(const ExternalProperty& material_property);
+std::unique_ptr<Material> createDomainMaterial(const ExternalProperty& material_property,
+                                               const MaterialItemContainer& container);
+MaterialItem* findMaterial(const ExternalProperty& material_property);
 
-BA_CORE_API_ QString materialTag(const SessionItem& item);
-BA_CORE_API_ QStringList materialRelatedModelTypes();
+QString materialTag(const SessionItem& item);
+QStringList materialRelatedModelTypes();
 
 //! Constructs material property corresponding to given material.
-BA_CORE_API_ ExternalProperty materialProperty(const SessionItem& materialItem);
+ExternalProperty materialProperty(const SessionItem& materialItem);
 
 //! Constructs color property from given color.
-BA_CORE_API_ ExternalProperty colorProperty(const QColor& color);
+ExternalProperty colorProperty(const QColor& color);
 
 //! Calls material selector dialog.
-BA_CORE_API_ ExternalProperty
-selectMaterialProperty(const ExternalProperty& previous = ExternalProperty());
+ExternalProperty selectMaterialProperty(const ExternalProperty& previous = ExternalProperty());
 
 //! Calls color selector dialog.
-BA_CORE_API_ ExternalProperty
-selectColorProperty(const ExternalProperty& previous = ExternalProperty());
+ExternalProperty selectColorProperty(const ExternalProperty& previous = ExternalProperty());
 
 //! Gather material property items from a given item
-BA_CORE_API_ QVector<SessionItem*> materialPropertyItems(SessionItem* item);
+QVector<SessionItem*> materialPropertyItems(SessionItem* item);
 } // namespace MaterialItemUtils
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_MATERIALITEMUTILS_H

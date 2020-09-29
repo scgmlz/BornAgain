@@ -86,7 +86,7 @@ IFormFactor* FormFactorCone::sliceFormFactor(ZLimits limits, const IRotation& ro
     double dradius = effects.dz_bottom * m_cot_alpha;
     FormFactorCone slicedff(m_radius - dradius, m_height - effects.dz_bottom - effects.dz_top,
                             m_alpha);
-    return CreateTransformedFormFactor(slicedff, rot, effects.position);
+    return createTransformedFormFactor(slicedff, rot, effects.position);
 }
 
 void FormFactorCone::onChange()

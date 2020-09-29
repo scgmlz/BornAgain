@@ -1,9 +1,9 @@
 #include "Core/Simulation/GISASSimulation.h"
 #include "Core/Beam/Beam.h"
 #include "Core/Intensity/OutputData.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 #include <memory>

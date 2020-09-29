@@ -89,7 +89,7 @@ class FactoryTest:
             self.m_sample_factory = SampleBuilderFactory()
             self.m_simulation_factory = SimulationFactory()
             self.m_simulation = self.m_simulation_factory.createItem(self.m_simulation_name)
-            self.m_sample = self.m_sample_factory.createSample(self.m_sample_builder_name)
+            self.m_sample = self.m_sample_factory.createSampleByName(self.m_sample_builder_name)
         else:
             self.m_sample_factory = None
             self.m_simulation_factory = None
@@ -155,7 +155,7 @@ class CustomTest(FactoryTest):
         Build and return the sample to calculate custom form factor in Distorted Wave Born Approximation.
         """
         # defining materials
-        m_ambience = HomogeneousMaterial("Air", 0.0, 0.0)
+        m_vacuum = HomogeneousMaterial("Vacuum", 0.0, 0.0)
         m_substrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
         m_particle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -164,13 +164,13 @@ class CustomTest(FactoryTest):
         particle = Particle(m_particle, ff)
         particle_layout = ParticleLayout()
         particle_layout.addParticle(particle, 1.0)
-        air_layer = Layer(m_ambience)
-        air_layer.addLayout(particle_layout)
+        vacuum_layer = Layer(m_vacuum)
+        vacuum_layer.addLayout(particle_layout)
         substrate_layer = Layer(m_substrate)
 
         # assemble multilayer
         multi_layer = MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayer(substrate_layer)
         return multi_layer
 

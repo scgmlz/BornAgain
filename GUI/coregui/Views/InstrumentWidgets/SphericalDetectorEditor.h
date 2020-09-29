@@ -20,7 +20,7 @@ class SphericalDetectorItem;
 class ComponentEditor;
 class QGridLayout;
 
-class BA_CORE_API_ SphericalDetectorEditor : public SessionItemWidget
+class SphericalDetectorEditor : public SessionItemWidget
 {
     Q_OBJECT
 

@@ -21,11 +21,11 @@
 #include "Core/Intensity/Histogram1D.h"
 #include "Core/Intensity/SimpleUnitConverters.h"
 #include "Core/Material/MaterialUtils.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Parametrization/Distributions.h"
 #include "Core/Parametrization/ParameterPool.h"
 #include "Core/Parametrization/RealParameter.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 namespace
 {
@@ -44,7 +44,7 @@ DepthProbeSimulation::DepthProbeSimulation(const MultiLayer& sample) : Simulatio
     initialize();
 }
 
-DepthProbeSimulation::DepthProbeSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder)
+DepthProbeSimulation::DepthProbeSimulation(const std::shared_ptr<ISampleBuilder> sample_builder)
     : Simulation(sample_builder)
 {
     initialize();

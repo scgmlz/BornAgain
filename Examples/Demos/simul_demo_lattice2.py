@@ -14,7 +14,7 @@ M_PI = numpy.pi
 # ----------------------------------
 def RunSimulation():
     # defining materials
-    mAmbience = HomogeneousMaterial("Air", 0.0, 0.0 )
+    mAmbience = HomogeneousMaterial("Vacuum", 0.0, 0.0 )
     mSubstrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8 )
     mParticle = HomogeneousMaterial("Particle", 6e-4, 2e-8 )
 
@@ -38,17 +38,17 @@ def RunSimulation():
     particle_layout1.setInterferenceFunction(interference)
     particle_layout2.setInterferenceFunction(interference)
 
-    # top air layer
-    air_layer = Layer(mAmbience)
-    air_layer.addLayout(particle_layout1)
-    air_layer.addLayout(particle_layout2)
+    # top vacuum layer
+    vacuum_layer = Layer(mAmbience)
+    vacuum_layer.addLayout(particle_layout1)
+    vacuum_layer.addLayout(particle_layout2)
 
     # substrate layer
     substrate_layer = Layer(mSubstrate, 0)
 
     # multilayer
     multi_layer = MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
 
     # build and run experiment

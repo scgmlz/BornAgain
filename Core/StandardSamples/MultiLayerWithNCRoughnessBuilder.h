@@ -15,18 +15,15 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHNCROUGHNESSBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_MULTILAYERWITHNCROUGHNESSBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/StandardSamples/MultiLayerWithRoughnessBuilder.h"
-
-class ISample;
 
 //! Builds sample: layers with correlated roughness.
 //! @ingroup standard_samples
 
-class BA_CORE_API_ MultiLayerWithNCRoughnessBuilder : public MultiLayerWithRoughnessBuilder
+class MultiLayerWithNCRoughnessBuilder : public MultiLayerWithRoughnessBuilder
 {
 public:
-    MultiLayerWithNCRoughnessBuilder();
     MultiLayer* buildSample() const override;
 };
 

@@ -15,8 +15,6 @@
 #ifndef BORNAGAIN_CORE_PARAMETRIZATION_INODEVISITOR_H
 #define BORNAGAIN_CORE_PARAMETRIZATION_INODEVISITOR_H
 
-#include "Wrap/WinDllMacros.h"
-
 class BasicLattice;
 class Beam;
 class ConstantBackground;
@@ -147,7 +145,7 @@ class SquareLattice;
 
 //! From visitor pattern to achieve double dispatch.
 
-class BA_CORE_API_ INodeVisitor
+class INodeVisitor
 {
 public:
     INodeVisitor() : m_depth(0) {}
@@ -288,7 +286,7 @@ private:
     int m_depth;
 };
 
-BA_CORE_API_ void VisitNodesPreorder(const INode& node, INodeVisitor& visitor);
-BA_CORE_API_ void VisitNodesPostorder(const INode& node, INodeVisitor& visitor);
+void VisitNodesPreorder(const INode& node, INodeVisitor& visitor);
+void VisitNodesPostorder(const INode& node, INodeVisitor& visitor);
 
 #endif // BORNAGAIN_CORE_PARAMETRIZATION_INODEVISITOR_H

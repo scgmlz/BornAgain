@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_EXPORT_SIMULATIONTOPYTHON_H
 #define BORNAGAIN_CORE_EXPORT_SIMULATIONTOPYTHON_H
 
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 #include <string>
 
@@ -28,7 +27,7 @@ class SpecularSimulation;
 
 //! Write a Python script that allows to run the current simulation.
 
-class BA_CORE_API_ SimulationToPython
+class SimulationToPython
 {
 public:
     enum EMainType {

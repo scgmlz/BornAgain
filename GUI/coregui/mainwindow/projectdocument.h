@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_PROJECTDOCUMENT_H
 
 #include "GUI/coregui/mainwindow/ProjectFlags.h"
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QIODevice;
@@ -39,7 +38,7 @@ const QString InfoNameAttribute("ProjectName");
 //! projectName()     - 'Untitled'
 //! projectDir()      - '/home/users/development/Untitled
 //! projectFileName() - '/home/users/development/Untitled/Untitled.pro'
-class BA_CORE_API_ ProjectDocument : public QObject
+class ProjectDocument : public QObject
 {
     Q_OBJECT
 

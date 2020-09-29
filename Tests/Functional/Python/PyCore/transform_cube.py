@@ -13,8 +13,8 @@ class RotationsCubeTest(unittest.TestCase):
     """
     Test of rotations and translations of simple cube in three layers system
     """
-    def get_sample(self, formfactor, rot = None, pos = None, layout_rot = None, layout_pos = None, add_to="air"):
-        mAmbience = HomogeneousMaterial("Air", 0.0, 0.0)
+    def get_sample(self, formfactor, rot = None, pos = None, layout_rot = None, layout_pos = None, add_to="Vacuum"):
+        mAmbience = HomogeneousMaterial("Vacuum", 0.0, 0.0)
         mParticle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
         mMiddle= HomogeneousMaterial("MidleLayer", 5e-5, 2e-8)
         mSubstrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
@@ -35,22 +35,22 @@ class RotationsCubeTest(unittest.TestCase):
         else:
             layout.addParticle(particle)
 
-        air_layer = Layer(mAmbience)
+        vacuum_layer = Layer(mAmbience)
         middle_layer = Layer(mSubstrate, 50.0)
         substrate = Layer(mSubstrate)
 
-        if add_to == "air":
-            air_layer.addLayout(layout)
+        if add_to == "Vacuum":
+            vacuum_layer.addLayout(layout)
         else:
             middle_layer.addLayout(layout)
 
         multi_layer = MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayer(middle_layer)
         multi_layer.addLayer(substrate)
         return multi_layer
 
-    def get_result(self, data, add_to="air"):
+    def get_result(self, data, add_to="Vacuum"):
         ff = data[0]
         rot = data[1]
         pos = data[2]
@@ -62,7 +62,7 @@ class RotationsCubeTest(unittest.TestCase):
         simulation.runSimulation()
         return simulation.result()
 
-    def get_difference(self, reference_data, test_data, add_to="air"):
+    def get_difference(self, reference_data, test_data, add_to="Vacuum"):
         intensity = self.get_result(test_data, add_to)
         return RelativeDifference(reference_data, intensity)
 

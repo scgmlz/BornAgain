@@ -21,7 +21,7 @@ class ComponentEditor;
 class QGridLayout;
 class DepthProbeInstrumentItem;
 
-class BA_CORE_API_ DepthProbeInstrumentEditor : public SessionItemWidget
+class DepthProbeInstrumentEditor : public SessionItemWidget
 {
     Q_OBJECT
 

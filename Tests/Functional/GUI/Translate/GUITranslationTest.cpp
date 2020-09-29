@@ -117,7 +117,7 @@ GUITranslationTest::GUITranslationTest(const std::string& simName, const std::st
         throw std::runtime_error("Error in GUITranslationTest: wrong simulation type.");
 
     SampleBuilderFactory sampleFactory;
-    m_simulation->setSample(*sampleFactory.createSample(m_sampleName));
+    m_simulation->setSample(*sampleFactory.createSampleByName(m_sampleName));
 }
 
 GUITranslationTest::~GUITranslationTest() {}

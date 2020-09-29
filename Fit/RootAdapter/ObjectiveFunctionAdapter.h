@@ -16,7 +16,6 @@
 #define BORNAGAIN_FIT_ROOTADAPTER_OBJECTIVEFUNCTIONADAPTER_H
 
 #include "Fit/Kernel/KernelTypes.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class RootScalarFunction;

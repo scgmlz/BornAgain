@@ -18,7 +18,7 @@
 #include "Core/Lattice/Lattice.h"
 #include "Core/Vector/Transform3D.h"
 
-class BA_CORE_API_ ILatticeOrientation
+class ILatticeOrientation
 {
 public:
     virtual ~ILatticeOrientation();
@@ -31,14 +31,14 @@ public:
 };
 
 //! A direction in reciprocal space, specified by double-valued indices hkl.
-struct BA_CORE_API_ MillerIndex {
+struct MillerIndex {
     MillerIndex(double h_, double k_, double l_);
     double h, k, l;
 };
 
 //! Specifies a rotation of a lattice through the Miller indices of two coordinate axes.
 
-class BA_CORE_API_ MillerIndexOrientation : public ILatticeOrientation
+class MillerIndexOrientation : public ILatticeOrientation
 {
 public:
     enum QComponent { QX, QY, QZ };

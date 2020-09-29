@@ -315,10 +315,10 @@ TEST_F(PyEmbedded, EmbeddedMultiLayer)
     buf << "import bornagain as ba                                        \n";
     buf << "                                                              \n";
     buf << "def get_simulation():                                         \n";
-    buf << "    m_ambience = ba.HomogeneousMaterial(\"Air\", 0.0, 0.0)    \n";
-    buf << "    air_layer = ba.Layer(m_ambience)                          \n";
+    buf << "    m_vacuum = ba.HomogeneousMaterial(\"Vacuum\", 0.0, 0.0)    \n";
+    buf << "    vacuum_layer = ba.Layer(m_vacuum)                          \n";
     buf << "    multilayer = ba.MultiLayer()                              \n";
-    buf << "    multilayer.addLayer(air_layer)                            \n";
+    buf << "    multilayer.addLayer(vacuum_layer)                            \n";
     buf << "    return multilayer                                         \n";
 
     PyObject* pCompiledFn = Py_CompileString(buf.str().c_str(), "", Py_file_input);
@@ -370,7 +370,7 @@ TEST_F(PyEmbedded, EmbeddedMultiLayer)
 TEST_F(PyEmbedded, ExportToPythonAndBack)
 {
     SampleBuilderFactory factory;
-    std::unique_ptr<MultiLayer> sample(factory.createSample("CylindersAndPrismsBuilder"));
+    std::unique_ptr<MultiLayer> sample(factory.createSampleByName("CylindersAndPrismsBuilder"));
 
     auto code = ExportToPython::generateSampleCode(*sample);
 
@@ -394,10 +394,10 @@ TEST_F(PyEmbedded, ModuleFunctionsList)
     buf << "import bornagain as ba                                        \n";
     buf << "                                                              \n";
     buf << "def get_simulation():                                         \n";
-    buf << "    m_ambience = ba.HomogeneousMaterial(\"Air\", 0.0, 0.0)    \n";
-    buf << "    air_layer = ba.Layer(m_ambience)                          \n";
+    buf << "    m_vacuum = ba.HomogeneousMaterial(\"Vacuum\", 0.0, 0.0)    \n";
+    buf << "    vacuum_layer = ba.Layer(m_vacuum)                          \n";
     buf << "    multilayer = ba.MultiLayer()                              \n";
-    buf << "    multilayer.addLayer(air_layer)                            \n";
+    buf << "    multilayer.addLayer(vacuum_layer)                            \n";
     buf << "    return multilayer                                         \n";
 
     auto listOfFunc = PyImport::listOfFunctions(buf.str(), BABuild::buildLibDir());

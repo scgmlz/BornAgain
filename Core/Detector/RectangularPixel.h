@@ -19,7 +19,7 @@
 
 //! A pixel in a RectangularDetector.
 
-class BA_CORE_API_ RectangularPixel : public IPixel
+class RectangularPixel : public IPixel
 {
 public:
     RectangularPixel(kvector_t corner_pos, kvector_t width, kvector_t height);

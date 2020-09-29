@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_ABOUTAPPLICATIONDIALOG_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_ABOUTAPPLICATIONDIALOG_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QDialog>
 
 class QBoxLayout;
 
 //! About BornAgain dialog.
 
-class BA_CORE_API_ AboutApplicationDialog : public QDialog
+class AboutApplicationDialog : public QDialog
 {
     Q_OBJECT
 public:

@@ -33,7 +33,7 @@ class ScientificPlotEvent;
 //! Provides a minimal functionality for data plotting and axes interaction. Should be a component
 //! for more complicated plotting widgets. This is a replacement for ColorMapPlot.
 
-class BA_CORE_API_ ColorMap : public ScientificPlot
+class ColorMap : public ScientificPlot
 {
     Q_OBJECT
 

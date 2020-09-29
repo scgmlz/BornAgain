@@ -35,7 +35,7 @@ class OverlayLabelController;
 //! The FitParametersWidget class contains a tree view to set fit parameters (fix/release,
 //! starting value, min/max bounds). It occupies buttom right corner of JobView.
 
-class BA_CORE_API_ FitParameterWidget : public SessionItemWidget
+class FitParameterWidget : public SessionItemWidget
 {
     Q_OBJECT
 public:

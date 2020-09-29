@@ -19,7 +19,7 @@
 
 //! This is a view of VerticalLineItem mask
 
-class BA_CORE_API_ VerticalLineView : public IShape2DView
+class VerticalLineView : public IShape2DView
 {
     Q_OBJECT
 
@@ -40,7 +40,7 @@ protected:
 
 //! This is a view of HorizontalLineItem mask
 
-class BA_CORE_API_ HorizontalLineView : public IShape2DView
+class HorizontalLineView : public IShape2DView
 {
     Q_OBJECT
 

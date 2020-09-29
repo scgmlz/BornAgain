@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORACTIONS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORACTIONS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class RealDataModel;
@@ -25,7 +24,7 @@ class QItemSelectionModel;
 //! The RealDataSelectorActions class contains actions to run/remove real data.
 //! Actions are used by the toolbar and context menu of selector list.
 
-class BA_CORE_API_ RealDataSelectorActions : public QObject
+class RealDataSelectorActions : public QObject
 {
     Q_OBJECT
 public:

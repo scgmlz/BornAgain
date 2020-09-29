@@ -15,12 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_TESTVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_TESTVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class MainWindow;
 
-class BA_CORE_API_ TestView : public QWidget
+class TestView : public QWidget
 {
     Q_OBJECT
 public:

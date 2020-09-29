@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ISHAPE2DVIEW_H
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsObject>
 
 class SessionItem;
@@ -25,7 +24,7 @@ class QPainter;
 
 //! Main interface class for views representing MaskItems, Projections on graphics scene.
 
-class BA_CORE_API_ IShape2DView : public QGraphicsObject
+class IShape2DView : public QGraphicsObject
 {
     Q_OBJECT
 

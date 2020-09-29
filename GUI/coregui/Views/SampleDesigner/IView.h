@@ -16,14 +16,13 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_IVIEW_H
 
 #include "GUI/coregui/Views/SampleDesigner/ViewTypes.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsObject>
 #include <memory>
 
 class SessionItem;
 
 //! parent class for graphic representation of all ISample's
-class BA_CORE_API_ IView : public QGraphicsObject
+class IView : public QGraphicsObject
 {
     Q_OBJECT
 public:

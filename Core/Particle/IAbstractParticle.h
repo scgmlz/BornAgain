@@ -26,7 +26,7 @@ class IRotation;
 
 //! @ingroup samples
 
-class BA_CORE_API_ IAbstractParticle : public ISample
+class IAbstractParticle : public ISample
 {
 public:
     IAbstractParticle() = default;

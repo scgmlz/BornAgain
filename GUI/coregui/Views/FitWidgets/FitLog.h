@@ -16,13 +16,12 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITLOG_H
 
 #include "GUI/coregui/Views/FitWidgets/FitLogFlags.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
 class JobMessagePanel;
 
-class BA_CORE_API_ FitLog
+class FitLog
 {
 public:
     FitLog();

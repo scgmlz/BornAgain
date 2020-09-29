@@ -2,7 +2,7 @@
  // this can be used to reduce the bloat in the swig-generated code
 
 %feature("director") IParameterized;
-%feature("director") IMultiLayerBuilder;
+%feature("director") ISampleBuilder;
 %feature("director") INode;
 %feature("director") ISample;
 %feature("director") IFormFactor;

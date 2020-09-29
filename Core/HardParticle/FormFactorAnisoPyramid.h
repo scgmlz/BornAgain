@@ -15,12 +15,12 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORANISOPYRAMID_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORANISOPYRAMID_H
 
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+#include "Core/HardParticle/IFormFactorPolyhedron.h"
 
 //! A frustum (truncated pyramid) with rectangular base.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorAnisoPyramid : public FormFactorPolyhedron
+class FormFactorAnisoPyramid : public IFormFactorPolyhedron
 {
 public:
     FormFactorAnisoPyramid(const std::vector<double> P);

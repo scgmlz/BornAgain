@@ -15,16 +15,15 @@
 #ifndef BORNAGAIN_CORE_STANDARDSAMPLES_SIZEDISTRIBUTIONMODELSBUILDER_H
 #define BORNAGAIN_CORE_STANDARDSAMPLES_SIZEDISTRIBUTIONMODELSBUILDER_H
 
-#include "Core/Multilayer/IMultiLayerBuilder.h"
+#include "Core/SampleBuilderEngine/ISampleBuilder.h"
 
 //! Creates the sample demonstrating size distribution model in decoupling approximation.
 //! Equivalent of Examples/python/simulation/ex03_InterferenceFunctions/ApproximationDA.py
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SizeDistributionDAModelBuilder : public IMultiLayerBuilder
+class SizeDistributionDAModelBuilder : public ISampleBuilder
 {
 public:
-    SizeDistributionDAModelBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -32,10 +31,9 @@ public:
 //! Equivalent of Examples/python/simulation/ex03_InterferenceFunctions/ApproximationLMA.py
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SizeDistributionLMAModelBuilder : public IMultiLayerBuilder
+class SizeDistributionLMAModelBuilder : public ISampleBuilder
 {
 public:
-    SizeDistributionLMAModelBuilder() {}
     MultiLayer* buildSample() const;
 };
 
@@ -43,20 +41,18 @@ public:
 //! Equivalent of Examples/python/simulation/ex03_InterferenceFunctions/ApproximationSSCA.py
 //! @ingroup standard_samples
 
-class BA_CORE_API_ SizeDistributionSSCAModelBuilder : public IMultiLayerBuilder
+class SizeDistributionSSCAModelBuilder : public ISampleBuilder
 {
 public:
-    SizeDistributionSSCAModelBuilder() {}
     MultiLayer* buildSample() const;
 };
 
 //! Builds sample: size spacing correlation approximation (IsGISAXS example #15).
 //! @ingroup standard_samples
 
-class BA_CORE_API_ CylindersInSSCABuilder : public IMultiLayerBuilder
+class CylindersInSSCABuilder : public ISampleBuilder
 {
 public:
-    CylindersInSSCABuilder() {}
     MultiLayer* buildSample() const;
 };
 

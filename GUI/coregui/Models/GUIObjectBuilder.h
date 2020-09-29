@@ -32,21 +32,17 @@ class ExternalProperty;
 
 namespace GUIObjectBuilder
 {
-BA_CORE_API_ SessionItem* populateSampleModelFromSim(SampleModel* sampleModel,
-                                                     MaterialModel* materialModel,
-                                                     const Simulation& simulation);
+SessionItem* populateSampleModelFromSim(SampleModel* sampleModel, MaterialModel* materialModel,
+                                        const Simulation& simulation);
 
-BA_CORE_API_ SessionItem* populateSampleModel(SampleModel* sampleModel,
-                                              MaterialModel* materialModel,
-                                              const MultiLayer& sample,
-                                              const QString& sample_name = "");
+SessionItem* populateSampleModel(SampleModel* sampleModel, MaterialModel* materialModel,
+                                 const MultiLayer& sample, const QString& sample_name = "");
 
-BA_CORE_API_ SessionItem* populateInstrumentModel(InstrumentModel* p_instrument_model,
-                                                  const Simulation& simulation,
-                                                  const QString& instrument_name = "");
+SessionItem* populateInstrumentModel(InstrumentModel* p_instrument_model,
+                                     const Simulation& simulation,
+                                     const QString& instrument_name = "");
 
-BA_CORE_API_ SessionItem* populateDocumentModel(DocumentModel* p_documentModel,
-                                                const Simulation& simulation);
+SessionItem* populateDocumentModel(DocumentModel* p_documentModel, const Simulation& simulation);
 }; // namespace GUIObjectBuilder
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_GUIOBJECTBUILDER_H

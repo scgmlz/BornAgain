@@ -10,19 +10,19 @@ class LayerTest : public ::testing::Test
 
 TEST_F(LayerTest, LayerGetAndSet)
 {
-    Material air = HomogeneousMaterial("air", 0, 0);
-    Layer layer(air, 10 * Units::nanometer);
-    EXPECT_EQ(air, *layer.material());
+    Material vacuum = HomogeneousMaterial("Vacuum", 0, 0);
+    Layer layer(vacuum, 10 * Units::nanometer);
+    EXPECT_EQ(vacuum, *layer.material());
     EXPECT_EQ(0u, layer.layouts().size());
     EXPECT_EQ(10, layer.thickness());
     EXPECT_EQ(layer.numberOfLayouts(), 0u);
 
     layer.setThickness(20.0);
-    EXPECT_EQ(air, *layer.material());
+    EXPECT_EQ(vacuum, *layer.material());
     EXPECT_EQ(20, layer.thickness());
 
     std::unique_ptr<Layer> clone(layer.clone());
-    EXPECT_EQ(air, *clone->material());
+    EXPECT_EQ(vacuum, *clone->material());
     EXPECT_EQ(0u, clone->layouts().size());
     EXPECT_EQ(20, clone->thickness());
     EXPECT_EQ(clone->numberOfLayouts(), 0u);
@@ -30,10 +30,10 @@ TEST_F(LayerTest, LayerGetAndSet)
 
 TEST_F(LayerTest, LayerAndDecoration)
 {
-    Material air = HomogeneousMaterial("air", 0, 0);
+    Material vacuum = HomogeneousMaterial("Vacuum", 0, 0);
     std::unique_ptr<ParticleLayout> layout1(new ParticleLayout());
 
-    Layer layer(air, 10 * Units::nanometer);
+    Layer layer(vacuum, 10 * Units::nanometer);
     layer.addLayout(*layout1);
     EXPECT_EQ(layer.numberOfLayouts(), 1u);
 
@@ -44,7 +44,7 @@ TEST_F(LayerTest, LayerAndDecoration)
 
 TEST_F(LayerTest, getChildren)
 {
-    Layer layer(HomogeneousMaterial("air", 0.0, 0.0));
+    Layer layer(HomogeneousMaterial("Vacuum", 0.0, 0.0));
 
     std::vector<const INode*> children = layer.getChildren();
     EXPECT_EQ(children.size(), 0u);

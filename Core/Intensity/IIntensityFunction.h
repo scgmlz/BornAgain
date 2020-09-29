@@ -16,12 +16,10 @@
 #ifndef BORNAGAIN_CORE_INTENSITY_IINTENSITYFUNCTION_H
 #define BORNAGAIN_CORE_INTENSITY_IINTENSITYFUNCTION_H
 
-#include "Wrap/WinDllMacros.h"
-
 //! Interface for applying arbitrary function to the measured intensity.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IIntensityFunction
+class IIntensityFunction
 {
 public:
     virtual ~IIntensityFunction();
@@ -32,7 +30,7 @@ public:
 //! Algorithm for applying log function to the measured intensity.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IntensityFunctionLog : public IIntensityFunction
+class IntensityFunctionLog : public IIntensityFunction
 {
 public:
     virtual IntensityFunctionLog* clone() const;
@@ -42,7 +40,7 @@ public:
 //! Algorithm for applying sqrt function to the measured intensity.
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IntensityFunctionSqrt : public IIntensityFunction
+class IntensityFunctionSqrt : public IIntensityFunction
 {
 public:
     virtual IntensityFunctionSqrt* clone() const;

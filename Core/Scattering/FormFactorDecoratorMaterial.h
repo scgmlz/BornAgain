@@ -23,7 +23,7 @@
 //! refractive index and that of its surrounding material.
 //! @ingroup formfactors_decorations
 
-class BA_CORE_API_ FormFactorDecoratorMaterial : public IFormFactorDecorator
+class FormFactorDecoratorMaterial : public IFormFactorDecorator
 {
 public:
     FormFactorDecoratorMaterial(const IFormFactor& form_factor);

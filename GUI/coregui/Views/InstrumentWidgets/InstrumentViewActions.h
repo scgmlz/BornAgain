@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTVIEWACTIONS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_INSTRUMENTVIEWACTIONS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QObject>
 
@@ -27,7 +26,7 @@ class QMenu;
 
 //! Collection of actions to add/remove/clone instrument.
 
-class BA_CORE_API_ InstrumentViewActions : public QObject
+class InstrumentViewActions : public QObject
 {
     Q_OBJECT
 

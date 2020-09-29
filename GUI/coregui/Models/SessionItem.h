@@ -18,6 +18,7 @@
 #include "Core/Basics/Assert.h"
 #include "Fit/Tools/RealLimits.h"
 #include "GUI/coregui/Models/ModelMapper.h"
+#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <memory>
 

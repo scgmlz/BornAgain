@@ -22,7 +22,7 @@
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ IPeakShape : public ISample
+class IPeakShape : public ISample
 {
 public:
     IPeakShape() = default;
@@ -44,7 +44,7 @@ public:
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ IsotropicGaussPeakShape : public IPeakShape
+class IsotropicGaussPeakShape : public IPeakShape
 {
 public:
     IsotropicGaussPeakShape(double max_intensity, double domainsize);
@@ -66,7 +66,7 @@ private:
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ IsotropicLorentzPeakShape : public IPeakShape
+class IsotropicLorentzPeakShape : public IPeakShape
 {
 public:
     IsotropicLorentzPeakShape(double max_intensity, double domainsize);
@@ -89,7 +89,7 @@ private:
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ GaussFisherPeakShape : public IPeakShape
+class GaussFisherPeakShape : public IPeakShape
 {
 public:
     GaussFisherPeakShape(double max_intensity, double radial_size, double kappa);
@@ -114,7 +114,7 @@ private:
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ LorentzFisherPeakShape : public IPeakShape
+class LorentzFisherPeakShape : public IPeakShape
 {
 public:
     LorentzFisherPeakShape(double max_intensity, double radial_size, double kappa);
@@ -139,7 +139,7 @@ private:
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ MisesFisherGaussPeakShape : public IPeakShape
+class MisesFisherGaussPeakShape : public IPeakShape
 {
 public:
     MisesFisherGaussPeakShape(double max_intensity, double radial_size, kvector_t zenith,
@@ -169,7 +169,7 @@ private:
 //!
 //! @ingroup samples_internal
 
-class BA_CORE_API_ MisesGaussPeakShape : public IPeakShape
+class MisesGaussPeakShape : public IPeakShape
 {
 public:
     MisesGaussPeakShape(double max_intensity, double radial_size, kvector_t zenith, double kappa);

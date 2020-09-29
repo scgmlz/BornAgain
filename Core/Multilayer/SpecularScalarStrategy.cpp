@@ -67,8 +67,7 @@ SpecularScalarStrategy::computeTR(const std::vector<Slice>& slices,
     }
 
     // Calculate transmission/refraction coefficients t_r for each layer, from bottom to top.
-    size_t start_index = N - 2;
-    calculateUpFromLayer(coeff, slices, kz, start_index);
+    calculateUpFromLayer(coeff, slices, kz);
     return coeff;
 }
 
@@ -81,53 +80,43 @@ void SpecularScalarStrategy::setZeroBelow(std::vector<ScalarRTCoefficients>& coe
     }
 }
 
-bool SpecularScalarStrategy::calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
+void SpecularScalarStrategy::calculateUpFromLayer(std::vector<ScalarRTCoefficients>& coeff,
                                                   const std::vector<Slice>& slices,
-                                                  const std::vector<complex_t>& kz,
-                                                  size_t slice_index) const
+                                                  const std::vector<complex_t>& kz) const
 {
-    coeff[slice_index + 1].t_r(0) = 1.0;
-    coeff[slice_index + 1].t_r(1) = 0.0;
-    std::vector<complex_t> factors(slice_index + 2);
-    factors[slice_index + 1] = complex_t(1, 0);
-    for (size_t j = 0; j <= slice_index; ++j) {
-        size_t i = slice_index - j; // start from bottom
+    auto N = slices.size();
+
+    coeff.back().t_r(0) = 1.0;
+    coeff.back().t_r(1) = 0.0;
+    std::vector<complex_t> factors(N - 1);
+    for (int i = N - 2; i >= 0; i--) {
         double sigma = 0.0;
         if (const auto roughness = GetBottomRoughness(slices, i))
             sigma = roughness->getSigma();
 
-        coeff[i].t_r = transition(kz[i], kz[i + 1], sigma, slices[i].thickness(), coeff[i + 1].t_r);
+        const auto mpmm = transition(kz[i], kz[i + 1], sigma);
+        const complex_t mp = mpmm.first;
+        const complex_t mm = mpmm.second;
 
-        if (std::isinf(std::norm(coeff[i].t_r(0))) || std::isnan(std::norm(coeff[i].t_r(0)))) {
-            coeff[i].t_r(0) = 1.0;
-            coeff[i].t_r(1) = 0.0;
+        const complex_t delta = exp_I(kz[i] * slices[i].thickness());
 
-            setZeroBelow(coeff, i);
-        }
+        complex_t S = mp + mm * coeff[i + 1].t_r(1);
+        S = 1. / S * delta;
+        factors[i] = S;
 
-        // normalize the t-coefficient in each step of the computation
-        // this avoids an overflow in the backwards propagation
-        // the used factors are stored in order to correct the amplitudes
-        // in forward direction at the end of the computation
-        factors[i] = coeff[i].t_r(0);
-        coeff[i].t_r = coeff[i].t_r / coeff[i].t_r(0);
+        coeff[i].t_r(1) = delta * (mm + mp * coeff[i + 1].t_r(1)) * S;
     }
 
     // now correct all amplitudes by dividing the with the remaining factors in forward direction
     // at some point this divison underflows, which is the point when all further amplitudes are set
     // to zero
-    auto dumpingFactor = complex_t(1, 0);
-    for (size_t j = 1; j <= slice_index + 1; ++j) {
+    complex_t dumpingFactor = 1;
+    for (size_t j = 1; j < N; ++j) {
         dumpingFactor = dumpingFactor * factors[j - 1];
-        if (std::isinf(std::norm(dumpingFactor))) {
-            setZeroBelow(coeff, j - 1);
-            break;
-        }
-        coeff[j].t_r = coeff[j].t_r / dumpingFactor;
-    }
 
-    // this return value is meaningless now, this procedure should always succeed
-    return true;
+        coeff[j].t_r(0) = dumpingFactor;
+        coeff[j].t_r(1) *= dumpingFactor;
+    }
 }
 
 namespace

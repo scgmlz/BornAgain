@@ -24,7 +24,7 @@ class ParameterTuningWidget;
 //! The JobRealTimeWidget class provides tuning of sample parameters in real time.
 //! Located on the right side of JobView and is visible when realtime activity is selected.
 
-class BA_CORE_API_ JobRealTimeWidget : public QWidget
+class JobRealTimeWidget : public QWidget
 {
     Q_OBJECT
 public:

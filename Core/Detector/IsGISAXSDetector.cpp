@@ -51,7 +51,7 @@ std::unique_ptr<IAxis> IsGISAXSDetector::createAxis(size_t index, size_t n_bins,
     return std::make_unique<CustomBinAxis>(axisName(index), n_bins, min, max);
 }
 
-size_t IsGISAXSDetector::getIndexOfSpecular(const Beam& /*beam*/) const
+size_t IsGISAXSDetector::indexOfSpecular(const Beam& /*beam*/) const
 {
     return totalSize();
 }

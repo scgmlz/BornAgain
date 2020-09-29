@@ -18,7 +18,6 @@
 #include "Core/Vector/Vectors3D.h"
 #include "GUI/ba3d/model/layer.h"
 #include "GUI/ba3d/model/particles.h"
-#include "Wrap/WinDllMacros.h"
 #include <memory>
 
 class SessionItem;
@@ -30,18 +29,14 @@ class IFormFactor;
 namespace TransformTo3D
 {
 
-BA_CORE_API_ double visualLayerThickness(const SessionItem& layerItem,
-                                         const SceneGeometry& sceneGeometry);
+double visualLayerThickness(const SessionItem& layerItem, const SceneGeometry& sceneGeometry);
 
-BA_CORE_API_
 std::unique_ptr<RealSpace::Layer> createLayer(const SessionItem& layerItem,
                                               const SceneGeometry& sceneGeometry,
                                               const QVector3D& origin = {});
 
-BA_CORE_API_
 std::unique_ptr<RealSpace::Particles::Particle> createParticle3D(const SessionItem& particleItem);
 
-BA_CORE_API_
 std::unique_ptr<RealSpace::Particles::Particle>
 createParticlefromIFormFactor(const IFormFactor* ff);
 

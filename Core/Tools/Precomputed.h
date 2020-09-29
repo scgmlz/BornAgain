@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_TOOLS_PRECOMPUTED_H
 #define BORNAGAIN_CORE_TOOLS_PRECOMPUTED_H
 
-#include "Wrap/WinDllMacros.h"
 #include <array>
 #include <utility>
 #include <vector>

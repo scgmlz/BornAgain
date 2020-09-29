@@ -16,7 +16,6 @@
 #ifndef BORNAGAIN_CORE_INSTRUMENT_FOURIERTRANSFORM_H
 #define BORNAGAIN_CORE_INSTRUMENT_FOURIERTRANSFORM_H
 
-#include "Wrap/WinDllMacros.h"
 #include <fftw3.h>
 #include <vector>
 
@@ -32,7 +31,7 @@
 //! by Jeremy Fix, May 30, 2011
 //!
 //! @ingroup tools_internal
-class BA_CORE_API_ FourierTransform
+class FourierTransform
 {
 public:
     //! definition of 1D vector of double

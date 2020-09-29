@@ -15,12 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITORFLAGS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKEDITORFLAGS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 //! Help class to define various flags for MaskEditor operation
 
-class BA_CORE_API_ MaskEditorFlags
+class MaskEditorFlags
 {
 public:
     enum EActivityType {

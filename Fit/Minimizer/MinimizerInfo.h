@@ -15,14 +15,13 @@
 #ifndef BORNAGAIN_FIT_MINIMIZER_MINIMIZERINFO_H
 #define BORNAGAIN_FIT_MINIMIZER_MINIMIZERINFO_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
 //! A name and a description.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ AlgorithmInfo
+class AlgorithmInfo
 {
 public:
     AlgorithmInfo() = delete;
@@ -42,7 +41,7 @@ private:
 //! Info about a minimizer, including list of defined minimization algorithms.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ MinimizerInfo
+class MinimizerInfo
 {
 public:
     MinimizerInfo() = delete;

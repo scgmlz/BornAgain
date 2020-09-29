@@ -85,7 +85,7 @@ private:
 protected:
     void eval(SpecularSimulationElement& elem, const std::vector<Slice>& slices) const override;
     double intensity(const SpecularSimulationElement& elem,
-                     ISpecularStrategy::single_coeff_t& coeff) const;
+                     const ISpecularStrategy::coefficient_pointer_type& coeff) const;
 };
 
 #endif // BORNAGAIN_CORE_COMPUTATION_SPECULARCOMPUTATIONTERM_H

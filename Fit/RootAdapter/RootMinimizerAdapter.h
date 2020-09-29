@@ -40,7 +40,7 @@ class Minimizer;
 //! Pure virtual interface that adapts the CERN ROOT minimizer to our IMinimizer.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ RootMinimizerAdapter : public IMinimizer
+class RootMinimizerAdapter : public IMinimizer
 {
 public:
     typedef ROOT::Math::Minimizer root_minimizer_t;

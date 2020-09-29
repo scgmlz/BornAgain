@@ -10,13 +10,13 @@ def get_sample():
     Returns a sample with two layers on a substrate, with correlated roughnesses.
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("ambience", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("ambience", 0.0, 0.0)
     m_part_a = ba.HomogeneousMaterial("PartA", 5e-6, 0.0)
     m_part_b = ba.HomogeneousMaterial("PartB", 10e-6, 0.0)
     m_substrate = ba.HomogeneousMaterial("substrate", 15e-6, 0.0)
 
     # defining layers
-    l_ambience = ba.Layer(m_ambience)
+    l_ambience = ba.Layer(m_vacuum)
     l_part_a = ba.Layer(m_part_a, 2.5*nm)
     l_part_b = ba.Layer(m_part_b, 5.0*nm)
     l_substrate = ba.Layer(m_substrate)

@@ -21,7 +21,7 @@
 //! Presents results of job (JobItem) using stack of different widgets and combo box in the
 //! right top corner of JobView, to switch between widgets.
 
-class BA_CORE_API_ JobResultsPresenter : public ItemComboWidget
+class JobResultsPresenter : public ItemComboWidget
 {
     Q_OBJECT
 

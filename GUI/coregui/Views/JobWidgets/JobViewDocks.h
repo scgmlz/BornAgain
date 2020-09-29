@@ -32,7 +32,7 @@ class JobItem;
 //! It's main method setActivity handles visibility logic for all of (JobSelectorWidget,
 //! JobOutputDataWidget, JobRealTimeWidget and FitPanelWidget).
 
-class BA_CORE_API_ JobViewDocks : public DocksController
+class JobViewDocks : public DocksController
 {
     Q_OBJECT
 

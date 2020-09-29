@@ -22,7 +22,7 @@
 //! Interface for detector resolution algorithms
 //! @ingroup algorithms_internal
 
-class BA_CORE_API_ IDetectorResolution : public ICloneable, public INode
+class IDetectorResolution : public ICloneable, public INode
 {
 public:
     virtual ~IDetectorResolution() {}

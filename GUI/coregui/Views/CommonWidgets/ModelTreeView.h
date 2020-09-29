@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_MODELTREEVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_MODELTREEVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class QTreeView;
@@ -26,7 +25,7 @@ class QAbstractItemDelegate;
 //! Equivalent of QTreeView for SessionModel allowing to add visual decorations to the tree.
 //! Additionaly provides expand/collapse utility methods.
 
-class BA_CORE_API_ ModelTreeView : public QWidget
+class ModelTreeView : public QWidget
 {
     Q_OBJECT
 public:

@@ -20,7 +20,7 @@
 //! A full spheroid (an ellipsoid with two equal axes, hence with circular cross section)
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorFullSpheroid : public IFormFactorBorn
+class FormFactorFullSpheroid : public IFormFactorBorn
 {
 public:
     FormFactorFullSpheroid(const std::vector<double> P);

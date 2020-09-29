@@ -4,7 +4,7 @@ particles can now cross interfaces.
 
 Given example is similar to simulation/ex01_BasicParticles/CylindersAndPrisms.py,
 with the difference, that z-position of particles is adjusted to move them slightly
-down from air layer and to make them cross substrate/air interface.
+down from vacuum layer and to make them cross substrate/air interface.
 
 Note:
 1) Simulation kernel automatically detects particles crossing interface and
@@ -28,7 +28,7 @@ def get_sample():
     Returns a sample with uncorrelated cylinders and prisms on a substrate.
     """
     # defining materials
-    m_air = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -49,12 +49,12 @@ def get_sample():
     interference = ba.InterferenceFunctionNone()
     particle_layout.setInterferenceFunction(interference)
 
-    # air layer with particles and substrate form multi layer
-    air_layer = ba.Layer(m_air)
-    air_layer.addLayout(particle_layout)
+    # vacuum layer with particles and substrate form multi layer
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
     substrate_layer = ba.Layer(m_substrate)
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     multi_layer.addLayer(substrate_layer)
     print(multi_layer.treeToString())
     return multi_layer

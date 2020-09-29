@@ -17,7 +17,6 @@
 
 #ifdef BORNAGAIN_PYTHON
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <memory>
 
@@ -26,7 +25,7 @@ class MultiLayer;
 
 //! Assists in importing Python object to GUI models.
 
-class BA_CORE_API_ PyImportAssistant : public QObject
+class PyImportAssistant : public QObject
 {
     Q_OBJECT
 public:

@@ -331,7 +331,7 @@ CreateAverageMaterialSlices(const std::vector<Slice>& slices,
         if (!CheckRegions(entry.second))
             throw std::runtime_error("CreateAverageMaterialSlices: "
                                      "total volumetric fraction of particles exceeds 1!");
-        auto new_material = CreateAveragedMaterial(slice_mat, entry.second);
+        auto new_material = createAveragedMaterial(slice_mat, entry.second);
         result[i_slice].setMaterial(new_material);
     }
     return result;

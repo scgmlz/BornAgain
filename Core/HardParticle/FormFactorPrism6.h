@@ -14,12 +14,13 @@
 
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM6_H
 #define BORNAGAIN_CORE_HARDPARTICLE_FORMFACTORPRISM6_H
-#include "Core/HardParticle/FormFactorPolyhedron.h"
+
+#include "Core/HardParticle/IFormFactorPrism.h"
 
 //! A prism based on a regular hexagonal.
 //! @ingroup hardParticle
 
-class BA_CORE_API_ FormFactorPrism6 : public FormFactorPolygonalPrism
+class FormFactorPrism6 : public IFormFactorPrism
 {
 public:
     FormFactorPrism6(const std::vector<double> P);

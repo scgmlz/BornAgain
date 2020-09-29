@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsView>
 
 class QGraphicsView;
@@ -28,7 +27,7 @@ class QKeyEvent;
 //!
 //! Belongs to SampleDesigner
 //! Currently contains logic for zooming, deleting objects
-class BA_CORE_API_ DesignerView : public QGraphicsView
+class DesignerView : public QGraphicsView
 {
     Q_OBJECT
 

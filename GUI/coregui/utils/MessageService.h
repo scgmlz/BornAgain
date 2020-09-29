@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_MESSAGESERVICE_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_MESSAGESERVICE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QMap>
 #include <QStringList>
 
@@ -26,7 +25,7 @@ class GUIMessage;
 //! @class MessageService
 //! @brief The service to collect messages from different senders.
 
-class BA_CORE_API_ MessageService
+class MessageService
 {
 public:
     virtual ~MessageService();
