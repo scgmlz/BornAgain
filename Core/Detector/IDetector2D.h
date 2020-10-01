@@ -46,9 +46,6 @@ public:
     //! Sets same number of bins in phi and alpha directions
     void setBinning(size_t n_bin1d) final;
 
-    //! Sets detector parameters using axes
-    void setDetectorAxes(const IAxis& axis0, const IAxis& axis1);
-
     //! Removes all masks from the detector
     void removeMasks();
 

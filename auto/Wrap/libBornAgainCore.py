@@ -18557,16 +18557,6 @@ class IDetector2D(IDetector):
         """
         return _libBornAgainCore.IDetector2D_setBinning(self, n_bin1d)
 
-    def setDetectorAxes(self, axis0, axis1):
-        r"""
-        setDetectorAxes(IDetector2D self, IAxis axis0, IAxis axis1)
-        void IDetector2D::setDetectorAxes(const IAxis &axis0, const IAxis &axis1)
-
-        Sets detector parameters using axes. 
-
-        """
-        return _libBornAgainCore.IDetector2D_setDetectorAxes(self, axis0, axis1)
-
     def removeMasks(self):
         r"""
         removeMasks(IDetector2D self)

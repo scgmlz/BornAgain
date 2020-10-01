@@ -63,13 +63,6 @@ void IDetector2D::setBinning(size_t n)
     setBinnings(n, n);
 }
 
-void IDetector2D::setDetectorAxes(const IAxis& axis0, const IAxis& axis1)
-{
-    clear();
-    addAxis(axis0);
-    addAxis(axis1);
-}
-
 const RegionOfInterest* IDetector2D::regionOfInterest() const
 {
     return m_region_of_interest.get();
