@@ -42,7 +42,8 @@ def get_simulation():
     """
     simulation = ba.GISASSimulation()
     simulation.setSample(get_sample())
-    simulation.setDetectorParameters(200, -1*deg, +1*deg, 200, 0*deg, +2*deg)
+    simulation.detector().setRanges(-1*deg, +1*deg, 0*deg, +2*deg)
+    simulation.detector().setBinning(200)
     simulation.setBeamParameters(1.5*angstrom, 0.15*deg, 0.0*deg)
     return simulation
 

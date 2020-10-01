@@ -5024,6 +5024,22 @@ class FixedBinAxis(IAxis):
         """
         return _libBornAgainCore.FixedBinAxis_clone(self)
 
+    def setSize(self, siz):
+        r"""
+        setSize(FixedBinAxis self, size_t siz)
+        void FixedBinAxis::setSize(size_t siz)
+
+        """
+        return _libBornAgainCore.FixedBinAxis_setSize(self, siz)
+
+    def setRange(self, start, end):
+        r"""
+        setRange(FixedBinAxis self, double start, double end)
+        void FixedBinAxis::setRange(double start, double end)
+
+        """
+        return _libBornAgainCore.FixedBinAxis_setRange(self, start, end)
+
     def size(self):
         r"""
         size(FixedBinAxis self) -> size_t
@@ -14011,7 +14027,7 @@ class ISampleBuilder(IParameterized):
     def createSampleByIndex(self, arg0):
         r"""
         createSampleByIndex(ISampleBuilder self, size_t arg0) -> MultiLayer
-        virtual MultiLayer* ISampleBuilder::createSampleByIndex(size_t index)
+        virtual MultiLayer* ISampleBuilder::createSampleByIndex(size_t)
 
         """
         return _libBornAgainCore.ISampleBuilder_createSampleByIndex(self, arg0)
@@ -17260,6 +17276,15 @@ class Simulation(ICloneable, INode):
         """
         return _libBornAgainCore.Simulation_getInstrument(self, *args)
 
+    def detector(self, *args):
+        r"""
+        detector(Simulation self) -> IDetector
+        detector(Simulation self) -> IDetector
+        const IDetector & Simulation::detector() const
+
+        """
+        return _libBornAgainCore.Simulation_detector(self, *args)
+
     def setBeamIntensity(self, intensity):
         r"""
         setBeamIntensity(Simulation self, double intensity)
@@ -17333,7 +17358,7 @@ class Simulation(ICloneable, INode):
     def setSampleBuilderCpp(self, sample_builder):
         r"""
         setSampleBuilderCpp(Simulation self, std::shared_ptr< ISampleBuilder > const & sample_builder)
-        void Simulation::setSampleBuilder(const std::shared_ptr< ISampleBuilder > sample_builder)
+        void Simulation::setSampleBuilder(const std::shared_ptr< ISampleBuilder > &sample_builder)
 
         """
         return _libBornAgainCore.Simulation_setSampleBuilderCpp(self, sample_builder)
@@ -17505,28 +17530,7 @@ class Simulation2D(Simulation):
         setDetectorParameters(Simulation2D self, size_t n_phi, double phi_min, double phi_max, size_t n_alpha, double alpha_min, double alpha_max)
         void Simulation2D::setDetectorParameters(size_t n_phi, double phi_min, double phi_max, size_t n_alpha, double alpha_min, double alpha_max)
 
-        Sets spherical detector parameters using angle ranges
-
-        Parameters:
-        -----------
-
-        n_phi: 
-        number of phi-axis bins
-
-        phi_min: 
-        low edge of first phi-bin
-
-        phi_max: 
-        upper edge of last phi-bin
-
-        n_alpha: 
-        number of alpha-axis bins
-
-        alpha_min: 
-        low edge of first alpha-bin
-
-        alpha_max: 
-        upper edge of last alpha-bin 
+        Sets angular ranges and numbers of bins. 
 
         """
         return _libBornAgainCore.Simulation2D_setDetectorParameters(self, n_phi, phi_min, phi_max, n_alpha, alpha_min, alpha_max)
@@ -17609,7 +17613,7 @@ class GISASSimulation(Simulation2D):
     def __init__(self):
         r"""
         __init__(GISASSimulation self) -> GISASSimulation
-        GISASSimulation::GISASSimulation(const std::shared_ptr< ISampleBuilder > p_sample_builder)
+        GISASSimulation::GISASSimulation()
 
         """
         _libBornAgainCore.GISASSimulation_swiginit(self, _libBornAgainCore.new_GISASSimulation())
@@ -17685,7 +17689,7 @@ class DepthProbeSimulation(Simulation):
     def __init__(self):
         r"""
         __init__(DepthProbeSimulation self) -> DepthProbeSimulation
-        DepthProbeSimulation::DepthProbeSimulation(const std::shared_ptr< ISampleBuilder > sample_builder)
+        DepthProbeSimulation::DepthProbeSimulation()
 
         """
         _libBornAgainCore.DepthProbeSimulation_swiginit(self, _libBornAgainCore.new_DepthProbeSimulation())
@@ -17788,7 +17792,7 @@ class SpecularSimulation(Simulation):
     def __init__(self):
         r"""
         __init__(SpecularSimulation self) -> SpecularSimulation
-        SpecularSimulation::SpecularSimulation(const std::shared_ptr< ISampleBuilder > sample_builder)
+        SpecularSimulation::SpecularSimulation()
 
         """
         _libBornAgainCore.SpecularSimulation_swiginit(self, _libBornAgainCore.new_SpecularSimulation())
@@ -17896,7 +17900,7 @@ class OffSpecSimulation(Simulation2D):
     def __init__(self):
         r"""
         __init__(OffSpecSimulation self) -> OffSpecSimulation
-        OffSpecSimulation::OffSpecSimulation(const std::shared_ptr< class ISampleBuilder > p_sample_builder)
+        OffSpecSimulation::OffSpecSimulation()
 
         """
         _libBornAgainCore.OffSpecSimulation_swiginit(self, _libBornAgainCore.new_OffSpecSimulation())
@@ -18272,6 +18276,18 @@ class IDetector(ICloneable, INode):
         """
         return _libBornAgainCore.IDetector_init(self, arg2)
 
+    def setRanges(self, phi_min, phi_max, alpha_min, alpha_max):
+        r"""setRanges(IDetector self, double phi_min, double phi_max, double alpha_min, double alpha_max)"""
+        return _libBornAgainCore.IDetector_setRanges(self, phi_min, phi_max, alpha_min, alpha_max)
+
+    def setBinnings(self, n_phi, n_alpha):
+        r"""setBinnings(IDetector self, size_t n_phi, size_t n_alpha)"""
+        return _libBornAgainCore.IDetector_setBinnings(self, n_phi, n_alpha)
+
+    def setBinning(self, n_bin1d):
+        r"""setBinning(IDetector self, size_t n_bin1d)"""
+        return _libBornAgainCore.IDetector_setBinning(self, n_bin1d)
+
     def clear(self):
         r"""
         clear(IDetector self)
@@ -18288,13 +18304,14 @@ class IDetector(ICloneable, INode):
         """
         return _libBornAgainCore.IDetector_addAxis(self, axis)
 
-    def getAxis(self, index):
+    def getAxis(self, *args):
         r"""
+        getAxis(IDetector self, size_t index) -> IAxis
         getAxis(IDetector self, size_t index) -> IAxis
         const IAxis & IDetector::getAxis(size_t index) const
 
         """
-        return _libBornAgainCore.IDetector_getAxis(self, index)
+        return _libBornAgainCore.IDetector_getAxis(self, *args)
 
     def dimension(self):
         r"""
@@ -18509,6 +18526,36 @@ class IDetector2D(IDetector):
 
         """
         return _libBornAgainCore.IDetector2D_setDetectorParameters(self, n_x, x_min, x_max, n_y, y_min, y_max)
+
+    def setRanges(self, phi_min, phi_max, alpha_min, alpha_max):
+        r"""
+        setRanges(IDetector2D self, double phi_min, double phi_max, double alpha_min, double alpha_max)
+        void IDetector2D::setRanges(double phi_min, double phi_max, double alpha_min, double alpha_max)
+
+        Sets angular ranges. 
+
+        """
+        return _libBornAgainCore.IDetector2D_setRanges(self, phi_min, phi_max, alpha_min, alpha_max)
+
+    def setBinnings(self, n_phi, n_alpha):
+        r"""
+        setBinnings(IDetector2D self, size_t n_phi, size_t n_alpha)
+        void IDetector2D::setBinnings(size_t n_phi, size_t n_alpha)
+
+        Sets numbers of bins in phi and alpha directions. 
+
+        """
+        return _libBornAgainCore.IDetector2D_setBinnings(self, n_phi, n_alpha)
+
+    def setBinning(self, n_bin1d):
+        r"""
+        setBinning(IDetector2D self, size_t n_bin1d)
+        void IDetector2D::setBinning(size_t n_bin1d)
+
+        Sets same number of bins in phi and alpha directions. 
+
+        """
+        return _libBornAgainCore.IDetector2D_setBinning(self, n_bin1d)
 
     def setDetectorAxes(self, axis0, axis1):
         r"""

@@ -33,6 +33,9 @@ public:
 
     FixedBinAxis* clone() const;
 
+    void setSize(size_t siz) { m_nbins = siz; }
+    void setRange(double start, double end) { m_start = start; m_end = end; }
+
     size_t size() const { return m_nbins; }
 
     double operator[](size_t index) const;

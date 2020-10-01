@@ -158,6 +158,10 @@ void Simulation::setAnalyzerProperties(const kvector_t direction, double efficie
     m_instrument.setAnalyzerProperties(direction, efficiency, total_transmission);
 }
 
+IDetector& Simulation::detector() { return m_instrument.detector(); }
+
+const IDetector& Simulation::detector() const { return m_instrument.detector(); }
+
 void Simulation::setBeamIntensity(double intensity)
 {
     m_instrument.setBeamIntensity(intensity);

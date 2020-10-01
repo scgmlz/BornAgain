@@ -22,7 +22,9 @@
 #include "Core/Mask/InfinitePlane.h"
 #include "Core/SimulationElement/SimulationElement.h"
 
-IDetector2D::IDetector2D() = default;
+IDetector2D::IDetector2D()
+{
+}
 
 IDetector2D::IDetector2D(const IDetector2D& other)
     : IDetector(other), m_detector_mask(other.m_detector_mask)
@@ -39,6 +41,26 @@ void IDetector2D::setDetectorParameters(size_t n_x, double x_min, double x_max, 
     clear();
     addAxis(*createAxis(0, n_x, x_min, x_max));
     addAxis(*createAxis(1, n_y, y_min, y_max));
+}
+
+void IDetector2D::setRanges(double x_min, double x_max,  double y_min, double y_max)
+{
+    const auto& x_axis = dynamic_cast<FixedBinAxis&>(getAxis(0));
+    const auto& y_axis = dynamic_cast<FixedBinAxis&>(getAxis(1));
+    setDetectorParameters(x_axis.size(), x_min, x_max, y_axis.size(), y_min, y_max);
+}
+
+void IDetector2D::setBinnings(size_t n_x, size_t n_y)
+{
+    const auto& x_axis = dynamic_cast<FixedBinAxis&>(getAxis(0));
+    const auto& y_axis = dynamic_cast<FixedBinAxis&>(getAxis(1));
+    setDetectorParameters(n_x, x_axis.getMin(), x_axis.getMax(),
+                          n_y, y_axis.getMin(), y_axis.getMax());
+}
+
+void IDetector2D::setBinning(size_t n)
+{
+    setBinnings(n, n);
 }
 
 void IDetector2D::setDetectorAxes(const IAxis& axis0, const IAxis& axis1)

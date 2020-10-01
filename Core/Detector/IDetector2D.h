@@ -39,6 +39,12 @@ public:
     //! Sets detector parameters using angle ranges
     void setDetectorParameters(size_t n_x, double x_min, double x_max, size_t n_y, double y_min,
                                double y_max);
+    //! Sets angular ranges
+    void setRanges(double phi_min, double phi_max,  double alpha_min, double alpha_max) final;
+    //! Sets numbers of bins in phi and alpha directions
+    void setBinnings(size_t n_phi, size_t n_alpha) final;
+    //! Sets same number of bins in phi and alpha directions
+    void setBinning(size_t n_bin1d) final;
 
     //! Sets detector parameters using axes
     void setDetectorAxes(const IAxis& axis0, const IAxis& axis1);

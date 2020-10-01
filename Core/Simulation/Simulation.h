@@ -27,6 +27,7 @@
 template <class T> class OutputData;
 class IBackground;
 class IComputation;
+class IDetector;
 class ISampleBuilder;
 class MultiLayer;
 
@@ -55,6 +56,9 @@ public:
     void setInstrument(const Instrument& instrument);
     const Instrument& getInstrument() const { return m_instrument; }
     Instrument& getInstrument() { return m_instrument; }
+
+    IDetector& detector();
+    const IDetector& detector() const;
 
     void setBeamIntensity(double intensity);
     double getBeamIntensity() const;

@@ -47,10 +47,15 @@ public:
     //! Inits detector with the beam settings
     virtual void init(const Beam&) {}
 
+    virtual void setRanges(double phi_min, double phi_max,  double alpha_min, double alpha_max);
+    virtual void setBinnings(size_t n_phi, size_t n_alpha);
+    virtual void setBinning(size_t n_bin1d);
+
     void clear() { m_axes.clear(); }
 
     void addAxis(const IAxis& axis);
 
+    IAxis& getAxis(size_t index);
     const IAxis& getAxis(size_t index) const;
 
     //! Returns actual dimensionality of the detector (number of defined axes)

@@ -40,6 +40,8 @@ public:
     void push_back(T* pointer) { m_pointers.push_back(pointer); }
     T* operator[](size_t index) { return m_pointers[index]; }
     const T* operator[](size_t index) const { return m_pointers[index]; }
+    T* at(size_t index) { return m_pointers.at(index); }
+    const T* at(size_t index) const { return m_pointers.at(index); }
     iterator begin() { return m_pointers.begin(); }
     const_iterator begin() const { return m_pointers.begin(); }
     iterator end() { return m_pointers.end(); }

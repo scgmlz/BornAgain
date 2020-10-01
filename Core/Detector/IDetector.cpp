@@ -38,16 +38,34 @@ IDetector::IDetector(const IDetector& other)
 
 IDetector::~IDetector() = default;
 
+void IDetector::setRanges(double, double,  double, double)
+{
+    throw std::runtime_error("setRanges called from 1D detector");
+}
+
+void IDetector::setBinnings(size_t, size_t)
+{
+    throw std::runtime_error("setBinnings called from 1D detector");
+}
+
+void IDetector::setBinning(size_t)
+{
+    throw std::runtime_error("setBinning not yet implemented for 1D detector");
+}
+
 void IDetector::addAxis(const IAxis& axis)
 {
     m_axes.push_back(axis.clone());
 }
 
+IAxis& IDetector::getAxis(size_t index)
+{
+    return *(m_axes.at(index));
+}
+
 const IAxis& IDetector::getAxis(size_t index) const
 {
-    if (index < dimension())
-        return *m_axes[index];
-    throw std::runtime_error("Error in IDetector::getAxis: not so many axes in this detector.");
+    return *(m_axes.at(index));
 }
 
 size_t IDetector::axisBinIndex(size_t index, size_t selected_axis) const
