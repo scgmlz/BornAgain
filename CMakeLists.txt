@@ -65,7 +65,6 @@ endif()
 
 # include CMake macros and functions
 include(GetFilenameComponent) # overwrite CMake command
-include(SearchInstalledSoftware)
 include(CheckCompiler)
 if(ZERO_TOLERANCE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wfatal-errors")
@@ -75,6 +74,7 @@ if(BORNAGAIN_GUI)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_QT=ON")
 endif()
 include(BornAgainConfiguration)
+include(SearchInstalledSoftware)
 include(BornAgainPolicy)
 include(BornAgainSwigLib)
 include(ThisBornAgain)
