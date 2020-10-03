@@ -17,8 +17,6 @@ set_target_properties(${lib} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${lib}_LIBRARY_TYPE SHARED)
 set(${lib}_LIBRARY ${lib} PARENT_SCOPE)
 
-SwigLib(${name} ${lib})
-
 if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
     set_target_properties(${lib} PROPERTIES LINK_FLAGS "-Wl,-rpath,@loader_path/../../Frameworks")
 endif()
@@ -29,6 +27,8 @@ foreach(file ${include_files})
     get_filename_component(dir ${file} DIRECTORY)
     install(FILES ${file} DESTINATION ${destination_include}/${name}/${dir})
 endforeach()
+
+SwigLib(${name} ${lib})
 
 # --- external dependencies ---
 

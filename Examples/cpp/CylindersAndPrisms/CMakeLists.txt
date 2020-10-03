@@ -13,16 +13,12 @@ cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 project(CylindersAndPrisms)
 
-add_executable(CylindersAndPrisms CylindersAndPrisms.cpp)
+set(app CylindersAndPrisms)
 
-# path to the cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/../modules)
-
-# find libraries
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/../modules) # where to find FindBornAgain
 find_package(BornAgain REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-include_as_system_directory("${EIGEN3_INCLUDE_DIRS}")
-include_directories(${BORNAGAIN_INCLUDE_DIR})
-
-target_link_libraries(CylindersAndPrisms ${BORNAGAIN_LIBRARIES})
+add_executable(${app} CylindersAndPrisms.cpp)
+target_include_directories(${app} PUBLIC ${BORNAGAIN_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
+target_link_libraries(${app} ${BORNAGAIN_LIBRARIES})
