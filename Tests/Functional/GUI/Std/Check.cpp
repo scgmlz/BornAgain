@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Detector/IntensityDataFunctions.h"
 #include "Core/Simulation/Simulation.h"
 #include "GUI/coregui/Models/DocumentModel.h"
 #include "GUI/coregui/Models/DomainSimulationBuilder.h"

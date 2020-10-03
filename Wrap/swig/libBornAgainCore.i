@@ -164,7 +164,7 @@
 #include "Core/Intensity/IHistogram.h"
 #include "Core/Intensity/IIntensityFunction.h"
 #include "Core/Intensity/IIntensityFunction.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Detector/IntensityDataFunctions.h"
 #include "Core/Intensity/OutputData.h"
 #include "Core/Lattice/ILatticeOrientation.h"
 #include "Core/Lattice/ISelectionRule.h"
@@ -465,7 +465,7 @@
 
 %include "Core/Intensity/Histogram1D.h"
 %include "Core/Intensity/Histogram2D.h"
-%include "Core/Intensity/IntensityDataFunctions.h"
+%include "Core/Detector/IntensityDataFunctions.h"
 
 %include "Core/Instrument/IChiSquaredModule.h"
 %include "Core/Instrument/ISpecularScan.h"

@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/FitWidgets/FitComparisonViewController.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Detector/IntensityDataFunctions.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/Data1DViewItem.h"
 #include "GUI/coregui/Models/DataItem.h"

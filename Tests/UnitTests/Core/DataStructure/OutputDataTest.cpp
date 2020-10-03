@@ -1,7 +1,7 @@
 #include "Core/Intensity/OutputData.h"
 #include "Core/Binning/FixedBinAxis.h"
 #include "Core/Binning/VariableBinAxis.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Detector/IntensityDataFunctions.h"
 #include "Core/Parametrization/ThreadInfo.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <algorithm>

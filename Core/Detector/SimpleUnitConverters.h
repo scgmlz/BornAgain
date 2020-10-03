@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Core/Intensity/SimpleUnitConverters.h
+//! @file      Core/Detector/SimpleUnitConverters.h
 //! @brief     Defines interface UnitConverterSimple and its subclasses.
 //!
 //! @homepage  http://www.bornagainproject.org

@@ -16,7 +16,7 @@
 #include "BATesting.h"
 #include "Core/Basics/Assert.h"
 #include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Core/Detector/IntensityDataFunctions.h"
 #include "Core/Tools/FileSystemUtils.h"
 #include <iostream>
 

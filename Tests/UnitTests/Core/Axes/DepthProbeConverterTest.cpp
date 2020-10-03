@@ -2,7 +2,7 @@
 #include "Core/Basics/Units.h"
 #include "Core/Beam/Beam.h"
 #include "Core/Binning/FixedBinAxis.h"
-#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Detector/SimpleUnitConverters.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class DepthProbeConverterTest : public ::testing::Test
