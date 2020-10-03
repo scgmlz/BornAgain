@@ -76,6 +76,7 @@ if(BORNAGAIN_GUI)
 endif()
 include(BornAgainConfiguration)
 include(BornAgainPolicy)
+include(BornAgainSwigLib)
 include(GeneratePythonDocs)
 include(BALineLength)
 
