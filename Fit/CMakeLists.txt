@@ -8,8 +8,11 @@ set(lib BornAgain${name})
 file(GLOB source_files */*.cpp)
 file(GLOB include_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} */*.h)
 
+if(BORNAGAIN_PYTHON)
+    list(APPEND source_files ${AUTO_DIR}/lib${lib}_wrap.cpp)
+endif()
 
-add_library(${lib} SHARED ${source_files} ${AUTO_DIR}/lib${lib}_wrap.cpp)
+add_library(${lib} SHARED ${source_files})
 set_target_properties(${lib} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${lib}_LIBRARY_TYPE SHARED)
 set(${lib}_LIBRARY ${lib} PARENT_SCOPE)
@@ -32,7 +35,3 @@ endforeach()
 target_include_directories(${lib}
     PUBLIC ${RootMinimizers_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
 target_link_libraries(${lib} ${RootMinimizers_LIBRARY} ${Boost_LIBRARIES})
-
-
-
-

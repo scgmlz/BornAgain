@@ -15,7 +15,11 @@ if(${Cerf_IS_CPP})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCERF_AS_CPP=ON")
 endif()
 
-add_library(${lib} SHARED ${source_files} ${AUTO_DIR}/lib${lib}_wrap.cpp)
+if(BORNAGAIN_PYTHON)
+    list(APPEND source_files ${AUTO_DIR}/lib${lib}_wrap.cpp)
+endif()
+
+add_library(${lib} SHARED ${source_files})
 set_target_properties(${lib} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${lib}_LIBRARY_TYPE SHARED)
 set(${lib}_LIBRARY ${lib} PARENT_SCOPE)
@@ -32,33 +36,6 @@ foreach(file ${include_files})
     get_filename_component(dir ${file} DIRECTORY)
     install(FILES ${file} DESTINATION ${destination_include}/${name}/${dir})
 endforeach()
-
-if(BORNAGAIN_PYTHON)
-    if(CONFIGURE_BINDINGS)
-        add_custom_command(
-            OUTPUT ${AUTO_DIR}/swig_runtime.h
-            COMMAND ${SWIG_EXECUTABLE} -c++;-python;-external-runtime;${AUTO_DIR}/swig_runtime.h
-            DEPENDS ${swig_dependencies} ${include_files}
-            )
-    endif()
-    add_custom_target(${lib}_runtime DEPENDS ${AUTO_DIR}/swig_runtime.h)
-    add_dependencies(${lib} ${lib}_runtime)
-
-    configure_file(${WRAP_DIR}/python/plot_utils.py
-                   ${CMAKE_BINARY_DIR}/lib/bornagain/plot_utils.py COPYONLY)
-
-    if(WIN32)
-        set(BA_MODULES_IMPORT_PATH "../../bin")
-    else()
-        set(BA_MODULES_IMPORT_PATH "..")
-    endif()
-    if(BORNAGAIN_APPLE_BUNDLE)
-        set(BA_MODULES_IMPORT_PATH
-            lib/BornAgain-${BornAgain_VERSION_MAJOR}.${BornAgain_VERSION_MINOR})
-    endif()
-    configure_file("${WRAP_DIR}/python/__init__.py.in"
-                   "${CMAKE_BINARY_DIR}/lib/bornagain/__init__.py" @ONLY)
-endif()
 
 # --- external dependencies ---
 
@@ -93,20 +70,6 @@ endif()
 
 # --- installation ---
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
-    DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.py" )
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
-    DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "README")
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
-    DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.gz")
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
-    DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.png")
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/cpp
-    DESTINATION ${destination_examples} COMPONENT Examples)
-install(FILES "${AUTO_DIR}/swig_runtime.h"
-    DESTINATION ${destination_include}/Wrap COMPONENT Headers)
-install(FILES ${CMAKE_SOURCE_DIR}/Wrap/WinDllMacros.h
-    DESTINATION ${destination_include}/Wrap COMPONENT Headers)
 
 if(WIN32)
     # system libraries
@@ -117,14 +80,6 @@ if(WIN32)
         install(FILES ${UTF_PATH}/${UTF_BASE_NAME}.dll
             DESTINATION ${destination_lib} COMPONENT Libraries)
     endforeach()
-
-    set(win_python_lib
-        "${Python3_LIBRARY_DIRS}/python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}.lib")
-    get_filename_component(UTF_BASE_NAME ${win_python_lib} NAME_WE)
-    get_filename_component(UTF_PATH ${Python3_EXECUTABLE} PATH)
-    message(STATUS "Python dll: ${UTF_PATH}/${UTF_BASE_NAME}.dll")
-    install(FILES ${UTF_PATH}/${UTF_BASE_NAME}.dll
-        DESTINATION ${destination_lib} COMPONENT Libraries)
 
     set(Cerf_LIB ${Cerf_LIBRARIES}) # we take for granted that there is only one cerf.lib
     get_filename_component(DIR ${Cerf_LIB} DIRECTORY)
@@ -178,16 +133,9 @@ else()
         \"../${destination_libexec}/thisbornagain.csh\" \"thisbornagain.csh\"
         WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${destination_bin}\")
         " COMPONENT Runtime)
-    else()
 
+    else()
         install(FILES ${WRAP_DIR}/python/bornagain_python_install.py
             DESTINATION ${destination_libexec})
     endif()
 endif()
-
-# Install bornagain/__init__.py and utilites
-install(DIRECTORY "${CMAKE_BINARY_DIR}/lib/bornagain/"
-        DESTINATION "${destination_libexec}/bornagain"
-        COMPONENT Libraries
-        FILES_MATCHING PATTERN "*.py"
-        PATTERN "__pycache__" EXCLUDE)
