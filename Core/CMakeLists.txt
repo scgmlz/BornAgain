@@ -39,7 +39,13 @@ SwigLib(${name} ${lib})
 
 # --- external dependencies ---
 
-target_link_libraries(${lib} ${BornAgainFit_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+target_include_directories(${lib}
+    PUBLIC ${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS} ${FFTW3_INCLUDE_DIR} ${GSL_INCLUDE_DIR}
+    ${tspectrum_INCLUDE_DIR} ${Cerf_INCLUDE_DIR}
+    ${CMAKE_SOURCE_DIR}/ThirdParty/Core/cerf_wrapper # TEMPORARY
+    SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIRS})
+target_link_libraries(${lib} ${BornAgainFit_LIBRARY} ${Boost_LIBRARIES} ${FFTW3_LIBRARIES}
+    ${GSL_LIBRARIES} ${tspectrum_LIBRARY} ${Cerf_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 if(BORNAGAIN_TIFF_SUPPORT)
     target_compile_definitions(${lib} PUBLIC -DBORNAGAIN_TIFF_SUPPORT)
@@ -47,20 +53,10 @@ if(BORNAGAIN_TIFF_SUPPORT)
     target_link_libraries(${lib} ${TIFF_LIBRARIES})
 endif()
 
-target_include_directories(${lib}
-    PUBLIC ${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS} ${FFTW3_INCLUDE_DIR} ${GSL_INCLUDE_DIR}
-    ${tspectrum_INCLUDE_DIR}
-    ${Cerf_INCLUDE_DIR}
-    ${CMAKE_SOURCE_DIR}/ThirdParty/Core/cerf_wrapper # TEMPORARY
-    SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIRS}
-    )
 if(BORNAGAIN_GUI)
     target_include_directories(${lib} PUBLIC ${Qt5Core_INCLUDE_DIRS}) # needed by Assert.h
     target_link_libraries(${lib} ${Qt5Core_LIBRARIES})
 endif()
-
-target_link_libraries(${lib} ${Boost_LIBRARIES} ${FFTW3_LIBRARIES} ${GSL_LIBRARIES}
-    ${tspectrum_LIBRARY} ${Cerf_LIBRARIES})
 
 if(BORNAGAIN_MPI)
     add_definitions(-DBORNAGAIN_MPI)
