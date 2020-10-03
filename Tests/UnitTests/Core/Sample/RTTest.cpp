@@ -13,7 +13,6 @@
 class RTTest : public ::testing::Test
 {
 protected:
-    ~RTTest();
     void printCoeffs(const std::vector<ScalarRTCoefficients>& coeffs)
     { // for debug phases
         for (size_t i = 0; i < coeffs.size(); ++i) {
@@ -48,8 +47,6 @@ protected:
     MultiLayer sample1, sample2;
     std::vector<ScalarRTCoefficients> coeffs1, coeffs2;
 };
-
-RTTest::~RTTest() = default;
 
 TEST_F(RTTest, SplitLayer)
 {

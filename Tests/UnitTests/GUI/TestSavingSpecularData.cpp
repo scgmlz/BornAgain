@@ -150,7 +150,7 @@ TEST_F(TestSavingSpecularData, test_setLastModified)
     EXPECT_FALSE(info.wasModifiedSinceLastSave());
 
     QTest::qSleep(nap_time);
-    item->init(*m_axis.get(), "Degrees");
+    item->init(*m_axis, "Degrees");
     EXPECT_TRUE(info.wasModifiedSinceLastSave());
 
     info = OutputDataSaveInfo::createSaved(item);

@@ -204,6 +204,7 @@ void Convolve::init(int h_src, int w_src, int h_kernel, int w_kernel)
         ws.w_offset = ws.w_kernel - 1;
         break;
     case FFTW_CIRCULAR_SAME:
+    case FFTW_CIRCULAR_SAME_SHIFTED:
         // Circular convolution, modulo N
         // We don't padd with zeros because if we do, we need to padd with at least h_kernel/2;
         // w_kernel/2 elements plus the wrapp around, which in facts leads to too much
@@ -213,20 +214,6 @@ void Convolve::init(int h_src, int w_src, int h_kernel, int w_kernel)
         ws.h_dst = h_src;
         ws.w_dst = w_src;
         // We copy the first [0:h_dst-1 ; 0:w_dst-1] real part elements of out_src
-        ws.h_offset = 0;
-        ws.w_offset = 0;
-        break;
-    case FFTW_CIRCULAR_SAME_SHIFTED:
-        // Circular convolution, modulo N, shifted by M/2
-        // We don't padd with zeros because if we do, we need to padd with at least h_kernel/2;
-        // w_kernel/2 elements plus the wrapp around, which in facts leads to too much
-        // computations compared to the gain obtained with the optimal size
-        ws.h_fftw = h_src;
-        ws.w_fftw = w_src;
-        ws.h_dst = h_src;
-        ws.w_dst = w_src;
-        // We copy the [h_kernel/2:h_kernel/2+h_dst-1 ; w_kernel/2:w_kernel/2+w_dst-1]
-        // real part elements of out_src
         ws.h_offset = 0;
         ws.w_offset = 0;
         break;

@@ -34,7 +34,7 @@ TEST_F(TestModelUtils, test_topItemNames)
     // inserting three top items
     auto item = model.insertNewItem("MultiLayer");
     item->setItemName("name1");
-    item = model.insertNewItem("Layer");
+    model.insertNewItem("Layer");
     item = model.insertNewItem("MultiLayer");
     item->setItemName("name2");
 

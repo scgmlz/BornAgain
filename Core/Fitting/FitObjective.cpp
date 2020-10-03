@@ -35,7 +35,7 @@ public:
 class ChiModuleWrapper : public IMetricWrapper
 {
 public:
-    ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module);
+    explicit ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module);
     double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const override;
 
 private:
@@ -45,7 +45,7 @@ private:
 class ObjectiveMetricWrapper : public IMetricWrapper
 {
 public:
-    ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module);
+    explicit ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module);
     double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const override;
 
 private:

@@ -8,10 +8,15 @@ set(lib BornAgain${name})
 # --- source and include files ---
 
 file(GLOB source_files */*.cpp)
+file(GLOB include_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} */*.h)
+
 if((NOT Cerf_IS_CPP) AND (NOT WIN32)) # TEMPORARY
     list(APPEND source_files ${CMAKE_SOURCE_DIR}/ThirdParty/Core/cerf_wrapper/cerf_ptr.c)
 endif()
-file(GLOB include_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} */*.h)
+if(${Cerf_IS_CPP})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCERF_AS_CPP=ON")
+endif()
+
 
 if(BORNAGAIN_PYTHON)
 
@@ -83,6 +88,23 @@ if(BORNAGAIN_PYTHON)
 
 endif(BORNAGAIN_PYTHON)
 
+# --- making library ---
+
+if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBA_CORE_BUILD_DLL")
+endif()
+
+add_library(${lib} SHARED ${source_files})
+set_target_properties(${lib} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
+set(${lib}_LIBRARY_TYPE SHARED)
+
+if(BORNAGAIN_PYTHON)
+    add_dependencies(${lib} ${lib}_python)
+endif()
+
+# exposing library name and list of include directories outside
+set(${lib}_LIBRARY ${lib} PARENT_SCOPE)
+
 
 if(BORNAGAIN_PYTHON)
     if(CONFIGURE_BINDINGS)
@@ -93,6 +115,7 @@ if(BORNAGAIN_PYTHON)
             )
     endif()
     add_custom_target(${lib}_runtime DEPENDS ${AUTO_DIR}/swig_runtime.h)
+    add_dependencies(${lib} ${lib}_runtime)
 
     configure_file(${WRAP_DIR}/python/plot_utils.py
                    ${CMAKE_BINARY_DIR}/lib/bornagain/plot_utils.py COPYONLY)
@@ -111,26 +134,6 @@ if(BORNAGAIN_PYTHON)
 endif()
 
 
-# --- making library ---
-
-if(WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBA_CORE_BUILD_DLL")
-endif()
-
-if(${Cerf_IS_CPP})
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCERF_AS_CPP=ON")
-endif()
-add_library(${lib} SHARED ${source_files})
-set_target_properties(${lib} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
-set(${lib}_LIBRARY_TYPE SHARED)
-
-if(BORNAGAIN_PYTHON)
-    add_dependencies(${lib} ${lib}_python)
-    add_dependencies(${lib} ${lib}_runtime)
-endif()
-
-# exposing library name and list of include directories outside
-set(${lib}_LIBRARY ${lib} PARENT_SCOPE)
 
 # --- external dependencies ---
 
@@ -165,7 +168,7 @@ endif()
 
 if(BORNAGAIN_PYTHON)
     target_compile_definitions(${lib} PUBLIC -DBORNAGAIN_PYTHON)
-    include_directories(${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+    target_include_directories(${lib} PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
     target_link_libraries(${lib} ${Python3_LIBRARIES})
 endif()
 
@@ -175,6 +178,15 @@ if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
 endif()
 
 # --- installation ---
+
+install(TARGETS ${lib} DESTINATION ${destination_lib} COMPONENT Libraries)
+install(FILES ${CMAKE_BINARY_DIR}/lib/lib${lib}.py
+    DESTINATION ${destination_lib} COMPONENT Libraries) # required by swig
+
+foreach(file ${include_files})
+    get_filename_component(dir ${file} DIRECTORY)
+    install(FILES ${file} DESTINATION ${destination_include}/${name}/${dir})
+endforeach()
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
     DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.py" )
@@ -186,17 +198,8 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
     DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.png")
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/cpp
     DESTINATION ${destination_examples} COMPONENT Examples)
-install(TARGETS ${lib} DESTINATION ${destination_lib} COMPONENT Libraries)
-install(FILES ${CMAKE_BINARY_DIR}/lib/lib${lib}.py
-    DESTINATION ${destination_lib} COMPONENT Libraries) # required by swig
-
-foreach(file ${include_files})
-    get_filename_component(dir ${file} DIRECTORY)
-    install(FILES ${file} DESTINATION ${destination_include}/${name}/${dir})
-endforeach()
 install(FILES "${AUTO_DIR}/swig_runtime.h"
     DESTINATION ${destination_include}/Wrap COMPONENT Headers)
-
 install(FILES ${CMAKE_SOURCE_DIR}/Wrap/WinDllMacros.h
     DESTINATION ${destination_include}/Wrap COMPONENT Headers)
 

@@ -50,7 +50,7 @@ TEST_F(BatchSimulation, BatchSimulation)
         batch->runSimulation();
         auto batch_result = batch->result();
         std::unique_ptr<OutputData<double>> batchResult(batch_result.data());
-        *result += *batchResult.get();
+        *result += *batchResult;
     }
 
     double diff = IntensityDataFunctions::getRelativeDifference(*result, *reference);

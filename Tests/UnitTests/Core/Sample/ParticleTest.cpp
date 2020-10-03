@@ -7,11 +7,7 @@
 
 class ParticleTest : public ::testing::Test
 {
-protected:
-    ~ParticleTest();
 };
-
-ParticleTest::~ParticleTest() = default;
 
 TEST_F(ParticleTest, InitialState)
 {

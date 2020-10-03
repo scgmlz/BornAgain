@@ -75,7 +75,7 @@ public:
     ~MesoCrystalPerformanceBuilder();
 
 protected:
-    MultiLayer* buildSample() const;
+    MultiLayer* buildSample() const override;
 
 private:
     std::unique_ptr<MesoCrystal> createMeso(Material material,
@@ -146,7 +146,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
             RotationX rotX(tilt);
             mesocrystal->setRotation(rotZ);
             mesocrystal->rotate(rotX);
-            particle_decoration.addParticle(*mesocrystal.get(), 1.0,
+            particle_decoration.addParticle(*mesocrystal, 1.0,
                                             kvector_t(0, 0, -m_meso_height));
         }
     }
@@ -198,7 +198,7 @@ int main()
 
     auto detector = create_detector();
 
-    simulation.setDetector(*detector.get());
+    simulation.setDetector(*detector);
 
     simulation.setBeamParameters(1.77 * Units::angstrom, 0.4 * Units::deg, 0.0);
     simulation.setBeamIntensity(6.1e+12);
