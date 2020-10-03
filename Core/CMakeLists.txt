@@ -5,8 +5,6 @@
 set(name Core)
 set(lib BornAgain${name})
 
-# --- source and include files ---
-
 file(GLOB source_files */*.cpp)
 file(GLOB include_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} */*.h)
 
@@ -17,25 +15,23 @@ if(${Cerf_IS_CPP})
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCERF_AS_CPP=ON")
 endif()
 
-SwigLib(${name} ${lib})
-
-# --- making library ---
-
-if(WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBA_CORE_BUILD_DLL")
-endif()
-
-add_library(${lib} SHARED ${source_files})
+add_library(${lib} SHARED ${source_files} ${AUTO_DIR}/lib${lib}_wrap.cpp)
 set_target_properties(${lib} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${lib}_LIBRARY_TYPE SHARED)
-
-if(BORNAGAIN_PYTHON)
-    add_dependencies(${lib} ${lib}_python)
-endif()
-
-# exposing library name and list of include directories outside
 set(${lib}_LIBRARY ${lib} PARENT_SCOPE)
 
+SwigLib(${name} ${lib})
+
+if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
+    set_target_properties(${lib} PROPERTIES LINK_FLAGS "-Wl,-rpath,@loader_path/../../Frameworks")
+endif()
+
+install(TARGETS ${lib} DESTINATION ${destination_lib} COMPONENT Libraries)
+
+foreach(file ${include_files})
+    get_filename_component(dir ${file} DIRECTORY)
+    install(FILES ${file} DESTINATION ${destination_include}/${name}/${dir})
+endforeach()
 
 if(BORNAGAIN_PYTHON)
     if(CONFIGURE_BINDINGS)
@@ -63,8 +59,6 @@ if(BORNAGAIN_PYTHON)
     configure_file("${WRAP_DIR}/python/__init__.py.in"
                    "${CMAKE_BINARY_DIR}/lib/bornagain/__init__.py" @ONLY)
 endif()
-
-
 
 # --- external dependencies ---
 
@@ -97,27 +91,7 @@ if(BORNAGAIN_MPI)
     target_link_libraries(${lib} ${MPI_LIBRARIES})
 endif()
 
-if(BORNAGAIN_PYTHON)
-    target_compile_definitions(${lib} PUBLIC -DBORNAGAIN_PYTHON)
-    target_include_directories(${lib} PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
-    target_link_libraries(${lib} ${Python3_LIBRARIES})
-endif()
-
-if(APPLE AND BORNAGAIN_APPLE_BUNDLE)
-    set(link_flags "-Wl,-rpath,@loader_path/../../Frameworks")
-    set_target_properties(${lib} PROPERTIES LINK_FLAGS ${link_flags})
-endif()
-
 # --- installation ---
-
-install(TARGETS ${lib} DESTINATION ${destination_lib} COMPONENT Libraries)
-install(FILES ${CMAKE_BINARY_DIR}/lib/lib${lib}.py
-    DESTINATION ${destination_lib} COMPONENT Libraries) # required by swig
-
-foreach(file ${include_files})
-    get_filename_component(dir ${file} DIRECTORY)
-    install(FILES ${file} DESTINATION ${destination_include}/${name}/${dir})
-endforeach()
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/Examples/
     DESTINATION ${destination_examples} COMPONENT Examples FILES_MATCHING PATTERN "*.py" )
@@ -135,26 +109,6 @@ install(FILES ${CMAKE_SOURCE_DIR}/Wrap/WinDllMacros.h
     DESTINATION ${destination_include}/Wrap COMPONENT Headers)
 
 if(WIN32)
-    # python in windows required .pyd extension for the library name
-    if(BORNAGAIN_PYTHON)
-        add_custom_command(
-            TARGET ${lib}
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_BINARY_DIR}/bin/${libprefix}${lib}${libsuffix}
-            ${CMAKE_BINARY_DIR}/lib/${libprefix}${lib}".pyd"
-            )
-        install(FILES ${CMAKE_BINARY_DIR}/lib/${libprefix}${lib}.pyd
-            DESTINATION ${destination_lib} COMPONENT Libraries)
-        add_custom_command(
-            TARGET ${lib}
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_BINARY_DIR}/bin/${libprefix}${lib}${libsuffix}
-            ${CMAKE_BINARY_DIR}/lib/${libprefix}${lib}${libsuffix}
-            )
-    endif()
-
     # system libraries
     foreach(Boost_lib ${Boost_LIBRARIES})
         get_filename_component(UTF_BASE_NAME ${Boost_lib} NAME_WE)

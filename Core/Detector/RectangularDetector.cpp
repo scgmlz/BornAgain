@@ -261,8 +261,8 @@ void RectangularDetector::initNormalVector(const kvector_t central_k)
         m_normal_to_detector = m_distance * central_k_unit;
     }
 
-    else if (m_detector_arrangement == PERPENDICULAR_TO_REFLECTED_BEAM ||
-             m_detector_arrangement == PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
+    else if (m_detector_arrangement == PERPENDICULAR_TO_REFLECTED_BEAM
+             || m_detector_arrangement == PERPENDICULAR_TO_REFLECTED_BEAM_DPOS) {
         m_normal_to_detector = m_distance * central_k_unit;
         m_normal_to_detector.setZ(-m_normal_to_detector.z());
     }

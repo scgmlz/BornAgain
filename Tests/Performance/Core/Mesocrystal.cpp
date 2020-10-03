@@ -146,8 +146,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
             RotationX rotX(tilt);
             mesocrystal->setRotation(rotZ);
             mesocrystal->rotate(rotX);
-            particle_decoration.addParticle(*mesocrystal, 1.0,
-                                            kvector_t(0, 0, -m_meso_height));
+            particle_decoration.addParticle(*mesocrystal, 1.0, kvector_t(0, 0, -m_meso_height));
         }
     }
 

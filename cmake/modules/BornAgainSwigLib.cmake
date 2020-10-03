@@ -1,11 +1,9 @@
 function(SwigLib name lib)
 
-    if(not BORNAGAIN_PYTHON)
+    if(NOT BORNAGAIN_PYTHON)
         return()
     endif()
 
-    set(WRAP_DIR ${CMAKE_SOURCE_DIR}/Wrap)
-    set(AUTO_DIR ${CMAKE_SOURCE_DIR}/auto/Wrap)
     file(MAKE_DIRECTORY ${AUTO_DIR})
 
     if(CONFIGURE_BINDINGS)
@@ -58,6 +56,7 @@ function(SwigLib name lib)
             -E copy ${AUTO_DIR}/lib${lib}.py ${CMAKE_BINARY_DIR}/lib/bornagain/lib${lib}.py
         DEPENDS ${AUTO_DIR}/lib${lib}.py
         )
+    add_dependencies(${lib} ${lib}_python)
 
     if((CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
             OR (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"))
@@ -68,8 +67,30 @@ function(SwigLib name lib)
 -Wno-deprecated-declarations")
     endif()
 
-    list(APPEND source_files "${AUTO_DIR}/lib${lib}_wrap.cpp")
+    target_compile_definitions(${lib} PUBLIC -DBORNAGAIN_PYTHON)
+    target_include_directories(${lib} PUBLIC ${Python3_INCLUDE_DIRS} ${Python3_NumPy_INCLUDE_DIRS})
+    target_link_libraries(${lib} ${Python3_LIBRARIES})
 
-endif(BORNAGAIN_PYTHON)
+    install(FILES ${CMAKE_BINARY_DIR}/lib/lib${lib}.py
+        DESTINATION ${destination_lib} COMPONENT Libraries)
+
+    if(WIN32)
+        add_custom_command(
+            TARGET ${lib}
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/bin/${libprefix}${lib}${libsuffix}
+            ${CMAKE_BINARY_DIR}/lib/${libprefix}${lib}".pyd"
+            )
+        install(FILES ${CMAKE_BINARY_DIR}/lib/${libprefix}${lib}.pyd
+            DESTINATION ${destination_lib} COMPONENT Libraries)
+        add_custom_command(
+            TARGET ${lib}
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/bin/${libprefix}${lib}${libsuffix}
+            ${CMAKE_BINARY_DIR}/lib/${libprefix}${lib}${libsuffix}
+            )
+    endif()
 
 endfunction()
