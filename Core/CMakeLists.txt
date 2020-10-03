@@ -55,7 +55,7 @@ target_include_directories(${lib}
     SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIRS}
     )
 if(BORNAGAIN_GUI)
-    target_include_directories(${lib} PUBLIC ${Qt5Core_INCLUDE_DIRS})
+    target_include_directories(${lib} PUBLIC ${Qt5Core_INCLUDE_DIRS}) # needed by Assert.h
     target_link_libraries(${lib} ${Qt5Core_LIBRARIES})
 endif()
 
@@ -64,6 +64,6 @@ target_link_libraries(${lib} ${Boost_LIBRARIES} ${FFTW3_LIBRARIES} ${GSL_LIBRARI
 
 if(BORNAGAIN_MPI)
     add_definitions(-DBORNAGAIN_MPI)
-    include_directories(${MPI_INCLUDE_PATH})
+    target_include_directories(${lib} PUBLIC ${MPI_INCLUDE_PATH})
     target_link_libraries(${lib} ${MPI_LIBRARIES})
 endif()
