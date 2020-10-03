@@ -106,3 +106,42 @@ if(CONFIGURE_MANPAGE)
     endif()
     message(STATUS "Found pod2man: ${POD2MAN}")
 endif()
+
+# --- Windows DLL installation ---
+
+if(WIN32)
+    # system libraries
+    foreach(Boost_lib ${Boost_LIBRARIES})
+        get_filename_component(UTF_BASE_NAME ${Boost_lib} NAME_WE)
+        get_filename_component(UTF_PATH ${Boost_lib} PATH)
+        message(STATUS "Boost dll: ${UTF_PATH}/${UTF_BASE_NAME}.dll")
+        install(FILES ${UTF_PATH}/${UTF_BASE_NAME}.dll
+            DESTINATION ${destination_lib} COMPONENT Libraries)
+    endforeach()
+
+    set(Cerf_LIB ${Cerf_LIBRARIES}) # we take for granted that there is only one cerf.lib
+    get_filename_component(DIR ${Cerf_LIB} DIRECTORY)
+    get_filename_component(cerf ${Cerf_LIB} NAME_WE)
+
+    set(DLL_MSG "")
+    foreach(LIB IN ITEMS ${cerf} libgcc_s_seh-1 libstdc++-6 libwinpthread-1)
+        set(DLL "${DIR}/${LIB}.dll")
+        if (NOT EXISTS ${DLL})
+            message(FATAL_ERROR "Dynamic load library ${DLL} (needed for cerf) does not exist")
+        endif()
+        install(FILES ${DLL} DESTINATION ${destination_lib} COMPONENT Libraries)
+        string(APPEND DLL_MSG " ${DLL}")
+    endforeach()
+    message(STATUS "Cerf dlls: ${DLL_MSG}")
+
+    set(DLL_MSG "")
+    foreach(LIB IN LISTS FFTW3_LIBRARIES TIFF_LIBRARIES)
+        string(REPLACE ".lib" ".dll" DLL "${LIB}")
+        if (NOT EXISTS ${DLL})
+            message(FATAL_ERROR "Dynamic load library ${DLL} (derived from ${LIB}) does not exist")
+        endif()
+        install(FILES ${DLL} DESTINATION ${destination_lib} COMPONENT Libraries)
+        string(APPEND DLL_MSG " ${DLL}")
+    endforeach()
+    message(STATUS "Other dlls: ${DLL_MSG}")
+endif()

@@ -77,6 +77,7 @@ endif()
 include(BornAgainConfiguration)
 include(BornAgainPolicy)
 include(BornAgainSwigLib)
+include(ThisBornAgain)
 include(GeneratePythonDocs)
 include(BALineLength)
 
@@ -117,6 +118,7 @@ add_subdirectory(Fit)
 add_subdirectory(Tests/UnitTests/Fit)
 
 add_subdirectory(Core)
+include(BornAgainPython) # makes Core lib dependent on Swig runtime and Python utilities
 add_subdirectory(Tests/UnitTests/Core)
 add_subdirectory(Tests/UnitTests/Numeric)
 add_subdirectory(Tests/Performance/Core)
