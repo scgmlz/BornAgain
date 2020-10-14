@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorTetrahedron.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/MathFunctions.h"
 
 const PolyhedralTopology FormFactorTetrahedron::topology = {{{{2, 1, 0}, false},
                                                              {{0, 1, 4, 3}, false},
@@ -24,17 +24,14 @@ const PolyhedralTopology FormFactorTetrahedron::topology = {{{{2, 1, 0}, false},
                                                              {{3, 4, 5}, false}},
                                                             false};
 
-//! Constructor of a truncated tethrahedron.
-//! @param base_edge: length of one edge of the equilateral triangular base in nanometers
-//! @param height: height of the tetrahedron in nanometers
-//! @param alpha: dihedral angle in radians between base and facet
 FormFactorTetrahedron::FormFactorTetrahedron(const std::vector<double> P)
-    : IFormFactorPolyhedron({"Tetrahedron",
-                             "class_tooltip",
-                             {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                              {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
-                            P),
+    : IFormFactorPolyhedron(
+          {"Tetrahedron",
+           "actually, not a tetrahedron, but a trigonal frustum",
+           {{"BaseEdge", "nm", "edge of base triangle", 0, +INF, 0},
+            {"Height", "nm", "height of frustum", 0, +INF, 0},
+            {"Alpha", "rad", "angle between base and a side face", 0., M_PI_2, 0}}},
+          P),
       m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
     onChange();

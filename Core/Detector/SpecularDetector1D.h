@@ -41,7 +41,7 @@ public:
     void resetRegionOfInterest() override {}
 
     //! Return default axes units
-    AxesUnits defaultAxesUnits() const override;
+    Axes::Units defaultAxesUnits() const override;
 
 protected:
     SpecularDetector1D(const SpecularDetector1D& other);

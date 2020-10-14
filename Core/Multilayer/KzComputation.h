@@ -15,9 +15,8 @@
 #ifndef BORNAGAIN_CORE_MULTILAYER_KZCOMPUTATION_H
 #define BORNAGAIN_CORE_MULTILAYER_KZCOMPUTATION_H
 
-#include "Core/Basics/Complex.h"
-#include "Core/Basics/ICloneable.h"
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Types/Complex.h"
+#include "Base/Vector/Vectors3D.h"
 #include <vector>
 
 class Slice;

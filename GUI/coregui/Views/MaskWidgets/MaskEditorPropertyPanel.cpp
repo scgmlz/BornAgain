@@ -15,7 +15,6 @@
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorPropertyPanel.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
-#include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
 #include "GUI/coregui/Views/AccordionWidget/ContentPane.h"
 #include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QListView>
@@ -123,7 +122,7 @@ void MaskEditorPropertyPanel::setPanelHidden(bool value)
         m_plotPropertyEditor->setItem(nullptr);
     } else {
         QModelIndexList indexes = selectionModel()->selectedIndexes();
-        if (indexes.size())
+        if (!indexes.empty())
             m_maskPropertyEditor->setItem(m_maskModel->itemForIndex(indexes.front()));
 
         m_plotPropertyEditor->setItem(m_intensityDataItem);
@@ -133,7 +132,7 @@ void MaskEditorPropertyPanel::setPanelHidden(bool value)
 void MaskEditorPropertyPanel::onSelectionChanged(const QItemSelection& selected,
                                                  const QItemSelection&)
 {
-    if (selected.size())
+    if (!selected.empty())
         m_maskPropertyEditor->setItem(m_maskModel->itemForIndex(selected.indexes().front()));
     else
         m_maskPropertyEditor->setItem(nullptr);

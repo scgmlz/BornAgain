@@ -16,7 +16,6 @@
 #include "GUI/coregui/Models/GroupInfoCatalog.h"
 #include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/SessionGraphicsItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/utils/GUIHelpers.h"

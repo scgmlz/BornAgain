@@ -15,9 +15,8 @@
 #ifndef BORNAGAIN_CORE_BEAM_BEAM_H
 #define BORNAGAIN_CORE_BEAM_BEAM_H
 
-#include "Core/Parametrization/INode.h"
-#include "Core/Vector/EigenCore.h"
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/EigenCore.h"
+#include "Param/Node/INode.h"
 
 class IFootprintFactor;
 

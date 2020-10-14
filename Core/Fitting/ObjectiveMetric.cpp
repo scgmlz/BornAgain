@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/Fitting/ObjectiveMetric.h"
+#include "Core/Data/OutputData.h"
 #include "Core/Fitting/ObjectiveMetricUtils.h"
 #include "Core/Fitting/SimDataPair.h"
-#include "Core/Intensity/OutputData.h"
 #include <cmath>
 #include <limits>
 
@@ -234,8 +234,8 @@ double RQ4Metric::compute(const SimDataPair& data_pair, bool use_weights) const
         return Chi2Metric::compute(data_pair, use_weights);
 
     // fetching data in RQ4 form
-    auto sim_data = data_pair.simulationResult().data(AxesUnits::RQ4);
-    auto exp_data = data_pair.experimentalData().data(AxesUnits::RQ4);
+    auto sim_data = data_pair.simulationResult().data(Axes::Units::RQ4);
+    auto exp_data = data_pair.experimentalData().data(Axes::Units::RQ4);
 
     return computeFromArrays(sim_data->getRawDataVector(), exp_data->getRawDataVector(),
                              data_pair.user_weights_array());

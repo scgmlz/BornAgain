@@ -5,14 +5,21 @@
 *.aux
 *.bbl
 *.blg
+*.brf
 *.dvi
 *.end
+*.idx
+*.ilg
+*.ind
 *.log
+*.nlo
 *.out
 *.toc
 *.trs
 *.vtp
 *.spl
+
+*__pycache__
 
 build/
 debug/

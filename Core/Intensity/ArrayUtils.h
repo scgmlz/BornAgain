@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_INTENSITY_ARRAYUTILS_H
 #define BORNAGAIN_CORE_INTENSITY_ARRAYUTILS_H
 
-#include "Core/Intensity/OutputData.h"
+#include "Core/Data/OutputData.h"
 #include <memory>
 #include <stdexcept>
 #include <vector>
@@ -58,7 +58,6 @@ class CreateDataImpl
 };
 
 //! Creates OutputData array from input vector.
-//! @param vec: input vector
 template <class T> CreateDataImpl::ReturnType<T> createData(const T& vec)
 {
     constexpr const int size = CreateDataImpl::nDim<T>::value;
@@ -76,13 +75,9 @@ PyObject* createNumpyArray(const std::vector<double>& data);
 #endif // BORNAGAIN_PYTHON
 
 //! Creates 1D vector from OutputData.
-//! @param vec: OutputData<double>
-//! @return vector<double>
 template <class T> decltype(auto) createVector1D(const T& data);
 
 //! Creates 2D vector from OutputData.
-//! @param vec: OutputData<double>
-//! @return vector<vector<double>>
 template <class T> decltype(auto) createVector2D(const T& data);
 
 } // namespace ArrayUtils

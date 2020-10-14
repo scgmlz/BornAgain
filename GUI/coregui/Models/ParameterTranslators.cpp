@@ -25,7 +25,7 @@ const QStringList expectedRoughnessPars =
                   << QString::fromStdString("CorrelationLength");
 }
 
-IPathTranslator::~IPathTranslator() {}
+IPathTranslator::~IPathTranslator() = default;
 
 ModelTypeTranslator::ModelTypeTranslator(QString gui_model_type, QString domain_name)
     : m_gui_model_type{std::move(gui_model_type)}, m_domain_name{std::move(domain_name)}

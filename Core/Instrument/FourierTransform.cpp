@@ -14,10 +14,10 @@
 // ************************************************************************** //
 
 #include "Core/Instrument/FourierTransform.h"
-#include "Core/Basics/Exceptions.h"
+#include "Base/Types/Exceptions.h"
 #include <algorithm>
+#include <cmath>
 #include <iostream>
-#include <math.h>
 #include <sstream>
 #include <stdexcept>
 

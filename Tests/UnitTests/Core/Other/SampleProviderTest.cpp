@@ -1,8 +1,8 @@
 #include "Core/SampleBuilderEngine/SampleProvider.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
@@ -87,7 +87,7 @@ TEST_F(SampleProviderTest, sampleBuilder)
     // Setting sample builder, original sample should gone.
     std::shared_ptr<ISampleBuilder> builder(new SampleProviderTest::TestBuilder(33.0));
     EXPECT_EQ(builder.use_count(), 1);
-    provider.setSampleBuilder(builder);
+    provider.setBuilder(builder);
     EXPECT_EQ(builder.use_count(), 2);
     EXPECT_EQ(provider.sample(), nullptr);
 
@@ -153,7 +153,7 @@ TEST_F(SampleProviderTest, builderInSimulationContext)
     SampleProvider& provider = sim.m_provider;
 
     std::shared_ptr<ISampleBuilder> builder(new SampleProviderTest::TestBuilder(33.0));
-    provider.setSampleBuilder(builder);
+    provider.setBuilder(builder);
     provider.updateSample();
 
     // provider's sample should not have neither parent nor children

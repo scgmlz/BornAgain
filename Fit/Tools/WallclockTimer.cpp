@@ -3,7 +3,7 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Fit/Tools/WallclockTimer.cpp
-//! @brief     Implements WallclockTimer class.
+//! @brief     Implements class WallclockTimer.
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)

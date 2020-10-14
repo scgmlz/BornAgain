@@ -22,8 +22,6 @@
 namespace Numeric
 {
 
-bool AreAlmostEqual(double a, double b, double tolerance_factor = 1.0);
-
 double GetAbsoluteDifference(double a, double b);
 
 double GetRelativeDifference(double a, double b);

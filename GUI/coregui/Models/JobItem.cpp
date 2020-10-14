@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/JobItem.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/Data1DViewItem.h"
 #include "GUI/coregui/Models/FitSuiteItem.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -165,7 +164,7 @@ bool JobItem::isFailed() const
 
 bool JobItem::isValidForFitting()
 {
-    return isTag(T_REALDATA) && getItem(T_REALDATA) ? true : false;
+    return isTag(T_REALDATA) && getItem(T_REALDATA);
 }
 
 void JobItem::setBeginTime(const QString& begin_time)

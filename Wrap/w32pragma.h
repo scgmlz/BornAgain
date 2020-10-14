@@ -3,7 +3,8 @@
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Wrap/w32pragma.h
-//! @brief     Pragmas and defines for MSVC
+//! @brief     Pragmas and defines for MSVC.
+//!            Always included per cmake/BornAgain/Windows.cmake
 //
 // ************************************************************************** //
 
@@ -68,31 +69,6 @@
 
 /* no override available for virtual member function from base */
 #pragma warning(disable : 4266)
-
-#define WIN32 1
-#define _WINDOWS 1
-#define WINVER 0x0400
-#define CRTAPI1 _cdecl
-#define CRTAPI2 _cdecl
-#if defined(_M_IX86)
-#define _X86_ 1
-#endif
-// #define _DLL  - used to be explicitly defined,
-// but it's implicitely defined via /MD(d)
-#define G__REDIRECTIO 1
-#define G__SHAREDLIB 1
-#define G__UNIX 1
-#define G__ROOT 1
-#define G__WIN32 1
-
-#if (_MSC_VER >= 1310)
-#define G__NEWSTDHEADER 1
-#endif
-
-#if (_MSC_VER >= 1400)
-#define _CRT_SECURE_NO_DEPRECATE 1
-#define _USE_ATTRIBUTES_FOR_SAL 0
-#endif
 
 #endif // _WIN32
 

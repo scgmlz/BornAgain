@@ -14,11 +14,9 @@
 
 #include "GUI/coregui/Views/PropertyEditor/TestComponentView.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Scattering/ISample.h"
 #include "Core/StandardSamples/SampleBuilderFactory.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
 #include "GUI/coregui/Models/MaterialDataItems.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SessionModelDelegate.h"
@@ -28,13 +26,13 @@
 #include "GUI/coregui/Views/PropertyEditor/ComponentTreeView.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include "GUI/coregui/utils/StyleUtils.h"
-#include "minisplitter.h"
 #include <QBoxLayout>
 #include <QDebug>
 #include <QItemSelectionModel>
 #include <QPushButton>
 #include <QTreeView>
 #include <limits>
+#include <minisplitter.h>
 
 TestComponentView::TestComponentView(MainWindow* mainWindow)
     : m_mainWindow(mainWindow), m_sampleModel(new SampleModel(this)),
@@ -130,7 +128,7 @@ void TestComponentView::onSelectionChanged(const QItemSelection& selected, const
 {
     QModelIndexList indices = selected.indexes();
 
-    if (indices.size()) {
+    if (!indices.empty()) {
         //        QModelIndex selectedIndex = indices.front();
         //        m_componentTree->setRootIndex(selectedIndex);
         //        m_componentTree->treeView()->expandAll();

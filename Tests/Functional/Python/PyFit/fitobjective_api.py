@@ -29,7 +29,8 @@ class SimulationBuilder:
         ml.addLayer(ba.Layer(material))
         ml.addLayer(ba.Layer(material))
 
-        simulation = ba.GISASSimulation(ml)
+        simulation = ba.GISASSimulation()
+        simulation.setSample(ml)
         simulation.setDetectorParameters(self.m_ncol, 0.0, 1.0, self.m_nrow, 0.0, 1.0)
         return simulation
 

@@ -3,7 +3,6 @@
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/ModelUtils.h"
 #include "GUI/coregui/Models/ParticleItem.h"
-#include "GUI/coregui/Models/ProxyModelStrategy.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "Tests/GTestWrapper/google_test.h"
@@ -123,7 +122,7 @@ TEST_F(TestProxyModelStrategy, test_componentStrategyParticle)
     QModelIndex radiusProxyIndex = strategy.sourceToProxy().value(radiusIndex);
     EXPECT_TRUE(particleProxyIndex.isValid());
     EXPECT_TRUE(groupProxyIndex.isValid());
-    EXPECT_TRUE(ffProxyIndex.isValid() == false); // ff is excluded from hierarchy
+    EXPECT_FALSE(ffProxyIndex.isValid()); // ff is excluded from hierarchy
     EXPECT_TRUE(radiusProxyIndex.isValid());
 
     // Checking "real" parents of indices
@@ -159,12 +158,12 @@ TEST_F(TestProxyModelStrategy, test_setRootIndex)
     QModelIndex groupProxyIndex = strategy.sourceToProxy().value(groupIndex);
     QModelIndex ffProxyIndex = strategy.sourceToProxy().value(ffIndex);
     QModelIndex radiusProxyIndex = strategy.sourceToProxy().value(radiusIndex);
-    EXPECT_TRUE(particleProxyIndex.isValid() == false); // particle is not in a tree
+    EXPECT_FALSE(particleProxyIndex.isValid()); // particle is not in a tree
     EXPECT_TRUE(groupProxyIndex.isValid());
     EXPECT_EQ(groupProxyIndex.row(), 0);
     EXPECT_EQ(groupProxyIndex.column(), 0);
     EXPECT_TRUE(groupProxyIndex.parent() == QModelIndex());
-    EXPECT_TRUE(ffProxyIndex.isValid() == false); // ff is excluded from hierarchy
+    EXPECT_FALSE(ffProxyIndex.isValid()); // ff is excluded from hierarchy
     EXPECT_TRUE(radiusProxyIndex.isValid());
 
     // checking that new parent of groupItem is root

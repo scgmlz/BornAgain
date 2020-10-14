@@ -54,6 +54,7 @@ public:
     const_iterator end() const { return m_options.end(); }
 
     size_t size() const { return m_options.size(); }
+    bool empty() const { return size() == 0; }
 
 protected:
     bool exists(const std::string& name);

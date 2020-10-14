@@ -23,27 +23,27 @@ RealSpacePositionBuilder::~RealSpacePositionBuilder() = default;
 
 void RealSpacePositionBuilder::visit(const InterferenceFunction1DLattice* p_iff)
 {
-    mP_pos_builder.reset(new Lattice1DPositionBuilder(p_iff));
+    mP_pos_builder = std::make_unique<Lattice1DPositionBuilder>(p_iff);
 }
 
 void RealSpacePositionBuilder::visit(const InterferenceFunction2DLattice* p_iff)
 {
-    mP_pos_builder.reset(new Lattice2DPositionBuilder(p_iff));
+    mP_pos_builder = std::make_unique<Lattice2DPositionBuilder>(p_iff);
 }
 
 void RealSpacePositionBuilder::visit(const InterferenceFunction2DParaCrystal* p_iff)
 {
-    mP_pos_builder.reset(new ParaCrystal2DPositionBuilder(p_iff));
+    mP_pos_builder = std::make_unique<ParaCrystal2DPositionBuilder>(p_iff);
 }
 
 void RealSpacePositionBuilder::visit(const InterferenceFunctionFinite2DLattice* p_iff)
 {
-    mP_pos_builder.reset(new Finite2DLatticePositionBuilder(p_iff));
+    mP_pos_builder = std::make_unique<Finite2DLatticePositionBuilder>(p_iff);
 }
 
 void RealSpacePositionBuilder::visit(const InterferenceFunctionRadialParaCrystal* p_iff)
 {
-    mP_pos_builder.reset(new RadialParacrystalPositionBuilder(p_iff));
+    mP_pos_builder = std::make_unique<RadialParacrystalPositionBuilder>(p_iff);
 }
 
 void RealSpacePositionBuilder::visit(const InterferenceFunctionNone*)

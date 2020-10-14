@@ -23,10 +23,6 @@
 class FormFactorLongBoxGauss : public IFormFactorBorn
 {
 public:
-    //! @brief Box constructor
-    //! @param length of Box's base
-    //! @param width of Box's base
-    //! @param height of Box
     FormFactorLongBoxGauss(const std::vector<double> P);
     FormFactorLongBoxGauss(double length, double width, double height);
 

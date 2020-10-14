@@ -22,7 +22,7 @@
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SpecularDataItem.h"
-#include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
+#include "GUI/coregui/Views/AccordionWidget/ContentPane.h"
 #include "GUI/coregui/Views/FitWidgets/MinimizerSettingsWidget.h"
 #include "GUI/coregui/Views/MaskWidgets/MaskEditor.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialEditor.h"

@@ -16,7 +16,7 @@
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/Models/JobQueueData.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
-#include "progressbar.h"
+#include <progressbar.h>
 
 JobProgressAssistant::JobProgressAssistant(MainWindow* mainWindow)
     : QObject(mainWindow), m_mainWindow(mainWindow)

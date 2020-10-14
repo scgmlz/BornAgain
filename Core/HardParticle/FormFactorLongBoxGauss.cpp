@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorLongBoxGauss.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/Shapes/Box.h"
-#include "Core/Tools/MathFunctions.h"
 
 FormFactorLongBoxGauss::FormFactorLongBoxGauss(const std::vector<double> P)
     : IFormFactorBorn({"FormFactorLongBoxGauss",
@@ -54,5 +54,5 @@ IFormFactor* FormFactorLongBoxGauss::sliceFormFactor(ZLimits limits, const IRota
 
 void FormFactorLongBoxGauss::onChange()
 {
-    mP_shape.reset(new Box(m_length, m_width, m_height));
+    mP_shape = std::make_unique<Box>(m_length, m_width, m_height);
 }

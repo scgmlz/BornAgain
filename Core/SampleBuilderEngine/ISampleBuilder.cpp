@@ -18,3 +18,5 @@ ISampleBuilder::ISampleBuilder()
 {
     setName("SampleBuilder");
 }
+
+ISampleBuilder::~ISampleBuilder() = default;

@@ -32,11 +32,9 @@ const PolyhedralTopology FormFactorDodecahedron::topology = {{// bottom:
                                                               {{15, 16, 17, 18, 19}, false}},
                                                              true};
 
-//! Constructor of a dodecahedron.
-//! @param edge: length of the edge in nanometers
 FormFactorDodecahedron::FormFactorDodecahedron(const std::vector<double> P)
     : IFormFactorPolyhedron(
-          {"Dodecahedron", "class_tooltip", {{"Edge", "nm", "para_tooltip", 0, +INF, 0}}}, P),
+          {"Dodecahedron", "regular dodecahedron", {{"Edge", "nm", "edge length", 0, +INF, 0}}}, P),
       m_edge(m_P[0])
 {
     onChange();

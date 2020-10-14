@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Views/JobWidgets/ProjectionsToolBar.h"
 #include "GUI/coregui/Views/JobWidgets/ProjectionsEditorActions.h"
-#include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QButtonGroup>
 #include <QLabel>

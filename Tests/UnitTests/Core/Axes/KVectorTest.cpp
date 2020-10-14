@@ -1,5 +1,4 @@
-#include "Core/Vector/Transform3D.h"
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Transform3D.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class KVectorTest : public ::testing::Test

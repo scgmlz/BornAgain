@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Views/MaskWidgets/SizeHandleElement.h"
 #include "GUI/coregui/Views/MaskWidgets/ISceneAdaptor.h"
-#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QGraphicsSceneHoverEvent>
 #include <QPainter>
 

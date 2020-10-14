@@ -1,4 +1,4 @@
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 #include "Core/Computation/ProcessedSample.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/KzComputation.h"
@@ -7,7 +7,7 @@
 #include "Core/Multilayer/SpecularMagneticNewTanhStrategy.h"
 #include "Core/Multilayer/SpecularMagneticStrategy.h"
 #include "Core/Multilayer/SpecularScalarTanhStrategy.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/RT/SimulationOptions.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <utility>
 

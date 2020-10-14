@@ -16,13 +16,13 @@
 #include "GUI/coregui/Models/JobItem.h"
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/utils/hostosinfo.h"
-#include "progressbar.h"
 #include <QApplication>
 #include <QMouseEvent>
 #include <QPaintDevice>
 #include <QPainter>
 #include <QStyleOptionProgressBarV2>
 #include <QWidget>
+#include <progressbar.h>
 
 JobListViewDelegate::JobListViewDelegate(QWidget* parent) : QItemDelegate(parent)
 {

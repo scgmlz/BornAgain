@@ -1,9 +1,8 @@
 #include "Core/Detector/SpecularDetector1D.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 #include "Core/Beam/Beam.h"
-#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Data/OutputData.h"
 #include "Core/Detector/SimulationArea.h"
-#include "Core/Intensity/OutputData.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
@@ -30,11 +29,6 @@ TEST_F(SpecularDetectorTest, basicBehaviour)
     // throwing exceptions
     OutputData<double>* p_intensity_map(nullptr);
     ASSERT_THROW(detector.applyDetectorResolution(p_intensity_map), std::runtime_error);
-
-    // clearing detector
-    detector.clear();
-    EXPECT_EQ(0u, detector.dimension());
-    ASSERT_THROW(detector.getAxis(0), std::runtime_error);
 }
 
 // Creation of the detector map with axes in given units

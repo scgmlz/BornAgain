@@ -13,11 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/SpecularMagneticOldStrategy.h"
+#include "Core/Material/WavevectorInfo.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerInterface.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Multilayer/Slice.h"
-#include "Core/Vector/WavevectorInfo.h"
 #include <Eigen/LU>
 
 namespace

@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_CORRELATIONS_IPEAKSHAPE_H
 
 #include "Core/Scattering/ISample.h"
-#include "Core/Vector/Vectors3D.h"
 
 //! Pure virtual interface class that defines the peak shape of a Bragg peak.
 //!

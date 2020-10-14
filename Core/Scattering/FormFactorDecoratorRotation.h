@@ -15,9 +15,9 @@
 #ifndef BORNAGAIN_CORE_SCATTERING_FORMFACTORDECORATORROTATION_H
 #define BORNAGAIN_CORE_SCATTERING_FORMFACTORDECORATORROTATION_H
 
+#include "Base/Vector/Transform3D.h"
 #include "Core/Scattering/IFormFactorDecorator.h"
 #include "Core/Scattering/Rotations.h"
-#include "Core/Vector/Transform3D.h"
 
 //! Equips a form factor with a rotation.
 //! @ingroup formfactors_internal

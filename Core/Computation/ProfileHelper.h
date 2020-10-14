@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_COMPUTATION_PROFILEHELPER_H
 #define BORNAGAIN_CORE_COMPUTATION_PROFILEHELPER_H
 
-#include "Core/Basics/Complex.h"
 #include "Core/Material/Material.h"
 #include <utility>
 #include <vector>

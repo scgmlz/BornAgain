@@ -31,8 +31,8 @@ TEST_F(TestProjectUtils, test_nonXMLDataInDir)
 
     QDir dir(projectDir);
     if (dir.exists()) {
-        EXPECT_TRUE(ProjectUtils::removeRecursively(projectDir) == true);
-        EXPECT_TRUE(dir.exists() == false);
+        EXPECT_TRUE(ProjectUtils::removeRecursively(projectDir));
+        EXPECT_FALSE(dir.exists());
     }
 
     GUIHelpers::createSubdir(".", projectDir);
@@ -61,7 +61,7 @@ TEST_F(TestProjectUtils, test_nonXMLDataInDir)
     EXPECT_EQ(test_nonxml_files, nonxml);
 
     std::cout << "remove nonxml files ..." << std::endl;
-    EXPECT_TRUE(ProjectUtils::removeFiles(projectDir, nonxml) == true);
+    EXPECT_TRUE(ProjectUtils::removeFiles(projectDir, nonxml));
 
     std::cout << "check that no files left ..." << std::endl;
     nonxml = ProjectUtils::nonXMLDataInDir(projectDir);

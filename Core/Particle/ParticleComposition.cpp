@@ -13,9 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/Particle/ParticleComposition.h"
-#include "Core/Basics/Exceptions.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/Particle/FormFactorWeighted.h"
 #include "Core/Particle/ParticleDistribution.h"
+#include "Core/Scattering/Rotations.h"
 
 ParticleComposition::ParticleComposition()
 {
@@ -29,7 +30,7 @@ ParticleComposition::ParticleComposition(const IParticle& particle,
     addParticles(particle, positions);
 }
 
-ParticleComposition::~ParticleComposition() {}
+ParticleComposition::~ParticleComposition() = default;
 
 ParticleComposition* ParticleComposition::clone() const
 {
@@ -45,7 +46,7 @@ ParticleComposition* ParticleComposition::clone() const
 
 IFormFactor* ParticleComposition::createFormFactor() const
 {
-    if (m_particles.size() == 0)
+    if (m_particles.empty())
         return {};
     std::unique_ptr<FormFactorWeighted> P_result{new FormFactorWeighted()};
     auto particles = decompose();

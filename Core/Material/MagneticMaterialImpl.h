@@ -15,10 +15,7 @@
 #ifndef BORNAGAIN_CORE_MATERIAL_MAGNETICMATERIALIMPL_H
 #define BORNAGAIN_CORE_MATERIAL_MAGNETICMATERIALIMPL_H
 
-#include "Core/Basics/Complex.h"
 #include "Core/Material/BaseMaterialImpl.h"
-#include "Core/Vector/EigenCore.h"
-#include "Core/Vector/Vectors3D.h"
 
 class Transform3D;
 class WavevectorInfo;

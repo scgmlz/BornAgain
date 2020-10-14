@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_INSTRUMENT_SPECTRUMUTILS_H
 #define BORNAGAIN_CORE_INSTRUMENT_SPECTRUMUTILS_H
 
-#include "Core/Intensity/Histogram2D.h"
+#include "Core/Histo/Histogram2D.h"
 #include <string>
 #include <vector>
 

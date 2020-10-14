@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMUTILS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEMUTILS_H
 
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Vectors3D.h"
 #include <QString>
 #include <QVariant>
 

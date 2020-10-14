@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "GUI/coregui/Views/widgetbox/widgetboxcategorylistview.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/mainwindow/tooltipdatabase.h"
 
 #include <QtDesigner/QDesignerFormEditorInterface>
@@ -49,10 +49,6 @@
 #include <QtXml/QDomDocument>
 
 #include <QtGui/QIcon>
-//#include <QtWidgets/QListView>
-//#include <QtWidgets/QLineEdit>
-//#include <QtWidgets/QItemDelegate>
-//#include <QtCore/QSortFilterProxyModel>
 
 #include <QItemDelegate>
 #include <QLineEdit>

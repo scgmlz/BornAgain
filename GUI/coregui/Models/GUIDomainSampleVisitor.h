@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H
 
-#include "Core/Parametrization/INodeVisitor.h"
+#include "Param/Node/INodeVisitor.h"
 #include <QMap>
 #include <QString>
 

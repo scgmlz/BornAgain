@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 #include "Core/InputOutput/OutputDataWriteFactory.h"
-#include "Core/Basics/Exceptions.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/InputOutput/DataFormatUtils.h"
 
 OutputDataWriter* OutputDataWriteFactory::getWriter(const std::string& file_name)

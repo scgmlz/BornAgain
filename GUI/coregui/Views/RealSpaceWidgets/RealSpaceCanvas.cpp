@@ -81,7 +81,7 @@ void RealSpaceCanvas::updateToSelection()
     if (!m_view_locked) {
         QModelIndexList indices = m_selectionModel->selection().indexes();
 
-        if (indices.size())
+        if (!indices.empty())
             m_currentSelection = FilterPropertyProxy::toSourceIndex(indices.back());
         else
             m_currentSelection = {};

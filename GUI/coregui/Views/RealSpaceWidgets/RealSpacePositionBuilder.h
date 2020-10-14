@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H
 
-#include "Core/Parametrization/INodeVisitor.h"
+#include "Param/Node/INodeVisitor.h"
 #include <memory>
 #include <vector>
 

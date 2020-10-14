@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "Fit/Minimizer/MinimizerFactory.h"
-#include "Fit/Minimizer/MinimizerCatalog.h"
 #include "Fit/Minimizer/TestMinimizer.h"
 #include "Fit/RootAdapter/GSLLevenbergMarquardtMinimizer.h"
 #include "Fit/RootAdapter/GSLMultiMinimizer.h"

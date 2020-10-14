@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/InterferenceFunctionTwin.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Param/Base/RealParameter.h"
 #include <cmath>
 
 InterferenceFunctionTwin::InterferenceFunctionTwin(const kvector_t& direction, double mean_distance,

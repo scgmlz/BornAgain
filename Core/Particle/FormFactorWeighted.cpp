@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Particle/FormFactorWeighted.h"
-#include "Core/Basics/Algorithms.h"
+#include "Base/Utils/Algorithms.h"
 
 FormFactorWeighted::FormFactorWeighted()
 {
@@ -44,7 +44,7 @@ double FormFactorWeighted::radialExtension() const
 
 double FormFactorWeighted::bottomZ(const IRotation& rotation) const
 {
-    if (m_form_factors.size() == 0)
+    if (m_form_factors.empty())
         throw std::runtime_error("FormFactorWeighted::bottomZ() -> Error: "
                                  "'this' contains no form factors.");
     return algo::min_value(m_form_factors.begin(), m_form_factors.end(),
@@ -53,7 +53,7 @@ double FormFactorWeighted::bottomZ(const IRotation& rotation) const
 
 double FormFactorWeighted::topZ(const IRotation& rotation) const
 {
-    if (m_form_factors.size() == 0)
+    if (m_form_factors.empty())
         throw std::runtime_error("FormFactorWeighted::topZ() -> Error: "
                                  "'this' contains no form factors.");
     return algo::max_value(m_form_factors.begin(), m_form_factors.end(),

@@ -13,8 +13,9 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/FormFactorItems.h"
-#include "Core/Basics/Units.h"
-#include "Core/includeIncludes/FormFactors.h"
+#include "Base/Const/Units.h"
+#include "Core/HardParticle/HardParticles.h"
+#include "Core/SoftParticle/SoftParticles.h"
 
 /* ------------------------------------------------ */
 

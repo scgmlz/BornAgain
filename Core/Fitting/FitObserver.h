@@ -86,7 +86,7 @@ template <class T> void FitObserver<T>::notify_all(const T& data)
 
 template <class T> bool FitObserver<T>::need_notify(int every_nth)
 {
-    return m_notify_count == 0 || m_notify_count % every_nth == 0 ? true : false;
+    return m_notify_count == 0 || m_notify_count % every_nth == 0;
 }
 
 #endif // BORNAGAIN_CORE_FITTING_FITOBSERVER_H

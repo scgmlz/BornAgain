@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/SpecularMagneticNewStrategy.h"
-#include "Core/Basics/PhysicalConstants.h"
+#include "Base/Const/PhysicalConstants.h"
 #include "Core/Multilayer/KzComputation.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/Slice.h"

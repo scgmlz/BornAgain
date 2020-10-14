@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/mainwindow/SaveService.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
 #include "GUI/coregui/mainwindow/AutosaveController.h"
 #include "GUI/coregui/mainwindow/ProjectUtils.h"
@@ -63,7 +63,7 @@ void SaveService::setAutosaveEnabled(bool value)
 
 bool SaveService::isAutosaveEnabled() const
 {
-    return m_autosave ? true : false;
+    return m_autosave;
 }
 
 void SaveService::setAutosaveTime(int timerInterval)

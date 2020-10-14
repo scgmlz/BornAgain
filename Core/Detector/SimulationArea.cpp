@@ -13,11 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/Detector/SimulationArea.h"
-#include "Core/Basics/Exceptions.h"
 #include "Core/Detector/DetectorMask.h"
 #include "Core/Detector/IDetector.h"
 #include "Core/Detector/RegionOfInterest.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
 #include "Core/Mask/Rectangle.h"
 #include <sstream>
 

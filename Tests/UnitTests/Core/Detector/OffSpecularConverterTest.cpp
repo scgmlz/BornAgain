@@ -1,8 +1,7 @@
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 #include "Core/Beam/Beam.h"
+#include "Core/Detector/SimpleUnitConverters.h"
 #include "Core/Detector/SphericalDetector.h"
-#include "Core/Intensity/SimpleUnitConverters.h"
-#include "Core/Vector/Vectors3D.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class OffSpecularConverterTest : public ::testing::Test
@@ -28,51 +27,51 @@ TEST_F(OffSpecularConverterTest, OffSpecularConverter)
 
     EXPECT_EQ(converter.dimension(), 2u);
 
-    EXPECT_DOUBLE_EQ(converter.calculateMin(0, AxesUnits::DEFAULT), 0.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMin(0, AxesUnits::NBINS), 0.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMin(0, AxesUnits::RADIANS), 0.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMin(0, AxesUnits::DEGREES), 0.0);
-    EXPECT_THROW(converter.calculateMin(0, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(converter.calculateMin(0, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(0, Axes::Units::DEFAULT), 0.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(0, Axes::Units::NBINS), 0.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(0, Axes::Units::RADIANS), 0.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(0, Axes::Units::DEGREES), 0.0);
+    EXPECT_THROW(converter.calculateMin(0, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(converter.calculateMin(0, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_DOUBLE_EQ(converter.calculateMax(0, AxesUnits::DEFAULT), 7.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMax(0, AxesUnits::NBINS), 51.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMax(0, AxesUnits::RADIANS), Units::deg2rad(7.0));
-    EXPECT_DOUBLE_EQ(converter.calculateMax(0, AxesUnits::DEGREES), 7.0);
-    EXPECT_THROW(converter.calculateMax(0, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(converter.calculateMax(0, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(converter.calculateMax(0, Axes::Units::DEFAULT), 7.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMax(0, Axes::Units::NBINS), 51.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMax(0, Axes::Units::RADIANS), Units::deg2rad(7.0));
+    EXPECT_DOUBLE_EQ(converter.calculateMax(0, Axes::Units::DEGREES), 7.0);
+    EXPECT_THROW(converter.calculateMax(0, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(converter.calculateMax(0, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_DOUBLE_EQ(converter.calculateMin(1, AxesUnits::DEFAULT), -2.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMin(1, AxesUnits::NBINS), 0.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMin(1, AxesUnits::RADIANS), Units::deg2rad(-2.0));
-    EXPECT_DOUBLE_EQ(converter.calculateMin(1, AxesUnits::DEGREES), -2.0);
-    EXPECT_THROW(converter.calculateMin(1, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(converter.calculateMin(1, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(1, Axes::Units::DEFAULT), -2.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(1, Axes::Units::NBINS), 0.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMin(1, Axes::Units::RADIANS), Units::deg2rad(-2.0));
+    EXPECT_DOUBLE_EQ(converter.calculateMin(1, Axes::Units::DEGREES), -2.0);
+    EXPECT_THROW(converter.calculateMin(1, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(converter.calculateMin(1, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_DOUBLE_EQ(converter.calculateMax(1, AxesUnits::DEFAULT), Units::rad2deg(1.5));
-    EXPECT_DOUBLE_EQ(converter.calculateMax(1, AxesUnits::NBINS), 70.0);
-    EXPECT_DOUBLE_EQ(converter.calculateMax(1, AxesUnits::RADIANS), 1.5);
-    EXPECT_DOUBLE_EQ(converter.calculateMax(1, AxesUnits::DEGREES), Units::rad2deg(1.5));
-    EXPECT_THROW(converter.calculateMax(1, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(converter.calculateMax(1, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(converter.calculateMax(1, Axes::Units::DEFAULT), Units::rad2deg(1.5));
+    EXPECT_DOUBLE_EQ(converter.calculateMax(1, Axes::Units::NBINS), 70.0);
+    EXPECT_DOUBLE_EQ(converter.calculateMax(1, Axes::Units::RADIANS), 1.5);
+    EXPECT_DOUBLE_EQ(converter.calculateMax(1, Axes::Units::DEGREES), Units::rad2deg(1.5));
+    EXPECT_THROW(converter.calculateMax(1, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(converter.calculateMax(1, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_THROW(converter.calculateMin(2, AxesUnits::DEFAULT), std::runtime_error);
-    EXPECT_THROW(converter.calculateMax(2, AxesUnits::DEFAULT), std::runtime_error);
+    EXPECT_THROW(converter.calculateMin(2, Axes::Units::DEFAULT), std::runtime_error);
+    EXPECT_THROW(converter.calculateMax(2, Axes::Units::DEFAULT), std::runtime_error);
 
-    auto axis = converter.createConvertedAxis(0, AxesUnits::DEFAULT);
+    auto axis = converter.createConvertedAxis(0, Axes::Units::DEFAULT);
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis.get()));
     EXPECT_EQ(axis->size(), converter.axisSize(0));
-    EXPECT_EQ(axis->getMin(), converter.calculateMin(0, AxesUnits::DEFAULT));
-    EXPECT_EQ(axis->getMax(), converter.calculateMax(0, AxesUnits::DEFAULT));
+    EXPECT_EQ(axis->getMin(), converter.calculateMin(0, Axes::Units::DEFAULT));
+    EXPECT_EQ(axis->getMax(), converter.calculateMax(0, Axes::Units::DEFAULT));
 
-    auto axis2 = converter.createConvertedAxis(1, AxesUnits::RADIANS);
+    auto axis2 = converter.createConvertedAxis(1, Axes::Units::RADIANS);
     EXPECT_TRUE(dynamic_cast<FixedBinAxis*>(axis2.get()));
     EXPECT_EQ(axis2->size(), converter.axisSize(1));
-    EXPECT_EQ(axis2->getMin(), converter.calculateMin(1, AxesUnits::RADIANS));
-    EXPECT_EQ(axis2->getMax(), converter.calculateMax(1, AxesUnits::RADIANS));
+    EXPECT_EQ(axis2->getMin(), converter.calculateMin(1, Axes::Units::RADIANS));
+    EXPECT_EQ(axis2->getMax(), converter.calculateMax(1, Axes::Units::RADIANS));
 
-    EXPECT_THROW(converter.createConvertedAxis(2, AxesUnits::DEFAULT), std::runtime_error);
-    EXPECT_THROW(converter.createConvertedAxis(1, AxesUnits::QSPACE), std::runtime_error);
+    EXPECT_THROW(converter.createConvertedAxis(2, Axes::Units::DEFAULT), std::runtime_error);
+    EXPECT_THROW(converter.createConvertedAxis(1, Axes::Units::QSPACE), std::runtime_error);
 }
 
 TEST_F(OffSpecularConverterTest, OffSpecularConverterClone)
@@ -82,34 +81,34 @@ TEST_F(OffSpecularConverterTest, OffSpecularConverterClone)
 
     EXPECT_EQ(P_clone->dimension(), 2u);
 
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, AxesUnits::DEFAULT), 0.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, AxesUnits::NBINS), 0.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, AxesUnits::RADIANS), 0.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, AxesUnits::DEGREES), 0.0);
-    EXPECT_THROW(P_clone->calculateMin(0, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(P_clone->calculateMin(0, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, Axes::Units::DEFAULT), 0.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, Axes::Units::NBINS), 0.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, Axes::Units::RADIANS), 0.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(0, Axes::Units::DEGREES), 0.0);
+    EXPECT_THROW(P_clone->calculateMin(0, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(P_clone->calculateMin(0, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, AxesUnits::DEFAULT), 7.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, AxesUnits::NBINS), 51.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, AxesUnits::RADIANS), Units::deg2rad(7.0));
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, AxesUnits::DEGREES), 7.0);
-    EXPECT_THROW(P_clone->calculateMax(0, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(P_clone->calculateMax(0, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, Axes::Units::DEFAULT), 7.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, Axes::Units::NBINS), 51.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, Axes::Units::RADIANS), Units::deg2rad(7.0));
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(0, Axes::Units::DEGREES), 7.0);
+    EXPECT_THROW(P_clone->calculateMax(0, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(P_clone->calculateMax(0, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, AxesUnits::DEFAULT), -2.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, AxesUnits::NBINS), 0.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, AxesUnits::RADIANS), Units::deg2rad(-2.0));
-    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, AxesUnits::DEGREES), -2.0);
-    EXPECT_THROW(P_clone->calculateMin(1, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(P_clone->calculateMin(1, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, Axes::Units::DEFAULT), -2.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, Axes::Units::NBINS), 0.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, Axes::Units::RADIANS), Units::deg2rad(-2.0));
+    EXPECT_DOUBLE_EQ(P_clone->calculateMin(1, Axes::Units::DEGREES), -2.0);
+    EXPECT_THROW(P_clone->calculateMin(1, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(P_clone->calculateMin(1, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, AxesUnits::DEFAULT), Units::rad2deg(1.5));
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, AxesUnits::NBINS), 70.0);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, AxesUnits::RADIANS), 1.5);
-    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, AxesUnits::DEGREES), Units::rad2deg(1.5));
-    EXPECT_THROW(P_clone->calculateMax(1, AxesUnits::QSPACE), std::runtime_error);
-    EXPECT_THROW(P_clone->calculateMax(1, AxesUnits::MM), std::runtime_error);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, Axes::Units::DEFAULT), Units::rad2deg(1.5));
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, Axes::Units::NBINS), 70.0);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, Axes::Units::RADIANS), 1.5);
+    EXPECT_DOUBLE_EQ(P_clone->calculateMax(1, Axes::Units::DEGREES), Units::rad2deg(1.5));
+    EXPECT_THROW(P_clone->calculateMax(1, Axes::Units::QSPACE), std::runtime_error);
+    EXPECT_THROW(P_clone->calculateMax(1, Axes::Units::MM), std::runtime_error);
 
-    EXPECT_THROW(P_clone->calculateMin(2, AxesUnits::DEFAULT), std::runtime_error);
-    EXPECT_THROW(P_clone->calculateMax(2, AxesUnits::DEFAULT), std::runtime_error);
+    EXPECT_THROW(P_clone->calculateMin(2, Axes::Units::DEFAULT), std::runtime_error);
+    EXPECT_THROW(P_clone->calculateMax(2, Axes::Units::DEFAULT), std::runtime_error);
 }

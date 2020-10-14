@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_SCATTERING_FORMFACTORDECORATORPOSITIONFACTOR_H
 
 #include "Core/Scattering/IFormFactorDecorator.h"
-#include "Core/Vector/Vectors3D.h"
 
 //! Decorates a form factor with a position dependent phase factor.
 //! @ingroup formfactors_internal

@@ -1,7 +1,6 @@
-#include "Core/Parametrization/DistributionHandler.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/IParameterized.h"
-#include "Core/Parametrization/ParameterPool.h"
+#include "Param/Distrib/DistributionHandler.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Distrib/Distributions.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 

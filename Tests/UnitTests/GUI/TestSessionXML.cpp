@@ -1,6 +1,5 @@
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/ParticleItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <QXmlStreamReader>

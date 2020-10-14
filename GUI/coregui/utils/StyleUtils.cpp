@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/utils/StyleUtils.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/CommonWidgets/detailswidget.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/utils/hostosinfo.h"

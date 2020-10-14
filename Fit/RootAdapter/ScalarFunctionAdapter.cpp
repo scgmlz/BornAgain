@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "Fit/RootAdapter/ScalarFunctionAdapter.h"
-#include "Fit/Kernel/KernelTypes.h"
 #include "Fit/RootAdapter/RootScalarFunction.h"
 
 using namespace Fit;
@@ -34,6 +33,7 @@ const RootScalarFunction* ScalarFunctionAdapter::rootObjectiveFunction()
         return m_fcn(m_parameters);
     };
 
-    m_root_objective.reset(new RootScalarFunction(rootfun, static_cast<int>(m_parameters.size())));
+    m_root_objective =
+        std::make_unique<RootScalarFunction>(rootfun, static_cast<int>(m_parameters.size()));
     return m_root_objective.get();
 }

@@ -1,17 +1,13 @@
 #include "Core/Particle/Particle.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Const/Units.h"
 #include "Core/HardParticle/FormFactorFullSphere.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class ParticleTest : public ::testing::Test
 {
-protected:
-    ~ParticleTest();
 };
-
-ParticleTest::~ParticleTest() = default;
 
 TEST_F(ParticleTest, InitialState)
 {
@@ -84,7 +80,7 @@ TEST_F(ParticleTest, getChildren)
     EXPECT_EQ(children.size(), 1u);
 
     // Checking children of particle (with rotation)
-    particle.reset(new Particle(mat, sphere, RotationY(45.)));
+    particle = std::make_unique<Particle>(mat, sphere, RotationY(45.));
     children = particle->getChildren();
     EXPECT_EQ(children.size(), 2u);
 }

@@ -13,23 +13,22 @@
 // ************************************************************************** //
 
 #include "Core/Simulation/SpecularSimulation.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Axis/PointwiseAxis.h"
+#include "Base/Const/MathConstants.h"
 #include "Core/Beam/IFootprintFactor.h"
-#include "Core/Binning/PointwiseAxis.h"
 #include "Core/Computation/IBackground.h"
 #include "Core/Computation/SpecularComputation.h"
 #include "Core/Detector/SpecularDetector1D.h"
-#include "Core/Instrument/AngularSpecScan.h"
-#include "Core/Instrument/ISpecularScan.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Intensity/UnitConverter1D.h"
+#include "Core/Histo/Histogram1D.h"
 #include "Core/Material/MaterialUtils.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Multilayer/SpecularSimulationElement.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Core/Scan/AngularSpecScan.h"
+#include "Core/Unit/UnitConverter1D.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
 
 namespace
 {
@@ -43,17 +42,6 @@ const double zero_alpha_i = 0.0;
 } // namespace
 
 SpecularSimulation::SpecularSimulation() : Simulation()
-{
-    initialize();
-}
-
-SpecularSimulation::SpecularSimulation(const MultiLayer& sample) : Simulation(sample)
-{
-    initialize();
-}
-
-SpecularSimulation::SpecularSimulation(const std::shared_ptr<ISampleBuilder> sample_builder)
-    : Simulation(sample_builder)
 {
     initialize();
 }

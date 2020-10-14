@@ -20,7 +20,7 @@ FormFactorCoreShell::FormFactorCoreShell(IFormFactor* core, IFormFactor* shell)
     setName("FormFactorCoreShell");
 }
 
-FormFactorCoreShell::~FormFactorCoreShell() {}
+FormFactorCoreShell::~FormFactorCoreShell() = default;
 
 FormFactorCoreShell* FormFactorCoreShell::clone() const
 {

@@ -3,7 +3,6 @@
 #include "GUI/coregui/Models/ParticleDistributionItem.h"
 #include "GUI/coregui/Models/ParticleItem.h"
 #include "GUI/coregui/Models/SampleModel.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 
@@ -54,17 +53,17 @@ TEST_F(TestParticleItem, test_distributionContext)
     SampleModel model;
     SessionItem* particle = model.insertNewItem("Particle");
     particle->setItemValue(ParticleItem::P_ABUNDANCE, 0.2);
-    EXPECT_TRUE(particle->getItem(ParticleItem::P_ABUNDANCE)->isEnabled() == true);
+    EXPECT_TRUE(particle->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
     EXPECT_EQ(particle->getItemValue(ParticleItem::P_ABUNDANCE).toDouble(), 0.2);
 
     // adding particle to distribution, checking that abundance is default
     SessionItem* distribution = model.insertNewItem("ParticleDistribution");
     model.moveItem(particle, distribution, -1, ParticleDistributionItem::T_PARTICLES);
-    EXPECT_TRUE(particle->getItem(ParticleItem::P_ABUNDANCE)->isEnabled() == false);
+    EXPECT_FALSE(particle->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
     EXPECT_EQ(particle->getItemValue(ParticleItem::P_ABUNDANCE).toDouble(), 1.0);
 
     // removing particle, checking that abundance is enabled again
     distribution->takeRow(ParentRow(*particle));
-    EXPECT_TRUE(particle->getItem(ParticleItem::P_ABUNDANCE)->isEnabled() == true);
+    EXPECT_TRUE(particle->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
     delete particle;
 }

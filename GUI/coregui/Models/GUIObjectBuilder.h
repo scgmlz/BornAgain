@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_GUIOBJECTBUILDER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_GUIOBJECTBUILDER_H
 
-#include "Core/Parametrization/INodeVisitor.h"
+#include "Param/Node/INodeVisitor.h"
 #include <QMap>
 #include <QString>
 

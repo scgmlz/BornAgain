@@ -15,9 +15,9 @@
 #ifndef BORNAGAIN_CORE_CORRELATIONS_FTDECAY2D_H
 #define BORNAGAIN_CORE_CORRELATIONS_FTDECAY2D_H
 
-#include "Core/Basics/ICloneable.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Parametrization/INode.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/ICloneable.h"
+#include "Param/Node/INode.h"
 #include <utility>
 
 //! Interface for two-dimensional decay function in reciprocal space.

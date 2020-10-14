@@ -20,9 +20,9 @@
 #include "GUI/coregui/Views/JobWidgets/ProjectionsPropertyPanel.h"
 #include "GUI/coregui/Views/JobWidgets/ProjectionsToolBar.h"
 #include "GUI/coregui/Views/JobWidgets/ProjectionsWidget.h"
-#include "minisplitter.h"
 #include <QItemSelectionModel>
 #include <QSplitter>
+#include <minisplitter.h>
 
 ProjectionsEditor::ProjectionsEditor(QWidget* parent)
     : QMainWindow(parent), m_editorActions(new ProjectionsEditorActions(this)),

@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Detector/IsGISAXSDetector.h"
-#include "Core/Binning/CustomBinAxis.h"
+#include "Base/Axis/CustomBinAxis.h"
 
 IsGISAXSDetector::IsGISAXSDetector()
 {

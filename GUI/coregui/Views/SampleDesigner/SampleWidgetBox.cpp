@@ -14,8 +14,8 @@
 
 #include "GUI/coregui/Views/SampleDesigner/SampleWidgetBox.h"
 #include "GUI/coregui/Views/widgetbox/widgetbox.h"
-#include "styledbar.h"
 #include <QVBoxLayout>
+#include <styledbar.h>
 
 #if QT_VERSION < 0x050000
 #define QStringLiteral QString

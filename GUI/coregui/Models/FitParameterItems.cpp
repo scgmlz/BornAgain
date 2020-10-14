@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/FitParameterItems.h"
-#include "Fit/Kernel/Parameter.h"
 #include "Fit/Kernel/Parameters.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/JobItem.h"
@@ -283,7 +282,7 @@ void FitParameterContainerItem::setValuesInParameterContainer(
     int index(0);
     for (int i = 0; i < fitPars.size(); ++i) {
         auto link_list = fitPars[i]->getItems(FitParameterItem::T_LINK);
-        if (link_list.size() == 0)
+        if (link_list.empty())
             continue;
         for (auto linkItem : link_list) {
             QString parPath = linkItem->getItemValue(FitParameterLinkItem::P_LINK).toString();

@@ -14,9 +14,8 @@
 // ************************************************************************** //
 
 #include "Tests/UnitTests/GUI/Utils.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Intensity/OutputData.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
+#include "Core/Instrument/IntensityDataFunctions.h"
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/mainwindow/ProjectUtils.h"

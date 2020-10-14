@@ -1,5 +1,4 @@
 #include "Core/Fitting/FitObjective.h"
-#include "Fit/Kernel/Parameters.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include "Tests/UnitTests/Core/Fitting/FittingTestHelper.h"
 

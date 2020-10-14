@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/SampleDesigner/SampleViewStatusBar.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QHBoxLayout>
 #include <QStatusBar>

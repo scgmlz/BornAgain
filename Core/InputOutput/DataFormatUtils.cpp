@@ -13,11 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/InputOutput/DataFormatUtils.h"
-#include "Core/Binning/ConstKBinAxis.h"
-#include "Core/Binning/CustomBinAxis.h"
-#include "Core/Binning/PointwiseAxis.h"
-#include "Core/Intensity/OutputData.h"
-#include "Core/Tools/FileSystemUtils.h"
+#include "Base/Axis/ConstKBinAxis.h"
+#include "Base/Axis/CustomBinAxis.h"
+#include "Base/Axis/PointwiseAxis.h"
+#include "Base/Utils/FileSystemUtils.h"
+#include "Core/Data/OutputData.h"
 #include "Fit/Tools/StringUtils.h"
 #include <iostream>
 #include <iterator>

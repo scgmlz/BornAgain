@@ -106,7 +106,7 @@ TEST_F(TestParticleCoreShell, test_distributionContext)
     // coreshell particle
     SessionItem* coreshell = model.insertNewItem("ParticleCoreShell");
     coreshell->setItemValue(ParticleItem::P_ABUNDANCE, 0.2);
-    EXPECT_TRUE(coreshell->getItem(ParticleItem::P_ABUNDANCE)->isEnabled() == true);
+    EXPECT_TRUE(coreshell->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
     EXPECT_EQ(coreshell->getItemValue(ParticleItem::P_ABUNDANCE).toDouble(), 0.2);
 
     // create distribution, adding coreshell to it

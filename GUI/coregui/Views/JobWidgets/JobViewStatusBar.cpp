@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/JobWidgets/JobViewStatusBar.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QComboBox>

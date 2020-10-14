@@ -23,8 +23,6 @@
 class FormFactorDodecahedron : public IFormFactorPolyhedron
 {
 public:
-    //! @brief Constructs a regular dodecahedron
-    //! @param edge length
     FormFactorDodecahedron(const std::vector<double> P);
     FormFactorDodecahedron(double edge);
 

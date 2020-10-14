@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/mainwindow/projectmanager.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Views/InfoWidgets/ProjectLoadWarningDialog.h"
 #include "GUI/coregui/mainwindow/AppSvc.h"

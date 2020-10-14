@@ -1,5 +1,5 @@
 #include "Core/Multilayer/LayerRoughness.h"
-#include "Core/Parametrization/ParameterPattern.h"
+#include "Param/Varia/ParameterPattern.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class LayerRoughnessTest : public ::testing::Test

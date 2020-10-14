@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Basics/Exceptions.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/Correlations/ILayout.h"
 #include "Core/Material/MaterialUtils.h"
 #include "Core/Multilayer/Layer.h"
@@ -21,8 +21,8 @@
 #include "Core/Multilayer/LayerInterface.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayerUtils.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
 
 MultiLayer::MultiLayer() : m_crossCorrLength(0)
 {
@@ -35,19 +35,19 @@ MultiLayer::~MultiLayer() = default;
 
 MultiLayer* MultiLayer::clone() const
 {
-    std::unique_ptr<MultiLayer> P_result(new MultiLayer());
-    P_result->setCrossCorrLength(crossCorrLength());
-    P_result->setExternalField(externalField());
-    P_result->setRoughnessModel(roughnessModel());
+    std::unique_ptr<MultiLayer> ret(new MultiLayer());
+    ret->setCrossCorrLength(crossCorrLength());
+    ret->setExternalField(externalField());
+    ret->setRoughnessModel(roughnessModel());
     for (size_t i = 0; i < numberOfLayers(); ++i) {
-        auto p_interface = i > 0 ? m_interfaces[i - 1] : nullptr;
-        std::unique_ptr<Layer> P_layer(m_layers[i]->clone());
-        if (i > 0 && p_interface->getRoughness())
-            P_result->addLayerWithTopRoughness(*P_layer, *p_interface->getRoughness());
+        const auto* interface = i > 0 ? m_interfaces[i - 1] : nullptr;
+        Layer* layer = m_layers[i]->clone();
+        if (i > 0 && interface->getRoughness())
+            ret->addLayerWithTopRoughness(*layer, *interface->getRoughness());
         else
-            P_result->addLayer(*P_layer);
+            ret->addLayer(*layer);
     }
-    return P_result.release();
+    return ret.release();
 }
 
 //! Adds layer with default (zero) roughness
@@ -60,19 +60,19 @@ void MultiLayer::addLayer(const Layer& layer)
 //! Adds layer with top roughness
 void MultiLayer::addLayerWithTopRoughness(const Layer& layer, const LayerRoughness& roughness)
 {
-    Layer* p_new_layer = layer.clone();
+    Layer* new_layer = layer.clone();
     if (numberOfLayers()) {
         // not the top layer
-        const Layer* p_last_layer = m_layers.back();
+        const Layer* last_layer = m_layers.back();
         LayerInterface* interface(nullptr);
         if (roughness.getSigma() != 0.0)
-            interface = LayerInterface::createRoughInterface(p_last_layer, p_new_layer, roughness);
+            interface = LayerInterface::createRoughInterface(last_layer, new_layer, roughness);
         else
-            interface = LayerInterface::createSmoothInterface(p_last_layer, p_new_layer);
+            interface = LayerInterface::createSmoothInterface(last_layer, new_layer);
         addAndRegisterInterface(interface);
     } else {
         // the top layer
-        if (p_new_layer->thickness() != 0.0)
+        if (new_layer->thickness() != 0.0)
             throw std::runtime_error(
                 "Invalid call to MultiLayer::addLayer(): the semi-infinite top layer "
                 "must have a pro forma thickness of 0");
@@ -82,7 +82,7 @@ void MultiLayer::addLayerWithTopRoughness(const Layer& layer, const LayerRoughne
                 "Invalid call to MultiLayer::addLayer(): the semi-infinite top layer "
                 "cannot have roughness.");
     }
-    addAndRegisterLayer(p_new_layer);
+    addAndRegisterLayer(new_layer);
 }
 
 const Layer* MultiLayer::layer(size_t i_layer) const
@@ -114,17 +114,17 @@ void MultiLayer::setRoughnessModel(RoughnessModel roughnessModel)
 
 std::vector<const INode*> MultiLayer::getChildren() const
 {
-    std::vector<const INode*> result;
-    const size_t layer_size = m_layers.size();
-    result.reserve(layer_size + m_interfaces.size());
+    std::vector<const INode*> ret;
+    const size_t N = m_layers.size();
+    ret.reserve(N + m_interfaces.size());
 
-    for (size_t i = 0; i < layer_size; ++i) {
-        result.push_back(m_layers[i]);
-        const LayerInterface* p_interface = MultiLayerUtils::LayerBottomInterface(*this, i);
-        if (p_interface)
-            result.push_back(p_interface);
+    for (size_t i = 0; i < N; ++i) {
+        ret.push_back(m_layers[i]);
+        const LayerInterface* interface = MultiLayerUtils::LayerBottomInterface(*this, i);
+        if (interface)
+            ret.push_back(interface);
     }
-    return result;
+    return ret;
 }
 
 void MultiLayer::addAndRegisterLayer(Layer* child)
@@ -143,13 +143,8 @@ void MultiLayer::addAndRegisterInterface(LayerInterface* child)
 void MultiLayer::handleLayerThicknessRegistration()
 {
     size_t n_layers = numberOfLayers();
-    for (size_t i = 0; i < numberOfLayers(); ++i) {
-        if (i == 0 || i == n_layers - 1) {
-            m_layers[i]->registerThickness(false);
-        } else {
-            m_layers[i]->registerThickness(true);
-        }
-    }
+    for (size_t i = 0; i < numberOfLayers(); ++i)
+        m_layers[i]->registerThickness(i > 0 && i < n_layers - 1);
 }
 
 size_t MultiLayer::check_layer_index(size_t i_layer) const

@@ -15,16 +15,14 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_IDETECTOR_H
 #define BORNAGAIN_CORE_DETECTOR_IDETECTOR_H
 
-#include "Core/Basics/ICloneable.h"
-#include "Core/Binning/IAxis.h"
+#include "Base/Types/CloneableVector.h"
 #include "Core/Detector/DetectionProperties.h"
 #include "Core/Detector/SimulationAreaIterator.h"
-#include "Core/Intensity/IUnitConverter.h"
-#include "Core/Parametrization/INode.h"
-#include "Core/Tools/SafePointerVector.h"
+#include "Core/Unit/IUnitConverter.h"
 
 class Beam;
 class DetectorMask;
+class IAxis;
 class IDetectorResolution;
 class IResolutionFunction2D;
 template <class T> class OutputData;
@@ -47,14 +45,12 @@ public:
     //! Inits detector with the beam settings
     virtual void init(const Beam&) {}
 
-    void clear() { m_axes.clear(); }
-
     void addAxis(const IAxis& axis);
 
     const IAxis& getAxis(size_t index) const;
 
     //! Returns actual dimensionality of the detector (number of defined axes)
-    size_t dimension() const { return m_axes.size(); }
+    size_t dimension() const;
 
     //! Calculate axis index for given global index
     size_t axisBinIndex(size_t index, size_t selected_axis) const;
@@ -102,7 +98,7 @@ public:
     createDetectorIntensity(const std::vector<SimulationElement>& elements) const;
 
     //! Return default axes units
-    virtual AxesUnits defaultAxesUnits() const { return AxesUnits::DEFAULT; }
+    virtual Axes::Units defaultAxesUnits() const { return Axes::Units::DEFAULT; }
 
     //! Returns number of simulation elements.
     size_t numberOfSimulationElements() const;
@@ -113,6 +109,8 @@ public:
 
 protected:
     IDetector(const IDetector& other);
+
+    void clear();
 
     //! Returns the name for the axis with given index
     virtual std::string axisName(size_t index) const = 0;
@@ -125,7 +123,7 @@ private:
     void setDataToDetectorMap(OutputData<double>& detectorMap,
                               const std::vector<SimulationElement>& elements) const;
 
-    SafePointerVector<IAxis> m_axes;
+    CloneableVector<IAxis> m_axes;
     DetectionProperties m_detection_properties;
     std::unique_ptr<IDetectorResolution> mP_detector_resolution;
 };

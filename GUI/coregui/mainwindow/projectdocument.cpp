@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/mainwindow/projectdocument.h"
-#include "Core/Basics/Assert.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/mainwindow/OutputDataIOService.h"

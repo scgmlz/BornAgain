@@ -13,12 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/Simulation/SimulationFactory.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Simulation/DepthProbeSimulation.h"
-#include "Core/Simulation/GISASSimulation.h"
 #include "Core/Simulation/OffSpecSimulation.h"
 #include "Core/Simulation/SpecularSimulation.h"
 #include "Core/Simulation/StandardSimulations.h"
+#include "Param/Base/RealParameter.h"
 
 SimulationFactory::SimulationFactory()
 {

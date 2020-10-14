@@ -13,12 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/Instrument/Instrument.h"
-#include "Core/Beam/Beam.h"
 #include "Core/Detector/DetectorFunctions.h"
-#include "Core/Detector/IResolutionFunction2D.h"
 #include "Core/Detector/SphericalDetector.h"
-#include "Core/Intensity/Histogram2D.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Histo/Histogram2D.h"
+#include "Core/Resolution/IResolutionFunction2D.h"
 
 Instrument::Instrument() : mP_detector(new SphericalDetector), m_beam(Beam::horizontalBeam())
 {
@@ -85,12 +83,6 @@ void Instrument::removeDetectorResolution()
 void Instrument::applyDetectorResolution(OutputData<double>* p_intensity_map) const
 {
     mP_detector->applyDetectorResolution(p_intensity_map);
-}
-
-OutputData<double>*
-Instrument::createDetectorIntensity(const std::vector<SimulationElement>& elements) const
-{
-    return mP_detector->createDetectorIntensity(elements);
 }
 
 void Instrument::setBeamParameters(double wavelength, double alpha_i, double phi_i)

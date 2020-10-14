@@ -13,12 +13,12 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/InterferenceFunction2DSuperLattice.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/Integrator.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/Aggregate/InterferenceFunctionNone.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Parametrization/RealParameter.h"
-#include "Core/Tools/Integrator.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Param/Base/RealParameter.h"
 
 #include <limits>
 
@@ -38,6 +38,8 @@ InterferenceFunction2DSuperLattice::InterferenceFunction2DSuperLattice(const Lat
 //! @param length_2: length of second lattice vector  in nanometers
 //! @param alpha: angle between lattice vectors in radians
 //! @param xi: rotation of lattice with respect to x-axis (beam direction) in radians
+//! @param size_1: correlation length in direction 1
+//! @param size_2: correlation length in direction 2
 InterferenceFunction2DSuperLattice::InterferenceFunction2DSuperLattice(
     double length_1, double length_2, double alpha, double xi, unsigned size_1, unsigned size_2)
     : InterferenceFunction2DSuperLattice(BasicLattice(length_1, length_2, alpha, xi), size_1,
@@ -68,8 +70,8 @@ const IInterferenceFunction& InterferenceFunction2DSuperLattice::substructureIFF
 }
 
 //! Creates square lattice.
-//! @param lattice_length: length of first and second lattice vectors in nanometers
-//! @param xi: rotation of lattice with respect to x-axis in radians
+// @param lattice_length: length of first and second lattice vectors in nanometers
+// @param xi: rotation of lattice with respect to x-axis in radians
 InterferenceFunction2DSuperLattice*
 InterferenceFunction2DSuperLattice::createSquare(double lattice_length, double xi, unsigned size_1,
                                                  unsigned size_2)
@@ -79,8 +81,8 @@ InterferenceFunction2DSuperLattice::createSquare(double lattice_length, double x
 }
 
 //! Creates hexagonal lattice.
-//! @param lattice_length: length of first and second lattice vectors in nanometers
-//! @param xi: rotation of lattice with respect to x-axis in radians
+// @param lattice_length: length of first and second lattice vectors in nanometers
+// @param xi: rotation of lattice with respect to x-axis in radians
 InterferenceFunction2DSuperLattice*
 InterferenceFunction2DSuperLattice::createHexagonal(double lattice_length, double xi,
                                                     unsigned size_1, unsigned size_2)

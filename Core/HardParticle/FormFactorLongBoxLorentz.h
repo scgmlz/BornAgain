@@ -23,10 +23,6 @@
 class FormFactorLongBoxLorentz : public IFormFactorBorn
 {
 public:
-    //! @brief Box constructor
-    //! @param length of Box's base
-    //! @param width of Box's base
-    //! @param height of Box
     FormFactorLongBoxLorentz(const std::vector<double> P);
     FormFactorLongBoxLorentz(double length, double width, double height);
 

@@ -1,15 +1,14 @@
 #include "Core/Simulation/DepthProbeSimulation.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Intensity/Histogram2D.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Const/Units.h"
+#include "Core/Histo/Histogram2D.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterPattern.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class DepthProbeSimulationTest : public ::testing::Test
@@ -147,7 +146,7 @@ TEST_F(DepthProbeSimulationTest, ResultAquisition)
     sim->runSimulation();
     SimulationResult sim_result = sim->result();
 
-    EXPECT_THROW(sim_result.histogram2d(AxesUnits::MM), std::runtime_error);
+    EXPECT_THROW(sim_result.histogram2d(Axes::Units::MM), std::runtime_error);
 
     const std::unique_ptr<Histogram2D> depth_map(sim_result.histogram2d());
     EXPECT_EQ(10u * 12u, depth_map->getTotalNumberOfBins());
@@ -157,7 +156,7 @@ TEST_F(DepthProbeSimulationTest, ResultAquisition)
     EXPECT_EQ(-30.0, depth_map->getYaxis().getMin());
     EXPECT_EQ(10.0, depth_map->getYaxis().getMax());
 
-    EXPECT_THROW(sim_result.data(AxesUnits::MM), std::runtime_error);
+    EXPECT_THROW(sim_result.data(Axes::Units::MM), std::runtime_error);
 
     const auto output = sim_result.data();
     EXPECT_EQ(depth_map->getTotalNumberOfBins(), output->getAllocatedSize());

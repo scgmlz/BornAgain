@@ -16,7 +16,7 @@
 #include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
 
-ExternalProperty::ExternalProperty() {}
+ExternalProperty::ExternalProperty() = default;
 
 QString ExternalProperty::text() const
 {

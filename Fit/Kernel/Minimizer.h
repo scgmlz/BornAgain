@@ -17,7 +17,6 @@
 
 #include "Fit/Kernel/KernelTypes.h"
 #include "Fit/Kernel/MinimizerResult.h"
-#include "Fit/Kernel/Parameters.h"
 #include <functional>
 #include <memory>
 #include <string>

@@ -33,10 +33,10 @@ namespace JobItemUtils
 void updateDataAxes(DataItem* intensityItem, const InstrumentItem* instrumentItem);
 
 //! returns axes units names from their domain counterpart
-QString nameFromAxesUnits(AxesUnits units);
+QString nameFromAxesUnits(Axes::Units units);
 
 //! returns domain axes units type from their GUI name
-AxesUnits axesUnitsFromName(const QString& name);
+Axes::Units axesUnitsFromName(const QString& name);
 
 void setIntensityItemAxesUnits(DataItem* intensityItem, const InstrumentItem* instrumentItem);
 

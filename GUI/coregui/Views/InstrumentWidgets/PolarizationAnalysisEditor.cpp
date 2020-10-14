@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/InstrumentWidgets/PolarizationAnalysisEditor.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"

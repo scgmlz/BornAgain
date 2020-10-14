@@ -16,8 +16,8 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARPLOT_H
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
-#include "qcustomplot.h"
 #include <memory>
+#include <qcustomplot.h>
 
 class BasicAxisItem;
 class SpecularDataItem;

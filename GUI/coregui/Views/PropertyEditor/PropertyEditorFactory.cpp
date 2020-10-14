@@ -13,13 +13,11 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/PropertyEditor/PropertyEditorFactory.h"
-#include "Fit/Tools/RealLimits.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/GroupItemController.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
-#include "GUI/coregui/Views/PropertyEditor/CustomEditors.h"
 #include "GUI/coregui/Views/PropertyEditor/MultiComboPropertyEditor.h"
 #include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QLabel>

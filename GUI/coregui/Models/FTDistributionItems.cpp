@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/FTDistributionItems.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 
 const QString FTDistribution1DItem::P_OMEGA = QString::fromStdString("Omega");
 

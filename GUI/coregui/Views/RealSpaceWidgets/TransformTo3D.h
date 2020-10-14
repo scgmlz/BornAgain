@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_TRANSFORMTO3D_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_TRANSFORMTO3D_H
 
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Vectors3D.h"
 #include "GUI/ba3d/model/layer.h"
 #include "GUI/ba3d/model/particles.h"
 #include <memory>

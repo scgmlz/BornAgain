@@ -17,7 +17,6 @@
 
 #include "Core/Particle/HomogeneousRegion.h"
 #include "Core/Scattering/ISample.h"
-#include "Core/Vector/Vectors3D.h"
 
 class IFormFactor;
 class IRotation;

@@ -13,14 +13,12 @@
 // ************************************************************************** //
 
 #include "Fit/RootAdapter/RootMinimizerAdapter.h"
-#include "Fit/Kernel/Parameter.h"
-#include "Fit/Kernel/Parameters.h"
 #include "Fit/RootAdapter/MinimizerResultUtils.h"
 #include "Fit/RootAdapter/ObjectiveFunctionAdapter.h"
 #include "Fit/RootAdapter/RootResidualFunction.h"
 #include "Fit/RootAdapter/RootScalarFunction.h"
 #include "Fit/Tools/StringUtils.h"
-#include "Math/Minimizer.h"
+#include <Math/Minimizer.h>
 
 using namespace Fit;
 

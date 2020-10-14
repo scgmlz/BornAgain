@@ -13,8 +13,6 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/InstrumentWidgets/DepthProbeInstrumentEditor.h"
-#include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
 #include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
 #include "GUI/coregui/Views/InfoWidgets/DistributionDialog.h"

@@ -13,16 +13,12 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceMesoCrystalUtils.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/Units.h"
-#include "Core/Particle/IParticle.h"
+#include "Base/Const/Units.h"
+#include "Base/Types/Exceptions.h"
+#include "Core/HardParticle/HardParticles.h"
 #include "Core/Particle/MesoCrystal.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleCoreShell.h"
-#include "Core/Particle/ParticleDistribution.h"
-#include "Core/Scattering/IFormFactor.h"
-#include "Core/includeIncludes/HardParticles.h"
-#include "GUI/ba3d/model/particles.h"
 #include "GUI/coregui/Models/Lattice2DItems.h"
 #include "GUI/coregui/Models/MesoCrystalItem.h"
 #include "GUI/coregui/Models/ParticleCompositionItem.h"
@@ -348,7 +344,7 @@ bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positi
 }
 } // namespace
 
-RealSpaceMesoCrystal::~RealSpaceMesoCrystal() {}
+RealSpaceMesoCrystal::~RealSpaceMesoCrystal() = default;
 
 RealSpaceMesoCrystal::RealSpaceMesoCrystal(const MesoCrystalItem* mesoCrystalItem,
                                            double total_abundance, const QVector3D& origin)

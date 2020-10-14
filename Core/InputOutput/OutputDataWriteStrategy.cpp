@@ -15,7 +15,6 @@
 #include "Core/InputOutput/OutputDataWriteStrategy.h"
 #include "Core/InputOutput/TiffHandler.h"
 #include "Core/Intensity/ArrayUtils.h"
-#include "Core/Intensity/OutputData.h" // needed by some compilers
 #include <cmath>
 #include <iomanip>
 

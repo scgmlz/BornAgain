@@ -15,8 +15,8 @@
 #ifndef BORNAGAIN_CORE_BEAM_IFOOTPRINTFACTOR_H
 #define BORNAGAIN_CORE_BEAM_IFOOTPRINTFACTOR_H
 
-#include "Core/Basics/ICloneable.h"
-#include "Core/Parametrization/INode.h"
+#include "Base/Types/ICloneable.h"
+#include "Param/Node/INode.h"
 
 class MultiLayer;
 class Beam;

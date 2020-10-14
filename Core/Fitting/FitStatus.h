@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_FITTING_FITSTATUS_H
 
 #include "Core/Fitting/FitObserver.h"
-#include "Core/Fitting/FitTypes.h"
 #include "Core/Fitting/IterationInfo.h"
 #include <functional>
 #include <vector>

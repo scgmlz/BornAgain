@@ -1,6 +1,6 @@
-#include "Core/Basics/Complex.h"
-#include "Core/Vector/EigenCore.h"
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Types/Complex.h"
+#include "Base/Vector/EigenCore.h"
+#include "Base/Vector/Vectors3D.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class CVectorTest : public ::testing::Test

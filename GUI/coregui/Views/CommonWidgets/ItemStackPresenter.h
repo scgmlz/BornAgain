@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKPRESENTER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKPRESENTER_H
 
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/CommonWidgets/ItemStackWidget.h"
 #include <QDebug>
 #include <QMap>
@@ -85,7 +85,7 @@ template <class T> T* ItemStackPresenter<T>::currentWidget()
 template <class T> T* ItemStackPresenter<T>::itemWidget(SessionItem* item)
 {
     if (m_single_widget) {
-        if (m_itemToWidget.size())
+        if (!m_itemToWidget.empty())
             return m_itemToWidget.first();
     } else {
         return m_itemToWidget[item];

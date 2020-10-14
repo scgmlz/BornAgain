@@ -13,9 +13,8 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/SampleDesigner/NodeEditorConnection.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
-#include "GUI/coregui/Views/SampleDesigner/NodeEditorPort.h"
 #include <QBrush>
 #include <QGraphicsScene>
 #include <QPainter>

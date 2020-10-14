@@ -21,7 +21,7 @@ void MessageHandler(QtMsgType type, const QMessageLogContext&, const QString& ms
 {
     switch (type) {
     case QtDebugMsg:
-        if (!msg.size()) // KDE will pass a zero-length msg qstring
+        if (msg.size() == 0) // KDE will pass a zero-length msg qstring
             break;
         std::cerr << "DEBUG: " << msg.toStdString() << std::endl;
         break;

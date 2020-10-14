@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/IntensityDataWidgets/SaveProjectionsAssistant.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Intensity/Histogram2D.h"
-#include "Core/Tools/PyFmt.h"
+#include "Base/Utils/PyFmt.h"
+#include "Core/Histo/Histogram1D.h"
+#include "Core/Histo/Histogram2D.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
@@ -62,7 +62,7 @@ void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataIte
         throw GUIHelpers::Error("TestProjectUtils::createTestFile() -> Error. "
                                 "Can't create file");
 
-    m_hist2d.reset(new Histogram2D(*intensityItem->getOutputData()));
+    m_hist2d = std::make_unique<Histogram2D>(*intensityItem->getOutputData());
 
     QTextStream out(&file);
 

@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_HARDPARTICLE_RIPPLES_H
 #define BORNAGAIN_CORE_HARDPARTICLE_RIPPLES_H
 
-#include "Core/Basics/Complex.h"
+#include "Base/Types/Complex.h"
 
 //! Computations for elongated particles.
 namespace ripples

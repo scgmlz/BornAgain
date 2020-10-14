@@ -17,7 +17,7 @@
 //! "Form factor (Fourier shape transform) of polygon and polyhedron."
 
 #include "Core/HardParticle/Polyhedron.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Utils/MathFunctions.h"
 #include <iomanip>
 #include <iostream>
 #include <stdexcept> // need overlooked by g++ 5.4

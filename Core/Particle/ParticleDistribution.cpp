@@ -13,13 +13,12 @@
 // ************************************************************************** //
 
 #include "Core/Particle/ParticleDistribution.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/ParameterSample.h"
-#include "Core/Parametrization/ParameterUtils.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/Particle/IParticle.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterUtils.h"
 #include <map>
 
 ParticleDistribution::ParticleDistribution(const IParticle& prototype,

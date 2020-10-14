@@ -29,4 +29,4 @@ RippleCosine::RippleCosine(double length, double width, double height)
     }
 }
 
-RippleCosine::~RippleCosine() {}
+RippleCosine::~RippleCosine() = default;

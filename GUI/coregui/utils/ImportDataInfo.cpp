@@ -12,18 +12,17 @@
 //
 // ************************************************************************** //
 
-#include "GUI/coregui/utils/ImportDataInfo.h"
-#include "Core/Intensity/AxisNames.h"
-#include "Core/Intensity/OutputData.h"
+#include "Core/Data/OutputData.h"
+#include "Core/Unit/AxisNames.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
 {
-std::vector<AxesUnits> specularUnits()
+std::vector<Axes::Units> specularUnits()
 {
-    std::vector<AxesUnits> result;
+    std::vector<Axes::Units> result;
     const auto units_map = AxisNames::InitSpecAxis();
     for (auto& pair : units_map)
         result.push_back(pair.first);
@@ -31,20 +30,21 @@ std::vector<AxesUnits> specularUnits()
 }
 
 // map: data rank --> available units
-std::map<size_t, std::vector<AxesUnits>> available_units = {{1u, specularUnits()},
-                                                            {2u, {AxesUnits::NBINS}}};
+std::map<size_t, std::vector<Axes::Units>> available_units = {{1u, specularUnits()},
+                                                              {2u, {Axes::Units::NBINS}}};
 } // namespace
 
-ImportDataInfo::ImportDataInfo() {}
+ImportDataInfo::ImportDataInfo() = default;
 
 ImportDataInfo::ImportDataInfo(ImportDataInfo&& other)
     : m_data(std::move(other.m_data)), m_units(other.m_units)
 {
 }
 
-ImportDataInfo::ImportDataInfo(std::unique_ptr<OutputData<double>> data, AxesUnits units)
-    : m_data(units == AxesUnits::NBINS && data ? ImportDataUtils::CreateSimplifiedOutputData(*data)
-                                               : std::move(data)),
+ImportDataInfo::ImportDataInfo(std::unique_ptr<OutputData<double>> data, Axes::Units units)
+    : m_data(units == Axes::Units::NBINS && data
+                 ? ImportDataUtils::CreateSimplifiedOutputData(*data)
+                 : std::move(data)),
       m_units(units)
 {
     checkValidity();

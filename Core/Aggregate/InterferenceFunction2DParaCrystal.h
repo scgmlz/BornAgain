@@ -15,8 +15,8 @@
 #ifndef BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DPARACRYSTAL_H
 #define BORNAGAIN_CORE_AGGREGATE_INTERFERENCEFUNCTION2DPARACRYSTAL_H
 
+#include "Base/Types/Complex.h"
 #include "Core/Aggregate/IInterferenceFunction.h"
-#include "Core/Basics/Complex.h"
 #include "Core/Correlations/FTDistributions2D.h"
 #include "Core/Lattice/Lattice2D.h"
 #include <memory>

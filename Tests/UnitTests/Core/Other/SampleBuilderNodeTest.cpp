@@ -1,7 +1,7 @@
 #include "Core/SampleBuilderEngine/SampleBuilderNode.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/ParameterPool.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Param/Base/ParameterPool.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
@@ -47,7 +47,7 @@ TEST_F(SampleBuilderNodeTest, builderParameters)
 
     // setting builder
     std::shared_ptr<ISampleBuilder> builder(new SampleBuilderNodeTest::TestBuilder(33.0));
-    builderNode.setSampleBuilder(builder);
+    builderNode.setSBN(builder);
     EXPECT_EQ(bool(builderNode), true);
 
     // checks that still no children
@@ -66,7 +66,7 @@ TEST_F(SampleBuilderNodeTest, builderParameters)
     builderNode.reset();
     EXPECT_EQ(builder.use_count(), 1);
     EXPECT_EQ(builderNode.parameterPool()->size(), 0u);
-    EXPECT_THROW(builderNode.createMultiLayer(), std::runtime_error);
+    EXPECT_DEATH(builderNode.createMultiLayer(), ".*");
 }
 
 //! Checks assignment operator.
@@ -75,7 +75,7 @@ TEST_F(SampleBuilderNodeTest, assignmentOperator)
 {
     SampleBuilderNode builderNode;
     std::shared_ptr<ISampleBuilder> builder(new SampleBuilderNodeTest::TestBuilder(33.0));
-    builderNode.setSampleBuilder(builder);
+    builderNode.setSBN(builder);
 
     // checking assignment
     SampleBuilderNode node2;

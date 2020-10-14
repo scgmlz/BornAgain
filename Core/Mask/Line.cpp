@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/Mask/Line.h"
-#include "Core/Binning/Bin.h"
-#include "Fit/TestEngine/Numeric.h"
+#include "Base/Axis/Bin.h"
+#include "Base/Utils/Algorithms.h"
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
@@ -69,7 +69,7 @@ VerticalLine::VerticalLine(double x) : IShape2D("VerticalLine"), m_x(x) {}
 
 bool VerticalLine::contains(double x, double /*y*/) const
 {
-    return Numeric::AreAlmostEqual(x, m_x);
+    return algo::almostEqual(x, m_x);
 }
 
 bool VerticalLine::contains(const Bin1D& binx, const Bin1D& /*biny*/) const
@@ -84,7 +84,7 @@ HorizontalLine::HorizontalLine(double y) : IShape2D("HorizontalLine"), m_y(y) {}
 
 bool HorizontalLine::contains(double /*x*/, double y) const
 {
-    return Numeric::AreAlmostEqual(y, m_y);
+    return algo::almostEqual(y, m_y);
 }
 
 bool HorizontalLine::contains(const Bin1D& /*binx*/, const Bin1D& biny) const

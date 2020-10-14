@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_SAMPLEBUILDERENGINE_ISAMPLEBUILDER_H
 #define BORNAGAIN_CORE_SAMPLEBUILDERENGINE_ISAMPLEBUILDER_H
 
-#include "Core/Parametrization/IParameterized.h"
+#include "Param/Base/IParameterized.h"
 
 class MultiLayer;
 
@@ -26,14 +26,11 @@ class ISampleBuilder : public IParameterized
 {
 public:
     ISampleBuilder();
+    virtual ~ISampleBuilder();
 
     virtual MultiLayer* buildSample() const = 0;
 
-    virtual MultiLayer* createSampleByIndex(size_t index)
-    {
-        (void)index;
-        return buildSample();
-    }
+    virtual MultiLayer* createSampleByIndex(size_t) { return buildSample(); }
     virtual size_t size() { return 1; }
 };
 

@@ -1,5 +1,4 @@
 #include "Core/Particle/Crystal.h"
-#include "Core/Lattice/Lattice.h"
 #include "Core/Particle/ParticleComposition.h"
 #include "Tests/GTestWrapper/google_test.h"
 

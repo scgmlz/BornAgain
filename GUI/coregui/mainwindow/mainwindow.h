@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 
-#include "fancymainwindow.h"
+#include <fancymainwindow.h>
 
 namespace Manhattan
 {

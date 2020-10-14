@@ -15,10 +15,8 @@
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "Core/Detector/IDetector2D.h"
 #include "Core/Instrument/Instrument.h"
-#include "Core/Intensity/UnitConverter1D.h"
-#include "GUI/coregui/Models/AxesItems.h"
+#include "Core/Unit/UnitConverter1D.h"
 #include "GUI/coregui/Models/BackgroundItems.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/GroupItem.h"
@@ -170,12 +168,12 @@ std::unique_ptr<IUnitConverter> SpecularInstrumentItem::createUnitConverter() co
     if (auto pointwise_axis = dynamic_cast<PointwiseAxisItem*>(axis_item)) {
         if (!pointwise_axis->containsNonXMLData()) // workaround for loading project
             return nullptr;
-        AxesUnits native_units = JobItemUtils::axesUnitsFromName(pointwise_axis->getUnitsLabel());
+        Axes::Units native_units = JobItemUtils::axesUnitsFromName(pointwise_axis->getUnitsLabel());
         return std::make_unique<UnitConverterConvSpec>(instrument->getBeam(),
                                                        *pointwise_axis->getAxis(), native_units);
     } else
         return std::make_unique<UnitConverterConvSpec>(
-            instrument->getBeam(), *axis_item->createAxis(1.0), AxesUnits::DEGREES);
+            instrument->getBeam(), *axis_item->createAxis(1.0), Axes::Units::DEGREES);
 }
 
 const QString Instrument2DItem::P_DETECTOR = "Detector";

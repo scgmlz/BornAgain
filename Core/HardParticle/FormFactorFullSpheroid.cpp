@@ -13,21 +13,19 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorFullSpheroid.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/HardParticle/FormFactorTruncatedSpheroid.h"
 #include "Core/Shapes/TruncatedEllipsoid.h"
-#include "Core/Tools/MathFunctions.h"
 #include <limits>
 
-//! Constructor of full spheroid.
-//! @param radius: radius of the circular cross section in nanometers
-//! @param height: height of the full spheroid in nanometers
 FormFactorFullSpheroid::FormFactorFullSpheroid(const std::vector<double> P)
-    : IFormFactorBorn({"FullSpheroid",
-                       "class_tooltip",
-                       {{"Radius", "nm", "para_tooltip", 0, +INF, 0},
-                        {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
-                      P),
+    : IFormFactorBorn(
+          {"FullSpheroid",
+           "ellipsoid of revolution",
+           {{"Radius", "nm", "revolution radius", 0, +INF, 0},
+            {"Height", "nm", "height = twice the radius in non-revolution direction", 0, +INF, 0}}},
+          P),
       m_radius(m_P[0]), m_height(m_P[1])
 {
     onChange();
@@ -68,5 +66,6 @@ IFormFactor* FormFactorFullSpheroid::sliceFormFactor(ZLimits limits, const IRota
 
 void FormFactorFullSpheroid::onChange()
 {
-    mP_shape.reset(new TruncatedEllipsoid(m_radius, m_radius, m_height / 2.0, m_height, 0.0));
+    mP_shape =
+        std::make_unique<TruncatedEllipsoid>(m_radius, m_radius, m_height / 2.0, m_height, 0.0);
 }

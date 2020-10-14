@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_GEOMETRY_H
 #define BORNAGAIN_GUI_BA3D_MODEL_GEOMETRY_H
 
-#include "../def.h"
 #include "GUI/ba3d/model/geometry_inc.h"
 #include <QObject>
 #include <QVector>

@@ -14,10 +14,9 @@
 
 #include "Tests/Functional/GUI/Other/SaveLoadProject.h"
 #include "BATesting.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/FileSystemUtils.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/StandardSamples/SampleBuilderFactory.h"
-#include "Core/Tools/FileSystemUtils.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/DocumentModel.h"
@@ -75,7 +74,7 @@ bool GUISaveLoadProject::runTest()
     // analyze difference
     nerr += check_difference(projectName1, projectName2);
 
-    return nerr == 0 ? true : false;
+    return nerr == 0;
 }
 
 int GUISaveLoadProject::run_job()

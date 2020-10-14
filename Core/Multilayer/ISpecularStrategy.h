@@ -15,8 +15,12 @@
 #ifndef BORNAGAIN_CORE_MULTILAYER_ISPECULARSTRATEGY_H
 #define BORNAGAIN_CORE_MULTILAYER_ISPECULARSTRATEGY_H
 
-#include "Core/Multilayer/Slice.h"
+#include "Base/Vector/Vectors3D.h"
 #include "Core/RT/ILayerRTCoefficients.h"
+#include <memory>
+#include <vector>
+
+class Slice;
 
 //! Interface for the Fresnel computations, both in the scalar and magnetic case
 //!
@@ -28,10 +32,10 @@
 class ISpecularStrategy
 {
 public:
-    virtual ~ISpecularStrategy() = default;
     ISpecularStrategy() = default;
-    ISpecularStrategy& operator=(const ISpecularStrategy& other) = delete;
+    virtual ~ISpecularStrategy() = default;
     ISpecularStrategy(const ISpecularStrategy& other) = delete;
+    ISpecularStrategy& operator=(const ISpecularStrategy& other) = delete;
 
     using coefficient_type = ILayerRTCoefficients;
     using coefficient_pointer_type = std::unique_ptr<const coefficient_type>;

@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_DETECTORMASK_H
 #define BORNAGAIN_CORE_DETECTOR_DETECTORMASK_H
 
-#include "Core/Intensity/OutputData.h"
+#include "Core/Data/OutputData.h"
 #include "Core/Mask/IShape2D.h"
 
 class IDetector2D;

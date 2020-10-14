@@ -13,11 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/InterferenceFunction2DParaCrystal.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
-#include "Core/Tools/Integrator.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/Integrator.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
 #include <limits>
 
 InterferenceFunction2DParaCrystal::InterferenceFunction2DParaCrystal(const Lattice2D& lattice,
@@ -165,9 +164,10 @@ void InterferenceFunction2DParaCrystal::transformToPrincipalAxes(double qx, doub
 //! Returns interference function for fixed angle xi.
 double InterferenceFunction2DParaCrystal::interferenceForXi(double xi) const
 {
-    double result = interference1D(m_qx, m_qy, xi, 0)
-                    * interference1D(m_qx, m_qy, xi + m_lattice->latticeAngle(), 1);
-    return result;
+    // don't touch order of computation; problems under Windows
+    double rx = interference1D(m_qx, m_qy, xi, 0);
+    double ry = interference1D(m_qx, m_qy, xi + m_lattice->latticeAngle(), 1);
+    return rx * ry;
 }
 
 //! Returns interference function for fixed xi in the dimension determined by the given index.
@@ -185,35 +185,29 @@ double InterferenceFunction2DParaCrystal::interference1D(double qx, double qy, d
             "interference1D() -> Error! Probability distributions for "
             "interference function not properly initialized");
 
-    double result(0.0);
     double length = index ? m_lattice->length2() : m_lattice->length1();
     int n = static_cast<int>(std::abs(m_domain_sizes[index] / length));
     double nd = static_cast<double>(n);
     complex_t fp = FTPDF(qx, qy, xi, index);
-    if (n < 1) {
-        result = ((1.0 + fp) / (1.0 - fp)).real();
-    } else {
-        if (std::norm(1.0 - fp) < std::numeric_limits<double>::epsilon())
-            result = nd;
-        // for (1-fp)*nd small, take the series expansion to second order in nd*(1-fp)
-        else if (std::abs(1.0 - fp) * nd < 2e-4) {
-            complex_t intermediate =
-                (nd - 1.0) / 2.0 + (nd * nd - 1.0) * (fp - 1.0) / 6.0
-                + (nd * nd * nd - 2.0 * nd * nd - nd + 2.0) * (fp - 1.0) * (fp - 1.0) / 24.0;
-            result = 1.0 + 2.0 * intermediate.real();
-        } else {
-            complex_t tmp;
-            if (std::abs(fp) == 0.0
-                || std::log(std::abs(fp)) * nd < std::log(std::numeric_limits<double>::min()))
-                tmp = 0.0;
-            else
-                tmp = std::pow(fp, n);
-            complex_t intermediate =
-                fp / (1.0 - fp) - fp * (1.0 - tmp) / nd / (1.0 - fp) / (1.0 - fp);
-            result = 1.0 + 2.0 * intermediate.real();
-        }
+    if (n < 1)
+        return ((1.0 + fp) / (1.0 - fp)).real();
+    if (std::norm(1.0 - fp) < std::numeric_limits<double>::epsilon())
+        return nd;
+    // for (1-fp)*nd small, take the series expansion to second order in nd*(1-fp)
+    if (std::abs(1.0 - fp) * nd < 2e-4) {
+        complex_t intermediate =
+            (nd - 1.0) / 2.0 + (nd * nd - 1.0) * (fp - 1.0) / 6.0
+            + (nd * nd * nd - 2.0 * nd * nd - nd + 2.0) * (fp - 1.0) * (fp - 1.0) / 24.0;
+        return 1.0 + 2.0 * intermediate.real();
     }
-    return result;
+    complex_t tmp;
+    if (std::abs(fp) == 0.0
+        || std::log(std::abs(fp)) * nd < std::log(std::numeric_limits<double>::min()))
+        tmp = 0.0;
+    else
+        tmp = std::pow(fp, n);
+    complex_t intermediate = fp / (1.0 - fp) - fp * (1.0 - tmp) / nd / (1.0 - fp) / (1.0 - fp);
+    return 1.0 + 2.0 * intermediate.real();
 }
 
 complex_t InterferenceFunction2DParaCrystal::FTPDF(double qx, double qy, double xi,

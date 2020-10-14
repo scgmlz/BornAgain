@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_SCATTERING_FORMFACTORDECORATORMATERIAL_H
 #define BORNAGAIN_CORE_SCATTERING_FORMFACTORDECORATORMATERIAL_H
 
-#include "Core/Material/Material.h"
 #include "Core/Scattering/IFormFactorDecorator.h"
 #include <memory>
 

@@ -13,8 +13,12 @@
 // ************************************************************************** //
 
 #include "Core/Particle/IParticle.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Core/Particle/SlicedParticle.h"
 #include "Core/Scattering/FormFactorDecoratorPositionFactor.h"
+#include "Core/Scattering/Rotations.h"
+#include "Param/Base/RealParameter.h"
+
+IParticle::~IParticle() = default;
 
 IFormFactor* IParticle::createFormFactor() const
 {

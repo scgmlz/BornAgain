@@ -15,9 +15,7 @@
 #ifndef BORNAGAIN_CORE_RT_SCALARRTCOEFFICIENTS_H
 #define BORNAGAIN_CORE_RT_SCALARRTCOEFFICIENTS_H
 
-#include "Core/Basics/Complex.h"
 #include "Core/RT/ILayerRTCoefficients.h"
-#include "Core/Vector/EigenCore.h"
 
 //! Specular reflection and transmission coefficients in a layer in case
 //! of scalar interactions between the layers and the scattered particle.

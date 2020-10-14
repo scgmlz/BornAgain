@@ -13,11 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/IInterferenceFunctionStrategy.h"
+#include "Base/Pixel/SimulationElement.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/IntegratorMCMiser.h"
 #include "Core/Aggregate/InterferenceFunctionNone.h"
-#include "Core/Basics/Exceptions.h"
 #include "Core/Multilayer/FormFactorCoherentSum.h"
-#include "Core/SimulationElement/SimulationElement.h"
-#include "Core/Tools/IntegratorMCMiser.h"
 
 IInterferenceFunctionStrategy::IInterferenceFunctionStrategy(const SimulationOptions& sim_params,
                                                              bool polarized)
@@ -33,7 +33,7 @@ void IInterferenceFunctionStrategy::init(
     const std::vector<FormFactorCoherentSum>& weighted_formfactors,
     const IInterferenceFunction* p_iff)
 {
-    if (weighted_formfactors.size() == 0)
+    if (weighted_formfactors.empty())
         throw Exceptions::ClassInitializationException(
             "IInterferenceFunctionStrategy::init: strategy gets no form factors.");
     m_formfactor_wrappers = weighted_formfactors;

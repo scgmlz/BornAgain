@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_SPHERICALPIXEL_H
 #define BORNAGAIN_CORE_DETECTOR_SPHERICALPIXEL_H
 
-#include "Core/Binning/IPixel.h"
+#include "Base/Pixel/IPixel.h"
 
 struct Bin1D;
 

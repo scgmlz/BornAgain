@@ -17,7 +17,6 @@
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/LayerItem.h"
 #include "GUI/coregui/Models/MaterialDataItems.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialItemContainer.h"
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/MesoCrystalItem.h"

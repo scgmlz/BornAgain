@@ -12,9 +12,8 @@
 //
 // ************************************************************************** //
 
-#include "Core/Basics/Assert.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/OutputData.h"
+#include "Core/Data/OutputData.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
 #include "Fit/TestEngine/Numeric.h"
 #include "Tests/Performance/Benchmark.h"
 #include <boost/format.hpp>
@@ -118,7 +117,7 @@ bool test_io(int nx, int ny, bool random_data, const std::string& ext)
 
     results.push_back(result);
 
-    bool success = result.m_biggest_diff < 1e-10 ? true : false;
+    bool success = result.m_biggest_diff < 1e-10;
     return success;
 }
 

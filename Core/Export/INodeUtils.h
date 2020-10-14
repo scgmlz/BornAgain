@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_EXPORT_INODEUTILS_H
 #define BORNAGAIN_CORE_EXPORT_INODEUTILS_H
 
-#include "Core/Parametrization/INode.h"
+#include "Param/Node/INode.h"
 
 namespace INodeUtils
 {

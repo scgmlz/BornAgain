@@ -13,21 +13,21 @@
 // ************************************************************************** //
 
 #include "Tests/Performance/Core/ThreadingComponents.h"
+#include "Base/Const/Units.h"
 #include "Core/Aggregate/InterferenceFunction2DLattice.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
 #include "Core/Detector/RectangularDetector.h"
 #include "Core/HardParticle/FormFactorFullSphere.h"
 #include "Core/Mask/Rectangle.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleDistribution.h"
 #include "Core/Simulation/GISASSimulation.h"
 #include "Core/StandardSamples/CylindersBuilder.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterPattern.h"
 
 namespace
 {

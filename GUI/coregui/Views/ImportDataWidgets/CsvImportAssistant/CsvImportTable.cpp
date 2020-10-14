@@ -168,14 +168,14 @@ QString CsvImportData::columnLabel(CsvImportData::DATA_TYPE type) const
 QList<QString> CsvImportData::availableCoordinateUnits() const
 {
     if (column(Coordinate) < 0)
-        return {csv::UnitsLabels[AxesUnits::NBINS]};
+        return {axisUnitLabel.at(Axes::Units::NBINS)};
 
     auto coordinate_type = m_selected_cols.at(Coordinate).name();
     if (coordinate_type == csv::_q_)
-        return {csv::UnitsLabels[AxesUnits::QSPACE]};
+        return {axisUnitLabel.at(Axes::Units::QSPACE)};
     else if (coordinate_type == csv::_theta_)
-        return {{csv::UnitsLabels[AxesUnits::DEGREES]}, {csv::UnitsLabels[AxesUnits::RADIANS]}};
-    return {csv::UnitsLabels[AxesUnits::NBINS]};
+        return {{axisUnitLabel.at(Axes::Units::DEGREES)}, {axisUnitLabel.at(Axes::Units::RADIANS)}};
+    return {axisUnitLabel.at(Axes::Units::NBINS)};
 }
 
 size_t CsvImportData::nCols() const

@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/PolyhedralComponents.h"
-#include "Core/Tools/MathFunctions.h"
-#include "Core/Tools/Precomputed.h"
+#include "Base/Utils/MathFunctions.h"
+#include "Base/Utils/Precomputed.h"
 #include <iomanip>
 #include <stdexcept> // need overlooked by g++ 5.4
 

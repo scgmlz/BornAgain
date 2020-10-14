@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_MULTILAYER_SSCAPPROXIMATIONSTRATEGY_H
 #define BORNAGAIN_CORE_MULTILAYER_SSCAPPROXIMATIONSTRATEGY_H
 
-#include "Core/Multilayer/IInterferenceFunctionStrategy.h"
 #include "Core/Multilayer/SSCAHelper.h"
 
 class SimulationElement;

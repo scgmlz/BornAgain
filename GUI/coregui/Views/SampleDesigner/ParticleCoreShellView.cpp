@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Views/SampleDesigner/ParticleCoreShellView.h"
 #include "GUI/coregui/Models/ParticleCoreShellItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 

@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/SoftParticle/FormFactorSphereGaussianRadius.h"
+#include "Core/LibFF/SomeFormFactors.h"
 #include "Core/Shapes/TruncatedEllipsoid.h"
-#include "Core/Vector/SomeFormFactors.h"
 #include "Fit/Tools/RealLimits.h"
 
 FormFactorSphereGaussianRadius::FormFactorSphereGaussianRadius(const std::vector<double> P)
@@ -44,7 +44,7 @@ complex_t FormFactorSphereGaussianRadius::evaluate_for_q(cvector_t q) const
 
 void FormFactorSphereGaussianRadius::onChange()
 {
-    mP_shape.reset(new TruncatedEllipsoid(m_mean, m_mean, m_mean, 2.0 * m_mean, 0.0));
+    mP_shape = std::make_unique<TruncatedEllipsoid>(m_mean, m_mean, m_mean, 2.0 * m_mean, 0.0);
 }
 
 double FormFactorSphereGaussianRadius::calculateMeanR3() const

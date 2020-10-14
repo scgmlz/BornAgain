@@ -21,7 +21,6 @@
 #include "GUI/coregui/Views/JobWidgets/JobRealTimeWidget.h"
 #include "GUI/coregui/Views/JobWidgets/JobSelectorWidget.h"
 #include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
-#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
 #include <QDockWidget>
 
 namespace

@@ -25,9 +25,6 @@ class MagneticSubstrateZeroFieldBuilder : public ISampleBuilder
 {
 public:
     MultiLayer* buildSample() const;
-
-private:
-    double m_sphere_radius;
 };
 
 //! Builds sample: ambient and one magnetized layer on a non-magnetized substrate.
@@ -46,9 +43,6 @@ class MagneticLayerBuilder : public ISampleBuilder
 {
 public:
     MultiLayer* buildSample() const;
-
-private:
-    double m_sphere_radius;
 };
 
 //! Builds sample: magnetic layer on a magnetic substrate with the fields rotated by 90°
@@ -61,10 +55,6 @@ public:
 
     MultiLayer* createSampleByIndex(size_t index) override;
     size_t size() override;
-
-private:
-    MultiLayer* builder(double sigmaRoughness = 0.,
-                        RoughnessModel roughnessModel = RoughnessModel::TANH) const;
 };
 
 //! Builds sample: rotated magnetic spheres in substrate layer with a unit magnetic field.

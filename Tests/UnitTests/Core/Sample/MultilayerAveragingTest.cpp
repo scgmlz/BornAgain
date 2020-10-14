@@ -1,14 +1,12 @@
 #include "Core/Aggregate/InterferenceFunction2DLattice.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/MathConstants.h"
 #include "Core/Computation/ProcessedSample.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Multilayer/Slice.h"
-#include "Core/Parametrization/SimulationOptions.h"
 #include "Core/Particle/Particle.h"
+#include "Core/RT/SimulationOptions.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class MultilayerAveragingTest : public ::testing::Test

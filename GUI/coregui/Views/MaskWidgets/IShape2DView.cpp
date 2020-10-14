@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Views/MaskWidgets/IShape2DView.h"
 #include "GUI/coregui/Models/MaskItems.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/MaskWidgets/ISceneAdaptor.h"
 #include <QAction>
 #include <QGraphicsSceneContextMenuEvent>

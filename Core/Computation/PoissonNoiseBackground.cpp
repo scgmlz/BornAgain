@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Computation/PoissonNoiseBackground.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Utils/MathFunctions.h"
 
 PoissonNoiseBackground::PoissonNoiseBackground()
     : IBackground({"PoissonNoiseBackground", "class_tooltip", {}}, {})

@@ -63,7 +63,7 @@ const bool FlatProjectsMode(false);
 namespace Utils
 {
 
-static const int MARGIN = 8;
+const int MARGIN = 8;
 
 class DetailsWidgetPrivate
 {

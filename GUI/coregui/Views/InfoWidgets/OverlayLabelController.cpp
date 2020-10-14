@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/InfoWidgets/OverlayLabelController.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/InfoWidgets/OverlayLabelWidget.h"
 #include <QAbstractScrollArea>
 #include <QEvent>

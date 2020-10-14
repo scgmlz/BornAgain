@@ -1,7 +1,6 @@
 #include "GUI/coregui/Models/LayerItem.h"
 #include "GUI/coregui/Models/MultiLayerItem.h"
 #include "GUI/coregui/Models/SampleModel.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
@@ -96,7 +95,6 @@ class TestMapperForItem : public ::testing::Test
 {
 public:
     TestMapperForItem() : m_mapped_item(0) {}
-    ~TestMapperForItem();
 
     void setItem(SessionItem* item, Widget* widget = 0, bool with_subscription = false)
     {
@@ -110,8 +108,6 @@ public:
     SessionItem* m_mapped_item;
     std::unique_ptr<ModelMapper> m_mapper;
 };
-
-TestMapperForItem::~TestMapperForItem() = default;
 
 TEST_F(TestMapperForItem, test_initialCondition)
 {

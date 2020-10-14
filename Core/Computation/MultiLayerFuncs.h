@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_COMPUTATION_MULTILAYERFUNCS_H
 #define BORNAGAIN_CORE_COMPUTATION_MULTILAYERFUNCS_H
 
-#include "Core/Basics/Complex.h"
+#include "Base/Types/Complex.h"
 #include <utility>
 #include <vector>
 

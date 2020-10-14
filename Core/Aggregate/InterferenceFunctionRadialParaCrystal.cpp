@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/InterferenceFunctionRadialParaCrystal.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Base/Types/Exceptions.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
 #include <limits>
 
 //! Constructor of interference function of radial paracrystal.
@@ -47,7 +47,6 @@ InterferenceFunctionRadialParaCrystal* InterferenceFunctionRadialParaCrystal::cl
 }
 
 //! Sets size spacing coupling parameter of the Size Spacing Correlation Approximation.
-//! @param size spacing coupling parameter
 void InterferenceFunctionRadialParaCrystal::setKappa(double kappa)
 {
     m_kappa = kappa;

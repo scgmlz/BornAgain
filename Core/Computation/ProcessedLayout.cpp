@@ -15,13 +15,13 @@
 #include "Core/Computation/ProcessedLayout.h"
 #include "Core/Aggregate/IInterferenceFunction.h"
 #include "Core/Correlations/ILayout.h"
-#include "Core/Multilayer/FormFactorBAPol.h"
 #include "Core/Multilayer/FormFactorCoherentSum.h"
-#include "Core/Multilayer/FormFactorDWBA.h"
-#include "Core/Multilayer/FormFactorDWBAPol.h"
 #include "Core/Multilayer/Slice.h"
 #include "Core/Multilayer/SlicedFormFactorList.h"
 #include "Core/Particle/IParticle.h"
+#include "Core/Scattering/FormFactorBAPol.h"
+#include "Core/Scattering/FormFactorDWBA.h"
+#include "Core/Scattering/FormFactorDWBAPol.h"
 
 namespace
 {
@@ -106,12 +106,12 @@ FormFactorCoherentSum ProcessedLayout::ProcessParticle(const IParticle& particle
         std::unique_ptr<IFormFactor> P_ff_framework;
         if (slices.size() > 1) {
             if (m_polarized)
-                P_ff_framework.reset(new FormFactorDWBAPol(*ff_pair.first));
+                P_ff_framework = std::make_unique<FormFactorDWBAPol>(*ff_pair.first);
             else
-                P_ff_framework.reset(new FormFactorDWBA(*ff_pair.first));
+                P_ff_framework = std::make_unique<FormFactorDWBA>(*ff_pair.first);
         } else {
             if (m_polarized)
-                P_ff_framework.reset(new FormFactorBAPol(*ff_pair.first));
+                P_ff_framework = std::make_unique<FormFactorBAPol>(*ff_pair.first);
             else
                 P_ff_framework.reset(ff_pair.first->clone());
         }

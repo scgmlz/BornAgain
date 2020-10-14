@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/LayerRoughness.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Base/Const/MathConstants.h"
+#include "Param/Base/RealParameter.h"
 
 //! Constructor of layer roughness.
 //! @param sigma: rms of the roughness in nanometers

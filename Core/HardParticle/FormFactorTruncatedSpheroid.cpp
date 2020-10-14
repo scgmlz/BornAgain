@@ -13,26 +13,22 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorTruncatedSpheroid.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/Integrator.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/Shapes/TruncatedEllipsoid.h"
-#include "Core/Tools/Integrator.h"
-#include "Core/Tools/MathFunctions.h"
 #include <limits>
 
-//! Constructor of a spheroidal dome.
-//! @param radius: radius of the truncated spheroid in nanometers
-//! @param height: height of the truncated spheroid in nanometers
-//! @param height_flattening: ratio of the height of the corresponding full spheroid to its diameter
-//! @param dh: length of cup truncated from the top
 FormFactorTruncatedSpheroid::FormFactorTruncatedSpheroid(const std::vector<double> P)
-    : IFormFactorBorn({"TruncatedSpheroid",
-                       "class_tooltip",
-                       {{"Radius", "nm", "para_tooltip", 0, +INF, 0},
-                        {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                        {"HeightFlattening", "", "para_tooltip", 0, +INF, 0},
-                        {"DeltaHeight", "nm", "para_tooltip", 0, +INF, 0}}},
-                      P),
+    : IFormFactorBorn(
+          {"TruncatedSpheroid",
+           "class_tooltip",
+           {{"Radius", "nm", "horizontal radius", 0, +INF, 0},
+            {"Height", "nm", "height before removal of cap", 0, +INF, 0},
+            {"HeightFlattening", "", "ratio of vertical to horizontal radius", 0, +INF, 0},
+            {"DeltaHeight", "nm", "height of removed cap", 0, +INF, 0}}},
+          P),
       m_radius(m_P[0]), m_height(m_P[1]), m_height_flattening(m_P[2]), m_dh(m_P[3])
 {
     check_initialization();

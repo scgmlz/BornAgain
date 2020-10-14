@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_REALLIMITSITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_REALLIMITSITEMS_H
 
-#include "Fit/Tools/RealLimits.h"
 #include "GUI/coregui/Models/SessionItem.h"
 
 class BA_CORE_API_ RealLimitsItem : public SessionItem

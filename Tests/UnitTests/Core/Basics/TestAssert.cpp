@@ -1,4 +1,4 @@
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class TestAssert : public ::testing::Test

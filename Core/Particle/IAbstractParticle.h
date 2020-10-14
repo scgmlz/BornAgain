@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_PARTICLE_IABSTRACTPARTICLE_H
 
 #include "Core/Scattering/ISample.h"
-#include "Core/Vector/Vectors3D.h"
 
 class IRotation;
 

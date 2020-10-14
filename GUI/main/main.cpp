@@ -54,5 +54,5 @@ int main(int argc, char* argv[])
     if (splash)
         splash->finish(&win);
 
-    return app.exec();
+    return QApplication::exec();
 }

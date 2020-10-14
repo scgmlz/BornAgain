@@ -19,9 +19,9 @@
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorPropertyPanel.h"
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorToolBar.h"
 #include "GUI/coregui/Views/MaskWidgets/MaskGraphicsScene.h"
-#include "minisplitter.h"
 #include <QBoxLayout>
 #include <QContextMenuEvent>
+#include <minisplitter.h>
 
 MaskEditor::MaskEditor(QWidget* parent)
     : QMainWindow(parent), m_editorActions(new MaskEditorActions(this)),

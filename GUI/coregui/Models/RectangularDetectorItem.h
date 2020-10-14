@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H
 
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Vectors3D.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 
 class BA_CORE_API_ RectangularDetectorItem : public DetectorItem

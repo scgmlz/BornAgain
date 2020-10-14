@@ -1,5 +1,5 @@
+#include "Base/Const/MathConstants.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/MathConstants.h"
 #include "Core/Computation/ProcessedSample.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
@@ -7,13 +7,12 @@
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Multilayer/SpecularScalarTanhStrategy.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/RT/SimulationOptions.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class RTTest : public ::testing::Test
 {
 protected:
-    ~RTTest();
     void printCoeffs(const std::vector<ScalarRTCoefficients>& coeffs)
     { // for debug phases
         for (size_t i = 0; i < coeffs.size(); ++i) {
@@ -48,8 +47,6 @@ protected:
     MultiLayer sample1, sample2;
     std::vector<ScalarRTCoefficients> coeffs1, coeffs2;
 };
-
-RTTest::~RTTest() = default;
 
 TEST_F(RTTest, SplitLayer)
 {

@@ -1,4 +1,4 @@
-#include "Core/Parametrization/ParameterPattern.h"
+#include "Param/Varia/ParameterPattern.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <string>
 

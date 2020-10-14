@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_EXPORT_ORDEREDMAP_H
 #define BORNAGAIN_CORE_EXPORT_ORDEREDMAP_H
 
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include <iostream>
 #include <list>
 #include <stdexcept>
@@ -48,11 +48,12 @@ public:
     iterator begin() { return m_list.begin(); }
     iterator end() { return m_list.end(); }
 
-    size_t size()
+    size_t size() const
     {
         ASSERT(m_list.size() == m_map.size());
         return m_list.size();
     }
+    bool empty() const { return size() == 0; }
 
     // if such key exists, pair will be deleted, and new pair appended to the end
     void insert(const Key& key, const Object& object)
@@ -91,7 +92,7 @@ public:
         return 1;
     }
 
-    const Object& value(const Key& key)
+    const Object& value(const Key& key) const
     {
         typename map_t::const_iterator mit = m_map.find(key);
         if (mit == m_map.end()) {

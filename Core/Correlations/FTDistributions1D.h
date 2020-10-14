@@ -15,9 +15,9 @@
 #ifndef BORNAGAIN_CORE_CORRELATIONS_FTDISTRIBUTIONS1D_H
 #define BORNAGAIN_CORE_CORRELATIONS_FTDISTRIBUTIONS1D_H
 
-#include "Core/Basics/ICloneable.h"
+#include "Base/Types/ICloneable.h"
 #include "Core/Correlations/IDistribution1DSampler.h"
-#include "Core/Parametrization/INode.h"
+#include "Param/Node/INode.h"
 
 //! Interface for a one-dimensional distribution, with normalization adjusted so that
 //! the Fourier transform evaluate(q) is a decay function that starts at evaluate(0)=1.
@@ -156,9 +156,6 @@ public:
 class FTDistribution1DVoigt : public IFTDistribution1D
 {
 public:
-    //! Constructor of one-dimensional pseudo-Voigt probability distribution.
-    //! @param omega: half-width of the distribution in nanometers
-    //! @param eta: parameter [0,1] to balance between Cauchy (eta=0.0) and Gauss (eta=1.0)
     FTDistribution1DVoigt(const std::vector<double> P);
     FTDistribution1DVoigt(double omega, double eta);
 

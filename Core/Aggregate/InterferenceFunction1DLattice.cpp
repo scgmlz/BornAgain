@@ -13,20 +13,19 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/InterferenceFunction1DLattice.h"
-#include "Core/Basics/Assert.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/Assert.h"
 #include "Core/Correlations/FTDecay1D.h"
 #include "Core/Correlations/FTDecay2D.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Param/Base/RealParameter.h"
 #include <algorithm>
 
 namespace
 {
 // maximum value for qx*Lambdax
-static const int nmax = 20;
+const int nmax = 20;
 // minimum number of neighboring reciprocal lattice points to use
-static const int min_points = 4;
+const int min_points = 4;
 } // namespace
 
 //! Constructor of interference function of one-dimensional lattice.
@@ -40,7 +39,7 @@ InterferenceFunction1DLattice::InterferenceFunction1DLattice(double length, doub
     registerParameter("Xi", &m_xi).setUnit("rad");
 }
 
-InterferenceFunction1DLattice::~InterferenceFunction1DLattice() {}
+InterferenceFunction1DLattice::~InterferenceFunction1DLattice() = default;
 
 InterferenceFunction1DLattice* InterferenceFunction1DLattice::clone() const
 {

@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"

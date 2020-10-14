@@ -47,7 +47,7 @@ public:
     ~SphericalDetector() override {}
 
     //! return default axes units
-    AxesUnits defaultAxesUnits() const override;
+    Axes::Units defaultAxesUnits() const override;
 
 protected:
     //! Creates an IPixel for the given OutputData object and index

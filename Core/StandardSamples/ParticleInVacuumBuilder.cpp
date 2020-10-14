@@ -13,15 +13,14 @@
 // ************************************************************************** //
 
 #include "Core/StandardSamples/ParticleInVacuumBuilder.h"
+#include "Base/Const/Units.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/Units.h"
+#include "Core/HardParticle/FormFactorFullSphere.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Particle/Particle.h"
 #include "Core/SampleBuilderEngine/SampleComponents.h"
 #include "Core/StandardSamples/ReferenceMaterials.h"
-#include "Core/includeIncludes/FormFactors.h"
 
 namespace
 {

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_MULTILAYER_SSCAHELPER_H
 #define BORNAGAIN_CORE_MULTILAYER_SSCAHELPER_H
 
-#include "Core/Basics/Complex.h"
 #include "Core/Multilayer/IInterferenceFunctionStrategy.h"
 #include "Core/Multilayer/InterferenceFunctionUtils.h"
 #include <Eigen/StdVector>

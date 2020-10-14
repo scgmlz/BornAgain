@@ -13,9 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/KzComputation.h"
-#include "Core/Basics/Units.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/MultiLayer.h"
+#include "Base/Const/Units.h"
 #include "Core/Multilayer/Slice.h"
 
 namespace

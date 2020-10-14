@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_MULTILAYER_SCALARFRESNELMAP_H
 
 #include "Core/Multilayer/IFresnelMap.h"
-#include "Core/Multilayer/ISpecularStrategy.h"
 #include "Core/RT/ScalarRTCoefficients.h"
 #include <cstddef>
 #include <unordered_map>

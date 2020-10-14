@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_MULTILAYER_INTERFERENCEFUNCTIONUTILS_H
 #define BORNAGAIN_CORE_MULTILAYER_INTERFERENCEFUNCTIONUTILS_H
 
-#include "Core/Basics/Complex.h"
+#include "Base/Types/Complex.h"
 #include <Eigen/StdVector>
 #include <vector>
 

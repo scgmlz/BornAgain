@@ -13,9 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/MaterialEditor/MaterialEditorDialog.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialEditor.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"

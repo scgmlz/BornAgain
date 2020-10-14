@@ -13,10 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/SSCApproximationStrategy.h"
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Aggregate/IInterferenceFunction.h"
 #include "Core/Multilayer/FormFactorCoherentSum.h"
-#include "Core/Multilayer/InterferenceFunctionUtils.h"
-#include "Core/SimulationElement/SimulationElement.h"
 
 using InterferenceFunctionUtils::PrecomputePolarizedFormFactors;
 using InterferenceFunctionUtils::PrecomputeScalarFormFactors;

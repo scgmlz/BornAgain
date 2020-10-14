@@ -31,7 +31,7 @@ std::unique_ptr<IUnitConverter> getConverter(Data1DViewItem* view_item)
     return DomainObjectBuilder::createUnitConverter(job_item->instrumentItem());
 }
 
-AxesUnits selectedUnits(Data1DViewItem* view_item)
+Axes::Units selectedUnits(Data1DViewItem* view_item)
 {
     auto current_unit_name =
         view_item->getItemValue(Data1DViewItem::P_AXES_UNITS).value<ComboProperty>().getValue();

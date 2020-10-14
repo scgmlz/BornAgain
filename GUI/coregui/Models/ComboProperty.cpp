@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/ComboProperty.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
 namespace
@@ -93,7 +93,7 @@ void ComboProperty::setCurrentIndex(int index)
 ComboProperty& ComboProperty::operator<<(const QString& str)
 {
     m_values.append(str);
-    if (m_values.size())
+    if (!m_values.empty())
         setCurrentIndex(0);
     return *this;
 }
@@ -101,7 +101,7 @@ ComboProperty& ComboProperty::operator<<(const QString& str)
 ComboProperty& ComboProperty::operator<<(const QStringList& str)
 {
     m_values.append(str);
-    if (m_values.size())
+    if (!m_values.empty())
         setCurrentIndex(0);
     return *this;
 }

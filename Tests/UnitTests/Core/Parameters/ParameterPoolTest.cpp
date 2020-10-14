@@ -1,6 +1,6 @@
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Param/Base/ParameterPool.h"
+#include "Base/Types/Exceptions.h"
+#include "Param/Base/RealParameter.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class ParameterPoolTest : public ::testing::Test

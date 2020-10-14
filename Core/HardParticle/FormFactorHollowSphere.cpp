@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorHollowSphere.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/Shapes/TruncatedEllipsoid.h"
 #include <limits>
 
@@ -57,7 +57,7 @@ complex_t FormFactorHollowSphere::evaluate_for_q(cvector_t q) const
 
 void FormFactorHollowSphere::onChange()
 {
-    mP_shape.reset(new TruncatedEllipsoid(m_mean, m_mean, m_mean, 2.0 * m_mean, 0.0));
+    mP_shape = std::make_unique<TruncatedEllipsoid>(m_mean, m_mean, m_mean, 2.0 * m_mean, 0.0);
 }
 
 bool FormFactorHollowSphere::checkParameters() const

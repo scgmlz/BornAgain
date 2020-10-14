@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_MODEL_H
 #define BORNAGAIN_GUI_BA3D_MODEL_MODEL_H
 
-#include "GUI/ba3d/model/object.h"
 #include "GUI/ba3d/model/particles.h"
 #include "GUI/ba3d/view/camera.h"
 #include <QVector>

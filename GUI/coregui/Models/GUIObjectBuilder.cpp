@@ -13,13 +13,11 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Simulation/GISASSimulation.h"
 #include "Core/Simulation/OffSpecSimulation.h"
-#include "Core/Simulation/Simulation.h"
 #include "Core/Simulation/SpecularSimulation.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DocumentModel.h"
 #include "GUI/coregui/Models/GUIDomainSampleVisitor.h"
 #include "GUI/coregui/Models/InstrumentItems.h"

@@ -54,7 +54,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QSIMPLERESOURCE_P_H
 
 #include "GUI/coregui/Views/widgetbox/shared_global_p.h"
-//#include "abstractformbuilder.h"
 #include <QtCore/QStringList>
 #include <QtDesigner/abstractformbuilder.h>
 

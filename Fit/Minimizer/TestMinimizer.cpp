@@ -13,12 +13,11 @@
 // ************************************************************************** //
 
 #include "Fit/Minimizer/TestMinimizer.h"
-#include "Fit/Kernel/Parameters.h"
 #include <sstream>
 
 using namespace Fit;
 
-TestMinimizer::TestMinimizer() {}
+TestMinimizer::TestMinimizer() = default;
 
 TestMinimizer::~TestMinimizer() = default;
 

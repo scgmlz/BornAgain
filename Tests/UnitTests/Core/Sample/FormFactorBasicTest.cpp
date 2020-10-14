@@ -1,8 +1,7 @@
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
-#include "Core/Scattering/IFormFactorBorn.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Const/Units.h"
+#include "Core/HardParticle/HardParticles.h"
 #include "Core/Scattering/Rotations.h"
-#include "Core/includeIncludes/HardParticles.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class FormFactorBasicTest : public ::testing::Test

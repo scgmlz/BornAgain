@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_COMPUTATION_LAYOUTSTRATEGYBUILDER_H
 #define BORNAGAIN_CORE_COMPUTATION_LAYOUTSTRATEGYBUILDER_H
 
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/RT/SimulationOptions.h"
 #include <memory>
 
 class IInterferenceFunction;
@@ -37,7 +37,6 @@ public:
 
 private:
     void createStrategy();
-    void checkInterferenceFunction(const IInterferenceFunction* p_iff);
 
     const ProcessedLayout* mp_layout;
     SimulationOptions m_sim_params;

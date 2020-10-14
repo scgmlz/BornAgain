@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_TESTS_FUNCTIONAL_FIT_MINIMIZER_CLASSICALTESTFUNCTIONS_H
 #define BORNAGAIN_TESTS_FUNCTIONAL_FIT_MINIMIZER_CLASSICALTESTFUNCTIONS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <vector>
 
 //! @class StandaloneFitTest
@@ -25,9 +24,9 @@
 
 namespace TestFunctions
 {
-BA_CORE_API_ double RosenBrock(const std::vector<double>& par);
-BA_CORE_API_ double WoodFour(const std::vector<double>& par);
-BA_CORE_API_ double DecayingSin(double x, const std::vector<double>& par);
+double RosenBrock(const std::vector<double>& par);
+double WoodFour(const std::vector<double>& par);
+double DecayingSin(double x, const std::vector<double>& par);
 } // namespace TestFunctions
 
 #endif // BORNAGAIN_TESTS_FUNCTIONAL_FIT_MINIMIZER_CLASSICALTESTFUNCTIONS_H

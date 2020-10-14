@@ -16,7 +16,6 @@
 #include "GUI/coregui/Models/ComponentProxyModel.h"
 #include "GUI/coregui/Models/GroupItem.h"
 #include "GUI/coregui/Models/ModelPath.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Views/PropertyEditor/ComponentUtils.h"
@@ -65,7 +64,7 @@ bool ComponentProxyStrategy::isPropertyRelated(SessionItem* item)
 
     if (m_sourceRootIndex.isValid() && item->parent()->index() == m_sourceRootIndex
         && item->parent()->modelType() != "GroupProperty")
-        return propertyRelated.contains(item->modelType()) ? true : false;
+        return propertyRelated.contains(item->modelType());
 
     return true;
 }

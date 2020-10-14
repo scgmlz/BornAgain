@@ -2,7 +2,6 @@
 #include "GUI/coregui/Models/LayerItem.h"
 #include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
-#include "GUI/coregui/Models/ModelMapper.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "Tests/GTestWrapper/google_test.h"

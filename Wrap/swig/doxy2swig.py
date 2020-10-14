@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 """Doxygen XML to SWIG docstring converter.
-
-Converts Doxygen generated XML files into a file containing docstrings
-that can be used by Swig.
-
 Usage:
 
   doxy2swig.py input.xml output.i
 
-input.xml is your doxygen generated XML file and output.i is where the
-output will be written (the file will be clobbered).
-
+Where
+  input.xml is a Doxygen-generated XML index
+  output.i  is to contain docstrings for use from Swig.
 """
 
-# This code is implemented using Mark Pilgrim's code as a guideline:
-#   http://www.faqs.org/docs/diveintopython/kgp_divein.html
+# License: BSD
 #
-# Author: Prabhu Ramachandran
-# License: BSD style
+# History:
+# - Inspired by http://www.faqs.org/docs/diveintopython/kgp_divein.html by Mark Pilgrim
+# - Authored by Prabhu Ramachandran, and released under BSD licence
+# - Migrated to Python3 - 01mar16, Jonathan Fisher
 #
-# update 01.03.2016:
-# This version has been modified by Jonathan Fisher (j.fisher@fz-juelich.de)
-# to be forwards-compatible with Python 3
+# Usage within BornAgain:
+# - from cmake/BornAgain/PythonDocs.cmake
 
 from __future__ import print_function
 from xml.dom import minidom
@@ -313,7 +309,7 @@ class Doxy2SWIG:
             fname = refid + '.xml'
             if not os.path.exists(fname):
                 fname = os.path.join(self.my_dir,  fname)
-            print("parsing file: %s"%fname)
+            # print("parsing file: %s"%fname)
             p = Doxy2SWIG(fname)
             p.generate()
             self.pieces.extend(self.clean_pieces(p.pieces))

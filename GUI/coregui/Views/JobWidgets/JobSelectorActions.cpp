@@ -115,7 +115,7 @@ void JobSelectorActions::initItemContextMenu(QMenu& menu, const QModelIndex& ind
     QModelIndex targetIndex = indexAtPoint;
     if (!targetIndex.isValid()) {
         QModelIndexList indexList = m_selectionModel->selectedIndexes();
-        if (indexList.size())
+        if (!indexList.empty())
             targetIndex = indexList.first();
     }
     m_runJobAction->setEnabled(canRunJob(targetIndex));

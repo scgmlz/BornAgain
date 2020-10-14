@@ -28,7 +28,7 @@ ItemTreeView::ItemTreeView(QWidget* parent) : QTreeView(parent)
     setDragDropMode(QAbstractItemView::InternalMove);
 }
 
-ItemTreeView::~ItemTreeView() {}
+ItemTreeView::~ItemTreeView() = default;
 
 void ItemTreeView::dragMoveEvent(QDragMoveEvent* event)
 {

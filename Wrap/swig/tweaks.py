@@ -29,7 +29,7 @@ fd.close()
 
 text_out = []
 for line in text_in:
-    line = line.replace("_libBornAgainCore.ICloneable_transferToCPP(self)", "self.__disown__()")
+    line = line.replace("_libBornAgainBase.ICloneable_transferToCPP(self)", "self.__disown__()")
     line = line.replace("_libBornAgainCore.Histogram1D_getBinCenters(self)", "self.getBinCentersNumpy()")
     line = line.replace("_libBornAgainCore.Histogram1D_getBinErrors(self)", "self.getBinErrorsNumpy()")
     line = line.replace("_libBornAgainCore.Histogram1D_getBinValues(self)", "self.getBinValuesNumpy()")

@@ -12,13 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "Core/Scattering/IFormFactor.h"
-#include "Core/Basics/Exceptions.h"
+#include "Core/Material/WavevectorInfo.h"
 #include "Core/RT/ILayerRTCoefficients.h"
 #include "Core/Scattering/FormFactorDecoratorPositionFactor.h"
 #include "Core/Scattering/FormFactorDecoratorRotation.h"
-#include "Core/Scattering/Rotations.h"
-#include "Core/Vector/WavevectorInfo.h"
 #include <memory>
 #include <utility>
 
@@ -82,11 +79,11 @@ IFormFactor* createTransformedFormFactor(const IFormFactor& formfactor, const IR
 {
     std::unique_ptr<IFormFactor> P_fftemp, P_result;
     if (!rot.isIdentity())
-        P_fftemp.reset(new FormFactorDecoratorRotation(formfactor, rot));
+        P_fftemp = std::make_unique<FormFactorDecoratorRotation>(formfactor, rot);
     else
         P_fftemp.reset(formfactor.clone());
     if (translation != kvector_t())
-        P_result.reset(new FormFactorDecoratorPositionFactor(*P_fftemp, translation));
+        P_result = std::make_unique<FormFactorDecoratorPositionFactor>(*P_fftemp, translation);
     else
         std::swap(P_fftemp, P_result);
     return P_result.release();

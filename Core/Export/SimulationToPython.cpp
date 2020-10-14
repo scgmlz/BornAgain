@@ -13,24 +13,26 @@
 // ************************************************************************** //
 
 #include "Core/Export/SimulationToPython.h"
+#include "Base/Utils/Algorithms.h"
+#include "Base/Utils/PyFmt.h"
 #include "Core/Beam/FootprintGauss.h"
 #include "Core/Beam/FootprintSquare.h"
 #include "Core/Computation/ConstantBackground.h"
 #include "Core/Computation/PoissonNoiseBackground.h"
-#include "Core/Detector/ConvolutionDetectorResolution.h"
 #include "Core/Detector/RectangularDetector.h"
 #include "Core/Detector/RegionOfInterest.h"
-#include "Core/Detector/ResolutionFunction2DGaussian.h"
 #include "Core/Detector/SphericalDetector.h"
 #include "Core/Export/INodeUtils.h"
 #include "Core/Export/SampleToPython.h"
-#include "Core/Instrument/ISpecularScan.h"
-#include "Core/Parametrization/ParameterUtils.h"
-#include "Core/PyIO/PythonFormatting.h"
+#include "Core/Instrument/PyFmt2.h"
+#include "Core/Resolution/ConvolutionDetectorResolution.h"
+#include "Core/Resolution/ResolutionFunction2DGaussian.h"
+#include "Core/Scan/ISpecularScan.h"
 #include "Core/Simulation/GISASSimulation.h"
 #include "Core/Simulation/OffSpecSimulation.h"
 #include "Core/Simulation/SpecularSimulation.h"
-#include "Core/Tools/PyFmt.h"
+#include "Param/Varia/ParameterUtils.h"
+#include "Param/Varia/PyFmtLimits.h"
 #include <iomanip>
 
 namespace
@@ -48,13 +50,21 @@ const std::string defineSimulate = "def run_simulation():\n"
 //! Returns a function that converts a coordinate to a Python code snippet with appropiate unit
 std::function<std::string(double)> printFunc(const IDetector* detector)
 {
-    if (detector->defaultAxesUnits() == AxesUnits::MM)
+    if (detector->defaultAxesUnits() == Axes::Units::MM)
         return pyfmt::printDouble;
-    if (detector->defaultAxesUnits() == AxesUnits::RADIANS)
+    if (detector->defaultAxesUnits() == Axes::Units::RADIANS)
         return pyfmt::printDegrees;
     throw Exceptions::RuntimeErrorException(
         "SimulationToPython::defineMasks() -> Error. Unknown detector units.");
 }
+
+//! returns true if it is (0, -1, 0) vector
+bool isDefaultDirection(const kvector_t direction)
+{
+    return algo::almostEqual(direction.x(), 0.0) && algo::almostEqual(direction.y(), -1.0)
+           && algo::almostEqual(direction.z(), 0.0);
+}
+
 } // namespace
 
 //! Returns a Python script that sets up a simulation and runs it if invoked as main program.
@@ -161,7 +171,7 @@ std::string SimulationToPython::defineDetector(const Simulation* simulation) con
             result << pyfmt::indent() << "detector.setPosition("
                    << pyfmt::printKvector(det->getNormalVector()) << ", "
                    << pyfmt::printDouble(det->getU0()) << ", " << pyfmt::printDouble(det->getV0());
-            if (!pyfmt::isDefaultDirection(det->getDirectionVector()))
+            if (!isDefaultDirection(det->getDirectionVector()))
                 result << ", " << pyfmt::printKvector(det->getDirectionVector());
             result << ")\n";
         } else if (det->getDetectorArrangment() == RectangularDetector::PERPENDICULAR_TO_SAMPLE) {
@@ -333,7 +343,7 @@ std::string SimulationToPython::defineParameterDistributions(const Simulation* s
     std::ostringstream result;
     const std::vector<ParameterDistribution>& distributions =
         simulation->getDistributionHandler().getDistributions();
-    if (distributions.size() == 0)
+    if (distributions.empty())
         return "";
     for (size_t i = 0; i < distributions.size(); ++i) {
         std::string main_par_name = distributions[i].getMainParameterName();

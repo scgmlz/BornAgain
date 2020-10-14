@@ -91,7 +91,7 @@ void DesignerMimeData::read_widget(QXmlStreamReader& reader)
 Qt::DropAction DesignerMimeData::execDrag(const QString& name, const QString& xmldescr,
                                           QWidget* dragSource)
 {
-    if (!xmldescr.size())
+    if (xmldescr.size() == 0)
         return Qt::IgnoreAction;
 
     QDrag* drag = new QDrag(dragSource);

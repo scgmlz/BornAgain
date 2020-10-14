@@ -13,13 +13,13 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/CommonWidgets/DocksController.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
-#include "fancymainwindow.h"
 #include <QAbstractItemView>
 #include <QAction>
 #include <QDockWidget>
 #include <QTimer>
+#include <fancymainwindow.h>
 
 DocksController::DocksController(Manhattan::FancyMainWindow* mainWindow)
     : QObject(mainWindow), m_mainWindow(mainWindow)

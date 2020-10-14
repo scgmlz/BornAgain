@@ -14,13 +14,10 @@
 
 #include "Tests/Functional/GUI/Translate/GUITranslationTest.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Simulation/GISASSimulation.h"
 #include "Core/Simulation/SimulationFactory.h"
 #include "Core/StandardSamples/SampleBuilderFactory.h"
 #include "Fit/Tools/StringUtils.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DocumentModel.h"
 #include "GUI/coregui/Models/FitParameterHelper.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
@@ -37,6 +34,7 @@
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SphericalDetectorItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Param/Base/ParameterPool.h"
 #include <QStack>
 
 namespace
@@ -120,7 +118,7 @@ GUITranslationTest::GUITranslationTest(const std::string& simName, const std::st
     m_simulation->setSample(*sampleFactory.createSampleByName(m_sampleName));
 }
 
-GUITranslationTest::~GUITranslationTest() {}
+GUITranslationTest::~GUITranslationTest() = default;
 
 bool GUITranslationTest::runTest()
 {
@@ -258,7 +256,7 @@ bool GUITranslationTest::checkExistingTranslations()
     }
     std::cout << ostr.str();
 
-    bool isSuccess = (wrong_translations.empty() ? true : false);
+    bool isSuccess = (wrong_translations.empty());
     return isSuccess;
 }
 
@@ -288,7 +286,7 @@ bool GUITranslationTest::checkMissedTranslations()
         }
     }
 
-    if (missedNames.size()) {
+    if (!missedNames.empty()) {
         std::cout << header() << std::endl;
         std::cout << "Translation doesn't exist:" << std::endl;
         std::cout << header() << std::endl;
@@ -296,6 +294,6 @@ bool GUITranslationTest::checkMissedTranslations()
             std::cout << "domain : " << name << std::endl;
     }
 
-    bool isSuccess = (missedNames.empty() ? true : false);
+    bool isSuccess = (missedNames.empty());
     return isSuccess;
 }

@@ -17,7 +17,7 @@
  * License: LGPL v2.1 or later (see COPYING)
  */
 #include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 
 #include <QDebug>
 #include <QEvent>
@@ -277,5 +277,4 @@ void ColumnResizer::dropWidgetsFromGridLayout(QGridLayout* layout)
 //    d->block_update = false;
 //}
 
-//#include <columnresizer.moc>
 // vi: ts=4 sw=4 et

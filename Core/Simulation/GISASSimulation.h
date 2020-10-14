@@ -15,8 +15,8 @@
 #ifndef BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H
 
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Simulation/Simulation2D.h"
-#include "Core/SimulationElement/SimulationElement.h"
 
 class MultiLayer;
 class ISampleBuilder;
@@ -28,9 +28,6 @@ class GISASSimulation : public Simulation2D
 {
 public:
     GISASSimulation();
-    GISASSimulation(const MultiLayer& p_sample);
-    GISASSimulation(const std::shared_ptr<ISampleBuilder> p_sample_builder);
-
     ~GISASSimulation() {}
 
     GISASSimulation* clone() const override { return new GISASSimulation(*this); }

@@ -13,8 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Correlations/FTDecay2D.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Utils/MathFunctions.h"
 #include <algorithm>
 
 // ************************************************************************** //
@@ -112,15 +111,12 @@ double FTDecayFunction2DGauss::evaluate(double qx, double qy) const
 // class FTDecayFunction2DVoigt
 // ************************************************************************** //
 
-//! Constructor of two-dimensional pseudo-Voigt decay function in reciprocal space.
-//! @param decay_length_x: the decay length in nanometers along x-axis of the distribution
-//! @param decay_length_y: the decay length in nanometers along y-axis of the distribution
-//! @param eta: parameter [0,1] to balance between Cauchy (eta=0.0) and Gauss (eta=1.0)
-//! @param gamma: distribution orientation with respect to the first lattice vector in radians
-
 FTDecayFunction2DVoigt::FTDecayFunction2DVoigt(const std::vector<double> P)
     : IFTDecayFunction2D(
-          {"FTDecayFunction2DVoigt", "class_tooltip", {{"Eta", "", "para_tooltip", -INF, +INF, 0}}},
+          {"FTDecayFunction2DVoigt",
+           "class_tooltip",
+           {{"Eta", "", "balances between Gauss (eta=0) and Cauchy (eta=1) limiting cases", -INF,
+             +INF, 0}}},
           P),
       m_eta(m_P[0])
 {

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_CORE_SIMULATION_SPECULARSIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_SPECULARSIMULATION_H
 
-#include "Core/Intensity/OutputData.h"
 #include "Core/RT/ILayerRTCoefficients.h"
 #include "Core/Simulation/Simulation.h"
 
@@ -35,8 +34,6 @@ class SpecularSimulation : public Simulation
 {
 public:
     SpecularSimulation();
-    SpecularSimulation(const MultiLayer& sample);
-    SpecularSimulation(const std::shared_ptr<ISampleBuilder> sample_builder);
     ~SpecularSimulation() override;
 
     SpecularSimulation* clone() const override;

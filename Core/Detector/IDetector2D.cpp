@@ -13,14 +13,14 @@
 // ************************************************************************** //
 
 #include "Core/Detector/IDetector2D.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Beam/Beam.h"
 #include "Core/Detector/DetectorContext.h"
 #include "Core/Detector/DetectorFunctions.h"
 #include "Core/Detector/RegionOfInterest.h"
 #include "Core/Detector/SimulationArea.h"
 #include "Core/Mask/InfinitePlane.h"
-#include "Core/SimulationElement/SimulationElement.h"
 
 IDetector2D::IDetector2D() = default;
 
@@ -41,13 +41,6 @@ void IDetector2D::setDetectorParameters(size_t n_x, double x_min, double x_max, 
     addAxis(*createAxis(1, n_y, y_min, y_max));
 }
 
-void IDetector2D::setDetectorAxes(const IAxis& axis0, const IAxis& axis1)
-{
-    clear();
-    addAxis(axis0);
-    addAxis(axis1);
-}
-
 const RegionOfInterest* IDetector2D::regionOfInterest() const
 {
     return m_region_of_interest.get();
@@ -55,7 +48,7 @@ const RegionOfInterest* IDetector2D::regionOfInterest() const
 
 void IDetector2D::setRegionOfInterest(double xlow, double ylow, double xup, double yup)
 {
-    m_region_of_interest.reset(new RegionOfInterest(*this, xlow, ylow, xup, yup));
+    m_region_of_interest = std::make_unique<RegionOfInterest>(*this, xlow, ylow, xup, yup);
     m_detector_mask.initMaskData(*this);
 }
 

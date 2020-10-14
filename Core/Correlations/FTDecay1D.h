@@ -15,9 +15,9 @@
 #ifndef BORNAGAIN_CORE_CORRELATIONS_FTDECAY1D_H
 #define BORNAGAIN_CORE_CORRELATIONS_FTDECAY1D_H
 
-#include "Core/Basics/ICloneable.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Parametrization/INode.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/ICloneable.h"
+#include "Param/Node/INode.h"
 #include <utility>
 
 //! Interface for a one-dimensional decay function,
@@ -85,9 +85,6 @@ public:
 class FTDecayFunction1DVoigt : public IFTDecayFunction1D
 {
 public:
-    //! Constructor of pseudo-Voigt decay function.
-    //! @param decay_length: half-width of the distribution in nanometers
-    //! @param eta: parameter [0,1] to balance between Cauchy (eta=0.0) and Gauss (eta=1.0)
     FTDecayFunction1DVoigt(const std::vector<double> P);
     FTDecayFunction1DVoigt(double decay_length, double eta);
 

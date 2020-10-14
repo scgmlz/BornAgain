@@ -76,5 +76,5 @@ def run_simulation():
 
 if __name__ == '__main__': 
     result = run_simulation()
-    ba.plot_simulation_result(result, cmap='jet', units=ba.AxesUnits.QSPACE,
+    ba.plot_simulation_result(result, cmap='jet', units=ba.Axes.QSPACE,
                               aspect='auto')

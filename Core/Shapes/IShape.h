@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_SHAPES_ISHAPE_H
 #define BORNAGAIN_CORE_SHAPES_ISHAPE_H
 
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Vectors3D.h"
 #include <vector>
 
 //! Pure virtual base class for different shapes.

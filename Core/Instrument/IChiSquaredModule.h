@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_INSTRUMENT_ICHISQUAREDMODULE_H
 #define BORNAGAIN_CORE_INSTRUMENT_ICHISQUAREDMODULE_H
 
-#include "Core/Basics/ICloneable.h"
+#include "Base/Types/ICloneable.h"
 #include <memory>
 
 class IVarianceFunction;

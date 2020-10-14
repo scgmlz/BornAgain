@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/BeamAngleItems.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 
 BeamAzimuthalAngleItem::BeamAzimuthalAngleItem()
     : BeamDistributionItem("BeamAzimuthalAngle", m_show_mean)

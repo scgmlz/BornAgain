@@ -15,14 +15,11 @@
 #include "Core/HardParticle/FormFactorPrism3.h"
 #include <iostream>
 
-//! Constructor of a prism with an equilaterial triangle base.
-//! @param base_edge: length of the base edge in nanometers
-//! @param height: height in nanometers
 FormFactorPrism3::FormFactorPrism3(const std::vector<double> P)
     : IFormFactorPrism({"Prism3",
-                        "class_tooltip",
-                        {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                         {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                        "prism with regular trigonal base",
+                        {{"BaseEdge", "nm", "edge length of trigonal base", 0, +INF, 0},
+                         {"Height", "nm", "height", 0, +INF, 0}}},
                        P),
       m_base_edge(m_P[0]), m_height(m_P[1])
 {

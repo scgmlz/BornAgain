@@ -13,13 +13,12 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Aggregate/IInterferenceFunction.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/Aggregate/InterferenceFunctionNone.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleDistribution.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
 
 namespace
 {
@@ -28,12 +27,10 @@ namespace
 //! which is the case for 2D functions.
 bool particleDensityIsProvidedByInterference(const IInterferenceFunction& iff)
 {
-    if (iff.getName() == "Interference2DLattice" || iff.getName() == "Interference2DParaCrystal"
-        || iff.getName() == "Interference2DSuperLattice"
-        || iff.getName() == "InterferenceFinite2DLattice"
-        || iff.getName() == "InterferenceHardDisk")
-        return true;
-    return false;
+    return iff.getName() == "Interference2DLattice" || iff.getName() == "Interference2DParaCrystal"
+           || iff.getName() == "Interference2DSuperLattice"
+           || iff.getName() == "InterferenceFinite2DLattice"
+           || iff.getName() == "InterferenceHardDisk";
 }
 } // namespace
 
@@ -53,7 +50,7 @@ ParticleLayout::ParticleLayout(const IAbstractParticle& particle, double abundan
     registerWeight();
 }
 
-ParticleLayout::~ParticleLayout() {} // needs member class definitions => don't move to .h
+ParticleLayout::~ParticleLayout() = default; // needs member class definitions => don't move to .h
 
 ParticleLayout* ParticleLayout::clone() const
 {

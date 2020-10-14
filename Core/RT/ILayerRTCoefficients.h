@@ -15,9 +15,9 @@
 #ifndef BORNAGAIN_CORE_RT_ILAYERRTCOEFFICIENTS_H
 #define BORNAGAIN_CORE_RT_ILAYERRTCOEFFICIENTS_H
 
-#include "Core/Basics/Complex.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Vector/EigenCore.h"
+#include "Base/Types/Complex.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Vector/EigenCore.h"
 
 //! Interface to access reflection/transmission coefficients.
 //! @ingroup algorithms_internal

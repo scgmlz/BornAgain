@@ -13,10 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/Lattice/Lattice.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Vector/Transform3D.h"
 #include "Core/Lattice/ISelectionRule.h"
-#include "Core/Parametrization/RealParameter.h"
-#include "Core/Vector/Transform3D.h"
+#include "Param/Base/RealParameter.h"
 #include <gsl/gsl_linalg.h>
 
 Lattice::Lattice()

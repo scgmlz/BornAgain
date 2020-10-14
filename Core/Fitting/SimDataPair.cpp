@@ -13,8 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Fitting/SimDataPair.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Intensity/OutputData.h"
+#include "Core/Instrument/IntensityDataFunctions.h"
 #include "Core/Simulation/Simulation.h"
 #include "Core/Simulation/UnitConverterUtils.h"
 #include "Fit/TestEngine/Numeric.h"
@@ -91,21 +90,21 @@ size_t SimDataPair::numberOfFitElements() const
 
 SimulationResult SimDataPair::simulationResult() const
 {
-    if (m_sim_data.size() == 0)
+    if (m_sim_data.empty())
         throwInitializationException("simulationResult");
     return m_sim_data;
 }
 
 SimulationResult SimDataPair::experimentalData() const
 {
-    if (m_exp_data.size() == 0)
+    if (m_exp_data.empty())
         throwInitializationException("experimentalData");
     return m_exp_data;
 }
 
 SimulationResult SimDataPair::uncertainties() const
 {
-    if (m_uncertainties.size() == 0)
+    if (m_uncertainties.empty())
         throwInitializationException("uncertainties");
     return m_uncertainties;
 }
@@ -113,7 +112,7 @@ SimulationResult SimDataPair::uncertainties() const
 //! Returns the user uncertainties cut to the ROI area.
 SimulationResult SimDataPair::userWeights() const
 {
-    if (m_user_weights.size() == 0)
+    if (m_user_weights.empty())
         throwInitializationException("userWeights");
     return m_user_weights;
 }
@@ -146,28 +145,28 @@ SimulationResult SimDataPair::absoluteDifference() const
 
 std::vector<double> SimDataPair::experimental_array() const
 {
-    if (m_exp_data.size() == 0)
+    if (m_exp_data.empty())
         throwInitializationException("experimental_array");
     return m_exp_data.data()->getRawDataVector();
 }
 
 std::vector<double> SimDataPair::simulation_array() const
 {
-    if (m_sim_data.size() == 0)
+    if (m_sim_data.empty())
         throwInitializationException("simulation_array");
     return m_sim_data.data()->getRawDataVector();
 }
 
 std::vector<double> SimDataPair::uncertainties_array() const
 {
-    if (m_uncertainties.size() == 0)
+    if (m_uncertainties.empty())
         throwInitializationException("uncertainties_array");
     return m_uncertainties.data()->getRawDataVector();
 }
 
 std::vector<double> SimDataPair::user_weights_array() const
 {
-    if (m_user_weights.size() == 0)
+    if (m_user_weights.empty())
         throwInitializationException("user_weights_array");
     return m_user_weights.data()->getRawDataVector();
 }

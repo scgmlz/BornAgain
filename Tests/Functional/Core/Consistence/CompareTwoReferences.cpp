@@ -12,12 +12,10 @@
 //
 // ************************************************************************** //
 
-//#include "BABuild.h"
 #include "BATesting.h"
-#include "Core/Basics/Assert.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Tools/FileSystemUtils.h"
+#include "Base/Utils/FileSystemUtils.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
+#include "Core/Instrument/IntensityDataFunctions.h"
 #include <iostream>
 
 namespace

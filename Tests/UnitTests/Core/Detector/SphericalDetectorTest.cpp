@@ -1,16 +1,13 @@
 #include "Core/Detector/SphericalDetector.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 #include "Core/Beam/Beam.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Detector/ConvolutionDetectorResolution.h"
 #include "Core/Detector/DetectorFunctions.h"
 #include "Core/Detector/RegionOfInterest.h"
-#include "Core/Detector/ResolutionFunction2DGaussian.h"
 #include "Core/Detector/SimulationArea.h"
-#include "Core/Intensity/OutputData.h"
 #include "Core/Mask/Polygon.h"
 #include "Core/Mask/Rectangle.h"
+#include "Core/Resolution/ConvolutionDetectorResolution.h"
+#include "Core/Resolution/ResolutionFunction2DGaussian.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
@@ -25,7 +22,7 @@ TEST_F(SphericalDetectorTest, initialState)
 
     // checking size
     EXPECT_EQ(0u, detector.dimension());
-    EXPECT_EQ(AxesUnits::RADIANS, detector.defaultAxesUnits());
+    EXPECT_EQ(Axes::Units::RADIANS, detector.defaultAxesUnits());
 
     // masks
     EXPECT_FALSE(detector.detectorMask()->hasMasks());
@@ -58,10 +55,6 @@ TEST_F(SphericalDetectorTest, constructionWithAxes)
     EXPECT_EQ(axis0.getMax(), detector.getAxis(0).getMax());
     EXPECT_EQ(axis1.getMin(), detector.getAxis(1).getMin());
     EXPECT_EQ(axis1.getMax(), detector.getAxis(1).getMax());
-
-    // clearing detector
-    detector.clear();
-    EXPECT_EQ(0u, detector.dimension());
 }
 
 // Construction of the detector via classical constructor.

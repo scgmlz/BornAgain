@@ -16,9 +16,9 @@
 
 #include "GUI/coregui/mainwindow/PyImportAssistant.h"
 #include "BABuild.h"
+#include "Base/Utils/SysUtils.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/PyIO/PyImport.h"
-#include "Core/Tools/SysUtils.h"
+#include "Core/Multilayer/PyImport.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
 #include "GUI/coregui/Views/InfoWidgets/ComboSelectorDialog.h"
 #include "GUI/coregui/Views/InfoWidgets/DetailedMessageBox.h"

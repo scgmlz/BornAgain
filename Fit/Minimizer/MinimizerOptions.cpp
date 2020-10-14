@@ -38,7 +38,7 @@ void MinimizerOptions::setOptionString(const std::string& options)
     std::vector<std::string> tokens = StringUtils::split(options, delimeter);
     try {
         for (std::string opt : tokens)
-            if (opt.size())
+            if (!opt.empty())
                 processCommand(opt);
     } catch (std::exception& ex) {
         std::ostringstream ostr;

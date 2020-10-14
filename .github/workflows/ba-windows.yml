@@ -95,7 +95,6 @@ jobs:
         dir: '${{ github.workspace }}/qt5/'
         install-deps: 'true'
         modules: 'qtcharts qtwebengine'
-        mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
         cached: 'false'
 
     - name: Download ccache, Ninja, Nsis

@@ -96,7 +96,7 @@ void MultiComboPropertyEditor::onModelDataChanged(const QModelIndex& topLeft, co
         return;
 
     ComboProperty comboProperty = m_data.value<ComboProperty>();
-    auto state = item->checkState() == Qt::Checked ? true : false;
+    auto state = item->checkState() == Qt::Checked;
     comboProperty.setSelected(topLeft.row(), state);
 
     updateBoxLabel();

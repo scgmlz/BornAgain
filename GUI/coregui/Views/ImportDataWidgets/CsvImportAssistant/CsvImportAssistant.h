@@ -29,7 +29,7 @@ class csvSelectionState
 public:
     csvSelectionState()
         : m_intensityColNum(-1), m_intensityMultiplier(1.), m_coordinateColNum(-1),
-          m_coordinateMultiplier(1.), m_firstRow(-1), m_lastRow(-1), m_units(AxesUnits::NBINS)
+          m_coordinateMultiplier(1.), m_firstRow(-1), m_lastRow(-1), m_units(Axes::Units::NBINS)
     {
     }
 
@@ -39,7 +39,7 @@ public:
     double m_coordinateMultiplier;
     int m_firstRow;
     int m_lastRow;
-    AxesUnits m_units;
+    Axes::Units m_units;
 
     bool availableData() { return m_intensityColNum > -1; }
 };
@@ -53,7 +53,7 @@ public:
     ImportDataInfo getData() { return m_dataAvailable ? fillData() : ImportDataInfo(); }
     static void showErrorMessage(std::string message);
     void setIntensityColumn(int iCol, double multiplier = 1.0);
-    void setCoordinateColumn(int iCol, AxesUnits units, double multiplier = 1.0);
+    void setCoordinateColumn(int iCol, Axes::Units units, double multiplier = 1.0);
     void setFirstRow(int iRow);
     void setLastRow(int iRow);
     size_t columnCount() { return m_csvArray[0].size(); }
@@ -82,7 +82,7 @@ private:
     int m_firstRow;
     int m_lastRow;
     std::set<int> m_rowsToDiscard;
-    AxesUnits m_units;
+    Axes::Units m_units;
     bool m_dataAvailable;
 };
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVIMPORTASSISTANT_H

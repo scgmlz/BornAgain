@@ -15,10 +15,10 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_COLORMAPUTILS_H
 
-#include "qcustomplot.h"
 #include <QMap>
 #include <QMargins>
 #include <QString>
+#include <qcustomplot.h>
 
 class IntensityDataItem;
 class ColorMap;

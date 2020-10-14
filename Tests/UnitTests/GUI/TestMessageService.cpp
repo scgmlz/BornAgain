@@ -26,7 +26,7 @@ public:
     class Sender : public QObject
     {
     public:
-        Sender(const QString& name) { setObjectName(name); }
+        explicit Sender(const QString& name) { setObjectName(name); }
     };
 };
 

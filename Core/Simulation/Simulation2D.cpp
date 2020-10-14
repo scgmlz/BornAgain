@@ -13,21 +13,14 @@
 // ************************************************************************** //
 
 #include "Core/Simulation/Simulation2D.h"
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Computation/DWBAComputation.h"
 #include "Core/Computation/IBackground.h"
 #include "Core/Detector/DetectorContext.h"
 #include "Core/Detector/DetectorFunctions.h"
-#include "Core/Intensity/Histogram2D.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Histo/Histogram2D.h"
 
 Simulation2D::Simulation2D() = default;
-
-Simulation2D::Simulation2D(const MultiLayer& p_sample) : Simulation(p_sample) {}
-
-Simulation2D::Simulation2D(const std::shared_ptr<ISampleBuilder> p_sample_builder)
-    : Simulation(p_sample_builder)
-{
-}
 
 Simulation2D::~Simulation2D() = default;
 

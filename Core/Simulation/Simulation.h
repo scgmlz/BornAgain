@@ -17,12 +17,11 @@
 
 #include "Core/Computation/ProgressHandler.h"
 #include "Core/Detector/IDetector2D.h"
+#include "Core/Histo/SimulationResult.h"
 #include "Core/Instrument/Instrument.h"
-#include "Core/Instrument/SimulationResult.h"
-#include "Core/Parametrization/DistributionHandler.h"
-#include "Core/Parametrization/INode.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/RT/SimulationOptions.h"
 #include "Core/SampleBuilderEngine/SampleProvider.h"
+#include "Param/Distrib/DistributionHandler.h"
 
 template <class T> class OutputData;
 class IBackground;
@@ -39,8 +38,6 @@ class Simulation : public ICloneable, public INode
 {
 public:
     Simulation();
-    Simulation(const MultiLayer& p_sample);
-    Simulation(const std::shared_ptr<ISampleBuilder> p_sample_builder);
     virtual ~Simulation();
 
     virtual Simulation* clone() const = 0;
@@ -72,7 +69,7 @@ public:
     void setSample(const MultiLayer& sample);
     const MultiLayer* sample() const;
 
-    void setSampleBuilder(const std::shared_ptr<ISampleBuilder> sample_builder);
+    void setSampleBuilder(const std::shared_ptr<ISampleBuilder>& sample_builder);
 
     void setBackground(const IBackground& bg);
     const IBackground* background() const { return mP_background.get(); }

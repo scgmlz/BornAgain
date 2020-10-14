@@ -92,7 +92,7 @@ ParameterTuningDelegate::ParameterTuningDelegate(QObject* parent)
 {
 }
 
-ParameterTuningDelegate::~ParameterTuningDelegate() {}
+ParameterTuningDelegate::~ParameterTuningDelegate() = default;
 
 void ParameterTuningDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const

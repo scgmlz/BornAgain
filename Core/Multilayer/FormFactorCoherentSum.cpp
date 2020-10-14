@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/Multilayer/FormFactorCoherentSum.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Base/Pixel/SimulationElement.h"
+#include "Base/Types/Exceptions.h"
 
 FormFactorCoherentSum::FormFactorCoherentSum(double abundance) : m_abundance(abundance) {}
 

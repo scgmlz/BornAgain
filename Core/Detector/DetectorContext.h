@@ -15,8 +15,8 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_DETECTORCONTEXT_H
 #define BORNAGAIN_CORE_DETECTOR_DETECTORCONTEXT_H
 
-#include "Core/Binning/IPixel.h"
-#include "Core/Vector/EigenCore.h"
+#include "Base/Pixel/IPixel.h"
+#include "Base/Vector/EigenCore.h"
 #include <memory>
 #include <vector>
 

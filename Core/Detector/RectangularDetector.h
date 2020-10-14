@@ -74,7 +74,7 @@ public:
     EDetectorArrangement getDetectorArrangment() const;
 
     //! return default axes units
-    AxesUnits defaultAxesUnits() const override;
+    Axes::Units defaultAxesUnits() const override;
 
     RectangularPixel* regionOfInterestPixel() const;
 

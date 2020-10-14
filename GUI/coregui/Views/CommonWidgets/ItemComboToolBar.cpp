@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/CommonWidgets/ItemComboToolBar.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include <QAction>
 #include <QComboBox>
 #include <QStandardItemModel>

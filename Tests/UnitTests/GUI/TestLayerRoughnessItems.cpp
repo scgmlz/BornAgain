@@ -1,4 +1,3 @@
-#include "Core/Multilayer/LayerRoughness.h"
 #include "GUI/coregui/Models/LayerRoughnessItems.h"
 #include "GUI/coregui/Models/TransformFromDomain.h"
 #include "GUI/coregui/Models/TransformToDomain.h"

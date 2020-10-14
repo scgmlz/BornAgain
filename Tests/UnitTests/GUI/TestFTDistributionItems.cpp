@@ -1,4 +1,3 @@
-#include "Core/Correlations/FTDistributions1D.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "Tests/GTestWrapper/google_test.h"
 

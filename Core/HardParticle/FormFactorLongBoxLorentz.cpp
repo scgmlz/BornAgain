@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorLongBoxLorentz.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/Shapes/Box.h"
-#include "Core/Tools/MathFunctions.h"
 
 FormFactorLongBoxLorentz::FormFactorLongBoxLorentz(const std::vector<double> P)
     : IFormFactorBorn({"FormFactorLongBoxLorentz",
@@ -54,5 +54,5 @@ IFormFactor* FormFactorLongBoxLorentz::sliceFormFactor(ZLimits limits, const IRo
 
 void FormFactorLongBoxLorentz::onChange()
 {
-    mP_shape.reset(new Box(m_length, m_width, m_height));
+    mP_shape = std::make_unique<Box>(m_length, m_width, m_height);
 }

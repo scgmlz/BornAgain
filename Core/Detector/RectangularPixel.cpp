@@ -13,12 +13,12 @@
 // ************************************************************************** //
 
 #include "Core/Detector/RectangularPixel.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Const/Units.h"
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Beam/Beam.h"
-#include "Core/Detector/IDetectorResolution.h"
 #include "Core/Detector/RegionOfInterest.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Resolution/IDetectorResolution.h"
 
 RectangularPixel::RectangularPixel(kvector_t corner_pos, kvector_t width, kvector_t height)
     : m_corner_pos(std::move(corner_pos)), m_width(std::move(width)), m_height(std::move(height))

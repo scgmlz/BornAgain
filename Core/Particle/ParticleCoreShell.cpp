@@ -15,6 +15,7 @@
 #include "Core/Particle/ParticleCoreShell.h"
 #include "Core/Particle/FormFactorCoreShell.h"
 #include "Core/Particle/Particle.h"
+#include "Core/Particle/SlicedParticle.h"
 
 ParticleCoreShell::ParticleCoreShell(const Particle& shell, const Particle& core,
                                      kvector_t relative_core_position)
@@ -25,13 +26,13 @@ ParticleCoreShell::ParticleCoreShell(const Particle& shell, const Particle& core
     addAndRegisterShell(shell);
 }
 
-ParticleCoreShell::~ParticleCoreShell() {}
+ParticleCoreShell::~ParticleCoreShell() = default;
 
 ParticleCoreShell* ParticleCoreShell::clone() const
 {
     ParticleCoreShell* p_result = new ParticleCoreShell(*mp_shell, *mp_core);
     p_result->setAbundance(m_abundance);
-    if (mP_rotation.get())
+    if (mP_rotation)
         p_result->setRotation(*mP_rotation);
     p_result->setPosition(m_position);
     return p_result;

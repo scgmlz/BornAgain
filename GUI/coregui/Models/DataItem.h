@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DATAITEM_H
 
-#include "Core/Intensity/OutputData.h"
+#include "Core/Data/OutputData.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/mainwindow/SaveLoadInterface.h"
 #include <QDateTime>

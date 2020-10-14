@@ -12,12 +12,10 @@
 //
 // ************************************************************************** //
 
-#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
 #include "Core/InputOutput/DataFormatUtils.cpp"
 // TODO avoid importing a cpp file
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/DataSelector.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
-#include "GUI/coregui/utils/ImportDataInfo.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 #include <QFileDialog>
 #include <QFormLayout>
@@ -32,7 +30,7 @@
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
     : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(-1),
       m_intensityMultiplier(1.0), m_coordinateColNum(-1), m_coordinateMultiplier(1.0),
-      m_firstRow(-1), m_lastRow(-1), m_units(AxesUnits::NBINS), m_dataAvailable(false)
+      m_firstRow(-1), m_lastRow(-1), m_units(Axes::Units::NBINS), m_dataAvailable(false)
 {
     if (!loadCsvFile()) {
         return;
@@ -43,7 +41,7 @@ CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, Q
     } else {
         m_intensityColNum = 0;
         m_coordinateColNum = -1;
-        m_units = AxesUnits::NBINS;
+        m_units = Axes::Units::NBINS;
         m_firstRow = 0;
         m_lastRow = int(m_csvFile->NumberOfRows() - 1);
         m_dataAvailable = true;
@@ -87,7 +85,7 @@ void CsvImportAssistant::setIntensityColumn(int iCol, double multiplier)
     m_intensityColNum = iCol - 1;
     m_intensityMultiplier = multiplier;
 }
-void CsvImportAssistant::setCoordinateColumn(int iCol, AxesUnits units, double multiplier)
+void CsvImportAssistant::setCoordinateColumn(int iCol, Axes::Units units, double multiplier)
 {
     m_coordinateColNum = iCol - 1;
     m_units = units;
@@ -167,7 +165,7 @@ ImportDataInfo CsvImportAssistant::fillData()
 
     getValuesFromColumns(intensityValues, coordinateValues);
 
-    auto axisName = csv::UnitsLabels[m_units].toStdString();
+    const auto axisName = axisUnitLabel.at(m_units);
     PointwiseAxis coordAxis(axisName, coordinateValues);
     resultOutputData->addAxis(coordAxis);
     resultOutputData->setRawDataVector(intensityValues);
@@ -377,6 +375,6 @@ void CsvImportAssistant::resetSelection()
     m_coordinateColNum = -1;
     m_firstRow = -1;
     m_lastRow = -1;
-    m_units = AxesUnits::NBINS;
+    m_units = Axes::Units::NBINS;
     m_dataAvailable = false;
 }

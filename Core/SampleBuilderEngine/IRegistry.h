@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_SAMPLEBUILDERENGINE_IREGISTRY_H
 #define BORNAGAIN_CORE_SAMPLEBUILDERENGINE_IREGISTRY_H
 
-#include "Core/Basics/Exceptions.h"
+#include "Base/Types/Exceptions.h"
 #include <map>
 #include <memory>
 #include <string>

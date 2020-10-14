@@ -1,5 +1,4 @@
 #include "GUI/coregui/Models/ComboProperty.h"
-#include "GUI/coregui/Models/GroupInfo.h"
 #include "GUI/coregui/Models/GroupItem.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "GUI/coregui/Models/SessionModel.h"
@@ -76,7 +75,7 @@ TEST_F(TestGroupItem, test_CreateGroup)
 
     // checking current variant
     QVariant value = groupItem->value();
-    EXPECT_TRUE(value.canConvert<ComboProperty>() == true);
+    EXPECT_TRUE(value.canConvert<ComboProperty>());
     ComboProperty combo = value.value<ComboProperty>();
     EXPECT_EQ(combo.getValues(), groupInfo.itemLabels());
     int index = groupInfo.itemTypes().indexOf(groupInfo.defaultType());

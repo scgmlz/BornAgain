@@ -66,7 +66,7 @@ void CsvIntensityColumn::resetColumn(int colNum, double multiplier, csv::DataCol
 /*Csv Coordinate Column*/
 
 // Constructors:
-CsvCoordinateColumn::CsvCoordinateColumn() : CsvIntensityColumn(), m_units(AxesUnits::NBINS) {}
+CsvCoordinateColumn::CsvCoordinateColumn() : CsvIntensityColumn(), m_units(Axes::Units::NBINS) {}
 
 CsvCoordinateColumn::CsvCoordinateColumn(const CsvCoordinateColumn& toCopy)
     : CsvIntensityColumn(toCopy), m_units(toCopy.units())
@@ -74,18 +74,18 @@ CsvCoordinateColumn::CsvCoordinateColumn(const CsvCoordinateColumn& toCopy)
 }
 
 CsvCoordinateColumn::CsvCoordinateColumn(int colNum, double multiplier, csv::DataColumn values,
-                                         AxesUnits units)
+                                         Axes::Units units)
 
     : CsvIntensityColumn(colNum, multiplier, values), m_units(units)
 {
 }
 // Getters:
-AxesUnits CsvCoordinateColumn::units() const
+Axes::Units CsvCoordinateColumn::units() const
 {
     return m_units;
 }
 // Setters:
-void CsvCoordinateColumn::setUnits(AxesUnits const units)
+void CsvCoordinateColumn::setUnits(Axes::Units const units)
 {
     m_units = units;
 }
@@ -94,7 +94,7 @@ void CsvCoordinateColumn::setName(csv::ColumnType const name)
     m_name = name;
 }
 void CsvCoordinateColumn::resetColumn(int colNum, double multiplier, csv::DataColumn values,
-                                      AxesUnits units, csv::ColumnType name)
+                                      Axes::Units units, csv::ColumnType name)
 {
     CsvIntensityColumn::resetColumn(colNum, multiplier, values);
     m_units = units;

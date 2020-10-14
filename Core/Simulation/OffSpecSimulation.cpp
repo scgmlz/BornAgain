@@ -14,27 +14,15 @@
 
 #include "Core/Simulation/OffSpecSimulation.h"
 #include "Core/Computation/DWBAComputation.h"
-#include "Core/Intensity/Histogram2D.h"
-#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Detector/SimpleUnitConverters.h"
+#include "Core/Histo/Histogram2D.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
 
 OffSpecSimulation::OffSpecSimulation()
-{
-    initialize();
-}
-
-OffSpecSimulation::OffSpecSimulation(const MultiLayer& p_sample) : Simulation2D(p_sample)
-{
-    initialize();
-}
-
-OffSpecSimulation::OffSpecSimulation(const std::shared_ptr<ISampleBuilder> p_sample_builder)
-    : Simulation2D(p_sample_builder)
 {
     initialize();
 }

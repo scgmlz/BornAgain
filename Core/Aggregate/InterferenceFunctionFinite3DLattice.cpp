@@ -13,17 +13,13 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/InterferenceFunctionFinite3DLattice.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Parametrization/RealParameter.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/MathFunctions.h"
+#include "Param/Base/RealParameter.h"
 
 #include <limits>
 
-//! Constructor of three-dimensional finite lattice interference function.
-//! @param lattice: object specifying a 2d lattice structure
-//! @param N_1: number of lattice cells in the first lattice direction
-//! @param N_2: number of lattice cells in the second lattice direction
 InterferenceFunctionFinite3DLattice::InterferenceFunctionFinite3DLattice(const Lattice& lattice,
                                                                          unsigned N_1, unsigned N_2,
                                                                          unsigned N_3)
@@ -67,6 +63,6 @@ double InterferenceFunctionFinite3DLattice::iff_without_dw(const kvector_t q) co
 
 void InterferenceFunctionFinite3DLattice::setLattice(const Lattice& lattice)
 {
-    mP_lattice.reset(new Lattice(lattice));
+    mP_lattice = std::make_unique<Lattice>(lattice);
     registerChild(mP_lattice.get());
 }

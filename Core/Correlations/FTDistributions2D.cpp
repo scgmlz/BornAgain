@@ -13,14 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/Correlations/FTDistributions2D.h"
-#include "Core/Basics/Algorithms.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Tools/Integrator.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/Integrator.h"
+#include "Base/Utils/MathFunctions.h"
 #include <limits>
-
-using algo::concat;
 
 // ************************************************************************** //
 // interface IFTDistribution1D
@@ -170,16 +166,12 @@ std::unique_ptr<IDistribution2DSampler> FTDistribution2DCone::createSampler() co
 // class FTDistribution2DVoigt
 // ************************************************************************** //
 
-//! Constructor of two-dimensional pseudo-Voigt probability distribution.
-//! @param omega_x: half-width of the distribution along its x-axis in nanometers
-//! @param omega_y: half-width of the distribution along its y-axis in nanometers
-//! @param eta: parameter [0,1] to balance between Cauchy (eta=0.0) and Gauss (eta=1.0)
-//! @param gamma: angle in direct space between first lattice vector and x-axis
-//! of the distribution in radians
-
 FTDistribution2DVoigt::FTDistribution2DVoigt(const std::vector<double> P)
     : IFTDistribution2D(
-          {"FTDistribution2DVoigt", "class_tooltip", {{"Eta", "", "para_tooltip", -INF, +INF, 0}}},
+          {"FTDistribution2DVoigt",
+           "class_tooltip",
+           {{"Eta", "", "balances between Gauss (eta=0) and Cauchy (eta=1) limiting cases", -INF,
+             +INF, 0}}},
           P),
       m_eta(m_P[3])
 {

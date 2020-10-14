@@ -15,10 +15,7 @@
 #ifndef BORNAGAIN_CORE_MATERIAL_MATERIALUTILS_H
 #define BORNAGAIN_CORE_MATERIAL_MATERIALUTILS_H
 
-#include "Core/Basics/Complex.h"
 #include "Core/Material/Material.h"
-#include "Core/Vector/EigenCore.h"
-#include "Core/Vector/Vectors3D.h"
 
 //! A number of materials-related helper functions for internal use
 //! @ingroup materials
@@ -37,7 +34,8 @@ complex_t ScalarReducedPotential(complex_t n, kvector_t k, double n_ref);
 Eigen::Matrix2cd PolarizedReducedPotential(complex_t n, kvector_t b_field, kvector_t k,
                                            double n_ref);
 
-//! Utility to compute magnetization correction for reduced potential and scattering length density
+// Utility to compute magnetization correction for reduced potential and scattering length density.
+// Used with T = double, complex_t.
 
 template <typename T>
 Eigen::Matrix2cd MagnetizationCorrection(complex_t unit_factor, double magnetic_factor,

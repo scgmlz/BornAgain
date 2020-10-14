@@ -1,8 +1,8 @@
 #include "Core/Particle/MesoCrystal.h"
 #include "Core/HardParticle/FormFactorFullSphere.h"
-#include "Core/Lattice/Lattice.h"
 #include "Core/Particle/Crystal.h"
 #include "Core/Particle/ParticleComposition.h"
+#include "Core/Scattering/Rotations.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class MesoCrystalTest : public ::testing::Test

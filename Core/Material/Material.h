@@ -15,10 +15,7 @@
 #ifndef BORNAGAIN_CORE_MATERIAL_MATERIAL_H
 #define BORNAGAIN_CORE_MATERIAL_MATERIAL_H
 
-#include "Core/Basics/Complex.h"
 #include "Core/Material/BaseMaterialImpl.h"
-#include "Core/Vector/EigenCore.h"
-#include "Core/Vector/Vectors3D.h"
 #include <memory>
 #include <vector>
 
@@ -31,22 +28,20 @@ class WavevectorInfo;
 class Material
 {
 public:
-    //! Material copy-constructor
-    Material(const Material& material);
-
-    //! Material move-constructor
-    Material(Material&& material) = default;
-
 #ifndef SWIG
     //! Creates material with particular material implementation
     Material(std::unique_ptr<BaseMaterialImpl> material_impl);
 #endif // SWIG
 
-    //! Material copy assignment
-    Material& operator=(const Material& other);
+    Material(const Material& material);
+#ifndef SWIG
+    Material(Material&& material) = default;
+#endif // SWIG
 
-    //! Material move assignment
+    Material& operator=(const Material& other);
+#ifndef SWIG
     Material& operator=(Material&& other) = default;
+#endif // SWIG
 
     //! Constructs a material with inverted magnetization
     Material inverted() const;

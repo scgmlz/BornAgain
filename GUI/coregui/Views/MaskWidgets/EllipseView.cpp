@@ -14,11 +14,10 @@
 
 #include "GUI/coregui/Views/MaskWidgets/EllipseView.h"
 #include "GUI/coregui/Models/MaskItems.h"
-#include "GUI/coregui/Views/MaskWidgets/SizeHandleElement.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 
-EllipseView::EllipseView() {}
+EllipseView::EllipseView() = default;
 
 void EllipseView::onChangedX()
 {

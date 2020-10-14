@@ -44,7 +44,6 @@
 
 #include <QtDesigner/QDesignerWidgetBoxInterface>
 
-//#include <QtWidgets/QListView>
 #include <QListView>
 #include <QtCore/QList>
 

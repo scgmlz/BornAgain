@@ -16,7 +16,6 @@
 #include "Core/Computation/DelayedProgressCounter.h"
 #include "Core/Multilayer/SpecularScalarStrategy.h"
 #include "Core/Multilayer/SpecularSimulationElement.h"
-#include "Core/RT/ScalarRTCoefficients.h"
 
 SpecularComputationTerm::SpecularComputationTerm(std::unique_ptr<ISpecularStrategy> strategy)
     : m_Strategy(std::move(strategy)){};
@@ -30,7 +29,7 @@ SpecularComputationTerm::~SpecularComputationTerm() = default;
 
 void SpecularComputationTerm::setProgressHandler(ProgressHandler* p_progress)
 {
-    mP_progress_counter.reset(new DelayedProgressCounter(p_progress, 100));
+    mP_progress_counter = std::make_unique<DelayedProgressCounter>(p_progress, 100);
 }
 
 void SpecularComputationTerm::compute(SpecularSimulationElement& elem,

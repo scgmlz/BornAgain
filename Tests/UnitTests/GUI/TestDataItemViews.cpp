@@ -4,7 +4,6 @@
 #include "GUI/coregui/Models/DataProperties.h"
 #include "GUI/coregui/Models/DataPropertyContainer.h"
 #include "GUI/coregui/Models/RealDataModel.h"
-#include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/mainwindow/projectdocument.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "GUI/coregui/utils/MessageService.h"

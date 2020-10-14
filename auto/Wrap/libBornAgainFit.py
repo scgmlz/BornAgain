@@ -143,6 +143,20 @@ _libBornAgainFit.SwigPyIterator_swigregister(SwigPyIterator)
 
 SHARED_PTR_DISOWN = _libBornAgainFit.SHARED_PTR_DISOWN
 
+
+import warnings
+def deprecated(message):
+  def deprecated_decorator(func):
+      def deprecated_func(*args, **kwargs):
+          warnings.simplefilter('always', DeprecationWarning)  # turn off filter
+          warnings.warn("{} is a deprecated function. {}".format(func.__name__, message),
+                        category=DeprecationWarning,
+                        stacklevel=2)
+          warnings.simplefilter('default', DeprecationWarning)  # reset filter
+          return func(*args, **kwargs)
+      return deprecated_func
+  return deprecated_decorator
+
 class vdouble1d_t(object):
     r"""Proxy of C++ std::vector< double > class."""
 
@@ -644,6 +658,173 @@ class vector_integer_t(object):
 # Register vector_integer_t in _libBornAgainFit:
 _libBornAgainFit.vector_integer_t_swigregister(vector_integer_t)
 
+class vinteger2d_t(object):
+    r"""Proxy of C++ std::vector< std::vector< int > > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        r"""iterator(vinteger2d_t self) -> SwigPyIterator"""
+        return _libBornAgainFit.vinteger2d_t_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        r"""__nonzero__(vinteger2d_t self) -> bool"""
+        return _libBornAgainFit.vinteger2d_t___nonzero__(self)
+
+    def __bool__(self):
+        r"""__bool__(vinteger2d_t self) -> bool"""
+        return _libBornAgainFit.vinteger2d_t___bool__(self)
+
+    def __len__(self):
+        r"""__len__(vinteger2d_t self) -> std::vector< std::vector< int > >::size_type"""
+        return _libBornAgainFit.vinteger2d_t___len__(self)
+
+    def __getslice__(self, i, j):
+        r"""__getslice__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i, std::vector< std::vector< int > >::difference_type j) -> vinteger2d_t"""
+        return _libBornAgainFit.vinteger2d_t___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        r"""
+        __setslice__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i, std::vector< std::vector< int > >::difference_type j)
+        __setslice__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i, std::vector< std::vector< int > >::difference_type j, vinteger2d_t v)
+        """
+        return _libBornAgainFit.vinteger2d_t___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        r"""__delslice__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i, std::vector< std::vector< int > >::difference_type j)"""
+        return _libBornAgainFit.vinteger2d_t___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        r"""
+        __delitem__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i)
+        __delitem__(vinteger2d_t self, PySliceObject * slice)
+        """
+        return _libBornAgainFit.vinteger2d_t___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        r"""
+        __getitem__(vinteger2d_t self, PySliceObject * slice) -> vinteger2d_t
+        __getitem__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i) -> vector_integer_t
+        """
+        return _libBornAgainFit.vinteger2d_t___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        r"""
+        __setitem__(vinteger2d_t self, PySliceObject * slice, vinteger2d_t v)
+        __setitem__(vinteger2d_t self, PySliceObject * slice)
+        __setitem__(vinteger2d_t self, std::vector< std::vector< int > >::difference_type i, vector_integer_t x)
+        """
+        return _libBornAgainFit.vinteger2d_t___setitem__(self, *args)
+
+    def pop(self):
+        r"""pop(vinteger2d_t self) -> vector_integer_t"""
+        return _libBornAgainFit.vinteger2d_t_pop(self)
+
+    def append(self, x):
+        r"""append(vinteger2d_t self, vector_integer_t x)"""
+        return _libBornAgainFit.vinteger2d_t_append(self, x)
+
+    def empty(self):
+        r"""empty(vinteger2d_t self) -> bool"""
+        return _libBornAgainFit.vinteger2d_t_empty(self)
+
+    def size(self):
+        r"""size(vinteger2d_t self) -> std::vector< std::vector< int > >::size_type"""
+        return _libBornAgainFit.vinteger2d_t_size(self)
+
+    def swap(self, v):
+        r"""swap(vinteger2d_t self, vinteger2d_t v)"""
+        return _libBornAgainFit.vinteger2d_t_swap(self, v)
+
+    def begin(self):
+        r"""begin(vinteger2d_t self) -> std::vector< std::vector< int > >::iterator"""
+        return _libBornAgainFit.vinteger2d_t_begin(self)
+
+    def end(self):
+        r"""end(vinteger2d_t self) -> std::vector< std::vector< int > >::iterator"""
+        return _libBornAgainFit.vinteger2d_t_end(self)
+
+    def rbegin(self):
+        r"""rbegin(vinteger2d_t self) -> std::vector< std::vector< int > >::reverse_iterator"""
+        return _libBornAgainFit.vinteger2d_t_rbegin(self)
+
+    def rend(self):
+        r"""rend(vinteger2d_t self) -> std::vector< std::vector< int > >::reverse_iterator"""
+        return _libBornAgainFit.vinteger2d_t_rend(self)
+
+    def clear(self):
+        r"""clear(vinteger2d_t self)"""
+        return _libBornAgainFit.vinteger2d_t_clear(self)
+
+    def get_allocator(self):
+        r"""get_allocator(vinteger2d_t self) -> std::vector< std::vector< int > >::allocator_type"""
+        return _libBornAgainFit.vinteger2d_t_get_allocator(self)
+
+    def pop_back(self):
+        r"""pop_back(vinteger2d_t self)"""
+        return _libBornAgainFit.vinteger2d_t_pop_back(self)
+
+    def erase(self, *args):
+        r"""
+        erase(vinteger2d_t self, std::vector< std::vector< int > >::iterator pos) -> std::vector< std::vector< int > >::iterator
+        erase(vinteger2d_t self, std::vector< std::vector< int > >::iterator first, std::vector< std::vector< int > >::iterator last) -> std::vector< std::vector< int > >::iterator
+        """
+        return _libBornAgainFit.vinteger2d_t_erase(self, *args)
+
+    def __init__(self, *args):
+        r"""
+        __init__(vinteger2d_t self) -> vinteger2d_t
+        __init__(vinteger2d_t self, vinteger2d_t other) -> vinteger2d_t
+        __init__(vinteger2d_t self, std::vector< std::vector< int > >::size_type size) -> vinteger2d_t
+        __init__(vinteger2d_t self, std::vector< std::vector< int > >::size_type size, vector_integer_t value) -> vinteger2d_t
+        """
+        _libBornAgainFit.vinteger2d_t_swiginit(self, _libBornAgainFit.new_vinteger2d_t(*args))
+
+    def push_back(self, x):
+        r"""push_back(vinteger2d_t self, vector_integer_t x)"""
+        return _libBornAgainFit.vinteger2d_t_push_back(self, x)
+
+    def front(self):
+        r"""front(vinteger2d_t self) -> vector_integer_t"""
+        return _libBornAgainFit.vinteger2d_t_front(self)
+
+    def back(self):
+        r"""back(vinteger2d_t self) -> vector_integer_t"""
+        return _libBornAgainFit.vinteger2d_t_back(self)
+
+    def assign(self, n, x):
+        r"""assign(vinteger2d_t self, std::vector< std::vector< int > >::size_type n, vector_integer_t x)"""
+        return _libBornAgainFit.vinteger2d_t_assign(self, n, x)
+
+    def resize(self, *args):
+        r"""
+        resize(vinteger2d_t self, std::vector< std::vector< int > >::size_type new_size)
+        resize(vinteger2d_t self, std::vector< std::vector< int > >::size_type new_size, vector_integer_t x)
+        """
+        return _libBornAgainFit.vinteger2d_t_resize(self, *args)
+
+    def insert(self, *args):
+        r"""
+        insert(vinteger2d_t self, std::vector< std::vector< int > >::iterator pos, vector_integer_t x) -> std::vector< std::vector< int > >::iterator
+        insert(vinteger2d_t self, std::vector< std::vector< int > >::iterator pos, std::vector< std::vector< int > >::size_type n, vector_integer_t x)
+        """
+        return _libBornAgainFit.vinteger2d_t_insert(self, *args)
+
+    def reserve(self, n):
+        r"""reserve(vinteger2d_t self, std::vector< std::vector< int > >::size_type n)"""
+        return _libBornAgainFit.vinteger2d_t_reserve(self, n)
+
+    def capacity(self):
+        r"""capacity(vinteger2d_t self) -> std::vector< std::vector< int > >::size_type"""
+        return _libBornAgainFit.vinteger2d_t_capacity(self)
+    __swig_destroy__ = _libBornAgainFit.delete_vinteger2d_t
+
+# Register vinteger2d_t in _libBornAgainFit:
+_libBornAgainFit.vinteger2d_t_swigregister(vinteger2d_t)
+
 class vector_longinteger_t(object):
     r"""Proxy of C++ std::vector< unsigned long > class."""
 
@@ -1144,6 +1325,358 @@ class vector_string_t(object):
 
 # Register vector_string_t in _libBornAgainFit:
 _libBornAgainFit.vector_string_t_swigregister(vector_string_t)
+
+class map_string_double_t(object):
+    r"""Proxy of C++ std::map< std::string,double > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        r"""iterator(map_string_double_t self) -> SwigPyIterator"""
+        return _libBornAgainFit.map_string_double_t_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        r"""__nonzero__(map_string_double_t self) -> bool"""
+        return _libBornAgainFit.map_string_double_t___nonzero__(self)
+
+    def __bool__(self):
+        r"""__bool__(map_string_double_t self) -> bool"""
+        return _libBornAgainFit.map_string_double_t___bool__(self)
+
+    def __len__(self):
+        r"""__len__(map_string_double_t self) -> std::map< std::string,double >::size_type"""
+        return _libBornAgainFit.map_string_double_t___len__(self)
+    def __iter__(self):
+        return self.key_iterator()
+    def iterkeys(self):
+        return self.key_iterator()
+    def itervalues(self):
+        return self.value_iterator()
+    def iteritems(self):
+        return self.iterator()
+
+    def __getitem__(self, key):
+        r"""__getitem__(map_string_double_t self, std::map< std::string,double >::key_type const & key) -> std::map< std::string,double >::mapped_type const &"""
+        return _libBornAgainFit.map_string_double_t___getitem__(self, key)
+
+    def __delitem__(self, key):
+        r"""__delitem__(map_string_double_t self, std::map< std::string,double >::key_type const & key)"""
+        return _libBornAgainFit.map_string_double_t___delitem__(self, key)
+
+    def has_key(self, key):
+        r"""has_key(map_string_double_t self, std::map< std::string,double >::key_type const & key) -> bool"""
+        return _libBornAgainFit.map_string_double_t_has_key(self, key)
+
+    def keys(self):
+        r"""keys(map_string_double_t self) -> PyObject *"""
+        return _libBornAgainFit.map_string_double_t_keys(self)
+
+    def values(self):
+        r"""values(map_string_double_t self) -> PyObject *"""
+        return _libBornAgainFit.map_string_double_t_values(self)
+
+    def items(self):
+        r"""items(map_string_double_t self) -> PyObject *"""
+        return _libBornAgainFit.map_string_double_t_items(self)
+
+    def __contains__(self, key):
+        r"""__contains__(map_string_double_t self, std::map< std::string,double >::key_type const & key) -> bool"""
+        return _libBornAgainFit.map_string_double_t___contains__(self, key)
+
+    def key_iterator(self):
+        r"""key_iterator(map_string_double_t self) -> SwigPyIterator"""
+        return _libBornAgainFit.map_string_double_t_key_iterator(self)
+
+    def value_iterator(self):
+        r"""value_iterator(map_string_double_t self) -> SwigPyIterator"""
+        return _libBornAgainFit.map_string_double_t_value_iterator(self)
+
+    def __setitem__(self, *args):
+        r"""
+        __setitem__(map_string_double_t self, std::map< std::string,double >::key_type const & key)
+        __setitem__(map_string_double_t self, std::map< std::string,double >::key_type const & key, std::map< std::string,double >::mapped_type const & x)
+        """
+        return _libBornAgainFit.map_string_double_t___setitem__(self, *args)
+
+    def asdict(self):
+        r"""asdict(map_string_double_t self) -> PyObject *"""
+        return _libBornAgainFit.map_string_double_t_asdict(self)
+
+    def __init__(self, *args):
+        r"""
+        __init__(map_string_double_t self, std::less< std::string > const & other) -> map_string_double_t
+        __init__(map_string_double_t self) -> map_string_double_t
+        __init__(map_string_double_t self, map_string_double_t other) -> map_string_double_t
+        """
+        _libBornAgainFit.map_string_double_t_swiginit(self, _libBornAgainFit.new_map_string_double_t(*args))
+
+    def empty(self):
+        r"""empty(map_string_double_t self) -> bool"""
+        return _libBornAgainFit.map_string_double_t_empty(self)
+
+    def size(self):
+        r"""size(map_string_double_t self) -> std::map< std::string,double >::size_type"""
+        return _libBornAgainFit.map_string_double_t_size(self)
+
+    def swap(self, v):
+        r"""swap(map_string_double_t self, map_string_double_t v)"""
+        return _libBornAgainFit.map_string_double_t_swap(self, v)
+
+    def begin(self):
+        r"""begin(map_string_double_t self) -> std::map< std::string,double >::iterator"""
+        return _libBornAgainFit.map_string_double_t_begin(self)
+
+    def end(self):
+        r"""end(map_string_double_t self) -> std::map< std::string,double >::iterator"""
+        return _libBornAgainFit.map_string_double_t_end(self)
+
+    def rbegin(self):
+        r"""rbegin(map_string_double_t self) -> std::map< std::string,double >::reverse_iterator"""
+        return _libBornAgainFit.map_string_double_t_rbegin(self)
+
+    def rend(self):
+        r"""rend(map_string_double_t self) -> std::map< std::string,double >::reverse_iterator"""
+        return _libBornAgainFit.map_string_double_t_rend(self)
+
+    def clear(self):
+        r"""clear(map_string_double_t self)"""
+        return _libBornAgainFit.map_string_double_t_clear(self)
+
+    def get_allocator(self):
+        r"""get_allocator(map_string_double_t self) -> std::map< std::string,double >::allocator_type"""
+        return _libBornAgainFit.map_string_double_t_get_allocator(self)
+
+    def count(self, x):
+        r"""count(map_string_double_t self, std::map< std::string,double >::key_type const & x) -> std::map< std::string,double >::size_type"""
+        return _libBornAgainFit.map_string_double_t_count(self, x)
+
+    def erase(self, *args):
+        r"""
+        erase(map_string_double_t self, std::map< std::string,double >::key_type const & x) -> std::map< std::string,double >::size_type
+        erase(map_string_double_t self, std::map< std::string,double >::iterator position)
+        erase(map_string_double_t self, std::map< std::string,double >::iterator first, std::map< std::string,double >::iterator last)
+        """
+        return _libBornAgainFit.map_string_double_t_erase(self, *args)
+
+    def find(self, x):
+        r"""find(map_string_double_t self, std::map< std::string,double >::key_type const & x) -> std::map< std::string,double >::iterator"""
+        return _libBornAgainFit.map_string_double_t_find(self, x)
+
+    def lower_bound(self, x):
+        r"""lower_bound(map_string_double_t self, std::map< std::string,double >::key_type const & x) -> std::map< std::string,double >::iterator"""
+        return _libBornAgainFit.map_string_double_t_lower_bound(self, x)
+
+    def upper_bound(self, x):
+        r"""upper_bound(map_string_double_t self, std::map< std::string,double >::key_type const & x) -> std::map< std::string,double >::iterator"""
+        return _libBornAgainFit.map_string_double_t_upper_bound(self, x)
+    __swig_destroy__ = _libBornAgainFit.delete_map_string_double_t
+
+# Register map_string_double_t in _libBornAgainFit:
+_libBornAgainFit.map_string_double_t_swigregister(map_string_double_t)
+
+class pvacuum_double_t(object):
+    r"""Proxy of C++ std::pair< double,double > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        r"""
+        __init__(pvacuum_double_t self) -> pvacuum_double_t
+        __init__(pvacuum_double_t self, double first, double second) -> pvacuum_double_t
+        __init__(pvacuum_double_t self, pvacuum_double_t other) -> pvacuum_double_t
+        """
+        _libBornAgainFit.pvacuum_double_t_swiginit(self, _libBornAgainFit.new_pvacuum_double_t(*args))
+    first = property(_libBornAgainFit.pvacuum_double_t_first_get, _libBornAgainFit.pvacuum_double_t_first_set, doc=r"""first : double""")
+    second = property(_libBornAgainFit.pvacuum_double_t_second_get, _libBornAgainFit.pvacuum_double_t_second_set, doc=r"""second : double""")
+    def __len__(self):
+        return 2
+    def __repr__(self):
+        return str((self.first, self.second))
+    def __getitem__(self, index): 
+        if not (index % 2):
+            return self.first
+        else:
+            return self.second
+    def __setitem__(self, index, val):
+        if not (index % 2):
+            self.first = val
+        else:
+            self.second = val
+    __swig_destroy__ = _libBornAgainFit.delete_pvacuum_double_t
+
+# Register pvacuum_double_t in _libBornAgainFit:
+_libBornAgainFit.pvacuum_double_t_swigregister(pvacuum_double_t)
+
+class vector_pvacuum_double_t(object):
+    r"""Proxy of C++ std::vector< std::pair< double,double > > class."""
+
+    thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
+    __repr__ = _swig_repr
+
+    def iterator(self):
+        r"""iterator(vector_pvacuum_double_t self) -> SwigPyIterator"""
+        return _libBornAgainFit.vector_pvacuum_double_t_iterator(self)
+    def __iter__(self):
+        return self.iterator()
+
+    def __nonzero__(self):
+        r"""__nonzero__(vector_pvacuum_double_t self) -> bool"""
+        return _libBornAgainFit.vector_pvacuum_double_t___nonzero__(self)
+
+    def __bool__(self):
+        r"""__bool__(vector_pvacuum_double_t self) -> bool"""
+        return _libBornAgainFit.vector_pvacuum_double_t___bool__(self)
+
+    def __len__(self):
+        r"""__len__(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::size_type"""
+        return _libBornAgainFit.vector_pvacuum_double_t___len__(self)
+
+    def __getslice__(self, i, j):
+        r"""__getslice__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i, std::vector< std::pair< double,double > >::difference_type j) -> vector_pvacuum_double_t"""
+        return _libBornAgainFit.vector_pvacuum_double_t___getslice__(self, i, j)
+
+    def __setslice__(self, *args):
+        r"""
+        __setslice__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i, std::vector< std::pair< double,double > >::difference_type j)
+        __setslice__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i, std::vector< std::pair< double,double > >::difference_type j, vector_pvacuum_double_t v)
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t___setslice__(self, *args)
+
+    def __delslice__(self, i, j):
+        r"""__delslice__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i, std::vector< std::pair< double,double > >::difference_type j)"""
+        return _libBornAgainFit.vector_pvacuum_double_t___delslice__(self, i, j)
+
+    def __delitem__(self, *args):
+        r"""
+        __delitem__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i)
+        __delitem__(vector_pvacuum_double_t self, PySliceObject * slice)
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t___delitem__(self, *args)
+
+    def __getitem__(self, *args):
+        r"""
+        __getitem__(vector_pvacuum_double_t self, PySliceObject * slice) -> vector_pvacuum_double_t
+        __getitem__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i) -> pvacuum_double_t
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t___getitem__(self, *args)
+
+    def __setitem__(self, *args):
+        r"""
+        __setitem__(vector_pvacuum_double_t self, PySliceObject * slice, vector_pvacuum_double_t v)
+        __setitem__(vector_pvacuum_double_t self, PySliceObject * slice)
+        __setitem__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::difference_type i, pvacuum_double_t x)
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t___setitem__(self, *args)
+
+    def pop(self):
+        r"""pop(vector_pvacuum_double_t self) -> pvacuum_double_t"""
+        return _libBornAgainFit.vector_pvacuum_double_t_pop(self)
+
+    def append(self, x):
+        r"""append(vector_pvacuum_double_t self, pvacuum_double_t x)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_append(self, x)
+
+    def empty(self):
+        r"""empty(vector_pvacuum_double_t self) -> bool"""
+        return _libBornAgainFit.vector_pvacuum_double_t_empty(self)
+
+    def size(self):
+        r"""size(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::size_type"""
+        return _libBornAgainFit.vector_pvacuum_double_t_size(self)
+
+    def swap(self, v):
+        r"""swap(vector_pvacuum_double_t self, vector_pvacuum_double_t v)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_swap(self, v)
+
+    def begin(self):
+        r"""begin(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::iterator"""
+        return _libBornAgainFit.vector_pvacuum_double_t_begin(self)
+
+    def end(self):
+        r"""end(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::iterator"""
+        return _libBornAgainFit.vector_pvacuum_double_t_end(self)
+
+    def rbegin(self):
+        r"""rbegin(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::reverse_iterator"""
+        return _libBornAgainFit.vector_pvacuum_double_t_rbegin(self)
+
+    def rend(self):
+        r"""rend(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::reverse_iterator"""
+        return _libBornAgainFit.vector_pvacuum_double_t_rend(self)
+
+    def clear(self):
+        r"""clear(vector_pvacuum_double_t self)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_clear(self)
+
+    def get_allocator(self):
+        r"""get_allocator(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::allocator_type"""
+        return _libBornAgainFit.vector_pvacuum_double_t_get_allocator(self)
+
+    def pop_back(self):
+        r"""pop_back(vector_pvacuum_double_t self)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_pop_back(self)
+
+    def erase(self, *args):
+        r"""
+        erase(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::iterator pos) -> std::vector< std::pair< double,double > >::iterator
+        erase(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::iterator first, std::vector< std::pair< double,double > >::iterator last) -> std::vector< std::pair< double,double > >::iterator
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t_erase(self, *args)
+
+    def __init__(self, *args):
+        r"""
+        __init__(vector_pvacuum_double_t self) -> vector_pvacuum_double_t
+        __init__(vector_pvacuum_double_t self, vector_pvacuum_double_t other) -> vector_pvacuum_double_t
+        __init__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::size_type size) -> vector_pvacuum_double_t
+        __init__(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::size_type size, pvacuum_double_t value) -> vector_pvacuum_double_t
+        """
+        _libBornAgainFit.vector_pvacuum_double_t_swiginit(self, _libBornAgainFit.new_vector_pvacuum_double_t(*args))
+
+    def push_back(self, x):
+        r"""push_back(vector_pvacuum_double_t self, pvacuum_double_t x)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_push_back(self, x)
+
+    def front(self):
+        r"""front(vector_pvacuum_double_t self) -> pvacuum_double_t"""
+        return _libBornAgainFit.vector_pvacuum_double_t_front(self)
+
+    def back(self):
+        r"""back(vector_pvacuum_double_t self) -> pvacuum_double_t"""
+        return _libBornAgainFit.vector_pvacuum_double_t_back(self)
+
+    def assign(self, n, x):
+        r"""assign(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::size_type n, pvacuum_double_t x)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_assign(self, n, x)
+
+    def resize(self, *args):
+        r"""
+        resize(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::size_type new_size)
+        resize(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::size_type new_size, pvacuum_double_t x)
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t_resize(self, *args)
+
+    def insert(self, *args):
+        r"""
+        insert(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::iterator pos, pvacuum_double_t x) -> std::vector< std::pair< double,double > >::iterator
+        insert(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::iterator pos, std::vector< std::pair< double,double > >::size_type n, pvacuum_double_t x)
+        """
+        return _libBornAgainFit.vector_pvacuum_double_t_insert(self, *args)
+
+    def reserve(self, n):
+        r"""reserve(vector_pvacuum_double_t self, std::vector< std::pair< double,double > >::size_type n)"""
+        return _libBornAgainFit.vector_pvacuum_double_t_reserve(self, n)
+
+    def capacity(self):
+        r"""capacity(vector_pvacuum_double_t self) -> std::vector< std::pair< double,double > >::size_type"""
+        return _libBornAgainFit.vector_pvacuum_double_t_capacity(self)
+    __swig_destroy__ = _libBornAgainFit.delete_vector_pvacuum_double_t
+
+# Register vector_pvacuum_double_t in _libBornAgainFit:
+_libBornAgainFit.vector_pvacuum_double_t_swigregister(vector_pvacuum_double_t)
 
 class RealLimits(object):
     r"""
@@ -1893,10 +2426,10 @@ class PyCallback(object):
         """
         return _libBornAgainFit.PyCallback_call_scalar(self, pars)
 
-    def call_residuals(self, arg0):
+    def call_residuals(self, pars):
         r"""
-        call_residuals(PyCallback self, Parameters arg0) -> vdouble1d_t
-        std::vector< double > PyCallback::call_residuals(Fit::Parameters)
+        call_residuals(PyCallback self, Parameters pars) -> vdouble1d_t
+        std::vector< double > PyCallback::call_residuals(Fit::Parameters pars)
 
         Call Python callable and returns its result. Intended to be overloaded in Python.
 
@@ -1909,7 +2442,7 @@ class PyCallback(object):
         vector of residuals 
 
         """
-        return _libBornAgainFit.PyCallback_call_residuals(self, arg0)
+        return _libBornAgainFit.PyCallback_call_residuals(self, pars)
     def __disown__(self):
         self.this.disown()
         _libBornAgainFit.disown_PyCallback(self)

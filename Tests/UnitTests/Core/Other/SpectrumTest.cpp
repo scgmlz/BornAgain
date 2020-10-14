@@ -1,8 +1,7 @@
 #include "Core/Instrument/SpectrumUtils.h"
-#include "Core/Intensity/Histogram2D.h"
 #include "Tests/GTestWrapper/google_test.h"
-#include "tspectrum.h"
 #include <iostream>
+#include <tspectrum.h>
 
 class SpectrumTest : public ::testing::Test
 {

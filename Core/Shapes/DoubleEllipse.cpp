@@ -26,4 +26,4 @@ DoubleEllipse::DoubleEllipse(double r0_x, double r0_y, double z, double rz_x, do
     std::move(top_face.begin(), top_face.end(), m_vertices.begin() + n_bottom);
 }
 
-DoubleEllipse::~DoubleEllipse() {}
+DoubleEllipse::~DoubleEllipse() = default;

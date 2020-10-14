@@ -15,11 +15,12 @@ if sys.version_info >= (3, 8, 0) and sys.platform == 'win32':
             if p and os.path.exists(p):
                 os.add_dll_directory(os.path.abspath(p))
 
+from libBornAgainBase import *
 from libBornAgainFit import *
+from libBornAgainParam import *
 from libBornAgainCore import *
 
 
 # To prevent inclusion of plotting tools during functional tests:
 if not "NOPLOT" in os.environ:
     from .plot_utils import *
-

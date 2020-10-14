@@ -19,7 +19,7 @@
 #include "GUI/coregui/Views/SpecularDataWidgets/SpecularPlotCanvas.h"
 #include "GUI/coregui/mainwindow/AppSvc.h"
 #include "GUI/coregui/mainwindow/projectmanager.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 SpecularDataCanvas::SpecularDataCanvas(QWidget* parent)
     : SessionItemWidget(parent), m_plot_canvas(new SpecularPlotCanvas),

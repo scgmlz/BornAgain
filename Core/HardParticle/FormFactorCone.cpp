@@ -13,23 +13,19 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorCone.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/Integrator.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/Shapes/DoubleEllipse.h"
-#include "Core/Tools/Integrator.h"
-#include "Core/Tools/MathFunctions.h"
 #include <limits>
 
-//! Constructor of a truncated cone with circular base.
-//! @param radius: radius of the base in nanometers
-//! @param height: height of the cone in nanometers
-//! @param alpha: angle between the base and the side surface in radians
 FormFactorCone::FormFactorCone(const std::vector<double> P)
     : IFormFactorBorn({"Cone",
-                       "class_tooltip",
-                       {{"Radius", "nm", "para_tooltip", 0, +INF, 0},
-                        {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                        {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
+                       "frustum with circular base",
+                       {{"Radius", "nm", "radius of base", 0, +INF, 0},
+                        {"Height", "nm", "height", 0, +INF, 0},
+                        {"Alpha", "rad", "angle between base and side", 0., M_PI_2, 0}}},
                       P),
       m_radius(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
@@ -93,5 +89,5 @@ void FormFactorCone::onChange()
 {
     m_cot_alpha = MathFunctions::cot(m_alpha);
     double radius2 = m_radius - m_height * m_cot_alpha;
-    mP_shape.reset(new DoubleEllipse(m_radius, m_radius, m_height, radius2, radius2));
+    mP_shape = std::make_unique<DoubleEllipse>(m_radius, m_radius, m_height, radius2, radius2);
 }

@@ -28,7 +28,6 @@
 #include "Core/StandardSamples/MagneticParticlesBuilder.h"
 #include "Core/StandardSamples/MesoCrystalBuilder.h"
 #include "Core/StandardSamples/MultiLayerWithNCRoughnessBuilder.h"
-#include "Core/StandardSamples/MultiLayerWithRoughnessBuilder.h"
 #include "Core/StandardSamples/MultipleLayoutBuilder.h"
 #include "Core/StandardSamples/ParaCrystalBuilder.h"
 #include "Core/StandardSamples/ParticleCompositionBuilder.h"

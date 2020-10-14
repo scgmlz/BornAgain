@@ -15,10 +15,10 @@
 #ifndef BORNAGAIN_CORE_CORRELATIONS_FTDISTRIBUTIONS2D_H
 #define BORNAGAIN_CORE_CORRELATIONS_FTDISTRIBUTIONS2D_H
 
-#include "Core/Basics/ICloneable.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/ICloneable.h"
 #include "Core/Correlations/IDistribution2DSampler.h"
-#include "Core/Parametrization/INode.h"
+#include "Param/Node/INode.h"
 
 //! Interface for two-dimensional distributions in Fourier space.
 //! @ingroup distribution_internal

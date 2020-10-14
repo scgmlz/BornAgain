@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/Scattering/ISample.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/ParameterPool.h"
+#include "Base/Types/Exceptions.h"
+#include "Param/Base/ParameterPool.h"
 #include <algorithm>
 #include <sstream>
 

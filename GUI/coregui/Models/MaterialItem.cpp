@@ -12,11 +12,9 @@
 //
 // ************************************************************************** //
 
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "GUI/coregui/Models/MaterialDataItems.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 

@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/GUIDomainSampleVisitor.h"
+#include "Base/Const/Units.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
-#include "Core/Material/Material.h"
+#include "Core/HardParticle/HardParticles.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Multilayer/MultiLayerUtils.h"
@@ -25,7 +25,7 @@
 #include "Core/Particle/ParticleComposition.h"
 #include "Core/Particle/ParticleCoreShell.h"
 #include "Core/Particle/ParticleDistribution.h"
-#include "Core/includeIncludes/FormFactors.h"
+#include "Core/SoftParticle/SoftParticles.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/LayerItem.h"
@@ -40,7 +40,6 @@
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "GUI/coregui/Models/TransformFromDomain.h"
 #include "GUI/coregui/Models/TransformationItem.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 

@@ -54,7 +54,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_FORMBUILDER_P_H
 
 #include "GUI/coregui/Views/widgetbox/deviceprofile_p.h"
-#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 #include <QtDesigner/formbuilder.h>
 

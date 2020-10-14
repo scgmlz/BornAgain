@@ -13,7 +13,6 @@
 // ************************************************************************** //
 
 #include "Fit/RootAdapter/MinimizerResultUtils.h"
-#include "Fit/Kernel/Parameters.h"
 #include "Fit/RootAdapter/RootMinimizerAdapter.h"
 #include "Fit/Tools/MinimizerUtils.h"
 #include <boost/format.hpp>
@@ -67,7 +66,7 @@ std::string MinimizerResultUtils::reportParameters(const Fit::Parameters& parame
     }
 
     Fit::Parameters::corr_matrix_t matrix = parameters.correlationMatrix();
-    if (matrix.size()) {
+    if (!matrix.empty()) {
         result << MinimizerUtils::sectionString("Correlations");
         for (size_t i = 0; i < matrix.size(); ++i) {
             result << boost::format("#%-2d       ") % i;
@@ -93,7 +92,7 @@ std::string reportDescription(const RootMinimizerAdapter& minimizer)
 
 std::string reportOption(const RootMinimizerAdapter& minimizer)
 {
-    if (minimizer.options().size() == 0)
+    if (minimizer.options().empty())
         return "";
 
     std::ostringstream result;

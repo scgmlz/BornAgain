@@ -13,8 +13,6 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/InstrumentWidgets/SpecularBeamEditor.h"
-#include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
 #include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"

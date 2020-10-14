@@ -13,9 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/SampleBuilderEngine/SampleBuilderNode.h"
+#include "Base/Utils/Assert.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/ParameterPool.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Param/Base/ParameterPool.h"
 #include <stdexcept>
 
 namespace
@@ -45,7 +46,7 @@ SampleBuilderNode& SampleBuilderNode::operator=(const SampleBuilderNode& other)
 
 //! Sets sample builder and borrows its parameters.
 
-void SampleBuilderNode::setSampleBuilder(builder_t sample_builder)
+void SampleBuilderNode::setSBN(const std::shared_ptr<ISampleBuilder>& sample_builder)
 {
     if (!sample_builder)
         throw std::runtime_error("SampleContainer::setSampleBuilder() -> Error. "
@@ -69,15 +70,13 @@ void SampleBuilderNode::reset()
 
 std::unique_ptr<MultiLayer> SampleBuilderNode::createMultiLayer()
 {
-    if (!m_sample_builder)
-        throw std::runtime_error("SampleBuilderNode::createMultiLayer() -> Error. Absent builder");
-
+    ASSERT(m_sample_builder);
     return std::unique_ptr<MultiLayer>(m_sample_builder->buildSample());
 }
 
 //! Returns current sample builder.
 
-SampleBuilderNode::builder_t SampleBuilderNode::builder() const
+std::shared_ptr<ISampleBuilder> SampleBuilderNode::builder() const
 {
     return m_sample_builder;
 }

@@ -15,7 +15,6 @@
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_OBJECT_H
 #define BORNAGAIN_GUI_BA3D_MODEL_OBJECT_H
 
-#include "../def.h"
 #include "GUI/ba3d/model/geometry_inc.h"
 #include <QColor>
 #include <QMatrix4x4>

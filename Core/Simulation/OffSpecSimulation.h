@@ -15,8 +15,8 @@
 #ifndef BORNAGAIN_CORE_SIMULATION_OFFSPECSIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_OFFSPECSIMULATION_H
 
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Simulation/Simulation2D.h"
-#include "Core/SimulationElement/SimulationElement.h"
 
 class Histogram2D;
 
@@ -27,9 +27,6 @@ class OffSpecSimulation : public Simulation2D
 {
 public:
     OffSpecSimulation();
-    OffSpecSimulation(const MultiLayer& p_sample);
-    OffSpecSimulation(const std::shared_ptr<class ISampleBuilder> p_sample_builder);
-
     ~OffSpecSimulation() final {}
 
     OffSpecSimulation* clone() const override { return new OffSpecSimulation(*this); }

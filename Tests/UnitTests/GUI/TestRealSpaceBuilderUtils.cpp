@@ -1,6 +1,4 @@
 #include "Core/Particle/Particle.h"
-#include "Core/Scattering/IFormFactor.h"
-#include "Core/Scattering/IFormFactorDecorator.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/ParticleItem.h"
 #include "GUI/coregui/Models/ParticleLayoutItem.h"

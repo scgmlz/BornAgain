@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"

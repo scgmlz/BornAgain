@@ -13,19 +13,19 @@
 // ************************************************************************** //
 
 #include "Core/Simulation/DepthProbeSimulation.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
 #include "Core/Beam/IFootprintFactor.h"
 #include "Core/Computation/DepthProbeComputation.h"
 #include "Core/Computation/IBackground.h"
+#include "Core/Detector/SimpleUnitConverters.h"
 #include "Core/Detector/SpecularDetector1D.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Intensity/SimpleUnitConverters.h"
+#include "Core/Histo/Histogram1D.h"
 #include "Core/Material/MaterialUtils.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
 
 namespace
 {
@@ -35,17 +35,6 @@ const double zero_alpha_i = 0.0;
 } // namespace
 
 DepthProbeSimulation::DepthProbeSimulation() : Simulation()
-{
-    initialize();
-}
-
-DepthProbeSimulation::DepthProbeSimulation(const MultiLayer& sample) : Simulation(sample)
-{
-    initialize();
-}
-
-DepthProbeSimulation::DepthProbeSimulation(const std::shared_ptr<ISampleBuilder> sample_builder)
-    : Simulation(sample_builder)
 {
     initialize();
 }
@@ -66,7 +55,7 @@ SimulationResult DepthProbeSimulation::result() const
 {
     validityCheck();
     auto data = createIntensityData();
-    return SimulationResult(*data, *createUnitConverter().get());
+    return SimulationResult(*data, *createUnitConverter());
 }
 
 void DepthProbeSimulation::setBeamParameters(double lambda, int nbins, double alpha_i_min,
@@ -120,9 +109,8 @@ DepthProbeSimulation::DepthProbeSimulation(const DepthProbeSimulation& other)
         m_alpha_axis.reset(other.m_alpha_axis->clone());
     if (other.m_z_axis)
         m_z_axis.reset(other.m_z_axis->clone());
-    if (!m_sim_elements.empty())
-        for (auto iter = m_sim_elements.begin(); iter != m_sim_elements.end(); ++iter)
-            iter->setZPositions(m_alpha_axis.get());
+    for (auto iter = m_sim_elements.begin(); iter != m_sim_elements.end(); ++iter)
+        iter->setZPositions(m_alpha_axis.get());
     initialize();
 }
 

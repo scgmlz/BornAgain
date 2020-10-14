@@ -13,11 +13,15 @@
 // ************************************************************************** //
 
 #include "Core/Material/Material.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Material/BaseMaterialImpl.h"
-#include "Core/Vector/Transform3D.h"
-#include "Core/Vector/WavevectorInfo.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Vector/Transform3D.h"
+#include "Core/Material/WavevectorInfo.h"
 #include <typeinfo>
+
+Material::Material(std::unique_ptr<BaseMaterialImpl> material_impl)
+    : m_material_impl(std::move(material_impl))
+{
+}
 
 Material::Material(const Material& material)
 {
@@ -25,11 +29,6 @@ Material::Material(const Material& material)
         throw Exceptions::NullPointerException(
             "Material: Error! Attempt to initialize material with nullptr.");
     m_material_impl.reset(material.m_material_impl->clone());
-}
-
-Material::Material(std::unique_ptr<BaseMaterialImpl> material_impl)
-    : m_material_impl(std::move(material_impl))
-{
 }
 
 Material& Material::operator=(const Material& other)

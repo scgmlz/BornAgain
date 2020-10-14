@@ -17,7 +17,6 @@
 
 #include "Core/Beam/Beam.h"
 #include "Core/Detector/IDetector.h"
-#include "Core/Parametrization/INode.h"
 #include <memory>
 
 template <class T> class OutputData;
@@ -84,10 +83,6 @@ public:
 
     //! apply the detector resolution to the given intensity map
     void applyDetectorResolution(OutputData<double>* p_intensity_map) const;
-
-    //! Returns new intensity map with detector resolution applied and axes in requested units
-    OutputData<double>*
-    createDetectorIntensity(const std::vector<SimulationElement>& elements) const;
 
     //! init detector with beam settings
     void initDetector();

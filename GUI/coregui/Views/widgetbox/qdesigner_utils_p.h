@@ -57,11 +57,10 @@
 
 #include <QtDesigner/QDesignerFormWindowInterface>
 
+#include <QMainWindow>
 #include <QtCore/QMap>
 #include <QtCore/QSharedDataPointer>
 #include <QtCore/QVariant>
-//#include <QtWidgets/QMainWindow>
-#include <QMainWindow>
 #include <QtGui/QIcon>
 #include <QtGui/QPixmap>
 

@@ -14,14 +14,12 @@
 // ************************************************************************** //
 
 #include "Core/StandardSamples/FeNiBilayerBuilder.h"
-#include "Core/Basics/Complex.h"
-#include "Core/Basics/PhysicalConstants.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/PhysicalConstants.h"
+#include "Base/Const/Units.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Multilayer/RoughnessModels.h"
 
 namespace
 {
@@ -86,6 +84,25 @@ public:
 //! @ingroup standard_samples
 class FeNiBilayer
 {
+public:
+    FeNiBilayer(Options opt = {})
+        : NBilayers(opt._NBilayers), angle(opt._angle),
+          magnetizationMagnitude(opt._magnetizationMagnitude), thicknessFe(opt._thicknessFe),
+          thicknessNi(opt._thicknessNi), sigmaRoughness(opt._sigmaRoughness),
+          effectiveSLD(opt._effectiveSLD), roughnessModel(opt._roughnessModel)
+    {
+        if (angle != 0. && effectiveSLD != 0.)
+            throw std::runtime_error("Cannot perform scalar computation "
+                                     "for non-colinear magnetization");
+
+        magnetizationVector = kvector_t(magnetizationMagnitude * std::sin(angle),
+                                        magnetizationMagnitude * std::cos(angle), 0);
+        sample = constructSample();
+    }
+
+    MultiLayer* release() { return sample.release(); }
+
+private:
     static constexpr auto sldFe = complex_t{8.02e-06, 0};
     static constexpr auto sldAu = complex_t{4.6665e-6, 0};
     static constexpr auto sldNi = complex_t{9.4245e-06, 0};
@@ -104,24 +121,6 @@ class FeNiBilayer
     std::unique_ptr<MultiLayer> sample;
 
     std::unique_ptr<MultiLayer> constructSample();
-
-public:
-    FeNiBilayer(Options opt = {})
-        : NBilayers(opt._NBilayers), angle(opt._angle),
-          magnetizationMagnitude(opt._magnetizationMagnitude), thicknessFe(opt._thicknessFe),
-          thicknessNi(opt._thicknessNi), sigmaRoughness(opt._sigmaRoughness),
-          effectiveSLD(opt._effectiveSLD), roughnessModel(opt._roughnessModel)
-    {
-        if (angle != 0. && effectiveSLD != 0.)
-            throw std::runtime_error("Cannot perform scalar computation "
-                                     "for non-colinear magnetization");
-
-        magnetizationVector = kvector_t(magnetizationMagnitude * std::sin(angle),
-                                        magnetizationMagnitude * std::cos(angle), 0);
-        sample = constructSample();
-    }
-
-    MultiLayer* release() { return sample.release(); }
 };
 
 } // namespace

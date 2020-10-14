@@ -14,7 +14,6 @@
 
 #include "Core/Fitting/FitPrintService.h"
 #include "Core/Fitting/FitObjective.h"
-#include "Fit/Kernel/MinimizerResult.h"
 #include "Fit/Tools/StringUtils.h"
 #include <iomanip>
 #include <iostream>

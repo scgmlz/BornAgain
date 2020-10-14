@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorCone6.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/MathFunctions.h"
 
 const PolyhedralTopology FormFactorCone6::topology = {{{{5, 4, 3, 2, 1, 0}, true},
                                                        {{0, 1, 7, 6}, false},
@@ -27,17 +27,14 @@ const PolyhedralTopology FormFactorCone6::topology = {{{{5, 4, 3, 2, 1, 0}, true
                                                        {{6, 7, 8, 9, 10, 11}, true}},
                                                       false};
 
-//! Constructor of a truncated pyramid, based on a regular hexagon
-//! @param base_edge: Edge of the regular hexagonal base in nanometers
-//! @param height: height of a truncated pyramid in nanometers
-//! @param alpha: dihedral angle in radians between base and facet
 FormFactorCone6::FormFactorCone6(const std::vector<double> P)
-    : IFormFactorPolyhedron({"Cone6",
-                             "class_tooltip",
-                             {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                              {"Alpha", "rad", "para_tooltip", 0., M_PI_2, 0}}},
-                            P),
+    : IFormFactorPolyhedron(
+          {"Cone6",
+           "frustum with regular hexagonal base",
+           {{"BaseEdge", "nm", "base edge length", 0, +INF, 0},
+            {"Height", "nm", "height", 0, +INF, 0},
+            {"Alpha", "rad", "angle between base and a side face", 0., M_PI_2, 0}}},
+          P),
       m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {
     onChange();

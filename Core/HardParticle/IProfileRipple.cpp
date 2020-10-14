@@ -61,7 +61,7 @@ complex_t IProfileRectangularRipple::factor_yz(complex_t qy, complex_t qz) const
 
 void IProfileRectangularRipple::onChange()
 {
-    mP_shape.reset(new Box(m_length, m_width, m_height));
+    mP_shape = std::make_unique<Box>(m_length, m_width, m_height);
 }
 
 // ************************************************************************** //
@@ -82,7 +82,7 @@ complex_t ICosineRipple::factor_yz(complex_t qy, complex_t qz) const
 
 void ICosineRipple::onChange()
 {
-    mP_shape.reset(new RippleCosine(m_length, m_width, m_height));
+    mP_shape = std::make_unique<RippleCosine>(m_length, m_width, m_height);
 }
 
 // ************************************************************************** //
@@ -106,5 +106,5 @@ complex_t ISawtoothRipple::factor_yz(complex_t qy, complex_t qz) const
 
 void ISawtoothRipple::onChange()
 {
-    mP_shape.reset(new RippleSawtooth(m_length, m_width, m_height, m_asymmetry));
+    mP_shape = std::make_unique<RippleSawtooth>(m_length, m_width, m_height, m_asymmetry);
 }

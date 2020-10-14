@@ -1,5 +1,5 @@
 #include "Core/Mask/Polygon.h"
-#include "Core/Binning/Bin.h"
+#include "Base/Axis/Bin.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 

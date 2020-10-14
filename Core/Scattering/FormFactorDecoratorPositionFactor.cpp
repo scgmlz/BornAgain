@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/Scattering/FormFactorDecoratorPositionFactor.h"
+#include "Core/Material/WavevectorInfo.h"
 #include "Core/Scattering/Rotations.h"
-#include "Core/Vector/WavevectorInfo.h"
 
 FormFactorDecoratorPositionFactor::FormFactorDecoratorPositionFactor(const IFormFactor& form_factor,
                                                                      const kvector_t& position)

@@ -18,11 +18,11 @@
 #include "Fit/Kernel/KernelTypes.h"
 
 #ifdef _WIN32
-#include "Math/Functor.h"
+#include <Math/Functor.h>
 #else
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#include "Math/Functor.h"
+#include <Math/Functor.h>
 #pragma GCC diagnostic pop
 #endif
 

@@ -1,4 +1,4 @@
-#include "Core/Parametrization/IParameterized.h"
+#include "Param/Base/IParameterized.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <stdexcept>
 

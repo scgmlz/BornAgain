@@ -13,10 +13,10 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/PointwiseAxisItem.h"
-#include "Core/Binning/PointwiseAxis.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IUnitConverter.h"
-#include "Core/Intensity/OutputData.h"
+#include "Base/Axis/PointwiseAxis.h"
+#include "Core/Data/OutputData.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
+#include "Core/Unit/IUnitConverter.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 
 namespace
@@ -68,7 +68,7 @@ std::unique_ptr<IAxis> PointwiseAxisItem::createAxis(double scale) const
         return nullptr;
 
     const auto converter = m_instrument->createUnitConverter();
-    const auto converted_axis = converter->createConvertedAxis(0, AxesUnits::DEGREES);
+    const auto converted_axis = converter->createConvertedAxis(0, Axes::Units::DEGREES);
 
     // applying scaling
     std::vector<double> centers = converted_axis->getBinCenters();
@@ -139,8 +139,8 @@ void PointwiseAxisItem::updateIndicators()
         return;
 
     const auto converter = m_instrument->createUnitConverter();
-    getItem(P_MIN_DEG)->setValue(converter->calculateMin(0, AxesUnits::DEGREES));
-    getItem(P_MAX_DEG)->setValue(converter->calculateMax(0, AxesUnits::DEGREES));
+    getItem(P_MIN_DEG)->setValue(converter->calculateMin(0, Axes::Units::DEGREES));
+    getItem(P_MAX_DEG)->setValue(converter->calculateMax(0, Axes::Units::DEGREES));
     getItem(P_NBINS)->setValue(static_cast<int>(m_axis->size()));
 
     emitDataChanged();

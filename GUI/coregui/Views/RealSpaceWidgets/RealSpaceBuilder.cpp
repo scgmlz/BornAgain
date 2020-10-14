@@ -13,11 +13,10 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilder.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
+#include "Core/Aggregate/InterferenceFunctions.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleCoreShell.h"
-#include "Core/includeIncludes/InterferenceFunctions.h"
-#include "GUI/ba3d/model/layer.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/Lattice2DItems.h"
 #include "GUI/coregui/Models/LayerItem.h"
@@ -28,7 +27,6 @@
 #include "GUI/coregui/Models/ParticleDistributionItem.h"
 #include "GUI/coregui/Models/ParticleItem.h"
 #include "GUI/coregui/Models/ParticleLayoutItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h"
@@ -46,7 +44,7 @@ std::unique_ptr<IInterferenceFunction> GetInterferenceFunction(const SessionItem
 
 RealSpaceBuilder::RealSpaceBuilder(QWidget* parent) : QWidget(parent) {}
 
-RealSpaceBuilder::~RealSpaceBuilder() {}
+RealSpaceBuilder::~RealSpaceBuilder() = default;
 
 void RealSpaceBuilder::populate(RealSpaceModel* model, const SessionItem& item,
                                 const SceneGeometry& sceneGeometry,
@@ -88,7 +86,7 @@ void RealSpaceBuilder::populateMultiLayer(RealSpaceModel* model, const SessionIt
     int index(0);
     for (auto layer : item.getItems(MultiLayerItem::T_LAYERS)) {
 
-        bool isTopLayer = index == 0 ? true : false;
+        bool isTopLayer = index == 0;
         populateLayer(model, *layer, sceneGeometry,
                       QVector3D(0, 0, static_cast<float>(-total_height)), isTopLayer);
 

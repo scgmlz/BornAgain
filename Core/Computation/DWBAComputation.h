@@ -17,7 +17,6 @@
 
 #include "Core/Computation/DWBASingleComputation.h"
 #include "Core/Computation/IComputation.h"
-#include "Core/Parametrization/SimulationOptions.h"
 
 class MultiLayer;
 class SimulationElement;

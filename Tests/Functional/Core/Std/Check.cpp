@@ -14,15 +14,12 @@
 
 #include "BABuild.h"
 #include "BATesting.h"
-#include "Core/Basics/Assert.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Base/Utils/FileSystemUtils.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
+#include "Core/Instrument/IntensityDataFunctions.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/SampleBuilderEngine/ISampleBuilder.h"
-#include "Core/Simulation/Simulation.h"
 #include "Core/Simulation/SimulationFactory.h"
 #include "Core/StandardSamples/SampleBuilderFactory.h"
-#include "Core/Tools/FileSystemUtils.h"
 #include <iostream>
 
 bool checkSimulation(const std::string& name, const Simulation& direct_simulation,

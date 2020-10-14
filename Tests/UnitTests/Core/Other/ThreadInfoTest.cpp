@@ -1,4 +1,4 @@
-#include "Core/Parametrization/ThreadInfo.h"
+#include "Base/Utils/ThreadInfo.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class ThreadInfoTest : public ::testing::Test

@@ -13,16 +13,15 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ProjectionsPlot.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Intensity/Histogram2D.h"
+#include "Core/Histo/Histogram1D.h"
+#include "Core/Histo/Histogram2D.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/FitWidgets/plot_constants.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 ProjectionsPlot::ProjectionsPlot(const QString& projectionType, QWidget* parent)
     : SessionItemWidget(parent), m_projectionType(projectionType), m_customPlot(new QCustomPlot),
@@ -169,7 +168,7 @@ void ProjectionsPlot::unsubscribeFromChildren()
 
 void ProjectionsPlot::updateProjectionsData()
 {
-    m_hist2d.reset(new Histogram2D(*intensityItem()->getOutputData()));
+    m_hist2d = std::make_unique<Histogram2D>(*intensityItem()->getOutputData());
     updateAxesRange();
     updateAxesTitle();
     setLogz(intensityItem()->isLogz());

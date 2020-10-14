@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_MODELS_ROTATIONITEMS_H
 
 #include "GUI/coregui/Models/SessionItem.h"
-#include "Wrap/WinDllMacros.h"
 
 class IRotation;
 

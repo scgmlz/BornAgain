@@ -55,8 +55,6 @@
 
 #include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
-//#include <QtWidgets/QItemDelegate>
-//#include <QtWidgets/QTreeView>
 #include <QItemDelegate>
 #include <QTreeView>
 

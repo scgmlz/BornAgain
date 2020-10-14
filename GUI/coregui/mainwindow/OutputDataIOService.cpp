@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/mainwindow/OutputDataIOService.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/JobItem.h"
 #include "GUI/coregui/Models/ModelPath.h"

@@ -25,4 +25,4 @@ Box::Box(double length, double width, double height)
     std::move(top_face.begin(), top_face.end(), m_vertices.begin() + 4);
 }
 
-Box::~Box() {}
+Box::~Box() = default;

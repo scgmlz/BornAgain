@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Detector/SphericalPixel.h"
-#include "Core/Binning/Bin.h"
+#include "Base/Axis/Bin.h"
 
 SphericalPixel::SphericalPixel(const Bin1D& alpha_bin, const Bin1D& phi_bin)
     : m_alpha(alpha_bin.m_lower), m_phi(phi_bin.m_lower), m_dalpha(alpha_bin.getBinSize()),

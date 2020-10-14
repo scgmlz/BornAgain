@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Views/CommonWidgets/ItemSelectorWidget.h"
 #include "GUI/coregui/Models/SessionDecorationModel.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QListView>
@@ -38,7 +37,7 @@ ItemSelectorWidget::ItemSelectorWidget(QWidget* parent)
             SLOT(onCustomContextMenuRequested(const QPoint&)));
 }
 
-ItemSelectorWidget::~ItemSelectorWidget() {}
+ItemSelectorWidget::~ItemSelectorWidget() = default;
 
 QSize ItemSelectorWidget::sizeHint() const
 {
@@ -100,7 +99,7 @@ void ItemSelectorWidget::onSelectionChanged(const QItemSelection& selected, cons
     QModelIndexList indexes = selected.indexes();
     SessionItem* selectedItem(0);
 
-    if (indexes.size())
+    if (!indexes.empty())
         selectedItem = m_model->itemForIndex(indexes.back());
 
     emit selectionChanged(selectedItem);
@@ -116,7 +115,7 @@ void ItemSelectorWidget::connectModel()
     if (!m_model)
         return;
 
-    m_decorationModel.reset(new SessionDecorationModel(nullptr, m_model));
+    m_decorationModel = std::make_unique<SessionDecorationModel>(nullptr, m_model);
     m_listView->setModel(m_decorationModel.get());
 
     connect(m_listView->selectionModel(),

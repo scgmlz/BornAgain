@@ -18,10 +18,7 @@
 #include "Core/Fitting/ObjectiveMetricUtils.h"
 #include "Core/Fitting/PyFittingCallbacks.h"
 #include "Core/Instrument/ChiSquaredModule.h"
-#include "Core/Intensity/ArrayUtils.h"
 #include "Core/Simulation/Simulation.h"
-#include "Fit/Kernel/MinimizerResult.h"
-#include "Fit/Kernel/Parameters.h"
 #include <stdexcept>
 
 class IMetricWrapper
@@ -35,7 +32,7 @@ public:
 class ChiModuleWrapper : public IMetricWrapper
 {
 public:
-    ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module);
+    explicit ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module);
     double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const override;
 
 private:
@@ -45,7 +42,7 @@ private:
 class ObjectiveMetricWrapper : public IMetricWrapper
 {
 public:
-    ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module);
+    explicit ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module);
     double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const override;
 
 private:

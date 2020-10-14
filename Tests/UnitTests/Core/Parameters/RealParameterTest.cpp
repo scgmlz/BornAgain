@@ -1,5 +1,5 @@
-#include "Core/Parametrization/RealParameter.h"
-#include "Core/Parametrization/IParameterized.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Base/IParameterized.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <stdexcept>

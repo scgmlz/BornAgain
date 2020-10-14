@@ -70,7 +70,7 @@ const bpo::variable_value& ApplicationOptions::operator[](const std::string& s) 
 
 bool ApplicationOptions::find(std::string name) const
 {
-    return (m_variables_map.count(name.c_str()) ? true : false);
+    return (m_variables_map.count(name.c_str()));
 }
 
 bool ApplicationOptions::isConsistent() const

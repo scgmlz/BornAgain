@@ -1,6 +1,6 @@
 #include "Core/Lattice/Lattice.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Vector/Transform3D.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Vector/Transform3D.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 class LatticeTest : public ::testing::Test

@@ -1,4 +1,3 @@
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "Tests/GTestWrapper/google_test.h"
@@ -231,7 +230,7 @@ TEST_F(TestSessionItem, dataRoles)
     EXPECT_TRUE(item->roleProperty(Qt::DisplayRole) == 5432);
     EXPECT_TRUE(item->roleProperty(Qt::EditRole) == 5432);
     for (int i = 0; i < 10; i++) {
-        EXPECT_TRUE(item->roleProperty(SessionFlags::EndSessionRoles + i).isValid() == false);
+        EXPECT_FALSE(item->roleProperty(SessionFlags::EndSessionRoles + i).isValid());
         item->setRoleProperty(SessionFlags::EndSessionRoles + i, i);
         EXPECT_TRUE(item->roleProperty(SessionFlags::EndSessionRoles + i) == i);
     }

@@ -14,7 +14,6 @@
 
 #include "GUI/coregui/Views/InstrumentWidgets/DetectorMaskDelegate.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InstrumentModel.h"

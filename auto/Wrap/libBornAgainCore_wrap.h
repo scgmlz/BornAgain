@@ -58,98 +58,6 @@ private:
 };
 
 
-class SwigDirector_IParameterized : public IParameterized, public Swig::Director {
-
-public:
-    SwigDirector_IParameterized(PyObject *self, std::string const &name = "");
-    SwigDirector_IParameterized(PyObject *self, IParameterized const &other);
-    virtual ~SwigDirector_IParameterized();
-    virtual ParameterPool *createParameterTree() const;
-    virtual void onChange();
-
-/* Internal director utilities */
-public:
-    bool swig_get_inner(const char *swig_protected_method_name) const {
-      std::map<std::string, bool>::const_iterator iv = swig_inner.find(swig_protected_method_name);
-      return (iv != swig_inner.end() ? iv->second : false);
-    }
-    void swig_set_inner(const char *swig_protected_method_name, bool swig_val) const {
-      swig_inner[swig_protected_method_name] = swig_val;
-    }
-private:
-    mutable std::map<std::string, bool> swig_inner;
-
-#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)
-/* VTable implementation */
-    PyObject *swig_get_method(size_t method_index, const char *method_name) const {
-      PyObject *method = vtable[method_index];
-      if (!method) {
-        swig::SwigVar_PyObject name = SWIG_Python_str_FromChar(method_name);
-        method = PyObject_GetAttr(swig_get_self(), name);
-        if (!method) {
-          std::string msg = "Method in class IParameterized doesn't exist, undefined ";
-          msg += method_name;
-          Swig::DirectorMethodException::raise(msg.c_str());
-        }
-        vtable[method_index] = method;
-      }
-      return method;
-    }
-private:
-    mutable swig::SwigVar_PyObject vtable[2];
-#endif
-
-};
-
-
-class SwigDirector_INode : public INode, public Swig::Director {
-
-public:
-    SwigDirector_INode(PyObject *self);
-    SwigDirector_INode(PyObject *self, NodeMeta const &meta, std::vector< double, std::allocator< double > > const &PValues);
-    virtual ~SwigDirector_INode();
-    virtual ParameterPool *createParameterTree() const;
-    virtual void onChange();
-    virtual void accept(INodeVisitor *visitor) const;
-    virtual std::string treeToString() const;
-    virtual std::vector< INode const *, std::allocator< INode const * > > getChildren() const;
-    virtual void setParent(INode const *newParent);
-
-/* Internal director utilities */
-public:
-    bool swig_get_inner(const char *swig_protected_method_name) const {
-      std::map<std::string, bool>::const_iterator iv = swig_inner.find(swig_protected_method_name);
-      return (iv != swig_inner.end() ? iv->second : false);
-    }
-    void swig_set_inner(const char *swig_protected_method_name, bool swig_val) const {
-      swig_inner[swig_protected_method_name] = swig_val;
-    }
-private:
-    mutable std::map<std::string, bool> swig_inner;
-
-#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)
-/* VTable implementation */
-    PyObject *swig_get_method(size_t method_index, const char *method_name) const {
-      PyObject *method = vtable[method_index];
-      if (!method) {
-        swig::SwigVar_PyObject name = SWIG_Python_str_FromChar(method_name);
-        method = PyObject_GetAttr(swig_get_self(), name);
-        if (!method) {
-          std::string msg = "Method in class INode doesn't exist, undefined ";
-          msg += method_name;
-          Swig::DirectorMethodException::raise(msg.c_str());
-        }
-        vtable[method_index] = method;
-      }
-      return method;
-    }
-private:
-    mutable swig::SwigVar_PyObject vtable[6];
-#endif
-
-};
-
-
 class SwigDirector_ISample : public ISample, public Swig::Director {
 
 public:
@@ -416,61 +324,6 @@ private:
 };
 
 
-class SwigDirector_IInterferenceFunction : public IInterferenceFunction, public Swig::Director {
-
-public:
-    SwigDirector_IInterferenceFunction(PyObject *self, NodeMeta const &meta, std::vector< double, std::allocator< double > > const &PValues);
-    SwigDirector_IInterferenceFunction(PyObject *self, double position_var);
-    virtual ~SwigDirector_IInterferenceFunction();
-    virtual IInterferenceFunction *clone() const;
-    virtual void transferToCPP();
-    virtual ParameterPool *createParameterTree() const;
-    virtual void onChange();
-    virtual void accept(INodeVisitor *visitor) const;
-    virtual std::string treeToString() const;
-    virtual std::vector< INode const *, std::allocator< INode const * > > getChildren() const;
-    virtual void setParent(INode const *newParent);
-    virtual Material const *material() const;
-    virtual double evaluate(kvector_t const q, double outer_iff = 1.0) const;
-    virtual double getParticleDensity() const;
-    virtual bool supportsMultilayer() const;
-    virtual double iff_without_dw(kvector_t const q) const;
-
-/* Internal director utilities */
-public:
-    bool swig_get_inner(const char *swig_protected_method_name) const {
-      std::map<std::string, bool>::const_iterator iv = swig_inner.find(swig_protected_method_name);
-      return (iv != swig_inner.end() ? iv->second : false);
-    }
-    void swig_set_inner(const char *swig_protected_method_name, bool swig_val) const {
-      swig_inner[swig_protected_method_name] = swig_val;
-    }
-private:
-    mutable std::map<std::string, bool> swig_inner;
-
-#if defined(SWIG_PYTHON_DIRECTOR_VTABLE)
-/* VTable implementation */
-    PyObject *swig_get_method(size_t method_index, const char *method_name) const {
-      PyObject *method = vtable[method_index];
-      if (!method) {
-        swig::SwigVar_PyObject name = SWIG_Python_str_FromChar(method_name);
-        method = PyObject_GetAttr(swig_get_self(), name);
-        if (!method) {
-          std::string msg = "Method in class IInterferenceFunction doesn't exist, undefined ";
-          msg += method_name;
-          Swig::DirectorMethodException::raise(msg.c_str());
-        }
-        vtable[method_index] = method;
-      }
-      return method;
-    }
-private:
-    mutable swig::SwigVar_PyObject vtable[14];
-#endif
-
-};
-
-
 class SwigDirector_ISampleBuilder : public ISampleBuilder, public Swig::Director {
 
 public:
@@ -479,7 +332,7 @@ public:
     virtual ParameterPool *createParameterTree() const;
     virtual void onChange();
     virtual MultiLayer *buildSample() const;
-    virtual MultiLayer *createSampleByIndex(size_t index);
+    virtual MultiLayer *createSampleByIndex(size_t arg0);
     virtual size_t size();
 
 /* Internal director utilities */

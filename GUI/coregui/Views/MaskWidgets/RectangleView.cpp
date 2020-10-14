@@ -17,7 +17,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 
-RectangleView::RectangleView() {}
+RectangleView::RectangleView() = default;
 
 void RectangleView::onChangedX()
 {

@@ -15,7 +15,7 @@
 #include "Core/Computation/MultiLayerFuncs.h"
 #include "Core/Computation/ProcessedSample.h"
 #include "Core/Computation/ProfileHelper.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/RT/SimulationOptions.h"
 
 std::vector<complex_t> MaterialProfile(const MultiLayer& multilayer, int n_points, double z_min,
                                        double z_max)

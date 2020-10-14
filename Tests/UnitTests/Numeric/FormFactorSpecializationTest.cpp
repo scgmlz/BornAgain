@@ -1,4 +1,4 @@
-#include "Core/includeIncludes/HardParticles.h"
+#include "Core/HardParticle/HardParticles.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include "Tests/UnitTests/Numeric/FormFactorTest.h"
 

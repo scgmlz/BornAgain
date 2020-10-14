@@ -281,8 +281,8 @@ void createFitContainers(JobItem* jobItem)
                                 "a second FitParameterContainer.");
     }
 
-    parsContainerItem = model->insertNewItem("FitParameterContainer", fitSuiteItem->index(), -1,
-                                             FitSuiteItem::T_FIT_PARAMETERS_CONTAINER);
+    model->insertNewItem("FitParameterContainer", fitSuiteItem->index(), -1,
+                         FitSuiteItem::T_FIT_PARAMETERS_CONTAINER);
 
     // Minimizer settings
     SessionItem* minimizerContainerItem = fitSuiteItem->getItem(FitSuiteItem::T_MINIMIZER);
@@ -291,8 +291,8 @@ void createFitContainers(JobItem* jobItem)
                                 "a second MinimizerContainer.");
     }
 
-    minimizerContainerItem = model->insertNewItem("MinimizerContainer", fitSuiteItem->index(), -1,
-                                                  FitSuiteItem::T_MINIMIZER);
+    model->insertNewItem("MinimizerContainer", fitSuiteItem->index(), -1,
+                         FitSuiteItem::T_MINIMIZER);
 }
 
 PointwiseAxisItem* getPointwiseAxisItem(const SpecularInstrumentItem* instrument)

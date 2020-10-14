@@ -12,7 +12,6 @@
 //
 // ************************************************************************** //
 
-#include "Core/Detector/SimulationAreaIterator.h"
 #include "Core/Detector/IDetector2D.h"
 #include "Core/Detector/SimulationArea.h"
 

@@ -12,7 +12,6 @@
 //
 // ************************************************************************** //
 
-#include "GUI/coregui/Models/ProxyModelStrategy.h"
 #include "GUI/coregui/Models/ComponentProxyModel.h"
 #include "GUI/coregui/Models/ModelUtils.h"
 #include "GUI/coregui/Models/SessionModel.h"

@@ -13,21 +13,43 @@
 // ************************************************************************** //
 
 #include "Core/StandardSamples/MagneticLayersBuilder.h"
+#include "Base/Const/Units.h"
+#include "Base/Utils/Assert.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Assert.h"
-#include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorFullSphere.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Multilayer/RoughnessModels.h"
 #include "Core/Particle/Particle.h"
 
 namespace
 {
 
 const double sphere_radius = 5 * Units::nanometer;
+
+MultiLayer* parametricBuild(double sigmaRoughness, RoughnessModel roughnessModel)
+{
+    MultiLayer* multi_layer = new MultiLayer();
+
+    kvector_t substr_field = kvector_t(0.0, 1e6, 0.0);
+    kvector_t layer_field = kvector_t(1e6, 1e6, 0.0);
+    Material vacuum_material = HomogeneousMaterial("Vacuum", 0.0, 0.0);
+    Material substrate_material = HomogeneousMaterial("Substrate", 7e-6, 2e-8, substr_field);
+    Material layer_material = HomogeneousMaterial("MagLayer", 6e-4, 2e-8, layer_field);
+
+    auto roughness = LayerRoughness();
+    roughness.setSigma(sigmaRoughness * Units::angstrom);
+
+    Layer vacuum_layer(vacuum_material);
+    Layer substrate_layer(substrate_material);
+    Layer layer(layer_material, 200 * Units::angstrom);
+    multi_layer->addLayer(vacuum_layer);
+    multi_layer->addLayerWithTopRoughness(layer, roughness);
+    multi_layer->addLayerWithTopRoughness(substrate_layer, roughness);
+    multi_layer->setRoughnessModel(roughnessModel);
+    return multi_layer;
+}
 
 } // namespace
 
@@ -103,31 +125,7 @@ MultiLayer* MagneticLayerBuilder::buildSample() const
 
 MultiLayer* SimpleMagneticRotationBuilder::buildSample() const
 {
-    return builder();
-}
-
-MultiLayer* SimpleMagneticRotationBuilder::builder(double sigmaRoughness,
-                                                   RoughnessModel roughnessModel) const
-{
-    MultiLayer* multi_layer = new MultiLayer();
-
-    kvector_t substr_field = kvector_t(0.0, 1e6, 0.0);
-    kvector_t layer_field = kvector_t(1e6, 1e6, 0.0);
-    Material vacuum_material = HomogeneousMaterial("Vacuum", 0.0, 0.0);
-    Material substrate_material = HomogeneousMaterial("Substrate", 7e-6, 2e-8, substr_field);
-    Material layer_material = HomogeneousMaterial("MagLayer", 6e-4, 2e-8, layer_field);
-
-    auto roughness = LayerRoughness();
-    roughness.setSigma(sigmaRoughness * Units::angstrom);
-
-    Layer vacuum_layer(vacuum_material);
-    Layer substrate_layer(substrate_material);
-    Layer layer(layer_material, 200 * Units::angstrom);
-    multi_layer->addLayer(vacuum_layer);
-    multi_layer->addLayerWithTopRoughness(layer, roughness);
-    multi_layer->addLayerWithTopRoughness(substrate_layer, roughness);
-    multi_layer->setRoughnessModel(roughnessModel);
-    return multi_layer;
+    return parametricBuild(0., RoughnessModel::TANH);
 }
 
 size_t SimpleMagneticRotationBuilder::size()
@@ -140,15 +138,15 @@ MultiLayer* SimpleMagneticRotationBuilder::createSampleByIndex(size_t index)
     switch (index) {
 
     case 0:
-        return builder(0.);
+        return parametricBuild(0., RoughnessModel::TANH);
 
     case 1:
         setName("Tanh");
-        return builder(2., RoughnessModel::TANH);
+        return parametricBuild(2., RoughnessModel::TANH);
 
     case 2:
         setName("NC");
-        return builder(2., RoughnessModel::NEVOT_CROCE);
+        return parametricBuild(2., RoughnessModel::NEVOT_CROCE);
 
     default:
         ASSERT(0);

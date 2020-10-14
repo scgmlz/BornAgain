@@ -1,7 +1,7 @@
 #ifndef BORNAGAIN_TESTS_UNITTESTS_GUI_TESTPARTICLELAYOUTITEM_H
 #define BORNAGAIN_TESTS_UNITTESTS_GUI_TESTPARTICLELAYOUTITEM_H
 
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/Lattice2DItems.h"
 #include "GUI/coregui/Models/ParticleLayoutItem.h"

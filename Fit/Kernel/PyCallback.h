@@ -39,7 +39,7 @@ public:
     //! Call Python callable and returns its result. Intended to be overloaded in Python.
     //! @param pars: Fit parameters object (intentionally passed by value).
     //! @return vector of residuals
-    virtual std::vector<double> call_residuals(Fit::Parameters);
+    virtual std::vector<double> call_residuals(Fit::Parameters pars);
 
 private:
     CallbackType m_callback_type;

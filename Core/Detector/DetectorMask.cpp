@@ -14,7 +14,7 @@
 
 #include "Core/Detector/IDetector2D.h"
 #include "Core/Detector/RegionOfInterest.h"
-#include "Core/Intensity/Histogram2D.h"
+#include "Core/Histo/Histogram2D.h"
 
 DetectorMask::DetectorMask() : m_number_of_masked_channels(0) {}
 
@@ -111,7 +111,7 @@ const IShape2D* DetectorMask::getMaskShape(size_t mask_index, bool& mask_value) 
 void DetectorMask::process_masks()
 {
     m_mask_data.setAllTo(false);
-    if (!m_shapes.size())
+    if (!!m_shapes.empty())
         return;
 
     m_number_of_masked_channels = 0;

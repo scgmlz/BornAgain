@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEVIEW_H
 
-#include "fancymainwindow.h"
+#include <fancymainwindow.h>
 
 class MainWindow;
 class SampleViewDocks;

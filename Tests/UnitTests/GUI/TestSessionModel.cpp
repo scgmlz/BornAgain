@@ -5,7 +5,6 @@
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SessionItemTags.h"
-#include "GUI/coregui/Models/SessionModel.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <QSignalSpy>
 #include <QXmlStreamWriter>

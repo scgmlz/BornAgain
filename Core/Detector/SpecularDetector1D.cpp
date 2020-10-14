@@ -32,9 +32,9 @@ SpecularDetector1D* SpecularDetector1D::clone() const
     return new SpecularDetector1D(*this);
 }
 
-AxesUnits SpecularDetector1D::defaultAxesUnits() const
+Axes::Units SpecularDetector1D::defaultAxesUnits() const
 {
-    return AxesUnits::RADIANS;
+    return Axes::Units::RADIANS;
 }
 
 std::string SpecularDetector1D::axisName(size_t index) const

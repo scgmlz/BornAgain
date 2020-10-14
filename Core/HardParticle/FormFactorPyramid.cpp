@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorPyramid.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Types/Exceptions.h"
+#include "Base/Utils/MathFunctions.h"
 
 const PolyhedralTopology FormFactorPyramid::topology = {{
                                                             {{3, 2, 1, 0}, true}, // TODO -> true
@@ -27,16 +27,12 @@ const PolyhedralTopology FormFactorPyramid::topology = {{
                                                         },
                                                         false};
 
-//! Constructor of a truncated pyramid with a square base
-//! @param base_edge: length of the square base in nanometers
-//! @param height: height of the pyramid in nanometers
-//! @param alpha: dihedral angle between the base and a side face in radians
 FormFactorPyramid::FormFactorPyramid(const std::vector<double> P)
     : IFormFactorPolyhedron({"Pyramid",
-                             "class_tooltip",
-                             {{"BaseEdge", "nm", "para_tooltip", 0, +INF, 0},
-                              {"Height", "nm", "para_tooltip", 0, +INF, 0},
-                              {"Alpha", "rad", "para_tooltip", 0., M_PI, 0}}},
+                             "frustum with quadratic base",
+                             {{"BaseEdge", "nm", "base edge length", 0, +INF, 0},
+                              {"Height", "nm", "height", 0, +INF, 0},
+                              {"Alpha", "rad", "angle between base and a side face", 0., M_PI, 0}}},
                             P),
       m_base_edge(m_P[0]), m_height(m_P[1]), m_alpha(m_P[2])
 {

@@ -27,4 +27,4 @@ RippleSawtooth::RippleSawtooth(double length, double width, double height, doubl
     m_vertices[5] = kvector_t(-length / 2.0, 0.0, height);
 }
 
-RippleSawtooth::~RippleSawtooth() {}
+RippleSawtooth::~RippleSawtooth() = default;

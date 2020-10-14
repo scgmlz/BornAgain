@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Instrument/ChiSquaredModule.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "Core/Instrument/VarianceFunctions.h"
 #include "Core/Intensity/IIntensityFunction.h"
 #include <cmath>

@@ -1,6 +1,5 @@
-#include "Core/Binning/PointwiseAxis.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/OutputData.h"
+#include "Base/Axis/PointwiseAxis.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/GroupItem.h"
@@ -150,7 +149,7 @@ TEST_F(TestSavingSpecularData, test_setLastModified)
     EXPECT_FALSE(info.wasModifiedSinceLastSave());
 
     QTest::qSleep(nap_time);
-    item->init(*m_axis.get(), "Degrees");
+    item->init(*m_axis, "Degrees");
     EXPECT_TRUE(info.wasModifiedSinceLastSave());
 
     info = OutputDataSaveInfo::createSaved(item);

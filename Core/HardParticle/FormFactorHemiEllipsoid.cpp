@@ -13,22 +13,18 @@
 // ************************************************************************** //
 
 #include "Core/HardParticle/FormFactorHemiEllipsoid.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Utils/Integrator.h"
+#include "Base/Utils/MathFunctions.h"
 #include "Core/Shapes/TruncatedEllipsoid.h"
-#include "Core/Tools/Integrator.h"
-#include "Core/Tools/MathFunctions.h"
 #include <limits>
 
-//! Constructor of horizontally oriented ellipsoid, truncated at the central plane.
-//! @param radius_x: radius of the ellipse base in the x-direction, in nanometers
-//! @param radius_y: radius of the ellipse base in the y-direction, in nanometers
-//! @param height: height of the hemi ellipsoid in nanometers
 FormFactorHemiEllipsoid::FormFactorHemiEllipsoid(const std::vector<double> P)
     : IFormFactorBorn({"HemiEllipsoid",
-                       "class_tooltip",
-                       {{"RadiusX", "nm", "para_tooltip", 0, +INF, 0},
-                        {"RadiusY", "nm", "para_tooltip", 0, +INF, 0},
-                        {"Height", "nm", "para_tooltip", 0, +INF, 0}}},
+                       "actually a spheroid, truncated at central xy plane",
+                       {{"RadiusX", "nm", "radius in x direction", 0, +INF, 0},
+                        {"RadiusY", "nm", "radius in y direction", 0, +INF, 0},
+                        {"Height", "nm", "height = radius in z direction", 0, +INF, 0}}},
                       P),
       m_radius_x(m_P[0]), m_radius_y(m_P[1]), m_height(m_P[2])
 {
@@ -78,5 +74,6 @@ complex_t FormFactorHemiEllipsoid::evaluate_for_q(cvector_t q) const
 
 void FormFactorHemiEllipsoid::onChange()
 {
-    mP_shape.reset(new TruncatedEllipsoid(m_radius_x, m_radius_x, m_height, m_height, 0.0));
+    mP_shape =
+        std::make_unique<TruncatedEllipsoid>(m_radius_x, m_radius_x, m_height, m_height, 0.0);
 }

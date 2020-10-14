@@ -67,7 +67,7 @@ bool CsvImportAssistantPerformanceTest::runTest()
             // Reading and setting data to import:
             CsvImportAssistant assistant(testFilename());
             assistant.setIntensityColumn(1);
-            assistant.setCoordinateColumn(9, AxesUnits::DEGREES);
+            assistant.setCoordinateColumn(9, Axes::Units::DEGREES);
             assistant.setFirstRow(1);
             assistant.setLastRow(int(nRows));
 

@@ -22,14 +22,6 @@
 namespace Numeric
 {
 
-//! Returns true if two doubles agree within epsilon*tolerance.
-bool AreAlmostEqual(double a, double b, double tolerance)
-{
-    constexpr double eps = std::numeric_limits<double>::epsilon();
-    return std::abs(a - b)
-           <= eps * std::max(tolerance * eps, std::max(1., tolerance) * std::abs(b));
-}
-
 //! Returns the absolute value of the difference between a and b.
 double GetAbsoluteDifference(double a, double b)
 {

@@ -21,7 +21,7 @@ public:
     SwigDirector_PyCallback(PyObject *self, PyCallback::CallbackType callback_type = PyCallback::SCALAR);
     virtual ~SwigDirector_PyCallback();
     virtual double call_scalar(Fit::Parameters pars);
-    virtual std::vector< double, std::allocator< double > > call_residuals(Fit::Parameters arg0);
+    virtual std::vector< double, std::allocator< double > > call_residuals(Fit::Parameters pars);
 
 /* Internal director utilities */
 public:

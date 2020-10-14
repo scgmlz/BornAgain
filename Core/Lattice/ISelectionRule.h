@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_LATTICE_ISELECTIONRULE_H
 #define BORNAGAIN_CORE_LATTICE_ISELECTIONRULE_H
 
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Vectors3D.h"
 
 //! Pure virtual base class for selection rules.
 //! @ingroup samples_internal

@@ -16,7 +16,6 @@
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/GroupItemController.h"
 #include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/utils/CustomEventFilters.h"
 #include "GUI/coregui/utils/GUIHelpers.h"

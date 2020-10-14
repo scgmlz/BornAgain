@@ -14,7 +14,6 @@
 
 #include "Core/Export/SampleLabelHandler.h"
 #include "Core/Aggregate/IInterferenceFunction.h"
-#include "Core/Material/Material.h"
 #include "Core/Multilayer/LayerRoughness.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/Particle/MesoCrystal.h"

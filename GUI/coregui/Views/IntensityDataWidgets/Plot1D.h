@@ -16,7 +16,7 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOT1D_H
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 class BasicAxisItem;
 class DataItem;

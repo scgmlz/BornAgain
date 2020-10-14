@@ -13,10 +13,9 @@
 // ************************************************************************** //
 
 #include "GUI/ba3d/widget.h"
-#include "model/model.h"
-#include "view/camera.h"
-#include "view/canvas.h"
-#include "view/program.h"
+#include "GUI/ba3d/model/model.h"
+#include "GUI/ba3d/view/canvas.h"
+#include "GUI/ba3d/view/program.h"
 
 #include <QBoxLayout>
 
@@ -32,7 +31,7 @@ Widget3D::Widget3D() : canvas(nullptr)
     box->addWidget((canvas = new Canvas));
 }
 
-Widget3D::~Widget3D() {}
+Widget3D::~Widget3D() = default;
 
 Camera& Widget3D::cam()
 {

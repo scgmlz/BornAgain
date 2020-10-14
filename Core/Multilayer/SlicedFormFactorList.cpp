@@ -15,6 +15,7 @@
 #include "Core/Multilayer/SlicedFormFactorList.h"
 #include "Core/Multilayer/Slice.h"
 #include "Core/Particle/IParticle.h"
+#include "Core/Particle/SlicedParticle.h"
 #include "Core/Scattering/Rotations.h"
 #include <utility>
 

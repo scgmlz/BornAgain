@@ -34,4 +34,4 @@ TruncatedEllipsoid::TruncatedEllipsoid(double r_x, double r_y, double r_z, doubl
     }
 }
 
-TruncatedEllipsoid::~TruncatedEllipsoid() {}
+TruncatedEllipsoid::~TruncatedEllipsoid() = default;

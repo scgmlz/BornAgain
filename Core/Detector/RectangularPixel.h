@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_RECTANGULARPIXEL_H
 #define BORNAGAIN_CORE_DETECTOR_RECTANGULARPIXEL_H
 
-#include "Core/Binning/IPixel.h"
+#include "Base/Pixel/IPixel.h"
 
 //! A pixel in a RectangularDetector.
 

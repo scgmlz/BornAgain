@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_IMPORTDATAINFO_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_IMPORTDATAINFO_H
 
-#include "Core/Intensity/IUnitConverter.h"
+#include "Core/Unit/IUnitConverter.h"
 #include <QString>
 #include <memory>
 
@@ -28,7 +28,7 @@ class ImportDataInfo
 public:
     ImportDataInfo();
     ImportDataInfo(ImportDataInfo&& other);
-    ImportDataInfo(std::unique_ptr<OutputData<double>> data, AxesUnits units);
+    ImportDataInfo(std::unique_ptr<OutputData<double>> data, Axes::Units units);
     ImportDataInfo(std::unique_ptr<OutputData<double>> data, const QString& units);
     ~ImportDataInfo();
 
@@ -43,7 +43,7 @@ public:
 private:
     void checkValidity();
     std::unique_ptr<OutputData<double>> m_data;
-    AxesUnits m_units;
+    Axes::Units m_units;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_UTILS_IMPORTDATAINFO_H

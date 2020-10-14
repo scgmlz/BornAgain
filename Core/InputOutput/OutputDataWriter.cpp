@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/InputOutput/OutputDataWriter.h"
+#include "Core/Data/OutputData.h"
 #include "Core/InputOutput/DataFormatUtils.h"
-#include "Core/Intensity/OutputData.h"
 #ifdef _WIN32
 #pragma warning(push)
 #pragma warning(disable : 4244 4275)
@@ -23,7 +23,7 @@
 #else
 #include "Core/InputOutput/boost_streams.h"
 #endif
-#include "Core/Tools/FileSystemUtils.h"
+#include "Base/Utils/FileSystemUtils.h"
 #include <fstream>
 
 OutputDataWriter::OutputDataWriter(const std::string& file_name) : m_file_name(file_name) {}

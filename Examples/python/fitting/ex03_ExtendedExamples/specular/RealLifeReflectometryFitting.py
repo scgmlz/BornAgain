@@ -253,7 +253,7 @@ def plot_result(sim_result, ref_result, bin_start=0, bin_end=-1):
                  sim_result.axis(), sim_data,
                  ref_result.axis(), ref_data)
 
-    xlabel = ba.get_axes_labels(sim_result, ba.AxesUnits.DEFAULT)[0]
+    xlabel = ba.get_axes_labels(sim_result, ba.Axes.DEFAULT)[0]
     ylabel = "Intensity"
     plt.xlabel(xlabel, fontsize=16)
     plt.ylabel(ylabel, fontsize=16)

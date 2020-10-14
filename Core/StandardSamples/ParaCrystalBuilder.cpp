@@ -13,12 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/StandardSamples/ParaCrystalBuilder.h"
+#include "Base/Const/Units.h"
+#include "Base/Utils/Assert.h"
 #include "Core/Aggregate/InterferenceFunction2DParaCrystal.h"
 #include "Core/Aggregate/InterferenceFunctionRadialParaCrystal.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Assert.h"
-#include "Core/Basics/Units.h"
-#include "Core/Correlations/FTDistributions2D.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"

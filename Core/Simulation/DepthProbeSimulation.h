@@ -15,10 +15,9 @@
 #ifndef BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H
 
-#include "Core/Intensity/OutputData.h"
+#include "Core/Computation/DepthProbeElement.h"
 #include "Core/RT/ILayerRTCoefficients.h"
 #include "Core/Simulation/Simulation.h"
-#include "Core/SimulationElement/DepthProbeElement.h"
 
 #include <vector>
 
@@ -35,8 +34,6 @@ class DepthProbeSimulation : public Simulation
 {
 public:
     DepthProbeSimulation();
-    DepthProbeSimulation(const MultiLayer& sample);
-    DepthProbeSimulation(const std::shared_ptr<ISampleBuilder> sample_builder);
     ~DepthProbeSimulation() override;
 
     DepthProbeSimulation* clone() const override;

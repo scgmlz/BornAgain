@@ -72,7 +72,7 @@ void SamplePropertyWidget::selectionChanged(const QItemSelection& selected, cons
 {
     QModelIndexList indices = selected.indexes();
 
-    if (indices.size()) {
+    if (!indices.empty()) {
         QModelIndex index = indices.back();
 
         if (auto proxy = dynamic_cast<QSortFilterProxyModel*>(

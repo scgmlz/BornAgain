@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_SIMULATION_UNITCONVERTERUTILS_H
 #define BORNAGAIN_CORE_SIMULATION_UNITCONVERTERUTILS_H
 
-#include "Core/Intensity/IUnitConverter.h"
+#include "Core/Unit/IUnitConverter.h"
 
 class Instrument;
 class Simulation;
@@ -28,7 +28,7 @@ namespace UnitConverterUtils
 
 //! Returns zero-valued output data array in specified units
 std::unique_ptr<OutputData<double>> createOutputData(const IUnitConverter& converter,
-                                                     AxesUnits units);
+                                                     Axes::Units units);
 
 //! Helper factory function to use in GISASSimulation. Depending on the type of detector,
 //! returns either RectangularConverter or SphericalConverter.

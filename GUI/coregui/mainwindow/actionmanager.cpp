@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/mainwindow/actionmanager.h"
-#include "Core/Basics/Assert.h"
-#include "Core/Tools/SysUtils.h"
+#include "Base/Utils/Assert.h"
+#include "Base/Utils/SysUtils.h"
 #include "GUI/coregui/mainwindow/PyImportAssistant.h"
 #include "GUI/coregui/mainwindow/UpdateNotifier.h"
 #include "GUI/coregui/mainwindow/aboutapplicationdialog.h"

@@ -11,8 +11,7 @@
 //
 // ************************************************************************** //
 
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Simulation/Simulation.h"
+#include "Core/Instrument/IntensityDataFunctions.h"
 #include "Core/Simulation/SimulationFactory.h"
 #include "Core/StandardSamples/SampleBuilderFactory.h"
 #include "Tests/GTestWrapper/google_test.h"
@@ -50,7 +49,7 @@ TEST_F(BatchSimulation, BatchSimulation)
         batch->runSimulation();
         auto batch_result = batch->result();
         std::unique_ptr<OutputData<double>> batchResult(batch_result.data());
-        *result += *batchResult.get();
+        *result += *batchResult;
     }
 
     double diff = IntensityDataFunctions::getRelativeDifference(*result, *reference);

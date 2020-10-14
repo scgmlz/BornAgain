@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
-#include "Core/Binning/PointwiseAxis.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Base/Axis/PointwiseAxis.h"
+#include "Core/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -89,13 +89,13 @@ ImportDataInfo ImportDataUtils::Import1dData(QString& fileName)
         || DataFormatUtils::isIntFile(fileName.toStdString())
         || DataFormatUtils::isTiffFile(fileName.toStdString())) {
         try {
-            return ImportDataInfo(ImportKnownData(fileName), AxesUnits::QSPACE);
+            return ImportDataInfo(ImportKnownData(fileName), Axes::Units::QSPACE);
         } catch (...) {
             return getFromImportAssistant(fileName);
         }
     } else {
         try {
-            return ImportDataInfo(ImportReflectometryData(fileName), AxesUnits::QSPACE);
+            return ImportDataInfo(ImportReflectometryData(fileName), Axes::Units::QSPACE);
         } catch (...) {
             QString message =
                 QString("There was a problem while trying to import data from "

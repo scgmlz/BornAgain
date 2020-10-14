@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/Mask/Rectangle.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Binning/Bin.h"
+#include "Base/Axis/Bin.h"
+#include "Base/Types/Exceptions.h"
 
 //! @param xlow x-coordinate of lower left corner
 //! @param ylow y-coordinate of lower left corner

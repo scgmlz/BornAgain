@@ -13,16 +13,14 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/DomainObjectBuilder.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 #include "Core/Detector/IDetector2D.h"
-#include "Core/Intensity/SimpleUnitConverters.h"
-#include "Core/Intensity/UnitConverter1D.h"
+#include "Core/Detector/SimpleUnitConverters.h"
 #include "Core/Simulation/UnitConverterUtils.h"
+#include "Core/Unit/UnitConverter1D.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
-#include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/LayerItem.h"
 #include "GUI/coregui/Models/ParticleDistributionItem.h"
@@ -85,7 +83,7 @@ std::unique_ptr<ParticleLayout> DomainObjectBuilder::buildParticleLayout(const S
             QString par_name = prop.getValue();
             if (par_name == ParticleDistributionItem::NO_SELECTION) {
                 auto grandchildren = children[i]->getItems();
-                if (grandchildren.size() == 0) {
+                if (grandchildren.empty()) {
                     continue;
                 }
                 if (grandchildren.size() > 1) {

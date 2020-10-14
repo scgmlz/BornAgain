@@ -1,19 +1,17 @@
 #include "Core/Simulation/SpecularSimulation.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Binning/VariableBinAxis.h"
-#include "Core/Instrument/AngularSpecScan.h"
-#include "Core/Instrument/QSpecScan.h"
-#include "Core/Intensity/Histogram1D.h"
+#include "Base/Axis/VariableBinAxis.h"
+#include "Base/Const/MathConstants.h"
+#include "Base/Const/Units.h"
+#include "Core/Histo/Histogram1D.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
+#include "Core/Scan/AngularSpecScan.h"
+#include "Core/Scan/QSpecScan.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterPattern.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 
@@ -183,9 +181,9 @@ TEST_F(SpecularSimulationTest, ConstructSimulation)
     EXPECT_EQ(data->getAllocatedSize(), 10u);
     EXPECT_EQ(data->getRank(), 1u);
 
-    EXPECT_NEAR(0.1 * Units::degree, sim_result.axis(AxesUnits::RADIANS).front(),
+    EXPECT_NEAR(0.1 * Units::degree, sim_result.axis(Axes::Units::RADIANS).front(),
                 Units::degree * 1e-11);
-    EXPECT_NEAR(1.9 * Units::degree, sim_result.axis(AxesUnits::RADIANS).back(),
+    EXPECT_NEAR(1.9 * Units::degree, sim_result.axis(Axes::Units::RADIANS).back(),
                 Units::degree * 1e-10);
 
     checkBeamState(*sim);

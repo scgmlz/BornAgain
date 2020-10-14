@@ -15,7 +15,7 @@
 #ifdef BORNAGAIN_TIFF_SUPPORT
 
 #include "Core/InputOutput/TiffHandler.h"
-#include "Core/Tools/SysUtils.h"
+#include "Base/Utils/SysUtils.h"
 #include <tiffio.hxx>
 
 TiffHandler::TiffHandler()

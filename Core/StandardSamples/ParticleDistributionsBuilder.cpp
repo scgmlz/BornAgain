@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "Core/StandardSamples/ParticleDistributionsBuilder.h"
+#include "Base/Const/Units.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
 #include "Core/HardParticle/FormFactorBox.h"
 #include "Core/HardParticle/FormFactorCone.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
@@ -22,12 +22,11 @@
 #include "Core/HardParticle/FormFactorPyramid.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/ParameterSample.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleDistribution.h"
 #include "Core/StandardSamples/ReferenceMaterials.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterPattern.h"
 
 MultiLayer* CylindersWithSizeDistributionBuilder::buildSample() const
 {

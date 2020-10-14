@@ -13,13 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/Particle/MesoCrystal.h"
+#include "Base/Const/Units.h"
 #include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
 #include "Core/Detector/RectangularDetector.h"
 #include "Core/HardParticle/FormFactorCylinder.h"
 #include "Core/Lattice/ISelectionRule.h"
-#include "Core/Lattice/Lattice.h"
-#include "Core/Material/Material.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/LayerRoughness.h"
@@ -75,7 +73,7 @@ public:
     ~MesoCrystalPerformanceBuilder();
 
 protected:
-    MultiLayer* buildSample() const;
+    MultiLayer* buildSample() const override;
 
 private:
     std::unique_ptr<MesoCrystal> createMeso(Material material,
@@ -146,8 +144,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
             RotationX rotX(tilt);
             mesocrystal->setRotation(rotZ);
             mesocrystal->rotate(rotX);
-            particle_decoration.addParticle(*mesocrystal.get(), 1.0,
-                                            kvector_t(0, 0, -m_meso_height));
+            particle_decoration.addParticle(*mesocrystal, 1.0, kvector_t(0, 0, -m_meso_height));
         }
     }
 
@@ -198,7 +195,7 @@ int main()
 
     auto detector = create_detector();
 
-    simulation.setDetector(*detector.get());
+    simulation.setDetector(*detector);
 
     simulation.setBeamParameters(1.77 * Units::angstrom, 0.4 * Units::deg, 0.0);
     simulation.setBeamIntensity(6.1e+12);

@@ -13,14 +13,14 @@
 
 #include "BABuild.h"
 #include "BAVersion.h"
+#include "Base/Utils/PyEmbeddedUtils.h"
+#include "Base/Utils/PyFmt.h"
+#include "Base/Utils/PythonCore.h"
+#include "Base/Utils/SysUtils.h"
 #include "Core/Export/ExportToPython.h"
 #include "Core/Multilayer/MultiLayer.h"
-#include "Core/PyIO/PyEmbeddedUtils.h"
-#include "Core/PyIO/PyImport.h"
+#include "Core/Multilayer/PyImport.h"
 #include "Core/StandardSamples/SampleBuilderFactory.h"
-#include "Core/Tools/PyFmt.h"
-#include "Core/Tools/PythonCore.h"
-#include "Core/Tools/SysUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <sstream>

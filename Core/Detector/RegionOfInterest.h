@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_DETECTOR_REGIONOFINTEREST_H
 #define BORNAGAIN_CORE_DETECTOR_REGIONOFINTEREST_H
 
-#include "Core/Basics/ICloneable.h"
+#include "Base/Types/ICloneable.h"
 #include <memory>
 #include <vector>
 

@@ -47,17 +47,13 @@
 #include <QtDesigner/QDesignerFormWindowManagerInterface>
 
 #include "GUI/coregui/Views/widgetbox/qdesigner_utils_p.h"
-//#include <filterwidget_p.h>
 
-#include <QtGui/QDropEvent>
-//#include <QtWidgets/QVBoxLayout>
-//#include <QtWidgets/QApplication>
-//#include <QtWidgets/QToolBar>
 #include <QApplication>
 #include <QDrag>
 #include <QLineEdit>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QtGui/QDropEvent>
 
 #include <QtGui/QIcon>
 
@@ -157,7 +153,7 @@ WidgetBox::WidgetBox(SampleDesignerInterface* core, QWidget* parent, Qt::WindowF
     //    setAcceptDrops (true);
 }
 
-WidgetBox::~WidgetBox() {}
+WidgetBox::~WidgetBox() = default;
 
 // QDesignerFormEditorInterface *WidgetBox::core() const
 //{

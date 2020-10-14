@@ -13,10 +13,10 @@
 // ************************************************************************** //
 
 #include "Core/SoftParticle/FormFactorSphereLogNormalRadius.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterSample.h"
+#include "Core/LibFF/SomeFormFactors.h"
 #include "Core/Shapes/TruncatedEllipsoid.h"
-#include "Core/Vector/SomeFormFactors.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterSample.h"
 
 FormFactorSphereLogNormalRadius::FormFactorSphereLogNormalRadius(const std::vector<double> P,
                                                                  size_t n_samples)
@@ -60,5 +60,5 @@ complex_t FormFactorSphereLogNormalRadius::evaluate_for_q(cvector_t q) const
 
 void FormFactorSphereLogNormalRadius::onChange()
 {
-    mP_shape.reset(new TruncatedEllipsoid(m_mean, m_mean, m_mean, 2.0 * m_mean, 0.0));
+    mP_shape = std::make_unique<TruncatedEllipsoid>(m_mean, m_mean, m_mean, 2.0 * m_mean, 0.0);
 }

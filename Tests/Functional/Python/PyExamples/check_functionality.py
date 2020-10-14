@@ -1,10 +1,10 @@
 """
+Usage: python check_functionality.py <path-to-example>/<example>.py
+
 Checks functionality of BornAgain Python example by running it in 'embedded' way.
-Usage: python check_functionality.py <path-to-example>/example.py
 
-Example is considered as functional, if it runs without exceptions thrown and
+The check passes successfully if the example runs without exceptions thrown and
 generates non-zero-size intensity image.
-
 """
 
 import sys
@@ -50,39 +50,30 @@ def run_example(filename):
     Tries to run python example and produce a *.png image
     """
     if not os.path.exists(filename):
-        raise Exception("File '"+filename+"' doesn't exist.")
+        raise Exception("Example script '"+filename+"' not found")
 
-    print(filename)
+    print("Input script: "+filename)
 
     fig = get_figure(filename)
-    try:
-        exec_full(filename)
 
-        plot_file_name = os.path.splitext(os.path.basename(filename))[0] + ".png"
-        plot_file_name = os.path.join(output_dir, plot_file_name)
-        print(plot_file_name)
-        plt.savefig(plot_file_name, bbox_inches='tight')
-        plt.close(fig)
+    exec_full(filename)
 
-        status = "OK"
+    plot_file_name = os.path.join(output_dir,
+                                  os.path.splitext(os.path.basename(filename))[0] + ".png")
+    print("Output image: "+plot_file_name)
+    plt.savefig(plot_file_name, bbox_inches='tight')
+    plt.close(fig)
 
-        kb = os.path.getsize(plot_file_name)/1000.
-        if kb < 4.0:
-            status = "EMPTY?"
-
-    except:
-        e = sys.exc_info()[0]
-        print("Error {0} while trying to execute '{1}'".format(e, filename))
-        status = "FAILED"
-
-    print(status)
-    if status != "OK":
-        raise Exception(status)
+    imgSize = os.path.getsize(plot_file_name)
+    if imgSize == 0:
+        raise Exception("Image file is empty")
+    if imgSize < 20000:
+        raise Exception("Image file is unplausibly small")
 
 
 if __name__ == '__main__':
 
     if len(sys.argv) != 2:
-        exit("Error")
+        exit("Auxiliary script check_functionality called with wrong number of arguments")
 
     run_example(sys.argv[1])

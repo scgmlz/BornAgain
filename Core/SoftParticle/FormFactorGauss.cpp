@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/SoftParticle/FormFactorGauss.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Const/MathConstants.h"
 #include "Core/Shapes/Box.h"
 #include <limits>
 

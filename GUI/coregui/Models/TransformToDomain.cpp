@@ -13,22 +13,18 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/TransformToDomain.h"
-#include "Core/Basics/Units.h"
-#include "Core/Detector/ScanResolution.h"
-#include "Core/Instrument/AngularSpecScan.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/RangedDistributions.h"
+#include "Base/Const/Units.h"
+#include "Core/Aggregate/InterferenceFunctions.h"
 #include "Core/Particle/MesoCrystal.h"
 #include "Core/Particle/Particle.h"
 #include "Core/Particle/ParticleCoreShell.h"
+#include "Core/Resolution/ScanResolution.h"
+#include "Core/Scan/AngularSpecScan.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Core/includeIncludes/InterferenceFunctions.h"
 #include "GUI/coregui/Models/BeamAngleItems.h"
 #include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/BeamWavelengthItem.h"
 #include "GUI/coregui/Models/ComboProperty.h"
-#include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/FTDecayFunctionItems.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "GUI/coregui/Models/JobItem.h"
@@ -54,6 +50,8 @@
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Param/Distrib/RangedDistributions.h"
+#include "Param/Varia/ParameterPattern.h"
 
 using SessionItemUtils::GetVectorItem;
 

@@ -16,7 +16,6 @@
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/Views/SampleDesigner/NodeEditorConnection.h"
-#include "GUI/coregui/Views/SampleDesigner/NodeEditorPort.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 #include <QObject>

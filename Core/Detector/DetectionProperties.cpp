@@ -13,9 +13,9 @@
 // ************************************************************************** //
 
 #include "Core/Detector/DetectionProperties.h"
-#include "Core/Basics/Complex.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Base/Types/Complex.h"
+#include "Base/Types/Exceptions.h"
+#include "Param/Base/RealParameter.h"
 
 DetectionProperties::DetectionProperties(kvector_t direction, double efficiency,
                                          double total_transmission)

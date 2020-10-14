@@ -13,14 +13,14 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Views/InfoWidgets/DistributionWidget.h"
-#include "Core/Parametrization/Distributions.h"
 #include "GUI/coregui/Models/DistributionItems.h"
 #include "GUI/coregui/Models/RealLimitsItems.h"
 #include "GUI/coregui/Views/InfoWidgets/WarningSign.h"
-#include "qcustomplot.h"
+#include "Param/Distrib/Distributions.h"
 #include <QLabel>
 #include <QVBoxLayout>
 #include <algorithm>
+#include <qcustomplot.h>
 
 namespace
 {

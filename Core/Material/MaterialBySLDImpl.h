@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_MATERIAL_MATERIALBYSLDIMPL_H
 
 #include "Core/Material/MagneticMaterialImpl.h"
-#include "Core/Material/Material.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 
 //! Material implementation based on wavelength-independent data (valid for a range of wavelengths)

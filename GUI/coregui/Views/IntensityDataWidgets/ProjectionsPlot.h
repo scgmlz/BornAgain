@@ -16,9 +16,9 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PROJECTIONSPLOT_H
 
 #include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
-#include "qcustomplot.h"
 #include <QMap>
 #include <memory>
+#include <qcustomplot.h>
 
 class IntensityDataItem;
 class ProjectionContainerItem;

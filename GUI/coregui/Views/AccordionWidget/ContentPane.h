@@ -32,7 +32,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CONTENTPANE_H
 
 #include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
-#include "GUI/coregui/Views/AccordionWidget/ClickableFrame.h"
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QPainter>

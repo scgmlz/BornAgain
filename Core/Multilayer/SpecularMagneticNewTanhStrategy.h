@@ -16,7 +16,6 @@
 #define BORNAGAIN_CORE_MULTILAYER_SPECULARMAGNETICNEWTANHSTRATEGY_H
 
 #include "Core/Multilayer/SpecularMagneticNewStrategy.h"
-#include "Core/RT/MatrixRTCoefficients_v3.h"
 
 //! Implements the magnetic Fresnel computation with the analytical Tanh roughness
 //!

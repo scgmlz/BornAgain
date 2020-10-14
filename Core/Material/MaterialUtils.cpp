@@ -13,8 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Material/MaterialUtils.h"
-#include "Core/Basics/PhysicalConstants.h"
-#include "Core/Material/Material.h"
+#include "Base/Const/PhysicalConstants.h"
 
 using PhysConsts::g_factor_n;
 using PhysConsts::h_bar;
@@ -26,7 +25,6 @@ constexpr double magnetic_prefactor = (m_n * g_factor_n * mu_N / h_bar / h_bar) 
 // Unit 2x2 matrix
 const Eigen::Matrix2cd Unit_Matrix(Eigen::Matrix2cd::Identity());
 
-// Imaginary unit
 namespace
 {
 // Pauli matrices
@@ -46,6 +44,8 @@ Eigen::Matrix2cd MaterialUtils::MagnetizationCorrection(complex_t unit_factor,
               * (Pauli_X * polarization[0] + Pauli_Y * polarization[1] + Pauli_Z * polarization[2]);
     return result;
 }
+
+// Prompt compilation for real and complex vectors:
 template Eigen::Matrix2cd MaterialUtils::MagnetizationCorrection(complex_t unit_factor,
                                                                  double magnetic_factor,
                                                                  kvector_t polarization);

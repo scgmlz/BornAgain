@@ -13,11 +13,8 @@
 // ************************************************************************** //
 
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
-#include "Core/Basics/Units.h"
-#include "Core/Correlations/FTDecay1D.h"
-#include "Core/Correlations/FTDecay2D.h"
-#include "Core/Correlations/FTDistributions2D.h"
-#include "Core/includeIncludes/InterferenceFunctions.h"
+#include "Base/Const/Units.h"
+#include "Core/Aggregate/InterferenceFunctions.h"
 #include "GUI/coregui/Models/FTDecayFunctionItems.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "GUI/coregui/Models/GroupItem.h"
@@ -43,7 +40,7 @@ InterferenceFunctionItem::InterferenceFunctionItem(const QString& modelType)
         ->setToolTip("Variance of the position in each dimension (nm^2)");
 }
 
-InterferenceFunctionItem::~InterferenceFunctionItem() {}
+InterferenceFunctionItem::~InterferenceFunctionItem() = default;
 
 void InterferenceFunctionItem::setPositionVariance(IInterferenceFunction* p_iff) const
 {

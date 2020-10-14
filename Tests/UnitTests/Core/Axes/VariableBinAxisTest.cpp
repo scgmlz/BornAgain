@@ -1,5 +1,5 @@
-#include "Core/Binning/VariableBinAxis.h"
-#include "Core/Basics/Exceptions.h"
+#include "Base/Axis/VariableBinAxis.h"
+#include "Base/Types/Exceptions.h"
 #include "Core/InputOutput/DataFormatUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 

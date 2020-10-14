@@ -16,7 +16,6 @@
 #include "GUI/coregui/Models/JobItem.h"
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/Views/JobWidgets/JobResultsPresenter.h"
-#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include <QVBoxLayout>
 

@@ -55,7 +55,7 @@ NodeEditorPort::~NodeEditorPort()
 
 bool NodeEditorPort::isOutput()
 {
-    return (m_direction == OUTPUT ? true : false);
+    return (m_direction == OUTPUT);
 }
 
 bool NodeEditorPort::isInput()

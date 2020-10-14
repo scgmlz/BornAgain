@@ -137,7 +137,7 @@ def plot_histogram(hist, zmin=None, zmax=None, xlabel=None, ylabel=None, zlabel=
                zlabel=zlabel, title=title, axes_limits=axes_limits, **kwargs)
 
 
-def plot_colormap(result, zmin=None, zmax=None, units=ba.AxesUnits.DEFAULT,
+def plot_colormap(result, zmin=None, zmax=None, units=ba.Axes.DEFAULT,
                   xlabel=None, ylabel=None, zlabel=None,
                   title=None, **kwargs):
     """
@@ -156,7 +156,7 @@ def plot_colormap(result, zmin=None, zmax=None, units=ba.AxesUnits.DEFAULT,
                zlabel=zlabel, title=title, axes_limits=axes_limits, **kwargs)
 
 
-def plot_specular_simulation_result(result, ymin=None, ymax=None, units=ba.AxesUnits.DEFAULT,
+def plot_specular_simulation_result(result, ymin=None, ymax=None, units=ba.Axes.DEFAULT,
               xlabel=None, ylabel=None, title=None, **kwargs):
     """
     Plots intensity data for specular simulation result
@@ -188,7 +188,7 @@ def plot_specular_simulation_result(result, ymin=None, ymax=None, units=ba.AxesU
         plt.title(title)
 
 
-def plot_simulation_result(result, intensity_min=None, intensity_max=None, units=ba.AxesUnits.DEFAULT,
+def plot_simulation_result(result, intensity_min=None, intensity_max=None, units=ba.Axes.DEFAULT,
                            xlabel=None, ylabel=None, postpone_show=False, title=None, **kwargs):
     """
     Draws simulation result and (optionally) shows the plot.
@@ -210,7 +210,7 @@ def plot_simulation_result(result, intensity_min=None, intensity_max=None, units
 
 class Plotter:
     def __init__(self, zmin=None, zmax=None, xlabel=None, ylabel=None,
-                 units=ba.AxesUnits.DEFAULT, aspect=None):
+                 units=ba.Axes.DEFAULT, aspect=None):
 
         self._fig = plt.figure(figsize=(10.25, 7.69))
         self._fig.canvas.draw()
@@ -231,7 +231,7 @@ class Plotter:
 
 class PlotterGISAS(Plotter):
     def __init__(self, zmin=None, zmax=None, xlabel=None, ylabel=None,
-                 units=ba.AxesUnits.DEFAULT, aspect=None):
+                 units=ba.Axes.DEFAULT, aspect=None):
         Plotter.__init__(self, zmin, zmax, xlabel, ylabel, units, aspect)
 
     @staticmethod
@@ -291,7 +291,7 @@ class PlotterSpecular(Plotter):
     specular data fit.
     """
 
-    def __init__(self, units=ba.AxesUnits.DEFAULT):
+    def __init__(self, units=ba.Axes.DEFAULT):
         Plotter.__init__(self)
         self.gs = gridspec.GridSpec(1, 2, width_ratios=[2.5, 1], wspace=0)
         self.units = units

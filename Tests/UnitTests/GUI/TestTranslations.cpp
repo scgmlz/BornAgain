@@ -1,6 +1,4 @@
 #include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "GUI/coregui/Models/BeamItems.h"
-#include "GUI/coregui/Models/DistributionItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/ModelPath.h"
 #include "GUI/coregui/Models/ParticleItem.h"

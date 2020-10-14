@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
 #define BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
 
-#include "Core/Basics/Complex.h"
+#include "Base/Types/Complex.h"
 
 class ProcessedSample;
 class SimulationElement;

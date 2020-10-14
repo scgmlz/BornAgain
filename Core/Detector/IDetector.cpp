@@ -13,13 +13,11 @@
 // ************************************************************************** //
 
 #include "Core/Detector/IDetector.h"
-#include "Core/Detector/ConvolutionDetectorResolution.h"
+#include "Base/Pixel/SimulationElement.h"
 #include "Core/Detector/DetectorMask.h"
-#include "Core/Detector/IDetectorResolution.h"
 #include "Core/Detector/RegionOfInterest.h"
 #include "Core/Detector/SimulationArea.h"
-#include "Core/Intensity/OutputData.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Core/Resolution/ConvolutionDetectorResolution.h"
 
 IDetector::IDetector()
 {
@@ -41,6 +39,16 @@ IDetector::~IDetector() = default;
 void IDetector::addAxis(const IAxis& axis)
 {
     m_axes.push_back(axis.clone());
+}
+
+size_t IDetector::dimension() const
+{
+    return m_axes.size();
+}
+
+void IDetector::clear()
+{
+    m_axes.clear();
 }
 
 const IAxis& IDetector::getAxis(size_t index) const

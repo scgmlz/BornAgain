@@ -16,8 +16,6 @@
 #include "Core/Scattering/ISample.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/FilterPropertyProxy.h"
-#include "GUI/coregui/Views/SampleDesigner/DesignerScene.h"
-#include "GUI/coregui/Views/SampleDesigner/DesignerView.h"
 #include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
 
 SampleDesigner::SampleDesigner(QWidget* parent)
@@ -27,7 +25,7 @@ SampleDesigner::SampleDesigner(QWidget* parent)
     m_designerView = new DesignerView(m_designerScene, parent);
 }
 
-SampleDesigner::~SampleDesigner() {}
+SampleDesigner::~SampleDesigner() = default;
 
 void SampleDesigner::setModels(ApplicationModels* models)
 {

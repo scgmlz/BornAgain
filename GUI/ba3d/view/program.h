@@ -15,7 +15,7 @@
 #ifndef BORNAGAIN_GUI_BA3D_VIEW_PROGRAM_H
 #define BORNAGAIN_GUI_BA3D_VIEW_PROGRAM_H
 
-#include "../def.h"
+#include "GUI/ba3d/def.h"
 #include <QOpenGLShaderProgram>
 
 namespace RealSpace

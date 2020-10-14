@@ -1,8 +1,7 @@
 #ifndef BORNAGAIN_TESTS_UNITTESTS_CORE_FITTING_FITTINGTESTHELPER_H
 #define BORNAGAIN_TESTS_UNITTESTS_CORE_FITTING_FITTINGTESTHELPER_H
 
-#include "Core/Basics/Units.h"
-#include "Core/Intensity/OutputData.h"
+#include "Base/Const/Units.h"
 #include "Core/Material/MaterialFactoryFuncs.h"
 #include "Core/Multilayer/Layer.h"
 #include "Core/Multilayer/MultiLayer.h"
@@ -33,7 +32,8 @@ public:
         multilayer.addLayer(Layer(material));
         multilayer.addLayer(Layer(material));
 
-        std::unique_ptr<GISASSimulation> result(new GISASSimulation(multilayer));
+        std::unique_ptr<GISASSimulation> result(new GISASSimulation());
+        result->setSample(multilayer);
         result->setDetectorParameters(m_nx, m_xmin, m_xmax, m_ny, m_ymin, m_ymax);
 
         m_builder_calls++;

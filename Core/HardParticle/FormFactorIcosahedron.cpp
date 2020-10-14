@@ -42,11 +42,9 @@ const PolyhedralTopology FormFactorIcosahedron::topology = {{// bottom:
                                                              {{9, 11, 10}, false}},
                                                             true};
 
-//! Constructor of a icosahedron.
-//! @param edge: length of the edge in nanometers
 FormFactorIcosahedron::FormFactorIcosahedron(const std::vector<double> P)
     : IFormFactorPolyhedron(
-          {"Icosahedron", "class_tooltip", {{"Edge", "nm", "para_tooltip", 0, +INF, 0}}}, P),
+          {"Icosahedron", "regular icosahedron", {{"Edge", "nm", "edge length", 0, +INF, 0}}}, P),
       m_edge(m_P[0])
 {
     onChange();

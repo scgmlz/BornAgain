@@ -33,7 +33,7 @@ bool isInterference2D(const QString& name)
 //! Returns true if name is related to 2D interference functions.
 bool isLattice2D(SessionItem* item)
 {
-    return dynamic_cast<Lattice2DItem*>(item) ? true : false;
+    return dynamic_cast<Lattice2DItem*>(item);
 }
 
 const QString density_tooltip =

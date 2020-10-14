@@ -2,7 +2,7 @@
 # Tests/Functional/PyCore/scripts/CMakeLists.txt
 ############################################################################
 
-set(OUTPUT_DIR ${TEST_OUTPUT_DIR}/Functional/Python/PyCore)
+set(OUTPUT_DIR ${TEST_OUTPUT_DIR}/Python/PyCore)
 file(MAKE_DIRECTORY ${OUTPUT_DIR})
 
 set(PYCORE_REFERENCE_DIR ${TEST_REFERENCE_DIR}/Python)
@@ -13,8 +13,7 @@ if(NOT BORNAGAIN_TIFF_SUPPORT)
 endif()
 
 foreach(_src ${sources})
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${_src}
-        ${OUTPUT_DIR}/${_src} @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${_src} ${OUTPUT_DIR}/${_src} @ONLY)
 endforeach()
 
 set(tests ${sources})

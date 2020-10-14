@@ -15,24 +15,12 @@
 #include "Core/Simulation/GISASSimulation.h"
 #include "Core/Computation/DWBAComputation.h"
 #include "Core/Computation/IBackground.h"
-#include "Core/Intensity/Histogram2D.h"
+#include "Core/Histo/Histogram2D.h"
 #include "Core/Multilayer/MultiLayer.h"
 #include "Core/SampleBuilderEngine/ISampleBuilder.h"
 #include "Core/Simulation/UnitConverterUtils.h"
-#include "Core/SimulationElement/SimulationElement.h"
 
 GISASSimulation::GISASSimulation()
-{
-    initialize();
-}
-
-GISASSimulation::GISASSimulation(const MultiLayer& p_sample) : Simulation2D(p_sample)
-{
-    initialize();
-}
-
-GISASSimulation::GISASSimulation(const std::shared_ptr<ISampleBuilder> p_sample_builder)
-    : Simulation2D(p_sample_builder)
 {
     initialize();
 }
@@ -52,7 +40,7 @@ SimulationResult GISASSimulation::result() const
     const auto& instrument = getInstrument();
     const auto converter = UnitConverterUtils::createConverterForGISAS(instrument);
     const std::unique_ptr<OutputData<double>> data(
-        instrument.createDetectorIntensity(m_sim_elements));
+        instrument.detector().createDetectorIntensity(m_sim_elements));
     return SimulationResult(*data, *converter);
 }
 

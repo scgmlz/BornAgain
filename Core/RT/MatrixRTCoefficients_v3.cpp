@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/RT/MatrixRTCoefficients_v3.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 
 namespace
 {

@@ -13,7 +13,7 @@
 // ************************************************************************** //
 
 #include "Core/Aggregate/IInterferenceFunction.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Param/Base/RealParameter.h"
 #include <algorithm>
 #include <stdexcept>
 
