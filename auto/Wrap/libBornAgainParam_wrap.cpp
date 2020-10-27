@@ -50936,7 +50936,7 @@ static PyMethodDef SwigMethods[] = {
 		"\n"
 		"Adds parameter to the pool, and returns reference to the input pointer.\n"
 		"\n"
-		"Returning the input pointer allows us to concatenate function calls like pool->addParameter( new  RealParameter(...) ).setLimits(-1,+1).setFixed().setUnit(\"nm\") \n"
+		"Returning the input pointer allows us to concatenate function calls like pool->addParameter( new RealParameter(...) ).setLimits(-1,+1).setFixed().setUnit(\"nm\") \n"
 		"\n"
 		""},
 	 { "ParameterPool_parameter", _wrap_ParameterPool_parameter, METH_VARARGS, "\n"

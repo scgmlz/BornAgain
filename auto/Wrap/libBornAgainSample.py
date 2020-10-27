@@ -8648,7 +8648,7 @@ class MultiLayer(ISample):
     r"""
 
 
-    Our sample model: a stack of layers one below the other.Example of system of 4 layers (3 interfaces):
+    Our sample model: a stack of layers one below the other. Example of system of 4 layers (3 interfaces):
 
     ambience layer #0 ------ interface #0 z=0.0 Fe, 20A layer #1 ------ interface #1 z=-20.0 Cr, 40A layer #2 ------ interface #2 z=-60.0 substrate layer #3
 

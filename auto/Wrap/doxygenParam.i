@@ -1047,7 +1047,7 @@ C++ includes: NodeIterator.h
 %feature("docstring")  IteratorState::IteratorState "IteratorState::IteratorState(const INode *single_element)
 ";
 
-%feature("docstring")  IteratorState::IteratorState "IteratorState::IteratorState(std::vector< const INode *> samples)
+%feature("docstring")  IteratorState::IteratorState "IteratorState::IteratorState(std::vector< const INode * > samples)
 ";
 
 %feature("docstring")  IteratorState::~IteratorState "virtual IteratorState::~IteratorState()
@@ -1244,7 +1244,7 @@ Returns number of parameters in the pool.
 
 Adds parameter to the pool, and returns reference to the input pointer.
 
-Returning the input pointer allows us to concatenate function calls like pool->addParameter( new  RealParameter(...) ).setLimits(-1,+1).setFixed().setUnit(\"nm\") 
+Returning the input pointer allows us to concatenate function calls like pool->addParameter( new RealParameter(...) ).setLimits(-1,+1).setFixed().setUnit(\"nm\") 
 ";
 
 %feature("docstring")  ParameterPool::parameter "RealParameter * ParameterPool::parameter(const std::string &name)
@@ -1615,16 +1615,16 @@ C++ includes: Unit.h
 ";
 
 
-// File: namespace_0D10.xml
+// File: namespace_0d10.xml
 
 
-// File: namespace_0D14.xml
+// File: namespace_0d14.xml
 
 
-// File: namespace_0D24.xml
+// File: namespace_0d24.xml
 
 
-// File: namespace_0D29.xml
+// File: namespace_0d29.xml
 
 
 // File: namespaceNodeUtils.xml

@@ -1677,7 +1677,9 @@ init detector with beam settings
 // File: classIntensityDataIOFactory.xml
 %feature("docstring") IntensityDataIOFactory "
 
-Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int - BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth \"*.gz\" or \"*.bz2\" the file will be zipped on the fly using appropriate algorithm. Usage:
+Provides users with possibility to read and write IntensityData from/to files in different format. Type of the file will be deduced from file name. *.txt - ASCII file with 2D array [nrow][ncol], layout as in numpy. *.int - BornAgain internal ASCII format. *.tif - 32-bits tiff file. If file name ends woth \"*.gz\" or \"*.bz2\" the file will be zipped on the fly using appropriate algorithm.
+
+Usage:
 
 C++ includes: IntensityDataIOFactory.h
 ";
@@ -2529,7 +2531,7 @@ Sets concrete writing strategy.
 // File: classPolygon.xml
 %feature("docstring") Polygon "
 
-A polygon in 2D space.Polygon defined by two arrays with x and y coordinates of points. Sizes of arrays should coincide. If polygon is unclosed (the last point doesn't repeat the first one), it will be closed automatically.
+A polygon in 2D space.  Polygon defined by two arrays with x and y coordinates of points. Sizes of arrays should coincide. If polygon is unclosed (the last point doesn't repeat the first one), it will be closed automatically.
 
 C++ includes: Polygon.h
 ";
@@ -3527,28 +3529,28 @@ Returns true if area defined by two bins is inside or on border of polygon (more
 // File: classFourierTransform_1_1Workspace.xml
 
 
-// File: namespace_0D113.xml
+// File: namespace_0d113.xml
 
 
-// File: namespace_0D115.xml
+// File: namespace_0d115.xml
 
 
-// File: namespace_0D125.xml
+// File: namespace_0d125.xml
 
 
-// File: namespace_0D33.xml
+// File: namespace_0d33.xml
 
 
-// File: namespace_0D56.xml
+// File: namespace_0d56.xml
 
 
-// File: namespace_0D58.xml
+// File: namespace_0d58.xml
 
 
-// File: namespace_0D62.xml
+// File: namespace_0d62.xml
 
 
-// File: namespace_0D68.xml
+// File: namespace_0d68.xml
 
 
 // File: namespaceArrayUtils.xml

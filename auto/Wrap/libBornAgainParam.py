@@ -2793,7 +2793,7 @@ class ParameterPool(libBornAgainBase.ICloneable):
 
         Adds parameter to the pool, and returns reference to the input pointer.
 
-        Returning the input pointer allows us to concatenate function calls like pool->addParameter( new  RealParameter(...) ).setLimits(-1,+1).setFixed().setUnit("nm") 
+        Returning the input pointer allows us to concatenate function calls like pool->addParameter( new RealParameter(...) ).setLimits(-1,+1).setFixed().setUnit("nm") 
 
         """
         return _libBornAgainParam.ParameterPool_addParameter(self, newPar)
