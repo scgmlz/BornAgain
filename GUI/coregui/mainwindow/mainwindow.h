@@ -49,7 +49,7 @@ class MainWindow : public Manhattan::FancyMainWindow
 public:
     enum ETabViewId { WELCOME, INSTRUMENT, SAMPLE, IMPORT, SIMULATION, JOB, MAXVIEWCOUNT };
 
-    explicit MainWindow(QWidget* parent = nullptr);
+    explicit MainWindow();
 
     MaterialModel* materialModel();
     InstrumentModel* instrumentModel();

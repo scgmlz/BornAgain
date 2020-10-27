@@ -38,8 +38,8 @@
 #include <progressbar.h>
 #include <stylehelper.h>
 
-MainWindow::MainWindow(QWidget* parent)
-    : Manhattan::FancyMainWindow(parent), m_tabWidget(new Manhattan::FancyTabWidget(this)),
+MainWindow::MainWindow()
+    : Manhattan::FancyMainWindow(nullptr), m_tabWidget(new Manhattan::FancyTabWidget(this)),
       m_progressBar(new Manhattan::ProgressBar(this)),
       m_applicationModels(new ApplicationModels(this)), m_projectManager(new ProjectManager(this)),
       m_actionManager(new ActionManager(this)), m_toolTipDataBase(new ToolTipDataBase(this)),
