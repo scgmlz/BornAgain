@@ -19,7 +19,6 @@
 #include "Base/Utils/SysUtils.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
 #include "GUI/coregui/Views/InfoWidgets/ComboSelectorDialog.h"
-#include "GUI/coregui/Views/InfoWidgets/DetailedMessageBox.h"
 #include "GUI/coregui/mainwindow/AppSvc.h"
 #include "GUI/coregui/mainwindow/ProjectUtils.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
@@ -30,6 +29,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QTextStream>
 
 namespace
@@ -146,10 +146,9 @@ QString PyImportAssistant::getPySampleFunctionName(const QString& snippet)
 
     } catch (const std::exception& ex) {
         QApplication::restoreOverrideCursor();
-        QString message("Exception thrown while acquiring functions from Python code.\n\n");
-        QString details = QString::fromStdString(std::string(ex.what()));
-        DetailedMessageBox(m_mainWindow, "Python failure", message, details).exec();
-
+        QString details("Exception thrown while acquiring functions from Python code:\n");
+        details += QString::fromStdString(std::string(ex.what()));
+        QMessageBox::warning(m_mainWindow, "Python import failed", details);
         return "";
     }
     QApplication::restoreOverrideCursor();
@@ -199,9 +198,9 @@ std::unique_ptr<MultiLayer> PyImportAssistant::createMultiLayer(const QString& s
 
     } catch (const std::exception& ex) {
         QApplication::restoreOverrideCursor();
-        QString message("Exception thrown while executing Python code to create multilayer.\n\n");
-        QString details = QString::fromStdString(std::string(ex.what()));
-        DetailedMessageBox(m_mainWindow, "Python failure", message, details).exec();
+        QString details("Exception thrown while executing Python code to create multilayer:\n");
+        details += QString::fromStdString(std::string(ex.what()));
+        QMessageBox::warning(m_mainWindow, "Python import failed", details);
     }
     QApplication::restoreOverrideCursor();
 
@@ -225,10 +224,10 @@ void PyImportAssistant::populateModels(const MultiLayer& multilayer, const QStri
         GUIHelpers::information(m_mainWindow, "PyImport", message);
 
     } catch (const std::exception& ex) {
-        QString message("Exception thrown while trying to build GUI models.\n"
-                        "GUI models might be in unconsistent state.\n\n");
-        QString details = QString::fromStdString(std::string(ex.what()));
-        DetailedMessageBox(m_mainWindow, "GUIObjectBuilder failure", message, details).exec();
+        QString details("Exception thrown while trying to build GUI models\n"
+                        "(GUI models might be in unconsistent state):\n");
+        details += QString::fromStdString(std::string(ex.what()));
+        QMessageBox::warning(m_mainWindow, "Building GUI model failed", details);
     }
 }
 
