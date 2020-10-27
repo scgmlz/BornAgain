@@ -31,6 +31,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
+#include <iostream>
 
 namespace
 {
@@ -193,14 +194,19 @@ std::unique_ptr<MultiLayer> PyImportAssistant::createMultiLayer(const QString& s
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
     try {
+        std::cout << "DEBUG PyImportAssistant::createMultiLayer" << std::endl;
         result = PyImport::createFromPython(snippet.toStdString(), funcName.toStdString(),
                                             bornagainDir());
 
     } catch (const std::exception& ex) {
+        std::cout << "DEBUG PyImportAssistant::createMultiLayer catched1" << std::endl;
         QApplication::restoreOverrideCursor();
+        std::cout << "DEBUG PyImportAssistant::createMultiLayer catched2" << std::endl;
         QString details("Exception thrown while executing Python code to create multilayer:\n");
         details += QString::fromStdString(std::string(ex.what()));
+        std::cout << "DEBUG PyImportAssistant::createMultiLayer catched3" << std::endl;
         QMessageBox::warning(m_mainWindow, "Python import failed", details);
+        std::cout << "DEBUG PyImportAssistant::createMultiLayer catched4" << std::endl;
     }
     QApplication::restoreOverrideCursor();
 
