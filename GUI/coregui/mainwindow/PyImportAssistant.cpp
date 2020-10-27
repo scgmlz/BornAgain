@@ -66,27 +66,34 @@ QString getCandidate(const QStringList& funcNames)
 
 PyImportAssistant::PyImportAssistant(MainWindow* mainwin) : QObject(mainwin), m_mainWindow(mainwin)
 {
+    std::cout << "DEBUG PIA mw=" << mainwin << std::endl;
+    std::cout << "          qa=" << QApplication::activeWindow() << std::endl;
 }
 
 void PyImportAssistant::exec()
 {
+    std::cout << "DEBUG exec1" << std::endl;
     auto fileName = fileNameToOpen();
 
     if (fileName.isEmpty())
         return;
 
+    std::cout << "DEBUG exec2" << std::endl;
     QString snippet = readFile(fileName);
     if (snippet.isEmpty())
         return;
 
+    std::cout << "DEBUG exec3" << std::endl;
     QString funcName = getPySampleFunctionName(snippet);
     if (funcName.isEmpty())
         return;
 
+    std::cout << "DEBUG exec4" << std::endl;
     auto multilayer = createMultiLayer(snippet, funcName);
     if (!multilayer)
         return;
 
+    std::cout << "DEBUG exec5" << std::endl;
     populateModels(*multilayer, GUIHelpers::baseName(fileName));
 }
 
