@@ -146,7 +146,7 @@ jobs:
         dir
         mkdir build
         cd build
-        cmake -G "Visual Studio 16 2019" -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_INCLUDE_PATH=%OPTLIBS%/include -DCMAKE_LIBRARY_PATH=%OPTLIBS%/lib -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER="cl.exe" -DCMAKE_CXX_COMPILER="cl.exe" ..
+        cmake -G "Visual Studio 16 2019" -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_INCLUDE_PATH=%OPTLIBS%/include -DCMAKE_LIBRARY_PATH=%OPTLIBS%/lib -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER="cl.exe" -DCMAKE_CXX_COMPILER="cl.exe" -Dwin32_console=ON ..
         ccache -z
         ccache -p
         cmake --build . --config Release -j4
