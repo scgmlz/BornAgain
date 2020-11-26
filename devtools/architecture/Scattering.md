@@ -7,11 +7,12 @@ Code analysis per 18nov, after merge of https://github.com/scgmlz/BornAgain/pull
 We consider a GISAS simulation, handled by class `GISASSimulation < ISimulation2D < ISimulation`
 (where `<` indicates inheritance).
 
-The function `GISASSimulation::runSimulation`
+The function `ISimulation::runSimulation`
 - calls `prepareSimulation`;
 - loops over parameter combinations, thereby performing an incoherent summation:
   - for each parameter set, `runSingleSimulation`;
-- calls `moveDataFromCache` and `transferResultsToIntensityMap` to collect results.
+- calls `moveDataFromCache` to collect results.
+  - also calls `transferResultsToIntensityMap`, which does nothing except for `OffSpecSimulation`.
 
 `GISASSimulation::prepareSimulation` seems to be mostly concerned with `SampleBuilder`s.
 
