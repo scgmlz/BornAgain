@@ -5,7 +5,7 @@ a magnetized sample.
 import numpy
 
 import bornagain as ba
-from bornagain import deg, angstrom
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 import matplotlib.pyplot as plt
 
@@ -15,30 +15,24 @@ def get_sample():
     Defines sample and returns it
     """
 
-    # parametrize the magnetization
-    magnetizationMagnitude = 1e8
-    angle = 30*deg
-    magnetizationVector = ba.kvector_t(magnetizationMagnitude*numpy.sin(angle),
-                                       magnetizationMagnitude*numpy.cos(angle),
-                                       0)
+    # Define materials
+    material_1 = ba.MaterialBySLD("Ambient", 0.0, 0.0)
+    magnetic_field = kvector_t(50000000, 86602540.3784, 0)
+    material_2 = ba.MaterialBySLD("Layer", 0.0001, 1e-08, magnetic_field)
+    material_3 = ba.MaterialBySLD("Substrate", 7e-05, 2e-06)
 
-    # creating materials
-    m_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
-    m_layer_mat = ba.MaterialBySLD("Layer", 1e-4, 1e-8, magnetizationVector)
-    m_substrate = ba.MaterialBySLD("Substrate", 7e-5, 2e-6)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_2, 10.0*nm)
+    layer_3 = ba.Layer(material_3)
 
-    # creating layers
-    ambient_layer = ba.Layer(m_ambient)
-    layer = ba.Layer(m_layer_mat, 10)
-    substrate_layer = ba.Layer(m_substrate)
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+    multiLayer_1.addLayer(layer_3)
 
-    # creating multilayer
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(ambient_layer)
-    multi_layer.addLayer(layer)
-    multi_layer.addLayer(substrate_layer)
-
-    return multi_layer
+    return multiLayer_1
 
 
 def get_simulation(scan_size=500):

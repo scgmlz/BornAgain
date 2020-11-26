@@ -17,7 +17,7 @@ For example, X or Y rotated particles can not yet cross interfaces (exception
 will be thrown when trying to simulate such geometries).
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 phi_min, phi_max = -1.0, 1.0
 alpha_min, alpha_max = 0.0, 2.0
@@ -27,37 +27,48 @@ def get_sample():
     """
     Returns a sample with uncorrelated cylinders and prisms on a substrate.
     """
-    # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    shift_down = 3*nm
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    # collection of particles
-    cylinder_ff = ba.FormFactorCylinder(5*nm, 5*nm)
-    cylinder = ba.Particle(m_particle, cylinder_ff)
-    cylinder.setPosition(0, 0, -shift_down)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    prism_ff = ba.FormFactorPrism3(10*nm, 5*nm)
-    prism = ba.Particle(m_particle, prism_ff)
-    prism.setPosition(0, 0, -shift_down)
+    # Define form factors
+    formFactor_1 = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
+    formFactor_2 = ba.FormFactorPrism3(10.0*nm, 5.0*nm)
 
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(cylinder, 0.5)
-    particle_layout.addParticle(prism, 0.5)
-    interference = ba.InterferenceFunctionNone()
-    particle_layout.setInterferenceFunction(interference)
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_1_position = kvector_t(0.0*nm, 0.0*nm, -3.0*nm)
+    particle_1.setPosition(particle_1_position)
+    particle_2 = ba.Particle(material_2, formFactor_2)
+    particle_2_position = kvector_t(0.0*nm, 0.0*nm, -3.0*nm)
+    particle_2.setPosition(particle_2_position)
 
-    # vacuum layer with particles and substrate form multi layer
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate)
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    print(multi_layer.treeToString())
-    return multi_layer
+    # Define interference functions
+    interference_1 = ba.InterferenceFunctionNone()
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 0.5)
+    layout_1.addParticle(particle_2, 0.5)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

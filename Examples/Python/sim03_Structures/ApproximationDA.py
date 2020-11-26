@@ -2,7 +2,7 @@
 Cylinders of two different sizes in Decoupling Approximation
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_sample():
@@ -10,40 +10,47 @@ def get_sample():
     Returns a sample with cylinders of two different sizes on a substrate.
     The cylinder positions are modelled in Decoupling Approximation.
     """
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    # cylindrical particle 1
-    radius1 = 5*nm
-    height1 = radius1
-    cylinder_ff1 = ba.FormFactorCylinder(radius1, height1)
-    cylinder1 = ba.Particle(m_particle, cylinder_ff1)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    # cylindrical particle 2
-    radius2 = 8*nm
-    height2 = radius2
-    cylinder_ff2 = ba.FormFactorCylinder(radius2, height2)
-    cylinder2 = ba.Particle(m_particle, cylinder_ff2)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    # interference function
-    interference = ba.InterferenceFunctionRadialParaCrystal(18.0*nm, 1e3*nm)
-    pdf = ba.FTDistribution1DGauss(3*nm)
-    interference.setProbabilityDistribution(pdf)
+    # Define form factors
+    formFactor_1 = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
+    formFactor_2 = ba.FormFactorCylinder(8.0*nm, 8.0*nm)
 
-    # assembling the sample
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(cylinder1, 0.8)
-    particle_layout.addParticle(cylinder2, 0.2)
-    particle_layout.setInterferenceFunction(interference)
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_2 = ba.Particle(material_2, formFactor_2)
 
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate)
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    return multi_layer
+    # Define interference functions
+    interference_1 = ba.InterferenceFunctionRadialParaCrystal(
+        18.0*nm, 1000.0*nm)
+    interference_1_pdf = ba.FTDistribution1DGauss(3.0*nm)
+    interference_1.setProbabilityDistribution(interference_1_pdf)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 0.8)
+    layout_1.addParticle(particle_2, 0.2)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

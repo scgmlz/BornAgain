@@ -3,7 +3,7 @@
 """
 import numpy
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_sample():
@@ -11,34 +11,48 @@ def get_sample():
     Returns a sample with a grating on a substrate, modelled by triangular ripples
     forming a 1D Paracrystal.
     """
-    # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    # collection of particles
-    ripple2_ff = ba.FormFactorSawtoothRippleBox(100*nm, 20*nm, 4*nm, -3.0*nm)
-    ripple = ba.Particle(m_particle, ripple2_ff)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(ripple, 1.0)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    interference = ba.InterferenceFunction2DLattice(
-        ba.BasicLattice2D(200.0*nm, 50.0*nm, 90.0*deg, 0.0*deg))
-    pdf = ba.FTDecayFunction2DGauss(1000.*nm/2./numpy.pi, 100.*nm/2./numpy.pi,
-                                    0)
-    interference.setDecayFunction(pdf)
-    particle_layout.setInterferenceFunction(interference)
+    # Define form factors
+    formFactor_1 = ba.FormFactorSawtoothRippleBox(100.0*nm, 20.0*nm, 4.0*nm,
+                                                  -3.0*nm)
 
-    # vacuum layer with particles and substrate form multi layer
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate, 0)
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
 
-    return multi_layer
+    # Define 2D lattices
+    lattice2D_1 = ba.BasicLattice2D(200.0*nm, 50.0*nm, 90.0*deg, 0.0*deg)
+
+    # Define interference functions
+    interference_1 = ba.InterferenceFunction2DLattice(lattice2D_1)
+    interference_1_pdf = ba.FTDecayFunction2DGauss(159.154943092*nm,
+                                                   15.9154943092*nm, 0.0*deg)
+    interference_1.setDecayFunction(interference_1_pdf)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 1.0)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.0001)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

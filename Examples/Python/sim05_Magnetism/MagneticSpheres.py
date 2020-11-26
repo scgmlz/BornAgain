@@ -2,7 +2,7 @@
 Simulation demo: magnetic spheres in substrate
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 # Magnetization of the particle's material (A/m)
 magnetization_particle = ba.kvector_t(0.0, 0.0, 1e7)
@@ -12,30 +12,41 @@ def get_sample():
     """
     Returns a sample with magnetic spheres in the substrate.
     """
-    # defining materials
-    particle_material = ba.HomogeneousMaterial("Particle", 2e-5, 4e-7,
-                                               magnetization_particle)
-    vacuum_material = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    substrate_material = ba.HomogeneousMaterial("Substrate", 7e-6, 1.8e-7)
 
-    # spherical magnetic particle
-    sphere_ff = ba.FormFactorFullSphere(5*nm)
-    sphere = ba.Particle(particle_material, sphere_ff)
-    position = ba.kvector_t(0.0, 0.0, -10.0*nm)
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(sphere, 1.0, position)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Substrate", 7e-06, 1.8e-07)
+    magnetic_field = kvector_t(0, 0, 10000000)
+    material_3 = ba.HomogeneousMaterial("Particle", 2e-05, 4e-07,
+                                        magnetic_field)
 
-    # defining layers
-    vacuum_layer = ba.Layer(vacuum_material)
-    substrate_layer = ba.Layer(substrate_material)
-    substrate_layer.addLayout(particle_layout)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_2)
 
-    # defining the multilayer
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
+    # Define form factors
+    formFactor_1 = ba.FormFactorFullSphere(5.0*nm)
 
-    return multi_layer
+    # Define particles
+    particle_1 = ba.Particle(material_3, formFactor_1)
+    particle_1_position = kvector_t(0.0*nm, 0.0*nm, -10.0*nm)
+    particle_1.setPosition(particle_1_position)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 1.0)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_2.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

@@ -4,7 +4,7 @@ simulated with BornAgain.
 """
 
 import bornagain as ba
-from bornagain import deg, nm, kvector_t
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 # Magnetization of the particle's core material (A/m)
 magnetization_core = kvector_t(0.0, 0.0, 1e7)
@@ -14,31 +14,44 @@ def get_sample():
     """
     Returns a sample with a magnetic core-shell particle in a solvent.
     """
-    # Defining Materials
-    mat_solvent = ba.HomogeneousMaterial("Solvent", 5e-6, 0.0)
-    mat_core = ba.HomogeneousMaterial("Core", 6e-6, 2e-8, magnetization_core)
-    mat_shell = ba.HomogeneousMaterial("Shell", 1e-7, 2e-8)
 
-    # Defining Layer
-    solvent_layer = ba.Layer(mat_solvent)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Solvent", 5e-06, 0.0)
+    magnetic_field = kvector_t(0, 0, 10000000)
+    material_2 = ba.HomogeneousMaterial("Core", 6e-06, 2e-08, magnetic_field)
+    material_3 = ba.HomogeneousMaterial("Shell", 1e-07, 2e-08)
 
-    # Defining particle layout with a core-shell particle
-    layout = ba.ParticleLayout()
-    core_sphere_ff = ba.FormFactorFullSphere(10*nm)
-    shell_sphere_ff = ba.FormFactorFullSphere(12*nm)
-    core = ba.Particle(mat_core, core_sphere_ff)
-    shell = ba.Particle(mat_shell, shell_sphere_ff)
-    position = kvector_t(0.0, 0.0, 2.0)
-    particleCoreShell = ba.ParticleCoreShell(shell, core, position)
-    layout.addParticle(particleCoreShell)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
 
-    # Adding layout to layer
-    solvent_layer.addLayout(layout)
+    # Define form factors
+    formFactor_1 = ba.FormFactorFullSphere(10.0*nm)
+    formFactor_2 = ba.FormFactorFullSphere(12.0*nm)
 
-    # Defining Multilayer with single layer
-    multiLayer = ba.MultiLayer()
-    multiLayer.addLayer(solvent_layer)
-    return multiLayer
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_1_position = kvector_t(0.0*nm, 0.0*nm, 2.0*nm)
+    particle_1.setPosition(particle_1_position)
+    particle_2 = ba.Particle(material_3, formFactor_2)
+
+    # Define core shell particles
+
+    particleCoreShell_1 = ba.ParticleCoreShell(particle_2, particle_1)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particleCoreShell_1, 1.0)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+
+    return multiLayer_1
 
 
 def get_simulation():

@@ -2,43 +2,57 @@
 2D paracrystal
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm, micrometer
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_sample():
     """
     Returns a sample with cylinders on a substrate, forming a 2D paracrystal
     """
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    # collection of particles
-    cylinder_ff = ba.FormFactorCylinder(4*nm, 5*nm)
-    cylinder = ba.Particle(m_particle, cylinder_ff)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    interference = ba.InterferenceFunction2DParaCrystal(
-        ba.SquareLattice2D(10.0*nm), 0.0, 20.0*micrometer, 20.0*micrometer)
-    interference.setIntegrationOverXi(True)
-    pdf = ba.FTDistribution2DCauchy(1.0*nm, 1.0*nm, 0)
-    interference.setProbabilityDistributions(pdf, pdf)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(cylinder, 1.0)
-    particle_layout.setInterferenceFunction(interference)
+    # Define form factors
+    formFactor_1 = ba.FormFactorCylinder(4.0*nm, 5.0*nm)
 
-    # assembling the sample
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
 
-    substrate_layer = ba.Layer(m_substrate)
+    # Define 2D lattices
+    lattice2D_1 = ba.BasicLattice2D(10.0*nm, 10.0*nm, 90.0*deg, 0.0*deg)
 
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    print(multi_layer.parametersToString())
-    print(multi_layer.treeToString())
-    return multi_layer
+    # Define interference functions
+    interference_1 = ba.InterferenceFunction2DParaCrystal(
+        lattice2D_1, 0.0*nm, 20000.0*nm, 20000.0*nm)
+    interference_1.setIntegrationOverXi(True)
+    interference_1_pdf_1 = ba.FTDistribution2DCauchy(1.0*nm, 1.0*nm, 0.0*deg)
+    interference_1_pdf_2 = ba.FTDistribution2DCauchy(1.0*nm, 1.0*nm, 0.0*deg)
+    interference_1.setProbabilityDistributions(interference_1_pdf_1,
+                                               interference_1_pdf_2)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 1.0)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

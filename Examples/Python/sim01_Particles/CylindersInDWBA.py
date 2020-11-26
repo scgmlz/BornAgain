@@ -2,7 +2,7 @@
 Cylinder form factor in DWBA
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_sample():
@@ -38,6 +38,7 @@ def get_sample():
     multiLayer_1 = ba.MultiLayer()
     multiLayer_1.addLayer(layer_1)
     multiLayer_1.addLayer(layer_2)
+
     return multiLayer_1
 
 

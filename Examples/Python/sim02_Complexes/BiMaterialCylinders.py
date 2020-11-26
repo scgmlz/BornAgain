@@ -3,7 +3,7 @@ Cylindrical particle made from two materials.
 Particle crosses air/substrate interface.
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_composition(top_material,
@@ -35,30 +35,48 @@ def get_sample():
     Particle shifted down to cross interface.
     """
 
-    # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
-    m_top_part = ba.HomogeneousMaterial("Ag", 1.245e-5, 5.419e-7)
-    m_bottom_part = ba.HomogeneousMaterial("Teflon", 2.900e-6, 6.019e-9)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Ag", 1.245e-05, 5.419e-07)
+    material_3 = ba.HomogeneousMaterial("Teflon", 2.9e-06, 6.019e-09)
+    material_4 = ba.HomogeneousMaterial("Substrate", 3.212e-06, 3.244e-08)
 
-    # collection of particles
-    composition = get_composition(m_top_part, m_bottom_part)
-    shift = 10.0*nm
-    composition.setPosition(0, 0, -shift)  # will be shifted below interface
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_4)
 
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(composition)
-    particle_layout.setTotalParticleSurfaceDensity(1)
+    # Define form factors
+    formFactor_1 = ba.FormFactorCylinder(10.0*nm, 4.0*nm)
+    formFactor_2 = ba.FormFactorCylinder(10.0*nm, 10.0*nm)
 
-    # vacuum layer with particles and substrate form multi layer
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate)
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    print(multi_layer.treeToString())
-    return multi_layer
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_1_position = kvector_t(0.0*nm, 0.0*nm, 10.0*nm)
+    particle_1.setPosition(particle_1_position)
+    particle_2 = ba.Particle(material_3, formFactor_2)
+
+    # Define composition of particles at specific positions
+    particleComposition_1 = ba.ParticleComposition()
+    particleComposition_1.addParticle(particle_1)
+    particleComposition_1.addParticle(particle_2)
+    particleComposition_1_position = kvector_t(0.0*nm, 0.0*nm, -10.0*nm)
+    particleComposition_1.setPosition(particleComposition_1_position)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particleComposition_1, 1.0)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(1)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

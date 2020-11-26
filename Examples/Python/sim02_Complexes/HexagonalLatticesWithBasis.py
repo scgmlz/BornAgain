@@ -3,7 +3,7 @@ Spheres on two hexagonal close packed layers
 """
 import numpy
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_sample():
@@ -11,35 +11,55 @@ def get_sample():
     Returns a sample with spheres on a substrate,
     forming two hexagonal close packed layers.
     """
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    radius = 10.0*nm
-    sphere_ff = ba.FormFactorFullSphere(radius)
-    sphere = ba.Particle(m_particle, sphere_ff)
-    particle_layout = ba.ParticleLayout()
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    pos0 = ba.kvector_t(0.0, 0.0, 0.0)
-    pos1 = ba.kvector_t(radius, radius, numpy.sqrt(3.0)*radius)
-    basis = ba.ParticleComposition()
-    basis.addParticles(sphere, [pos0, pos1])
-    particle_layout.addParticle(basis)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    interference = ba.InterferenceFunction2DLattice(
-        ba.HexagonalLattice2D(radius*2.0, 0*deg))
-    pdf = ba.FTDecayFunction2DCauchy(10*nm, 10*nm, 0)
-    interference.setDecayFunction(pdf)
+    # Define form factors
+    formFactor_1 = ba.FormFactorFullSphere(10.0*nm)
+    formFactor_2 = ba.FormFactorFullSphere(10.0*nm)
 
-    particle_layout.setInterferenceFunction(interference)
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_2 = ba.Particle(material_2, formFactor_2)
+    particle_2_position = kvector_t(10.0*nm, 10.0*nm, 17.3205080757*nm)
+    particle_2.setPosition(particle_2_position)
 
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate, 0)
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    return multi_layer
+    # Define composition of particles at specific positions
+    particleComposition_1 = ba.ParticleComposition()
+    particleComposition_1.addParticle(particle_1)
+    particleComposition_1.addParticle(particle_2)
+
+    # Define 2D lattices
+    lattice2D_1 = ba.BasicLattice2D(20.0*nm, 20.0*nm, 120.0*deg, 0.0*deg)
+
+    # Define interference functions
+    interference_1 = ba.InterferenceFunction2DLattice(lattice2D_1)
+    interference_1_pdf = ba.FTDecayFunction2DCauchy(10.0*nm, 10.0*nm, 0.0*deg)
+    interference_1.setDecayFunction(interference_1_pdf)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particleComposition_1, 1.0)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.00288675134595)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

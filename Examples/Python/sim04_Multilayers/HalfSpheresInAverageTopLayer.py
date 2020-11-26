@@ -3,7 +3,7 @@ Square lattice of half spheres on substrate with usage of average material
 and slicing
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 sphere_radius = 5*nm
 n_slices = 10
@@ -13,35 +13,47 @@ def get_sample():
     """
     Returns a sample with cylinders on a substrate.
     """
-    # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_layer = ba.HomogeneousMaterial("Layer", 3e-6, 2e-8)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 3e-5, 2e-8)
 
-    # cylindrical particle
-    half_sphere_ff = ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius,
-                                                  0)
-    half_sphere = ba.Particle(m_particle, half_sphere_ff)
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(half_sphere)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 3e-05, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    # interference function
-    interference = ba.InterferenceFunction2DLattice(
-        ba.SquareLattice2D(10*nm, 0*deg))
-    pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm, 0)
-    interference.setDecayFunction(pdf)
-    particle_layout.setInterferenceFunction(interference)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_1.setNumberOfSlices(10)
+    layer_2 = ba.Layer(material_3)
 
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    vacuum_layer.setNumberOfSlices(n_slices)
-    substrate_layer = ba.Layer(m_substrate)
+    # Define form factors
+    formFactor_1 = ba.FormFactorTruncatedSphere(5.0*nm, 5.0*nm, 0.0*nm)
 
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    return multi_layer
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+
+    # Define 2D lattices
+    lattice2D_1 = ba.BasicLattice2D(10.0*nm, 10.0*nm, 90.0*deg, 0.0*deg)
+
+    # Define interference functions
+    interference_1 = ba.InterferenceFunction2DLattice(lattice2D_1)
+    interference_1_pdf = ba.FTDecayFunction2DCauchy(100.0*nm, 100.0*nm, 0.0*deg)
+    interference_1.setDecayFunction(interference_1_pdf)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 1.0)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

@@ -2,7 +2,7 @@
 Long boxes at 1D lattice, ba.OffSpecular simulation
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 phi_f_min, phi_f_max = -1.0, 1.0
 alpha_f_min, alpha_f_max = 0.0, 10.0
@@ -14,36 +14,45 @@ def get_sample():
     Returns a sample with a grating on a substrate,
     modelled by infinitely long boxes forming a 1D lattice.
     """
-    # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    # collection of particles
-    lattice_length = 100.0*nm
-    lattice_rotation_angle = 0.0*deg
-    interference = ba.InterferenceFunction1DLattice(lattice_length,
-                                                    lattice_rotation_angle)
-    pdf = ba.FTDecayFunction1DCauchy(1e+6)
-    interference.setDecayFunction(pdf)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    box_ff = ba.FormFactorBox(1000*nm, 20*nm, 10.0*nm)
-    box = ba.Particle(m_particle, box_ff)
-    transform = ba.RotationZ(90.0*deg)
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(box, 1.0, ba.kvector_t(0.0, 0.0, 0.0),
-                                transform)
-    particle_layout.setInterferenceFunction(interference)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    # assembling the sample
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate)
+    # Define form factors
+    formFactor_1 = ba.FormFactorBox(1000.0*nm, 20.0*nm, 10.0*nm)
 
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    return multi_layer
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_1_rotation = ba.RotationZ(90.0*deg)
+    particle_1.setRotation(particle_1_rotation)
+
+    # Define interference functions
+    interference_1 = ba.InterferenceFunction1DLattice(100.0*nm, 0.0*deg)
+    interference_1_pdf = ba.FTDecayFunction1DCauchy(1000000.0*nm)
+    interference_1.setDecayFunction(interference_1_pdf)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 1.0)
+    layout_1.setInterferenceFunction(interference_1)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+
+    return multiLayer_1
 
 
 def get_simulation():

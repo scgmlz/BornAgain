@@ -2,7 +2,7 @@
 Cylinder form factor in Born approximation
 """
 import bornagain as ba
-from bornagain import deg, angstrom, nm
+from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 
 def get_sample():
@@ -36,6 +36,7 @@ def get_sample():
     # Define multilayers
     multiLayer_1 = ba.MultiLayer()
     multiLayer_1.addLayer(layer_1)
+
     return multiLayer_1
 
 
