@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Test/Functional/Minimizer/PlanCases.h
+//! @file      Fit/Test/Minimizer/PlanCases.h
 //! @brief     Defines collection of FunctionTestPlan classes
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -12,11 +12,11 @@
 //
 //  ************************************************************************************************
 
-#ifndef BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_PLANCASES_H
-#define BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_PLANCASES_H
+#ifndef BORNAGAIN_FIT_TEST_MINIMIZER_PLANCASES_H
+#define BORNAGAIN_FIT_TEST_MINIMIZER_PLANCASES_H
 
-#include "Fit/Test/Functional/Minimizer/ResidualTestPlan.h"
-#include "Fit/Test/Functional/Minimizer/ScalarTestPlan.h"
+#include "Fit/Test/Minimizer/ResidualTestPlan.h"
+#include "Fit/Test/Minimizer/ScalarTestPlan.h"
 
 //! Setting for standalone fit of Rosenbrock function.
 
@@ -70,4 +70,4 @@ public:
     TestMinimizerPlan();
 };
 
-#endif // BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_PLANCASES_H
+#endif // BORNAGAIN_FIT_TEST_MINIMIZER_PLANCASES_H

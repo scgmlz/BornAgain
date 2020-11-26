@@ -115,7 +115,7 @@ endif()
 add_subdirectory(Fit/3rdParty)
 add_subdirectory(Fit)
 add_subdirectory(Fit/Test/Unit)
-add_subdirectory(Fit/Test/Functional)
+add_subdirectory(Fit/Test/Minimizer)
 
 
 ## recurse into the given subdirectories

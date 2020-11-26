@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Test/Functional/Minimizer/PlanFactory.h
+//! @file      Fit/Test/Minimizer/PlanFactory.h
 //! @brief     Defines class FunctionTestPlanFactory
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -12,8 +12,8 @@
 //
 //  ************************************************************************************************
 
-#ifndef BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_PLANFACTORY_H
-#define BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_PLANFACTORY_H
+#ifndef BORNAGAIN_FIT_TEST_MINIMIZER_PLANFACTORY_H
+#define BORNAGAIN_FIT_TEST_MINIMIZER_PLANFACTORY_H
 
 #include "Fit/TestEngine/IFactory.h"
 #include "Fit/TestEngine/MinimizerTestPlan.h"
@@ -25,4 +25,4 @@ public:
     PlanFactory();
 };
 
-#endif // BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_PLANFACTORY_H
+#endif // BORNAGAIN_FIT_TEST_MINIMIZER_PLANFACTORY_H

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Test/Functional/Minimizer/ResidualTestPlan.cpp
+//! @file      Fit/Test/Minimizer/ResidualTestPlan.cpp
 //! @brief     Implements class ResidualTestPlan
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -12,7 +12,7 @@
 //
 //  ************************************************************************************************
 
-#include "Fit/Test/Functional/Minimizer/ResidualTestPlan.h"
+#include "Fit/Test/Minimizer/ResidualTestPlan.h"
 #include "Base/Math/Numeric.h"
 #include "Fit/Kernel/Minimizer.h"
 #include <cassert>

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Test/Functional/Minimizer/ClassicalTestFunctions.h
+//! @file      Fit/Test/Minimizer/ClassicalTestFunctions.h
 //! @brief     Declares set of ObjectiveTestFunctions.
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -12,8 +12,8 @@
 //
 //  ************************************************************************************************
 
-#ifndef BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_CLASSICALTESTFUNCTIONS_H
-#define BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_CLASSICALTESTFUNCTIONS_H
+#ifndef BORNAGAIN_FIT_TEST_MINIMIZER_CLASSICALTESTFUNCTIONS_H
+#define BORNAGAIN_FIT_TEST_MINIMIZER_CLASSICALTESTFUNCTIONS_H
 
 #include <vector>
 
@@ -28,4 +28,4 @@ double WoodFour(const std::vector<double>& par);
 double DecayingSin(double x, const std::vector<double>& par);
 } // namespace TestFunctions
 
-#endif // BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_CLASSICALTESTFUNCTIONS_H
+#endif // BORNAGAIN_FIT_TEST_MINIMIZER_CLASSICALTESTFUNCTIONS_H

@@ -2,7 +2,7 @@
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
-//! @file      Fit/Test/Functional/Minimizer/ScalarTestPlan.h
+//! @file      Fit/Test/Minimizer/ScalarTestPlan.h
 //! @brief     Defines class ScalarTestPlan
 //!
 //! @homepage  http://www.bornagainproject.org
@@ -12,8 +12,8 @@
 //
 //  ************************************************************************************************
 
-#ifndef BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_SCALARTESTPLAN_H
-#define BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_SCALARTESTPLAN_H
+#ifndef BORNAGAIN_FIT_TEST_MINIMIZER_SCALARTESTPLAN_H
+#define BORNAGAIN_FIT_TEST_MINIMIZER_SCALARTESTPLAN_H
 
 #include "Fit/Minimizer/Types.h"
 #include "Fit/TestEngine/MinimizerTestPlan.h"
@@ -37,4 +37,4 @@ private:
     double m_tolerance_on_minimum;
 };
 
-#endif // BORNAGAIN_FIT_TEST_FUNCTIONAL_MINIMIZER_SCALARTESTPLAN_H
+#endif // BORNAGAIN_FIT_TEST_MINIMIZER_SCALARTESTPLAN_H
