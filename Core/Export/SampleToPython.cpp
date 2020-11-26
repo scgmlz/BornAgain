@@ -38,6 +38,60 @@
 
 using pyfmt::indent;
 
+namespace {
+
+void setRotationInformation(const IParticle* particle, std::string name,
+                                            std::ostringstream& result) {
+    if (particle->rotation()) {
+        switch (particle->rotation()->getTransform3D().getRotationType()) {
+        case Transform3D::EULER: {
+            double alpha, beta, gamma;
+            particle->rotation()->getTransform3D().calculateEulerAngles(&alpha, &beta, &gamma);
+            result << indent() << name << "_rotation = ba.RotationEuler("
+                   << pyfmt::printDegrees(alpha) << ", " << pyfmt::printDegrees(beta) << ", "
+                   << pyfmt::printDegrees(gamma) << ")\n";
+            break;
+        }
+        case Transform3D::XAXIS: {
+            double alpha = particle->rotation()->getTransform3D().calculateRotateXAngle();
+            result << indent() << name << "_rotation = ba.RotationX(" << pyfmt::printDegrees(alpha)
+                   << ")\n";
+            break;
+        }
+        case Transform3D::YAXIS: {
+            double alpha = particle->rotation()->getTransform3D().calculateRotateYAngle();
+            result << indent() << name << "_rotation = ba.RotationY(" << pyfmt::printDegrees(alpha)
+                   << ")\n";
+            break;
+        }
+        case Transform3D::ZAXIS: {
+            double alpha = particle->rotation()->getTransform3D().calculateRotateZAngle();
+            result << indent() << name << "_rotation = ba.RotationZ(" << pyfmt::printDegrees(alpha)
+                   << ")\n";
+            break;
+        }
+        }
+        result << indent() << name << ".setRotation(" << name << "_rotation)\n";
+    }
+}
+
+void setPositionInformation(const IParticle* particle, std::string name,
+                                            std::ostringstream& result) {
+    kvector_t pos = particle->position();
+    if (pos == kvector_t())
+        return;
+
+    result << indent() << name << "_position = kvector_t(" << pyfmt::printNm(pos.x()) << ", "
+           << pyfmt::printNm(pos.y()) << ", " << pyfmt::printNm(pos.z()) << ")\n";
+    result << indent() << name << ".setPosition(" << name << "_position)\n";
+}
+
+} // namespace
+
+//  ************************************************************************************************
+//  class SampleToPython
+//  ************************************************************************************************
+
 std::string SampleToPython::generateSampleCode(const MultiLayer& multilayer) {
     initLabels(multilayer);
     return defineGetSample();
@@ -591,53 +645,7 @@ std::string SampleToPython::defineMultiLayers() const {
                 layerIndex++;
             }
         }
-        result << indent() << "return " << it->second << "\n";
+        result << "\n" << indent() << "return " << it->second << "\n";
     }
     return result.str();
-}
-
-void SampleToPython::setRotationInformation(const IParticle* particle, std::string name,
-                                            std::ostringstream& result) const {
-    if (particle->rotation()) {
-        switch (particle->rotation()->getTransform3D().getRotationType()) {
-        case Transform3D::EULER: {
-            double alpha, beta, gamma;
-            particle->rotation()->getTransform3D().calculateEulerAngles(&alpha, &beta, &gamma);
-            result << indent() << name << "_rotation = ba.RotationEuler("
-                   << pyfmt::printDegrees(alpha) << ", " << pyfmt::printDegrees(beta) << ", "
-                   << pyfmt::printDegrees(gamma) << ")\n";
-            break;
-        }
-        case Transform3D::XAXIS: {
-            double alpha = particle->rotation()->getTransform3D().calculateRotateXAngle();
-            result << indent() << name << "_rotation = ba.RotationX(" << pyfmt::printDegrees(alpha)
-                   << ")\n";
-            break;
-        }
-        case Transform3D::YAXIS: {
-            double alpha = particle->rotation()->getTransform3D().calculateRotateYAngle();
-            result << indent() << name << "_rotation = ba.RotationY(" << pyfmt::printDegrees(alpha)
-                   << ")\n";
-            break;
-        }
-        case Transform3D::ZAXIS: {
-            double alpha = particle->rotation()->getTransform3D().calculateRotateZAngle();
-            result << indent() << name << "_rotation = ba.RotationZ(" << pyfmt::printDegrees(alpha)
-                   << ")\n";
-            break;
-        }
-        }
-        result << indent() << name << ".setRotation(" << name << "_rotation)\n";
-    }
-}
-
-void SampleToPython::setPositionInformation(const IParticle* particle, std::string name,
-                                            std::ostringstream& result) const {
-    kvector_t pos = particle->position();
-    if (pos == kvector_t())
-        return;
-
-    result << indent() << name << "_position = kvector_t(" << pyfmt::printNm(pos.x()) << ", "
-           << pyfmt::printNm(pos.y()) << ", " << pyfmt::printNm(pos.z()) << ")\n";
-    result << indent() << name << ".setPosition(" << name << "_position)\n";
 }

@@ -20,7 +20,7 @@
 class MultiLayer;
 class ISimulation;
 
-//! Contains main methods to generate Python scripts from Core simulation objects.
+//! Wraps methods that serialize objects to Python.
 
 namespace ExportToPython {
 

@@ -22,8 +22,5 @@ std::string ExportToPython::generateSampleCode(const MultiLayer& multilayer) {
 }
 
 std::string ExportToPython::generateSimulationCode(const ISimulation& simulation) {
-    std::unique_ptr<ISimulation> sim(simulation.clone());
-    sim->prepareSimulation();
-
-    return SimulationToPython().generateSimulationCode(*sim);
+    return SimulationToPython().generateSimulationCode(simulation);
 }
