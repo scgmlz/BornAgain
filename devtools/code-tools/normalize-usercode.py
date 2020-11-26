@@ -35,6 +35,8 @@ def substitute_sample(ti, tc):
         header += mi.group(2) + '\n'
 
     t = re.sub(pat, header + mn.group(3) + mi.group(6), ti)
+
+    t = re.sub(r'\nfrom bornagain import.+?', '\nfrom bornagain import deg, nm, nm2, kvector_t', t)
     return t
 
 
@@ -70,7 +72,6 @@ def normalize_text(ti, fname):
         '{based_on_style: pep8, column_limit: 80, '
         'no_spaces_around_selected_binary_operators: "*,/"}'
     )[0]
-    print(tf)
     return tf
 
 
