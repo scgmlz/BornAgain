@@ -6,6 +6,7 @@ Export to normal form is done by BornAgain's ExportToPython function.
 """
 
 import argparse, os, re
+from yapf.yapflib.yapf_api import FormatCode
 import bornagain as ba
 
 def substitute_sample(ti, tc):
@@ -55,6 +56,8 @@ def normalize_text(ti, fname):
     tf = substitute_sample(ti, tc)
     if verbose:
         print(f'.. normalized, {len(ti.split())} -> {len(tf.split())} lines')
+    # YAPF formatting
+    tf = FormatCode(tf, style_config='{based_on_style: pep8, column_limit: 85}')
     return tf
 
 def normalize_file(fname, inplace):
