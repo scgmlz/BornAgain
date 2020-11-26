@@ -25,6 +25,11 @@ def substitute_sample(ti, tc):
     if not mn:
         raise Exception(f'Normalized code has no function get_sample(): "{tc}"')
 
+    # forbidden cases:
+    if re.search(r'\n\s{4,}(for|if|while) ', mi.group(3)):
+        # expansion of for loops in sample construction is undesirable
+        raise Exception(f'Input get_sample contains control structure')
+
     header = mi.group(1)
     if mi.group(2):
         header += mi.group(2) + '\n'
@@ -77,13 +82,6 @@ def normalize_file(fname, inplace):
             if verbose:
                 print(f'.. read {len(ti.split())} lines')
 
-        # forbidden cases:
-        if not force:
-            if re.search(r'\n\s{4,}(for|if|while) ', ti):
-                # expansion of for loops in sample construction is undesirable
-                print(f'=> UNTOUCHABLE - contains control structure')
-                return 2
-
         # normalize
         tf = normalize_text(ti, fname)
         if verbose:
@@ -129,12 +127,8 @@ if __name__ == '__main__':
     parser.add_argument("input_files", nargs='+', type=str)
     parser.add_argument("-i", "--in-place", action="store_true")
     parser.add_argument("-v", "--verbose", action="store_true")
-    parser.add_argument("-f", "--force",
-                        help="proceed although there are control statements",
-                        action="store_true")
     args = parser.parse_args()
     verbose = args.verbose
-    force = args.force
     files = args.input_files
 
     count = [0, 0, 0]
