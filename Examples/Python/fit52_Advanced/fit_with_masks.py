@@ -41,7 +41,8 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.setBeamIntensity(1e+08)
     simulation.setSample(get_sample(params))
@@ -99,9 +100,12 @@ def add_mask_to_simulation(simulation):
     simulation.addMask(ba.Polygon(points), True)
 
     # giving pacman something to eat
-    simulation.addMask(ba.Rectangle(0.45*deg, 0.95*deg, 0.55*deg, 1.05*deg), False)
-    simulation.addMask(ba.Rectangle(0.61*deg, 0.95*deg, 0.71*deg, 1.05*deg), False)
-    simulation.addMask(ba.Rectangle(0.75*deg, 0.95*deg, 0.85*deg, 1.05*deg), False)
+    simulation.addMask(ba.Rectangle(0.45*deg, 0.95*deg, 0.55*deg, 1.05*deg),
+                       False)
+    simulation.addMask(ba.Rectangle(0.61*deg, 0.95*deg, 0.71*deg, 1.05*deg),
+                       False)
+    simulation.addMask(ba.Rectangle(0.75*deg, 0.95*deg, 0.85*deg, 1.05*deg),
+                       False)
 
     # other mask's shapes are possible too
     # simulation.removeMasks()

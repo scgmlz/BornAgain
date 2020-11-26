@@ -34,7 +34,8 @@ def PlotNumpyArrayWithROOT(a, zmin=1, zmax=None):
 #-------------------------------------------------------------
 if __name__ == '__main__':
     # Define the arguments to the script
-    parser = argparse.ArgumentParser(description='Plot 2D data table on log scale.')
+    parser = argparse.ArgumentParser(
+        description='Plot 2D data table on log scale.')
     parser.add_argument('-m',
                         '--minz',
                         dest='zmin',

@@ -67,10 +67,10 @@ class Doxy2SWIG:
         self.multi = 0
         self.ignores = ('inheritancegraph', 'param', 'listofallmembers',
                         'innerclass', 'name', 'declname', 'incdepgraph',
-                        'invincdepgraph', 'programlisting', 'type', 'references',
-                        'referencedby', 'location', 'collaborationgraph',
-                        'reimplements', 'reimplementedby', 'derivedcompoundref',
-                        'basecompoundref')
+                        'invincdepgraph', 'programlisting', 'type',
+                        'references', 'referencedby', 'location',
+                        'collaborationgraph', 'reimplements', 'reimplementedby',
+                        'derivedcompoundref', 'basecompoundref')
         #self.generics = []
 
     def generate(self):

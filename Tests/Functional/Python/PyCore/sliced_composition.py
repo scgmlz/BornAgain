@@ -56,7 +56,8 @@ class SlicedSpheresTest(unittest.TestCase):
         topCup = ba.Particle(
             top_material,
             ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height, 0))
+                                         sphere_radius*2 - bottom_cup_height,
+                                         0))
         bottomCup = ba.Particle(
             bottom_material,
             ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2,
@@ -79,7 +80,8 @@ class SlicedSpheresTest(unittest.TestCase):
         topCup = ba.Particle(
             top_material,
             ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height, 0))
+                                         sphere_radius*2 - bottom_cup_height,
+                                         0))
         bottomCup = ba.Particle(
             bottom_material,
             ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height, 0))
@@ -188,7 +190,8 @@ class SlicedSpheresTest(unittest.TestCase):
         truncatedSphere = ba.Particle(
             mParticle,
             ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height, 0))
+                                         sphere_radius*2 - bottom_cup_height,
+                                         0))
         reference = self.get_result(truncatedSphere)
 
         # Particle composition, top part made of same material, as particle. Bottom part made of same material as substrate.

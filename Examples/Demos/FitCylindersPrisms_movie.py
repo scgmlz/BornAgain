@@ -117,7 +117,8 @@ class DrawObserver(IFitObserver):
         fig.clf()
         # plotting real data
         real_data = fit_suite.getFitObjects().getRealData().getArray()
-        simulated_data = fit_suite.getFitObjects().getSimulationData().getArray()
+        simulated_data = fit_suite.getFitObjects().getSimulationData().getArray(
+        )
         plt.subplot(2, 2, 1)
         im = plt.imshow(real_data + 1,
                         norm=matplotlib.colors.LogNorm(),

@@ -18,7 +18,8 @@ def get_sample():
 
     p_interference_function = \
         ba.InterferenceFunction2DLattice(ba.SquareLattice2D(25.0*nm, 0))
-    pdf = ba.FTDecayFunction2DCauchy(300.0*nm/2.0/numpy.pi, 100.0*nm/2.0/numpy.pi, 0)
+    pdf = ba.FTDecayFunction2DCauchy(300.0*nm/2.0/numpy.pi,
+                                     100.0*nm/2.0/numpy.pi, 0)
     p_interference_function.setDecayFunction(pdf)
 
     particle_layout = ba.ParticleLayout()
@@ -43,7 +44,8 @@ def get_simulation():
     Assigns additional distribution to lattice rotation angle.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
 
     simulation.setSample(get_sample())

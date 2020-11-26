@@ -96,8 +96,8 @@ class RotationsCubeTest(unittest.TestCase):
         isSuccess = True
         for i in range(1, len(data_to_test)):
             diff = self.get_difference(reference_data, data_to_test[i])
-            print("{0}    #{1}   diff {2:.2e}".format(self.testRotationZ.__name__, i,
-                                                      diff))
+            print("{0}    #{1}   diff {2:.2e}".format(
+                self.testRotationZ.__name__, i, diff))
             if (diff > 1e-10): isSuccess = False
 
         self.assertTrue(isSuccess)
@@ -127,8 +127,8 @@ class RotationsCubeTest(unittest.TestCase):
         isSuccess = True
         for i in range(1, len(data_to_test)):
             diff = self.get_difference(reference_data, data_to_test[i])
-            print("{0}    #{1}   diff {2:.2e}".format(self.testRotationY.__name__, i,
-                                                      diff))
+            print("{0}    #{1}   diff {2:.2e}".format(
+                self.testRotationY.__name__, i, diff))
             if (diff > 1e-10): isSuccess = False
 
         self.assertTrue(isSuccess)
@@ -158,8 +158,8 @@ class RotationsCubeTest(unittest.TestCase):
         isSuccess = True
         for i in range(1, len(data_to_test)):
             diff = self.get_difference(reference_data, data_to_test[i])
-            print("{0}    #{1}   diff {2:.2e}".format(self.testRotationX.__name__, i,
-                                                      diff))
+            print("{0}    #{1}   diff {2:.2e}".format(
+                self.testRotationX.__name__, i, diff))
             if (diff > 1e-10): isSuccess = False
 
         self.assertTrue(isSuccess)
@@ -182,8 +182,8 @@ class RotationsCubeTest(unittest.TestCase):
         for i in range(1, len(data_to_test)):
             diff = self.get_difference(reference_data, data_to_test[i],
                                        "add_to_middle")
-            print("{0}    #{1}   diff {2:.2e}".format(self.testRotationX.__name__, i,
-                                                      diff))
+            print("{0}    #{1}   diff {2:.2e}".format(
+                self.testRotationX.__name__, i, diff))
             if (diff > 1e-10): isSuccess = False
 
         self.assertTrue(isSuccess)

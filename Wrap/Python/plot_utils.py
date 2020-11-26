@@ -78,7 +78,8 @@ def get_axes_labels(result, units):
     """
     axis_infos = result.axisInfo(units)
     labels = [
-        translate_axis_label(axis_infos[i].m_name) for i in range(len(axis_infos))
+        translate_axis_label(axis_infos[i].m_name)
+        for i in range(len(axis_infos))
     ]
 
     return labels
@@ -144,7 +145,12 @@ def plot_histogram(hist,
     if not ylabel:
         ylabel = translate_axis_label(hist.yAxis().getName())
 
-    axes_limits = [hist.getXmin(), hist.getXmax(), hist.getYmin(), hist.getYmax()]
+    axes_limits = [
+        hist.getXmin(),
+        hist.getXmax(),
+        hist.getYmin(),
+        hist.getYmax()
+    ]
 
     plot_array(hist.array(),
                zmin=zmin,
@@ -245,8 +251,8 @@ def plot_simulation_result(result,
     :param postpone_show: postpone showing the plot for later tuning (False by default)
     """
     if len(result.array().shape) == 1:  # 1D data, specular simulation assumed
-        plot_specular_simulation_result(result, intensity_min, intensity_max, units,
-                                        **kwargs)
+        plot_specular_simulation_result(result, intensity_min, intensity_max,
+                                        units, **kwargs)
     else:
         plot_colormap(result,
                       intensity_min,
@@ -354,9 +360,11 @@ class PlotterGISAS(Plotter):
 
         iteration_info = fit_objective.iterationInfo()
 
-        plt.text(0.01, 0.85,
-                 "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
-        plt.text(0.01, 0.75, "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
+        plt.text(
+            0.01, 0.85,
+            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+        plt.text(0.01, 0.75,
+                 "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         index = 0
         params = iteration_info.parameterMap()
         for key in params:
@@ -459,8 +467,8 @@ class PlotterSpecular(Plotter):
         font = {'family': 'serif', 'weight': 'normal', 'size': label_fontsize}
 
         plt.subplot(self.gs[0])
-        plt.semilogy(sim_data.axis(), sim_values, 'b', real_data.axis(), real_values,
-                     'k--')
+        plt.semilogy(sim_data.axis(), sim_values, 'b', real_data.axis(),
+                     real_values, 'k--')
         if unc_values is not None:
             plt.semilogy(real_data.axis(),
                          real_values - unc_values,

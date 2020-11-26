@@ -320,8 +320,8 @@ def copy_python_framework():
 def copy_qt_libraries():
     print("--> Copying Qt libraries")
     libs = [
-        'QtCore', 'QtDBus', 'QtDesigner', 'QtGui', 'QtPrintSupport', 'QtWidgets',
-        'QtXml', 'QtSvg', 'QtNetwork', 'QtOpenGL'
+        'QtCore', 'QtDBus', 'QtDesigner', 'QtGui', 'QtPrintSupport',
+        'QtWidgets', 'QtXml', 'QtSvg', 'QtNetwork', 'QtOpenGL'
     ]
     print("   ", end="")
     for libname in libs:
@@ -410,7 +410,8 @@ def validate_dependencies():
     files_with_missed_dependencies = []
     for file_name in file_list:
         for dependency in otool(file_name):
-            if is_system_dependency(dependency) or is_rpath_dependency(dependency):
+            if is_system_dependency(dependency) or is_rpath_dependency(
+                    dependency):
                 continue
             if os.path.basename(file_name) in dependency:
                 # self dependency (libId)

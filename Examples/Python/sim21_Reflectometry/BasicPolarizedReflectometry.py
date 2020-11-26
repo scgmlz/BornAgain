@@ -16,7 +16,8 @@ def get_sample():
 
     # creating materials
     m_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
-    m_layer_mat = ba.MaterialBySLD("Layer", 1e-4, 1e-8, ba.kvector_t(0.0, 1e8, 0.0))
+    m_layer_mat = ba.MaterialBySLD("Layer", 1e-4, 1e-8,
+                                   ba.kvector_t(0.0, 1e8, 0.0))
     m_substrate = ba.MaterialBySLD("Substrate", 7e-5, 2e-6)
 
     # creating layers

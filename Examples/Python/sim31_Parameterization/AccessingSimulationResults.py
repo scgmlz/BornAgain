@@ -40,7 +40,8 @@ def get_simulation():
     Returns a GISAXS simulation with beam and detector defined.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(201, -2.0*deg, 2.0*deg, 201, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(201, -2.0*deg, 2.0*deg, 201, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.setBeamIntensity(1e+05)
     return simulation
@@ -88,11 +89,15 @@ def plot_slices(hist):
 
     # projection along Y, slice at fixed x-value
     proj1 = noisy.projectionY(0.0)
-    plt.semilogy(proj1.binCenters(), proj1.binValues(), label=r'$\phi=0.0^{\circ}$')
+    plt.semilogy(proj1.binCenters(),
+                 proj1.binValues(),
+                 label=r'$\phi=0.0^{\circ}$')
 
     # projection along Y, slice at fixed x-value
     proj2 = noisy.projectionY(0.5)  # slice at fixed value
-    plt.semilogy(proj2.binCenters(), proj2.binValues(), label=r'$\phi=0.5^{\circ}$')
+    plt.semilogy(proj2.binCenters(),
+                 proj2.binValues(),
+                 label=r'$\phi=0.5^{\circ}$')
 
     # projection along Y for all X values between [xlow, xup], averaged
     proj3 = noisy.projectionY(0.41, 0.59)

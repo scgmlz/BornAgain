@@ -59,7 +59,8 @@ for P in PP:
             DeltaPath.append(0)
         elif inside(y, -T[0], 0) and inside(yold, -T[0], 0):
             DeltaPath.append(DeltaLayer[0])
-        elif inside(y, -T[0] - T[1], -T[0]) and inside(yold, -T[0] - T[1], -T[0]):
+        elif inside(y, -T[0] - T[1], -T[0]) and inside(yold, -T[0] - T[1],
+                                                       -T[0]):
             DeltaPath.append(DeltaLayer[1])
         else:
             sys.stderr.write("Invalid input => layer ill defined\n")

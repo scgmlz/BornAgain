@@ -92,7 +92,8 @@ class OutputDataIOTest(unittest.TestCase):
             ba.VariableBinAxis("axis0", 10,
                                get_boundaries_flat_in_sin(10, -5.0, 5.0)))
         data.addAxis(
-            ba.VariableBinAxis("axis1", 3, get_boundaries_flat_in_sin(3, 0.0, 2.0)))
+            ba.VariableBinAxis("axis1", 3,
+                               get_boundaries_flat_in_sin(3, 0.0, 2.0)))
         fill_data(data)
         ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
         newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
@@ -102,7 +103,8 @@ class OutputDataIOTest(unittest.TestCase):
         data = ba.IntensityData()
         data.addAxis(ba.FixedBinAxis("axis0", 10, -5.0, 5.0))
         data.addAxis(
-            ba.VariableBinAxis("axis1", 3, get_boundaries_flat_in_sin(3, 0.0, 2.0)))
+            ba.VariableBinAxis("axis1", 3,
+                               get_boundaries_flat_in_sin(3, 0.0, 2.0)))
         fill_data(data)
         ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
         newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
@@ -166,8 +168,10 @@ class OutputDataIOTest(unittest.TestCase):
                            [8.0, 9.0, 10.0, 11.0]])
         numpy.savetxt('tmp.txt', arr)
         newdata = numpy.array(
-            ba.IntensityDataIOFactory.readOutputData("tmp.txt").getRawDataVector())
-        expected = numpy.array([8., 4., 0., 9., 5., 1., 10., 6., 2., 11., 7., 3.])
+            ba.IntensityDataIOFactory.readOutputData(
+                "tmp.txt").getRawDataVector())
+        expected = numpy.array(
+            [8., 4., 0., 9., 5., 1., 10., 6., 2., 11., 7., 3.])
         self.assertTrue(numpy.array_equal(newdata, expected))
 
     def test_SaveOutputData_ReadNumpyArray(self):

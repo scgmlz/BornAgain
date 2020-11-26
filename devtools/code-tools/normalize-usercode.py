@@ -67,7 +67,7 @@ def normalize_text(ti, fname):
     tf = FormatCode(
         tf,
         style_config=
-        '{based_on_style: pep8, column_limit: 85, '
+        '{based_on_style: pep8, column_limit: 80, '
         'no_spaces_around_selected_binary_operators: "*,/"}'
     )[0]
     print(tf)

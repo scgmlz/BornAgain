@@ -16,7 +16,8 @@ sldMgO = (5.9803e-06, 9.3996e-12)
 magnetizationMagnitude = 1.6e6
 angle = 0
 magnetizationVector = ba.kvector_t(magnetizationMagnitude*numpy.sin(angle*deg),
-                                   magnetizationMagnitude*numpy.cos(angle*deg), 0)
+                                   magnetizationMagnitude*numpy.cos(angle*deg),
+                                   0)
 
 
 def get_sample(*, magnetization=magnetizationVector):

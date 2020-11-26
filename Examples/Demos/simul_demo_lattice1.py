@@ -29,8 +29,7 @@ def RunSimulation():
 
     # interference function
     interference = InterferenceFunction2DLattice(ba.SquareLattice2D(10.0*nm))
-    pdf = FTDecayFunction2DCauchy(300.0*nm/2.0/M_PI, 100.0*nm/2.0/M_PI,
-                                  0)
+    pdf = FTDecayFunction2DCauchy(300.0*nm/2.0/M_PI, 100.0*nm/2.0/M_PI, 0)
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
 

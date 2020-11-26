@@ -45,7 +45,8 @@ def get_simulation(integration_flag):
     If integration_flag=True, the simulation will integrate over detector bins.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, -2.0*deg, 2.0*deg, 200, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(200, -2.0*deg, 2.0*deg, 200, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.getOptions().setMonteCarloIntegration(integration_flag, 50)
     if not "__no_terminal__" in globals():
@@ -106,7 +107,11 @@ def run_simulation():
 
         zmin = condition['zmin']
         zmax = condition['zmax']
-        ba.plot_colormap(result, zmin=zmin, zmax=zmax, cmap='jet', aspect='auto')
+        ba.plot_colormap(result,
+                         zmin=zmin,
+                         zmax=zmax,
+                         cmap='jet',
+                         aspect='auto')
 
         plt.text(0.0,
                  2.1,

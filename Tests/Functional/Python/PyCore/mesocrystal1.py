@@ -27,11 +27,11 @@ class MySampleBuilder(ISampleBuilder):
         self.roughness = ctypes.c_double(2.8746e+01*nm)
         # register parameters
         self.registerParameter(
-            "lattice_length_a",
-            ctypes.addressof(self.lattice_length_a)).setUnit("nm").setNonnegative()
+            "lattice_length_a", ctypes.addressof(
+                self.lattice_length_a)).setUnit("nm").setNonnegative()
         self.registerParameter(
-            "lattice_length_c",
-            ctypes.addressof(self.lattice_length_c)).setUnit("nm").setNonnegative()
+            "lattice_length_c", ctypes.addressof(
+                self.lattice_length_c)).setUnit("nm").setNonnegative()
         self.registerParameter(
             "nanoparticle_radius", ctypes.addressof(
                 self.nanoparticle_radius)).setUnit("nm").setNonnegative()
@@ -44,11 +44,12 @@ class MySampleBuilder(ISampleBuilder):
         self.registerParameter("meso_radius", ctypes.addressof(
             self.meso_radius)).setUnit("nm").setNonnegative()
         self.registerParameter(
-            "sigma_lattice_length_a", ctypes.addressof(
+            "sigma_lattice_length_a",
+            ctypes.addressof(
                 self.sigma_lattice_length_a)).setUnit("nm").setNonnegative()
-        self.registerParameter("surface_filling_ratio",
-                               ctypes.addressof(
-                                   self.surface_filling_ratio)).setNonnegative()
+        self.registerParameter(
+            "surface_filling_ratio",
+            ctypes.addressof(self.surface_filling_ratio)).setNonnegative()
         self.registerParameter("roughness", ctypes.addressof(
             self.roughness)).setUnit("nm").setNonnegative()
 
@@ -60,8 +61,8 @@ class MySampleBuilder(ISampleBuilder):
         n_particle = complex(1.0 - 2.84e-5, 4.7e-7)
         avg_n_squared_meso = complex(0.7886*n_particle*n_particle + 0.2114)
         n_avg = complex(
-            numpy.sqrt(self.surface_filling_ratio.value*avg_n_squared_meso + 1.0 -
-                       self.surface_filling_ratio.value))
+            numpy.sqrt(self.surface_filling_ratio.value*avg_n_squared_meso +
+                       1.0 - self.surface_filling_ratio.value))
         n_particle_adapted = complex(
             numpy.sqrt(n_avg*n_avg + n_particle*n_particle - 1.0))
         ff = FormFactorCylinder(self.meso_radius.value, self.meso_height.value)
@@ -114,8 +115,8 @@ class MySampleBuilder(ISampleBuilder):
     # -------------------------------------------------------------------------
     # building meso crystal
     # -------------------------------------------------------------------------
-    def createMesoCrystal(self, stacking_radius_a, stacking_radius_c, n_particle,
-                          p_meso_form_factor):
+    def createMesoCrystal(self, stacking_radius_a, stacking_radius_c,
+                          n_particle, p_meso_form_factor):
 
         mParticle = HomogeneousMaterial("Particle", n_particle)
 
@@ -123,8 +124,9 @@ class MySampleBuilder(ISampleBuilder):
         bas_a = p_lat.getBasisVectorA()
         bas_b = p_lat.getBasisVectorB()
         bas_c = p_lat.getBasisVectorC()
-        ff = FormFactorSphereGaussianRadius(self.nanoparticle_radius.value,
-                                            self.sigma_nanoparticle_radius.value)
+        ff = FormFactorSphereGaussianRadius(
+            self.nanoparticle_radius.value,
+            self.sigma_nanoparticle_radius.value)
         particle = Particle(mParticle, ff)
         position_0 = kvector_t(0.0, 0.0, 0.0)
         position_1 = 1.0/3.0*(2.0*bas_a + bas_b + bas_c)
@@ -142,7 +144,8 @@ class MySampleBuilder(ISampleBuilder):
     # create lattice
     # -------------------------------------------------------------------------
     def createLattice(self, stacking_radius_a, stacking_radius_c):
-        result = HexagonalLattice(stacking_radius_a*2.0, stacking_radius_c*2.0*2.3)
+        result = HexagonalLattice(stacking_radius_a*2.0,
+                                  stacking_radius_c*2.0*2.3)
         result.setSelectionRule(SimpleSelectionRule(-1, 1, 1, 3))
         return result
 

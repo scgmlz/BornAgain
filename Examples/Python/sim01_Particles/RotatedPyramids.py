@@ -9,26 +9,38 @@ def get_sample():
     """
     Returns a sample with rotated pyramids on top of a substrate.
     """
-    # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    # collection of particles
-    pyramid_ff = ba.FormFactorPyramid(10*nm, 5*nm, 54.73*deg)
-    pyramid = ba.Particle(m_particle, pyramid_ff)
-    transform = ba.RotationZ(45.*deg)
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(pyramid, 1.0, ba.kvector_t(0.0, 0.0, 0.0), transform)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
+    material_3 = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
 
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    substrate_layer = ba.Layer(m_substrate)
+    # Define layers
+    layer_1 = ba.Layer(material_1)
+    layer_2 = ba.Layer(material_3)
 
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    multi_layer.addLayer(substrate_layer)
-    return multi_layer
+    # Define form factors
+    formFactor_1 = ba.FormFactorPyramid(10.0*nm, 5.0*nm, 54.73*deg)
+
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
+    particle_1_rotation = ba.RotationZ(45.0*deg)
+    particle_1.setRotation(particle_1_rotation)
+
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particle_1, 1.0)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    multiLayer_1.addLayer(layer_2)
+    return multiLayer_1
 
 
 def get_simulation():
@@ -36,7 +48,8 @@ def get_simulation():
     Returns a GISAXS simulation with beam and detector defined.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, -2.0*deg, 2.0*deg, 200, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(200, -2.0*deg, 2.0*deg, 200, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     return simulation
 

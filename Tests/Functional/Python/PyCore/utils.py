@@ -44,7 +44,8 @@ def get_reference_data(filename):
 
 def get_simulation_MiniGISAS(sample=None):
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(25, -2.0*deg, 2.0*deg, 25, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(25, -2.0*deg, 2.0*deg, 25, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     if sample:
         simulation.setSample(sample)
@@ -53,7 +54,8 @@ def get_simulation_MiniGISAS(sample=None):
 
 def get_simulation_BasicGISAS(sample=None):
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     if sample:
         simulation.setSample(sample)

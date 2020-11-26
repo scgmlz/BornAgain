@@ -58,8 +58,10 @@ class StandaloneFitTest(unittest.TestCase):
         Testing fit of rosenbrock function
         """
         params = ba.Parameters()
-        params.add(ba.Parameter("x", -1.2, ba.AttLimits.limited(-5.0, 5.0), 0.01))
-        params.add(ba.Parameter("y", 1.0, ba.AttLimits.limited(-5.0, 5.0), 0.01))
+        params.add(
+            ba.Parameter("x", -1.2, ba.AttLimits.limited(-5.0, 5.0), 0.01))
+        params.add(ba.Parameter("y", 1.0, ba.AttLimits.limited(-5.0, 5.0),
+                                0.01))
 
         model = Rosenbrock()
         minimizer = ba.Minimizer()
@@ -72,8 +74,8 @@ class StandaloneFitTest(unittest.TestCase):
                                        model.m_expected_params, 3)
 
         # check found minimum
-        np.testing.assert_almost_equal(result.minValue(), model.m_expected_minimum,
-                                       3)
+        np.testing.assert_almost_equal(result.minValue(),
+                                       model.m_expected_minimum, 3)
 
     def test_DecayingSinFit(self):
         params = ba.Parameters()

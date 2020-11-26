@@ -44,7 +44,8 @@ def get_simulation(params):
     incident_angle = params["incident_angle"]
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, incident_angle, 0.0*deg)
     simulation.setBeamIntensity(1e+08)
     simulation.setSample(get_sample(params))
@@ -135,9 +136,11 @@ class PlotObserver():
 
         iteration_info = fit_objective.iterationInfo()
 
-        plt.text(0.01, 0.85,
-                 "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
-        plt.text(0.01, 0.75, "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
+        plt.text(
+            0.01, 0.85,
+            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+        plt.text(0.01, 0.75,
+                 "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
             plt.text(0.01, 0.55 - index*0.1,
                      '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
@@ -151,9 +154,11 @@ class PlotObserver():
 
         iteration_info = fit_objective.iterationInfo()
 
-        plt.text(0.01, 0.95,
-                 "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
-        plt.text(0.01, 0.70, "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
+        plt.text(
+            0.01, 0.95,
+            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+        plt.text(0.01, 0.70,
+                 "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
             plt.text(0.01, 0.30 - index*0.3,
                      '{:30.30s}: {:6.3f}'.format(params.name(), params.value))

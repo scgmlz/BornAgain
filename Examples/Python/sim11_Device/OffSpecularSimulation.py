@@ -31,7 +31,8 @@ def get_sample():
     box = ba.Particle(m_particle, box_ff)
     transform = ba.RotationZ(90.0*deg)
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(box, 1.0, ba.kvector_t(0.0, 0.0, 0.0), transform)
+    particle_layout.addParticle(box, 1.0, ba.kvector_t(0.0, 0.0, 0.0),
+                                transform)
     particle_layout.setInterferenceFunction(interference)
 
     # assembling the sample
@@ -53,7 +54,8 @@ def get_simulation():
     simulation.setDetectorParameters(20, phi_f_min*deg, phi_f_max*deg, 200,
                                      alpha_f_min*deg, alpha_f_max*deg)
     # define the beam with alpha_i varied between alpha_i_min and alpha_i_max
-    alpha_i_axis = ba.FixedBinAxis("alpha_i", 200, alpha_i_min*deg, alpha_i_max*deg)
+    alpha_i_axis = ba.FixedBinAxis("alpha_i", 200, alpha_i_min*deg,
+                                   alpha_i_max*deg)
     simulation.setBeamParameters(1.0*angstrom, alpha_i_axis, 0.0*deg)
     simulation.setBeamIntensity(1e9)
     return simulation
@@ -72,4 +74,7 @@ def run_simulation():
 
 if __name__ == '__main__':
     result = run_simulation()
-    ba.plot_simulation_result(result, intensity_min=1.0, cmap='jet', aspect='auto')
+    ba.plot_simulation_result(result,
+                              intensity_min=1.0,
+                              cmap='jet',
+                              aspect='auto')

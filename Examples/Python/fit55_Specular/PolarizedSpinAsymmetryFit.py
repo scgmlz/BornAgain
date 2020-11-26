@@ -47,9 +47,9 @@ def get_sample(params):
     """
     magnetizationMagnitude = params["rhoM_Mafo"]*1e-6/RhoMconst
     angle = 0
-    magnetizationVector = ba.kvector_t(magnetizationMagnitude*numpy.sin(angle*deg),
-                                       magnetizationMagnitude*numpy.cos(angle*deg),
-                                       0)
+    magnetizationVector = ba.kvector_t(
+        magnetizationMagnitude*numpy.sin(angle*deg),
+        magnetizationMagnitude*numpy.cos(angle*deg), 0)
 
     mat_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
     mat_layer = ba.MaterialBySLD("(Mg,Al,Fe)3O4", params["rho_Mafo"]*1e-6, 0,
@@ -255,10 +255,12 @@ def downloadAndExtractData():
 
     rawdata = zipfile.open("MAFO_Saturated.refl").read().decode("utf-8")
 
-    table_pp = match(r'.*# "polarization": "\+\+"\n#.*?\n# "units".*?\n(.*?)#.*',
-                     rawdata, DOTALL).group(1)
-    table_mm = match(r'.*# "polarization": "\-\-"\n#.*?\n# "units".*?\n(.*?)#.*',
-                     rawdata, DOTALL).group(1)
+    table_pp = match(
+        r'.*# "polarization": "\+\+"\n#.*?\n# "units".*?\n(.*?)#.*', rawdata,
+        DOTALL).group(1)
+    table_mm = match(
+        r'.*# "polarization": "\-\-"\n#.*?\n# "units".*?\n(.*?)#.*', rawdata,
+        DOTALL).group(1)
 
     data_pp = numpy.genfromtxt(BytesIO(table_pp.encode()), unpack=True)
     data_mm = numpy.genfromtxt(BytesIO(table_mm.encode()), unpack=True)
@@ -360,8 +362,10 @@ if __name__ == '__main__':
                       "MAFO_Saturated_spin_asymmetry_initial.pdf")
 
     if fit:
-        fitResult = run_fit_ba([data_pp[0], data_mm[0]], [data_pp[1], data_mm[1]],
-                               [run_Simulation_pp, run_Simulation_mm], startParams)
+        fitResult = run_fit_ba([data_pp[0], data_mm[0]],
+                               [data_pp[1], data_mm[1]],
+                               [run_Simulation_pp, run_Simulation_mm],
+                               startParams)
         print("Fit Result:")
         print(fitResult)
 

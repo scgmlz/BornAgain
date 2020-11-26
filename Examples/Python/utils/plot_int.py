@@ -25,8 +25,8 @@ def plot_int(args):
     else:
         intensity_min = data.getMinimum()
     ylog = not args.ylin
-    if ylog and intensity_min<=0:
-        intensity_min = intensity_max / 1e6
+    if ylog and intensity_min <= 0:
+        intensity_min = intensity_max/1e6
 
     if args.verbose:
         print(f'Data extend from {data.getMinimum()} to {data.getMaximum()}')
@@ -34,14 +34,18 @@ def plot_int(args):
         # some white space above and below automatically determined y range:
         if not args.max:
             if args.ylin:
-                intensity_max = intensity_max + (intensity_max-intensity_min)*0.05
+                intensity_max = intensity_max + (intensity_max -
+                                                 intensity_min)*0.05
             else:
-                intensity_max = intensity_max*(intensity_max/intensity_min)**0.05
+                intensity_max = intensity_max*(intensity_max/
+                                               intensity_min)**0.05
         if not args.min:
             if args.ylin:
-                intensity_min = intensity_min - (intensity_max-intensity_min)*0.05
+                intensity_min = intensity_min - (intensity_max -
+                                                 intensity_min)*0.05
             else:
-                intensity_min = intensity_min/(intensity_max/intensity_min)**0.05
+                intensity_min = intensity_min/(intensity_max/
+                                               intensity_min)**0.05
         plot_int_1d(data, ylog, intensity_min, intensity_max)
     elif data.rank() == 2:
         plot_int_2d(data, ylog, intensity_min, intensity_max)
@@ -63,10 +67,7 @@ def plot_raw_data_2d(values, extent_array, ylog, intensity_min, intensity_max):
         norm = colors.LogNorm(intensity_min, intensity_max)
     else:
         norm = colors.Normalize(intensity_min, intensity_max)
-    im = plt.imshow(values,
-                    norm=norm,
-                    extent=extent_array,
-                    aspect='auto')
+    im = plt.imshow(values, norm=norm, extent=extent_array, aspect='auto')
     cb = plt.colorbar(im)
     cb.set_label(r'Intensity (arb. u.)', size=16)
     plt.xlabel(r'$\phi_f (^{\circ})$', fontsize=16)
@@ -94,13 +95,21 @@ def plot_raw_data_1d(axis, values, ylog):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose", action="store_true",
+    parser.add_argument("-v",
+                        "--verbose",
+                        action="store_true",
                         help="print some output to the terminal")
-    parser.add_argument("file", type=str,
+    parser.add_argument("file",
+                        type=str,
                         help="input data file (.int or .int.gz)")
     parser.add_argument("-l", "--min", type=float, help="upper plot limit")
     parser.add_argument("-u", "--max", type=float, help="lower plot limit")
-    parser.add_argument("-y", "--ylin", action="store_true", help="linear y scale", )
+    parser.add_argument(
+        "-y",
+        "--ylin",
+        action="store_true",
+        help="linear y scale",
+    )
     args = parser.parse_args()
 
     plot_int(args)

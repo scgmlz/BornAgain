@@ -24,7 +24,8 @@ class BinRange:
 
 
 class Detector:
-    def __init__(self, bins_per_dimension, phi_min, phi_max, alpha_min, alpha_max):
+    def __init__(self, bins_per_dimension, phi_min, phi_max, alpha_min,
+                 alpha_max):
         self.phi = BinRange(phi_min, phi_max, bins_per_dimension)
         self.alpha = BinRange(alpha_min, alpha_max, bins_per_dimension)
 
@@ -98,7 +99,8 @@ def make_plot(results, det, name, nrow=1):
                         top=1 - topskip)
     # Plot the color scale.
     cbar_ax = fig.add_axes([
-        1 - rightskip + 0.4*xskip, bottomskip, 0.25*xskip, 1 - bottomskip - topskip
+        1 - rightskip + 0.4*xskip, bottomskip, 0.25*xskip,
+        1 - bottomskip - topskip
     ])
     cb = fig.colorbar(im, cax=cbar_ax)
     cb.set_label(r'$\left|F(q)\right|^2/V^{\,2}$', fontsize=fontsize)
@@ -169,6 +171,7 @@ def run_simulation(det, ff, trafo=None):
     simulation.setSample(sample)
     simulation.runSimulation()
     data = simulation.result().array()
-    nor = data[det.alpha.n - det.alpha.central_index() - 1, det.phi.central_index()]
+    nor = data[det.alpha.n - det.alpha.central_index() - 1,
+               det.phi.central_index()]
     data /= nor
     return data + 1e-80  # for log scale

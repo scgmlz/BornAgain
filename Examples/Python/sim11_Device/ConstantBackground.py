@@ -36,7 +36,8 @@ def get_simulation():
     Returns a GISAXS simulation with a constant backround.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.setBeamIntensity(1e6)
     bg = ba.ConstantBackground(1e3)

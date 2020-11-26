@@ -10,38 +10,39 @@ def get_sample():
     Return a sample with cylinders on a substrate.
     The cylinders have a Gaussian size distribution.
     """
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
-    # cylindrical particle
-    radius = 5*nm
-    height = radius
-    cylinder_ff = ba.FormFactorCylinder(radius, height)
-    cylinder = ba.Particle(m_particle, cylinder_ff)
+    # Define materials
+    material_1 = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_2 = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
 
-    # collection of particles with size distribution
-    nparticles = 100
-    sigma = 0.2*radius
+    # Define layers
+    layer_1 = ba.Layer(material_1)
 
-    gauss_distr = ba.DistributionGaussian(radius, sigma)
+    # Define form factors
+    formFactor_1 = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
 
-    sigma_factor = 2.0
-    par_distr = ba.ParameterDistribution("/Particle/Cylinder/Radius", gauss_distr,
-                                         nparticles, sigma_factor)
-    # by uncommenting the line below, the height of the cylinders
-    #   can be scaled proportionally to the radius:
-    # par_distr.linkParameter("/Particle/Cylinder/Height")
-    part_coll = ba.ParticleDistribution(cylinder, par_distr)
+    # Define particles
+    particle_1 = ba.Particle(material_2, formFactor_1)
 
-    # assembling the sample
-    particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(part_coll)
+    # Define particles with parameter following a distribution
+    distr_1 = ba.DistributionGaussian(5.0*nm, 1.0*nm)
+    par_distr_1 = ba.ParameterDistribution("/Particle/Cylinder/Radius", distr_1,
+                                           100, 2.0)
+    particleDistribution_1 = ba.ParticleDistribution(particle_1, par_distr_1)
 
-    vacuum_layer = ba.Layer(m_vacuum)
-    vacuum_layer.addLayout(particle_layout)
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(vacuum_layer)
-    return multi_layer
+    # Define particle layouts and adding particles
+    layout_1 = ba.ParticleLayout()
+    layout_1.addParticle(particleDistribution_1, 1.0)
+    layout_1.setWeight(1)
+    layout_1.setTotalParticleSurfaceDensity(0.01)
+
+    # Add layouts to layers
+    layer_1.addLayout(layout_1)
+
+    # Define multilayers
+    multiLayer_1 = ba.MultiLayer()
+    multiLayer_1.addLayer(layer_1)
+    return multiLayer_1
 
 
 def get_simulation():
@@ -49,7 +50,8 @@ def get_simulation():
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, 0.0*deg, 2.0*deg, 200, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(200, 0.0*deg, 2.0*deg, 200, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     return simulation
 

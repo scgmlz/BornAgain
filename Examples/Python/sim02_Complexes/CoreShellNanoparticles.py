@@ -21,7 +21,8 @@ def get_sample():
     core_particle = ba.Particle(m_core, parallelepiped2_ff)
     core_position = ba.kvector_t(0.0, 0.0, 0.0)
 
-    particle = ba.ParticleCoreShell(shell_particle, core_particle, core_position)
+    particle = ba.ParticleCoreShell(shell_particle, core_particle,
+                                    core_position)
     particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(particle)
     interference = ba.InterferenceFunctionNone()
@@ -41,7 +42,8 @@ def get_simulation():
     Returns a GISAXS simulation with beam and detector defined.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, -1.0*deg, 1.0*deg, 200, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(200, -1.0*deg, 1.0*deg, 200, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     return simulation
 

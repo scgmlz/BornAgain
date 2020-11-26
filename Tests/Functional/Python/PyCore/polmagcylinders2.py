@@ -8,6 +8,7 @@ from utils import get_difference, REFERENCE_DIR
 
 from bornagain import *
 
+
 # ----------------------------------
 # describe sample and run simulation
 # ----------------------------------

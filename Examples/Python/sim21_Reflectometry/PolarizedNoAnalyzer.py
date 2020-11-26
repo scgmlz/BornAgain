@@ -18,7 +18,8 @@ def get_sample():
     magnetizationMagnitude = 1e8
     angle = 30*deg
     magnetizationVector = ba.kvector_t(magnetizationMagnitude*numpy.sin(angle),
-                                       magnetizationMagnitude*numpy.cos(angle), 0)
+                                       magnetizationMagnitude*numpy.cos(angle),
+                                       0)
 
     m_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
     m_layer_mat = ba.MaterialBySLD("Layer", 1e-4, 1e-8, magnetizationVector)
@@ -84,10 +85,13 @@ def plot(axis, data, labels):
 
 if __name__ == '__main__':
     q, results_pp = run_simulation(ba.kvector_t(0, 1, 0), ba.kvector_t(0, 1, 0))
-    q, results_mm = run_simulation(ba.kvector_t(0, -1, 0), ba.kvector_t(0, -1, 0))
+    q, results_mm = run_simulation(ba.kvector_t(0, -1, 0),
+                                   ba.kvector_t(0, -1, 0))
 
-    q, results_pm = run_simulation(ba.kvector_t(0, 1, 0), ba.kvector_t(0, -1, 0))
-    q, results_mp = run_simulation(ba.kvector_t(0, -1, 0), ba.kvector_t(0, 1, 0))
+    q, results_pm = run_simulation(ba.kvector_t(0, 1, 0),
+                                   ba.kvector_t(0, -1, 0))
+    q, results_mp = run_simulation(ba.kvector_t(0, -1, 0),
+                                   ba.kvector_t(0, 1, 0))
 
     r_plus = results_pp + results_pm
     r_minus = results_mm + results_mp

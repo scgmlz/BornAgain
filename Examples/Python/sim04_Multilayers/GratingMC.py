@@ -57,7 +57,8 @@ def get_simulation():
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, -0.5*deg, 0.5*deg, 200, 0.0*deg, 0.6*deg)
+    simulation.setDetectorParameters(200, -0.5*deg, 0.5*deg, 200, 0.0*deg,
+                                     0.6*deg)
     simulation.setBeamParameters(1.34*angstrom, 0.4*deg, 0.0*deg)
     simulation.setBeamIntensity(1e+08)
     simulation.getOptions().setMonteCarloIntegration(True, 100)

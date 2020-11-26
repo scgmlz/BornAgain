@@ -64,8 +64,9 @@ def change_rpath(oldpath, newpath, filename):
 
 def delete_rpath(todelete, filename):
     print("delete_rpath ", todelete, filename)
-    p = subprocess.Popen(['install_name_tool', '-delete_rpath', todelete, filename],
-                         stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        ['install_name_tool', '-delete_rpath', todelete, filename],
+        stdout=subprocess.PIPE)
     p.communicate()
     return
 
@@ -194,7 +195,8 @@ def prepare_init_module(app_dir, bundle_dir):
     libexec_dir = os.path.join(source_dir, "BornAgain-" + BORNAGAIN_VERSION,
                                "bornagain")
     package_dir = os.path.join(bundle_dir, "bornagain")
-    print("--> Copying modules from '{0}' to '{1}'".format(libexec_dir, package_dir))
+    print("--> Copying modules from '{0}' to '{1}'".format(
+        libexec_dir, package_dir))
     shutil.copytree(libexec_dir, package_dir)
     return package_dir
 
@@ -209,8 +211,9 @@ def copy_libraries(app_dir, destination_dir):
     app_frameworks_dir = os.path.join(app_dir, "Contents", "Frameworks")
 
     # copying BornAgain libraries
-    shutil.copytree(app_bornagainlib_dir,
-                    os.path.join(destination_dir, "BornAgain-" + BORNAGAIN_VERSION))
+    shutil.copytree(
+        app_bornagainlib_dir,
+        os.path.join(destination_dir, "BornAgain-" + BORNAGAIN_VERSION))
 
     # cleaning unnecessary files
     libfiles = glob.glob(os.path.join(destination_dir, '*/libBornAgainGUI*'))
@@ -224,7 +227,8 @@ def copy_libraries(app_dir, destination_dir):
     if not os.path.exists(frameworks_dest):
         os.makedirs(frameworks_dest)
     for lib in frameworks_libs:
-        shutil.copyfile(lib, os.path.join(frameworks_dest, os.path.basename(lib)))
+        shutil.copyfile(lib, os.path.join(frameworks_dest,
+                                          os.path.basename(lib)))
 
 
 def patch_libraries(dir_name):
@@ -285,7 +289,8 @@ def install_bundle(dir_name):
     Installs BornAgain Python bundle previously generated in the directory dir_name
     """
     print('-'*80)
-    print("Installing bundle in Python site-packages '{0}'".format(get_python_lib()))
+    print("Installing bundle in Python site-packages '{0}'".format(
+        get_python_lib()))
     print('-'*80)
 
     os.chdir(bundle_dir)
@@ -304,15 +309,17 @@ if __name__ == '__main__':
 
     print('-'*80)
     print(
-        "Installation of BornAgain-{0} libraries into site-packages of your Python".
-        format(BORNAGAIN_VERSION))
+        "Installation of BornAgain-{0} libraries into site-packages of your Python"
+        .format(BORNAGAIN_VERSION))
     print('-'*80)
     print("From :", app_dir)
     print("To   :", get_python_lib())
     print(" ")
     print("Possible options:")
     print("[0] - Generate bundle with BornAgain libraries, do not install it.")
-    print("[1] - Generate bundle and install it into site-packages of your Python.")
+    print(
+        "[1] - Generate bundle and install it into site-packages of your Python."
+    )
     print("[2] - Exit")
 
     var = 0

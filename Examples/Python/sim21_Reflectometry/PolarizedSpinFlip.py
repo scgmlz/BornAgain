@@ -19,7 +19,8 @@ def get_sample():
     magnetizationMagnitude = 1e8
     angle = 30*deg
     magnetizationVector = ba.kvector_t(magnetizationMagnitude*numpy.sin(angle),
-                                       magnetizationMagnitude*numpy.cos(angle), 0)
+                                       magnetizationMagnitude*numpy.cos(angle),
+                                       0)
 
     # creating materials
     m_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)

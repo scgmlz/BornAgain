@@ -49,7 +49,8 @@ def get_simulation():
     Characterizing the input beam and output detector
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(200, -0.5*deg, 0.5*deg, 200, 0.0*deg, 1.0*deg)
+    simulation.setDetectorParameters(200, -0.5*deg, 0.5*deg, 200, 0.0*deg,
+                                     1.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.setBeamIntensity(5e11)
     return simulation

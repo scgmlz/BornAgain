@@ -21,7 +21,8 @@ def get_sample():
     particle_layout.addParticle(box)
 
     # interference function
-    interference = ba.InterferenceFunction2DLattice(ba.SquareLattice2D(8*nm, 0*deg))
+    interference = ba.InterferenceFunction2DLattice(
+        ba.SquareLattice2D(8*nm, 0*deg))
     pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm, 0)
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
@@ -41,7 +42,8 @@ def get_simulation():
     Returns a GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(101, -2.0*deg, 2.0*deg, 101, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(101, -2.0*deg, 2.0*deg, 101, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.getOptions().setUseAvgMaterials(True)
     simulation.getOptions().setIncludeSpecular(True)

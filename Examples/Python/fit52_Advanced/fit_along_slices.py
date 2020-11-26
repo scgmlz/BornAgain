@@ -42,7 +42,8 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg, 2.0*deg)
+    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
+                                     2.0*deg)
     simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
     simulation.setBeamIntensity(1e+08)
     simulation.setSample(get_sample(params))
@@ -129,9 +130,11 @@ class PlotObserver:
 
         iteration_info = fit_objective.iterationInfo()
 
-        plt.text(0.01, 0.85,
-                 "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
-        plt.text(0.01, 0.75, "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
+        plt.text(
+            0.01, 0.85,
+            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+        plt.text(0.01, 0.75,
+                 "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
             plt.text(0.01, 0.55 - index*0.1,
                      '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
@@ -156,7 +159,8 @@ class PlotObserver:
         # horizontal slices
         slices = [("real", real_data.projectionX(alpha_slice_value)),
                   ("simul", simul_data.projectionX(alpha_slice_value))]
-        title = ("Horizontal slice at alpha =" + '{:3.1f}'.format(alpha_slice_value))
+        title = ("Horizontal slice at alpha =" +
+                 '{:3.1f}'.format(alpha_slice_value))
         plt.subplot(2, 2, 2)
         self.plot_slices(slices, title)
 
