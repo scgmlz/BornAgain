@@ -30,7 +30,7 @@ def get_sample():
 
     particle_layout = ba.ParticleLayout()
     particle_layout.addParticle(box, 1.0, ba.kvector_t(0.0, 0.0, 0.0),
-                                ba.RotationZ(lattice_rotation_angle))
+                                ba.RotationZ(45*deg))
     particle_layout.setInterferenceFunction(interference)
 
     # assembling the sample
@@ -72,5 +72,5 @@ if __name__ == '__main__':
     result = run_simulation()
     ba.plot_simulation_result(result,
                               intensity_min=1e-03,
-                              cmap='inferno',
+                              cmap='jet',
                               aspect='auto')
