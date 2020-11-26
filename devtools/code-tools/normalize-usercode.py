@@ -15,7 +15,7 @@ def normalize_text(ti, fname):
     globals().update(ns)
     s = get_simulation()
     s.setSample(get_sample())
-    t = ba.generatePyExportTest(s)
+    t = ba.generateSimulationCode(s)
     return t
 
 def normalize_file(fname, inplace):
