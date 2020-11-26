@@ -78,7 +78,7 @@ def normalize_file(fname, inplace):
                 print(f'.. read {len(ti.split())} lines')
 
         # forbidden cases:
-        if re.search(r'\n\s+(for|if|while) ', ti):
+        if re.search(r'\n\s{4,}(for|if|while) ', ti):
             exit(f'=> UNTOUCHABLE - contains control structure')
 
         # normalize
