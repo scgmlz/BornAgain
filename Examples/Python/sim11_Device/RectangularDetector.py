@@ -100,7 +100,7 @@ def plot(results):
                      xlabel=r'$\phi_f ^{\circ}$',
                      ylabel=r'$\alpha_f ^{\circ}$',
                      zlabel="",
-                     cmap='jet',
+                     cmap='inferno',
                      aspect='auto')
 
     # showing  result of rectangular detector simulation
@@ -110,7 +110,7 @@ def plot(results):
                      xlabel='X, mm',
                      ylabel='Y, mm',
                      zlabel="",
-                     cmap='jet',
+                     cmap='inferno',
                      aspect='auto')
 
     # show relative difference between two plots (sph[i]-rect[i])/rect[i]
@@ -122,7 +122,7 @@ def plot(results):
     im = plt.imshow(rel_diff,
                     norm=colors.LogNorm(1e-6, 1.0),
                     aspect='auto',
-                    cmap='jet')
+                    cmap='inferno')
     cb = plt.colorbar(im, pad=0.025)
     plt.xlabel('X, bins', fontsize=14)
     plt.ylabel('Y, bins', fontsize=14)

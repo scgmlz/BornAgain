@@ -98,5 +98,5 @@ if __name__ == '__main__':
     result = run_simulation()
     ba.plot_simulation_result(result,
                               intensity_min=1e-03,
-                              cmap='jet',
+                              cmap='inferno',
                               aspect='auto')

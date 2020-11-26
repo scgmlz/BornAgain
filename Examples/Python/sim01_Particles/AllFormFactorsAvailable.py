@@ -101,7 +101,7 @@ def run_simulation():
                          xlabel="",
                          ylabel="",
                          zlabel="",
-                         cmap='jet',
+                         cmap='inferno',
                          aspect='auto')
 
         plt.tick_params(axis='both', which='major', labelsize=8)

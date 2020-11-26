@@ -90,7 +90,7 @@ def plot(result):
     Plots simulation results for different detectors.
     """
     # set plotting parameters
-    rcParams['image.cmap'] = 'jet'
+    rcParams['image.cmap'] = 'inferno'
     rcParams['image.aspect'] = 'auto'
 
     fig = plt.figure(figsize=(12.80, 10.24))

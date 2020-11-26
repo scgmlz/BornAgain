@@ -90,6 +90,6 @@ def run_simulation():
 if __name__ == '__main__':
     result = run_simulation()
     ba.plot_simulation_result(result,
-                              cmap='jet',
+                              cmap='inferno',
                               units=ba.Axes.QSPACE,
                               aspect='auto')

@@ -448,7 +448,7 @@ const std::string defineMain =
     "    if len(sys.argv)>=2:\n"
     "        ba.IntensityDataIOFactory.writeSimulationResult(result, sys.argv[1])\n"
     "    else:\n"
-    "        ba.plot_simulation_result(result, cmap='jet', aspect='auto')\n";
+    "        ba.plot_simulation_result(result, cmap='inferno', aspect='auto')\n";
 
 } // namespace
 

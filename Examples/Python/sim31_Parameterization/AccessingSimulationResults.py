@@ -80,7 +80,7 @@ def plot_histogram(hist, zmin=None, zmax=None):
                       zlabel="",
                       zmin=zmin,
                       zmax=zmax,
-                      cmap='jet',
+                      cmap='inferno',
                       aspect='auto')
 
 

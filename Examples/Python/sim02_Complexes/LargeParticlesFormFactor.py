@@ -110,7 +110,7 @@ def run_simulation():
         ba.plot_colormap(result,
                          zmin=zmin,
                          zmax=zmax,
-                         cmap='jet',
+                         cmap='inferno',
                          aspect='auto')
 
         plt.text(0.0,
