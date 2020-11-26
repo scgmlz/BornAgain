@@ -26,7 +26,7 @@ def get_sample():
     particle_1 = ba.Particle(material_2, formFactor_1)
 
     # Define 2D lattices
-    lattice2D_1 = ba.BasicLattice2D(25.0*nm, 25.0*nm, 90.0*deg, 0.0*deg)
+    lattice2D_1 = ba.SquareLattice2D(25.0*nm, 25.0*nm)
 
     # Define interference functions
     interference_1 = ba.InterferenceFunction2DLattice(lattice2D_1)
