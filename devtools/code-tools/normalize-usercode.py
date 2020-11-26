@@ -36,7 +36,8 @@ def substitute_sample(ti, tc):
 
     t = re.sub(pat, header + mn.group(3) + mi.group(6), ti)
 
-    t = re.sub(r'\nfrom bornagain import.+?', '\nfrom bornagain import deg, nm, nm2, kvector_t', t)
+    t = re.sub(r'\nfrom bornagain import.+?',
+               '\nfrom bornagain import deg, nm, nm2, kvector_t', t)
     return t
 
 
@@ -61,17 +62,16 @@ def cycle_text(ti, fname):
 def normalize_text(ti, fname):
     tc = cycle_text(ti, fname)
     if verbose:
-        print(f'.. cycled through BA, {len(ti.split())} -> {len(tc.split())} lines')
+        print(
+            f'.. cycled through BA, {len(ti.split())} -> {len(tc.split())} lines'
+        )
     tf = substitute_sample(ti, tc)
     if verbose:
         print(f'.. normalized, {len(ti.split())} -> {len(tf.split())} lines')
     # YAPF formatting
-    tf = FormatCode(
-        tf,
-        style_config=
-        '{based_on_style: pep8, column_limit: 80, '
-        'no_spaces_around_selected_binary_operators: "*,/"}'
-    )[0]
+    tf = FormatCode(tf,
+                    style_config='{based_on_style: pep8, column_limit: 80, '
+                    'no_spaces_around_selected_binary_operators: "*,/"}')[0]
     return tf
 
 
