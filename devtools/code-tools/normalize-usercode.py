@@ -32,16 +32,20 @@ def substitute_sample(ti, tc):
     t = re.sub(pat, header+mn.group(3)+mi.group(6), ti)
     return t
 
-def cycle_text(ti, fname):
-    """
-    Returns normalized version of script ti as obtained from BornAgain's export-to-Python function.
-    """
+def retrieve_simulation(ti, fname):
     c=compile(ti, fname, 'exec')
     ns = {}
     exec(c,ns)
     globals().update(ns)
     s = get_simulation()
     s.setSample(get_sample())
+    return s
+
+def cycle_text(ti, fname):
+    """
+    Returns normalized version of script ti as obtained from BornAgain's export-to-Python function.
+    """
+    s = retrieve_simulation(ti, fname)
     return ba.generateSimulationCode(s)
 
 def normalize_text(ti, fname):
@@ -64,35 +68,53 @@ def normalize_file(fname, inplace):
                 print(f'.. read {len(ti.split())} lines')
 
         # normalize
-        t = normalize_text(ti, fname)
+        tf = normalize_text(ti, fname)
         if verbose:
             print(f'.. obtained normalized text')
-        if t == ti:
+        if tf == ti:
             if verbose:
                 print(f'.. nothing changed')
             return 0
         with open('out1.py', 'w') as f:
-            f.write(t)
+            f.write(tf)
         if verbose:
             print(f'.. saved to out1.py')
 
         # check invariance under second normalization
-        t2 = normalize_text(t, fname)
+        t2 = normalize_text(tf, fname)
         if verbose:
             print(f'.. re-normalized')
-        if t2 != t:
+        if t2 != tf:
             with open('out2.py', 'w') as f:
                 f.write(t2)
             exit(f'=> BUG - changed under second normalization, see out2.py vs out1.py')
 
         # check invariance of simulation result:
+        si = retrieve_simulation(ti, fname+".old")
+        sf = retrieve_simulation(tf, fname+".new")
+        if verbose:
+            print(f'.. running old simulation ..')
+        si.runSimulation()
+        ri = si.result()
+        if verbose:
+            print(f'.. running new simulation ..')
+        sf.runSimulation()
+        rf = sf.result()
+        if verbose:
+            print(f'.. done with simulations')
+        diff = ba.getRelativeDifference(ba.importArrayToOutputData(ri.array()),
+                                        ba.importArrayToOutputData(rf.array()))
+        if verbose:
+            print(f'.. relative difference {diff}')
+        if diff>1e-10:
+            exit(f'=> BUG - simulation result changed')
 
         # output
         if inplace:
             os.rename('out1.py', fname)
             print(f'=> NORMALIZED')
         else:
-            print(t)
+            print(tf)
 
         return 1
 
