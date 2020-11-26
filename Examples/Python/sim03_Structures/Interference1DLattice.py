@@ -7,7 +7,7 @@ import bornagain as ba
 from bornagain import deg, angstrom, nm
 
 
-def get_sample(lattice_rotation_angle=45*deg):
+def get_sample():
     """
     Returns a sample with a grating on a substrate,
     modelled by very long boxes forming a 1D lattice with Cauchy correlations.
@@ -21,8 +21,7 @@ def get_sample(lattice_rotation_angle=45*deg):
     lattice_length = 30*nm
 
     # collection of particles
-    interference = ba.InterferenceFunction1DLattice(lattice_length,
-                                                    lattice_rotation_angle)
+    interference = ba.InterferenceFunction1DLattice(lattice_length, 45*deg)
     pdf = ba.FTDecayFunction1DCauchy(1000.0)
     interference.setDecayFunction(pdf)
 

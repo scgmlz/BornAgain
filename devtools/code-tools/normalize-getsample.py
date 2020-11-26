@@ -43,8 +43,12 @@ def substitute_sample(ti, tc):
 
 def retrieve_sample(ti, fname):
     c = compile(ti, fname, 'exec')
+    if verbose:
+        print(f'.. compiled sample code')
     ns = {}
     exec(c, ns)
+    if verbose:
+        print(f'.. executed sample code')
     globals().update(ns)
     return get_sample()
 
@@ -54,6 +58,8 @@ def cycle_sample(ti, fname):
     Returns normalized version of script ti as obtained from BornAgain's export-to-Python function.
     """
     sam = retrieve_sample(ti, fname)
+    if verbose:
+        print(f'.. retrieved sample')
     res = ba.generateSampleCode(sam)
     if verbose:
         print(f'.. cycled get_sample, {len(res.split())} lines')
