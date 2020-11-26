@@ -36,8 +36,8 @@ def substitute_sample(ti, tc):
 
     t = re.sub(pat, header + mn.group(3) + mi.group(6), ti)
 
-    t = re.sub(r'\nfrom bornagain import.+?',
-               '\nfrom bornagain import deg, nm, nm2, kvector_t', t)
+    t = re.sub(r'\nfrom bornagain import.+',
+               '\nfrom bornagain import angstrom, deg, nm, nm2, kvector_t', t)
     return t
 
 
