@@ -199,7 +199,7 @@ std::string SampleToPython::defineLayers() const {
         result << indent() << it->second << " = ba.Layer("
                << m_label->labelMaterial(layer->material());
         if (layer->thickness() != 0)
-            result << ", " << layer->thickness();
+            result << ", " << pyfmt::printNm(layer->thickness());
         result << ")\n";
         if (layer->numberOfSlices() != 1)
             result << indent() << it->second << ".setNumberOfSlices(" << layer->numberOfSlices()
