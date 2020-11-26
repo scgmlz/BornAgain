@@ -13,11 +13,8 @@
 //  ************************************************************************************************
 
 #include "Fit/Test/Minimizer/ResidualTestPlan.h"
-#include "Base/Math/Numeric.h"
 #include "Fit/Kernel/Minimizer.h"
-#include <cassert>
 #include <iostream>
-#include <sstream>
 
 using namespace mumufit;
 
