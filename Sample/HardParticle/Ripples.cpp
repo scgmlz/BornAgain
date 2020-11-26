@@ -15,7 +15,7 @@
 #include "Sample/HardParticle/Ripples.h"
 #include "Base/Math/Constants.h"
 #include "Base/Math/Functions.h"
-#include "Base/Math/Integrator.h"
+#include "Base/Math/IntegratorGK.h"
 
 complex_t ripples::factor_x_box(complex_t q, double r) {
     return r * Math::sinc(q * r / 2.0);

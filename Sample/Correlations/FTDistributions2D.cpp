@@ -14,7 +14,7 @@
 
 #include "Sample/Correlations/FTDistributions2D.h"
 #include "Base/Math/Bessel.h"
-#include "Base/Math/Integrator.h"
+#include "Base/Math/IntegratorGK.h"
 #include <limits>
 
 //  ************************************************************************************************

@@ -15,7 +15,7 @@
 #include "Sample/HardParticle/FormFactorTruncatedSpheroid.h"
 #include "Base/Math/Bessel.h"
 #include "Base/Math/Constants.h"
-#include "Base/Math/Integrator.h"
+#include "Base/Math/IntegratorGK.h"
 #include "Sample/Shapes/TruncatedEllipsoid.h"
 #include <limits>
 

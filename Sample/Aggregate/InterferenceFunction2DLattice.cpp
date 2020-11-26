@@ -13,7 +13,7 @@
 //  ************************************************************************************************
 
 #include "Sample/Aggregate/InterferenceFunction2DLattice.h"
-#include "Base/Math/Integrator.h"
+#include "Base/Math/IntegratorGK.h"
 #include "Param/Base/RealParameter.h"
 #include <algorithm>
 

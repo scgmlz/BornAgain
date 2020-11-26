@@ -13,7 +13,7 @@
 //  ************************************************************************************************
 
 #include "Sample/Aggregate/InterferenceFunction2DParaCrystal.h"
-#include "Base/Math/Integrator.h"
+#include "Base/Math/IntegratorGK.h"
 #include "Param/Base/ParameterPool.h"
 #include "Param/Base/RealParameter.h"
 #include <limits>

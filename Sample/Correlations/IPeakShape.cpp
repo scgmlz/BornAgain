@@ -15,7 +15,7 @@
 #include "Sample/Correlations/IPeakShape.h"
 #include "Base/Math/Bessel.h"
 #include "Base/Math/Constants.h"
-#include "Base/Math/Integrator.h"
+#include "Base/Math/IntegratorGK.h"
 #include <limits>
 
 namespace {
