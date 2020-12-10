@@ -79,7 +79,7 @@ def run_simulation():
 
 def simulate_and_plot():
     result = run_simulation().histogram2d()
-    ba.plot_histogram(result, cmap='jet', aspect='auto')
+    ba.plot_histogram(result, *sys.argv[1:])
 
     peaks = ba.FindPeaks(result, 2, "nomarkov", 0.001)
     xpeaks = [peak[0] for peak in peaks]

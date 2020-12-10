@@ -22,6 +22,7 @@ except Exception as e:
 
 label_fontsize = 16
 
+
 class Plotter:
     """
     Draws fit progress. Base class for simulation-specific classes (PlotterGISAS etc).

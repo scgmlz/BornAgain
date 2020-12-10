@@ -16,6 +16,7 @@ import bornagain as ba
 from matplotlib import pyplot as plt
 from os import path
 
+
 def get_sample(params):
     """
     Creates a sample and returns it

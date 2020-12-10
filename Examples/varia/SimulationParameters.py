@@ -120,7 +120,7 @@ def plot(results):
 
     for nplot, hist in results.items():
         plt.subplot(2, 2, nplot + 1)
-        ba.plot_colormap(hist, zlabel="", cmap='jet', aspect='auto')
+        ba.plot_colormap(hist, zlabel="", *sys.argv[1:])
     plt.tight_layout()
     plt.show()
 

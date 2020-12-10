@@ -97,12 +97,7 @@ def simulate_and_plot():
         plt.subplot(5, 5, nplot + 1)
         plt.subplots_adjust(wspace=0.3, hspace=0.3)
 
-        ba.plot_colormap(result,
-                         xlabel="",
-                         ylabel="",
-                         zlabel="",
-                         cmap='jet',
-                         aspect='auto')
+        ba.plot_colormap(result, xlabel="", ylabel="", zlabel="", *sys.argv[1:])
 
         plt.tick_params(axis='both', which='major', labelsize=8)
         plt.tick_params(axis='both', which='minor', labelsize=6)

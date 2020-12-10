@@ -110,8 +110,7 @@ def simulate_and_plot():
         ba.plot_colormap(result,
                          intensity_min=zmin,
                          intensity_max=zmax,
-                         cmap='jet',
-                         aspect='auto')
+                         *sys.argv[1:])
 
         plt.text(0.0,
                  2.1,
