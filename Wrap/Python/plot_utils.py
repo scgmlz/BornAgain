@@ -195,7 +195,7 @@ def plot_specular_simulation_result(result, **kwargs):
         plt.title(title)
 
 
-def plot_simulation_result(result, **kwargs):
+def plot_simulation_result(result, *args, **kwargs):
     """
     Draws simulation result and (optionally) shows the plot.
     :param result_: SimulationResult object obtained from GISAS/OffSpecular/SpecularSimulation
@@ -204,12 +204,18 @@ def plot_simulation_result(result, **kwargs):
     :param units: units for plot axes
     :param postpone_show: postpone showing the plot for later tuning (False by default)
     """
-    postpone_show = kwargs.pop('postpone_show', False)
+    for arg in args:
+        try:
+            k,v = arg.split('=')
+            kwargs[k] = v
+        except ValueError:
+            kwargs[arg] = True
 
     if len(result.array().shape) == 1:  # 1D data, specular simulation assumed
         plot_specular_simulation_result(result, **kwargs)
     else:
         plot_colormap(result, **kwargs)
     plt.tight_layout()
-    if not (postpone_show):
+
+    if not kwargs.pop('noshow', False):
         plt.show()
