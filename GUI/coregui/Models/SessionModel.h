@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONMODEL_H
@@ -20,8 +20,7 @@
 #include "GUI/coregui/Models/SessionXML.h"
 #include <QStringList>
 
-class BA_CORE_API_ SessionModel : public QAbstractItemModel
-{
+class SessionModel : public QAbstractItemModel {
     Q_OBJECT
     friend class SessionItem;
 
@@ -104,14 +103,12 @@ private:
     QString m_model_tag; //!< model tag (SampleModel, InstrumentModel)
 };
 
-template <typename T> T* SessionModel::topItem() const
-{
+template <typename T> T* SessionModel::topItem() const {
     auto items = topItems<T>();
     return items.isEmpty() ? nullptr : items.front();
 }
 
-template <typename T> QVector<T*> SessionModel::topItems() const
-{
+template <typename T> QVector<T*> SessionModel::topItems() const {
     QVector<T*> result;
 
     QModelIndex parentIndex;
@@ -124,33 +121,27 @@ template <typename T> QVector<T*> SessionModel::topItems() const
     return result;
 }
 
-inline bool SessionModel::setHeaderData(int, Qt::Orientation, const QVariant&, int)
-{
+inline bool SessionModel::setHeaderData(int, Qt::Orientation, const QVariant&, int) {
     return false;
 }
 
-inline Qt::DropActions SessionModel::supportedDragActions() const
-{
+inline Qt::DropActions SessionModel::supportedDragActions() const {
     return Qt::MoveAction;
 }
 
-inline Qt::DropActions SessionModel::supportedDropActions() const
-{
+inline Qt::DropActions SessionModel::supportedDropActions() const {
     return Qt::MoveAction;
 }
 
-inline QString SessionModel::getModelTag() const
-{
+inline QString SessionModel::getModelTag() const {
     return m_model_tag;
 }
 
-inline QString SessionModel::getModelName() const
-{
+inline QString SessionModel::getModelName() const {
     return m_name;
 }
 
-inline void SessionModel::setDraggedItemType(const QString& type)
-{
+inline void SessionModel::setDraggedItemType(const QString& type) {
     m_dragged_item_type = type;
 }
 

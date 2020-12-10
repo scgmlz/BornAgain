@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,26 +10,27 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_MINIMIZER_MINIMIZERINFO_H
 #define BORNAGAIN_FIT_MINIMIZER_MINIMIZERINFO_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 #include <vector>
 
 //! A name and a description.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ AlgorithmInfo
-{
+class AlgorithmInfo {
 public:
     AlgorithmInfo() = delete;
     AlgorithmInfo(const std::string& itemName, const std::string& itemDescription)
-        : m_itemName(itemName), m_itemDescription(itemDescription)
-    {
-    }
+        : m_itemName(itemName), m_itemDescription(itemDescription) {}
 
     std::string name() const { return m_itemName; }
     std::string description() const { return m_itemDescription; }
@@ -42,14 +43,11 @@ private:
 //! Info about a minimizer, including list of defined minimization algorithms.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ MinimizerInfo
-{
+class MinimizerInfo {
 public:
     MinimizerInfo() = delete;
     MinimizerInfo(const std::string& minimizerType, const std::string& minimizerDescription)
-        : m_name(minimizerType), m_description(minimizerDescription)
-    {
-    }
+        : m_name(minimizerType), m_description(minimizerDescription) {}
 
     //! Sets currently active algorithm
     void setAlgorithmName(const std::string& algorithmName);
@@ -80,3 +78,4 @@ private:
 };
 
 #endif // BORNAGAIN_FIT_MINIMIZER_MINIMIZERINFO_H
+#endif // USER_API

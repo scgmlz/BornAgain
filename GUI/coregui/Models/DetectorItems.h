@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DETECTORITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DETECTORITEMS_H
@@ -22,8 +22,7 @@ class IDetector2D;
 class IResolutionFunction2D;
 class DetectorItem;
 
-class BA_CORE_API_ DetectorItem : public SessionItem
-{
+class BA_CORE_API_ DetectorItem : public SessionItem {
 public:
     static const QString T_MASKS;
     static const QString P_RESOLUTION_FUNCTION;

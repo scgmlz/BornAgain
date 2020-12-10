@@ -23,18 +23,26 @@
 
 namespace BATesting {
 
-inline std::string ReferenceDataDir() { return "@TEST_REFERENCE_DIR@"; }
-inline std::string StdReferenceDir() { return "@TEST_REFERENCE_DIR@/Std"; }
-inline std::string CoreReferenceDir() { return "@TEST_REFERENCE_DIR@/Core"; }
-
-inline std::string TestOutputDir() { return "@TEST_OUTPUT_DIR@"; }
-inline std::string StdOutputDir() { return "@TEST_OUTPUT_DIR@/Functional/Std"; }
-inline std::string CoreOutputDir() { return "@TEST_OUTPUT_DIR@/Functional/Core"; }
-inline std::string SelfConsistenceOutputDir() { return "@TEST_OUTPUT_DIR@/Functional/SelfConsistence"; }
-inline std::string GUIOutputDir() { return "@TEST_OUTPUT_DIR@/Functional/GUI"; }
-inline std::string PyStandardOutputDir() { return "@TEST_OUTPUT_DIR@/Functional/Python/Std"; }
-
-
+inline std::string ReferenceDir_Std() {
+    return "@TEST_REFERENCE_DIR_STD@";
 }
+inline std::string ReferenceDir_Core() {
+    return "@TEST_REFERENCE_DIR_CORE@";
+}
+
+inline std::string TestOutDir() {
+    return "@TEST_OUTPUT_DIR@";
+}
+inline std::string TestOutDir_Std() {
+    return "@TEST_OUTPUT_DIR_STD@";
+}
+inline std::string TestOutDir_Core() {
+    return "@TEST_OUTPUT_DIR_CORE@";
+}
+inline std::string TestOutDir_PyStd() {
+    return "@TEST_OUTPUT_DIR_PY_STD@";
+}
+
+} // namespace BATesting
 
 #endif

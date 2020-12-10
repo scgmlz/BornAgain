@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_PERFORMANCE_BENCHMARK_H
 #define BORNAGAIN_TESTS_PERFORMANCE_BENCHMARK_H
 
-#include "Core/Export/OrderedMap.h"
 #include "Fit/Tools/WallclockTimer.h"
 #include <functional>
 #include <map>
@@ -24,14 +23,12 @@
 // No Win export symbols here, because Benchmark.cpp is linked directly to the executables,
 // and not in form of a library
 
-class Duration
-{
+class Duration {
 public:
     Duration() : m_totalTime(0) {}
 
     void start() { m_timer.start(); }
-    void stop()
-    {
+    void stop() {
         m_timer.stop();
         m_totalTime += m_timer.runTime();
     }
@@ -44,9 +41,8 @@ private:
 
 //! Benchmark tool to measure duration of several processes.
 
-class Benchmark
-{
-    typedef OrderedMap<std::string, Duration*> BenchmarkMap;
+class Benchmark {
+    typedef std::map<std::string, Duration*> BenchmarkMap;
 
 public:
     Benchmark() {}

@@ -3,12 +3,11 @@ Collection of utils for testing
 """
 
 import gzip, numpy, sys, os
-
-sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 import bornagain as ba
 from bornagain import deg, angstrom
 
-REFERENCE_DIR = "@PYCORE_REFERENCE_DIR@"
+REFERENCE_DIR = "@TEST_REFERENCE_DIR_PY_CORE@"
+
 
 def get_difference(data, reference):
     """
@@ -32,40 +31,16 @@ def get_difference(data, reference):
         raise ba.Exception("get_difference", "isnan")
     return diff
 
+
 def get_reference_data(filename):
     """
     read and return reference data from file
     """
-    return ba.IntensityDataIOFactory.readIntensityData(os.path.join(REFERENCE_DIR, filename))
+    return ba.IntensityDataIOFactory.readIntensityData(
+        os.path.join(REFERENCE_DIR, filename))
 
-def get_simulation_MiniGISAS(sample = None):
-    simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(25, -2.0*deg, 2.0*deg, 25, 0.0*deg, 2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
-    if sample:
-        simulation.setSample(sample)
-    return simulation
 
-def get_simulation_BasicGISAS(sample = None):
-    simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg, 2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
-    if sample:
-        simulation.setSample(sample)
-    return simulation
-
-def plot_intensity_data(intensity):
-    import matplotlib, pylab
-    data = intensity.getArray() + 1
-    # data = numpy.abs(intensity.getArray())
-    phi_min = rad2deg(intensity.getAxis(0).getMin())
-    phi_max = rad2deg(intensity.getAxis(0).getMax())
-    alpha_min = rad2deg(intensity.getAxis(1).getMin())
-    alpha_max = rad2deg(intensity.getAxis(1).getMax())
-    im = pylab.imshow(data, norm=matplotlib.colors.LogNorm(),
-                      extent=[phi_min, phi_max, alpha_min, alpha_max])
-    cb = pylab.colorbar(im)
-    cb.set_label(r'Intensity (arb. u.)', size=16)
-    pylab.xlabel(r'$\phi_f (^{\circ})$', fontsize=16)
-    pylab.ylabel(r'$\alpha_f (^{\circ})$', fontsize=16)
-    pylab.show()
+def get_simulation_MiniGISAS(sample):
+    detector = ba.SphericalDetector(25, -2*deg, 2*deg, 25, 0*deg, 2*deg)
+    beam = ba.Beam(1., 1*angstrom, ba.Direction(0.2*deg, 0))
+    return ba.GISASSimulation(beam, sample, detector)

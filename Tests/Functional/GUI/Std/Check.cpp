@@ -1,19 +1,19 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      Tests/Functional/GUI/Std/Check.cpp
-//! @brief     Implements function checkSimulation for Python standard test
+//! @brief     Implements function checkSimulation for GUI standard test
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Simulation/Simulation.h"
+#include "Core/Simulation/ISimulation.h"
+#include "Device/Data/DataUtils.h"
 #include "GUI/coregui/Models/DocumentModel.h"
 #include "GUI/coregui/Models/DomainSimulationBuilder.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
@@ -22,9 +22,10 @@
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/SampleModel.h"
 
+namespace {
+
 std::unique_ptr<OutputData<double>> domainData(const std::string& /*test_name*/,
-                                               const Simulation& direct_simulation)
-{
+                                               const ISimulation& direct_simulation) {
     // initializing necessary GUI
     DocumentModel documentModel;
     SampleModel sampleModel;
@@ -36,7 +37,7 @@ std::unique_ptr<OutputData<double>> domainData(const std::string& /*test_name*/,
     GUIObjectBuilder::populateInstrumentModel(&instrumentModel, direct_simulation);
     GUIObjectBuilder::populateDocumentModel(&documentModel, direct_simulation);
 
-    std::unique_ptr<Simulation> domain_simulation = DomainSimulationBuilder::createSimulation(
+    std::unique_ptr<ISimulation> domain_simulation = DomainSimulationBuilder::createSimulation(
         sampleModel.multiLayerItem(), instrumentModel.instrumentItem(),
         documentModel.simulationOptionsItem());
 
@@ -44,12 +45,15 @@ std::unique_ptr<OutputData<double>> domainData(const std::string& /*test_name*/,
     return std::unique_ptr<OutputData<double>>(domain_simulation->result().data());
 }
 
-bool checkSimulation(const std::string& name, const Simulation& direct_simulation,
-                     const double limit)
-{
+} // namespace
+
+//! Run simulation directly (in core) and through GUI model, and compare results.
+
+bool checkSimulation(const std::string& name, const ISimulation& direct_simulation,
+                     const double limit) {
     const std::unique_ptr<OutputData<double>> domain_data = domainData(name, direct_simulation);
 
     const std::unique_ptr<OutputData<double>> ref_data = direct_simulation.result().data();
 
-    return IntensityDataFunctions::checkRelativeDifference(*domain_data, *ref_data, limit);
+    return DataUtils::checkRelativeDifference(*domain_data, *ref_data, limit);
 }

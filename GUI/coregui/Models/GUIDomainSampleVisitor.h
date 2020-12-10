@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_GUIDOMAINSAMPLEVISITOR_H
 
-#include "Core/Parametrization/INodeVisitor.h"
+#include "Param/Node/INodeVisitor.h"
 #include <QMap>
 #include <QString>
 
@@ -24,13 +24,10 @@ class MaterialModel;
 class SessionItem;
 class ExternalProperty;
 class Material;
-class Simulation;
-class MultiLayer;
 
 //! Visits domain sample tree to build GUI presentation.
 
-class BA_CORE_API_ GUIDomainSampleVisitor : public INodeVisitor
-{
+class GUIDomainSampleVisitor : public INodeVisitor {
 public:
     GUIDomainSampleVisitor();
     ~GUIDomainSampleVisitor();
@@ -103,7 +100,7 @@ private:
     QMap<int, SessionItem*> m_levelToParentItem;
     QMap<QString, double> m_propertyToValue;
     QMap<QString, bool> m_sample_encountered;
-    QMap<SessionItem*, const ISample*> m_itemToSample;
+    QMap<SessionItem*, const ISampleNode*> m_itemToSample;
     QString m_topSampleName;
 
     SampleModel* m_sampleModel;

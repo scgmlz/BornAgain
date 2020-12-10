@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -28,8 +28,7 @@ const QString RealDataItem::T_INTENSITY_DATA = "Intensity data";
 const QString RealDataItem::T_NATIVE_DATA = "Native user data axis";
 const QString RealDataItem::P_NATIVE_DATA_UNITS = "Native user data units";
 
-RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullptr)
-{
+RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullptr) {
     setItemName("undefined");
 
     // Registering this tag even without actual data item to avoid troubles in copying RealDataItem
@@ -67,46 +66,40 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
     });
 }
 
-IntensityDataItem* RealDataItem::intensityDataItem()
-{
+IntensityDataItem* RealDataItem::intensityDataItem() {
     return const_cast<IntensityDataItem*>(
         static_cast<const RealDataItem*>(this)->intensityDataItem());
 }
 
-const IntensityDataItem* RealDataItem::intensityDataItem() const
-{
+const IntensityDataItem* RealDataItem::intensityDataItem() const {
     return dynamic_cast<const IntensityDataItem*>(dataItem());
 }
 
-DataItem* RealDataItem::dataItem()
-{
+DataItem* RealDataItem::dataItem() {
     return const_cast<DataItem*>(static_cast<const RealDataItem*>(this)->dataItem());
 }
 
-const DataItem* RealDataItem::dataItem() const
-{
+const DataItem* RealDataItem::dataItem() const {
     return dynamic_cast<const DataItem*>(getItem(T_INTENSITY_DATA));
 }
 
-DataItem* RealDataItem::nativeData()
-{
+DataItem* RealDataItem::nativeData() {
     return const_cast<DataItem*>(static_cast<const RealDataItem*>(this)->nativeData());
 }
 
-const DataItem* RealDataItem::nativeData() const
-{
+const DataItem* RealDataItem::nativeData() const {
     return dynamic_cast<const DataItem*>(getItem(T_NATIVE_DATA));
 }
 
 //! Sets OutputData to underlying item. Creates it, if not exists.
 
-void RealDataItem::setOutputData(OutputData<double>* data)
-{
+void RealDataItem::setOutputData(OutputData<double>* data) {
     ASSERT(data && "Assertion failed in RealDataItem::setOutputData: passed data is nullptr");
-    ASSERT(data->getRank() < 3 && data->getRank() > 0);
+    ASSERT(data->rank() < 3 && data->rank() > 0);
 
-    const QString& target_model_type =
-        data->getRank() == 2 ? "IntensityData" : data->getRank() == 1 ? "SpecularData" : "";
+    const QString& target_model_type = data->rank() == 2   ? "IntensityData"
+                                       : data->rank() == 1 ? "SpecularData"
+                                                           : "";
     auto data_item = getItem(T_INTENSITY_DATA);
     if (data_item && data_item->modelType() != target_model_type)
         throw GUIHelpers::Error("Error in RealDataItem::setOutputData: trying to set data "
@@ -119,8 +112,7 @@ void RealDataItem::setOutputData(OutputData<double>* data)
     dataItem()->setOutputData(data);
 }
 
-void RealDataItem::initDataItem(size_t data_rank, const QString& tag)
-{
+void RealDataItem::initDataItem(size_t data_rank, const QString& tag) {
     ASSERT(data_rank <= 2 && data_rank > 0);
     const QString& target_model_type = data_rank == 2 ? "IntensityData" : "SpecularData";
     auto data_item = getItem(tag);
@@ -131,8 +123,7 @@ void RealDataItem::initDataItem(size_t data_rank, const QString& tag)
         this->model()->insertNewItem(target_model_type, this->index(), 0, tag);
 }
 
-void RealDataItem::setImportData(ImportDataInfo data)
-{
+void RealDataItem::setImportData(ImportDataInfo data) {
     if (!data)
         return;
 
@@ -148,20 +139,17 @@ void RealDataItem::setImportData(ImportDataInfo data)
     item<DataItem>(T_NATIVE_DATA).setOutputData(output_data.release());
 }
 
-bool RealDataItem::holdsDimensionalData() const
-{
+bool RealDataItem::holdsDimensionalData() const {
     return getItemValue(P_NATIVE_DATA_UNITS).toString() != "nbins";
 }
 
-void RealDataItem::linkToInstrument(const InstrumentItem* instrument, bool make_update)
-{
+void RealDataItem::linkToInstrument(const InstrumentItem* instrument, bool make_update) {
     m_linkedInstrument = instrument;
     if (make_update)
         updateToInstrument();
 }
 
-std::vector<int> RealDataItem::shape() const
-{
+std::vector<int> RealDataItem::shape() const {
     auto data_item = dataItem();
     if (!data_item) {
         ASSERT(data_item);
@@ -170,13 +158,11 @@ std::vector<int> RealDataItem::shape() const
     return data_item->shape();
 }
 
-QString RealDataItem::underlyingDataModel()
-{
+QString RealDataItem::underlyingDataModel() {
     return dataItem()->modelType();
 }
 
-MaskContainerItem* RealDataItem::maskContainerItem()
-{
+MaskContainerItem* RealDataItem::maskContainerItem() {
     if (auto intensity_data = intensityDataItem())
         return intensity_data->maskContainerItem();
     return nullptr;
@@ -184,16 +170,14 @@ MaskContainerItem* RealDataItem::maskContainerItem()
 
 //! Updates the name of file to store intensity data.
 
-void RealDataItem::updateNonXMLDataFileNames()
-{
+void RealDataItem::updateNonXMLDataFileNames() {
     if (DataItem* item = dataItem())
         item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::realDataFileName(*this));
     if (DataItem* item = nativeData())
         item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::nativeDataFileName(*this));
 }
 
-void RealDataItem::updateToInstrument()
-{
+void RealDataItem::updateToInstrument() {
     DataItem* data_item = dataItem();
     if (!data_item)
         return;

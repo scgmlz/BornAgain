@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/FilterPropertyProxy.h"
 #include "GUI/coregui/Models/SessionModel.h"
 
-int FilterPropertyProxy::columnCount(const QModelIndex& parent) const
-{
+int FilterPropertyProxy::columnCount(const QModelIndex& parent) const {
     Q_UNUSED(parent);
     return m_columns;
 }
 
-QModelIndex FilterPropertyProxy::toSourceIndex(QModelIndex index)
-{
+QModelIndex FilterPropertyProxy::toSourceIndex(QModelIndex index) {
     FilterPropertyProxy* proxy =
         dynamic_cast<FilterPropertyProxy*>(const_cast<QAbstractItemModel*>(index.model()));
     if (proxy)
@@ -30,8 +28,7 @@ QModelIndex FilterPropertyProxy::toSourceIndex(QModelIndex index)
     return index;
 }
 
-bool FilterPropertyProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{
+bool FilterPropertyProxy::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const {
     QModelIndex index = sourceModel()->index(sourceRow, 1, sourceParent);
     if (!sourceParent.isValid())
         return true;

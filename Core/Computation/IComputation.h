@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_COMPUTATION_ICOMPUTATION_H
 #define BORNAGAIN_CORE_COMPUTATION_ICOMPUTATION_H
 
 #include "Core/Computation/ComputationStatus.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Sample/RT/SimulationOptions.h"
 #include <memory>
 #include <vector>
 
@@ -27,12 +32,11 @@ class ProgressHandler;
 //! Interface for a single-threaded computation with given range of SimulationElements
 //! and ProgressHandler.
 //!
-//! Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
+//! Controlled by the multi-threading machinery in ISimulation::runSingleSimulation().
 //!
 //! @ingroup algorithms_internal
 
-class IComputation
-{
+class IComputation {
 public:
     IComputation(const MultiLayer& sample, const SimulationOptions& options,
                  ProgressHandler& progress);
@@ -45,12 +49,13 @@ public:
 
 protected:
     SimulationOptions m_sim_options;
-    ProgressHandler* mp_progress;
+    ProgressHandler* m_progress;
     ComputationStatus m_status;
-    std::unique_ptr<ProcessedSample> mP_processed_sample;
+    std::unique_ptr<ProcessedSample> m_processed_sample;
 
 private:
     virtual void runProtected() = 0;
 };
 
 #endif // BORNAGAIN_CORE_COMPUTATION_ICOMPUTATION_H
+#endif // USER_API

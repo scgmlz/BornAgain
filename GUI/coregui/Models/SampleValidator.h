@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEVALIDATOR_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SAMPLEVALIDATOR_H
@@ -21,8 +21,7 @@ class SessionItem;
 class MultiLayerItem;
 
 //! Validates SampleModel for MultiLayerItem suitable for simulation
-class SampleValidator
-{
+class SampleValidator {
 public:
     SampleValidator();
 

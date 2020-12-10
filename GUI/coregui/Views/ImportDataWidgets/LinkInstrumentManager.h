@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QList>
 #include <QObject>
 #include <QStringList>
@@ -32,13 +31,11 @@ class SessionModel;
 //! RealDataModel. Particularly, it notifies RealDataItem about changes in linked instruments
 //! to adjust axes of IntensityDataItem.
 
-class BA_CORE_API_ LinkInstrumentManager : public QObject
-{
+class LinkInstrumentManager : public QObject {
     Q_OBJECT
 
 public:
-    class InstrumentInfo
-    {
+    class InstrumentInfo {
     public:
         InstrumentInfo();
         QString m_identifier;
@@ -50,7 +47,7 @@ public:
 
     void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
 
-    InstrumentItem* getInstrument(const QString& identifier);
+    InstrumentItem* instrument(const QString& identifier);
     QStringList instrumentNames() const;
     int instrumentComboIndex(const QString& identifier);
     QString instrumentIdentifier(int comboIndex);

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,27 +10,24 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_GISASSIMULATION_H
 
-#include "Core/Simulation/Simulation2D.h"
-#include "Core/SimulationElement/SimulationElement.h"
+#include "Base/Pixel/SimulationElement.h"
+#include "Core/Simulation/ISimulation2D.h"
 
 class MultiLayer;
-class IMultiLayerBuilder;
+class ISampleBuilder;
 
 //! Main class to run a Grazing-Incidence Small-Angle Scattering simulation.
 //! @ingroup simulation
 
-class BA_CORE_API_ GISASSimulation : public Simulation2D
-{
+class GISASSimulation : public ISimulation2D {
 public:
+    GISASSimulation(const Beam& beam, const MultiLayer& sample, const IDetector& detector);
     GISASSimulation();
-    GISASSimulation(const MultiLayer& p_sample);
-    GISASSimulation(const std::shared_ptr<IMultiLayerBuilder> p_sample_builder);
-
     ~GISASSimulation() {}
 
     GISASSimulation* clone() const override { return new GISASSimulation(*this); }
@@ -53,7 +50,7 @@ public:
 private:
     GISASSimulation(const GISASSimulation& other);
 
-    //! Initializes the vector of Simulation elements
+    //! Initializes the vector of ISimulation elements
     void initSimulationElementVector() override;
 
     void initialize();

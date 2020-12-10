@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/PropertyEditor/MultiComboPropertyEditor.h"
 #include "GUI/coregui/Models/ComboProperty.h"
@@ -25,13 +25,10 @@
 #include <QVBoxLayout>
 
 QCheckListStyledItemDelegate::QCheckListStyledItemDelegate(QObject* parent)
-    : QStyledItemDelegate(parent)
-{
-}
+    : QStyledItemDelegate(parent) {}
 
 void QCheckListStyledItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
-                                         const QModelIndex& index) const
-{
+                                         const QModelIndex& index) const {
     QStyleOptionViewItem& styleOption = const_cast<QStyleOptionViewItem&>(option);
     styleOption.showDecorationSelected = false;
     QStyledItemDelegate::paint(painter, styleOption, index);
@@ -44,9 +41,10 @@ void QCheckListStyledItemDelegate::paint(QPainter* painter, const QStyleOptionVi
 // ----------------------------------------------------------------------------
 
 MultiComboPropertyEditor::MultiComboPropertyEditor(QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox), m_wheel_event_filter(new WheelEventEater(this)),
-      m_model(new QStandardItemModel(this))
-{
+    : CustomEditor(parent)
+    , m_box(new QComboBox)
+    , m_wheel_event_filter(new WheelEventEater(this))
+    , m_model(new QStandardItemModel(this)) {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
@@ -72,21 +70,18 @@ MultiComboPropertyEditor::MultiComboPropertyEditor(QWidget* parent)
     setConnected(true);
 }
 
-QSize MultiComboPropertyEditor::sizeHint() const
-{
+QSize MultiComboPropertyEditor::sizeHint() const {
     return m_box->sizeHint();
 }
 
-QSize MultiComboPropertyEditor::minimumSizeHint() const
-{
+QSize MultiComboPropertyEditor::minimumSizeHint() const {
     return m_box->minimumSizeHint();
 }
 
 //! Propagate check state from the model to ComboProperty.
 
 void MultiComboPropertyEditor::onModelDataChanged(const QModelIndex& topLeft, const QModelIndex&,
-                                                  const QVector<int>&)
-{
+                                                  const QVector<int>&) {
     // on Qt 5.9 roles remains empty for checked state. It will stop working if uncomment.
     //    if (!roles.contains(Qt::CheckStateRole))
     //        return;
@@ -96,7 +91,7 @@ void MultiComboPropertyEditor::onModelDataChanged(const QModelIndex& topLeft, co
         return;
 
     ComboProperty comboProperty = m_data.value<ComboProperty>();
-    auto state = item->checkState() == Qt::Checked ? true : false;
+    auto state = item->checkState() == Qt::Checked;
     comboProperty.setSelected(topLeft.row(), state);
 
     updateBoxLabel();
@@ -105,8 +100,7 @@ void MultiComboPropertyEditor::onModelDataChanged(const QModelIndex& topLeft, co
 
 //! Processes press event in QComboBox's underlying list view.
 
-void MultiComboPropertyEditor::onClickedList(const QModelIndex& index)
-{
+void MultiComboPropertyEditor::onClickedList(const QModelIndex& index) {
     if (auto item = m_model->itemFromIndex(index)) {
         auto state = item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked;
         item->setCheckState(state);
@@ -115,8 +109,7 @@ void MultiComboPropertyEditor::onClickedList(const QModelIndex& index)
 
 //! Handles mouse clicks on QComboBox elements.
 
-bool MultiComboPropertyEditor::eventFilter(QObject* obj, QEvent* event)
-{
+bool MultiComboPropertyEditor::eventFilter(QObject* obj, QEvent* event) {
     if (isClickToSelect(obj, event)) {
         // Handles mouse clicks on QListView when it is expanded from QComboBox
         // 1) Prevents list from closing while selecting items.
@@ -138,8 +131,7 @@ bool MultiComboPropertyEditor::eventFilter(QObject* obj, QEvent* event)
     }
 }
 
-void MultiComboPropertyEditor::initEditor()
-{
+void MultiComboPropertyEditor::initEditor() {
     if (!m_data.canConvert<ComboProperty>())
         return;
 
@@ -165,8 +157,7 @@ void MultiComboPropertyEditor::initEditor()
     updateBoxLabel();
 }
 
-void MultiComboPropertyEditor::setConnected(bool isConnected)
-{
+void MultiComboPropertyEditor::setConnected(bool isConnected) {
     if (isConnected) {
         connect(m_model, &QStandardItemModel::dataChanged, this,
                 &MultiComboPropertyEditor::onModelDataChanged);
@@ -178,18 +169,15 @@ void MultiComboPropertyEditor::setConnected(bool isConnected)
 
 //! Update text on QComboBox with the label provided by combo property.
 
-void MultiComboPropertyEditor::updateBoxLabel()
-{
+void MultiComboPropertyEditor::updateBoxLabel() {
     ComboProperty combo = m_data.value<ComboProperty>();
     m_box->setCurrentText(combo.label());
 }
 
-bool MultiComboPropertyEditor::isClickToSelect(QObject* obj, QEvent* event) const
-{
+bool MultiComboPropertyEditor::isClickToSelect(QObject* obj, QEvent* event) const {
     return obj == m_box->view()->viewport() && event->type() == QEvent::MouseButtonRelease;
 }
 
-bool MultiComboPropertyEditor::isClickToExpand(QObject* obj, QEvent* event) const
-{
+bool MultiComboPropertyEditor::isClickToExpand(QObject* obj, QEvent* event) const {
     return obj == m_box->lineEdit() && event->type() == QEvent::MouseButtonRelease;
 }

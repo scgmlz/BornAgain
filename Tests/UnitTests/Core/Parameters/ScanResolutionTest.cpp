@@ -1,18 +1,15 @@
-#include "Core/Detector/ScanResolution.h"
-#include "Core/Parametrization/ParameterSample.h"
-#include "Core/Parametrization/RangedDistributions.h"
+#include "Device/Resolution/ScanResolution.h"
+#include "Param/Distrib/RangedDistributions.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 
-class ScanResolutionTest : public ::testing::Test
-{
+class ScanResolutionTest : public ::testing::Test {
 protected:
     using DistrOutput = std::vector<std::vector<ParameterSample>>;
     void compareResults(const DistrOutput& lhs, const DistrOutput& rhs);
 };
 
-void ScanResolutionTest::compareResults(const DistrOutput& lhs, const DistrOutput& rhs)
-{
+void ScanResolutionTest::compareResults(const DistrOutput& lhs, const DistrOutput& rhs) {
     EXPECT_EQ(lhs.size(), rhs.size());
     for (size_t i = 0; i < lhs.size(); ++i) {
         EXPECT_EQ(lhs[i].size(), rhs[i].size());
@@ -23,8 +20,7 @@ void ScanResolutionTest::compareResults(const DistrOutput& lhs, const DistrOutpu
     }
 }
 
-TEST_F(ScanResolutionTest, RelativeSingleValued)
-{
+TEST_F(ScanResolutionTest, RelativeSingleValued) {
     RangedDistributionGate distr(3, 1.0);
     std::unique_ptr<ScanResolution> resolution(ScanResolution::scanRelativeResolution(distr, 0.1));
 
@@ -38,15 +34,10 @@ TEST_F(ScanResolutionTest, RelativeSingleValued)
     actual = resolution->generateSamples(1.0, 3);
     compareResults(ref_result, actual);
 
-    std::stringstream print_ref;
-    print_ref << "    distribution = ba.RangedDistributionGate(3, 1.0)\n"
-              << "    resolution = ba.ScanRelativeResolution(distribution, 0.1)";
-    EXPECT_EQ(print_ref.str(), resolution->print());
     EXPECT_THROW(resolution->generateSamples(std::vector<double>()), std::runtime_error);
 }
 
-TEST_F(ScanResolutionTest, AbsoluteSingleValued)
-{
+TEST_F(ScanResolutionTest, AbsoluteSingleValued) {
     RangedDistributionGate distr(3, 1.0);
     std::unique_ptr<ScanResolution> resolution(ScanResolution::scanAbsoluteResolution(distr, 0.1));
 
@@ -60,15 +51,10 @@ TEST_F(ScanResolutionTest, AbsoluteSingleValued)
     actual = resolution->generateSamples(1.0, 3);
     compareResults(ref_result, actual);
 
-    std::stringstream print_ref;
-    print_ref << "    distribution = ba.RangedDistributionGate(3, 1.0)\n"
-              << "    resolution = ba.ScanAbsoluteResolution(distribution, 0.1)";
-    EXPECT_EQ(print_ref.str(), resolution->print());
     EXPECT_THROW(resolution->generateSamples(std::vector<double>()), std::runtime_error);
 }
 
-TEST_F(ScanResolutionTest, RelativeVectorValued)
-{
+TEST_F(ScanResolutionTest, RelativeVectorValued) {
     RangedDistributionGate distr(3, 1.0);
     EXPECT_THROW(ScanResolution::scanRelativeResolution(distr, std::vector<double>()),
                  std::runtime_error);
@@ -87,14 +73,12 @@ TEST_F(ScanResolutionTest, RelativeVectorValued)
     actual = resolution->generateSamples(1.0, 3);
     compareResults(ref_result, actual);
 
-    EXPECT_THROW(resolution->print(), std::runtime_error);
     EXPECT_THROW(resolution->generateSamples(std::vector<double>()), std::runtime_error);
     EXPECT_THROW(resolution->generateSamples(std::vector<double>(2, 1.0)), std::runtime_error);
     EXPECT_THROW(resolution->generateSamples(std::vector<double>(10, 1.0)), std::runtime_error);
 }
 
-TEST_F(ScanResolutionTest, AbsoluteVectorValued)
-{
+TEST_F(ScanResolutionTest, AbsoluteVectorValued) {
     RangedDistributionGate distr(3, 1.0);
     EXPECT_THROW(ScanResolution::scanAbsoluteResolution(distr, std::vector<double>()),
                  std::runtime_error);
@@ -113,7 +97,6 @@ TEST_F(ScanResolutionTest, AbsoluteVectorValued)
     actual = resolution->generateSamples(1.0, 3);
     compareResults(ref_result, actual);
 
-    EXPECT_THROW(resolution->print(), std::runtime_error);
     EXPECT_THROW(resolution->generateSamples(std::vector<double>()), std::runtime_error);
     EXPECT_THROW(resolution->generateSamples(std::vector<double>(2, 1.0)), std::runtime_error);
     EXPECT_THROW(resolution->generateSamples(std::vector<double>(10, 1.0)), std::runtime_error);

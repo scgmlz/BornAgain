@@ -1,14 +1,11 @@
-#include "Core/Lattice/Lattice2D.h"
+#include "Sample/Lattice/Lattice2D.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class Lattice2DTest : public ::testing::Test
-{
-};
+class Lattice2DTest : public ::testing::Test {};
 
-TEST_F(Lattice2DTest, basicLattice)
-{
+TEST_F(Lattice2DTest, basicLattice) {
     const double length1(1.0), length2(2.0), angle(3.0), rotangle(0.7);
-    BasicLattice lattice(length1, length2, angle, rotangle);
+    BasicLattice2D lattice(length1, length2, angle, rotangle);
     EXPECT_EQ(lattice.length1(), length1);
     EXPECT_EQ(lattice.length2(), length2);
     EXPECT_EQ(lattice.latticeAngle(), angle);
@@ -26,10 +23,9 @@ TEST_F(Lattice2DTest, basicLattice)
     EXPECT_EQ(lattice.rotationAngle(), new_value);
 }
 
-TEST_F(Lattice2DTest, basicLatticeClone)
-{
+TEST_F(Lattice2DTest, basicLatticeClone) {
     const double length1(1.0), length2(2.0), angle(3.0), xi(4.0);
-    BasicLattice lattice(length1, length2, angle, xi);
+    BasicLattice2D lattice(length1, length2, angle, xi);
 
     std::unique_ptr<Lattice2D> clone(lattice.clone());
     EXPECT_EQ(clone->length1(), length1);
@@ -38,10 +34,9 @@ TEST_F(Lattice2DTest, basicLatticeClone)
     EXPECT_EQ(clone->rotationAngle(), xi);
 }
 
-TEST_F(Lattice2DTest, squareLatticeClone)
-{
+TEST_F(Lattice2DTest, squareLatticeClone) {
     const double length(1.0), xi(4.0);
-    SquareLattice lattice(length, xi);
+    SquareLattice2D lattice(length, xi);
 
     std::unique_ptr<Lattice2D> clone(lattice.clone());
     EXPECT_EQ(clone->length1(), length);
@@ -58,10 +53,9 @@ TEST_F(Lattice2DTest, squareLatticeClone)
     EXPECT_EQ(clone->rotationAngle(), new_value);
 }
 
-TEST_F(Lattice2DTest, hexagonalLatticeClone)
-{
+TEST_F(Lattice2DTest, hexagonalLatticeClone) {
     const double length(1.0), xi(4.0);
-    HexagonalLattice lattice(length, xi);
+    HexagonalLattice2D lattice(length, xi);
 
     std::unique_ptr<Lattice2D> clone(lattice.clone());
     EXPECT_EQ(clone->length1(), length);
@@ -78,10 +72,8 @@ TEST_F(Lattice2DTest, hexagonalLatticeClone)
     EXPECT_EQ(clone->rotationAngle(), new_value);
 }
 
-TEST_F(Lattice2DTest, onChange)
-{
-    class Parent : public INode
-    {
+TEST_F(Lattice2DTest, onChange) {
+    class Parent : public INode {
     public:
         Parent() : m_changed(false) {}
         void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
@@ -91,7 +83,7 @@ TEST_F(Lattice2DTest, onChange)
 
     Parent parent;
     const double length1(1.0), length2(2.0), angle(3.0), xi(4.0);
-    BasicLattice lattice(length1, length2, angle, xi);
+    BasicLattice2D lattice(length1, length2, angle, xi);
 
     parent.registerChild(&lattice);
     EXPECT_FALSE(parent.m_changed);

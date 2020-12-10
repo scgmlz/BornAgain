@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSPROPERTYPANEL_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSPROPERTYPANEL_H
@@ -19,8 +19,7 @@
 
 class ComponentEditor;
 
-class BA_CORE_API_ ProjectionsPropertyPanel : public SessionItemWidget
-{
+class ProjectionsPropertyPanel : public SessionItemWidget {
     Q_OBJECT
 
 public:

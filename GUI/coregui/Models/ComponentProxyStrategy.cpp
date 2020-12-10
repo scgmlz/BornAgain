@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,25 +10,22 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ComponentProxyStrategy.h"
 #include "GUI/coregui/Models/ComponentProxyModel.h"
 #include "GUI/coregui/Models/GroupItem.h"
 #include "GUI/coregui/Models/ModelPath.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Views/PropertyEditor/ComponentUtils.h"
 
-void ComponentProxyStrategy::onDataChanged(SessionModel* source, ComponentProxyModel* proxy)
-{
+void ComponentProxyStrategy::onDataChanged(SessionModel* source, ComponentProxyModel* proxy) {
     buildModelMap(source, proxy);
     proxy->layoutChanged();
 }
 
-bool ComponentProxyStrategy::processSourceIndex(const QModelIndex& index)
-{
+bool ComponentProxyStrategy::processSourceIndex(const QModelIndex& index) {
     QPersistentModelIndex sourceIndex = {index};
 
     SessionItem* item = m_source->itemForIndex(index);
@@ -59,13 +56,12 @@ bool ComponentProxyStrategy::processSourceIndex(const QModelIndex& index)
 //! Returns true if item is property related to exclude top level items (ParticleLayout, Particle
 //! etc from the tree).
 
-bool ComponentProxyStrategy::isPropertyRelated(SessionItem* item)
-{
+bool ComponentProxyStrategy::isPropertyRelated(SessionItem* item) {
     static QStringList propertyRelated = ComponentUtils::propertyRelatedTypes();
 
     if (m_sourceRootIndex.isValid() && item->parent()->index() == m_sourceRootIndex
         && item->parent()->modelType() != "GroupProperty")
-        return propertyRelated.contains(item->modelType()) ? true : false;
+        return propertyRelated.contains(item->modelType());
 
     return true;
 }
@@ -73,16 +69,14 @@ bool ComponentProxyStrategy::isPropertyRelated(SessionItem* item)
 //! Returns true if item should become new root item.
 //! This is used when we want to show single item (Layer, Particle) on top of the tree.
 
-bool ComponentProxyStrategy::isNewRootItem(SessionItem* item)
-{
+bool ComponentProxyStrategy::isNewRootItem(SessionItem* item) {
     return item->index() == m_sourceRootIndex;
 }
 
 //! Makes SessionItem to become the only one item in a tree.
 
 void ComponentProxyStrategy::processRootItem(SessionItem* item,
-                                             const QPersistentModelIndex& sourceIndex)
-{
+                                             const QPersistentModelIndex& sourceIndex) {
     const int nrows = 0; // invisible root item will contain only single item
     QPersistentModelIndex proxyIndex = createProxyIndex(nrows, sourceIndex.column(), item);
     m_sourceToProxy.insert(sourceIndex, proxyIndex);
@@ -91,8 +85,7 @@ void ComponentProxyStrategy::processRootItem(SessionItem* item,
 
 //! Returns true if item is a group property which in turn is inside of another group property.
 
-bool ComponentProxyStrategy::isSubGroup(SessionItem* item)
-{
+bool ComponentProxyStrategy::isSubGroup(SessionItem* item) {
     const SessionItem* ancestor = ModelPath::ancestor(item->parent(), "GroupProperty");
     if (item->modelType() == "GroupProperty" && ancestor
         && ancestor->modelType() == "GroupProperty") {
@@ -104,8 +97,7 @@ bool ComponentProxyStrategy::isSubGroup(SessionItem* item)
 
 //! Returns true if item is a children/grandchildrent of some group item.
 
-bool ComponentProxyStrategy::isGroupChildren(SessionItem* item)
-{
+bool ComponentProxyStrategy::isGroupChildren(SessionItem* item) {
     if (item->parent() && item->parent()->modelType() == "GroupProperty")
         return true;
 
@@ -120,8 +112,7 @@ bool ComponentProxyStrategy::isGroupChildren(SessionItem* item)
 //! All properties of current item of group item
 
 void ComponentProxyStrategy::processGroupItem(SessionItem* item,
-                                              const QPersistentModelIndex& sourceIndex)
-{
+                                              const QPersistentModelIndex& sourceIndex) {
     if (const SessionItem* ancestor = ModelPath::ancestor(item, "GroupProperty")) {
         if (ancestor == item)
             return;
@@ -140,8 +131,7 @@ void ComponentProxyStrategy::processGroupItem(SessionItem* item,
 //! Process group property which is inside of other group property.
 
 void ComponentProxyStrategy::processSubGroupItem(SessionItem* item,
-                                                 const QPersistentModelIndex& sourceIndex)
-{
+                                                 const QPersistentModelIndex& sourceIndex) {
     if (const SessionItem* ancestor = ModelPath::ancestor(item->parent(), "GroupProperty")) {
         auto groupItem = dynamic_cast<const GroupItem*>(ancestor);
 
@@ -156,8 +146,7 @@ void ComponentProxyStrategy::processSubGroupItem(SessionItem* item,
 }
 
 void ComponentProxyStrategy::processDefaultItem(SessionItem* item,
-                                                const QPersistentModelIndex& sourceIndex)
-{
+                                                const QPersistentModelIndex& sourceIndex) {
     ASSERT(item);
     if (!item->isVisible())
         return;
@@ -174,8 +163,7 @@ void ComponentProxyStrategy::processDefaultItem(SessionItem* item,
     m_proxySourceParent.insert(proxyIndex, sourceParent);
 }
 
-int ComponentProxyStrategy::parentVisibleRow(const SessionItem& item)
-{
+int ComponentProxyStrategy::parentVisibleRow(const SessionItem& item) {
     int result(-1);
 
     if (!item.parent() || !item.isVisible())

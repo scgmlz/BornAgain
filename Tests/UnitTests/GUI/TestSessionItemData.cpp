@@ -3,19 +3,15 @@
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestSessionItemData : public ::testing::Test
-{
-};
+class TestSessionItemData : public ::testing::Test {};
 
-TEST_F(TestSessionItemData, initialState)
-{
+TEST_F(TestSessionItemData, initialState) {
     SessionItemData itemData;
     EXPECT_TRUE(itemData.roles().isEmpty());
     EXPECT_FALSE(itemData.data(Qt::DisplayRole).isValid());
 }
 
-TEST_F(TestSessionItemData, setData)
-{
+TEST_F(TestSessionItemData, setData) {
     SessionItemData itemData;
 
     // setting DisplayRole

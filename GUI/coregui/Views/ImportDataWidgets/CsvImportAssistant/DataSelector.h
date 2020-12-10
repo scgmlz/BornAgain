@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_DATASELECTOR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_DATASELECTOR_H
 
-#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvDataColumn.h"
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h"
-#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvNamespace.h"
-#include "GUI/coregui/utils/ImportDataInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <QAction>
 #include <QComboBox>
 #include <QDialog>
@@ -33,8 +29,7 @@
 class QBoxLayout;
 
 //! Dialog to hold DataSelector.
-class DataSelector : public QDialog
-{
+class DataSelector : public QDialog {
     Q_OBJECT
 public:
     DataSelector(csv::DataArray csvArray, QWidget* parent = nullptr);
@@ -45,15 +40,13 @@ public:
     double intensityMultiplier() const { return m_tableWidget->intensityMultiplier(); }
     double coordinateMultiplier() const { return m_tableWidget->coordinateMultiplier(); }
     std::set<int> rowsToDiscard() const { return m_tableWidget->rowsToDiscard(); }
-    AxesUnits units() const;
-    void setDataArray(csv::DataArray csvArray)
-    {
+    Axes::Units units() const;
+    void setDataArray(csv::DataArray csvArray) {
         m_data = std::move(csvArray);
         updateData();
         resetSelection();
     }
-    void setSeparator(char newSeparator)
-    {
+    void setSeparator(char newSeparator) {
         m_separatorField->setText(QString(QChar(newSeparator)));
     }
 

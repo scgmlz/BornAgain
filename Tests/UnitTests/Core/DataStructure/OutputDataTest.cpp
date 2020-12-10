@@ -1,13 +1,9 @@
-#include "Core/Intensity/OutputData.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Binning/VariableBinAxis.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Parametrization/ThreadInfo.h"
+#include "Base/Axis/VariableBinAxis.h"
+#include "Device/Data/DataUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <algorithm>
 
-class OutputDataTest : public ::testing::Test
-{
+class OutputDataTest : public ::testing::Test {
 protected:
     OutputDataTest();
 
@@ -19,8 +15,7 @@ protected:
     OutputData<Eigen::Matrix2d> matrix_data_2d;
 };
 
-OutputDataTest::OutputDataTest()
-{
+OutputDataTest::OutputDataTest() {
     zero_3d_coordinate.push_back(0);
     zero_3d_coordinate.push_back(0);
     zero_3d_coordinate.push_back(0);
@@ -43,13 +38,11 @@ OutputDataTest::OutputDataTest()
     matrix_data_2d.setAllTo(Eigen::Matrix2d::Identity());
 }
 
-TEST_F(OutputDataTest, SingleElementAfterConstruction)
-{
+TEST_F(OutputDataTest, SingleElementAfterConstruction) {
     EXPECT_EQ(1u, int_data_0d.getAllocatedSize());
 }
 
-TEST_F(OutputDataTest, SizeAfterAddingAxes)
-{
+TEST_F(OutputDataTest, SizeAfterAddingAxes) {
     EXPECT_EQ(1u, int_data_0d.getAllocatedSize());
     EXPECT_EQ(20u, fl_data_1d.getAllocatedSize());
     EXPECT_EQ(2000u, db_data_3d.getAllocatedSize());
@@ -57,8 +50,7 @@ TEST_F(OutputDataTest, SizeAfterAddingAxes)
     EXPECT_EQ(200u, matrix_data_2d.getAllocatedSize());
 }
 
-TEST_F(OutputDataTest, DataInitialization)
-{
+TEST_F(OutputDataTest, DataInitialization) {
     std::vector<unsigned> coordinates;
     coordinates.push_back(11);
     coordinates.push_back(4);
@@ -72,8 +64,7 @@ TEST_F(OutputDataTest, DataInitialization)
               matrix_data_2d[matrix_data_2d.toGlobalIndex(coordinates2)]);
 }
 
-TEST_F(OutputDataTest, isInitialized)
-{
+TEST_F(OutputDataTest, isInitialized) {
     OutputData<double> data1;
     EXPECT_FALSE(data1.isInitialized());
     data1.addAxis("axis", 10, 0.0, 10.0);
@@ -82,8 +73,7 @@ TEST_F(OutputDataTest, isInitialized)
     EXPECT_FALSE(data1.isInitialized());
 }
 
-TEST_F(OutputDataTest, DataCopying)
-{
+TEST_F(OutputDataTest, DataCopying) {
     OutputData<double> data1;
     OutputData<double> data2;
     data1.addAxis("axis1", 10, 0., 10.);
@@ -145,8 +135,7 @@ TEST_F(OutputDataTest, DataCopying)
     EXPECT_TRUE(mdata2.hasSameShape(mdata2));
 }
 
-TEST_F(OutputDataTest, MaxElement)
-{
+TEST_F(OutputDataTest, MaxElement) {
     OutputData<double> data;
     data.addAxis("axis1", 10, 0., 10.);
     data.addAxis("axis2", 2, 0., 10.);
@@ -166,8 +155,7 @@ TEST_F(OutputDataTest, MaxElement)
 // 0 | 0   2   4   6   8   10  12  14  16  18 |
 // --------------------------------------------
 //   | 0   1   2   3   4   5   6   7   8   9  | x
-TEST_F(OutputDataTest, ValueOfAxis)
-{
+TEST_F(OutputDataTest, ValueOfAxis) {
     OutputData<double> data;
     data.addAxis("axis1", 10, 0., 10.);
     data.addAxis("axis2", 2, 0., 10.);
@@ -213,24 +201,22 @@ TEST_F(OutputDataTest, ValueOfAxis)
 // 0 | 0   2   4   6   8   10  12  14  16  18 |
 // --------------------------------------------
 //   | 0   1   2   3   4   5   6   7   8   9  | x
-TEST_F(OutputDataTest, GetAxisBin)
-{
+TEST_F(OutputDataTest, GetAxisBin) {
     OutputData<double> data;
     data.addAxis("axis1", 10, 0., 10.);
     data.addAxis("axis2", 2, 0., 10.);
 
-    EXPECT_EQ(0.5, data.getAxisBin(0, "axis1").getMidPoint());
-    EXPECT_EQ(0.5, data.getAxisBin(1, "axis1").getMidPoint());
-    EXPECT_EQ(9.5, data.getAxisBin(18, "axis1").getMidPoint());
-    EXPECT_EQ(9.5, data.getAxisBin(19, "axis1").getMidPoint());
-    EXPECT_EQ(2.5, data.getAxisBin(0, "axis2").getMidPoint());
-    EXPECT_EQ(7.5, data.getAxisBin(1, "axis2").getMidPoint());
-    EXPECT_EQ(2.5, data.getAxisBin(18, "axis2").getMidPoint());
-    EXPECT_EQ(7.5, data.getAxisBin(19, "axis2").getMidPoint());
+    EXPECT_EQ(0.5, data.getAxisBin(0, "axis1").center());
+    EXPECT_EQ(0.5, data.getAxisBin(1, "axis1").center());
+    EXPECT_EQ(9.5, data.getAxisBin(18, "axis1").center());
+    EXPECT_EQ(9.5, data.getAxisBin(19, "axis1").center());
+    EXPECT_EQ(2.5, data.getAxisBin(0, "axis2").center());
+    EXPECT_EQ(7.5, data.getAxisBin(1, "axis2").center());
+    EXPECT_EQ(2.5, data.getAxisBin(18, "axis2").center());
+    EXPECT_EQ(7.5, data.getAxisBin(19, "axis2").center());
 }
 
-TEST_F(OutputDataTest, SetCleared)
-{
+TEST_F(OutputDataTest, SetCleared) {
     db_data_3d.clear();
     db_data_3d.setAllTo(1.0);
     EXPECT_EQ(db_data_3d[0], 1.0);
@@ -240,8 +226,7 @@ TEST_F(OutputDataTest, SetCleared)
     EXPECT_EQ(10 * Eigen::Matrix2d::Identity(), matrix_data_2d[0]);
 }
 
-TEST_F(OutputDataTest, MixedTypeOperations)
-{
+TEST_F(OutputDataTest, MixedTypeOperations) {
     OutputData<bool> data_bool;
     data_bool.addAxis("axis1", 10, 0.0, 10.0);
 

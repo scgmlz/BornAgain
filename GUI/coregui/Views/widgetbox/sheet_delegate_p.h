@@ -55,8 +55,6 @@
 
 #include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
-//#include <QtWidgets/QItemDelegate>
-//#include <QtWidgets/QTreeView>
 #include <QItemDelegate>
 #include <QTreeView>
 
@@ -64,11 +62,9 @@ QT_BEGIN_NAMESPACE
 
 class QTreeView;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT SheetDelegate : public QItemDelegate
-{
+class QDESIGNER_SHARED_EXPORT SheetDelegate : public QItemDelegate {
     Q_OBJECT
 public:
     SheetDelegate(QTreeView* view, QWidget* parent);

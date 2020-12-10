@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITORCANVAS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITORCANVAS_H
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorFlags.h"
-#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <QWidget>
 
@@ -35,8 +34,7 @@ class QItemSelectionModel;
 //! Particularly, it creates temporary ProjectionItem in projection container, when mouse
 //! is inside ColorMap viewport.
 
-class ProjectionsEditorCanvas : public QWidget
-{
+class ProjectionsEditorCanvas : public QWidget {
     Q_OBJECT
 
 public:

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_GEOMETRY_INC_H
 #define BORNAGAIN_GUI_BA3D_MODEL_GEOMETRY_INC_H
 
-#include "../def.h"
+#include "GUI/ba3d/def.h"
 #include <memory>
 
 // include to use geometry basics, without details
 
-namespace RealSpace
-{
+namespace RealSpace {
 //------------------------------------------------------------------------------
 
 class Geometry;
@@ -34,8 +33,7 @@ extern const float GoldenRatio;
 extern const float IcosahedronL2R; // L/R conversion
 extern const float DodecahedronL2R;
 
-namespace GeometricID
-{
+namespace GeometricID {
 
 // Enum id for basic shapes
 enum class BaseShape {

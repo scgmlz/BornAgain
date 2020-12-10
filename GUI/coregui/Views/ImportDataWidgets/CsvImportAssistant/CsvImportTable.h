@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVIMPORTTABLE_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVIMPORTTABLE_H
 
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvDataColumn.h"
-#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvNamespace.h"
 #include <QTableWidget>
 #include <set>
 
-class BA_CORE_API_ CsvImportData : public QObject
-{
+class CsvImportData : public QObject {
 public:
     // FIXME: move DATA_TYPE enumeration to csv namespace
     enum DATA_TYPE { Intensity, Coordinate };
@@ -72,8 +70,7 @@ private:
     std::set<int> m_discarded_rows;
 };
 
-class CsvImportTable : public QTableWidget
-{
+class CsvImportTable : public QTableWidget {
     Q_OBJECT
 public:
     CsvImportTable(QWidget* parent = nullptr);

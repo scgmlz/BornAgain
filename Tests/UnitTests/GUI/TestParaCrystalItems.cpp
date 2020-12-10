@@ -1,27 +1,22 @@
-#include "Core/Aggregate/InterferenceFunction2DParaCrystal.h"
-#include "Core/Basics/Units.h"
-#include "Core/Correlations/FTDistributions2D.h"
-#include "Core/Lattice/Lattice2D.h"
+#include "Base/Const/Units.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/Lattice2DItems.h"
 #include "GUI/coregui/Models/ParticleLayoutItem.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/TransformFromDomain.h"
+#include "Sample/Aggregate/InterferenceFunction2DParaCrystal.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestParaCrystalItems : public ::testing::Test
-{
-};
+class TestParaCrystalItems : public ::testing::Test {};
 
-TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain)
-{
+TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain) {
     double length1(10.0), length2(20.0), angle(45.0), xi(90.0);
     double damping_length(1000.0), domain_size1(50.0), domain_size2(100.0);
 
-    InterferenceFunction2DParaCrystal orig(length1, length2, angle * Units::deg, xi * Units::deg,
-                                           damping_length);
-    orig.setDomainSizes(domain_size1, domain_size2);
+    InterferenceFunction2DParaCrystal orig(
+        BasicLattice2D(length1, length2, angle * Units::deg, xi * Units::deg), damping_length,
+        domain_size1, domain_size2);
 
     double clength_x(1.0), clength_y(2.0), gamma(3.0);
     orig.setProbabilityDistributions(
@@ -43,10 +38,10 @@ TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain)
               orig.integrationOverXi());
 
     SessionItem* latticeItem = item.getGroupItem(InterferenceFunction2DLatticeItem::P_LATTICE_TYPE);
-    EXPECT_EQ(latticeItem->modelType(), "BasicLattice");
-    EXPECT_EQ(latticeItem->getItemValue(BasicLatticeItem::P_LATTICE_LENGTH1).toDouble(), length1);
-    EXPECT_EQ(latticeItem->getItemValue(BasicLatticeItem::P_LATTICE_LENGTH2).toDouble(), length2);
-    EXPECT_EQ(latticeItem->getItemValue(BasicLatticeItem::P_LATTICE_ANGLE).toDouble(), angle);
+    EXPECT_EQ(latticeItem->modelType(), "BasicLattice2D");
+    EXPECT_EQ(latticeItem->getItemValue(BasicLattice2DItem::P_LATTICE_LENGTH1).toDouble(), length1);
+    EXPECT_EQ(latticeItem->getItemValue(BasicLattice2DItem::P_LATTICE_LENGTH2).toDouble(), length2);
+    EXPECT_EQ(latticeItem->getItemValue(BasicLattice2DItem::P_LATTICE_ANGLE).toDouble(), angle);
     EXPECT_EQ(latticeItem->getItemValue(Lattice2DItem::P_LATTICE_ROTATION_ANGLE).toDouble(), xi);
 
     SessionItem* pdfItem1 = item.getGroupItem(InterferenceFunction2DParaCrystalItem::P_PDF1);
@@ -74,8 +69,7 @@ TEST_F(TestParaCrystalItems, test_Para2D_fromToDomain)
     EXPECT_EQ(domain->lattice().rotationAngle(), orig.lattice().rotationAngle());
 }
 
-TEST_F(TestParaCrystalItems, test_Inference2DRotationAngleToggle)
-{
+TEST_F(TestParaCrystalItems, test_Inference2DRotationAngleToggle) {
     SampleModel model;
     SessionItem* multilayer = model.insertNewItem("MultiLayer");
     SessionItem* layer = model.insertNewItem("Layer", multilayer->index());

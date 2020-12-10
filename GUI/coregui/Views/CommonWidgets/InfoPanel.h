@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_INFOPANEL_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_INFOPANEL_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 
 class QStackedWidget;
@@ -27,8 +26,7 @@ class QResizeEvent;
 
 //! Used in JobMessagePanel.
 
-class BA_CORE_API_ InfoPanel : public QFrame
-{
+class InfoPanel : public QFrame {
     Q_OBJECT
 public:
     explicit InfoPanel(QWidget* parent);

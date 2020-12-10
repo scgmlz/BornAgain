@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceWidget.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceActions.h"
@@ -21,9 +21,12 @@
 
 RealSpaceWidget::RealSpaceWidget(SampleModel* sampleModel, QItemSelectionModel* selectionModel,
                                  QWidget* parent)
-    : QWidget(parent), m_actions(new RealSpaceActions(this)), m_toolBar(new RealSpaceToolBar),
-      m_canvas(new RealSpaceCanvas), m_sampleModel(sampleModel), m_selectionModel(selectionModel)
-{
+    : QWidget(parent)
+    , m_actions(new RealSpaceActions(this))
+    , m_toolBar(new RealSpaceToolBar)
+    , m_canvas(new RealSpaceCanvas)
+    , m_sampleModel(sampleModel)
+    , m_selectionModel(selectionModel) {
     auto hlayout = new QHBoxLayout;
     hlayout->setMargin(0);
     hlayout->setSpacing(0);
@@ -58,12 +61,10 @@ RealSpaceWidget::RealSpaceWidget(SampleModel* sampleModel, QItemSelectionModel* 
             &RealSpaceCanvas::onSavePictureAction);
 }
 
-void RealSpaceWidget::showEvent(QShowEvent*)
-{
+void RealSpaceWidget::showEvent(QShowEvent*) {
     m_canvas->setModel(m_sampleModel, m_selectionModel);
 }
 
-void RealSpaceWidget::hideEvent(QHideEvent*)
-{
+void RealSpaceWidget::hideEvent(QHideEvent*) {
     m_canvas->setModel(nullptr, nullptr);
 }

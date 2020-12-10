@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_COMBOPROPERTY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_COMBOPROPERTY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <QVariant>
 #include <QVector>
@@ -23,8 +22,7 @@
 //! Custom property to define list of string values with multiple selections.
 //! Intended for QVariant.
 
-class BA_CORE_API_ ComboProperty
-{
+class ComboProperty {
 public:
     ComboProperty();
 

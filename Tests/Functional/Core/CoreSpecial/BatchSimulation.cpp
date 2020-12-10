@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -9,27 +9,23 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Simulation/Simulation.h"
 #include "Core/Simulation/SimulationFactory.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
+#include "Device/Data/DataUtils.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
 
-class BatchSimulation : public ::testing::Test
-{
-};
+class BatchSimulation : public ::testing::Test {};
 
-TEST_F(BatchSimulation, BatchSimulation)
-{
+TEST_F(BatchSimulation, BatchSimulation) {
     SimulationFactory sim_registry;
-    const std::unique_ptr<Simulation> simulation = sim_registry.createItemPtr("MiniGISAS");
+    const std::unique_ptr<ISimulation> simulation = sim_registry.createItemPtr("MiniGISAS");
 
     SampleBuilderFactory sampleFactory;
-    std::shared_ptr<class IMultiLayerBuilder> builder(
+    std::shared_ptr<class ISampleBuilder> builder(
         sampleFactory.createItemPtr("CylindersInBABuilder").release());
     simulation->setSampleBuilder(builder);
     simulation->runSimulation();
@@ -41,7 +37,7 @@ TEST_F(BatchSimulation, BatchSimulation)
     const unsigned n_batches = 9;
     const double threshold = 2e-10;
     for (unsigned i_batch = 0; i_batch < n_batches; ++i_batch) {
-        const std::unique_ptr<Simulation> batch(simulation->clone());
+        const std::unique_ptr<ISimulation> batch(simulation->clone());
         ThreadInfo threadInfo;
         threadInfo.n_threads = 1;
         threadInfo.n_batches = n_batches;
@@ -50,10 +46,10 @@ TEST_F(BatchSimulation, BatchSimulation)
         batch->runSimulation();
         auto batch_result = batch->result();
         std::unique_ptr<OutputData<double>> batchResult(batch_result.data());
-        *result += *batchResult.get();
+        *result += *batchResult;
     }
 
-    double diff = IntensityDataFunctions::getRelativeDifference(*result, *reference);
+    double diff = DataUtils::relativeDataDifference(*result, *reference);
 
     EXPECT_LE(diff, threshold);
 }

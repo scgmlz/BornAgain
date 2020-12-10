@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,20 +10,19 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MESOCRYSTALITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MESOCRYSTALITEM_H
 
-#include "Core/Lattice/Lattice.h"
 #include "GUI/coregui/Models/SessionGraphicsItem.h"
+#include "Sample/Lattice/Lattice3D.h"
 
 class IFormFactor;
 class IParticle;
 class MesoCrystal;
 
-class BA_CORE_API_ MesoCrystalItem : public SessionGraphicsItem
-{
+class BA_CORE_API_ MesoCrystalItem : public SessionGraphicsItem {
 public:
     static const QString P_OUTER_SHAPE;
     static const QString T_BASIS_PARTICLE;
@@ -37,7 +36,7 @@ public:
 
     QStringList translateList(const QStringList& list) const override;
 
-    Lattice getLattice() const;
+    Lattice3D getLattice() const;
     std::unique_ptr<IParticle> getBasis() const;
     std::unique_ptr<IFormFactor> getOuterShape() const;
 };

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SimulationView.h"
 #include "GUI/coregui/Views/SimulationWidgets/SimulationSetupWidget.h"
@@ -19,9 +19,9 @@
 #include <QVBoxLayout>
 
 SimulationView::SimulationView(MainWindow* mainWindow)
-    : QWidget(mainWindow), m_simulationSetupWidget(new SimulationSetupWidget),
-      m_toolBar(new StyledToolBar)
-{
+    : QWidget(mainWindow)
+    , m_simulationSetupWidget(new SimulationSetupWidget)
+    , m_toolBar(new StyledToolBar) {
     m_toolBar->setFixedHeight(m_toolBar->minimumHeight());
     m_simulationSetupWidget->setApplicationModels(mainWindow->models());
 
@@ -34,17 +34,14 @@ SimulationView::SimulationView(MainWindow* mainWindow)
     setLayout(mainLayout);
 }
 
-void SimulationView::onRunSimulationShortcut()
-{
+void SimulationView::onRunSimulationShortcut() {
     m_simulationSetupWidget->onRunSimulation();
 }
 
-void SimulationView::showEvent(QShowEvent*)
-{
+void SimulationView::showEvent(QShowEvent*) {
     updateSimulationViewElements();
 }
 
-void SimulationView::updateSimulationViewElements()
-{
+void SimulationView::updateSimulationViewElements() {
     m_simulationSetupWidget->updateViewElements();
 }

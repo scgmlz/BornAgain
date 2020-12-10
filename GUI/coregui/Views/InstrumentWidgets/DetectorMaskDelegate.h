@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORMASKDELEGATE_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORMASKDELEGATE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QModelIndex>
 #include <QObject>
 
@@ -29,8 +28,7 @@ class DetectorItem;
 //! in InstrumentModel) and temporary IntensityDataItem (defined in temporary SessionModel).
 //! The later one is used by MaskEditor for mask drawing.
 
-class BA_CORE_API_ DetectorMaskDelegate : public QObject
-{
+class DetectorMaskDelegate : public QObject {
     Q_OBJECT
 
 public:

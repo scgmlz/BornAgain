@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_FIT_MINIMIZER_MINIMIZERCATALOG_H
 #define BORNAGAIN_FIT_MINIMIZER_MINIMIZERCATALOG_H
 
 #include "Fit/Minimizer/MinimizerInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <map>
 
 //! Hard-coded information about all minimizers available.
@@ -34,8 +33,7 @@ Genetic        | Default
 Test           | Default
 */
 
-class BA_CORE_API_ MinimizerCatalog
-{
+class MinimizerCatalog {
 public:
     MinimizerCatalog();
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorPropertyPanel.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
-#include "GUI/coregui/Views/AccordionWidget/AccordionWidget.h"
 #include "GUI/coregui/Views/AccordionWidget/ContentPane.h"
 #include "GUI/coregui/Views/PropertyEditor/ComponentEditor.h"
 #include <QListView>
@@ -23,11 +22,9 @@
 
 //! Widget to cheat Accordion to resize correctly.
 
-class EnvelopWidget : public QWidget
-{
+class EnvelopWidget : public QWidget {
 public:
-    EnvelopWidget(QWidget* content)
-    {
+    EnvelopWidget(QWidget* content) {
         QVBoxLayout* mainLayout = new QVBoxLayout;
         mainLayout->setContentsMargins(0, 0, 0, 0);
         mainLayout->setSpacing(0);
@@ -40,10 +37,13 @@ public:
 };
 
 MaskEditorPropertyPanel::MaskEditorPropertyPanel(QWidget* parent)
-    : QWidget(parent), m_listView(new QListView), m_maskPropertyEditor(new ComponentEditor),
-      m_plotPropertyEditor(new ComponentEditor(ComponentEditor::MiniTree)),
-      m_accordion(new AccordionWidget), m_maskModel(nullptr), m_intensityDataItem(nullptr)
-{
+    : QWidget(parent)
+    , m_listView(new QListView)
+    , m_maskPropertyEditor(new ComponentEditor)
+    , m_plotPropertyEditor(new ComponentEditor(ComponentEditor::MiniTree))
+    , m_accordion(new AccordionWidget)
+    , m_maskModel(nullptr)
+    , m_intensityDataItem(nullptr) {
     setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
     setObjectName(QLatin1String("MaskEditorToolPanel"));
 
@@ -65,20 +65,17 @@ MaskEditorPropertyPanel::MaskEditorPropertyPanel(QWidget* parent)
     setLayout(mainLayout);
 }
 
-QSize MaskEditorPropertyPanel::sizeHint() const
-{
+QSize MaskEditorPropertyPanel::sizeHint() const {
     return QSize(128, 128);
 }
 
-QSize MaskEditorPropertyPanel::minimumSizeHint() const
-{
+QSize MaskEditorPropertyPanel::minimumSizeHint() const {
     return QSize(128, 128);
 }
 
 void MaskEditorPropertyPanel::setMaskContext(SessionModel* model,
                                              const QModelIndex& maskContainerIndex,
-                                             IntensityDataItem* intensityItem)
-{
+                                             IntensityDataItem* intensityItem) {
     m_maskModel = model;
     m_rootIndex = maskContainerIndex;
     m_intensityDataItem = intensityItem;
@@ -94,8 +91,7 @@ void MaskEditorPropertyPanel::setMaskContext(SessionModel* model,
     m_plotPropertyEditor->setItem(m_intensityDataItem);
 }
 
-void MaskEditorPropertyPanel::resetContext()
-{
+void MaskEditorPropertyPanel::resetContext() {
     m_maskModel = nullptr;
     m_rootIndex = {};
     m_intensityDataItem = nullptr;
@@ -104,15 +100,13 @@ void MaskEditorPropertyPanel::resetContext()
     m_plotPropertyEditor->setItem(nullptr);
 }
 
-QItemSelectionModel* MaskEditorPropertyPanel::selectionModel()
-{
+QItemSelectionModel* MaskEditorPropertyPanel::selectionModel() {
     ASSERT(m_listView);
     return m_listView->selectionModel();
 }
 
 //! Show/Hide panel. When panel is hidden, all property editors are disabled.
-void MaskEditorPropertyPanel::setPanelHidden(bool value)
-{
+void MaskEditorPropertyPanel::setPanelHidden(bool value) {
     this->setHidden(value);
 
     if (!m_rootIndex.isValid())
@@ -123,7 +117,7 @@ void MaskEditorPropertyPanel::setPanelHidden(bool value)
         m_plotPropertyEditor->setItem(nullptr);
     } else {
         QModelIndexList indexes = selectionModel()->selectedIndexes();
-        if (indexes.size())
+        if (!indexes.empty())
             m_maskPropertyEditor->setItem(m_maskModel->itemForIndex(indexes.front()));
 
         m_plotPropertyEditor->setItem(m_intensityDataItem);
@@ -131,21 +125,18 @@ void MaskEditorPropertyPanel::setPanelHidden(bool value)
 }
 
 void MaskEditorPropertyPanel::onSelectionChanged(const QItemSelection& selected,
-                                                 const QItemSelection&)
-{
-    if (selected.size())
+                                                 const QItemSelection&) {
+    if (!selected.empty())
         m_maskPropertyEditor->setItem(m_maskModel->itemForIndex(selected.indexes().front()));
     else
         m_maskPropertyEditor->setItem(nullptr);
 }
 
-void MaskEditorPropertyPanel::onCustomContextMenuRequested(const QPoint& point)
-{
+void MaskEditorPropertyPanel::onCustomContextMenuRequested(const QPoint& point) {
     emit itemContextMenuRequest(m_listView->mapToGlobal(point));
 }
 
-void MaskEditorPropertyPanel::setup_PlotProperties(AccordionWidget* accordion)
-{
+void MaskEditorPropertyPanel::setup_PlotProperties(AccordionWidget* accordion) {
     ContentPane* cp = accordion->getContentPane(accordion->addContentPane("Plot properties"));
     cp->setMaximumHeight(600);
     cp->setHeaderTooltip("Plot properties editor");
@@ -159,8 +150,7 @@ void MaskEditorPropertyPanel::setup_PlotProperties(AccordionWidget* accordion)
     contentFrame->setLayout(layout);
 }
 
-void MaskEditorPropertyPanel::setup_MaskStack(AccordionWidget* accordion)
-{
+void MaskEditorPropertyPanel::setup_MaskStack(AccordionWidget* accordion) {
     ContentPane* cp = accordion->getContentPane(accordion->addContentPane("Mask stack"));
     cp->setMaximumHeight(600);
     cp->setHeaderTooltip("List of created masks representing mask stacking order.");
@@ -174,8 +164,7 @@ void MaskEditorPropertyPanel::setup_MaskStack(AccordionWidget* accordion)
     contentFrame->setLayout(layout);
 }
 
-void MaskEditorPropertyPanel::setup_MaskProperties(AccordionWidget* accordion)
-{
+void MaskEditorPropertyPanel::setup_MaskProperties(AccordionWidget* accordion) {
     ContentPane* cp = accordion->getContentPane(accordion->addContentPane("Mask properties"));
     cp->setMaximumHeight(600);
     cp->setHeaderTooltip("Property editor for currently selected mask.");

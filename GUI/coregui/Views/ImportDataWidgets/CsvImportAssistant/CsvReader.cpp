@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,21 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvReader.h"
 #include <fstream>
 #include <iostream>
 
-std::string const& CSVRow::operator[](unsigned index) const
-{
+std::string const& CSVRow::operator[](unsigned index) const {
     return m_data[index];
 }
 
-unsigned long CSVRow::size() const
-{
+unsigned long CSVRow::size() const {
     return static_cast<unsigned long>(m_data.size());
 }
 
-void CSVRow::readNextRow(std::istream& str)
-{
+void CSVRow::readNextRow(std::istream& str) {
     std::string line;
     std::getline(str, line);
     std::replace(std::begin(line), std::end(line), '\t', ' ');
@@ -46,30 +43,25 @@ void CSVRow::readNextRow(std::istream& str)
     }
 }
 
-void CSVRow::setSeparator(char sep)
-{
+void CSVRow::setSeparator(char sep) {
     this->separator = sep;
     return;
 }
 
-char CSVRow::getSeparator()
-{
+char CSVRow::getSeparator() {
     return this->separator;
 }
 
-void CSVRow::addCell(std::string str)
-{
+void CSVRow::addCell(std::string str) {
     m_data.push_back(str);
 }
 
-void CSVFile::Init()
-{
+void CSVFile::Init() {
     Read();
     EqualizeRowLengths();
 }
 
-void CSVFile::Read()
-{
+void CSVFile::Read() {
     std::ifstream file(filepath);
     if (!file.is_open()) {
         throw std::ios_base::failure("Unable to open file \"" + filepath + "\"");
@@ -81,8 +73,7 @@ void CSVFile::Read()
     }
 }
 
-void CSVFile::EqualizeRowLengths()
-{
+void CSVFile::EqualizeRowLengths() {
     for (unsigned i = 0; i < NumberOfRows(); i++) {
         while (rows[i].size() < NumberOfColumns()) {
             rows[i].addCell("");
@@ -93,34 +84,28 @@ void CSVFile::EqualizeRowLengths()
     }
 }
 
-std::vector<std::string> const CSVFile::operator[](unsigned index_i) const
-{
+std::vector<std::string> const CSVFile::operator[](unsigned index_i) const {
     return m_data[index_i];
 }
 
-unsigned long CSVFile::NumberOfRows() const
-{
+unsigned long CSVFile::NumberOfRows() const {
     return static_cast<unsigned long>(rows.size());
 }
 
-unsigned long CSVFile::NumberOfColumns() const
-{
+unsigned long CSVFile::NumberOfColumns() const {
     return this->numberOfColumns;
 }
 
-void CSVFile::set_separator(char sep)
-{
+void CSVFile::set_separator(char sep) {
     this->separator = sep;
     return;
 }
 
-char CSVFile::get_separator()
-{
+char CSVFile::get_separator() {
     return this->separator;
 }
 
-CSVRow CSVFile::get_headers()
-{
+CSVRow CSVFile::get_headers() {
     if (headersRow > 0) {
         return this->rows[headersRow - 1];
     } else {
@@ -131,7 +116,6 @@ CSVRow CSVFile::get_headers()
     }
 }
 
-CSVRow CSVFile::get_row(unsigned i)
-{
+CSVRow CSVFile::get_row(unsigned i) {
     return this->rows[i];
 }

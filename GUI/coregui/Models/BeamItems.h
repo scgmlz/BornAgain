@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_BEAMITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_BEAMITEMS_H
@@ -23,8 +23,7 @@ class FootprintItem;
 class GroupItem;
 class IAxis;
 
-class BA_CORE_API_ BeamItem : public SessionItem
-{
+class BA_CORE_API_ BeamItem : public SessionItem {
 public:
     static const QString P_INTENSITY;
     static const QString P_WAVELENGTH;
@@ -34,10 +33,10 @@ public:
 
     ~BeamItem() override;
 
-    double getIntensity() const;
+    double intensity() const;
     void setIntensity(double value);
 
-    double getWavelength() const;
+    double wavelength() const;
     void setWavelength(double value);
 
     virtual double getInclinationAngle() const = 0;
@@ -55,8 +54,7 @@ protected:
     void setWavelengthProperty(const QString& wavelength_type);
 };
 
-class BA_CORE_API_ SpecularBeamItem : public BeamItem
-{
+class BA_CORE_API_ SpecularBeamItem : public BeamItem {
 public:
     static const QString P_FOOPTPRINT;
 
@@ -77,8 +75,7 @@ private:
     void updateWavelength();
 };
 
-class BA_CORE_API_ GISASBeamItem : public BeamItem
-{
+class BA_CORE_API_ GISASBeamItem : public BeamItem {
 public:
     GISASBeamItem();
     ~GISASBeamItem() override;

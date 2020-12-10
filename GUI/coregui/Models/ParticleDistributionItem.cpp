@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ParticleDistributionItem.h"
-#include "Core/Basics/Units.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterUtils.h"
+#include "Base/Const/Units.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/DistributionItems.h"
 #include "GUI/coregui/Models/ParameterTreeUtils.h"
@@ -24,9 +22,9 @@
 #include "GUI/coregui/Models/TransformFromDomain.h"
 #include "GUI/coregui/Models/TransformToDomain.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Param/Varia/ParameterUtils.h"
 
-namespace
-{
+namespace {
 const QString abundance_tooltip = "Proportion of this type of particles normalized to the \n"
                                   "total number of particles in the layout";
 }
@@ -37,8 +35,7 @@ const QString ParticleDistributionItem::P_DISTRIBUTION = "Distribution";
 const QString ParticleDistributionItem::NO_SELECTION = "None";
 const QString ParticleDistributionItem::T_PARTICLES = "Particle Tag";
 
-ParticleDistributionItem::ParticleDistributionItem() : SessionGraphicsItem("ParticleDistribution")
-{
+ParticleDistributionItem::ParticleDistributionItem() : SessionGraphicsItem("ParticleDistribution") {
     setToolTip("Collection of particles obtained via parametric distribution "
                "of particle prototype");
 
@@ -79,9 +76,8 @@ ParticleDistributionItem::ParticleDistributionItem() : SessionGraphicsItem("Part
     });
 }
 
-std::unique_ptr<ParticleDistribution> ParticleDistributionItem::createParticleDistribution() const
-{
-    if (children().size() == 0)
+std::unique_ptr<ParticleDistribution> ParticleDistributionItem::createParticleDistribution() const {
+    if (children().empty())
         return nullptr;
     std::unique_ptr<IParticle> P_particle = TransformToDomain::createIParticle(*getItem());
     if (!P_particle)
@@ -91,7 +87,7 @@ std::unique_ptr<ParticleDistribution> ParticleDistributionItem::createParticleDi
 
     std::string domain_par = domainMainParameter();
 
-    double scale = ParameterUtils::isAngleRelated(domain_par) ? Units::degree : 1.0;
+    double scale = ParameterUtils::isAngleRelated(domain_par) ? Units::deg : 1.0;
     auto P_distribution = distr_item.createDistribution(scale);
 
     RealLimits limits = RealLimits::limitless();
@@ -116,14 +112,12 @@ std::unique_ptr<ParticleDistribution> ParticleDistributionItem::createParticleDi
     return result;
 }
 
-void ParticleDistributionItem::setDomainCacheNames(const QString& name, const QStringList& linked)
-{
+void ParticleDistributionItem::setDomainCacheNames(const QString& name, const QStringList& linked) {
     m_domain_cache_name = name;
     m_linked_names = linked;
 }
 
-void ParticleDistributionItem::updateMainParameterList()
-{
+void ParticleDistributionItem::updateMainParameterList() {
     if (!isTag(P_DISTRIBUTED_PARAMETER))
         return;
 
@@ -146,8 +140,7 @@ void ParticleDistributionItem::updateMainParameterList()
     setItemValue(P_DISTRIBUTED_PARAMETER, newProp.variant());
 }
 
-void ParticleDistributionItem::updateLinkedParameterList()
-{
+void ParticleDistributionItem::updateLinkedParameterList() {
     if (!isTag(P_LINKED_PARAMETER) || !isTag(P_DISTRIBUTED_PARAMETER))
         return;
 
@@ -179,8 +172,7 @@ void ParticleDistributionItem::updateLinkedParameterList()
     setItemValue(P_LINKED_PARAMETER, newProp.variant());
 }
 
-QStringList ParticleDistributionItem::childParameterNames() const
-{
+QStringList ParticleDistributionItem::childParameterNames() const {
     if (auto child = childParticle()) {
         auto result = ParameterTreeUtils::parameterTreeNames(child);
         result.removeAll(ParticleItem::P_ABUNDANCE);
@@ -190,30 +182,26 @@ QStringList ParticleDistributionItem::childParameterNames() const
     return {};
 }
 
-QString ParticleDistributionItem::translateParameterNameToGUI(const QString& domainName)
-{
+QString ParticleDistributionItem::translateParameterNameToGUI(const QString& domainName) {
     if (auto child = childParticle())
         return ParameterTreeUtils::domainNameToParameterName(domainName, child);
     return {};
 }
 
-const SessionItem* ParticleDistributionItem::childParticle() const
-{
-    if (getItems(T_PARTICLES).size() == 0)
+const SessionItem* ParticleDistributionItem::childParticle() const {
+    if (getItems(T_PARTICLES).empty())
         return nullptr;
 
     ASSERT(getItems(T_PARTICLES).size() == 1);
     return getItems(T_PARTICLES).front();
 }
 
-std::string ParticleDistributionItem::domainMainParameter() const
-{
+std::string ParticleDistributionItem::domainMainParameter() const {
     auto par_name = getItemValue(P_DISTRIBUTED_PARAMETER).value<ComboProperty>().getValue();
     return ParameterTreeUtils::parameterNameToDomainName(par_name, childParticle()).toStdString();
 }
 
-std::vector<std::string> ParticleDistributionItem::domainLinkedParameters() const
-{
+std::vector<std::string> ParticleDistributionItem::domainLinkedParameters() const {
     std::vector<std::string> result;
     auto linked_names = getItemValue(P_LINKED_PARAMETER).value<ComboProperty>().selectedValues();
     for (auto name : linked_names) {

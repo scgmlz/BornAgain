@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/InstrumentViewToolBar.h"
 #include "GUI/coregui/Views/InstrumentWidgets/InstrumentViewActions.h"
@@ -18,10 +18,11 @@
 #include <QToolButton>
 
 InstrumentViewToolBar::InstrumentViewToolBar(InstrumentViewActions* actions, QWidget* parent)
-    : StyledToolBar(parent), m_addInstrumentButton(new QToolButton),
-      m_removeInstrumentButton(new QToolButton), m_cloneInstrumentButton(new QToolButton),
-      m_addInstrumentMenu(actions->instrumentMenu())
-{
+    : StyledToolBar(parent)
+    , m_addInstrumentButton(new QToolButton)
+    , m_removeInstrumentButton(new QToolButton)
+    , m_cloneInstrumentButton(new QToolButton)
+    , m_addInstrumentMenu(actions->instrumentMenu()) {
     m_addInstrumentButton->setText("Add");
     m_addInstrumentButton->setIcon(QIcon(":/images/shape-square-plus.svg"));
     m_addInstrumentButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -51,7 +52,6 @@ InstrumentViewToolBar::InstrumentViewToolBar(InstrumentViewActions* actions, QWi
             &InstrumentViewActions::onCloneInstrument);
 }
 
-void InstrumentViewToolBar::onAddInstrument()
-{
+void InstrumentViewToolBar::onAddInstrument() {
     m_addInstrumentMenu->defaultAction()->triggered();
 }

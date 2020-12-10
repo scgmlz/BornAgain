@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBSELECTORWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class JobModel;
@@ -25,16 +24,14 @@ class JobSelectorActions;
 class JobListWidget;
 class JobPropertiesWidget;
 
-namespace Manhattan
-{
+namespace Manhattan {
 class MiniSplitter;
 }
 
 //! The JobSelectorWidget class represents left panel of JobView. Contains a tree to select jobs
 //! on the top and job property editor at the bottom.
 
-class BA_CORE_API_ JobSelectorWidget : public QWidget
-{
+class JobSelectorWidget : public QWidget {
     Q_OBJECT
 
 public:

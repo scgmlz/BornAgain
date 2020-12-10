@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/GroupItem.h"
@@ -23,8 +23,7 @@
 #include "GUI/coregui/utils/MessageService.h"
 #include <QtCore/QXmlStreamWriter>
 
-namespace
-{
+namespace {
 const QString bool_type_name = "bool";
 const QString double_type_name = "double";
 const QString int_type_name = "int";
@@ -36,8 +35,7 @@ void report_error(MessageService* messageService, SessionItem* item, const QStri
 SessionItem* createItem(SessionItem* item, const QString& modelType, const QString& tag);
 } // namespace
 
-void SessionXML::writeTo(QXmlStreamWriter* writer, SessionItem* parent)
-{
+void SessionXML::writeTo(QXmlStreamWriter* writer, SessionItem* parent) {
     writer->writeStartElement(parent->model()->getModelTag());
     writer->writeAttribute(SessionXML::ModelNameAttribute, parent->model()->getModelName());
 
@@ -46,8 +44,7 @@ void SessionXML::writeTo(QXmlStreamWriter* writer, SessionItem* parent)
     writer->writeEndElement(); // m_model_tag
 }
 
-void SessionXML::writeItemAndChildItems(QXmlStreamWriter* writer, const SessionItem* item)
-{
+void SessionXML::writeItemAndChildItems(QXmlStreamWriter* writer, const SessionItem* item) {
     if (item->parent()) {
         writer->writeStartElement(SessionXML::ItemTag);
         writer->writeAttribute(SessionXML::ModelTypeAttribute, item->modelType());
@@ -68,8 +65,7 @@ void SessionXML::writeItemAndChildItems(QXmlStreamWriter* writer, const SessionI
         writer->writeEndElement(); // ItemTag
 }
 
-void SessionXML::writeVariant(QXmlStreamWriter* writer, QVariant variant, int role)
-{
+void SessionXML::writeVariant(QXmlStreamWriter* writer, QVariant variant, int role) {
     if (variant.isValid()) {
         writer->writeStartElement(SessionXML::ParameterTag);
         QString type_name = variant.typeName();
@@ -112,8 +108,7 @@ void SessionXML::writeVariant(QXmlStreamWriter* writer, QVariant variant, int ro
 }
 
 void SessionXML::readItems(QXmlStreamReader* reader, SessionItem* parent, QString topTag,
-                           MessageService* messageService)
-{
+                           MessageService* messageService) {
     ASSERT(parent);
     const QString start_type = parent->model()->getModelTag();
     while (!reader->atEnd()) {
@@ -134,8 +129,8 @@ void SessionXML::readItems(QXmlStreamReader* reader, SessionItem* parent, QStrin
                 auto newItem = createItem(parent, model_type, tag);
                 if (!newItem) {
                     QString message = QString("Error while parsing XML. Can't create item of "
-                                              "modelType '%1' for tag '%2'")
-                                          .arg(model_type, tag);
+                                              "modelType '%1' for tag '%2', parent '%3'")
+                                          .arg(model_type, tag, parent->P_NAME);
                     report_error(messageService, parent, message);
                     // risky attempt to recover the rest of the project
                     reader->skipCurrentElement();
@@ -157,8 +152,7 @@ void SessionXML::readItems(QXmlStreamReader* reader, SessionItem* parent, QStrin
 }
 
 QString SessionXML::readProperty(QXmlStreamReader* reader, SessionItem* item,
-                                 MessageService* messageService)
-{
+                                 MessageService* messageService) {
     const QString parameter_name =
         reader->attributes().value(SessionXML::ParameterNameAttribute).toString();
     const QString parameter_type =
@@ -228,10 +222,8 @@ QString SessionXML::readProperty(QXmlStreamReader* reader, SessionItem* item,
     return parameter_name;
 }
 
-namespace
-{
-void report_error(MessageService* messageService, SessionItem* item, const QString& message)
-{
+namespace {
+void report_error(MessageService* messageService, SessionItem* item, const QString& message) {
     if (messageService) {
         messageService->send_warning(item->model(), message);
     } else {
@@ -239,8 +231,7 @@ void report_error(MessageService* messageService, SessionItem* item, const QStri
     }
 }
 
-SessionItem* createItem(SessionItem* item, const QString& modelType, const QString& tag)
-{
+SessionItem* createItem(SessionItem* item, const QString& modelType, const QString& tag) {
     SessionItem* result(nullptr);
 
     if (item->modelType() == "GroupProperty") {

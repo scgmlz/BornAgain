@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_COMPUTATION_CONSTANTBACKGROUND_H
 #define BORNAGAIN_CORE_COMPUTATION_CONSTANTBACKGROUND_H
@@ -21,19 +21,18 @@
 //!
 //! @ingroup simulation
 
-class BA_CORE_API_ ConstantBackground : public IBackground
-{
+class ConstantBackground : public IBackground {
 public:
     ConstantBackground(const std::vector<double> P);
     ConstantBackground(double background_value);
 
-    ConstantBackground* clone() const override final;
+    ConstantBackground* clone() const final;
 
     double backgroundValue() const { return m_background_value; }
 
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
-    double addBackGround(double intensity) const override final;
+    double addBackground(double intensity) const final;
 
 private:
     const double& m_background_value;

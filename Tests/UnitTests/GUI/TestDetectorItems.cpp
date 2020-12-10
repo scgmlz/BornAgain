@@ -1,20 +1,16 @@
-#include "Core/Basics/Units.h"
-#include "Core/Detector/ConvolutionDetectorResolution.h"
-#include "Core/Detector/IDetector2D.h"
-#include "Core/Detector/ResolutionFunction2DGaussian.h"
+#include "Base/Const/Units.h"
+#include "Device/Detector/IDetector2D.h"
+#include "Device/Resolution/ConvolutionDetectorResolution.h"
+#include "Device/Resolution/ResolutionFunction2DGaussian.h"
 #include "GUI/coregui/Models/ComboProperty.h"
-#include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InstrumentModel.h"
 #include "GUI/coregui/Models/RectangularDetectorItem.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestDetectorItems : public ::testing::Test
-{
-};
+class TestDetectorItems : public ::testing::Test {};
 
-TEST_F(TestDetectorItems, test_detectorAlignment)
-{
+TEST_F(TestDetectorItems, test_detectorAlignment) {
     InstrumentModel model;
     SessionItem* detector = model.insertNewItem("RectangularDetector");
 
@@ -33,8 +29,7 @@ TEST_F(TestDetectorItems, test_detectorAlignment)
     EXPECT_FALSE(detector->getItem(RectangularDetectorItem::P_NORMAL)->isVisible());
 }
 
-TEST_F(TestDetectorItems, test_resolutionFunction)
-{
+TEST_F(TestDetectorItems, test_resolutionFunction) {
     InstrumentModel model;
     GISASInstrumentItem* instrument =
         dynamic_cast<GISASInstrumentItem*>(model.insertNewItem("GISASInstrument"));

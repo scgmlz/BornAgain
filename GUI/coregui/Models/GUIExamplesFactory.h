@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_GUIEXAMPLESFACTORY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_GUIEXAMPLESFACTORY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QMap>
 
 class SessionItem;
@@ -23,8 +22,7 @@ class SampleModel;
 class MaterialModel;
 
 //! Class that generates GUI model from
-class BA_CORE_API_ GUIExamplesFactory
-{
+class GUIExamplesFactory {
 public:
     static bool isValidExampleName(const QString& name);
 

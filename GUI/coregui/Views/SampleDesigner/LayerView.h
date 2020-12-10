@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_LAYERVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_LAYERVIEW_H
@@ -18,8 +18,7 @@
 #include "GUI/coregui/Views/SampleDesigner/ILayerView.h"
 
 //! Class that represents view of Layer
-class BA_CORE_API_ LayerView : public ILayerView
-{
+class LayerView : public ILayerView {
     Q_OBJECT
 public:
     LayerView(QGraphicsItem* parent = 0);

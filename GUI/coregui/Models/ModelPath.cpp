@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ModelPath.h"
 #include "GUI/coregui/Models/JobItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 
-QString ModelPath::getPathFromIndex(const QModelIndex& index)
-{
+QString ModelPath::getPathFromIndex(const QModelIndex& index) {
     if (index.isValid()) {
         QStringList namePath;
         QModelIndex cur = index;
@@ -33,8 +32,7 @@ QString ModelPath::getPathFromIndex(const QModelIndex& index)
 
 // TODO cover with unit tests and simplify
 
-QModelIndex ModelPath::getIndexFromPath(const SessionModel* model, const QString& path)
-{
+QModelIndex ModelPath::getIndexFromPath(const SessionModel* model, const QString& path) {
     if (model) {
         QStringList parts = path.split("/");
         SessionItem* t = model->rootItem();
@@ -57,8 +55,7 @@ QModelIndex ModelPath::getIndexFromPath(const SessionModel* model, const QString
 
 //! returns an item from relative path wrt to given parent
 
-SessionItem* ModelPath::getItemFromPath(const QString& relPath, const SessionItem* parent)
-{
+SessionItem* ModelPath::getItemFromPath(const QString& relPath, const SessionItem* parent) {
     ASSERT(parent);
     QString fullPath = getPathFromIndex(parent->index()) + "/" + relPath;
     return parent->model()->itemForIndex(ModelPath::getIndexFromPath(parent->model(), fullPath));
@@ -66,8 +63,7 @@ SessionItem* ModelPath::getItemFromPath(const QString& relPath, const SessionIte
 
 //! Iterates through all the model and returns true if item is found. This is to
 
-bool ModelPath::isValidItem(SessionModel* model, SessionItem* item, const QModelIndex& parent)
-{
+bool ModelPath::isValidItem(SessionModel* model, SessionItem* item, const QModelIndex& parent) {
     for (int i_row = 0; i_row < model->rowCount(parent); ++i_row) {
         QModelIndex index = model->index(i_row, 0, parent);
         SessionItem* curr = model->itemForIndex(index);
@@ -84,8 +80,7 @@ bool ModelPath::isValidItem(SessionModel* model, SessionItem* item, const QModel
 //! Returns ancestor of given modelType for given item.
 //! For example, returns corresponding jobItem owning ParameterItem via ParameterContainer.
 
-const SessionItem* ModelPath::ancestor(const SessionItem* item, const QString& requiredModelType)
-{
+const SessionItem* ModelPath::ancestor(const SessionItem* item, const QString& requiredModelType) {
     const SessionItem* cur = item;
     while (cur && cur->modelType() != requiredModelType)
         cur = cur->parent();
@@ -95,8 +90,7 @@ const SessionItem* ModelPath::ancestor(const SessionItem* item, const QString& r
 
 //! Returns translation of item path to domain name
 
-QString ModelPath::itemPathTranslation(const SessionItem& item, const SessionItem* topItem)
-{
+QString ModelPath::itemPathTranslation(const SessionItem& item, const SessionItem* topItem) {
     QStringList pathList;
     const SessionItem* current(&item);
     while (current && current != topItem) {

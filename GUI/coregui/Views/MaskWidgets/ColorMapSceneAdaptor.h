@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_COLORMAPSCENEADAPTOR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_COLORMAPSCENEADAPTOR_H
@@ -20,8 +20,7 @@ class ColorMap;
 
 //! Performs conversion of MaskItems coordinates between ColorMap and GraphicsScene.
 
-class ColorMapSceneAdaptor : public ISceneAdaptor
-{
+class ColorMapSceneAdaptor : public ISceneAdaptor {
     Q_OBJECT
 
 public:

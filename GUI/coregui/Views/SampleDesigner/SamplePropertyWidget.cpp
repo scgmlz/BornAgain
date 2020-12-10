@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/SamplePropertyWidget.h"
 #include "GUI/coregui/Models/SessionItem.h"
@@ -21,9 +21,9 @@
 #include <QVBoxLayout>
 
 SamplePropertyWidget::SamplePropertyWidget(QItemSelectionModel* selection_model, QWidget* parent)
-    : QWidget(parent), m_selection_model(nullptr),
-      m_propertyEditor(new ComponentEditor(ComponentEditor::FullTree))
-{
+    : QWidget(parent)
+    , m_selection_model(nullptr)
+    , m_propertyEditor(new ComponentEditor(ComponentEditor::FullTree)) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     setWindowTitle(QLatin1String("Property Editor"));
     setObjectName(QLatin1String("SamplePropertyWidget"));
@@ -38,18 +38,15 @@ SamplePropertyWidget::SamplePropertyWidget(QItemSelectionModel* selection_model,
     setLayout(mainLayout);
 }
 
-QSize SamplePropertyWidget::sizeHint() const
-{
+QSize SamplePropertyWidget::sizeHint() const {
     return QSize(230, 256);
 }
 
-QSize SamplePropertyWidget::minimumSizeHint() const
-{
+QSize SamplePropertyWidget::minimumSizeHint() const {
     return QSize(230, 64);
 }
 
-void SamplePropertyWidget::setSelectionModel(QItemSelectionModel* selection_model)
-{
+void SamplePropertyWidget::setSelectionModel(QItemSelectionModel* selection_model) {
     if (selection_model == m_selection_model)
         return;
 
@@ -68,11 +65,10 @@ void SamplePropertyWidget::setSelectionModel(QItemSelectionModel* selection_mode
 
 // TODO Refactor this together with whole SampleView. Remove knowledge about proxy model.
 
-void SamplePropertyWidget::selectionChanged(const QItemSelection& selected, const QItemSelection&)
-{
+void SamplePropertyWidget::selectionChanged(const QItemSelection& selected, const QItemSelection&) {
     QModelIndexList indices = selected.indexes();
 
-    if (indices.size()) {
+    if (!indices.empty()) {
         QModelIndex index = indices.back();
 
         if (auto proxy = dynamic_cast<QSortFilterProxyModel*>(

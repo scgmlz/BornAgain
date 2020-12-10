@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/LayerView.h"
 #include "GUI/coregui/Models/LayerItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
 #include "GUI/coregui/Views/SampleDesigner/ParticleLayoutView.h"
@@ -22,8 +21,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-LayerView::LayerView(QGraphicsItem* parent) : ILayerView(parent)
-{
+LayerView::LayerView(QGraphicsItem* parent) : ILayerView(parent) {
     setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
     setName("Layer");
     setRectangle(DesignerHelper::getDefaultBoundingRect("Layer"));
@@ -31,8 +29,7 @@ LayerView::LayerView(QGraphicsItem* parent) : ILayerView(parent)
     addPort(QString(), NodeEditorPort::INPUT, NodeEditorPort::PARTICLE_LAYOUT);
 }
 
-void LayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
-{
+void LayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     Q_UNUSED(widget);
 
     painter->setPen(Qt::black);
@@ -43,8 +40,7 @@ void LayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
     painter->drawRect(getRectangle());
 }
 
-void LayerView::addView(IView* childView, int /* row */)
-{
+void LayerView::addView(IView* childView, int /* row */) {
     ParticleLayoutView* layout = dynamic_cast<ParticleLayoutView*>(childView);
     ASSERT(layout);
     connectInputPort(layout, 0);

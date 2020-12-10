@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_TABLECONTEXTMENU_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_TABLECONTEXTMENU_H
 
-#include "Core/Intensity/IUnitConverter.h"
+#include "Device/Unit/IUnitConverter.h"
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvNamespace.h"
 #include <QMenu>
 #include <QStringList>
 #include <QTableWidget>
 
-class TableContextMenu : public QMenu
-{
+class TableContextMenu : public QMenu {
     Q_OBJECT
 public:
     TableContextMenu(QWidget* parent = nullptr);

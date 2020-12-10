@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,26 +10,23 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_GEOMETRY_H
 #define BORNAGAIN_GUI_BA3D_MODEL_GEOMETRY_H
 
-#include "../def.h"
 #include "GUI/ba3d/model/geometry_inc.h"
 #include <QObject>
 #include <QVector>
 #include <unordered_map>
 #include <vector>
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 class Buffer;
 class GeometryStore;
 
-class Geometry
-{
+class Geometry {
     friend class Buffer;
     friend class GeometryStore;
 
@@ -95,8 +92,7 @@ private:
 
 // a single store keeps existing geometries for sharing
 
-class GeometryStore : public QObject
-{
+class GeometryStore : public QObject {
     Q_OBJECT
     friend class Geometry;
 

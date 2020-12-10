@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,10 +10,9 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/mainwindow/projectdocument.h"
-#include "Core/Basics/Assert.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/mainwindow/OutputDataIOService.h"
@@ -24,64 +23,57 @@
 #include <QElapsedTimer>
 #include <QXmlStreamReader>
 
-namespace
-{
+namespace {
 const QString minimal_supported_version = "1.6.0";
 }
 
 ProjectDocument::ProjectDocument(const QString& projectFileName)
-    : m_applicationModels(nullptr), m_modified(false), m_documentStatus(ProjectFlags::STATUS_OK),
-      m_messageService(nullptr), m_dataService(new OutputDataIOService(this))
-{
+    : m_applicationModels(nullptr)
+    , m_modified(false)
+    , m_documentStatus(ProjectFlags::STATUS_OK)
+    , m_messageService(nullptr)
+    , m_dataService(new OutputDataIOService(this)) {
     setObjectName("ProjectDocument");
     if (!projectFileName.isEmpty())
         setProjectFileName(projectFileName);
 }
 
-QString ProjectDocument::projectName() const
-{
+QString ProjectDocument::projectName() const {
     return m_project_name;
 }
 
-void ProjectDocument::setProjectName(const QString& text)
-{
+void ProjectDocument::setProjectName(const QString& text) {
     if (m_project_name != text) {
         m_project_name = text;
         emit modified();
     }
 }
 
-QString ProjectDocument::projectDir() const
-{
+QString ProjectDocument::projectDir() const {
     return m_project_dir;
 }
 
-void ProjectDocument::setProjectDir(const QString& text)
-{
+void ProjectDocument::setProjectDir(const QString& text) {
     m_project_dir = text;
 }
 
-QString ProjectDocument::projectFileName() const
-{
+QString ProjectDocument::projectFileName() const {
     if (!projectName().isEmpty())
         return projectDir() + "/" + projectName() + projectFileExtension();
     else
         return "";
 }
 
-void ProjectDocument::setProjectFileName(const QString& projectFileName)
-{
+void ProjectDocument::setProjectFileName(const QString& projectFileName) {
     setProjectName(ProjectUtils::projectName(projectFileName));
     setProjectDir(ProjectUtils::projectDir(projectFileName));
 }
 
-QString ProjectDocument::projectFileExtension()
-{
+QString ProjectDocument::projectFileExtension() {
     return ".pro";
 }
 
-void ProjectDocument::setApplicationModels(ApplicationModels* applicationModels)
-{
+void ProjectDocument::setApplicationModels(ApplicationModels* applicationModels) {
     if (applicationModels != m_applicationModels) {
         disconnectModels();
         m_applicationModels = applicationModels;
@@ -90,14 +82,12 @@ void ProjectDocument::setApplicationModels(ApplicationModels* applicationModels)
     }
 }
 
-void ProjectDocument::save(const QString& project_file_name, bool autoSave)
-{
+void ProjectDocument::save(const QString& project_file_name, bool autoSave) {
     save_project_data(project_file_name);
     save_project_file(project_file_name, autoSave);
 }
 
-void ProjectDocument::save_project_file(const QString& project_file_name, bool autoSave)
-{
+void ProjectDocument::save_project_file(const QString& project_file_name, bool autoSave) {
     QElapsedTimer timer;
     timer.start();
 
@@ -117,16 +107,14 @@ void ProjectDocument::save_project_file(const QString& project_file_name, bool a
     }
 }
 
-void ProjectDocument::save_project_data(const QString& project_file_name)
-{
+void ProjectDocument::save_project_data(const QString& project_file_name) {
     QElapsedTimer timer;
     timer.start();
 
     m_dataService->save(ProjectUtils::projectDir(project_file_name));
 }
 
-void ProjectDocument::load(const QString& project_file_name)
-{
+void ProjectDocument::load(const QString& project_file_name) {
     QElapsedTimer timer1, timer2;
     timer1.start();
 
@@ -161,69 +149,57 @@ void ProjectDocument::load(const QString& project_file_name)
     }
 }
 
-bool ProjectDocument::hasValidNameAndPath()
-{
+bool ProjectDocument::hasValidNameAndPath() {
     return (!m_project_name.isEmpty() && !m_project_dir.isEmpty());
 }
 
-bool ProjectDocument::isModified()
-{
+bool ProjectDocument::isModified() {
     return m_modified;
 }
 
-void ProjectDocument::setModified(bool flag)
-{
+void ProjectDocument::setModified(bool flag) {
     m_modified = flag;
     if (m_modified)
         emit modified();
 }
 
-void ProjectDocument::setLogger(MessageService* messageService)
-{
+void ProjectDocument::setLogger(MessageService* messageService) {
     m_messageService = messageService;
 }
 
-ProjectFlags::DocumentStatus ProjectDocument::documentStatus() const
-{
+ProjectFlags::DocumentStatus ProjectDocument::documentStatus() const {
     return m_documentStatus;
 }
 
-bool ProjectDocument::isReady() const
-{
+bool ProjectDocument::isReady() const {
     return (m_documentStatus == ProjectFlags::STATUS_OK);
 }
 
-bool ProjectDocument::hasWarnings() const
-{
+bool ProjectDocument::hasWarnings() const {
     return m_documentStatus.testFlag(ProjectFlags::STATUS_WARNING);
 }
 
-bool ProjectDocument::hasErrors() const
-{
+bool ProjectDocument::hasErrors() const {
     return m_documentStatus.testFlag(ProjectFlags::STATUS_FAILED);
 }
 
-bool ProjectDocument::hasData() const
-{
+bool ProjectDocument::hasData() const {
     return !m_dataService->nonXMLItems().isEmpty();
 }
 
-QString ProjectDocument::documentVersion() const
-{
+QString ProjectDocument::documentVersion() const {
     QString result(m_currentVersion);
     if (result.isEmpty())
         result = GUIHelpers::getBornAgainVersionString();
     return result;
 }
 
-void ProjectDocument::onModelChanged()
-{
+void ProjectDocument::onModelChanged() {
     m_modified = true;
     emit modified();
 }
 
-void ProjectDocument::readFrom(QIODevice* device)
-{
+void ProjectDocument::readFrom(QIODevice* device) {
     ASSERT(m_messageService);
     QXmlStreamReader reader(device);
 
@@ -266,8 +242,7 @@ void ProjectDocument::readFrom(QIODevice* device)
     }
 }
 
-void ProjectDocument::writeTo(QIODevice* device)
-{
+void ProjectDocument::writeTo(QIODevice* device) {
     QXmlStreamWriter writer(device);
     writer.setAutoFormatting(true);
     writer.writeStartDocument();
@@ -285,14 +260,12 @@ void ProjectDocument::writeTo(QIODevice* device)
     writer.writeEndDocument();
 }
 
-void ProjectDocument::disconnectModels()
-{
+void ProjectDocument::disconnectModels() {
     if (m_applicationModels)
         disconnect(m_applicationModels, SIGNAL(modelChanged()), this, SLOT(onModelChanged()));
 }
 
-void ProjectDocument::connectModels()
-{
+void ProjectDocument::connectModels() {
     if (m_applicationModels)
         connect(m_applicationModels, SIGNAL(modelChanged()), this, SLOT(onModelChanged()),
                 Qt::UniqueConnection);

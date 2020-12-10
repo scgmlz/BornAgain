@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MASKITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MASKITEMS_H
@@ -21,16 +21,14 @@ class IShape2D;
 
 //! Container holding various masks as children
 
-class BA_CORE_API_ MaskContainerItem : public SessionItem
-{
+class BA_CORE_API_ MaskContainerItem : public SessionItem {
 public:
     MaskContainerItem();
 };
 
 //! A base class for all mask items
 
-class BA_CORE_API_ MaskItem : public SessionItem
-{
+class BA_CORE_API_ MaskItem : public SessionItem {
 public:
     static const QString P_MASK_VALUE;
     static const QString P_IS_VISIBLE;
@@ -38,8 +36,7 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale = 1.0) const;
 };
 
-class BA_CORE_API_ RectangleItem : public MaskItem
-{
+class BA_CORE_API_ RectangleItem : public MaskItem {
 public:
     static const QString P_XLOW;
     static const QString P_YLOW;
@@ -49,14 +46,12 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
-class BA_CORE_API_ RegionOfInterestItem : public RectangleItem
-{
+class BA_CORE_API_ RegionOfInterestItem : public RectangleItem {
 public:
     RegionOfInterestItem();
 };
 
-class BA_CORE_API_ PolygonPointItem : public SessionItem
-{
+class BA_CORE_API_ PolygonPointItem : public SessionItem {
 
 public:
     static const QString P_POSX;
@@ -64,8 +59,7 @@ public:
     PolygonPointItem();
 };
 
-class BA_CORE_API_ PolygonItem : public MaskItem
-{
+class BA_CORE_API_ PolygonItem : public MaskItem {
 
 public:
     static const QString P_ISCLOSED;
@@ -73,8 +67,7 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
-class BA_CORE_API_ VerticalLineItem : public MaskItem
-{
+class BA_CORE_API_ VerticalLineItem : public MaskItem {
 
 public:
     static const QString P_POSX;
@@ -82,8 +75,7 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
-class BA_CORE_API_ HorizontalLineItem : public MaskItem
-{
+class BA_CORE_API_ HorizontalLineItem : public MaskItem {
 
 public:
     static const QString P_POSY;
@@ -91,8 +83,7 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
-class BA_CORE_API_ EllipseItem : public MaskItem
-{
+class BA_CORE_API_ EllipseItem : public MaskItem {
 
 public:
     static const QString P_XCENTER;
@@ -104,8 +95,7 @@ public:
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;
 };
 
-class BA_CORE_API_ MaskAllItem : public MaskItem
-{
+class BA_CORE_API_ MaskAllItem : public MaskItem {
 public:
     MaskAllItem();
     virtual std::unique_ptr<IShape2D> createShape(double scale) const;

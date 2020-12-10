@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/JobPropertiesWidget.h"
 #include "GUI/coregui/Models/JobItem.h"
@@ -23,9 +23,11 @@
 #include <QVBoxLayout>
 
 JobPropertiesWidget::JobPropertiesWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_tabWidget(new QTabWidget),
-      m_componentEditor(new ComponentEditor), m_commentsEditor(new QTextEdit), m_block_update(false)
-{
+    : SessionItemWidget(parent)
+    , m_tabWidget(new QTabWidget)
+    , m_componentEditor(new ComponentEditor)
+    , m_commentsEditor(new QTextEdit)
+    , m_block_update(false) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
     setWindowTitle(Constants::JobPropertiesWidgetName);
 
@@ -44,18 +46,15 @@ JobPropertiesWidget::JobPropertiesWidget(QWidget* parent)
     connect(m_commentsEditor, &QTextEdit::textChanged, this, &JobPropertiesWidget::onTextChanged);
 }
 
-QSize JobPropertiesWidget::sizeHint() const
-{
+QSize JobPropertiesWidget::sizeHint() const {
     return QSize(StyleUtils::PropertyPanelWidth(), StyleUtils::PropertyPanelWidth());
 }
 
-QSize JobPropertiesWidget::minimumSizeHint() const
-{
+QSize JobPropertiesWidget::minimumSizeHint() const {
     return QSize(StyleUtils::PropertyPanelWidth(), StyleUtils::PropertyPanelWidth());
 }
 
-void JobPropertiesWidget::subscribeToItem()
-{
+void JobPropertiesWidget::subscribeToItem() {
     currentItem()->mapper()->setOnPropertyChange(
         [this](const QString& name) {
             if (name == JobItem::P_COMMENTS)
@@ -68,25 +67,21 @@ void JobPropertiesWidget::subscribeToItem()
     updateItem();
 }
 
-void JobPropertiesWidget::unsubscribeFromItem()
-{
+void JobPropertiesWidget::unsubscribeFromItem() {
     m_componentEditor->setItem(nullptr);
 }
 
-void JobPropertiesWidget::contextMenuEvent(QContextMenuEvent*)
-{
+void JobPropertiesWidget::contextMenuEvent(QContextMenuEvent*) {
     // Reimplemented to suppress menu from main window
 }
 
-void JobPropertiesWidget::onTextChanged()
-{
+void JobPropertiesWidget::onTextChanged() {
     m_block_update = true;
     jobItem()->setComments(m_commentsEditor->toPlainText());
     m_block_update = false;
 }
 
-void JobPropertiesWidget::updateItem()
-{
+void JobPropertiesWidget::updateItem() {
     if (m_block_update)
         return;
 
@@ -100,7 +95,6 @@ void JobPropertiesWidget::updateItem()
     }
 }
 
-JobItem* JobPropertiesWidget::jobItem()
-{
+JobItem* JobPropertiesWidget::jobItem() {
     return dynamic_cast<JobItem*>(currentItem());
 }

@@ -1,12 +1,9 @@
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestGUIHelpers : public ::testing::Test
-{
-};
+class TestGUIHelpers : public ::testing::Test {};
 
-TEST_F(TestGUIHelpers, test_VersionString)
-{
+TEST_F(TestGUIHelpers, test_VersionString) {
     int vmajor(0), vminor(0), vpatch(0);
 
     EXPECT_EQ(true, GUIHelpers::parseVersion("1.5.0", vmajor, vminor, vpatch));

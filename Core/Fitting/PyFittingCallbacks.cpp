@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Fitting/PyFittingCallbacks.h"
 
@@ -20,8 +20,7 @@ PyBuilderCallback::PyBuilderCallback() = default;
 
 PyBuilderCallback::~PyBuilderCallback() = default;
 
-Simulation* PyBuilderCallback::build_simulation(Fit::Parameters)
-{
+ISimulation* PyBuilderCallback::build_simulation(mumufit::Parameters) {
     throw std::runtime_error("PyBuilderCallback::build_simulation() -> Error. Not implemented");
 }
 
@@ -31,7 +30,6 @@ PyObserverCallback::PyObserverCallback() = default;
 
 PyObserverCallback::~PyObserverCallback() = default;
 
-void PyObserverCallback::update(const FitObjective&)
-{
+void PyObserverCallback::update(const FitObjective&) {
     throw std::runtime_error("PyObserverCallback::update() -> Error. Not implemented");
 }

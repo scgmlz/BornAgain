@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/JobItemUtils.h"
-#include "Core/Simulation/Simulation.h"
+#include "Core/Simulation/ISimulation.h"
 #include "Core/Simulation/UnitConverterUtils.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/DomainObjectBuilder.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -25,29 +24,27 @@
 #include <QDebug>
 #include <QFileInfo>
 
-namespace
-{
-const std::map<QString, AxesUnits> units_from_names{{"nbins", AxesUnits::NBINS},
-                                                    {"Radians", AxesUnits::RADIANS},
-                                                    {"Degrees", AxesUnits::DEGREES},
-                                                    {"mm", AxesUnits::MM},
-                                                    {"q-space", AxesUnits::QSPACE}};
+namespace {
+const std::map<QString, Axes::Units> units_from_names{{"nbins", Axes::Units::NBINS},
+                                                      {"Radians", Axes::Units::RADIANS},
+                                                      {"Degrees", Axes::Units::DEGREES},
+                                                      {"mm", Axes::Units::MM},
+                                                      {"q-space", Axes::Units::QSPACE}};
 
-const std::map<AxesUnits, QString> names_from_units{{AxesUnits::NBINS, "nbins"},
-                                                    {AxesUnits::RADIANS, "Radians"},
-                                                    {AxesUnits::MM, "mm"},
-                                                    {AxesUnits::QSPACE, "q-space"},
-                                                    {AxesUnits::DEGREES, "Degrees"}};
+const std::map<Axes::Units, QString> names_from_units{{Axes::Units::NBINS, "nbins"},
+                                                      {Axes::Units::RADIANS, "Radians"},
+                                                      {Axes::Units::MM, "mm"},
+                                                      {Axes::Units::QSPACE, "q-space"},
+                                                      {Axes::Units::DEGREES, "Degrees"}};
 
 //! Updates axes' titles
-void updateAxesTitle(DataItem* intensityItem, const IUnitConverter& converter, AxesUnits units);
+void updateAxesTitle(DataItem* intensityItem, const IUnitConverter& converter, Axes::Units units);
 } // namespace
 
 //! Updates axes of OutputData in IntensityData item to correspond with ::P_AXES_UNITS selection.
 //! InstrumentItem is used to get domain's detector map for given units.
 
-void JobItemUtils::updateDataAxes(DataItem* intensityItem, const InstrumentItem* instrumentItem)
-{
+void JobItemUtils::updateDataAxes(DataItem* intensityItem, const InstrumentItem* instrumentItem) {
     ASSERT(intensityItem);
 
     if (!instrumentItem) {
@@ -60,7 +57,7 @@ void JobItemUtils::updateDataAxes(DataItem* intensityItem, const InstrumentItem*
     if (!intensityItem->getOutputData())
         return;
 
-    AxesUnits requested_units = axesUnitsFromName(intensityItem->selectedAxesUnits());
+    Axes::Units requested_units = axesUnitsFromName(intensityItem->selectedAxesUnits());
 
     const auto converter = DomainObjectBuilder::createUnitConverter(instrumentItem);
     auto newData = UnitConverterUtils::createOutputData(*converter.get(), requested_units);
@@ -73,24 +70,21 @@ void JobItemUtils::updateDataAxes(DataItem* intensityItem, const InstrumentItem*
 
 //! Correspondance of domain detector axes types to their gui counterpart.
 
-QString JobItemUtils::nameFromAxesUnits(AxesUnits units)
-{
+QString JobItemUtils::nameFromAxesUnits(Axes::Units units) {
     return names_from_units.find(units) != names_from_units.end() ? names_from_units.at(units)
                                                                   : QString();
 }
 
 //! Correspondance of GUI axes units names to their domain counterpart.
 
-AxesUnits JobItemUtils::axesUnitsFromName(const QString& name)
-{
+Axes::Units JobItemUtils::axesUnitsFromName(const QString& name) {
     return units_from_names.at(name);
 }
 
 //! Sets axes units suitable for given instrument.
 
 void JobItemUtils::setIntensityItemAxesUnits(DataItem* intensityItem,
-                                             const InstrumentItem* instrumentItem)
-{
+                                             const InstrumentItem* instrumentItem) {
     const auto converter = DomainObjectBuilder::createUnitConverter(instrumentItem);
     if (!converter)
         return;
@@ -98,15 +92,13 @@ void JobItemUtils::setIntensityItemAxesUnits(DataItem* intensityItem,
 }
 
 void JobItemUtils::setIntensityItemAxesUnits(DataItem* intensityItem,
-                                             const IUnitConverter& converter)
-{
+                                             const IUnitConverter& converter) {
     ComboProperty combo = availableUnits(converter);
     intensityItem->setItemValue(DataItem::P_AXES_UNITS, combo.variant());
 }
 
 void JobItemUtils::createDefaultDetectorMap(DataItem* intensityItem,
-                                            const InstrumentItem* instrumentItem)
-{
+                                            const InstrumentItem* instrumentItem) {
     const auto converter = DomainObjectBuilder::createUnitConverter(instrumentItem);
     auto output_data = UnitConverterUtils::createOutputData(*converter, converter->defaultUnits());
     intensityItem->setOutputData(output_data.release());
@@ -114,8 +106,7 @@ void JobItemUtils::createDefaultDetectorMap(DataItem* intensityItem,
     updateAxesTitle(intensityItem, *converter, converter->defaultUnits());
 }
 
-void JobItemUtils::setResults(DataItem* intensityItem, const Simulation* simulation)
-{
+void JobItemUtils::setResults(DataItem* intensityItem, const ISimulation* simulation) {
     const auto sim_result = simulation->result();
     if (intensityItem->getOutputData() == nullptr) {
         const auto& converter = sim_result.converter();
@@ -127,8 +118,7 @@ void JobItemUtils::setResults(DataItem* intensityItem, const Simulation* simulat
     intensityItem->setOutputData(data.release());
 }
 
-ComboProperty JobItemUtils::availableUnits(const IUnitConverter& converter)
-{
+ComboProperty JobItemUtils::availableUnits(const IUnitConverter& converter) {
     ComboProperty result;
     for (auto units : converter.availableUnits()) {
         auto unit_name = nameFromAxesUnits(units);
@@ -140,10 +130,8 @@ ComboProperty JobItemUtils::availableUnits(const IUnitConverter& converter)
     return result;
 }
 
-namespace
-{
-void updateAxesTitle(DataItem* intensityItem, const IUnitConverter& converter, AxesUnits units)
-{
+namespace {
+void updateAxesTitle(DataItem* intensityItem, const IUnitConverter& converter, Axes::Units units) {
     intensityItem->setXaxisTitle(QString::fromStdString(converter.axisName(0, units)));
     if (converter.dimension() > 1)
         intensityItem->setYaxisTitle(QString::fromStdString(converter.axisName(1, units)));

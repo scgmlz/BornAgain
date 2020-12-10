@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/ParticleDistributionView.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 
-ParticleDistributionView::ParticleDistributionView(QGraphicsItem* parent) : ConnectableView(parent)
-{
+ParticleDistributionView::ParticleDistributionView(QGraphicsItem* parent)
+    : ConnectableView(parent) {
     setName("ParticleDistribution");
     setColor(DesignerHelper::getDefaultParticleColor());
     setRectangle(DesignerHelper::getDefaultBoundingRect("ParticleDistribution"));
@@ -31,7 +31,6 @@ ParticleDistributionView::ParticleDistributionView(QGraphicsItem* parent) : Conn
     m_label_vspace = StyleUtils::SizeOfLetterM().height() * 3.0;
 }
 
-void ParticleDistributionView::addView(IView* childView, int /* row */)
-{
+void ParticleDistributionView::addView(IView* childView, int /* row */) {
     connectInputPort(dynamic_cast<ConnectableView*>(childView), 0);
 }

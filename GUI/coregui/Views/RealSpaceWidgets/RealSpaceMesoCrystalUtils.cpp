@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceMesoCrystalUtils.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/Units.h"
-#include "Core/Particle/IParticle.h"
-#include "Core/Particle/MesoCrystal.h"
-#include "Core/Particle/Particle.h"
-#include "Core/Particle/ParticleCoreShell.h"
-#include "Core/Particle/ParticleDistribution.h"
-#include "Core/Scattering/IFormFactor.h"
-#include "Core/includeIncludes/HardParticles.h"
-#include "GUI/ba3d/model/particles.h"
+#include "Base/Const/Units.h"
 #include "GUI/coregui/Models/Lattice2DItems.h"
 #include "GUI/coregui/Models/MesoCrystalItem.h"
 #include "GUI/coregui/Models/ParticleCompositionItem.h"
@@ -31,13 +22,15 @@
 #include "GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilderUtils.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.h"
+#include "Sample/HardParticle/HardParticles.h"
+#include "Sample/Particle/MesoCrystal.h"
+#include "Sample/Particle/Particle.h"
+#include "Sample/Particle/ParticleCoreShell.h"
 
-namespace
-{
+namespace {
 const int n = 10; // TODO: Adjust this parameter based on the size of the mesocrystal
 
-bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positionInside)
-{
+bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positionInside) {
     bool check(false);
     if (auto ff_AnisoPyramid = dynamic_cast<const FormFactorAnisoPyramid*>(outerShape)) {
         double L = ff_AnisoPyramid->getLength();
@@ -142,12 +135,12 @@ bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positi
         std::ostringstream ostr;
         ostr << "Sorry, outer shape Dodecahedron not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (dynamic_cast<const FormFactorDot*>(outerShape)) {
         std::ostringstream ostr;
         ostr << "Cannot display particles inside the Mesocrystal!";
         ostr << "\n\nOuter shape is a Dot!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (auto ff_EllipsoidalCylinder =
                    dynamic_cast<const FormFactorEllipsoidalCylinder*>(outerShape)) {
         double a = ff_EllipsoidalCylinder->getRadiusX(); // semi-axis length along x
@@ -202,7 +195,7 @@ bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positi
         std::ostringstream ostr;
         ostr << "Sorry, outer shape Icosahedron not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (auto ff_Prism3 = dynamic_cast<const FormFactorPrism3*>(outerShape)) {
         double B = ff_Prism3->getBaseEdge();
         double H = ff_Prism3->getHeight();
@@ -260,37 +253,37 @@ bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positi
         std::ostringstream ostr;
         ostr << "Sorry, outer shape CosineRippleBox not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (dynamic_cast<const FormFactorCosineRippleGauss*>(outerShape)) {
         // TODO: Implement CosineRippleGauss
         std::ostringstream ostr;
         ostr << "Sorry, outer shape CosineRippleGauss not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (dynamic_cast<const FormFactorCosineRippleLorentz*>(outerShape)) {
         // TODO: Implement CosineRippleLorentz
         std::ostringstream ostr;
         ostr << "Sorry, outer shape CosineRippleLorentz not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (dynamic_cast<const FormFactorSawtoothRippleBox*>(outerShape)) {
         // TODO: Implement SawtoothRippleBox
         std::ostringstream ostr;
         ostr << "Sorry, outer shape SawtoothRippleBox not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (dynamic_cast<const FormFactorSawtoothRippleGauss*>(outerShape)) {
         // TODO: Implement SawtoothRippleGauss
         std::ostringstream ostr;
         ostr << "Sorry, outer shape SawtoothRippleGauss not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (dynamic_cast<const FormFactorSawtoothRippleLorentz*>(outerShape)) {
         // TODO: Implement SawtoothRippleLorentz
         std::ostringstream ostr;
         ostr << "Sorry, outer shape SawtoothRippleLorentz not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (auto ff_Tetrahedron = dynamic_cast<const FormFactorTetrahedron*>(outerShape)) {
         double B = ff_Tetrahedron->getBaseEdge();
         double H = ff_Tetrahedron->getHeight();
@@ -323,7 +316,7 @@ bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positi
         std::ostringstream ostr;
         ostr << "Sorry, outer shape Truncated cube not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else if (auto ff_TruncatedSphere =
                    dynamic_cast<const FormFactorTruncatedSphere*>(outerShape)) {
         double R = ff_TruncatedSphere->getRadius();
@@ -342,24 +335,22 @@ bool isPositionInsideMesoCrystal(const IFormFactor* outerShape, kvector_t positi
         std::ostringstream ostr;
         ostr << "Sorry, outer shape Truncated spheroid not yet implemented for Mesocrystal";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     }
     return check;
 }
 } // namespace
 
-RealSpaceMesoCrystal::~RealSpaceMesoCrystal() {}
+RealSpaceMesoCrystal::~RealSpaceMesoCrystal() = default;
 
 RealSpaceMesoCrystal::RealSpaceMesoCrystal(const MesoCrystalItem* mesoCrystalItem,
-                                           double total_abundance, const QVector3D& origin)
-{
+                                           double total_abundance, const QVector3D& origin) {
     m_mesoCrystalItem = mesoCrystalItem;
     m_total_abundance = total_abundance;
     m_origin = origin;
 }
 
-Particle3DContainer RealSpaceMesoCrystal::populateMesoCrystal()
-{
+Particle3DContainer RealSpaceMesoCrystal::populateMesoCrystal() {
     auto mesoCrystal = m_mesoCrystalItem->createMesoCrystal();
 
     std::unique_ptr<MesoCrystal> M_clone(mesoCrystal->clone()); // clone of the mesoCrystal
@@ -389,7 +380,7 @@ Particle3DContainer RealSpaceMesoCrystal::populateMesoCrystal()
         std::ostringstream ostr;
         ostr << "Sorry, MesoCrystal inside MesoCrystal not yet implemented";
         ostr << "\n\nStay tuned!";
-        throw Exceptions::ClassInitializationException(ostr.str());
+        throw std::runtime_error(ostr.str());
     } else {
         auto particle = dynamic_cast<const Particle*>(particleBasis.get());
         mesoCrystalBasis3DContainer =

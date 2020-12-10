@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/DesignerMimeData.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
@@ -29,8 +29,7 @@
 #endif
 
 DesignerMimeData::DesignerMimeData(const QString& entryname, const QString& xmldescr, QDrag* drag)
-    : m_entryname(entryname), m_xmldescr(xmldescr)
-{
+    : m_entryname(entryname), m_xmldescr(xmldescr) {
     drag->setMimeData(this);
 
     read_xmldescr(m_xmldescr);
@@ -44,8 +43,7 @@ DesignerMimeData::DesignerMimeData(const QString& entryname, const QString& xmld
     drag->setHotSpot(QPoint(drag->pixmap().width() / 2, drag->pixmap().height() / 2));
 }
 
-void DesignerMimeData::read_xmldescr(const QString& xmldescr)
-{
+void DesignerMimeData::read_xmldescr(const QString& xmldescr) {
     QXmlStreamReader reader(xmldescr);
 
     bool widget_found = false;
@@ -74,8 +72,7 @@ void DesignerMimeData::read_xmldescr(const QString& xmldescr)
 }
 
 // extract class name and skip the rest
-void DesignerMimeData::read_widget(QXmlStreamReader& reader)
-{
+void DesignerMimeData::read_widget(QXmlStreamReader& reader) {
     for (const QXmlStreamAttribute& attribute : reader.attributes()) {
         QStringRef name = attribute.name();
         if (name == "class") {
@@ -89,9 +86,8 @@ void DesignerMimeData::read_widget(QXmlStreamReader& reader)
 
 // Execute a drag and drop operation.
 Qt::DropAction DesignerMimeData::execDrag(const QString& name, const QString& xmldescr,
-                                          QWidget* dragSource)
-{
-    if (!xmldescr.size())
+                                          QWidget* dragSource) {
+    if (xmldescr.size() == 0)
         return Qt::IgnoreAction;
 
     QDrag* drag = new QDrag(dragSource);
@@ -103,7 +99,6 @@ Qt::DropAction DesignerMimeData::execDrag(const QString& name, const QString& xm
     return executedAction;
 }
 
-QPixmap DesignerMimeData::getPixmap(const QString& name)
-{
+QPixmap DesignerMimeData::getPixmap(const QString& name) {
     return DesignerHelper::getMimePixmap(name);
 }

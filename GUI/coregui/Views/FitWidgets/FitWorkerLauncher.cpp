@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/FitWorkerLauncher.h"
 #include "GUI/coregui/Views/FitWidgets/FitWorker.h"
 #include <QThread>
 
 FitWorkerLauncher::FitWorkerLauncher(QObject* parent)
-    : QObject(parent), m_is_fit_running(false), m_duration(0)
-{
-}
+    : QObject(parent), m_is_fit_running(false), m_duration(0) {}
 
-void FitWorkerLauncher::runFitting(std::shared_ptr<FitObjectiveBuilder> suite)
-{
+void FitWorkerLauncher::runFitting(std::shared_ptr<FitObjectiveBuilder> suite) {
     if (!suite || m_is_fit_running)
         return;
 
@@ -50,30 +47,25 @@ void FitWorkerLauncher::runFitting(std::shared_ptr<FitObjectiveBuilder> suite)
 
 //! Returns duration of fit in msec.
 
-int FitWorkerLauncher::getDuration()
-{
+int FitWorkerLauncher::getDuration() {
     return m_duration;
 }
 
-void FitWorkerLauncher::interruptFitting()
-{
+void FitWorkerLauncher::interruptFitting() {
     if (m_is_fit_running)
         emit intern_interruptFittingWorker();
 }
 
-void FitWorkerLauncher::intern_workerFinished(int duration)
-{
+void FitWorkerLauncher::intern_workerFinished(int duration) {
     m_is_fit_running = false;
     m_duration = duration;
     emit fittingFinished();
 }
 
-void FitWorkerLauncher::intern_workerStarted()
-{
+void FitWorkerLauncher::intern_workerStarted() {
     emit fittingStarted();
 }
 
-void FitWorkerLauncher::intern_error(const QString& mesg)
-{
+void FitWorkerLauncher::intern_error(const QString& mesg) {
     emit fittingError(mesg);
 }

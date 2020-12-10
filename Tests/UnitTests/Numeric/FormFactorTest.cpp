@@ -5,8 +5,7 @@ using ::testing::Combine;
 using ::testing::Values;
 using ::testing::internal::ParamGenerator;
 
-namespace formFactorTest
-{
+namespace formFactorTest {
 
 const complex_t I{0, 1};
 
@@ -24,8 +23,7 @@ auto qlist = testing::Combine(
                     .1 + .1 * I, -.99 + .3 * I, .999, -.9999));
 
 void run_test_for_many_q(std::function<void(cvector_t)> run_one_test, double qmag_min,
-                         double qmag_max)
-{
+                         double qmag_max) {
     ParamGenerator<std::tuple<cvector_t, cvector_t, double, complex_t>> gen = qlist;
     for (auto it : gen) {
         cvector_t qdir = std::get<0>(it);

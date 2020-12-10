@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,8 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_TESTENGINE_IFACTORY_H
 #define BORNAGAIN_FIT_TESTENGINE_IFACTORY_H
 
@@ -22,11 +27,12 @@
 #include <memory>
 #include <sstream>
 
+namespace mumufit::test {
+
 //! Base class for all factories.
 //! @ingroup tools_internal
 
-template <class Key, class AbstractProduct> class IFactory
-{
+template <class Key, class AbstractProduct> class IFactory {
 public:
     //! function which will be used to create object of AbstractProduct base type
     typedef typename std::function<AbstractProduct*()> CreateItemCallback;
@@ -35,29 +41,25 @@ public:
     typedef std::map<Key, CreateItemCallback> CallbackMap_t;
 
     //! Creates object by calling creation function corresponded to given identifier
-    AbstractProduct* createItem(const Key& item_key) const
-    {
+    AbstractProduct* createItem(const Key& item_key) const {
         auto it = m_callbacks.find(item_key);
         assert(it != m_callbacks.end());
         return (it->second)();
     }
 
 #ifndef SWIG
-    std::unique_ptr<AbstractProduct> createItemPtr(const Key& item_key) const
-    {
+    std::unique_ptr<AbstractProduct> createItemPtr(const Key& item_key) const {
         return std::unique_ptr<AbstractProduct>{createItem(item_key)};
     }
 #endif
 
     //! Registers object's creation function
-    bool registerItem(const Key& item_key, CreateItemCallback CreateFn)
-    {
+    bool registerItem(const Key& item_key, CreateItemCallback CreateFn) {
         assert(m_callbacks.find(item_key) == m_callbacks.end());
         return m_callbacks.insert(make_pair(item_key, CreateFn)).second;
     }
 
-    bool contains(const Key& item_key) const
-    {
+    bool contains(const Key& item_key) const {
         return m_callbacks.find(item_key) != m_callbacks.end();
     }
 
@@ -74,9 +76,11 @@ protected:
 //! 'create_new<T>', with no function arguments supplied. Equivalently, we could
 //! use a lambda function '[](){return new T;}'.
 
-template <class T> T* create_new()
-{
+template <class T> T* create_new() {
     return new T();
 }
 
+} // namespace mumufit::test
+
 #endif // BORNAGAIN_FIT_TESTENGINE_IFACTORY_H
+#endif // USER_API

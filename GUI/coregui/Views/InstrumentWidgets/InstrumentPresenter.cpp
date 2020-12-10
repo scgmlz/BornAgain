@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,42 +10,39 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/InstrumentPresenter.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/InstrumentWidgets/DepthProbeInstrumentEditor.h"
 #include "GUI/coregui/Views/InstrumentWidgets/GISASInstrumentEditor.h"
-#include "GUI/coregui/Views/InstrumentWidgets/OffSpecInstrumentEditor.h"
+#include "GUI/coregui/Views/InstrumentWidgets/OffSpecularInstrumentEditor.h"
 #include "GUI/coregui/Views/InstrumentWidgets/SpecularInstrumentEditor.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-namespace
-{
+namespace {
 const QString GISASPresentation = "GISAS";
-const QString OffSpecPresentation = "OffSpec";
+const QString OffSpecularPresentation = "OffSpecular";
 const QString SpecularPresentation = "Specular";
 const QString DepthProbePresentation = "DepthProbe";
 } // namespace
 
-InstrumentPresenter::InstrumentPresenter(QWidget* parent) : ItemComboWidget(parent)
-{
+InstrumentPresenter::InstrumentPresenter(QWidget* parent) : ItemComboWidget(parent) {
     registerWidget(GISASPresentation, create_new<GISASInstrumentEditor>);
-    registerWidget(OffSpecPresentation, create_new<OffSpecInstrumentEditor>);
+    registerWidget(OffSpecularPresentation, create_new<OffSpecularInstrumentEditor>);
     registerWidget(SpecularPresentation, create_new<SpecularInstrumentEditor>);
     registerWidget(DepthProbePresentation, create_new<DepthProbeInstrumentEditor>);
     setToolBarVisible(false);
 }
 
-QString InstrumentPresenter::itemPresentation() const
-{
+QString InstrumentPresenter::itemPresentation() const {
     if (!currentItem())
         return {};
 
     if (currentItem()->modelType() == "GISASInstrument")
         return GISASPresentation;
-    else if (currentItem()->modelType() == "OffSpecInstrument")
-        return OffSpecPresentation;
+    else if (currentItem()->modelType() == "OffSpecularInstrument")
+        return OffSpecularPresentation;
     else if (currentItem()->modelType() == "SpecularInstrument")
         return SpecularPresentation;
     else if (currentItem()->modelType() == "DepthProbeInstrument")
@@ -56,9 +53,8 @@ QString InstrumentPresenter::itemPresentation() const
                                 + currentItem()->modelType() + "'");
 }
 
-QStringList InstrumentPresenter::activePresentationList(SessionItem* item)
-{
+QStringList InstrumentPresenter::activePresentationList(SessionItem* item) {
     Q_UNUSED(item);
-    return QStringList() << GISASPresentation << OffSpecPresentation << SpecularPresentation
+    return QStringList() << GISASPresentation << OffSpecularPresentation << SpecularPresentation
                          << DepthProbePresentation;
 }

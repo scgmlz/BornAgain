@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORPRESENTER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INSTRUMENTWIDGETS_DETECTORPRESENTER_H
@@ -21,8 +21,7 @@
 //! of detector item (SphericalDetectorEditor or RectangularDetectorEditor).
 //! Main component of GISASDetectorEditor.
 
-class BA_CORE_API_ DetectorPresenter : public ItemComboWidget
-{
+class DetectorPresenter : public ItemComboWidget {
     Q_OBJECT
 
 public:

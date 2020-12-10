@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/CommonWidgets/ItemComboToolBar.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include <QAction>
 #include <QComboBox>
 #include <QStandardItemModel>
 
 ItemComboToolBar::ItemComboToolBar(QWidget* parent)
-    : StyledToolBar(parent), m_comboBox(new QComboBox), m_comboBoxAction(nullptr)
-{
+    : StyledToolBar(parent), m_comboBox(new QComboBox), m_comboBoxAction(nullptr) {
     setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
     m_comboBox->setToolTip("Select type of graphical presentation.");
@@ -30,16 +29,14 @@ ItemComboToolBar::ItemComboToolBar(QWidget* parent)
     setComboConnected(true);
 }
 
-void ItemComboToolBar::setPresentation(const QString& name)
-{
+void ItemComboToolBar::setPresentation(const QString& name) {
     setComboConnected(false);
     m_comboBox->setCurrentText(name);
     setComboConnected(true);
 }
 
 void ItemComboToolBar::setPresentationList(const QStringList& presentationList,
-                                           const QStringList& activeList)
-{
+                                           const QStringList& activeList) {
     ASSERT(presentationList.size());
 
     QString previous = currentPresentation();
@@ -56,15 +53,13 @@ void ItemComboToolBar::setPresentationList(const QStringList& presentationList,
     setComboConnected(true);
 }
 
-QString ItemComboToolBar::currentPresentation() const
-{
+QString ItemComboToolBar::currentPresentation() const {
     return m_comboBox->currentText();
 }
 
 //! Sets external actions to tool bar (previous actions will be removed).
 
-void ItemComboToolBar::setActionList(const QList<QAction*>& actionList)
-{
+void ItemComboToolBar::setActionList(const QList<QAction*>& actionList) {
     for (auto action : actions())
         removeAction(action);
 
@@ -76,8 +71,7 @@ void ItemComboToolBar::setActionList(const QList<QAction*>& actionList)
     addAction(m_comboBoxAction);
 }
 
-void ItemComboToolBar::setComboConnected(bool value)
-{
+void ItemComboToolBar::setComboConnected(bool value) {
     if (value)
         connect(m_comboBox, SIGNAL(currentIndexChanged(QString)), this,
                 SIGNAL(comboChanged(QString)), Qt::UniqueConnection);
@@ -88,8 +82,7 @@ void ItemComboToolBar::setComboConnected(bool value)
 
 //! All items in QComboBox which are not in given list, will be disabled (gray and unselectable).
 
-void ItemComboToolBar::makeItemsEnabled(const QStringList& activePresentations)
-{
+void ItemComboToolBar::makeItemsEnabled(const QStringList& activePresentations) {
     const QStandardItemModel* model = dynamic_cast<const QStandardItemModel*>(m_comboBox->model());
     ASSERT(model);
 

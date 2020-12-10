@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,25 +10,28 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATION_H
 #define BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATION_H
 
-#include "Core/Computation/DepthProbeComputationTerm.h"
 #include "Core/Computation/IComputation.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Core/Term/DepthProbeComputationTerm.h"
 
 class MultiLayer;
 
 //! Performs a single-threaded depth probe computation with given sample.
 //!
-//! Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
+//! Controlled by the multi-threading machinery in ISimulation::runSingleSimulation().
 //!
 //! @ingroup algorithms_internal
 
-class DepthProbeComputation : public IComputation
-{
+class DepthProbeComputation : public IComputation {
     using DepthProbeElementIter = std::vector<DepthProbeElement>::iterator;
 
 public:
@@ -45,3 +48,4 @@ private:
 };
 
 #endif // BORNAGAIN_CORE_COMPUTATION_DEPTHPROBECOMPUTATION_H
+#endif // USER_API

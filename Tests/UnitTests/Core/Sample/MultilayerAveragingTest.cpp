@@ -1,37 +1,31 @@
-#include "Core/Aggregate/InterferenceFunction2DLattice.h"
-#include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Computation/ProcessedSample.h"
-#include "Core/HardParticle/FormFactorCylinder.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Multilayer/Slice.h"
-#include "Core/Parametrization/SimulationOptions.h"
-#include "Core/Particle/Particle.h"
+#include "Sample/Aggregate/InterferenceFunction2DLattice.h"
+#include "Sample/Aggregate/ParticleLayout.h"
+#include "Sample/HardParticle/FormFactorCylinder.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/Particle/Particle.h"
+#include "Sample/Processed/ProcessedSample.h"
+#include "Sample/RT/SimulationOptions.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class MultilayerAveragingTest : public ::testing::Test
-{
+class MultilayerAveragingTest : public ::testing::Test {
 protected:
     MultilayerAveragingTest()
-        : vacuum(HomogeneousMaterial("vac", 0.0, 0.0)),
-          stone(HomogeneousMaterial("stone", 4e-4, 8e-7))
-    {
-    }
+        : vacuum(HomogeneousMaterial("vac", 0.0, 0.0))
+        , stone(HomogeneousMaterial("stone", 4e-4, 8e-7)) {}
 
     const Material vacuum, stone;
 };
 
-TEST_F(MultilayerAveragingTest, AverageMultilayer)
-{
+TEST_F(MultilayerAveragingTest, AverageMultilayer) {
     // particles
     FormFactorCylinder cylinder_ff(1.0, 3.0);
     Particle particle(stone, cylinder_ff);
 
     // interferences
-    InterferenceFunction2DLattice interf_1(10.0, 10.0, 120.0, 0.0);
-    InterferenceFunction2DLattice interf_2(10.0, 10.0, 120.0, 0.0);
+    InterferenceFunction2DLattice interf_1(BasicLattice2D(10.0, 10.0, 120.0, 0.0));
+    InterferenceFunction2DLattice interf_2(BasicLattice2D(10.0, 10.0, 120.0, 0.0));
 
     // layouts
     ParticleLayout layout_1;

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,32 +10,28 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/EllipseView.h"
 #include "GUI/coregui/Models/MaskItems.h"
-#include "GUI/coregui/Views/MaskWidgets/SizeHandleElement.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 
-EllipseView::EllipseView() {}
+EllipseView::EllipseView() = default;
 
-void EllipseView::onChangedX()
-{
+void EllipseView::onChangedX() {
     setBlockOnProperty(true);
     m_item->setItemValue(EllipseItem::P_XCENTER, fromSceneX(this->x()));
     setBlockOnProperty(false);
 }
 
-void EllipseView::onChangedY()
-{
+void EllipseView::onChangedY() {
     setBlockOnProperty(true);
     m_item->setItemValue(EllipseItem::P_YCENTER, fromSceneY(this->y()));
     setBlockOnProperty(false);
 }
 
-void EllipseView::onPropertyChange(const QString& propertyName)
-{
+void EllipseView::onPropertyChange(const QString& propertyName) {
     if (propertyName == EllipseItem::P_XRADIUS || propertyName == EllipseItem::P_YRADIUS) {
         update_view();
     } else if (propertyName == EllipseItem::P_XCENTER) {
@@ -47,8 +43,7 @@ void EllipseView::onPropertyChange(const QString& propertyName)
     }
 }
 
-void EllipseView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
+void EllipseView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
     painter->setRenderHints(QPainter::Antialiasing);
     bool mask_value = m_item->getItemValue(MaskItem::P_MASK_VALUE).toBool();
     painter->setBrush(MaskEditorHelper::getMaskBrush(mask_value));
@@ -56,8 +51,7 @@ void EllipseView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
     painter->drawEllipse(m_mask_rect);
 }
 
-void EllipseView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
+void EllipseView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     if (m_activeHandleElement) {
         QPointF opposPos = mapFromScene(m_resize_opposite_origin);
         qreal xmin = std::min(event->pos().x(), opposPos.x());
@@ -108,8 +102,7 @@ void EllipseView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 //! updates position of view using item properties
 
-void EllipseView::update_position()
-{
+void EllipseView::update_position() {
     disconnect(this, SIGNAL(xChanged()), this, SLOT(onChangedX()));
     disconnect(this, SIGNAL(yChanged()), this, SLOT(onChangedY()));
 
@@ -123,35 +116,30 @@ void EllipseView::update_position()
         setTransform(QTransform().rotate(-1.0 * par(EllipseItem::P_ANGLE)));
 }
 
-QRectF EllipseView::mask_rectangle()
-{
+QRectF EllipseView::mask_rectangle() {
     return QRectF(-width() / 2., -height() / 2., width(), height());
 }
 
 //! returns the x-coordinate of the rectangle's left edge
 
-qreal EllipseView::left() const
-{
+qreal EllipseView::left() const {
     return toSceneX(par(EllipseItem::P_XCENTER) - par(EllipseItem::P_XRADIUS));
 }
 
 //! returns the x-coordinate of the rectangle's right edge
 
-qreal EllipseView::right() const
-{
+qreal EllipseView::right() const {
     return toSceneX(par(EllipseItem::P_XCENTER) + par(EllipseItem::P_XRADIUS));
 }
 
 //! Returns the y-coordinate of the rectangle's top edge.
 
-qreal EllipseView::top() const
-{
+qreal EllipseView::top() const {
     return toSceneY(par(EllipseItem::P_YCENTER) + par(EllipseItem::P_YRADIUS));
 }
 
 //! Returns the y-coordinate of the rectangle's bottom edge.
 
-qreal EllipseView::bottom() const
-{
+qreal EllipseView::bottom() const {
     return toSceneY(par(EllipseItem::P_YCENTER) - par(EllipseItem::P_YRADIUS));
 }

@@ -1,19 +1,15 @@
-#include "Core/Detector/SpecularDetector1D.h"
-#include "Core/Basics/Units.h"
-#include "Core/Beam/Beam.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Detector/SimulationArea.h"
-#include "Core/Intensity/OutputData.h"
+#include "Device/Detector/SpecularDetector1D.h"
+#include "Base/Const/Units.h"
+#include "Device/Beam/Beam.h"
+#include "Device/Data/OutputData.h"
+#include "Device/Detector/SimulationArea.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-class SpecularDetectorTest : public ::testing::Test
-{
-};
+class SpecularDetectorTest : public ::testing::Test {};
 
 // Default detector construction
-TEST_F(SpecularDetectorTest, basicBehaviour)
-{
+TEST_F(SpecularDetectorTest, basicBehaviour) {
     FixedBinAxis axis("axis0", 10, 0.0, 10.0);
     SpecularDetector1D detector(axis);
 
@@ -24,42 +20,35 @@ TEST_F(SpecularDetectorTest, basicBehaviour)
 
     // checking size and axis
     EXPECT_EQ(1u, detector.dimension());
-    EXPECT_EQ(axis.getMin(), detector.getAxis(0).getMin());
-    EXPECT_EQ(axis.getMax(), detector.getAxis(0).getMax());
+    EXPECT_EQ(axis.lowerBound(), detector.axis(0).lowerBound());
+    EXPECT_EQ(axis.upperBound(), detector.axis(0).upperBound());
 
     // throwing exceptions
     OutputData<double>* p_intensity_map(nullptr);
     ASSERT_THROW(detector.applyDetectorResolution(p_intensity_map), std::runtime_error);
-
-    // clearing detector
-    detector.clear();
-    EXPECT_EQ(0u, detector.dimension());
-    ASSERT_THROW(detector.getAxis(0), std::runtime_error);
 }
 
 // Creation of the detector map with axes in given units
-TEST_F(SpecularDetectorTest, createDetectorMap)
-{
+TEST_F(SpecularDetectorTest, createDetectorMap) {
     FixedBinAxis axis("axis0", 10, 1.0 * Units::deg, 10.0 * Units::deg);
     SpecularDetector1D detector(axis);
 
     // creating map in default units, which are radians and checking axes
     auto data = detector.createDetectorMap();
-    EXPECT_EQ(data->getAxis(0).size(), 10u);
-    EXPECT_EQ(data->getAxis(0).getMin(), 1.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(0).getMax(), 10.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).size(), 10u);
+    EXPECT_EQ(data->axis(0).lowerBound(), 1.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).upperBound(), 10.0 * Units::deg);
 }
 
-TEST_F(SpecularDetectorTest, Clone)
-{
+TEST_F(SpecularDetectorTest, Clone) {
     FixedBinAxis axis("axis0", 5, 1.0 * Units::deg, 10.0 * Units::deg);
     SpecularDetector1D detector(axis);
     std::unique_ptr<SpecularDetector1D> clone(detector.clone());
 
     const auto data = clone->createDetectorMap();
-    EXPECT_EQ(data->getAxis(0).size(), 5u);
-    EXPECT_EQ(data->getAxis(0).getMin(), 1.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(0).getMax(), 10.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).size(), 5u);
+    EXPECT_EQ(data->axis(0).lowerBound(), 1.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).upperBound(), 10.0 * Units::deg);
 
     EXPECT_EQ(nullptr, clone->detectorResolution());
     EXPECT_EQ(nullptr, clone->detectorMask());

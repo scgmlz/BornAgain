@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -20,10 +20,8 @@
 
 using gradient_map_t = QMap<QString, QCPColorGradient::GradientPreset>;
 
-namespace
-{
-gradient_map_t createGradientMap()
-{
+namespace {
+gradient_map_t createGradientMap() {
     gradient_map_t result;
 
     result["Grayscale"] = QCPColorGradient::gpGrayscale;
@@ -44,14 +42,12 @@ gradient_map_t createGradientMap()
 
 // Converts xmin (low edge of first bin) and xmax (upper edge of last bin) to the
 // range expected by QCPColorMapData::setRange.
-QCPRange qcpRange(double xmin, double xmax, int nbins)
-{
+QCPRange qcpRange(double xmin, double xmax, int nbins) {
     double dx = (xmax - xmin) / nbins;
     return QCPRange(xmin + dx / 2., xmax - dx / 2.);
 }
 
-QMargins defaultMargins(const QWidget& widget)
-{
+QMargins defaultMargins(const QWidget& widget) {
     auto base_size = StyleUtils::SizeOfLetterM(&widget);
     int left = static_cast<int>(base_size.width() * 6.0);
     int top = static_cast<int>(base_size.height() * 1.5);
@@ -62,8 +58,7 @@ QMargins defaultMargins(const QWidget& widget)
 
 } // namespace
 
-QCPColorGradient ColorMapUtils::getGradient(const QString& gradientName)
-{
+QCPColorGradient ColorMapUtils::getGradient(const QString& gradientName) {
     static gradient_map_t gradient_map = createGradientMap();
 
     auto it = gradient_map.find(gradientName);
@@ -74,44 +69,36 @@ QCPColorGradient ColorMapUtils::getGradient(const QString& gradientName)
     return QCPColorGradient(it.value());
 }
 
-QCPColorGradient ColorMapUtils::itemGradient(const IntensityDataItem* item)
-{
+QCPColorGradient ColorMapUtils::itemGradient(const IntensityDataItem* item) {
     return getGradient(item->getGradient());
 }
 
-QCPRange ColorMapUtils::itemXrange(const IntensityDataItem* item)
-{
+QCPRange ColorMapUtils::itemXrange(const IntensityDataItem* item) {
     return qcpRange(item->getXmin(), item->getXmax(), item->getNbinsX());
 }
 
-QCPRange ColorMapUtils::itemZoomX(const IntensityDataItem* item)
-{
+QCPRange ColorMapUtils::itemZoomX(const IntensityDataItem* item) {
     return QCPRange(item->getLowerX(), item->getUpperX());
 }
 
-QCPRange ColorMapUtils::itemYrange(const IntensityDataItem* item)
-{
+QCPRange ColorMapUtils::itemYrange(const IntensityDataItem* item) {
     return qcpRange(item->getYmin(), item->getYmax(), item->getNbinsY());
 }
 
-QCPRange ColorMapUtils::itemZoomY(const IntensityDataItem* item)
-{
+QCPRange ColorMapUtils::itemZoomY(const IntensityDataItem* item) {
     return QCPRange(item->getLowerY(), item->getUpperY());
 }
 
-QCPRange ColorMapUtils::itemDataRange(const IntensityDataItem* item)
-{
+QCPRange ColorMapUtils::itemDataRange(const IntensityDataItem* item) {
     QPair<double, double> range = item->dataRange();
     return QCPRange(range.first, range.second);
 }
 
-QCPRange ColorMapUtils::itemDataZoom(const IntensityDataItem* item)
-{
+QCPRange ColorMapUtils::itemDataZoom(const IntensityDataItem* item) {
     return QCPRange(item->getLowerZ(), item->getUpperZ());
 }
 
-void ColorMapUtils::setLogz(QCPColorScale* scale, bool isLogz)
-{
+void ColorMapUtils::setLogz(QCPColorScale* scale, bool isLogz) {
     if (isLogz && scale->dataScaleType() != QCPAxis::stLogarithmic)
         scale->setDataScaleType(QCPAxis::stLogarithmic);
 
@@ -121,8 +108,7 @@ void ColorMapUtils::setLogz(QCPColorScale* scale, bool isLogz)
     setLogz(scale->axis(), isLogz);
 }
 
-void ColorMapUtils::setLogz(QCPAxis* axis, bool isLogz)
-{
+void ColorMapUtils::setLogz(QCPAxis* axis, bool isLogz) {
     if (isLogz) {
         axis->setNumberFormat("eb");
         axis->setNumberPrecision(0);
@@ -138,8 +124,7 @@ void ColorMapUtils::setLogz(QCPAxis* axis, bool isLogz)
     }
 }
 
-void ColorMapUtils::setDefaultMargins(QCustomPlot* customPlot)
-{
+void ColorMapUtils::setDefaultMargins(QCustomPlot* customPlot) {
     auto* axisRectangle = customPlot->axisRect();
     axisRectangle->setAutoMargins(QCP::msTop | QCP::msBottom);
     axisRectangle->setMargins(defaultMargins(*customPlot));

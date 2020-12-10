@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEM_H
 
-#include "Core/Basics/Assert.h"
-#include "Fit/Tools/RealLimits.h"
+#include "Base/Utils/Assert.h"
+#include "Fit/Param/RealLimits.h"
 #include "GUI/coregui/Models/ModelMapper.h"
+#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <memory>
 
@@ -27,8 +28,7 @@ class SessionItemData;
 class SessionItemTags;
 class IPathTranslator;
 
-class BA_CORE_API_ SessionItem
-{
+class BA_CORE_API_ SessionItem {
     friend class SessionModel;
 
 public:
@@ -138,15 +138,13 @@ private:
     QVector<IPathTranslator*> m_translators;
 };
 
-template <typename T> T& SessionItem::item(const QString& tag) const
-{
+template <typename T> T& SessionItem::item(const QString& tag) const {
     T* t = dynamic_cast<T*>(getItem(tag));
     ASSERT(t);
     return *t;
 }
 
-template <typename T> T& SessionItem::groupItem(const QString& groupName) const
-{
+template <typename T> T& SessionItem::groupItem(const QString& groupName) const {
     T* t = dynamic_cast<T*>(getGroupItem(groupName));
     ASSERT(t);
     return *t;

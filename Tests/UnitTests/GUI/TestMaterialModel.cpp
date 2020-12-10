@@ -1,16 +1,12 @@
 #include "GUI/coregui/Models/MaterialDataItems.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-class TestMaterialModel : public ::testing::Test
-{
-};
+class TestMaterialModel : public ::testing::Test {};
 
-TEST_F(TestMaterialModel, addRefractiveMaterial)
-{
+TEST_F(TestMaterialModel, addRefractiveMaterial) {
     std::unique_ptr<MaterialModel> model(new MaterialModel);
 
     EXPECT_EQ(model->rowCount(QModelIndex()), 0);
@@ -29,8 +25,7 @@ TEST_F(TestMaterialModel, addRefractiveMaterial)
     EXPECT_EQ(materialData->getItemValue(MaterialRefractiveDataItem::P_BETA), beta);
 }
 
-TEST_F(TestMaterialModel, addSLDMaterial)
-{
+TEST_F(TestMaterialModel, addSLDMaterial) {
     std::unique_ptr<MaterialModel> model(new MaterialModel);
 
     EXPECT_EQ(model->rowCount(QModelIndex()), 0);
@@ -49,8 +44,7 @@ TEST_F(TestMaterialModel, addSLDMaterial)
     EXPECT_EQ(materialData->getItemValue(MaterialSLDDataItem::P_SLD_IMAG), sld_imag);
 }
 
-TEST_F(TestMaterialModel, cloneMaterial)
-{
+TEST_F(TestMaterialModel, cloneMaterial) {
     std::unique_ptr<MaterialModel> model(new MaterialModel);
 
     EXPECT_EQ(model->rowCount(QModelIndex()), 0);
@@ -79,8 +73,7 @@ TEST_F(TestMaterialModel, cloneMaterial)
 
 //! Checks the method which returns MaterialItem from known identifier.
 
-TEST_F(TestMaterialModel, materialFromIdentifier)
-{
+TEST_F(TestMaterialModel, materialFromIdentifier) {
     MaterialModel model;
     auto material1 = model.addRefractiveMaterial("aaa", 1.0, 2.0);
     auto material2 = model.addRefractiveMaterial("bbb", 3.0, 4.0);
@@ -91,8 +84,7 @@ TEST_F(TestMaterialModel, materialFromIdentifier)
 
 //! Checks the method which returns MaterialItem from material name.
 
-TEST_F(TestMaterialModel, test_materialFromName)
-{
+TEST_F(TestMaterialModel, test_materialFromName) {
     MaterialModel model;
     auto material1 = model.addRefractiveMaterial("aaa", 1.0, 2.0);
     auto material2 = model.addRefractiveMaterial("bbb", 3.0, 4.0);
@@ -103,8 +95,7 @@ TEST_F(TestMaterialModel, test_materialFromName)
 
 //! Checks the method which construct MaterialProperty from MaterialItem.
 
-TEST_F(TestMaterialModel, test_materialPropertyFromMaterial)
-{
+TEST_F(TestMaterialModel, test_materialPropertyFromMaterial) {
     MaterialModel model;
     auto material = model.addRefractiveMaterial("Something", 1.0, 2.0);
 
@@ -116,14 +107,13 @@ TEST_F(TestMaterialModel, test_materialPropertyFromMaterial)
 
 //! Default MaterialProperty construction.
 
-TEST_F(TestMaterialModel, defaultMaterialProperty)
-{
+TEST_F(TestMaterialModel, defaultMaterialProperty) {
     MaterialModel model;
 
     // testing default material property from MaterialItemUtils
     // in the absence of any materials, property should be in invalid state
     ExternalProperty property = MaterialItemUtils::defaultMaterialProperty();
-    EXPECT_TRUE(property.isValid() == false);
+    EXPECT_FALSE(property.isValid());
 
     // adding materials to the model, default property should refer to first material in a model
     auto mat1 = model.addRefractiveMaterial("Something1", 1.0, 2.0);

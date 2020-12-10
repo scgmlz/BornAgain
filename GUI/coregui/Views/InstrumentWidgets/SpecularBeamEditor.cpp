@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,9 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/SpecularBeamEditor.h"
-#include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
 #include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
@@ -24,8 +22,7 @@
 #include <QGridLayout>
 #include <QGroupBox>
 
-namespace
-{
+namespace {
 const QString wavelength_title("Wavelength [nm]");
 const QString inclination_title("Inclination angles [deg]");
 const QString footprint_title("Footprint correction");
@@ -33,13 +30,13 @@ const QString polarization_title("Polarization (Bloch vector)");
 } // namespace
 
 SpecularBeamEditor::SpecularBeamEditor(ColumnResizer* columnResizer, QWidget* parent)
-    : SessionItemWidget(parent), m_columnResizer(columnResizer),
-      m_intensityEditor(new ComponentEditor(ComponentEditor::PlainWidget)),
-      m_wavelengthEditor(new ComponentEditor(ComponentEditor::InfoWidget, wavelength_title)),
-      m_inclinationEditor(new ComponentEditor(ComponentEditor::InfoWidget, inclination_title)),
-      m_footprint_editor(new ComponentEditor(ComponentEditor::GroupWidget, footprint_title)),
-      m_gridLayout(new QGridLayout)
-{
+    : SessionItemWidget(parent)
+    , m_columnResizer(columnResizer)
+    , m_intensityEditor(new ComponentEditor(ComponentEditor::PlainWidget))
+    , m_wavelengthEditor(new ComponentEditor(ComponentEditor::InfoWidget, wavelength_title))
+    , m_inclinationEditor(new ComponentEditor(ComponentEditor::InfoWidget, inclination_title))
+    , m_footprint_editor(new ComponentEditor(ComponentEditor::GroupWidget, footprint_title))
+    , m_gridLayout(new QGridLayout) {
     m_gridLayout->addWidget(m_intensityEditor, 0, 0);
     m_gridLayout->addWidget(m_wavelengthEditor, 1, 0);
     m_gridLayout->addWidget(m_inclinationEditor, 1, 1);
@@ -61,8 +58,7 @@ SpecularBeamEditor::SpecularBeamEditor(ColumnResizer* columnResizer, QWidget* pa
     m_columnResizer->addWidgetsFromGridLayout(m_gridLayout, 2);
 }
 
-void SpecularBeamEditor::subscribeToItem()
-{
+void SpecularBeamEditor::subscribeToItem() {
     const auto beam_item = instrumentItem()->beamItem();
     ASSERT(beam_item);
 
@@ -80,23 +76,20 @@ void SpecularBeamEditor::subscribeToItem()
     m_footprint_editor->setItem(beam_item->getItem(SpecularBeamItem::P_FOOPTPRINT));
 }
 
-void SpecularBeamEditor::unsubscribeFromItem()
-{
+void SpecularBeamEditor::unsubscribeFromItem() {
     m_intensityEditor->clearEditor();
     m_wavelengthEditor->clearEditor();
     m_inclinationEditor->clearEditor();
     m_footprint_editor->clearEditor();
 }
 
-SpecularInstrumentItem* SpecularBeamEditor::instrumentItem()
-{
+SpecularInstrumentItem* SpecularBeamEditor::instrumentItem() {
     auto result = dynamic_cast<SpecularInstrumentItem*>(currentItem());
     ASSERT(result);
     return result;
 }
 
-void SpecularBeamEditor::onDialogRequest(SessionItem* item, const QString& name)
-{
+void SpecularBeamEditor::onDialogRequest(SessionItem* item, const QString& name) {
     if (!item)
         return;
 

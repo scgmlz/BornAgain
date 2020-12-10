@@ -66,11 +66,9 @@ class QDrag;
 class QImage;
 class QDropEvent;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
-class QDESIGNER_SHARED_EXPORT QDesignerDnDItem : public QDesignerDnDItemInterface
-{
+class QDESIGNER_SHARED_EXPORT QDesignerDnDItem : public QDesignerDnDItemInterface {
 public:
     explicit QDesignerDnDItem(DropType type, QWidget* source = 0);
     virtual ~QDesignerDnDItem();
@@ -101,8 +99,7 @@ private:
 
 // Mime data for use with designer drag and drop operations.
 
-class QDESIGNER_SHARED_EXPORT QDesignerMimeData : public QMimeData
-{
+class QDESIGNER_SHARED_EXPORT QDesignerMimeData : public QMimeData {
     Q_OBJECT
 
 public:

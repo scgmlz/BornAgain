@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/NodeEditor.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerView.h"
@@ -22,14 +22,12 @@
 
 NodeEditor::NodeEditor(QObject* parent) : QObject(parent), m_scene(0), m_conn(0) {}
 
-void NodeEditor::install(QGraphicsScene* scene)
-{
+void NodeEditor::install(QGraphicsScene* scene) {
     scene->installEventFilter(this);
     m_scene = scene;
 }
 
-QGraphicsItem* NodeEditor::itemAt(const QPointF& pos)
-{
+QGraphicsItem* NodeEditor::itemAt(const QPointF& pos) {
     QList<QGraphicsItem*> items = m_scene->items(QRectF(pos - QPointF(1, 1), QSize(3, 3)));
 
     for (QGraphicsItem* item : items)
@@ -39,8 +37,7 @@ QGraphicsItem* NodeEditor::itemAt(const QPointF& pos)
     return nullptr;
 }
 
-bool NodeEditor::eventFilter(QObject* object, QEvent* event)
-{
+bool NodeEditor::eventFilter(QObject* object, QEvent* event) {
     QGraphicsSceneMouseEvent* mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
     if (!mouseEvent)
         return QObject::eventFilter(object, event);
@@ -57,8 +54,7 @@ bool NodeEditor::eventFilter(QObject* object, QEvent* event)
     return isProcessedEvent ? isProcessedEvent : QObject::eventFilter(object, event);
 }
 
-bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent* event)
-{
+bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent* event) {
     bool result(false);
 
     if (m_conn == 0 && event->button() == Qt::LeftButton) {
@@ -77,8 +73,7 @@ bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent* event)
     return result;
 }
 
-bool NodeEditor::processMouseMove(QGraphicsSceneMouseEvent* event)
-{
+bool NodeEditor::processMouseMove(QGraphicsSceneMouseEvent* event) {
     bool result(false);
 
     if (m_conn) {
@@ -89,8 +84,7 @@ bool NodeEditor::processMouseMove(QGraphicsSceneMouseEvent* event)
     return result;
 }
 
-bool NodeEditor::processMouseRelease(QGraphicsSceneMouseEvent* event)
-{
+bool NodeEditor::processMouseRelease(QGraphicsSceneMouseEvent* event) {
     bool result(false);
 
     if (m_conn && event->button() == Qt::LeftButton) {

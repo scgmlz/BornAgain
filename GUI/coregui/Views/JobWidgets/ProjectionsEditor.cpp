@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/ProjectionsEditor.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -20,17 +20,20 @@
 #include "GUI/coregui/Views/JobWidgets/ProjectionsPropertyPanel.h"
 #include "GUI/coregui/Views/JobWidgets/ProjectionsToolBar.h"
 #include "GUI/coregui/Views/JobWidgets/ProjectionsWidget.h"
-#include "minisplitter.h"
 #include <QItemSelectionModel>
 #include <QSplitter>
+#include <qt-manhattan-style/minisplitter.h>
 
 ProjectionsEditor::ProjectionsEditor(QWidget* parent)
-    : QMainWindow(parent), m_editorActions(new ProjectionsEditorActions(this)),
-      m_toolBar(new ProjectionsToolBar(m_editorActions)),
-      m_projectionsCanvas(new ProjectionsEditorCanvas), m_projectionsWidget(new ProjectionsWidget),
-      m_propertyPanel(new ProjectionsPropertyPanel), m_selectionModel(nullptr),
-      m_rightSplitter(new Manhattan::MiniSplitter), m_bottomSplitter(new QSplitter)
-{
+    : QMainWindow(parent)
+    , m_editorActions(new ProjectionsEditorActions(this))
+    , m_toolBar(new ProjectionsToolBar(m_editorActions))
+    , m_projectionsCanvas(new ProjectionsEditorCanvas)
+    , m_projectionsWidget(new ProjectionsWidget)
+    , m_propertyPanel(new ProjectionsPropertyPanel)
+    , m_selectionModel(nullptr)
+    , m_rightSplitter(new Manhattan::MiniSplitter)
+    , m_bottomSplitter(new QSplitter) {
     addToolBar(Qt::RightToolBarArea, m_toolBar);
 
     m_bottomSplitter->setOrientation(Qt::Vertical);
@@ -48,8 +51,7 @@ ProjectionsEditor::ProjectionsEditor(QWidget* parent)
 }
 
 void ProjectionsEditor::setContext(SessionModel* model, const QModelIndex& shapeContainerIndex,
-                                   IntensityDataItem* intensityItem)
-{
+                                   IntensityDataItem* intensityItem) {
     Q_UNUSED(model);
     Q_UNUSED(shapeContainerIndex);
 
@@ -65,20 +67,17 @@ void ProjectionsEditor::setContext(SessionModel* model, const QModelIndex& shape
     m_editorActions->setSelectionModel(m_selectionModel);
 }
 
-void ProjectionsEditor::resetContext()
-{
+void ProjectionsEditor::resetContext() {
     m_propertyPanel->setItem(nullptr);
     m_projectionsCanvas->resetContext();
     m_projectionsWidget->setItem(nullptr);
 }
 
-QList<QAction*> ProjectionsEditor::topToolBarActions()
-{
+QList<QAction*> ProjectionsEditor::topToolBarActions() {
     return m_editorActions->topToolBarActions();
 }
 
-void ProjectionsEditor::setup_connections()
-{
+void ProjectionsEditor::setup_connections() {
     // tool panel request is propagated from editorActions to this MaskEditor
     connect(m_editorActions, &ProjectionsEditorActions::resetViewRequest, m_projectionsCanvas,
             &ProjectionsEditorCanvas::onResetViewRequest);

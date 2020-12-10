@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,8 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_MINIMIZER_MINIMIZEROPTIONS_H
 #define BORNAGAIN_FIT_MINIMIZER_MINIMIZEROPTIONS_H
 
@@ -20,8 +25,7 @@
 //! Collection of internal minimizer settings.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ MinimizerOptions : public OptionContainer
-{
+class MinimizerOptions : public OptionContainer {
 public:
     //! Returns string with all options (i.e. "Strategy=1;Tolerance=0.01;")
     std::string toOptionString() const;
@@ -34,3 +38,4 @@ private:
 };
 
 #endif // BORNAGAIN_FIT_MINIMIZER_MINIMIZEROPTIONS_H
+#endif // USER_API

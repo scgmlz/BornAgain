@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_STYLEDTOOLBAR_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_STYLEDTOOLBAR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QToolBar>
 
 //! The StyledToolBar class represents our standard narrow toolbar with the height 24 pixels.
 
-class BA_CORE_API_ StyledToolBar : public QToolBar
-{
+class StyledToolBar : public QToolBar {
     Q_OBJECT
 
 public:

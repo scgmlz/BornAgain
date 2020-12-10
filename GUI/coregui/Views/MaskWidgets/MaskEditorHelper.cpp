@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QBrush>
@@ -18,21 +18,18 @@
 #include <QPen>
 #include <QRectF>
 
-QBrush MaskEditorHelper::getSelectionMarkerBrush()
-{
+QBrush MaskEditorHelper::getSelectionMarkerBrush() {
     QBrush result;
     result.setStyle(Qt::SolidPattern);
     result.setColor(QColor(226, 235, 244));
     return result;
 }
 
-QPen MaskEditorHelper::getSelectionMarkerPen()
-{
+QPen MaskEditorHelper::getSelectionMarkerPen() {
     return QPen(QColor(99, 162, 217));
 }
 
-QBrush MaskEditorHelper::getMaskBrush(bool mask_value)
-{
+QBrush MaskEditorHelper::getMaskBrush(bool mask_value) {
     QBrush result;
     result.setStyle(Qt::SolidPattern);
     if (mask_value) {
@@ -43,8 +40,7 @@ QBrush MaskEditorHelper::getMaskBrush(bool mask_value)
     return result;
 }
 
-QPen MaskEditorHelper::getMaskPen(bool mask_value)
-{
+QPen MaskEditorHelper::getMaskPen(bool mask_value) {
     if (mask_value) {
         return QPen(QColor(165, 80, 76)); // dark red
     } else {
@@ -52,8 +48,7 @@ QPen MaskEditorHelper::getMaskPen(bool mask_value)
     }
 }
 
-QRectF MaskEditorHelper::getMarkerRectangle(const QPointF& pos)
-{
+QRectF MaskEditorHelper::getMarkerRectangle(const QPointF& pos) {
     QRectF result(0, 0, 7, 7);
     result.moveCenter(pos);
     return result;

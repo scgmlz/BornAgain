@@ -1,16 +1,16 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      GUI/coregui/Views/SampleDesigner/ILayerView.h
-//! @brief     Defines class ILayerView
+//! @brief     Defines interface ILayerView
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ILAYERVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_ILAYERVIEW_H
@@ -22,8 +22,7 @@ class MultiLayerCandidate;
 
 //! Base class for LayerView and MultiLayerView
 //! Provides functionality for moving view on top of MultiLayer.
-class BA_CORE_API_ ILayerView : public ConnectableView
-{
+class ILayerView : public ConnectableView {
     Q_OBJECT
 
 public:
@@ -53,8 +52,7 @@ private:
 };
 
 //! Class to hold MultiLayer candidate for dropping LayerView.
-class MultiLayerCandidate
-{
+class MultiLayerCandidate {
 public:
     MultiLayerCandidate() : multilayer(0), row(-1), distance(0) {}
     MultiLayerView* multilayer; //!< pointer to the candidate

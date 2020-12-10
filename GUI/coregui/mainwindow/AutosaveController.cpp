@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,28 +10,24 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/mainwindow/AutosaveController.h"
 #include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
 #include "GUI/coregui/mainwindow/ProjectUtils.h"
 #include "GUI/coregui/mainwindow/projectdocument.h"
-#include "GUI/coregui/utils/GUIHelpers.h"
 #include <QDir>
 
-namespace
-{
+namespace {
 const int update_every = 20000; // in msec
 }
 
 AutosaveController::AutosaveController(QObject* parent)
-    : QObject(parent), m_document(0), m_timer(new UpdateTimer(update_every, this))
-{
+    : QObject(parent), m_document(0), m_timer(new UpdateTimer(update_every, this)) {
     connect(m_timer, SIGNAL(timeToUpdate()), this, SLOT(onTimerTimeout()));
 }
 
-void AutosaveController::setDocument(ProjectDocument* document)
-{
+void AutosaveController::setDocument(ProjectDocument* document) {
     if (document == m_document)
         return;
 
@@ -48,32 +44,28 @@ void AutosaveController::setDocument(ProjectDocument* document)
     onDocumentModified();
 }
 
-void AutosaveController::setAutosaveTime(int timerInterval)
-{
+void AutosaveController::setAutosaveTime(int timerInterval) {
     m_timer->reset();
     m_timer->setWallclockTimer(timerInterval);
 }
 
 //! Returns the name of autosave directory.
 
-QString AutosaveController::autosaveDir() const
-{
+QString AutosaveController::autosaveDir() const {
     if (m_document && m_document->hasValidNameAndPath())
         return ProjectUtils::autosaveDir(m_document->projectFileName());
 
     return "";
 }
 
-QString AutosaveController::autosaveName() const
-{
+QString AutosaveController::autosaveName() const {
     if (m_document && m_document->hasValidNameAndPath())
         return ProjectUtils::autosaveName(m_document->projectFileName());
 
     return "";
 }
 
-void AutosaveController::removeAutosaveDir()
-{
+void AutosaveController::removeAutosaveDir() {
     if (autosaveDir().isEmpty())
         return;
 
@@ -81,21 +73,18 @@ void AutosaveController::removeAutosaveDir()
     dir.removeRecursively();
 }
 
-void AutosaveController::onTimerTimeout()
-{
+void AutosaveController::onTimerTimeout() {
     if (m_document->isModified())
         autosave();
 }
 
-void AutosaveController::onDocumentDestroyed(QObject* object)
-{
+void AutosaveController::onDocumentDestroyed(QObject* object) {
     Q_UNUSED(object);
     m_timer->reset();
     m_document = 0;
 }
 
-void AutosaveController::onDocumentModified()
-{
+void AutosaveController::onDocumentModified() {
     if (!m_document)
         return;
 
@@ -103,17 +92,29 @@ void AutosaveController::onDocumentModified()
         m_timer->scheduleUpdate();
 }
 
-void AutosaveController::autosave()
-{
-    QString name = autosaveName();
-    if (!name.isEmpty()) {
-        GUIHelpers::createSubdir(m_document->projectDir(), ProjectUtils::autosaveSubdir());
-        emit autosaveRequest();
+bool AutosaveController::assureAutoSaveDirExists() const {
+    if (m_document && m_document->hasValidNameAndPath()) {
+        const QDir projectDir = m_document->projectDir();
+        if (projectDir.exists() && !projectDir.exists(ProjectUtils::autosaveSubdir()))
+            projectDir.mkdir(ProjectUtils::autosaveSubdir());
+
+        return QDir(autosaveDir()).exists();
+    }
+
+    return false;
+}
+
+void AutosaveController::autosave() {
+    try {
+        if (!autosaveName().isEmpty() && assureAutoSaveDirExists())
+            emit autosaveRequest();
+    } catch (...) {
+        // catch any exception - autosave itself never should cause a crash by an unhandled
+        // exception
     }
 }
 
-void AutosaveController::setDocumentConnected(bool set_connected)
-{
+void AutosaveController::setDocumentConnected(bool set_connected) {
     if (!m_document)
         return;
 

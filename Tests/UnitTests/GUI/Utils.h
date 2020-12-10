@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -11,7 +11,7 @@
 //! @authors   Scientific Computing Group at MLZ Garching
 //! @authors   C. Durniak, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_UNITTESTS_GUI_UTILS_H
 #define BORNAGAIN_TESTS_UNITTESTS_GUI_UTILS_H
@@ -24,8 +24,7 @@
 template <class T> class OutputData;
 class RealDataItem;
 
-namespace GuiUnittestUtils
-{
+namespace GuiUnittestUtils {
 enum class DIM { D1 = 1, D2 = 2 };
 
 //! Creates directory in current working directory. If such directory already exists,
@@ -40,8 +39,7 @@ RealDataItem* createRealData(const QString& name, SessionModel& model, double va
                              DIM n_dim = DIM::D2);
 
 //! Converts property to XML string
-template <typename T> QString propertyToXML(const T& property)
-{
+template <typename T> QString propertyToXML(const T& property) {
     QString result;
     QXmlStreamWriter writer(&result);
     SessionXML::writeVariant(&writer, property.variant(), /*role*/ 0);
@@ -49,8 +47,7 @@ template <typename T> QString propertyToXML(const T& property)
 }
 
 //! Converts XML string to property
-template <typename T> T propertyFromXML(const QString& buffer)
-{
+template <typename T> T propertyFromXML(const QString& buffer) {
     std::unique_ptr<PropertyItem> item(new PropertyItem);
     QXmlStreamReader reader(buffer);
 

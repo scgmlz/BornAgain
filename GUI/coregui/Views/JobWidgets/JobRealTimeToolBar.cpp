@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/JobRealTimeToolBar.h"
 #include <QToolButton>
 
 JobRealTimeToolBar::JobRealTimeToolBar(QWidget* parent)
-    : StyledToolBar(parent), m_resetParametersButton(new QToolButton)
-{
+    : StyledToolBar(parent), m_resetParametersButton(new QToolButton) {
     setMinimumSize(minimumHeight(), minimumHeight());
 
     m_resetParametersButton->setText("Reset values");

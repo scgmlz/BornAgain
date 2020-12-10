@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ColorMapCanvas.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -21,10 +21,10 @@
 #include <QVBoxLayout>
 
 ColorMapCanvas::ColorMapCanvas(QWidget* parent)
-    : SessionItemWidget(parent), m_colorMap(new ColorMap),
-      m_canvasEvent(new FontScalingEvent(m_colorMap, this)),
-      m_statusLabel(new PlotStatusLabel(m_colorMap, this))
-{
+    : SessionItemWidget(parent)
+    , m_colorMap(new ColorMap)
+    , m_canvasEvent(new FontScalingEvent(m_colorMap, this))
+    , m_statusLabel(new PlotStatusLabel(m_colorMap, this)) {
     this->installEventFilter(m_canvasEvent);
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -38,29 +38,24 @@ ColorMapCanvas::ColorMapCanvas(QWidget* parent)
     setStatusLabelEnabled(false);
 }
 
-void ColorMapCanvas::setItem(SessionItem* intensityDataItem)
-{
+void ColorMapCanvas::setItem(SessionItem* intensityDataItem) {
     SessionItemWidget::setItem(intensityDataItem);
     m_colorMap->setItem(dynamic_cast<IntensityDataItem*>(intensityDataItem));
 }
 
-ColorMap* ColorMapCanvas::colorMap()
-{
+ColorMap* ColorMapCanvas::colorMap() {
     return m_colorMap;
 }
 
-QCustomPlot* ColorMapCanvas::customPlot()
-{
+QCustomPlot* ColorMapCanvas::customPlot() {
     return m_colorMap->customPlot();
 }
 
-void ColorMapCanvas::setStatusLabelEnabled(bool flag)
-{
+void ColorMapCanvas::setStatusLabelEnabled(bool flag) {
     m_statusLabel->setLabelEnabled(flag);
     m_statusLabel->setHidden(!flag);
 }
 
-void ColorMapCanvas::onStatusString(const QString& name)
-{
+void ColorMapCanvas::onStatusString(const QString& name) {
     m_statusLabel->setText(name);
 }

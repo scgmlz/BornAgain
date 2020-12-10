@@ -30,10 +30,8 @@
 
 class QGraphicsOpacityEffect;
 
-namespace Utils
-{
-class FadingPanel : public QWidget
-{
+namespace Utils {
+class FadingPanel : public QWidget {
     Q_OBJECT
 
 public:
@@ -42,8 +40,7 @@ public:
     virtual void setOpacity(qreal value) = 0;
 };
 
-class FadingWidget : public FadingPanel
-{
+class FadingWidget : public FadingPanel {
     Q_OBJECT
 public:
     FadingWidget(QWidget* parent = 0);
@@ -55,8 +52,7 @@ protected:
     QGraphicsOpacityEffect* m_opacityEffect;
 };
 
-class DetailsButton : public QAbstractButton
-{
+class DetailsButton : public QAbstractButton {
     Q_OBJECT
     Q_PROPERTY(float fader READ fader WRITE setFader)
 
@@ -65,8 +61,7 @@ public:
 
     QSize sizeHint() const;
     float fader() { return m_fader; }
-    void setFader(float value)
-    {
+    void setFader(float value) {
         m_fader = value;
         update();
     }

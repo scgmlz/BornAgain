@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SIMULATIONOPTIONSITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SIMULATIONOPTIONSITEM_H
@@ -22,8 +22,7 @@
 //! integration flag). Used in SimulationView to define job settings. When job is started,
 //! item is copied to the job as a child.
 
-class BA_CORE_API_ SimulationOptionsItem : public SessionItem
-{
+class BA_CORE_API_ SimulationOptionsItem : public SessionItem {
 public:
     static const QString P_RUN_POLICY;
     static const QString P_NTHREADS;

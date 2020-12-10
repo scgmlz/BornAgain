@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,16 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/PropertyEditor/PropertyEditorFactory.h"
-#include "Fit/Tools/RealLimits.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/GroupItemController.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
-#include "GUI/coregui/Views/PropertyEditor/CustomEditors.h"
 #include "GUI/coregui/Views/PropertyEditor/MultiComboPropertyEditor.h"
 #include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QLabel>
@@ -27,45 +25,37 @@
 #include <QSpinBox>
 #include <limits>
 
-namespace
-{
+namespace {
 QWidget* createCustomStringEditor(const SessionItem& item);
 double getStep(double val);
 
-bool isDoubleProperty(const QVariant& variant)
-{
+bool isDoubleProperty(const QVariant& variant) {
     return variant.type() == QVariant::Double;
 }
 
-bool isIntProperty(const QVariant& variant)
-{
+bool isIntProperty(const QVariant& variant) {
     return variant.type() == QVariant::Int;
 }
 
-bool isExternalProperty(const QVariant& variant)
-{
+bool isExternalProperty(const QVariant& variant) {
     return variant.canConvert<ExternalProperty>();
 }
 
-bool isComboProperty(const QVariant& variant)
-{
+bool isComboProperty(const QVariant& variant) {
     return variant.canConvert<ComboProperty>();
 }
 
-bool isStringProperty(const QVariant& variant)
-{
+bool isStringProperty(const QVariant& variant) {
     return variant.type() == QVariant::String;
 }
 
-bool isBoolProperty(const QVariant& variant)
-{
+bool isBoolProperty(const QVariant& variant) {
     return variant.type() == QVariant::Bool;
 }
 
 } // namespace
 
-bool PropertyEditorFactory::hasStringRepresentation(const QModelIndex& index)
-{
+bool PropertyEditorFactory::hasStringRepresentation(const QModelIndex& index) {
     auto variant = index.data();
     if (isExternalProperty(variant))
         return true;
@@ -79,8 +69,7 @@ bool PropertyEditorFactory::hasStringRepresentation(const QModelIndex& index)
     return false;
 }
 
-QString PropertyEditorFactory::toString(const QModelIndex& index)
-{
+QString PropertyEditorFactory::toString(const QModelIndex& index) {
     auto variant = index.data();
     if (isExternalProperty(variant))
         return variant.value<ExternalProperty>().text();
@@ -93,16 +82,15 @@ QString PropertyEditorFactory::toString(const QModelIndex& index)
         auto item = static_cast<SessionItem*>(index.internalPointer());
         return item->editorType() == "ScientificDouble"
                    ? QString::number(item->value().toDouble(), 'g')
-                   : item->editorType() == "ScientificSpinBox"
-                         ? ScientificSpinBox::toString(item->value().toDouble(), item->decimals())
-                         : QString::number(item->value().toDouble(), 'f', item->decimals());
+               : item->editorType() == "ScientificSpinBox"
+                   ? ScientificSpinBox::toString(item->value().toDouble(), item->decimals())
+                   : QString::number(item->value().toDouble(), 'f', item->decimals());
     }
 
     return "";
 }
 
-QWidget* PropertyEditorFactory::CreateEditor(const SessionItem& item, QWidget* parent)
-{
+QWidget* PropertyEditorFactory::CreateEditor(const SessionItem& item, QWidget* parent) {
     QWidget* result(nullptr);
 
     if (isDoubleProperty(item.value())) {
@@ -153,11 +141,9 @@ QWidget* PropertyEditorFactory::CreateEditor(const SessionItem& item, QWidget* p
     return result;
 }
 
-namespace
-{
+namespace {
 
-QWidget* createCustomStringEditor(const SessionItem& item)
-{
+QWidget* createCustomStringEditor(const SessionItem& item) {
     QWidget* result(nullptr);
 
     if (item.isEditable()) {
@@ -173,8 +159,7 @@ QWidget* createCustomStringEditor(const SessionItem& item)
     return result;
 }
 
-double getStep(double val)
-{
+double getStep(double val) {
     return val == 0.0 ? 1.0 : val / 100.;
 }
 

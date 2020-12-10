@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,22 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Computation/PoissonNoiseBackground.h"
-#include "Core/Tools/MathFunctions.h"
+#include "Base/Math/Functions.h"
 
 PoissonNoiseBackground::PoissonNoiseBackground()
-    : IBackground({"PoissonNoiseBackground", "class_tooltip", {}}, {})
-{
-}
+    : IBackground({"PoissonNoiseBackground", "class_tooltip", {}}, {}) {}
 
-PoissonNoiseBackground* PoissonNoiseBackground::clone() const
-{
+PoissonNoiseBackground* PoissonNoiseBackground::clone() const {
     return new PoissonNoiseBackground;
 }
 
-double PoissonNoiseBackground::addBackGround(double intensity) const
-{
-    return MathFunctions::GeneratePoissonRandom(intensity);
+double PoissonNoiseBackground::addBackground(double intensity) const {
+    return Math::GeneratePoissonRandom(intensity);
 }

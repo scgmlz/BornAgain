@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_ACTIONMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_ACTIONMANAGER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QMenu;
@@ -26,8 +25,7 @@ class QShortcut;
 
 //! Class to handle MainWindow's menu and corresponding actions
 
-class BA_CORE_API_ ActionManager : public QObject
-{
+class ActionManager : public QObject {
     Q_OBJECT
 public:
     ActionManager(MainWindow* parent);

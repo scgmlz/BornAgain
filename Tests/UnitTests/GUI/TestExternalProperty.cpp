@@ -3,40 +3,36 @@
 #include "Tests/UnitTests/GUI/Comparators.h"
 #include "Tests/UnitTests/GUI/Utils.h"
 
-class TestExternalProperty : public ::testing::Test
-{
+class TestExternalProperty : public ::testing::Test {
 public:
-    ExternalProperty propertyFromXML(const QString& buffer)
-    {
+    ExternalProperty propertyFromXML(const QString& buffer) {
         return GuiUnittestUtils::propertyFromXML<ExternalProperty>(buffer);
     }
 };
 
-TEST_F(TestExternalProperty, test_initialState)
-{
+TEST_F(TestExternalProperty, test_initialState) {
     ExternalProperty property;
-    EXPECT_TRUE(property.isValid() == false);
-    EXPECT_TRUE(property.color().isValid() == false);
-    EXPECT_TRUE(property.identifier().isEmpty() == true);
-    EXPECT_TRUE(property.text().isEmpty() == true);
+    EXPECT_FALSE(property.isValid());
+    EXPECT_FALSE(property.color().isValid());
+    EXPECT_TRUE(property.identifier().isEmpty());
+    EXPECT_TRUE(property.text().isEmpty());
 
     // changing any property should change state to valid
     property.setColor(QColor(Qt::red));
     EXPECT_TRUE(property.color() == QColor(Qt::red));
-    EXPECT_TRUE(property.isValid() == true);
+    EXPECT_TRUE(property.isValid());
     property.setColor(QColor());
-    EXPECT_TRUE(property.isValid() == false);
+    EXPECT_FALSE(property.isValid());
     property.setText("aaa");
     EXPECT_TRUE(property.text() == "aaa");
-    EXPECT_TRUE(property.isValid() == true);
+    EXPECT_TRUE(property.isValid());
     property.setText(QString());
-    EXPECT_TRUE(property.isValid() == false);
+    EXPECT_FALSE(property.isValid());
 }
 
 //! Testing equality operators.
 
-TEST_F(TestExternalProperty, test_equalityOperators)
-{
+TEST_F(TestExternalProperty, test_equalityOperators) {
     ExternalProperty prop1;
     ExternalProperty prop2;
 
@@ -55,8 +51,7 @@ TEST_F(TestExternalProperty, test_equalityOperators)
 //! Testing equality operators for QVariants based on ExternalProperty.
 //! If comparators are not registered, the behavior is undefined
 
-TEST_F(TestExternalProperty, test_variantEquality)
-{
+TEST_F(TestExternalProperty, test_variantEquality) {
     ExternalProperty prop1;
     ExternalProperty prop2;
 
@@ -73,8 +68,7 @@ TEST_F(TestExternalProperty, test_variantEquality)
     }
 }
 
-TEST_F(TestExternalProperty, test_toXML)
-{
+TEST_F(TestExternalProperty, test_toXML) {
     QString expected;
 
     // empty property to XML

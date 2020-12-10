@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,24 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ProjectionsPlot.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Intensity/Histogram2D.h"
+#include "Device/Histo/Histogram1D.h"
+#include "Device/Histo/Histogram2D.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/FitWidgets/plot_constants.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 ProjectionsPlot::ProjectionsPlot(const QString& projectionType, QWidget* parent)
-    : SessionItemWidget(parent), m_projectionType(projectionType), m_customPlot(new QCustomPlot),
-      m_block_plot_update(false)
-{
+    : SessionItemWidget(parent)
+    , m_projectionType(projectionType)
+    , m_customPlot(new QCustomPlot)
+    , m_block_plot_update(false) {
     QVBoxLayout* vlayout = new QVBoxLayout(this);
     vlayout->setMargin(0);
     vlayout->setSpacing(0);
@@ -42,20 +42,17 @@ ProjectionsPlot::ProjectionsPlot(const QString& projectionType, QWidget* parent)
     ColorMapUtils::setDefaultMargins(m_customPlot);
 }
 
-ProjectionsPlot::~ProjectionsPlot()
-{
+ProjectionsPlot::~ProjectionsPlot() {
     unsubscribeFromChildren();
 }
 
-void ProjectionsPlot::onMarginsChanged(double left, double right)
-{
+void ProjectionsPlot::onMarginsChanged(double left, double right) {
     QMargins orig = m_customPlot->axisRect()->margins();
     m_customPlot->axisRect()->setMargins(QMargins(left, orig.top(), right, orig.bottom()));
     replot();
 }
 
-void ProjectionsPlot::subscribeToItem()
-{
+void ProjectionsPlot::subscribeToItem() {
     // Update projection plot on new item appearance
     projectionContainerItem()->mapper()->setOnChildrenChange(
         [this](SessionItem* item) {
@@ -97,14 +94,12 @@ void ProjectionsPlot::subscribeToItem()
     updateProjections();
 }
 
-void ProjectionsPlot::unsubscribeFromItem()
-{
+void ProjectionsPlot::unsubscribeFromItem() {
     unsubscribeFromChildren();
     clearProjections();
 }
 
-void ProjectionsPlot::onProjectionPropertyChanged(SessionItem* item, const QString& property)
-{
+void ProjectionsPlot::onProjectionPropertyChanged(SessionItem* item, const QString& property) {
     if (m_block_plot_update)
         return;
 
@@ -120,28 +115,24 @@ void ProjectionsPlot::onProjectionPropertyChanged(SessionItem* item, const QStri
     m_block_plot_update = false;
 }
 
-IntensityDataItem* ProjectionsPlot::intensityItem()
-{
+IntensityDataItem* ProjectionsPlot::intensityItem() {
     IntensityDataItem* result = dynamic_cast<IntensityDataItem*>(currentItem());
     ASSERT(result);
     return result;
 }
 
-ProjectionContainerItem* ProjectionsPlot::projectionContainerItem()
-{
+ProjectionContainerItem* ProjectionsPlot::projectionContainerItem() {
     ProjectionContainerItem* result = dynamic_cast<ProjectionContainerItem*>(
         intensityItem()->getItem(IntensityDataItem::T_PROJECTIONS));
     ASSERT(result);
     return result;
 }
 
-QVector<SessionItem*> ProjectionsPlot::projectionItems()
-{
+QVector<SessionItem*> ProjectionsPlot::projectionItems() {
     return projectionContainerItem()->getChildrenOfType(m_projectionType);
 }
 
-QCPGraph* ProjectionsPlot::graphForItem(SessionItem* item)
-{
+QCPGraph* ProjectionsPlot::graphForItem(SessionItem* item) {
     if (item->modelType() != m_projectionType)
         return nullptr;
 
@@ -159,17 +150,15 @@ QCPGraph* ProjectionsPlot::graphForItem(SessionItem* item)
     return graph;
 }
 
-void ProjectionsPlot::unsubscribeFromChildren()
-{
+void ProjectionsPlot::unsubscribeFromChildren() {
     if (currentItem())
         projectionContainerItem()->mapper()->unsubscribe(this);
 }
 
 //! Creates cached 2D histogram for later projection calculations.
 
-void ProjectionsPlot::updateProjectionsData()
-{
-    m_hist2d.reset(new Histogram2D(*intensityItem()->getOutputData()));
+void ProjectionsPlot::updateProjectionsData() {
+    m_hist2d = std::make_unique<Histogram2D>(*intensityItem()->getOutputData());
     updateAxesRange();
     updateAxesTitle();
     setLogz(intensityItem()->isLogz());
@@ -177,8 +166,7 @@ void ProjectionsPlot::updateProjectionsData()
 
 //! Runs through all projection items and generates missed plots.
 
-void ProjectionsPlot::updateProjections()
-{
+void ProjectionsPlot::updateProjections() {
     if (m_block_plot_update)
         return;
 
@@ -194,8 +182,7 @@ void ProjectionsPlot::updateProjections()
 
 //! Updates canva's axes to match current zoom level of IntensityDataItem
 
-void ProjectionsPlot::updateAxesRange()
-{
+void ProjectionsPlot::updateAxesRange() {
     if (isHorizontalType())
         m_customPlot->xAxis->setRange(ColorMapUtils::itemZoomX(intensityItem()));
     else
@@ -204,8 +191,7 @@ void ProjectionsPlot::updateAxesRange()
     m_customPlot->yAxis->setRange(ColorMapUtils::itemDataZoom(intensityItem()));
 }
 
-void ProjectionsPlot::updateAxesTitle()
-{
+void ProjectionsPlot::updateAxesTitle() {
     if (isHorizontalType())
         m_customPlot->xAxis->setLabel(intensityItem()->getXaxisTitle());
     else
@@ -214,8 +200,7 @@ void ProjectionsPlot::updateAxesTitle()
 
 //! Clears all graphs corresponding to projection items.
 
-void ProjectionsPlot::clearProjections()
-{
+void ProjectionsPlot::clearProjections() {
     m_block_plot_update = true;
 
     m_customPlot->clearPlottables();
@@ -228,8 +213,7 @@ void ProjectionsPlot::clearProjections()
 
 //! Removes plot corresponding to given projection item.
 
-void ProjectionsPlot::clearProjection(SessionItem* item)
-{
+void ProjectionsPlot::clearProjection(SessionItem* item) {
     if (auto graph = graphForItem(item)) {
         m_block_plot_update = true;
         m_customPlot->removePlottable(graph);
@@ -241,8 +225,7 @@ void ProjectionsPlot::clearProjection(SessionItem* item)
 
 //! Updates projection appearance (line style, etc)
 
-void ProjectionsPlot::onIntensityItemPropertyChanged(const QString& propertyName)
-{
+void ProjectionsPlot::onIntensityItemPropertyChanged(const QString& propertyName) {
     if (propertyName == IntensityDataItem::P_IS_INTERPOLATED) {
         setInterpolate(intensityItem()->isInterpolated());
         replot();
@@ -251,8 +234,7 @@ void ProjectionsPlot::onIntensityItemPropertyChanged(const QString& propertyName
 
 //! Updates zoom of projections in accordance with IntensityDataItem.
 
-void ProjectionsPlot::onAxisPropertyChanged(const QString& axisName, const QString& propertyName)
-{
+void ProjectionsPlot::onAxisPropertyChanged(const QString& axisName, const QString& propertyName) {
     Q_UNUSED(axisName);
 
     if (propertyName == BasicAxisItem::P_MIN_DEG || propertyName == BasicAxisItem::P_MAX_DEG)
@@ -267,8 +249,7 @@ void ProjectionsPlot::onAxisPropertyChanged(const QString& axisName, const QStri
 
 //! Sets the data to graph from given projection iten.
 
-void ProjectionsPlot::setGraphFromItem(QCPGraph* graph, SessionItem* item)
-{
+void ProjectionsPlot::setGraphFromItem(QCPGraph* graph, SessionItem* item) {
     std::unique_ptr<Histogram1D> hist;
 
     if (item->modelType() == "HorizontalLineMask") {
@@ -280,35 +261,31 @@ void ProjectionsPlot::setGraphFromItem(QCPGraph* graph, SessionItem* item)
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    auto centers = hist->getBinCenters();
-    auto values = hist->getBinValues();
+    auto centers = hist->binCenters();
+    auto values = hist->binValues();
     graph->setData(QVector<double>(centers.begin(), centers.end()),
                    QVector<double>(values.begin(), values.end()));
 #else
-    graph->setData(QVector<double>::fromStdVector(hist->getBinCenters()),
-                   QVector<double>::fromStdVector(hist->getBinValues()));
+    graph->setData(QVector<double>::fromStdVector(hist->binCenters()),
+                   QVector<double>::fromStdVector(hist->binValues()));
 #endif
 }
 
-void ProjectionsPlot::setInterpolate(bool isInterpolated)
-{
+void ProjectionsPlot::setInterpolate(bool isInterpolated) {
     for (auto graph : m_item_to_graph)
         graph->setLineStyle(isInterpolated ? QCPGraph::lsLine : QCPGraph::lsStepCenter);
 }
 
-void ProjectionsPlot::setLogz(bool isLogz)
-{
+void ProjectionsPlot::setLogz(bool isLogz) {
     ColorMapUtils::setLogz(m_customPlot->yAxis, isLogz);
 }
 
-void ProjectionsPlot::replot()
-{
+void ProjectionsPlot::replot() {
     m_customPlot->replot();
 }
 
 //! Returns true, if widget is intended for horizontal projections.
 
-bool ProjectionsPlot::isHorizontalType()
-{
+bool ProjectionsPlot::isHorizontalType() {
     return m_projectionType == "HorizontalLineMask";
 }

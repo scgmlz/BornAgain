@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/HistogramPlot.h"
 #include "GUI/coregui/Views/FitWidgets/plot_constants.h"
-#include "GUI/coregui/utils/StyleUtils.h"
 
-HistogramPlot::HistogramPlot(QWidget* parent) : QWidget(parent), m_customPlot(new QCustomPlot)
+HistogramPlot::HistogramPlot(QWidget* parent)
+    : QWidget(parent)
+    , m_customPlot(new QCustomPlot)
 
 {
     QVBoxLayout* vlayout = new QVBoxLayout(this);
@@ -45,36 +46,31 @@ HistogramPlot::HistogramPlot(QWidget* parent) : QWidget(parent), m_customPlot(ne
     m_customPlot->yAxis->setLabelFont(QFont(QFont().family(), Constants::plot_axes_label_size()));
 }
 
-void HistogramPlot::addData(double x, double y)
-{
+void HistogramPlot::addData(double x, double y) {
     m_customPlot->graph()->addData(x, y);
     m_customPlot->graph()->rescaleAxes();
     m_customPlot->replot();
 }
 
-void HistogramPlot::addData(const QVector<double>& x, const QVector<double>& y)
-{
+void HistogramPlot::addData(const QVector<double>& x, const QVector<double>& y) {
     m_customPlot->graph()->addData(x, y);
     m_customPlot->graph()->rescaleAxes();
     m_customPlot->replot();
 }
 
-void HistogramPlot::setData(const QVector<double>& x, const QVector<double>& y)
-{
+void HistogramPlot::setData(const QVector<double>& x, const QVector<double>& y) {
     m_customPlot->graph()->setData(x, y);
     m_customPlot->graph()->rescaleAxes();
     m_customPlot->replot();
 }
 
-void HistogramPlot::clearData()
-{
+void HistogramPlot::clearData() {
     m_customPlot->removeGraph(m_customPlot->graph());
     initGraph();
     m_customPlot->replot();
 }
 
-void HistogramPlot::initGraph()
-{
+void HistogramPlot::initGraph() {
     m_customPlot->addGraph();
 
     QPen pen(QColor(0, 0, 255, 200));

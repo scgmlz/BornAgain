@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/main/MessageHandler.h"
 #include <QMessageBox>
 #include <iostream>
 
 //! This is set by main to be the message handler of our GUI.
-void MessageHandler(QtMsgType type, const QMessageLogContext&, const QString& msg)
-{
+void MessageHandler(QtMsgType type, const QMessageLogContext&, const QString& msg) {
     switch (type) {
     case QtDebugMsg:
-        if (!msg.size()) // KDE will pass a zero-length msg qstring
+        if (msg.size() == 0) // KDE will pass a zero-length msg qstring
             break;
         std::cerr << "DEBUG: " << msg.toStdString() << std::endl;
         break;

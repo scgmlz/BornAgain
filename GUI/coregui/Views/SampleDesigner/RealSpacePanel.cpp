@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/RealSpacePanel.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceWidget.h"
@@ -18,8 +18,7 @@
 
 RealSpacePanel::RealSpacePanel(SampleModel* sampleModel, QItemSelectionModel* selectionModel,
                                QWidget* parent)
-    : QWidget(parent), m_realSpaceWidget(nullptr)
-{
+    : QWidget(parent), m_realSpaceWidget(nullptr) {
     setWindowTitle("Real Space");
     setObjectName("Sample3DPanel");
 
@@ -33,7 +32,6 @@ RealSpacePanel::RealSpacePanel(SampleModel* sampleModel, QItemSelectionModel* se
     setLayout(layout);
 }
 
-QSize RealSpacePanel::sizeHint() const
-{
+QSize RealSpacePanel::sizeHint() const {
     return QSize(300, 300);
 }

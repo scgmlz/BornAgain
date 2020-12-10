@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SimulationWidgets/SimulationSetupAssistant.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -25,8 +25,7 @@ SimulationSetupAssistant::SimulationSetupAssistant() : m_isValid(false) {}
 
 bool SimulationSetupAssistant::isValidSimulationSetup(const MultiLayerItem* multiLayerItem,
                                                       const InstrumentItem* instrumentItem,
-                                                      const RealDataItem* realData)
-{
+                                                      const RealDataItem* realData) {
     clear();
 
     checkMultiLayerItem(multiLayerItem);
@@ -39,14 +38,12 @@ bool SimulationSetupAssistant::isValidSimulationSetup(const MultiLayerItem* mult
     return m_isValid;
 }
 
-void SimulationSetupAssistant::clear()
-{
+void SimulationSetupAssistant::clear() {
     m_isValid = true;
     m_messages.clear();
 }
 
-void SimulationSetupAssistant::checkMultiLayerItem(const MultiLayerItem* multiLayerItem)
-{
+void SimulationSetupAssistant::checkMultiLayerItem(const MultiLayerItem* multiLayerItem) {
     if (!multiLayerItem) {
         m_messages.append("No sample selected");
         m_isValid = false;
@@ -59,8 +56,7 @@ void SimulationSetupAssistant::checkMultiLayerItem(const MultiLayerItem* multiLa
     }
 }
 
-void SimulationSetupAssistant::checkInstrumentItem(const InstrumentItem* instrumentItem)
-{
+void SimulationSetupAssistant::checkInstrumentItem(const InstrumentItem* instrumentItem) {
     if (!instrumentItem) {
         m_messages.append("No instrument selected");
         m_isValid = false;
@@ -71,8 +67,7 @@ void SimulationSetupAssistant::checkInstrumentItem(const InstrumentItem* instrum
 //! its axes will be compared with current detector item.
 
 void SimulationSetupAssistant::checkFittingSetup(const InstrumentItem* instrumentItem,
-                                                 const RealDataItem* realData)
-{
+                                                 const RealDataItem* realData) {
     if (!realData || !instrumentItem || instrumentItem->alignedWith(realData))
         return;
 
@@ -83,8 +78,7 @@ void SimulationSetupAssistant::checkFittingSetup(const InstrumentItem* instrumen
 
 //! Composes the error message for message box.
 
-QString SimulationSetupAssistant::composeMessage()
-{
+QString SimulationSetupAssistant::composeMessage() {
     QString result("Can't run the job with current settings\n\n");
     for (auto message : m_messages) {
         QString text = QString("- %1 \n").arg(message);

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DEPTHPROBEINSTRUMENTITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DEPTHPROBEINSTRUMENTITEM_H
@@ -21,8 +21,7 @@ class DepthProbeSimulation;
 
 //! Depth probe instrument.
 
-class BA_CORE_API_ DepthProbeInstrumentItem : public InstrumentItem
-{
+class BA_CORE_API_ DepthProbeInstrumentItem : public InstrumentItem {
 public:
     static const QString P_BEAM;
     static const QString P_Z_AXIS;
@@ -35,8 +34,8 @@ public:
     std::vector<int> shape() const override;
     void updateToRealData(const RealDataItem* item) override;
 
-    // FIXME switch to base Simulation class after InstrumentItem refactoring and
-    // after Simulation gets createUnitConverter method
+    // FIXME switch to base ISimulation class after InstrumentItem refactoring and
+    // after ISimulation gets createUnitConverter method
     std::unique_ptr<DepthProbeSimulation> createSimulation() const;
 
     std::unique_ptr<IUnitConverter> createUnitConverter() const;

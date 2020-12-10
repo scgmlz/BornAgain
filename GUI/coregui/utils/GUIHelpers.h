@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_GUIHELPERS_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_GUIHELPERS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 #include <QWidget>
 #include <memory>
@@ -24,12 +23,10 @@
 class JobItem;
 class RealDataItem;
 
-namespace GUIHelpers
-{
-class BA_CORE_API_ Error : public std::exception
-{
+namespace GUIHelpers {
+class Error : public std::exception {
 public:
-    explicit Error(const QString& message) noexcept : message(message) {}
+    explicit Error(const QString& message) noexcept : m_messageAsLatin1(message.toLatin1()) {}
     virtual ~Error() noexcept;
 
     Error(const Error&) = default;
@@ -40,49 +37,45 @@ public:
     const char* what() const noexcept override;
 
 private:
-    QString message;
+    QByteArray m_messageAsLatin1;
 };
 
-BA_CORE_API_ void information(QWidget* parent, const QString& title, const QString& text,
-                              const QString& detailedText = "");
-BA_CORE_API_ void warning(QWidget* parent, const QString& title, const QString& text,
-                          const QString& detailedText = "");
-BA_CORE_API_ bool question(QWidget* parent, const QString& title, const QString& text,
-                           const QString& detailedText = "", const QString& yesText = "&Yes",
-                           const QString& noText = "&No");
-BA_CORE_API_ bool okToDelete(QWidget* parent, const QString& title, const QString& text,
-                             const QString& detailedText = "");
+void information(QWidget* parent, const QString& title, const QString& text,
+                 const QString& detailedText = "");
+void warning(QWidget* parent, const QString& title, const QString& text,
+             const QString& detailedText = "");
+bool question(QWidget* parent, const QString& title, const QString& text,
+              const QString& detailedText = "", const QString& yesText = "&Yes",
+              const QString& noText = "&No");
+bool okToDelete(QWidget* parent, const QString& title, const QString& text,
+                const QString& detailedText = "");
 
-BA_CORE_API_ QString getBornAgainVersionString();
+QString getBornAgainVersionString();
 
-BA_CORE_API_ QString getValidFileName(const QString& proposed_name);
+QString getValidFileName(const QString& proposed_name);
 
-BA_CORE_API_ QString fileDir(const QString& fileName);
-BA_CORE_API_ QString baseName(const QString& fileName);
+QString fileDir(const QString& fileName);
+QString baseName(const QString& fileName);
 
-BA_CORE_API_ void createSubdir(const QString& parentName, const QString& subdirName);
+bool parseVersion(const QString& version, int& major_num, int& minor_num, int& patch_num);
 
-BA_CORE_API_ bool parseVersion(const QString& version, int& major_num, int& minor_num,
-                               int& patch_num);
+int versionCode(const QString& version);
 
-BA_CORE_API_ int versionCode(const QString& version);
+bool isVersionMatchMinimal(const QString& version, const QString& minimal_version);
 
-BA_CORE_API_ bool isVersionMatchMinimal(const QString& version, const QString& minimal_version);
+QString currentDateTime();
 
-BA_CORE_API_ QString currentDateTime();
+QStringList fromStdStrings(const std::vector<std::string>& container);
 
-BA_CORE_API_ QStringList fromStdStrings(const std::vector<std::string>& container);
+QVector<double> fromStdVector(const std::vector<double>& data);
 
-BA_CORE_API_ QVector<double> fromStdVector(const std::vector<double>& data);
+QString createUuid();
 
-BA_CORE_API_ QString createUuid();
-
-BA_CORE_API_ QString readTextFile(const QString& fileName);
+QString readTextFile(const QString& fileName);
 
 } // namespace GUIHelpers
 
-inline std::ostream& operator<<(std::ostream& stream, const QString& str)
-{
+inline std::ostream& operator<<(std::ostream& stream, const QString& str) {
     stream << str.toStdString();
     return stream;
 }

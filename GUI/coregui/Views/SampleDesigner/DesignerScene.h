@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERSCENE_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERSCENE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsScene>
 #include <QMap>
 #include <QModelIndex>
@@ -35,8 +34,7 @@ class FilterPropertyProxy;
 class MaterialModel;
 
 //! Main class which represents SessionModel on graphics scene
-class BA_CORE_API_ DesignerScene : public QGraphicsScene
-{
+class DesignerScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
@@ -67,8 +65,7 @@ public slots:
     void onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last);
     void onRowsRemoved(const QModelIndex& parent, int first, int last);
 
-    void setLayerInterfaceLine(const QLineF& line = {})
-    {
+    void setLayerInterfaceLine(const QLineF& line = {}) {
         m_layer_interface_line = line;
         invalidate();
     }

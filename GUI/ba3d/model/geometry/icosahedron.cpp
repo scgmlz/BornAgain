@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "../geometry.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
+#include "GUI/ba3d/model/geometry.h"
 #include <QQuaternion>
 #include <qmath.h>
 
-namespace RealSpace
-{
+namespace RealSpace {
 
-Geometry::Mesh Geometry::meshIcosahedron()
-{
+Geometry::Mesh Geometry::meshIcosahedron() {
     Vertices vs_(12); // 12 vertices of the icosahedron retrieved from Icosahedron.cpp
 
     const float E = 1.0; // edge

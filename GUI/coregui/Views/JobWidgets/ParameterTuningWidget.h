@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PARAMETERTUNINGWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PARAMETERTUNINGWIDGET_H
@@ -32,8 +32,7 @@ class ParameterItem;
 //! Main widget for real time parameter tuning.
 //! Contains a tree for parameter tuning and the model to provide drag-and-drop in FitActivityPanel.
 
-class ParameterTuningWidget : public SessionItemWidget
-{
+class ParameterTuningWidget : public SessionItemWidget {
     Q_OBJECT
 
 public:

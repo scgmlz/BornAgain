@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_BEAMWAVELENGTHITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_BEAMWAVELENGTHITEM_H
 
 #include "GUI/coregui/Models/BeamDistributionItem.h"
 
-class BA_CORE_API_ BeamWavelengthItem : public BeamDistributionItem
-{
+class BA_CORE_API_ BeamWavelengthItem : public BeamDistributionItem {
 public:
     BeamWavelengthItem(const QString& model_type = "BeamWavelength",
                        const QString& distribution_group = "Distribution extended group");
@@ -29,8 +28,7 @@ private:
     static const bool m_show_mean = true;
 };
 
-class BA_CORE_API_ SpecularBeamWavelengthItem : public BeamWavelengthItem
-{
+class BA_CORE_API_ SpecularBeamWavelengthItem : public BeamWavelengthItem {
 public:
     SpecularBeamWavelengthItem();
     void setToRange(const RealLimits& limits);

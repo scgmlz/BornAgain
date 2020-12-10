@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/GISASBeamEditor.h"
 #include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Views/CommonWidgets/ColumnResizer.h"
 #include "GUI/coregui/Views/InfoWidgets/DistributionDialog.h"
@@ -22,8 +21,7 @@
 #include <QGridLayout>
 #include <QGroupBox>
 
-namespace
-{
+namespace {
 const QString wavelength_title("Wavelength [nm]");
 const QString inclination_title("Inclination angle [deg]");
 const QString azimuthal_title("Azimuthal angle [deg]");
@@ -31,13 +29,13 @@ const QString polarization_title("Polarization (Bloch vector)");
 } // namespace
 
 GISASBeamEditor::GISASBeamEditor(ColumnResizer* columnResizer, QWidget* parent)
-    : SessionItemWidget(parent), m_columnResizer(columnResizer),
-      m_intensityEditor(new ComponentEditor(ComponentEditor::PlainWidget)),
-      m_wavelengthEditor(new ComponentEditor(ComponentEditor::InfoWidget, wavelength_title)),
-      m_inclinationEditor(new ComponentEditor(ComponentEditor::InfoWidget, inclination_title)),
-      m_azimuthalEditor(new ComponentEditor(ComponentEditor::InfoWidget, azimuthal_title)),
-      m_gridLayout(new QGridLayout)
-{
+    : SessionItemWidget(parent)
+    , m_columnResizer(columnResizer)
+    , m_intensityEditor(new ComponentEditor(ComponentEditor::PlainWidget))
+    , m_wavelengthEditor(new ComponentEditor(ComponentEditor::InfoWidget, wavelength_title))
+    , m_inclinationEditor(new ComponentEditor(ComponentEditor::InfoWidget, inclination_title))
+    , m_azimuthalEditor(new ComponentEditor(ComponentEditor::InfoWidget, azimuthal_title))
+    , m_gridLayout(new QGridLayout) {
     m_gridLayout->addWidget(m_intensityEditor, 0, 0);
     m_gridLayout->addWidget(m_wavelengthEditor, 1, 0);
     m_gridLayout->addWidget(m_inclinationEditor, 1, 1);
@@ -60,8 +58,7 @@ GISASBeamEditor::GISASBeamEditor(ColumnResizer* columnResizer, QWidget* parent)
     m_columnResizer->addWidgetsFromGridLayout(m_gridLayout, 2);
 }
 
-void GISASBeamEditor::subscribeToItem()
-{
+void GISASBeamEditor::subscribeToItem() {
     m_intensityEditor->setItem(beamItem()->getItem(BeamItem::P_INTENSITY));
 
     auto wavelengthItem = beamItem()->getItem(BeamItem::P_WAVELENGTH);
@@ -74,28 +71,24 @@ void GISASBeamEditor::subscribeToItem()
     m_azimuthalEditor->setItem(azimuthalItem->getItem(BeamDistributionItem::P_DISTRIBUTION));
 }
 
-void GISASBeamEditor::unsubscribeFromItem()
-{
+void GISASBeamEditor::unsubscribeFromItem() {
     m_intensityEditor->clearEditor();
     m_wavelengthEditor->clearEditor();
     m_inclinationEditor->clearEditor();
     m_azimuthalEditor->clearEditor();
 }
 
-GISASInstrumentItem* GISASBeamEditor::instrumentItem()
-{
+GISASInstrumentItem* GISASBeamEditor::instrumentItem() {
     auto result = dynamic_cast<GISASInstrumentItem*>(currentItem());
     ASSERT(result);
     return result;
 }
 
-BeamItem* GISASBeamEditor::beamItem()
-{
+BeamItem* GISASBeamEditor::beamItem() {
     return instrumentItem()->beamItem();
 }
 
-void GISASBeamEditor::onDialogRequest(SessionItem* item, const QString& name)
-{
+void GISASBeamEditor::onDialogRequest(SessionItem* item, const QString& name) {
     if (!item)
         return;
 

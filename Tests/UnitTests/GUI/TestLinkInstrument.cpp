@@ -12,14 +12,11 @@
 #include <QSignalSpy>
 #include <QTest>
 
-class TestLinkInstrument : public ::testing::Test
-{
-};
+class TestLinkInstrument : public ::testing::Test {};
 
 //! Checks that LinkInstrumentManager listens instrument model.
 
-TEST_F(TestLinkInstrument, test_linkInstrumentManager)
-{
+TEST_F(TestLinkInstrument, test_linkInstrumentManager) {
     InstrumentModel instrumentModel;
     RealDataModel realDataModel;
     LinkInstrumentManager manager;
@@ -38,19 +35,18 @@ TEST_F(TestLinkInstrument, test_linkInstrumentManager)
     EXPECT_EQ(spy.count(), 1);
     EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined" << instrument->itemName());
 
-    EXPECT_EQ(manager.getInstrument(identifier), instrument);
+    EXPECT_EQ(manager.instrument(identifier), instrument);
     EXPECT_EQ(manager.instrumentComboIndex(identifier), 1);
 
     // removing instrument
     instrumentModel.removeRow(0);
     EXPECT_EQ(spy.count(), 2);
     EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined");
-    QVERIFY(manager.getInstrument(identifier) == nullptr);
+    QVERIFY(manager.instrument(identifier) == nullptr);
     EXPECT_EQ(manager.instrumentComboIndex(identifier), -1);
 }
 
-TEST_F(TestLinkInstrument, test_canLinkToInstrument)
-{
+TEST_F(TestLinkInstrument, test_canLinkToInstrument) {
     InstrumentModel instrumentModel;
     RealDataModel realDataModel;
     LinkInstrumentManager manager;

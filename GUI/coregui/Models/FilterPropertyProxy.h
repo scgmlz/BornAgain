@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_FILTERPROPERTYPROXY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QSortFilterProxyModel>
 
 //!
@@ -22,15 +21,12 @@
 //! SessionModel to have only top level items
 //!
 
-class BA_CORE_API_ FilterPropertyProxy : public QSortFilterProxyModel
-{
+class FilterPropertyProxy : public QSortFilterProxyModel {
     Q_OBJECT
 
 public:
     FilterPropertyProxy(int columns, QObject* parent = 0)
-        : QSortFilterProxyModel(parent), m_columns(columns)
-    {
-    }
+        : QSortFilterProxyModel(parent), m_columns(columns) {}
     int columnCount(const QModelIndex& parent) const;
 
     static QModelIndex toSourceIndex(QModelIndex index);

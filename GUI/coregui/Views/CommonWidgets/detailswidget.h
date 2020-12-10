@@ -26,17 +26,14 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_DETAILSWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
-namespace Utils
-{
+namespace Utils {
 
 class DetailsWidgetPrivate;
 class FadingPanel;
 
-class DetailsWidget : public QWidget
-{
+class DetailsWidget : public QWidget {
     Q_OBJECT
     Q_PROPERTY(QString summaryText READ summaryText WRITE setSummaryText DESIGNABLE true)
     Q_PROPERTY(QString additionalSummaryText READ additionalSummaryText WRITE

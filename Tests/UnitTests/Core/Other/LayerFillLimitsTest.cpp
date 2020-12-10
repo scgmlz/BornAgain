@@ -1,9 +1,8 @@
-#include "Core/Multilayer/LayerFillLimits.h"
+#include "Sample/Scattering/LayerFillLimits.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <stdexcept>
 
-class LayerFillLimitsTest : public ::testing::Test
-{
+class LayerFillLimitsTest : public ::testing::Test {
 protected:
     LayerFillLimitsTest();
 
@@ -11,21 +10,18 @@ protected:
     std::vector<double> layers_bottomz;
 };
 
-LayerFillLimitsTest::LayerFillLimitsTest() : m_fill_limits({})
-{
+LayerFillLimitsTest::LayerFillLimitsTest() : m_fill_limits({}) {
     std::vector<double> layers_bottomz = {0, -5, -20};
     m_fill_limits = LayerFillLimits(layers_bottomz);
 }
 
-TEST_F(LayerFillLimitsTest, LayerFillLimitsEmptyConstructor)
-{
+TEST_F(LayerFillLimitsTest, LayerFillLimitsEmptyConstructor) {
     LayerFillLimits layer_limits({});
     EXPECT_EQ(1u, layer_limits.layerZLimits().size());
     EXPECT_EQ(layer_limits.layerZLimits()[0], ZLimits());
 }
 
-TEST_F(LayerFillLimitsTest, LayerFillLimitsConstructor)
-{
+TEST_F(LayerFillLimitsTest, LayerFillLimitsConstructor) {
     std::vector<ZLimits> limits = m_fill_limits.layerZLimits();
     EXPECT_EQ(4u, limits.size());
     EXPECT_EQ(limits[0], ZLimits());
@@ -34,8 +30,7 @@ TEST_F(LayerFillLimitsTest, LayerFillLimitsConstructor)
     EXPECT_EQ(limits[3], ZLimits());
 }
 
-TEST_F(LayerFillLimitsTest, LayerFillLimitsWrongUpdate)
-{
+TEST_F(LayerFillLimitsTest, LayerFillLimitsWrongUpdate) {
     EXPECT_THROW(m_fill_limits.update({1, 0}), std::runtime_error);
     std::vector<ZLimits> limits = m_fill_limits.layerZLimits();
     EXPECT_EQ(4u, limits.size());
@@ -45,8 +40,7 @@ TEST_F(LayerFillLimitsTest, LayerFillLimitsWrongUpdate)
     EXPECT_EQ(limits[3], ZLimits());
 }
 
-TEST_F(LayerFillLimitsTest, LayerFillLimitsUpdate)
-{
+TEST_F(LayerFillLimitsTest, LayerFillLimitsUpdate) {
     m_fill_limits.update({1, 1.5});
     std::vector<ZLimits> limits = m_fill_limits.layerZLimits();
     EXPECT_EQ(4u, limits.size());

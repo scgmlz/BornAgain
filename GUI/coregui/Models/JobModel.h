@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_JOBMODEL_H
 
@@ -22,8 +22,7 @@ class InstrumentItem;
 class RealDataItem;
 class SimulationOptionsItem;
 
-class BA_CORE_API_ JobModel : public SessionModel
-{
+class JobModel : public SessionModel {
     Q_OBJECT
 
 public:

@@ -1,5 +1,5 @@
 #!/usr/bin/python
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 ## ************************************************************************** ##
 ##
@@ -41,13 +41,13 @@ except:
     record_cpu_time = False
     get_cpu_time = lambda: None
 
-
 # globals used in custom form factor
 phi_min, phi_max = -1.0, 1.0
 alpha_min, alpha_max = 0.0, 2.0
 
+
 # user-defined custom form factor
-class CustomFormFactor(IFormFactorBorn):
+class CustomFormFactor(IBornFF):
     """
     A custom defined form factor
     The form factor is V sech(q L) with
@@ -55,7 +55,7 @@ class CustomFormFactor(IFormFactorBorn):
     L length scale which defines mean radius
     """
     def __init__(self, V, L):
-        IFormFactorBorn.__init__(self)
+        IBornFF.__init__(self)
         # parameters describing the form factor
         self.V = V
         self.L = L
@@ -73,6 +73,7 @@ class CustomFormFactor(IFormFactorBorn):
     def evaluate_for_q(self, q):
         return self.V*1.0/math.cosh(q.mag()*self.L)
 
+
 # class for performance test, constructed using sample factories
 class FactoryTest:
     def __init__(self, name, simulation_name, sample_builder, nrepetitions):
@@ -88,8 +89,10 @@ class FactoryTest:
         if simulation_name != None and sample_builder != None:
             self.m_sample_factory = SampleBuilderFactory()
             self.m_simulation_factory = SimulationFactory()
-            self.m_simulation = self.m_simulation_factory.createItem(self.m_simulation_name)
-            self.m_sample = self.m_sample_factory.createSample(self.m_sample_builder_name)
+            self.m_simulation = self.m_simulation_factory.createItem(
+                self.m_simulation_name)
+            self.m_sample = self.m_sample_factory.createSampleByName(
+                self.m_sample_builder_name)
         else:
             self.m_sample_factory = None
             self.m_simulation_factory = None
@@ -127,10 +130,10 @@ class FactoryTest:
 
         if record_cpu_time:
             self.m_cpu_time = end_cpu_time - start_cpu_time
-            logfile.write("OK: %-6.3f (wall sec), %-6.3f (cpu sec) \n" % (self.m_wall_time, self.m_cpu_time))
+            logfile.write("OK: %-6.3f (wall sec), %-6.3f (cpu sec) \n" %
+                          (self.m_wall_time, self.m_cpu_time))
         else:
             logfile.write("OK: %-6.3f (wall sec)\n" % (self.m_wall_time))
-
 
 
 # special performance test case: custom form factor
@@ -155,22 +158,22 @@ class CustomTest(FactoryTest):
         Build and return the sample to calculate custom form factor in Distorted Wave Born Approximation.
         """
         # defining materials
-        m_ambience = HomogeneousMaterial("Air", 0.0, 0.0)
+        m_vacuum = HomogeneousMaterial("Vacuum", 0.0, 0.0)
         m_substrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
         m_particle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
         # collection of particles
-        ff = CustomFormFactor(343.0*nanometer, 7.0*nanometer)
+        ff = CustomFormFactor(343.0*nm, 7.0*nm)
         particle = Particle(m_particle, ff)
         particle_layout = ParticleLayout()
         particle_layout.addParticle(particle, 1.0)
-        air_layer = Layer(m_ambience)
-        air_layer.addLayout(particle_layout)
+        vacuum_layer = Layer(m_vacuum)
+        vacuum_layer.addLayout(particle_layout)
         substrate_layer = Layer(m_substrate)
 
         # assemble multilayer
         multi_layer = MultiLayer()
-        multi_layer.addLayer(air_layer)
+        multi_layer.addLayer(vacuum_layer)
         multi_layer.addLayer(substrate_layer)
         return multi_layer
 
@@ -182,8 +185,9 @@ class CustomTest(FactoryTest):
         """
         simulation = GISASSimulation()
         simulation.getOptions().setNumberOfThreads(-1)
-        simulation.setDetectorParameters(100, phi_min*degree, phi_max*degree, 100, alpha_min*degree, alpha_max*degree)
-        simulation.setBeamParameters(1.0*angstrom, 0.2*degree, 0.0*degree)
+        simulation.setDetectorParameters(100, phi_min*deg, phi_max*deg, 100,
+                                         alpha_min*deg, alpha_max*deg)
+        simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
         return simulation
 
 
@@ -197,40 +201,45 @@ class PerformanceTests:
         self.m_pyversion = ""
         self.m_filename = filename
 
-        self.add("MultiLayer",         "MaxiGISAS",    "MultiLayerWithRoughnessBuilder", 1)
-        self.add("CylindersInDWBA",    "MaxiGISAS",    "CylindersInDWBABuilder", 10)
-        self.add("RotatedPyramids",    "MaxiGISAS",    "RotatedPyramidsBuilder", 10)
-        self.add("CoreShell",          "MaxiGISAS",    "CoreShellParticleBuilder", 10)
-        self.add("SquareLattice",      "MaxiGISAS",    "SquareLatticeBuilder", 10)
-        self.add("RadialParaCrystal",  "MaxiGISAS",    "RadialParaCrystalBuilder", 10)
-        self.add("HexParaCrystal",     "BasicGISAS",   "HexParaCrystalBuilder", 1)
-        self.add("SSCA",               "MaxiGISAS",    "SizeDistributionSSCAModelBuilder", 10)
-        self.add("Mesocrystal",        "MaxiGISAS",    "MesoCrystalBuilder", 2)
-        self.add("PolMagCyl",          "MaxiGISAS00",  "MagneticCylindersBuilder", 10)
+        self.add("MultiLayer", "MaxiGISAS", "MultiLayerWithRoughnessBuilder", 1)
+        self.add("CylindersInDWBA", "MaxiGISAS", "CylindersInDWBABuilder", 10)
+        self.add("RotatedPyramids", "MaxiGISAS", "RotatedPyramidsBuilder", 10)
+        self.add("CoreShell", "MaxiGISAS", "CoreShellParticleBuilder", 10)
+        self.add("SquareLattice2D", "MaxiGISAS", "SquareLattice2DBuilder", 10)
+        self.add("RadialParaCrystal", "MaxiGISAS", "RadialParaCrystalBuilder",
+                 10)
+        self.add("HexParaCrystal", "BasicGISAS", "HexParaCrystalBuilder", 1)
+        self.add("SSCA", "MaxiGISAS", "SizeDistributionSSCAModelBuilder", 10)
+        self.add("Mesocrystal", "MaxiGISAS", "MesoCrystalBuilder", 2)
+        self.add("PolMagCyl", "MaxiGISAS00", "MagneticCylindersBuilder", 10)
 
         # custom form factor is a special case since it's not in the registry
         self.m_tests.append(CustomTest("Custom FF", 10))
 
-        logfile.write("\nPreparing to run %d performance tests.\n\n" % len(self.m_tests))
+        logfile.write("\nPreparing to run %d performance tests.\n\n" %
+                      len(self.m_tests))
 
     def add(self, name, simulation_name, sample_builder, nrepetitions):
-        self.m_tests.append(FactoryTest(name, simulation_name, sample_builder, nrepetitions))
+        self.m_tests.append(
+            FactoryTest(name, simulation_name, sample_builder, nrepetitions))
 
     # execute all performance tests
     def execute(self):
         self.init_sysinfo()
-        for test in self.m_tests: test.run()
+        for test in self.m_tests:
+            test.run()
         self.write_results()
-
 
     # write out system information and test results to file
     def write_results(self):
 
-        if ( self.m_filename != None ):
+        if (self.m_filename != None):
             try:
                 write_file = open(self.m_filename, "a")
             except:
-                sys.stderr.write("Could not open filed '%' for writing. Writing to stdout instead.\n" % self.m_filename)
+                sys.stderr.write(
+                    "Could not open filed '%' for writing. Writing to stdout instead.\n"
+                    % self.m_filename)
                 write_file = sys.stdout
                 self.m_filename = None
 
@@ -265,16 +274,18 @@ class PerformanceTests:
         write_file.write("\n")
         write_file.flush()
 
-        if ( self.m_filename != None ):
+        if (self.m_filename != None):
             write_file.close()
 
     # determine platform, architecture, python version, etc.
     def init_sysinfo(self):
         system, node, release, version, machine, processor = platform.uname()
-        self.m_datime = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
+        self.m_datime = datetime.datetime.strftime(datetime.datetime.now(),
+                                                   '%Y-%m-%d %H:%M:%S')
         self.m_hostname = node
         self.m_sysinfo = "%s %s" % (system, machine)
         self.m_pyversion = "%d.%d" % (sys.version_info[:2])
+
 
 # used for writing the summary with proper formatting
 def pretty_write(dictionary, file):
@@ -291,9 +302,10 @@ def pretty_write(dictionary, file):
     file.write(header + "\n")
     file.write(footer + "\n")
 
+
 if __name__ == '__main__':
 
-    if ( len(sys.argv) > 2 ):
+    if (len(sys.argv) > 2):
         print("Usage: test_performance.py [output file]")
         exit(0)
 

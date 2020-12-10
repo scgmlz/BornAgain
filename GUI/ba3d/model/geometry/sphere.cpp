@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "../geometry.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
+#include "GUI/ba3d/model/geometry.h"
 #include <qmath.h>
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 // cut: 0..1 - how much is cut off from the bottom
 // removedTop - how much fraction of the radius is removed from the top
-Geometry::Mesh Geometry::meshSphere(float cut, float baseShift, float removedTop)
-{
+Geometry::Mesh Geometry::meshSphere(float cut, float baseShift, float removedTop) {
     if (1 <= cut)
         return Mesh();
     cut = qMax(0.f, cut);

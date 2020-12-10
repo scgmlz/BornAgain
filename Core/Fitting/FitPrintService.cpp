@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,21 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Fitting/FitPrintService.h"
+#include "Base/Utils/StringUtils.h"
 #include "Core/Fitting/FitObjective.h"
-#include "Fit/Kernel/MinimizerResult.h"
-#include "Fit/Tools/StringUtils.h"
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 
-namespace
-{
+namespace {
 
-size_t length_of_longest_name(const Fit::Parameters& params)
-{
+size_t length_of_longest_name(const mumufit::Parameters& params) {
     size_t result(0);
     for (const auto& par : params) {
         if (par.name().size() > result)
@@ -37,8 +34,7 @@ size_t length_of_longest_name(const Fit::Parameters& params)
 
 FitPrintService::FitPrintService() = default;
 
-void FitPrintService::print(const FitObjective& objective)
-{
+void FitPrintService::print(const FitObjective& objective) {
     std::ostringstream ostr;
 
     if (objective.isFirstIteration()) {
@@ -56,8 +52,7 @@ void FitPrintService::print(const FitObjective& objective)
     std::cout << ostr.str() << "\n";
 }
 
-std::string FitPrintService::iterationHeaderString(const FitObjective& objective)
-{
+std::string FitPrintService::iterationHeaderString(const FitObjective& objective) {
     std::ostringstream result;
 
     result << "FitPrintService::update() -> Info."
@@ -67,8 +62,7 @@ std::string FitPrintService::iterationHeaderString(const FitObjective& objective
     return result.str();
 }
 
-std::string FitPrintService::wallTimeString()
-{
+std::string FitPrintService::wallTimeString() {
     std::ostringstream result;
 
     m_last_call_time.stop();
@@ -79,8 +73,7 @@ std::string FitPrintService::wallTimeString()
     return result.str();
 }
 
-std::string FitPrintService::parameterString(const FitObjective& objective)
-{
+std::string FitPrintService::parameterString(const FitObjective& objective) {
     std::ostringstream result;
 
     const auto params = objective.iterationInfo().parameters();
@@ -95,8 +88,7 @@ std::string FitPrintService::parameterString(const FitObjective& objective)
     return result.str();
 }
 
-std::string FitPrintService::fitResultString(const FitObjective& objective)
-{
+std::string FitPrintService::fitResultString(const FitObjective& objective) {
     std::ostringstream result;
 
     m_run_time.stop();

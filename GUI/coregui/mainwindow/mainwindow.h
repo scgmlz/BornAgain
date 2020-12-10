@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,16 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H
 
-#include "Wrap/WinDllMacros.h"
-#include "fancymainwindow.h"
+#include <qt-manhattan-style/fancymainwindow.h>
 
-namespace Manhattan
-{
+namespace Manhattan {
 class FancyTabWidget;
 class ProgressBar;
 } // namespace Manhattan
@@ -43,14 +41,13 @@ class ActionManager;
 class ToolTipDataBase;
 class UpdateNotifier;
 
-class BA_CORE_API_ MainWindow : public Manhattan::FancyMainWindow
-{
+class MainWindow : public Manhattan::FancyMainWindow {
     Q_OBJECT
 
 public:
     enum ETabViewId { WELCOME, INSTRUMENT, SAMPLE, IMPORT, SIMULATION, JOB, MAXVIEWCOUNT };
 
-    explicit MainWindow(QWidget* parent = nullptr);
+    explicit MainWindow();
 
     MaterialModel* materialModel();
     InstrumentModel* instrumentModel();

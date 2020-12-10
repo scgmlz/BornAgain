@@ -1,15 +1,12 @@
-#include "Core/Particle/Crystal.h"
-#include "Core/Lattice/Lattice.h"
-#include "Core/Particle/ParticleComposition.h"
+#include "Sample/Particle/Crystal.h"
+#include "Sample/Lattice/BakeLattice.h"
+#include "Sample/Particle/ParticleComposition.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class CrystalTest : public ::testing::Test
-{
-};
+class CrystalTest : public ::testing::Test {};
 
-TEST_F(CrystalTest, getChildren)
-{
-    Lattice lattice = Lattice::createHexagonalLattice(1.0, 2.0);
+TEST_F(CrystalTest, getChildren) {
+    Lattice3D lattice = bake::HexagonalLattice(1.0, 2.0);
     ParticleComposition composition;
     Crystal crystal(composition, lattice);
 

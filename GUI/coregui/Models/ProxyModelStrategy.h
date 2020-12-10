@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_PROXYMODELSTRATEGY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_PROXYMODELSTRATEGY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QPersistentModelIndex>
 
 class SessionModel;
@@ -24,8 +23,7 @@ class SessionItem;
 
 //! Base class for proxy strategies in ComponentProxyModel.
 
-class BA_CORE_API_ ProxyModelStrategy
-{
+class ProxyModelStrategy {
 public:
     using map_t = QMap<QPersistentModelIndex, QPersistentModelIndex>;
 
@@ -56,8 +54,7 @@ protected:
 
 //! Strategy for ComponentProxyModel which makes it identical to source model.
 
-class BA_CORE_API_ IndentityProxyStrategy : public ProxyModelStrategy
-{
+class IndentityProxyStrategy : public ProxyModelStrategy {
 protected:
     bool processSourceIndex(const QModelIndex& index);
 };

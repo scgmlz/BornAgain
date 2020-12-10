@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVESERVICE_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_SAVESERVICE_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QQueue>
 
@@ -24,8 +23,7 @@ class AutosaveController;
 
 //! Provides save/autosave of ProjectDocument in a thread.
 
-class BA_CORE_API_ SaveService : public QObject
-{
+class SaveService : public QObject {
     Q_OBJECT
 
 public:

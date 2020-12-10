@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/BeamAngleItems.h"
-#include "Core/Basics/Units.h"
+#include "Base/Const/Units.h"
 
 BeamAzimuthalAngleItem::BeamAzimuthalAngleItem()
-    : BeamDistributionItem("BeamAzimuthalAngle", m_show_mean)
-{
+    : BeamDistributionItem("BeamAzimuthalAngle", m_show_mean) {
     register_distribution_group("Distribution extended group");
 
     SessionItem* valueItem = getGroupItem(P_DISTRIBUTION)->getItem(DistributionNoneItem::P_MEAN);
@@ -30,21 +29,18 @@ BeamAzimuthalAngleItem::BeamAzimuthalAngleItem()
 
 //! Returns beam azimuthal angle. In the case of distribution applied, returns its mean.
 
-double BeamAzimuthalAngleItem::azimuthalAngle() const
-{
+double BeamAzimuthalAngleItem::azimuthalAngle() const {
     return BeamDistributionItem::meanValue();
 }
 
-double BeamAzimuthalAngleItem::scaleFactor() const
-{
-    return Units::degree;
+double BeamAzimuthalAngleItem::scaleFactor() const {
+    return Units::deg;
 }
 
 // ------------------------------------------------------------------------------------------------
 
 BeamInclinationAngleItem::BeamInclinationAngleItem()
-    : BeamDistributionItem("BeamInclinationAngle", m_show_mean)
-{
+    : BeamDistributionItem("BeamInclinationAngle", m_show_mean) {
     register_distribution_group("Distribution extended group");
 
     SessionItem* valueItem = getGroupItem(P_DISTRIBUTION)->getItem(DistributionNoneItem::P_MEAN);
@@ -57,12 +53,10 @@ BeamInclinationAngleItem::BeamInclinationAngleItem()
 
 //! Returns beam inclination angle. In the case of distribution applied, returns its mean.
 
-double BeamInclinationAngleItem::inclinationAngle() const
-{
+double BeamInclinationAngleItem::inclinationAngle() const {
     return BeamDistributionItem::meanValue();
 }
 
-double BeamInclinationAngleItem::scaleFactor() const
-{
-    return Units::degree;
+double BeamInclinationAngleItem::scaleFactor() const {
+    return Units::deg;
 }

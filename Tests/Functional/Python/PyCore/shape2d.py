@@ -1,10 +1,8 @@
 import numpy, os, sys, unittest
-
-sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 import bornagain as ba
 
-class Shape2DTest(unittest.TestCase):
 
+class Shape2DTest(unittest.TestCase):
     def test_constructPolygonFromList(self):
         """
         Testing construction of polygon from two Numpy arrays
@@ -33,7 +31,8 @@ class Shape2DTest(unittest.TestCase):
         """
 
         # initialization from numpy array
-        points = numpy.array([[-1.0, -0.5], [2.0, -0.5], [2.0, 1.5], [-1.0, 1.5]])
+        points = numpy.array([[-1.0, -0.5], [2.0, -0.5], [2.0, 1.5],
+                              [-1.0, 1.5]])
 
         p = ba.Polygon(points)
         self.assertTrue(p.contains(-0.75, -0.25))

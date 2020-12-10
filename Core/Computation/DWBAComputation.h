@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,26 +10,29 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_COMPUTATION_DWBACOMPUTATION_H
 #define BORNAGAIN_CORE_COMPUTATION_DWBACOMPUTATION_H
 
 #include "Core/Computation/DWBASingleComputation.h"
 #include "Core/Computation/IComputation.h"
-#include "Core/Parametrization/SimulationOptions.h"
 
 class MultiLayer;
 class SimulationElement;
 
 //! Performs a single-threaded DWBA computation with given sample and simulation parameters.
 //!
-//! Controlled by the multi-threading machinery in Simulation::runSingleSimulation().
+//! Controlled by the multi-threading machinery in ISimulation::runSingleSimulation().
 //!
 //! @ingroup algorithms_internal
 
-class DWBAComputation : public IComputation
-{
+class DWBAComputation : public IComputation {
 public:
     DWBAComputation(const MultiLayer& multilayer, const SimulationOptions& options,
                     ProgressHandler& progress, std::vector<SimulationElement>::iterator begin_it,
@@ -46,3 +49,4 @@ private:
 };
 
 #endif // BORNAGAIN_CORE_COMPUTATION_DWBACOMPUTATION_H
+#endif // USER_API

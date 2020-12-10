@@ -1,17 +1,13 @@
 #include "Core/Fitting/SimDataPair.h"
-#include "Fit/Kernel/Parameters.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include "Tests/UnitTests/Core/Fitting/FittingTestHelper.h"
 
-class SimDataPairTest : public ::testing::Test
-{
-};
+class SimDataPairTest : public ::testing::Test {};
 
-TEST_F(SimDataPairTest, standardPair)
-{
+TEST_F(SimDataPairTest, standardPair) {
     FittingTestHelper helper;
 
-    simulation_builder_t builder = [&](const Fit::Parameters& pars) {
+    simulation_builder_t builder = [&](const mumufit::Parameters& pars) {
         return helper.createSimulation(pars);
     };
 
@@ -30,7 +26,7 @@ TEST_F(SimDataPairTest, standardPair)
     EXPECT_THROW(obj.experimentalData(), std::runtime_error);
 
     // calling builder once
-    Fit::Parameters params;
+    mumufit::Parameters params;
     EXPECT_EQ(helper.m_builder_calls, 0u);
     obj.runSimulation(params);
     EXPECT_EQ(helper.m_builder_calls, 1u);
@@ -62,11 +58,10 @@ TEST_F(SimDataPairTest, standardPair)
     EXPECT_DOUBLE_EQ(std::accumulate(array.begin(), array.end(), 0), expected_size * exp_value);
 }
 
-TEST_F(SimDataPairTest, moveTest)
-{
+TEST_F(SimDataPairTest, moveTest) {
     FittingTestHelper helper;
 
-    simulation_builder_t builder = [&](const Fit::Parameters& pars) {
+    simulation_builder_t builder = [&](const mumufit::Parameters& pars) {
         return helper.createSimulation(pars);
     };
 
@@ -75,7 +70,7 @@ TEST_F(SimDataPairTest, moveTest)
 
     SimDataPair obj(builder, *helper.createData(exp_value), nullptr, dataset_weight);
     // calling builder once
-    Fit::Parameters params;
+    mumufit::Parameters params;
     EXPECT_EQ(helper.m_builder_calls, 0u);
     obj.runSimulation(params);
     EXPECT_EQ(helper.m_builder_calls, 1u);

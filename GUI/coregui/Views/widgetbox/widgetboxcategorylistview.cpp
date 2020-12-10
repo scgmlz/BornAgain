@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "GUI/coregui/Views/widgetbox/widgetboxcategorylistview.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/mainwindow/tooltipdatabase.h"
 
 #include <QtDesigner/QDesignerFormEditorInterface>
@@ -49,10 +49,6 @@
 #include <QtXml/QDomDocument>
 
 #include <QtGui/QIcon>
-//#include <QtWidgets/QListView>
-//#include <QtWidgets/QLineEdit>
-//#include <QtWidgets/QItemDelegate>
-//#include <QtCore/QSortFilterProxyModel>
 
 #include <QItemDelegate>
 #include <QLineEdit>
@@ -78,8 +74,7 @@ QT_BEGIN_NAMESPACE
 
 enum { FILTER_ROLE = Qt::UserRole + 11 };
 
-static QString domToString(const QDomElement& elt)
-{
+static QString domToString(const QDomElement& elt) {
     QString result;
     QTextStream stream(&result, QIODevice::WriteOnly);
     elt.save(stream, 2);
@@ -87,15 +82,13 @@ static QString domToString(const QDomElement& elt)
     return result;
 }
 
-static QDomDocument stringToDom(const QString& xml)
-{
+static QDomDocument stringToDom(const QString& xml) {
     QDomDocument result;
     result.setContent(xml);
     return result;
 }
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 // Entry of the model list
 
@@ -116,16 +109,13 @@ WidgetBoxCategoryEntry::WidgetBoxCategoryEntry() : editable(false) {}
 
 WidgetBoxCategoryEntry::WidgetBoxCategoryEntry(const QDesignerWidgetBoxInterface::Widget& w,
                                                const QString& filterIn, const QIcon& i, bool e)
-    : widget(w), filter(filterIn), icon(i), editable(e)
-{
-}
+    : widget(w), filter(filterIn), icon(i), editable(e) {}
 
 /* WidgetBoxCategoryModel, representing a list of category entries. Uses a
  * QAbstractListModel since the behaviour depends on the view mode of the list
  * view, it does not return text in the case of IconMode. */
 
-class WidgetBoxCategoryModel : public QAbstractListModel
-{
+class WidgetBoxCategoryModel : public QAbstractListModel {
 public:
     //    explicit WidgetBoxCategoryModel(QDesignerFormEditorInterface *core, QObject *parent = 0);
     explicit WidgetBoxCategoryModel(SampleDesignerInterface* core, QObject* parent = 0);
@@ -165,27 +155,27 @@ private:
 // WidgetBoxCategoryModel::WidgetBoxCategoryModel(QDesignerFormEditorInterface *core, QObject
 // *parent) :
 WidgetBoxCategoryModel::WidgetBoxCategoryModel(SampleDesignerInterface* core, QObject* parent)
-    : QAbstractListModel(parent),
+    : QAbstractListModel(parent)
+    ,
 #if QT_VERSION >= 0x050000
-      m_classNameRegExp("<widget +class *= *\"([^\"]+)\""),
+    m_classNameRegExp("<widget +class *= *\"([^\"]+)\"")
+    ,
 #else
-      m_classNameRegExp(QString("<widget +class *= *\"([^\"]+)\"")),
+    m_classNameRegExp(QString("<widget +class *= *\"([^\"]+)\""))
+    ,
 #endif
 
-      //    m_core(core),
-      m_viewMode(QListView::ListMode)
-{
+    //    m_core(core),
+    m_viewMode(QListView::ListMode) {
     ASSERT(m_classNameRegExp.isValid());
     Q_UNUSED(core);
 }
 
-QListView::ViewMode WidgetBoxCategoryModel::viewMode() const
-{
+QListView::ViewMode WidgetBoxCategoryModel::viewMode() const {
     return m_viewMode;
 }
 
-void WidgetBoxCategoryModel::setViewMode(QListView::ViewMode vm)
-{
+void WidgetBoxCategoryModel::setViewMode(QListView::ViewMode vm) {
     if (m_viewMode == vm)
         return;
     const bool empty = m_items.isEmpty();
@@ -196,8 +186,7 @@ void WidgetBoxCategoryModel::setViewMode(QListView::ViewMode vm)
         endResetModel();
 }
 
-int WidgetBoxCategoryModel::indexOfWidget(const QString& name)
-{
+int WidgetBoxCategoryModel::indexOfWidget(const QString& name) {
     const int count = m_items.size();
     for (int i = 0; i < count; i++)
         if (m_items.at(i).widget.name() == name)
@@ -205,8 +194,7 @@ int WidgetBoxCategoryModel::indexOfWidget(const QString& name)
     return -1;
 }
 
-QDesignerWidgetBoxInterface::Category WidgetBoxCategoryModel::category() const
-{
+QDesignerWidgetBoxInterface::Category WidgetBoxCategoryModel::category() const {
     QDesignerWidgetBoxInterface::Category rc;
     const WidgetBoxCategoryEntrys::const_iterator cend = m_items.constEnd();
     for (WidgetBoxCategoryEntrys::const_iterator it = m_items.constBegin(); it != cend; ++it)
@@ -214,8 +202,7 @@ QDesignerWidgetBoxInterface::Category WidgetBoxCategoryModel::category() const
     return rc;
 }
 
-bool WidgetBoxCategoryModel::removeCustomWidgets()
-{
+bool WidgetBoxCategoryModel::removeCustomWidgets() {
     // Typically, we are a whole category of custom widgets, so, remove all
     // and do reset.
     bool changed = false;
@@ -234,8 +221,7 @@ bool WidgetBoxCategoryModel::removeCustomWidgets()
 }
 
 void WidgetBoxCategoryModel::addWidget(const QDesignerWidgetBoxInterface::Widget& widget,
-                                       const QIcon& icon, bool editable)
-{
+                                       const QIcon& icon, bool editable) {
     // build item. Filter on name + class name if it is different and not a layout.
     QString filter = widget.name();
     if (!filter.contains("Layout") && m_classNameRegExp.indexIn(widget.domXml()) != -1) {
@@ -282,8 +268,7 @@ void WidgetBoxCategoryModel::addWidget(const QDesignerWidgetBoxInterface::Widget
     endInsertRows();
 }
 
-QVariant WidgetBoxCategoryModel::data(const QModelIndex& index, int role) const
-{
+QVariant WidgetBoxCategoryModel::data(const QModelIndex& index, int role) const {
     const int row = index.row();
     if (row < 0 || row >= m_items.size())
         return QVariant();
@@ -316,8 +301,7 @@ QVariant WidgetBoxCategoryModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool WidgetBoxCategoryModel::setData(const QModelIndex& index, const QVariant& value, int role)
-{
+bool WidgetBoxCategoryModel::setData(const QModelIndex& index, const QVariant& value, int role) {
     const int row = index.row();
     if (role != Qt::EditRole || row < 0 || row >= m_items.size()
         || value.type() != QVariant::String)
@@ -337,8 +321,7 @@ bool WidgetBoxCategoryModel::setData(const QModelIndex& index, const QVariant& v
     return true;
 }
 
-Qt::ItemFlags WidgetBoxCategoryModel::flags(const QModelIndex& index) const
-{
+Qt::ItemFlags WidgetBoxCategoryModel::flags(const QModelIndex& index) const {
     Qt::ItemFlags rc = Qt::ItemIsEnabled;
     const int row = index.row();
     if (row >= 0 && row < m_items.size())
@@ -351,13 +334,11 @@ Qt::ItemFlags WidgetBoxCategoryModel::flags(const QModelIndex& index) const
     return rc;
 }
 
-int WidgetBoxCategoryModel::rowCount(const QModelIndex& /*parent*/) const
-{
+int WidgetBoxCategoryModel::rowCount(const QModelIndex& /*parent*/) const {
     return m_items.size();
 }
 
-bool WidgetBoxCategoryModel::removeRows(int row, int count, const QModelIndex& parent)
-{
+bool WidgetBoxCategoryModel::removeRows(int row, int count, const QModelIndex& parent) {
     if (row < 0 || count < 1)
         return false;
     const int size = m_items.size();
@@ -371,13 +352,12 @@ bool WidgetBoxCategoryModel::removeRows(int row, int count, const QModelIndex& p
     return true;
 }
 
-QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryModel::widgetAt(const QModelIndex& index) const
-{
+QDesignerWidgetBoxInterface::Widget
+WidgetBoxCategoryModel::widgetAt(const QModelIndex& index) const {
     return widgetAt(index.row());
 }
 
-QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryModel::widgetAt(int row) const
-{
+QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryModel::widgetAt(int row) const {
     if (row < 0 || row >= m_items.size())
         return QDesignerWidgetBoxInterface::Widget();
     return m_items.at(row).widget;
@@ -385,8 +365,7 @@ QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryModel::widgetAt(int row) co
 
 /* WidgetSubBoxItemDelegate, ensures a valid name using a regexp validator */
 
-class WidgetBoxCategoryEntryDelegate : public QItemDelegate
-{
+class WidgetBoxCategoryEntryDelegate : public QItemDelegate {
 public:
     explicit WidgetBoxCategoryEntryDelegate(QWidget* parent = 0) : QItemDelegate(parent) {}
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
@@ -395,8 +374,7 @@ public:
 
 QWidget* WidgetBoxCategoryEntryDelegate::createEditor(QWidget* parent,
                                                       const QStyleOptionViewItem& option,
-                                                      const QModelIndex& index) const
-{
+                                                      const QModelIndex& index) const {
     QWidget* result = QItemDelegate::createEditor(parent, option, index);
     if (QLineEdit* line_edit = qobject_cast<QLineEdit*>(result)) {
         QRegExp re = QRegExp("[_a-zA-Z][_a-zA-Z0-9]*");
@@ -411,9 +389,9 @@ QWidget* WidgetBoxCategoryEntryDelegate::createEditor(QWidget* parent,
 // WidgetBoxCategoryListView::WidgetBoxCategoryListView(QDesignerFormEditorInterface *core, QWidget
 // *parent) :
 WidgetBoxCategoryListView::WidgetBoxCategoryListView(SampleDesignerInterface* core, QWidget* parent)
-    : QListView(parent), m_proxyModel(new QSortFilterProxyModel(this)),
-      m_model(new WidgetBoxCategoryModel(core, this))
-{
+    : QListView(parent)
+    , m_proxyModel(new QSortFilterProxyModel(this))
+    , m_model(new WidgetBoxCategoryModel(core, this)) {
     setFocusPolicy(Qt::NoFocus);
     setFrameShape(QFrame::NoFrame);
     // setIconSize(QSize(22, 22));
@@ -437,14 +415,12 @@ WidgetBoxCategoryListView::WidgetBoxCategoryListView(SampleDesignerInterface* co
             SIGNAL(scratchPadChanged()));
 }
 
-void WidgetBoxCategoryListView::setViewMode(ViewMode vm)
-{
+void WidgetBoxCategoryListView::setViewMode(ViewMode vm) {
     QListView::setViewMode(vm);
     m_model->setViewMode(vm);
 }
 
-void WidgetBoxCategoryListView::setCurrentItem(EAccessMode am, int row)
-{
+void WidgetBoxCategoryListView::setCurrentItem(EAccessMode am, int row) {
     const QModelIndex index = am == FILTERED ? m_proxyModel->index(row, 0)
                                              : m_proxyModel->mapFromSource(m_model->index(row, 0));
 
@@ -452,8 +428,7 @@ void WidgetBoxCategoryListView::setCurrentItem(EAccessMode am, int row)
         setCurrentIndex(index);
 }
 
-void WidgetBoxCategoryListView::slotPressed(const QModelIndex& index)
-{
+void WidgetBoxCategoryListView::slotPressed(const QModelIndex& index) {
     const QDesignerWidgetBoxInterface::Widget wgt =
         m_model->widgetAt(m_proxyModel->mapToSource(index));
     if (wgt.isNull())
@@ -461,8 +436,7 @@ void WidgetBoxCategoryListView::slotPressed(const QModelIndex& index)
     emit pressed(wgt.name(), widgetDomXml(wgt), QCursor::pos());
 }
 
-void WidgetBoxCategoryListView::removeCurrentItem()
-{
+void WidgetBoxCategoryListView::removeCurrentItem() {
     const QModelIndex index = currentIndex();
     if (!index.isValid() || !m_proxyModel->removeRow(index.row()))
         return;
@@ -476,55 +450,46 @@ void WidgetBoxCategoryListView::removeCurrentItem()
     }
 }
 
-void WidgetBoxCategoryListView::editCurrentItem()
-{
+void WidgetBoxCategoryListView::editCurrentItem() {
     const QModelIndex index = currentIndex();
     if (index.isValid())
         edit(index);
 }
 
-int WidgetBoxCategoryListView::count(EAccessMode am) const
-{
+int WidgetBoxCategoryListView::count(EAccessMode am) const {
     return am == FILTERED ? m_proxyModel->rowCount() : m_model->rowCount();
 }
 
-int WidgetBoxCategoryListView::mapRowToSource(int filterRow) const
-{
+int WidgetBoxCategoryListView::mapRowToSource(int filterRow) const {
     const QModelIndex filterIndex = m_proxyModel->index(filterRow, 0);
     return m_proxyModel->mapToSource(filterIndex).row();
 }
 
 QDesignerWidgetBoxInterface::Widget
-WidgetBoxCategoryListView::widgetAt(EAccessMode am, const QModelIndex& index) const
-{
+WidgetBoxCategoryListView::widgetAt(EAccessMode am, const QModelIndex& index) const {
     const QModelIndex unfilteredIndex = am == FILTERED ? m_proxyModel->mapToSource(index) : index;
     return m_model->widgetAt(unfilteredIndex);
 }
 
 QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryListView::widgetAt(EAccessMode am,
-                                                                        int row) const
-{
+                                                                        int row) const {
     return m_model->widgetAt(am == UNFILTERED ? row : mapRowToSource(row));
 }
 
-void WidgetBoxCategoryListView::removeRow(EAccessMode am, int row)
-{
+void WidgetBoxCategoryListView::removeRow(EAccessMode am, int row) {
     m_model->removeRow(am == UNFILTERED ? row : mapRowToSource(row));
 }
 
-bool WidgetBoxCategoryListView::containsWidget(const QString& name)
-{
+bool WidgetBoxCategoryListView::containsWidget(const QString& name) {
     return m_model->indexOfWidget(name) != -1;
 }
 
 void WidgetBoxCategoryListView::addWidget(const QDesignerWidgetBoxInterface::Widget& widget,
-                                          const QIcon& icon, bool editable)
-{
+                                          const QIcon& icon, bool editable) {
     m_model->addWidget(widget, icon, editable);
 }
 
-QString WidgetBoxCategoryListView::widgetDomXml(const QDesignerWidgetBoxInterface::Widget& widget)
-{
+QString WidgetBoxCategoryListView::widgetDomXml(const QDesignerWidgetBoxInterface::Widget& widget) {
     QString domXml = widget.domXml();
 
     if (domXml.isEmpty()) {
@@ -537,18 +502,15 @@ QString WidgetBoxCategoryListView::widgetDomXml(const QDesignerWidgetBoxInterfac
     return domXml;
 }
 
-void WidgetBoxCategoryListView::filter(const QRegExp& re)
-{
+void WidgetBoxCategoryListView::filter(const QRegExp& re) {
     m_proxyModel->setFilterRegExp(re);
 }
 
-QDesignerWidgetBoxInterface::Category WidgetBoxCategoryListView::category() const
-{
+QDesignerWidgetBoxInterface::Category WidgetBoxCategoryListView::category() const {
     return m_model->category();
 }
 
-bool WidgetBoxCategoryListView::removeCustomWidgets()
-{
+bool WidgetBoxCategoryListView::removeCustomWidgets() {
     return m_model->removeCustomWidgets();
 }
 } // namespace qdesigner_internal

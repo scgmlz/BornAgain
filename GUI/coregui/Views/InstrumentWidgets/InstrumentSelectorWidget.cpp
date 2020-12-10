@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/InstrumentSelectorWidget.h"
 #include "GUI/coregui/Models/InstrumentModel.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include <QAction>
 #include <QListView>
 #include <QMenu>
@@ -22,8 +21,7 @@
 #include <QVBoxLayout>
 
 InstrumentSelectorWidget::InstrumentSelectorWidget(InstrumentModel* model, QWidget* parent)
-    : ItemSelectorWidget(parent)
-{
+    : ItemSelectorWidget(parent) {
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 
     listView()->setViewMode(QListView::IconMode);
@@ -45,12 +43,10 @@ InstrumentSelectorWidget::InstrumentSelectorWidget(InstrumentModel* model, QWidg
     layout()->setMargin(10);
 }
 
-QSize InstrumentSelectorWidget::sizeHint() const
-{
+QSize InstrumentSelectorWidget::sizeHint() const {
     return QSize(170, 400);
 }
 
-QSize InstrumentSelectorWidget::minimumSizeHint() const
-{
+QSize InstrumentSelectorWidget::minimumSizeHint() const {
     return QSize(96, 200);
 }

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACECANVAS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACECANVAS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QItemSelectionModel>
 #include <QModelIndex>
 #include <QWidget>
@@ -27,12 +26,10 @@ class RealSpaceModel;
 class WarningSign;
 
 // Class for holding size and thickness information of layers
-class SceneGeometry
-{
+class SceneGeometry {
 public:
     SceneGeometry(double size = 100.0, double top_thickness = 25.0, double bottom_thickness = 25.0,
-                  double min_thickness = 2.0)
-    {
+                  double min_thickness = 2.0) {
         l_size = size;                         // layer size
         l_top_thickness = top_thickness;       // top layer thickness
         l_bottom_thickness = bottom_thickness; // bottom layer thickness
@@ -56,8 +53,7 @@ private:
 };
 
 //! Provides 3D object generation for RealSpaceWidget.
-class BA_CORE_API_ RealSpaceCanvas : public QWidget
-{
+class RealSpaceCanvas : public QWidget {
     Q_OBJECT
 
 public:

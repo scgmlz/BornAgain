@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_PROJECTIONITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_PROJECTIONITEMS_H
@@ -19,8 +19,7 @@
 
 //! A container to hold ProjectionItems, intended to store projections of color map on X, Y axes.
 
-class BA_CORE_API_ ProjectionContainerItem : public SessionItem
-{
+class ProjectionContainerItem : public SessionItem {
 public:
     ProjectionContainerItem();
 };

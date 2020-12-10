@@ -44,8 +44,12 @@ jobs:
 
     - name: setup dependencies
       run: |
-        brew install cmake ccache fftw gsl boost qt5 libtiff libcerf eigen python numpy scipy
+        brew install cmake ccache fftw gsl boost qt5 libtiff eigen python numpy scipy
         echo "Qt5 is installed to $QTDIR"
+        wget http://apps.jcns.fz-juelich.de/src/MacLibs/cerf-1.14-Darwin.zip
+        unzip cerf-1.14-Darwin.zip
+        mv cerf-1.14-Darwin/lib/* /usr/local/bin/
+        mv cerf-1.14-Darwin/include/* /usr/local/include/
 
     - name: Install Python packages
       run: |

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/JobSelectorToolBar.h"
 #include "GUI/coregui/Views/JobWidgets/JobSelectorActions.h"
 #include <QToolButton>
 
 JobSelectorToolBar::JobSelectorToolBar(JobSelectorActions* actions, QWidget* parent)
-    : StyledToolBar(parent), m_runJobButton(new QToolButton), m_removeJobButton(new QToolButton)
-{
+    : StyledToolBar(parent), m_runJobButton(new QToolButton), m_removeJobButton(new QToolButton) {
     setMinimumSize(minimumHeight(), minimumHeight());
 
     m_runJobButton->setText("Run");

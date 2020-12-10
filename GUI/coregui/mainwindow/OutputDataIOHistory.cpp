@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/mainwindow/OutputDataIOHistory.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/mainwindow/SaveLoadInterface.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
 //! Static method to create info for just saved item.
 
-OutputDataSaveInfo OutputDataSaveInfo::createSaved(const SaveLoadInterface* item)
-{
+OutputDataSaveInfo OutputDataSaveInfo::createSaved(const SaveLoadInterface* item) {
     ASSERT(item);
 
     OutputDataSaveInfo result;
@@ -30,23 +29,20 @@ OutputDataSaveInfo OutputDataSaveInfo::createSaved(const SaveLoadInterface* item
     return result;
 }
 
-bool OutputDataSaveInfo::wasModifiedSinceLastSave() const
-{
+bool OutputDataSaveInfo::wasModifiedSinceLastSave() const {
     return wasSavedBefore(m_data->lastModified());
 }
 
 //! Returns true if IntensityDataItem was saved before given time.
 
-bool OutputDataSaveInfo::wasSavedBefore(const QDateTime& dtime) const
-{
+bool OutputDataSaveInfo::wasSavedBefore(const QDateTime& dtime) const {
     // positive number means that m_last_saved is older than dtime
     return m_last_saved.msecsTo(dtime) > 0;
 }
 
 //-----------------------------------------------------------------------------
 
-void OutputDataDirHistory::markAsSaved(const SaveLoadInterface* item)
-{
+void OutputDataDirHistory::markAsSaved(const SaveLoadInterface* item) {
     if (contains(item))
         throw GUIHelpers::Error("OutputDataDirHistory::markAsSaved() -> Error. "
                                 "Already existing item.");
@@ -55,14 +51,12 @@ void OutputDataDirHistory::markAsSaved(const SaveLoadInterface* item)
         m_history.push_back(OutputDataSaveInfo::createSaved(item));
 }
 
-bool OutputDataDirHistory::wasModifiedSinceLastSave(const SaveLoadInterface* item)
-{
+bool OutputDataDirHistory::wasModifiedSinceLastSave(const SaveLoadInterface* item) {
     // non existing item is treated as modified since last save
     return contains(item) ? itemInfo(item).wasModifiedSinceLastSave() : true;
 }
 
-bool OutputDataDirHistory::contains(const SaveLoadInterface* item)
-{
+bool OutputDataDirHistory::contains(const SaveLoadInterface* item) {
     for (auto& info : m_history)
         if (info.item() == item)
             return true;
@@ -72,8 +66,7 @@ bool OutputDataDirHistory::contains(const SaveLoadInterface* item)
 
 //! Returns list of file names used to save all items in a history.
 
-QStringList OutputDataDirHistory::savedFileNames() const
-{
+QStringList OutputDataDirHistory::savedFileNames() const {
     QStringList result;
 
     for (auto& info : m_history)
@@ -82,8 +75,7 @@ QStringList OutputDataDirHistory::savedFileNames() const
     return result;
 }
 
-OutputDataSaveInfo OutputDataDirHistory::itemInfo(const SaveLoadInterface* item) const
-{
+OutputDataSaveInfo OutputDataDirHistory::itemInfo(const SaveLoadInterface* item) const {
     for (auto& info : m_history) {
         if (info.item() == item)
             return info;
@@ -94,14 +86,12 @@ OutputDataSaveInfo OutputDataDirHistory::itemInfo(const SaveLoadInterface* item)
 
 //-----------------------------------------------------------------------------
 
-bool OutputDataIOHistory::hasHistory(const QString& dirname) const
-{
+bool OutputDataIOHistory::hasHistory(const QString& dirname) const {
     return m_dir_history.find(dirname) == m_dir_history.end() ? false : true;
 }
 
 bool OutputDataIOHistory::wasModifiedSinceLastSave(const QString& dirname,
-                                                   const SaveLoadInterface* item)
-{
+                                                   const SaveLoadInterface* item) {
     if (!hasHistory(dirname))
         throw GUIHelpers::Error("OutputDataIOHistory::wasModifiedSinceLastSave() -> Error. "
                                 "No info for directory '"
@@ -111,15 +101,13 @@ bool OutputDataIOHistory::wasModifiedSinceLastSave(const QString& dirname,
 
 //! Sets history for given directory. Previous history will be rewritten.
 
-void OutputDataIOHistory::setHistory(const QString& dirname, const OutputDataDirHistory& history)
-{
+void OutputDataIOHistory::setHistory(const QString& dirname, const OutputDataDirHistory& history) {
     ASSERT(dirname.isEmpty() == false);
 
     m_dir_history[dirname] = history;
 }
 
-QStringList OutputDataIOHistory::savedFileNames(const QString& dirname) const
-{
+QStringList OutputDataIOHistory::savedFileNames(const QString& dirname) const {
     if (!hasHistory(dirname))
         throw GUIHelpers::Error("OutputDataIOHistory::savedFileNames() -> Error. "
                                 "No info for directory '"

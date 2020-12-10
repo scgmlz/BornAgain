@@ -80,8 +80,7 @@ QT_BEGIN_NAMESPACE
 #endif
 
 #ifdef QFORMINTERNAL_NAMESPACE
-namespace QFormInternal
-{
+namespace QFormInternal {
 #endif
 
 /*******************************************************************************
@@ -158,8 +157,7 @@ class DomStringPropertySpecification;
 ** Declarations
 */
 
-class QDESIGNER_UILIB_EXPORT DomUI
-{
+class QDESIGNER_UILIB_EXPORT DomUI {
 public:
     DomUI();
     ~DomUI();
@@ -172,8 +170,7 @@ public:
     // attribute accessors
     inline bool hasAttributeVersion() const { return m_has_attr_version; }
     inline QString attributeVersion() const { return m_attr_version; }
-    inline void setAttributeVersion(const QString& a)
-    {
+    inline void setAttributeVersion(const QString& a) {
         m_attr_version = a;
         m_has_attr_version = true;
     }
@@ -181,8 +178,7 @@ public:
 
     inline bool hasAttributeLanguage() const { return m_has_attr_language; }
     inline QString attributeLanguage() const { return m_attr_language; }
-    inline void setAttributeLanguage(const QString& a)
-    {
+    inline void setAttributeLanguage(const QString& a) {
         m_attr_language = a;
         m_has_attr_language = true;
     }
@@ -190,8 +186,7 @@ public:
 
     inline bool hasAttributeDisplayname() const { return m_has_attr_displayname; }
     inline QString attributeDisplayname() const { return m_attr_displayname; }
-    inline void setAttributeDisplayname(const QString& a)
-    {
+    inline void setAttributeDisplayname(const QString& a) {
         m_attr_displayname = a;
         m_has_attr_displayname = true;
     }
@@ -199,8 +194,7 @@ public:
 
     inline bool hasAttributeStdsetdef() const { return m_has_attr_stdsetdef; }
     inline int attributeStdsetdef() const { return m_attr_stdsetdef; }
-    inline void setAttributeStdsetdef(int a)
-    {
+    inline void setAttributeStdsetdef(int a) {
         m_attr_stdsetdef = a;
         m_has_attr_stdsetdef = true;
     }
@@ -208,8 +202,7 @@ public:
 
     inline bool hasAttributeStdSetDef() const { return m_has_attr_stdSetDef; }
     inline int attributeStdSetDef() const { return m_attr_stdSetDef; }
-    inline void setAttributeStdSetDef(int a)
-    {
+    inline void setAttributeStdSetDef(int a) {
         m_attr_stdSetDef = a;
         m_has_attr_stdSetDef = true;
     }
@@ -376,8 +369,7 @@ private:
     void operator=(const DomUI& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomIncludes
-{
+class QDESIGNER_UILIB_EXPORT DomIncludes {
 public:
     DomIncludes();
     ~DomIncludes();
@@ -406,8 +398,7 @@ private:
     void operator=(const DomIncludes& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomInclude
-{
+class QDESIGNER_UILIB_EXPORT DomInclude {
 public:
     DomInclude();
     ~DomInclude();
@@ -420,8 +411,7 @@ public:
     // attribute accessors
     inline bool hasAttributeLocation() const { return m_has_attr_location; }
     inline QString attributeLocation() const { return m_attr_location; }
-    inline void setAttributeLocation(const QString& a)
-    {
+    inline void setAttributeLocation(const QString& a) {
         m_attr_location = a;
         m_has_attr_location = true;
     }
@@ -429,8 +419,7 @@ public:
 
     inline bool hasAttributeImpldecl() const { return m_has_attr_impldecl; }
     inline QString attributeImpldecl() const { return m_attr_impldecl; }
-    inline void setAttributeImpldecl(const QString& a)
-    {
+    inline void setAttributeImpldecl(const QString& a) {
         m_attr_impldecl = a;
         m_has_attr_impldecl = true;
     }
@@ -455,8 +444,7 @@ private:
     void operator=(const DomInclude& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomResources
-{
+class QDESIGNER_UILIB_EXPORT DomResources {
 public:
     DomResources();
     ~DomResources();
@@ -469,8 +457,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -497,8 +484,7 @@ private:
     void operator=(const DomResources& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomResource
-{
+class QDESIGNER_UILIB_EXPORT DomResource {
 public:
     DomResource();
     ~DomResource();
@@ -511,8 +497,7 @@ public:
     // attribute accessors
     inline bool hasAttributeLocation() const { return m_has_attr_location; }
     inline QString attributeLocation() const { return m_attr_location; }
-    inline void setAttributeLocation(const QString& a)
-    {
+    inline void setAttributeLocation(const QString& a) {
         m_attr_location = a;
         m_has_attr_location = true;
     }
@@ -534,8 +519,7 @@ private:
     void operator=(const DomResource& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomActionGroup
-{
+class QDESIGNER_UILIB_EXPORT DomActionGroup {
 public:
     DomActionGroup();
     ~DomActionGroup();
@@ -548,8 +532,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -588,8 +571,7 @@ private:
     void operator=(const DomActionGroup& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomAction
-{
+class QDESIGNER_UILIB_EXPORT DomAction {
 public:
     DomAction();
     ~DomAction();
@@ -602,8 +584,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -611,8 +592,7 @@ public:
 
     inline bool hasAttributeMenu() const { return m_has_attr_menu; }
     inline QString attributeMenu() const { return m_attr_menu; }
-    inline void setAttributeMenu(const QString& a)
-    {
+    inline void setAttributeMenu(const QString& a) {
         m_attr_menu = a;
         m_has_attr_menu = true;
     }
@@ -646,8 +626,7 @@ private:
     void operator=(const DomAction& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomActionRef
-{
+class QDESIGNER_UILIB_EXPORT DomActionRef {
 public:
     DomActionRef();
     ~DomActionRef();
@@ -660,8 +639,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -683,8 +661,7 @@ private:
     void operator=(const DomActionRef& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomButtonGroup
-{
+class QDESIGNER_UILIB_EXPORT DomButtonGroup {
 public:
     DomButtonGroup();
     ~DomButtonGroup();
@@ -697,8 +674,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -729,8 +705,7 @@ private:
     void operator=(const DomButtonGroup& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomButtonGroups
-{
+class QDESIGNER_UILIB_EXPORT DomButtonGroups {
 public:
     DomButtonGroups();
     ~DomButtonGroups();
@@ -759,8 +734,7 @@ private:
     void operator=(const DomButtonGroups& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomImages
-{
+class QDESIGNER_UILIB_EXPORT DomImages {
 public:
     DomImages();
     ~DomImages();
@@ -789,8 +763,7 @@ private:
     void operator=(const DomImages& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomImage
-{
+class QDESIGNER_UILIB_EXPORT DomImage {
 public:
     DomImage();
     ~DomImage();
@@ -803,8 +776,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -834,8 +806,7 @@ private:
     void operator=(const DomImage& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomImageData
-{
+class QDESIGNER_UILIB_EXPORT DomImageData {
 public:
     DomImageData();
     ~DomImageData();
@@ -848,8 +819,7 @@ public:
     // attribute accessors
     inline bool hasAttributeFormat() const { return m_has_attr_format; }
     inline QString attributeFormat() const { return m_attr_format; }
-    inline void setAttributeFormat(const QString& a)
-    {
+    inline void setAttributeFormat(const QString& a) {
         m_attr_format = a;
         m_has_attr_format = true;
     }
@@ -857,8 +827,7 @@ public:
 
     inline bool hasAttributeLength() const { return m_has_attr_length; }
     inline int attributeLength() const { return m_attr_length; }
-    inline void setAttributeLength(int a)
-    {
+    inline void setAttributeLength(int a) {
         m_attr_length = a;
         m_has_attr_length = true;
     }
@@ -883,8 +852,7 @@ private:
     void operator=(const DomImageData& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomCustomWidgets
-{
+class QDESIGNER_UILIB_EXPORT DomCustomWidgets {
 public:
     DomCustomWidgets();
     ~DomCustomWidgets();
@@ -913,8 +881,7 @@ private:
     void operator=(const DomCustomWidgets& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomHeader
-{
+class QDESIGNER_UILIB_EXPORT DomHeader {
 public:
     DomHeader();
     ~DomHeader();
@@ -927,8 +894,7 @@ public:
     // attribute accessors
     inline bool hasAttributeLocation() const { return m_has_attr_location; }
     inline QString attributeLocation() const { return m_attr_location; }
-    inline void setAttributeLocation(const QString& a)
-    {
+    inline void setAttributeLocation(const QString& a) {
         m_attr_location = a;
         m_has_attr_location = true;
     }
@@ -950,8 +916,7 @@ private:
     void operator=(const DomHeader& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomCustomWidget
-{
+class QDESIGNER_UILIB_EXPORT DomCustomWidget {
 public:
     DomCustomWidget();
     ~DomCustomWidget();
@@ -1024,14 +989,12 @@ public:
     inline bool hasElementSlots() const { return m_children & Slots; }
     void clearElementSlots();
 
-    inline DomPropertySpecifications* elementPropertyspecifications() const
-    {
+    inline DomPropertySpecifications* elementPropertyspecifications() const {
         return m_propertyspecifications;
     }
     DomPropertySpecifications* takeElementPropertyspecifications();
     void setElementPropertyspecifications(DomPropertySpecifications* a);
-    inline bool hasElementPropertyspecifications() const
-    {
+    inline bool hasElementPropertyspecifications() const {
         return m_children & Propertyspecifications;
     }
     void clearElementPropertyspecifications();
@@ -1074,8 +1037,7 @@ private:
     void operator=(const DomCustomWidget& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomProperties
-{
+class QDESIGNER_UILIB_EXPORT DomProperties {
 public:
     DomProperties();
     ~DomProperties();
@@ -1104,8 +1066,7 @@ private:
     void operator=(const DomProperties& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomPropertyData
-{
+class QDESIGNER_UILIB_EXPORT DomPropertyData {
 public:
     DomPropertyData();
     ~DomPropertyData();
@@ -1118,8 +1079,7 @@ public:
     // attribute accessors
     inline bool hasAttributeType() const { return m_has_attr_type; }
     inline QString attributeType() const { return m_attr_type; }
-    inline void setAttributeType(const QString& a)
-    {
+    inline void setAttributeType(const QString& a) {
         m_attr_type = a;
         m_has_attr_type = true;
     }
@@ -1141,8 +1101,7 @@ private:
     void operator=(const DomPropertyData& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomSizePolicyData
-{
+class QDESIGNER_UILIB_EXPORT DomSizePolicyData {
 public:
     DomSizePolicyData();
     ~DomSizePolicyData();
@@ -1179,8 +1138,7 @@ private:
     void operator=(const DomSizePolicyData& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomLayoutDefault
-{
+class QDESIGNER_UILIB_EXPORT DomLayoutDefault {
 public:
     DomLayoutDefault();
     ~DomLayoutDefault();
@@ -1193,8 +1151,7 @@ public:
     // attribute accessors
     inline bool hasAttributeSpacing() const { return m_has_attr_spacing; }
     inline int attributeSpacing() const { return m_attr_spacing; }
-    inline void setAttributeSpacing(int a)
-    {
+    inline void setAttributeSpacing(int a) {
         m_attr_spacing = a;
         m_has_attr_spacing = true;
     }
@@ -1202,8 +1159,7 @@ public:
 
     inline bool hasAttributeMargin() const { return m_has_attr_margin; }
     inline int attributeMargin() const { return m_attr_margin; }
-    inline void setAttributeMargin(int a)
-    {
+    inline void setAttributeMargin(int a) {
         m_attr_margin = a;
         m_has_attr_margin = true;
     }
@@ -1228,8 +1184,7 @@ private:
     void operator=(const DomLayoutDefault& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomLayoutFunction
-{
+class QDESIGNER_UILIB_EXPORT DomLayoutFunction {
 public:
     DomLayoutFunction();
     ~DomLayoutFunction();
@@ -1242,8 +1197,7 @@ public:
     // attribute accessors
     inline bool hasAttributeSpacing() const { return m_has_attr_spacing; }
     inline QString attributeSpacing() const { return m_attr_spacing; }
-    inline void setAttributeSpacing(const QString& a)
-    {
+    inline void setAttributeSpacing(const QString& a) {
         m_attr_spacing = a;
         m_has_attr_spacing = true;
     }
@@ -1251,8 +1205,7 @@ public:
 
     inline bool hasAttributeMargin() const { return m_has_attr_margin; }
     inline QString attributeMargin() const { return m_attr_margin; }
-    inline void setAttributeMargin(const QString& a)
-    {
+    inline void setAttributeMargin(const QString& a) {
         m_attr_margin = a;
         m_has_attr_margin = true;
     }
@@ -1277,8 +1230,7 @@ private:
     void operator=(const DomLayoutFunction& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomTabStops
-{
+class QDESIGNER_UILIB_EXPORT DomTabStops {
 public:
     DomTabStops();
     ~DomTabStops();
@@ -1307,8 +1259,7 @@ private:
     void operator=(const DomTabStops& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomLayout
-{
+class QDESIGNER_UILIB_EXPORT DomLayout {
 public:
     DomLayout();
     ~DomLayout();
@@ -1321,8 +1272,7 @@ public:
     // attribute accessors
     inline bool hasAttributeClass() const { return m_has_attr_class; }
     inline QString attributeClass() const { return m_attr_class; }
-    inline void setAttributeClass(const QString& a)
-    {
+    inline void setAttributeClass(const QString& a) {
         m_attr_class = a;
         m_has_attr_class = true;
     }
@@ -1330,8 +1280,7 @@ public:
 
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -1339,8 +1288,7 @@ public:
 
     inline bool hasAttributeStretch() const { return m_has_attr_stretch; }
     inline QString attributeStretch() const { return m_attr_stretch; }
-    inline void setAttributeStretch(const QString& a)
-    {
+    inline void setAttributeStretch(const QString& a) {
         m_attr_stretch = a;
         m_has_attr_stretch = true;
     }
@@ -1348,8 +1296,7 @@ public:
 
     inline bool hasAttributeRowStretch() const { return m_has_attr_rowStretch; }
     inline QString attributeRowStretch() const { return m_attr_rowStretch; }
-    inline void setAttributeRowStretch(const QString& a)
-    {
+    inline void setAttributeRowStretch(const QString& a) {
         m_attr_rowStretch = a;
         m_has_attr_rowStretch = true;
     }
@@ -1357,8 +1304,7 @@ public:
 
     inline bool hasAttributeColumnStretch() const { return m_has_attr_columnStretch; }
     inline QString attributeColumnStretch() const { return m_attr_columnStretch; }
-    inline void setAttributeColumnStretch(const QString& a)
-    {
+    inline void setAttributeColumnStretch(const QString& a) {
         m_attr_columnStretch = a;
         m_has_attr_columnStretch = true;
     }
@@ -1366,8 +1312,7 @@ public:
 
     inline bool hasAttributeRowMinimumHeight() const { return m_has_attr_rowMinimumHeight; }
     inline QString attributeRowMinimumHeight() const { return m_attr_rowMinimumHeight; }
-    inline void setAttributeRowMinimumHeight(const QString& a)
-    {
+    inline void setAttributeRowMinimumHeight(const QString& a) {
         m_attr_rowMinimumHeight = a;
         m_has_attr_rowMinimumHeight = true;
     }
@@ -1375,8 +1320,7 @@ public:
 
     inline bool hasAttributeColumnMinimumWidth() const { return m_has_attr_columnMinimumWidth; }
     inline QString attributeColumnMinimumWidth() const { return m_attr_columnMinimumWidth; }
-    inline void setAttributeColumnMinimumWidth(const QString& a)
-    {
+    inline void setAttributeColumnMinimumWidth(const QString& a) {
         m_attr_columnMinimumWidth = a;
         m_has_attr_columnMinimumWidth = true;
     }
@@ -1429,8 +1373,7 @@ private:
     void operator=(const DomLayout& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomLayoutItem
-{
+class QDESIGNER_UILIB_EXPORT DomLayoutItem {
 public:
     DomLayoutItem();
     ~DomLayoutItem();
@@ -1443,8 +1386,7 @@ public:
     // attribute accessors
     inline bool hasAttributeRow() const { return m_has_attr_row; }
     inline int attributeRow() const { return m_attr_row; }
-    inline void setAttributeRow(int a)
-    {
+    inline void setAttributeRow(int a) {
         m_attr_row = a;
         m_has_attr_row = true;
     }
@@ -1452,8 +1394,7 @@ public:
 
     inline bool hasAttributeColumn() const { return m_has_attr_column; }
     inline int attributeColumn() const { return m_attr_column; }
-    inline void setAttributeColumn(int a)
-    {
+    inline void setAttributeColumn(int a) {
         m_attr_column = a;
         m_has_attr_column = true;
     }
@@ -1461,8 +1402,7 @@ public:
 
     inline bool hasAttributeRowSpan() const { return m_has_attr_rowSpan; }
     inline int attributeRowSpan() const { return m_attr_rowSpan; }
-    inline void setAttributeRowSpan(int a)
-    {
+    inline void setAttributeRowSpan(int a) {
         m_attr_rowSpan = a;
         m_has_attr_rowSpan = true;
     }
@@ -1470,8 +1410,7 @@ public:
 
     inline bool hasAttributeColSpan() const { return m_has_attr_colSpan; }
     inline int attributeColSpan() const { return m_attr_colSpan; }
-    inline void setAttributeColSpan(int a)
-    {
+    inline void setAttributeColSpan(int a) {
         m_attr_colSpan = a;
         m_has_attr_colSpan = true;
     }
@@ -1479,8 +1418,7 @@ public:
 
     inline bool hasAttributeAlignment() const { return m_has_attr_alignment; }
     inline QString attributeAlignment() const { return m_attr_alignment; }
-    inline void setAttributeAlignment(const QString& a)
-    {
+    inline void setAttributeAlignment(const QString& a) {
         m_attr_alignment = a;
         m_has_attr_alignment = true;
     }
@@ -1532,8 +1470,7 @@ private:
     void operator=(const DomLayoutItem& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomRow
-{
+class QDESIGNER_UILIB_EXPORT DomRow {
 public:
     DomRow();
     ~DomRow();
@@ -1562,8 +1499,7 @@ private:
     void operator=(const DomRow& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomColumn
-{
+class QDESIGNER_UILIB_EXPORT DomColumn {
 public:
     DomColumn();
     ~DomColumn();
@@ -1592,8 +1528,7 @@ private:
     void operator=(const DomColumn& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomItem
-{
+class QDESIGNER_UILIB_EXPORT DomItem {
 public:
     DomItem();
     ~DomItem();
@@ -1606,8 +1541,7 @@ public:
     // attribute accessors
     inline bool hasAttributeRow() const { return m_has_attr_row; }
     inline int attributeRow() const { return m_attr_row; }
-    inline void setAttributeRow(int a)
-    {
+    inline void setAttributeRow(int a) {
         m_attr_row = a;
         m_has_attr_row = true;
     }
@@ -1615,8 +1549,7 @@ public:
 
     inline bool hasAttributeColumn() const { return m_has_attr_column; }
     inline int attributeColumn() const { return m_attr_column; }
-    inline void setAttributeColumn(int a)
-    {
+    inline void setAttributeColumn(int a) {
         m_attr_column = a;
         m_has_attr_column = true;
     }
@@ -1650,8 +1583,7 @@ private:
     void operator=(const DomItem& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomWidget
-{
+class QDESIGNER_UILIB_EXPORT DomWidget {
 public:
     DomWidget();
     ~DomWidget();
@@ -1664,8 +1596,7 @@ public:
     // attribute accessors
     inline bool hasAttributeClass() const { return m_has_attr_class; }
     inline QString attributeClass() const { return m_attr_class; }
-    inline void setAttributeClass(const QString& a)
-    {
+    inline void setAttributeClass(const QString& a) {
         m_attr_class = a;
         m_has_attr_class = true;
     }
@@ -1673,8 +1604,7 @@ public:
 
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -1682,8 +1612,7 @@ public:
 
     inline bool hasAttributeNative() const { return m_has_attr_native; }
     inline bool attributeNative() const { return m_attr_native; }
-    inline void setAttributeNative(bool a)
-    {
+    inline void setAttributeNative(bool a) {
         m_attr_native = a;
         m_has_attr_native = true;
     }
@@ -1783,8 +1712,7 @@ private:
     void operator=(const DomWidget& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomSpacer
-{
+class QDESIGNER_UILIB_EXPORT DomSpacer {
 public:
     DomSpacer();
     ~DomSpacer();
@@ -1797,8 +1725,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -1825,8 +1752,7 @@ private:
     void operator=(const DomSpacer& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomColor
-{
+class QDESIGNER_UILIB_EXPORT DomColor {
 public:
     DomColor();
     ~DomColor();
@@ -1839,8 +1765,7 @@ public:
     // attribute accessors
     inline bool hasAttributeAlpha() const { return m_has_attr_alpha; }
     inline int attributeAlpha() const { return m_attr_alpha; }
-    inline void setAttributeAlpha(int a)
-    {
+    inline void setAttributeAlpha(int a) {
         m_attr_alpha = a;
         m_has_attr_alpha = true;
     }
@@ -1881,8 +1806,7 @@ private:
     void operator=(const DomColor& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomGradientStop
-{
+class QDESIGNER_UILIB_EXPORT DomGradientStop {
 public:
     DomGradientStop();
     ~DomGradientStop();
@@ -1895,8 +1819,7 @@ public:
     // attribute accessors
     inline bool hasAttributePosition() const { return m_has_attr_position; }
     inline double attributePosition() const { return m_attr_position; }
-    inline void setAttributePosition(double a)
-    {
+    inline void setAttributePosition(double a) {
         m_attr_position = a;
         m_has_attr_position = true;
     }
@@ -1926,8 +1849,7 @@ private:
     void operator=(const DomGradientStop& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomGradient
-{
+class QDESIGNER_UILIB_EXPORT DomGradient {
 public:
     DomGradient();
     ~DomGradient();
@@ -1940,8 +1862,7 @@ public:
     // attribute accessors
     inline bool hasAttributeStartX() const { return m_has_attr_startX; }
     inline double attributeStartX() const { return m_attr_startX; }
-    inline void setAttributeStartX(double a)
-    {
+    inline void setAttributeStartX(double a) {
         m_attr_startX = a;
         m_has_attr_startX = true;
     }
@@ -1949,8 +1870,7 @@ public:
 
     inline bool hasAttributeStartY() const { return m_has_attr_startY; }
     inline double attributeStartY() const { return m_attr_startY; }
-    inline void setAttributeStartY(double a)
-    {
+    inline void setAttributeStartY(double a) {
         m_attr_startY = a;
         m_has_attr_startY = true;
     }
@@ -1958,8 +1878,7 @@ public:
 
     inline bool hasAttributeEndX() const { return m_has_attr_endX; }
     inline double attributeEndX() const { return m_attr_endX; }
-    inline void setAttributeEndX(double a)
-    {
+    inline void setAttributeEndX(double a) {
         m_attr_endX = a;
         m_has_attr_endX = true;
     }
@@ -1967,8 +1886,7 @@ public:
 
     inline bool hasAttributeEndY() const { return m_has_attr_endY; }
     inline double attributeEndY() const { return m_attr_endY; }
-    inline void setAttributeEndY(double a)
-    {
+    inline void setAttributeEndY(double a) {
         m_attr_endY = a;
         m_has_attr_endY = true;
     }
@@ -1976,8 +1894,7 @@ public:
 
     inline bool hasAttributeCentralX() const { return m_has_attr_centralX; }
     inline double attributeCentralX() const { return m_attr_centralX; }
-    inline void setAttributeCentralX(double a)
-    {
+    inline void setAttributeCentralX(double a) {
         m_attr_centralX = a;
         m_has_attr_centralX = true;
     }
@@ -1985,8 +1902,7 @@ public:
 
     inline bool hasAttributeCentralY() const { return m_has_attr_centralY; }
     inline double attributeCentralY() const { return m_attr_centralY; }
-    inline void setAttributeCentralY(double a)
-    {
+    inline void setAttributeCentralY(double a) {
         m_attr_centralY = a;
         m_has_attr_centralY = true;
     }
@@ -1994,8 +1910,7 @@ public:
 
     inline bool hasAttributeFocalX() const { return m_has_attr_focalX; }
     inline double attributeFocalX() const { return m_attr_focalX; }
-    inline void setAttributeFocalX(double a)
-    {
+    inline void setAttributeFocalX(double a) {
         m_attr_focalX = a;
         m_has_attr_focalX = true;
     }
@@ -2003,8 +1918,7 @@ public:
 
     inline bool hasAttributeFocalY() const { return m_has_attr_focalY; }
     inline double attributeFocalY() const { return m_attr_focalY; }
-    inline void setAttributeFocalY(double a)
-    {
+    inline void setAttributeFocalY(double a) {
         m_attr_focalY = a;
         m_has_attr_focalY = true;
     }
@@ -2012,8 +1926,7 @@ public:
 
     inline bool hasAttributeRadius() const { return m_has_attr_radius; }
     inline double attributeRadius() const { return m_attr_radius; }
-    inline void setAttributeRadius(double a)
-    {
+    inline void setAttributeRadius(double a) {
         m_attr_radius = a;
         m_has_attr_radius = true;
     }
@@ -2021,8 +1934,7 @@ public:
 
     inline bool hasAttributeAngle() const { return m_has_attr_angle; }
     inline double attributeAngle() const { return m_attr_angle; }
-    inline void setAttributeAngle(double a)
-    {
+    inline void setAttributeAngle(double a) {
         m_attr_angle = a;
         m_has_attr_angle = true;
     }
@@ -2030,8 +1942,7 @@ public:
 
     inline bool hasAttributeType() const { return m_has_attr_type; }
     inline QString attributeType() const { return m_attr_type; }
-    inline void setAttributeType(const QString& a)
-    {
+    inline void setAttributeType(const QString& a) {
         m_attr_type = a;
         m_has_attr_type = true;
     }
@@ -2039,8 +1950,7 @@ public:
 
     inline bool hasAttributeSpread() const { return m_has_attr_spread; }
     inline QString attributeSpread() const { return m_attr_spread; }
-    inline void setAttributeSpread(const QString& a)
-    {
+    inline void setAttributeSpread(const QString& a) {
         m_attr_spread = a;
         m_has_attr_spread = true;
     }
@@ -2048,8 +1958,7 @@ public:
 
     inline bool hasAttributeCoordinateMode() const { return m_has_attr_coordinateMode; }
     inline QString attributeCoordinateMode() const { return m_attr_coordinateMode; }
-    inline void setAttributeCoordinateMode(const QString& a)
-    {
+    inline void setAttributeCoordinateMode(const QString& a) {
         m_attr_coordinateMode = a;
         m_has_attr_coordinateMode = true;
     }
@@ -2112,8 +2021,7 @@ private:
     void operator=(const DomGradient& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomBrush
-{
+class QDESIGNER_UILIB_EXPORT DomBrush {
 public:
     DomBrush();
     ~DomBrush();
@@ -2126,8 +2034,7 @@ public:
     // attribute accessors
     inline bool hasAttributeBrushStyle() const { return m_has_attr_brushStyle; }
     inline QString attributeBrushStyle() const { return m_attr_brushStyle; }
-    inline void setAttributeBrushStyle(const QString& a)
-    {
+    inline void setAttributeBrushStyle(const QString& a) {
         m_attr_brushStyle = a;
         m_has_attr_brushStyle = true;
     }
@@ -2167,8 +2074,7 @@ private:
     void operator=(const DomBrush& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomColorRole
-{
+class QDESIGNER_UILIB_EXPORT DomColorRole {
 public:
     DomColorRole();
     ~DomColorRole();
@@ -2181,8 +2087,7 @@ public:
     // attribute accessors
     inline bool hasAttributeRole() const { return m_has_attr_role; }
     inline QString attributeRole() const { return m_attr_role; }
-    inline void setAttributeRole(const QString& a)
-    {
+    inline void setAttributeRole(const QString& a) {
         m_attr_role = a;
         m_has_attr_role = true;
     }
@@ -2212,8 +2117,7 @@ private:
     void operator=(const DomColorRole& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomColorGroup
-{
+class QDESIGNER_UILIB_EXPORT DomColorGroup {
 public:
     DomColorGroup();
     ~DomColorGroup();
@@ -2246,8 +2150,7 @@ private:
     void operator=(const DomColorGroup& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomPalette
-{
+class QDESIGNER_UILIB_EXPORT DomPalette {
 public:
     DomPalette();
     ~DomPalette();
@@ -2293,8 +2196,7 @@ private:
     void operator=(const DomPalette& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomFont
-{
+class QDESIGNER_UILIB_EXPORT DomFont {
 public:
     DomFont();
     ~DomFont();
@@ -2390,8 +2292,7 @@ private:
     void operator=(const DomFont& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomPoint
-{
+class QDESIGNER_UILIB_EXPORT DomPoint {
 public:
     DomPoint();
     ~DomPoint();
@@ -2428,8 +2329,7 @@ private:
     void operator=(const DomPoint& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomRect
-{
+class QDESIGNER_UILIB_EXPORT DomRect {
 public:
     DomRect();
     ~DomRect();
@@ -2478,8 +2378,7 @@ private:
     void operator=(const DomRect& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomLocale
-{
+class QDESIGNER_UILIB_EXPORT DomLocale {
 public:
     DomLocale();
     ~DomLocale();
@@ -2492,8 +2391,7 @@ public:
     // attribute accessors
     inline bool hasAttributeLanguage() const { return m_has_attr_language; }
     inline QString attributeLanguage() const { return m_attr_language; }
-    inline void setAttributeLanguage(const QString& a)
-    {
+    inline void setAttributeLanguage(const QString& a) {
         m_attr_language = a;
         m_has_attr_language = true;
     }
@@ -2501,8 +2399,7 @@ public:
 
     inline bool hasAttributeCountry() const { return m_has_attr_country; }
     inline QString attributeCountry() const { return m_attr_country; }
-    inline void setAttributeCountry(const QString& a)
-    {
+    inline void setAttributeCountry(const QString& a) {
         m_attr_country = a;
         m_has_attr_country = true;
     }
@@ -2527,8 +2424,7 @@ private:
     void operator=(const DomLocale& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomSizePolicy
-{
+class QDESIGNER_UILIB_EXPORT DomSizePolicy {
 public:
     DomSizePolicy();
     ~DomSizePolicy();
@@ -2541,8 +2437,7 @@ public:
     // attribute accessors
     inline bool hasAttributeHSizeType() const { return m_has_attr_hSizeType; }
     inline QString attributeHSizeType() const { return m_attr_hSizeType; }
-    inline void setAttributeHSizeType(const QString& a)
-    {
+    inline void setAttributeHSizeType(const QString& a) {
         m_attr_hSizeType = a;
         m_has_attr_hSizeType = true;
     }
@@ -2550,8 +2445,7 @@ public:
 
     inline bool hasAttributeVSizeType() const { return m_has_attr_vSizeType; }
     inline QString attributeVSizeType() const { return m_attr_vSizeType; }
-    inline void setAttributeVSizeType(const QString& a)
-    {
+    inline void setAttributeVSizeType(const QString& a) {
         m_attr_vSizeType = a;
         m_has_attr_vSizeType = true;
     }
@@ -2601,8 +2495,7 @@ private:
     void operator=(const DomSizePolicy& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomSize
-{
+class QDESIGNER_UILIB_EXPORT DomSize {
 public:
     DomSize();
     ~DomSize();
@@ -2639,8 +2532,7 @@ private:
     void operator=(const DomSize& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomDate
-{
+class QDESIGNER_UILIB_EXPORT DomDate {
 public:
     DomDate();
     ~DomDate();
@@ -2683,8 +2575,7 @@ private:
     void operator=(const DomDate& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomTime
-{
+class QDESIGNER_UILIB_EXPORT DomTime {
 public:
     DomTime();
     ~DomTime();
@@ -2727,8 +2618,7 @@ private:
     void operator=(const DomTime& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomDateTime
-{
+class QDESIGNER_UILIB_EXPORT DomDateTime {
 public:
     DomDateTime();
     ~DomDateTime();
@@ -2789,8 +2679,7 @@ private:
     void operator=(const DomDateTime& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomStringList
-{
+class QDESIGNER_UILIB_EXPORT DomStringList {
 public:
     DomStringList();
     ~DomStringList();
@@ -2803,8 +2692,7 @@ public:
     // attribute accessors
     inline bool hasAttributeNotr() const { return m_has_attr_notr; }
     inline QString attributeNotr() const { return m_attr_notr; }
-    inline void setAttributeNotr(const QString& a)
-    {
+    inline void setAttributeNotr(const QString& a) {
         m_attr_notr = a;
         m_has_attr_notr = true;
     }
@@ -2812,8 +2700,7 @@ public:
 
     inline bool hasAttributeComment() const { return m_has_attr_comment; }
     inline QString attributeComment() const { return m_attr_comment; }
-    inline void setAttributeComment(const QString& a)
-    {
+    inline void setAttributeComment(const QString& a) {
         m_attr_comment = a;
         m_has_attr_comment = true;
     }
@@ -2821,8 +2708,7 @@ public:
 
     inline bool hasAttributeExtraComment() const { return m_has_attr_extraComment; }
     inline QString attributeExtraComment() const { return m_attr_extraComment; }
-    inline void setAttributeExtraComment(const QString& a)
-    {
+    inline void setAttributeExtraComment(const QString& a) {
         m_attr_extraComment = a;
         m_has_attr_extraComment = true;
     }
@@ -2855,8 +2741,7 @@ private:
     void operator=(const DomStringList& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomResourcePixmap
-{
+class QDESIGNER_UILIB_EXPORT DomResourcePixmap {
 public:
     DomResourcePixmap();
     ~DomResourcePixmap();
@@ -2869,8 +2754,7 @@ public:
     // attribute accessors
     inline bool hasAttributeResource() const { return m_has_attr_resource; }
     inline QString attributeResource() const { return m_attr_resource; }
-    inline void setAttributeResource(const QString& a)
-    {
+    inline void setAttributeResource(const QString& a) {
         m_attr_resource = a;
         m_has_attr_resource = true;
     }
@@ -2878,8 +2762,7 @@ public:
 
     inline bool hasAttributeAlias() const { return m_has_attr_alias; }
     inline QString attributeAlias() const { return m_attr_alias; }
-    inline void setAttributeAlias(const QString& a)
-    {
+    inline void setAttributeAlias(const QString& a) {
         m_attr_alias = a;
         m_has_attr_alias = true;
     }
@@ -2904,8 +2787,7 @@ private:
     void operator=(const DomResourcePixmap& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomResourceIcon
-{
+class QDESIGNER_UILIB_EXPORT DomResourceIcon {
 public:
     DomResourceIcon();
     ~DomResourceIcon();
@@ -2918,8 +2800,7 @@ public:
     // attribute accessors
     inline bool hasAttributeTheme() const { return m_has_attr_theme; }
     inline QString attributeTheme() const { return m_attr_theme; }
-    inline void setAttributeTheme(const QString& a)
-    {
+    inline void setAttributeTheme(const QString& a) {
         m_attr_theme = a;
         m_has_attr_theme = true;
     }
@@ -2927,8 +2808,7 @@ public:
 
     inline bool hasAttributeResource() const { return m_has_attr_resource; }
     inline QString attributeResource() const { return m_attr_resource; }
-    inline void setAttributeResource(const QString& a)
-    {
+    inline void setAttributeResource(const QString& a) {
         m_attr_resource = a;
         m_has_attr_resource = true;
     }
@@ -3019,8 +2899,7 @@ private:
     void operator=(const DomResourceIcon& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomString
-{
+class QDESIGNER_UILIB_EXPORT DomString {
 public:
     DomString();
     ~DomString();
@@ -3033,8 +2912,7 @@ public:
     // attribute accessors
     inline bool hasAttributeNotr() const { return m_has_attr_notr; }
     inline QString attributeNotr() const { return m_attr_notr; }
-    inline void setAttributeNotr(const QString& a)
-    {
+    inline void setAttributeNotr(const QString& a) {
         m_attr_notr = a;
         m_has_attr_notr = true;
     }
@@ -3042,8 +2920,7 @@ public:
 
     inline bool hasAttributeComment() const { return m_has_attr_comment; }
     inline QString attributeComment() const { return m_attr_comment; }
-    inline void setAttributeComment(const QString& a)
-    {
+    inline void setAttributeComment(const QString& a) {
         m_attr_comment = a;
         m_has_attr_comment = true;
     }
@@ -3051,8 +2928,7 @@ public:
 
     inline bool hasAttributeExtraComment() const { return m_has_attr_extraComment; }
     inline QString attributeExtraComment() const { return m_attr_extraComment; }
-    inline void setAttributeExtraComment(const QString& a)
-    {
+    inline void setAttributeExtraComment(const QString& a) {
         m_attr_extraComment = a;
         m_has_attr_extraComment = true;
     }
@@ -3080,8 +2956,7 @@ private:
     void operator=(const DomString& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomPointF
-{
+class QDESIGNER_UILIB_EXPORT DomPointF {
 public:
     DomPointF();
     ~DomPointF();
@@ -3118,8 +2993,7 @@ private:
     void operator=(const DomPointF& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomRectF
-{
+class QDESIGNER_UILIB_EXPORT DomRectF {
 public:
     DomRectF();
     ~DomRectF();
@@ -3168,8 +3042,7 @@ private:
     void operator=(const DomRectF& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomSizeF
-{
+class QDESIGNER_UILIB_EXPORT DomSizeF {
 public:
     DomSizeF();
     ~DomSizeF();
@@ -3206,8 +3079,7 @@ private:
     void operator=(const DomSizeF& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomChar
-{
+class QDESIGNER_UILIB_EXPORT DomChar {
 public:
     DomChar();
     ~DomChar();
@@ -3238,8 +3110,7 @@ private:
     void operator=(const DomChar& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomUrl
-{
+class QDESIGNER_UILIB_EXPORT DomUrl {
 public:
     DomUrl();
     ~DomUrl();
@@ -3271,8 +3142,7 @@ private:
     void operator=(const DomUrl& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomProperty
-{
+class QDESIGNER_UILIB_EXPORT DomProperty {
 public:
     DomProperty();
     ~DomProperty();
@@ -3285,8 +3155,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -3294,8 +3163,7 @@ public:
 
     inline bool hasAttributeStdset() const { return m_has_attr_stdset; }
     inline int attributeStdset() const { return m_attr_stdset; }
-    inline void setAttributeStdset(int a)
-    {
+    inline void setAttributeStdset(int a) {
         m_attr_stdset = a;
         m_has_attr_stdset = true;
     }
@@ -3511,8 +3379,7 @@ private:
     void operator=(const DomProperty& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomConnections
-{
+class QDESIGNER_UILIB_EXPORT DomConnections {
 public:
     DomConnections();
     ~DomConnections();
@@ -3541,8 +3408,7 @@ private:
     void operator=(const DomConnections& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomConnection
-{
+class QDESIGNER_UILIB_EXPORT DomConnection {
 public:
     DomConnection();
     ~DomConnection();
@@ -3598,8 +3464,7 @@ private:
     void operator=(const DomConnection& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomConnectionHints
-{
+class QDESIGNER_UILIB_EXPORT DomConnectionHints {
 public:
     DomConnectionHints();
     ~DomConnectionHints();
@@ -3628,8 +3493,7 @@ private:
     void operator=(const DomConnectionHints& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomConnectionHint
-{
+class QDESIGNER_UILIB_EXPORT DomConnectionHint {
 public:
     DomConnectionHint();
     ~DomConnectionHint();
@@ -3642,8 +3506,7 @@ public:
     // attribute accessors
     inline bool hasAttributeType() const { return m_has_attr_type; }
     inline QString attributeType() const { return m_attr_type; }
-    inline void setAttributeType(const QString& a)
-    {
+    inline void setAttributeType(const QString& a) {
         m_attr_type = a;
         m_has_attr_type = true;
     }
@@ -3678,8 +3541,7 @@ private:
     void operator=(const DomConnectionHint& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomScript
-{
+class QDESIGNER_UILIB_EXPORT DomScript {
 public:
     DomScript();
     ~DomScript();
@@ -3692,8 +3554,7 @@ public:
     // attribute accessors
     inline bool hasAttributeSource() const { return m_has_attr_source; }
     inline QString attributeSource() const { return m_attr_source; }
-    inline void setAttributeSource(const QString& a)
-    {
+    inline void setAttributeSource(const QString& a) {
         m_attr_source = a;
         m_has_attr_source = true;
     }
@@ -3701,8 +3562,7 @@ public:
 
     inline bool hasAttributeLanguage() const { return m_has_attr_language; }
     inline QString attributeLanguage() const { return m_attr_language; }
-    inline void setAttributeLanguage(const QString& a)
-    {
+    inline void setAttributeLanguage(const QString& a) {
         m_attr_language = a;
         m_has_attr_language = true;
     }
@@ -3727,8 +3587,7 @@ private:
     void operator=(const DomScript& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomWidgetData
-{
+class QDESIGNER_UILIB_EXPORT DomWidgetData {
 public:
     DomWidgetData();
     ~DomWidgetData();
@@ -3757,8 +3616,7 @@ private:
     void operator=(const DomWidgetData& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomDesignerData
-{
+class QDESIGNER_UILIB_EXPORT DomDesignerData {
 public:
     DomDesignerData();
     ~DomDesignerData();
@@ -3787,8 +3645,7 @@ private:
     void operator=(const DomDesignerData& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomSlots
-{
+class QDESIGNER_UILIB_EXPORT DomSlots {
 public:
     DomSlots();
     ~DomSlots();
@@ -3821,8 +3678,7 @@ private:
     void operator=(const DomSlots& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomPropertySpecifications
-{
+class QDESIGNER_UILIB_EXPORT DomPropertySpecifications {
 public:
     DomPropertySpecifications();
     ~DomPropertySpecifications();
@@ -3834,8 +3690,7 @@ public:
 
     // attribute accessors
     // child element accessors
-    inline QList<DomStringPropertySpecification*> elementStringpropertyspecification() const
-    {
+    inline QList<DomStringPropertySpecification*> elementStringpropertyspecification() const {
         return m_stringpropertyspecification;
     }
     void setElementStringpropertyspecification(const QList<DomStringPropertySpecification*>& a);
@@ -3854,8 +3709,7 @@ private:
     void operator=(const DomPropertySpecifications& other);
 };
 
-class QDESIGNER_UILIB_EXPORT DomStringPropertySpecification
-{
+class QDESIGNER_UILIB_EXPORT DomStringPropertySpecification {
 public:
     DomStringPropertySpecification();
     ~DomStringPropertySpecification();
@@ -3868,8 +3722,7 @@ public:
     // attribute accessors
     inline bool hasAttributeName() const { return m_has_attr_name; }
     inline QString attributeName() const { return m_attr_name; }
-    inline void setAttributeName(const QString& a)
-    {
+    inline void setAttributeName(const QString& a) {
         m_attr_name = a;
         m_has_attr_name = true;
     }
@@ -3877,8 +3730,7 @@ public:
 
     inline bool hasAttributeType() const { return m_has_attr_type; }
     inline QString attributeType() const { return m_attr_type; }
-    inline void setAttributeType(const QString& a)
-    {
+    inline void setAttributeType(const QString& a) {
         m_attr_type = a;
         m_has_attr_type = true;
     }
@@ -3886,8 +3738,7 @@ public:
 
     inline bool hasAttributeNotr() const { return m_has_attr_notr; }
     inline QString attributeNotr() const { return m_attr_notr; }
-    inline void setAttributeNotr(const QString& a)
-    {
+    inline void setAttributeNotr(const QString& a) {
         m_attr_notr = a;
         m_has_attr_notr = true;
     }

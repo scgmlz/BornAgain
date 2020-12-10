@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_GROUPINFOBOX_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_GROUPINFOBOX_H
@@ -18,8 +18,7 @@
 #include <QGroupBox>
 
 //! The class which extends QGroupBox with clickable icon next to the label
-class GroupInfoBox : public QGroupBox
-{
+class GroupInfoBox : public QGroupBox {
     Q_OBJECT
 
 public:

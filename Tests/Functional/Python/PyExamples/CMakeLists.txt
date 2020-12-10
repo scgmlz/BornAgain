@@ -1,29 +1,29 @@
 ###############################################################################
 # Tests/Functional/PyExamples/CMakeLists.txt
 #
-# > Test functionality of all examples found in PY_EXAMPLES_DIR = <BornAgain>/Examples/python
-# > Validates selected examples against reference files
+# Runs check_functionality.py over example scripts found in PY_EXAMPLES_DIR
 #
 ###############################################################################
 
-set(output_dir ${TEST_OUTPUT_DIR}/Functional/Python/PyExamples)
+set(output_dir ${TEST_OUTPUT_DIR_PY_EXAMPLES})
 file(MAKE_DIRECTORY ${output_dir})
 
-file(GLOB sim_examples "${PY_EXAMPLES_DIR}/simulation/ex*/*.py")
-file(GLOB fit_examples
-    "${PY_EXAMPLES_DIR}/fitting/ex03_ExtendedExamples/specular/FitSpecularBasics.py")
-set(examples ${sim_examples} ${fit_examples})
+file(GLOB examples
+    ${PY_EXAMPLES_DIR}/scatter2d/*.py
+    ${PY_EXAMPLES_DIR}/specular/*.py
+    ${PY_EXAMPLES_DIR}/varia/*.py
+    ${PY_EXAMPLES_DIR}/fit55_Specular/FitSpecularBasics.py)
+if (WIN32)
+    # Convergence problem in Gauss-Kronrod integration
+    list(REMOVE_ITEM examples ${PY_EXAMPLES_DIR}/scatter2d/Interference2DParaCrystal.py)
+endif()
 
-set(test_script ${output_dir}/check_functionality.py)
+set(test_script ${TOOL_DIR}/code-tools/batch-plot.py)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/check_functionality.py ${test_script} @ONLY)
-
-foreach(example ${examples})
-    set(script_path ${example})
-
-    get_filename_component(script_name ${script_path} NAME_WE)
-    set(test_name PyExamples/${script_name})
-
-    add_test(${test_name} ${Python3_EXECUTABLE} ${test_script} ${script_path})
-    set_tests_properties(${test_name} PROPERTIES LABELS "Fullcheck")
+foreach(example_path ${examples})
+    get_filename_component(example_name ${example_path} NAME_WE)
+    set(test_name PyExamples.${example_name})
+    add_test(${test_name}
+        env PYTHONPATH=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+        ${Python3_EXECUTABLE} ${test_script} -s ${example_path} ${output_dir})
 endforeach()

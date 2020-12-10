@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONVIEWCONTROLLER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONVIEWCONTROLLER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class DataItem;
@@ -24,8 +23,7 @@ class JobItem;
 class PropertyRepeater;
 class SessionModel;
 
-class BA_CORE_API_ DiffItemController : public QObject
-{
+class DiffItemController : public QObject {
 public:
     DiffItemController(const QString& data_type, QObject* parent);
     ~DiffItemController() override;
@@ -43,8 +41,7 @@ private:
     DataItem* m_diff_item;
 };
 
-class BA_CORE_API_ FitComparison1DViewController : public QObject
-{
+class FitComparison1DViewController : public QObject {
 public:
     explicit FitComparison1DViewController(QObject* parent);
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,21 +10,21 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/TableContextMenu.h"
 
 TableContextMenu::TableContextMenu(QWidget* parent)
-    : QMenu(parent), m_coordSubMenu(this),
-      m_selectFromThisRowOn(new QAction("Set As First Data Row", this)),
-      m_selectUntilThisRow(new QAction("Set As Last Data Row", this)),
-      m_resetAction(new QAction("Reset", this)),
-      m_setAsTheta(new QAction(csv::HeaderLabels[csv::_theta_], this)),
-      m_setAsQ(new QAction(csv::HeaderLabels[csv::_q_], this)),
-      m_setAsIntensity(
-          new QAction("Set As " + csv::HeaderLabels[csv::_intensity_] + " Column", this)),
-      m_discardRow(new QAction("Toogle Discard Selected Rows", this))
-{
+    : QMenu(parent)
+    , m_coordSubMenu(this)
+    , m_selectFromThisRowOn(new QAction("Set As First Data Row", this))
+    , m_selectUntilThisRow(new QAction("Set As Last Data Row", this))
+    , m_resetAction(new QAction("Reset", this))
+    , m_setAsTheta(new QAction(csv::HeaderLabels[csv::_theta_], this))
+    , m_setAsQ(new QAction(csv::HeaderLabels[csv::_q_], this))
+    , m_setAsIntensity(
+          new QAction("Set As " + csv::HeaderLabels[csv::_intensity_] + " Column", this))
+    , m_discardRow(new QAction("Toogle Discard Selected Rows", this)) {
     this->addAction(m_selectFromThisRowOn);
     this->addAction(m_selectUntilThisRow);
     this->addAction(m_discardRow);

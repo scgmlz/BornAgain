@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/SampleViewAligner.h"
 #include "GUI/coregui/Models/SampleModel.h"
@@ -19,26 +19,21 @@
 #include "GUI/coregui/utils/StyleUtils.h"
 #include <QModelIndex>
 
-namespace
-{
-int step_width()
-{
+namespace {
+int step_width() {
     return StyleUtils::SizeOfLetterM().width() * 12.5;
 }
-int step_height()
-{
+int step_height() {
     return StyleUtils::SizeOfLetterM().height() * 11;
 }
 } // namespace
 
-SampleViewAligner::SampleViewAligner(DesignerScene* scene) : m_scene(scene)
-{
+SampleViewAligner::SampleViewAligner(DesignerScene* scene) : m_scene(scene) {
     ASSERT(m_scene);
 }
 
 //! Spring based implified algorithm for smart alignment
-void SampleViewAligner::smartAlign()
-{
+void SampleViewAligner::smartAlign() {
     m_views.clear();
     updateViews();
     updateForces();
@@ -47,8 +42,7 @@ void SampleViewAligner::smartAlign()
 
 //! Forms list of all views which are subject for smart alignment (i.e. views
 //! which do not have parent view)
-void SampleViewAligner::updateViews(const QModelIndex& parentIndex)
-{
+void SampleViewAligner::updateViews(const QModelIndex& parentIndex) {
     SampleModel* sampleModel = m_scene->getSampleModel();
     for (int i_row = 0; i_row < sampleModel->rowCount(parentIndex); ++i_row) {
         QModelIndex itemIndex = sampleModel->index(i_row, 0, parentIndex);
@@ -61,8 +55,7 @@ void SampleViewAligner::updateViews(const QModelIndex& parentIndex)
 }
 
 //! Calculates forces acting on all views for smart alignment
-void SampleViewAligner::updateForces()
-{
+void SampleViewAligner::updateForces() {
     m_viewToPos.clear();
     for (IView* view : m_views) {
         calculateForces(view);
@@ -71,8 +64,7 @@ void SampleViewAligner::updateForces()
 
 //! Calculates forces acting on single view (simplified force directed spring algorithm)
 //! and deduce new position of views.
-void SampleViewAligner::calculateForces(IView* view)
-{
+void SampleViewAligner::calculateForces(IView* view) {
     qreal xvel = 0;
     qreal yvel = 0;
 
@@ -103,8 +95,7 @@ void SampleViewAligner::calculateForces(IView* view)
 }
 
 //! Applies calculated positions to views
-void SampleViewAligner::advance()
-{
+void SampleViewAligner::advance() {
     for (IView* view : m_views) {
         view->setPos(m_viewToPos[view]);
     }
@@ -115,8 +106,7 @@ void SampleViewAligner::advance()
 //! Weirdness of given function is due to the fact, that, for example, ParticleLayout view
 //! should interact not with Layer view, but with its parent - MultiLayer view.
 //! Similarly, MultiLayer is not interacting with its Layers, but directly with the ParticleLayout.
-QList<IView*> SampleViewAligner::getConnectedViews(IView* view)
-{
+QList<IView*> SampleViewAligner::getConnectedViews(IView* view) {
     QList<IView*> result;
 
     SessionItem* itemOfView = view->getItem();
@@ -149,8 +139,7 @@ QList<IView*> SampleViewAligner::getConnectedViews(IView* view)
 }
 
 //! Aligns sample starting from
-void SampleViewAligner::alignSample(SessionItem* item, QPointF reference, bool force_alignment)
-{
+void SampleViewAligner::alignSample(SessionItem* item, QPointF reference, bool force_alignment) {
     ASSERT(item);
     alignSample(m_scene->getSampleModel()->indexOfItem(item), reference, force_alignment);
 }
@@ -160,8 +149,7 @@ void SampleViewAligner::alignSample(SessionItem* item, QPointF reference, bool f
 //! if force_alignment=true the position will be changed anyway.
 //! Position of View which has parent item (like Layer) will remain unchainged.
 void SampleViewAligner::alignSample(const QModelIndex& parentIndex, QPointF reference,
-                                    bool force_alignment)
-{
+                                    bool force_alignment) {
     SampleModel* sampleModel = m_scene->getSampleModel();
 
     if (IView* view = getViewForIndex(parentIndex)) {
@@ -185,8 +173,7 @@ void SampleViewAligner::alignSample(const QModelIndex& parentIndex, QPointF refe
     }
 }
 
-IView* SampleViewAligner::getViewForIndex(const QModelIndex& index)
-{
+IView* SampleViewAligner::getViewForIndex(const QModelIndex& index) {
     SampleModel* sampleModel = m_scene->getSampleModel();
     SessionItem* item = sampleModel->itemForIndex(index);
     return m_scene->getViewForItem(item);

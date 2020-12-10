@@ -1,15 +1,12 @@
-#include "Core/Basics/Units.h"
-#include "Core/includeIncludes/FormFactors.h"
-#include "Fit/TestEngine/Numeric.h"
+#include "Base/Const/Units.h"
+#include "Base/Utils/Algorithms.h"
 #include "GUI/coregui/Models/FormFactorItems.h"
+#include "Sample/HardParticle/FormFactorAnisoPyramid.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestFormFactorItems : public ::testing::Test
-{
-};
+class TestFormFactorItems : public ::testing::Test {};
 
-TEST_F(TestFormFactorItems, test_AnisoPyramidItem)
-{
+TEST_F(TestFormFactorItems, test_AnisoPyramidItem) {
     // to domain
     AnisoPyramidItem item;
     item.setItemValue(AnisoPyramidItem::P_LENGTH, 20.0);
@@ -22,5 +19,5 @@ TEST_F(TestFormFactorItems, test_AnisoPyramidItem)
     EXPECT_EQ(p_ff->getLength(), 20.0);
     EXPECT_EQ(p_ff->getWidth(), 16.0);
     EXPECT_EQ(p_ff->getHeight(), 13.0);
-    EXPECT_TRUE(Numeric::AreAlmostEqual(p_ff->getAlpha(), Units::deg2rad(60.0)));
+    EXPECT_TRUE(algo::almostEqual(p_ff->getAlpha(), Units::deg2rad(60.0)));
 }

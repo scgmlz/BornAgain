@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_COMPONENTPROXYSTRATEGY_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_COMPONENTPROXYSTRATEGY_H
@@ -19,8 +19,7 @@
 
 //! Strategy for ComponentProxyModel which hides extra level of GroupProperty.
 
-class BA_CORE_API_ ComponentProxyStrategy : public ProxyModelStrategy
-{
+class ComponentProxyStrategy : public ProxyModelStrategy {
 public:
     void onDataChanged(SessionModel* source, ComponentProxyModel* proxy);
 

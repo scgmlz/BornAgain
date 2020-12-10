@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SimulationWidgets/SimulationSetupWidget.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
@@ -29,10 +29,12 @@
 #include <QVBoxLayout>
 
 SimulationSetupWidget::SimulationSetupWidget(QWidget* parent)
-    : QWidget(parent), m_applicationModels(0), runSimulationButton(0), exportToPyScriptButton(0),
-      m_simDataSelectorWidget(new SimulationDataSelectorWidget(this)),
-      m_simOptionsWidget(new SimulationOptionsWidget(this))
-{
+    : QWidget(parent)
+    , m_applicationModels(0)
+    , runSimulationButton(0)
+    , exportToPyScriptButton(0)
+    , m_simDataSelectorWidget(new SimulationDataSelectorWidget(this))
+    , m_simOptionsWidget(new SimulationOptionsWidget(this)) {
     QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->addWidget(m_simDataSelectorWidget);
     mainLayout->addWidget(m_simOptionsWidget);
@@ -45,8 +47,7 @@ SimulationSetupWidget::SimulationSetupWidget(QWidget* parent)
     connect(exportToPyScriptButton, SIGNAL(clicked()), this, SLOT(onExportToPythonScript()));
 }
 
-void SimulationSetupWidget::setApplicationModels(ApplicationModels* model)
-{
+void SimulationSetupWidget::setApplicationModels(ApplicationModels* model) {
     ASSERT(model);
     if (model != m_applicationModels) {
         m_applicationModels = model;
@@ -55,14 +56,12 @@ void SimulationSetupWidget::setApplicationModels(ApplicationModels* model)
     }
 }
 
-void SimulationSetupWidget::updateViewElements()
-{
+void SimulationSetupWidget::updateViewElements() {
     m_simDataSelectorWidget->updateViewElements();
     m_simOptionsWidget->setItem(m_applicationModels->documentModel()->simulationOptionsItem());
 }
 
-void SimulationSetupWidget::onRunSimulation()
-{
+void SimulationSetupWidget::onRunSimulation() {
     const MultiLayerItem* multiLayerItem = m_simDataSelectorWidget->selectedMultiLayerItem();
     const auto instrumentItem = m_simDataSelectorWidget->selectedInstrumentItem();
     const RealDataItem* realDataItem = m_simDataSelectorWidget->selectedRealDataItem();
@@ -79,8 +78,7 @@ void SimulationSetupWidget::onRunSimulation()
         m_applicationModels->jobModel()->runJob(jobItem->index());
 }
 
-void SimulationSetupWidget::onExportToPythonScript()
-{
+void SimulationSetupWidget::onExportToPythonScript() {
     const MultiLayerItem* multiLayerItem = m_simDataSelectorWidget->selectedMultiLayerItem();
     const auto instrumentItem = m_simDataSelectorWidget->selectedInstrumentItem();
 
@@ -97,13 +95,12 @@ void SimulationSetupWidget::onExportToPythonScript()
         AppSvc::projectManager()->projectDir());
 }
 
-QWidget* SimulationSetupWidget::createButtonWidget()
-{
+QWidget* SimulationSetupWidget::createButtonWidget() {
     QWidget* result = new QWidget;
 
     QHBoxLayout* simButtonLayout = new QHBoxLayout;
     // run simulation button
-    runSimulationButton = new QPushButton("Run Simulation");
+    runSimulationButton = new QPushButton("Run simulation");
     runSimulationButton->setIcon(QIcon(":/images/main_simulation.png"));
     runSimulationButton->setMinimumWidth(100);
     runSimulationButton->setMinimumHeight(50);

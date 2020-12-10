@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaterialEditor/MaterialEditorDialog.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialEditor.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
@@ -25,14 +23,12 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-namespace
-{
+namespace {
 const QSize default_dialog_size(512, 400);
 }
 
 MaterialEditorDialog::MaterialEditorDialog(MaterialModel* materialModel, QWidget* parent)
-    : QDialog(parent), m_origMaterialModel(materialModel), m_materialEditor(nullptr)
-{
+    : QDialog(parent), m_origMaterialModel(materialModel), m_materialEditor(nullptr) {
     setWindowTitle("Material Editor");
     setMinimumSize(128, 128);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -50,8 +46,7 @@ MaterialEditorDialog::MaterialEditorDialog(MaterialModel* materialModel, QWidget
 }
 
 //! replaces original material model with the model modified by MaterialEditor
-void MaterialEditorDialog::onOKButton()
-{
+void MaterialEditorDialog::onOKButton() {
     if (m_materialEditor->modelWasChanged()) {
         m_origMaterialModel->clear();
         m_origMaterialModel->initFrom(m_tmpMaterialModel.get(), 0);
@@ -60,14 +55,12 @@ void MaterialEditorDialog::onOKButton()
     accept();
 }
 
-void MaterialEditorDialog::onCancelButton()
-{
+void MaterialEditorDialog::onCancelButton() {
     writeSettings();
     reject();
 }
 
-QBoxLayout* MaterialEditorDialog::createButtonLayout()
-{
+QBoxLayout* MaterialEditorDialog::createButtonLayout() {
     auto result = new QHBoxLayout;
 
     auto okButton = new QPushButton("OK");
@@ -84,16 +77,14 @@ QBoxLayout* MaterialEditorDialog::createButtonLayout()
     return result;
 }
 
-void MaterialEditorDialog::init_material_editor()
-{
+void MaterialEditorDialog::init_material_editor() {
     ASSERT(m_origMaterialModel);
     m_tmpMaterialModel.reset(m_origMaterialModel->createCopy());
     m_materialEditor = new MaterialEditor(m_tmpMaterialModel.get(), this);
     readSettings();
 }
 
-void MaterialEditorDialog::readSettings()
-{
+void MaterialEditorDialog::readSettings() {
     QSettings settings;
     if (settings.childGroups().contains(Constants::S_MATERIALEDITOR)) {
         settings.beginGroup(Constants::S_MATERIALEDITOR);
@@ -106,8 +97,7 @@ void MaterialEditorDialog::readSettings()
     }
 }
 
-void MaterialEditorDialog::writeSettings()
-{
+void MaterialEditorDialog::writeSettings() {
     QSettings settings;
     settings.beginGroup(Constants::S_MATERIALEDITOR);
     settings.setValue(Constants::S_WINDOWSIZE, this->size());
@@ -115,8 +105,7 @@ void MaterialEditorDialog::writeSettings()
     settings.endGroup();
 }
 
-ExternalProperty MaterialEditorDialog::selectedMaterialProperty()
-{
+ExternalProperty MaterialEditorDialog::selectedMaterialProperty() {
     if (MaterialItem* material = m_materialEditor->selectedMaterial())
         return MaterialItemUtils::materialProperty(*material);
 
@@ -124,8 +113,7 @@ ExternalProperty MaterialEditorDialog::selectedMaterialProperty()
 }
 
 //!
-void MaterialEditorDialog::setMaterialProperty(const ExternalProperty& matProperty)
-{
+void MaterialEditorDialog::setMaterialProperty(const ExternalProperty& matProperty) {
     ASSERT(m_materialEditor);
 
     m_materialEditor->setInitialMaterialProperty(matProperty);

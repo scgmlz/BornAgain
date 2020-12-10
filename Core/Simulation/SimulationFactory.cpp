@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Simulation/SimulationFactory.h"
-#include "Core/Parametrization/RealParameter.h"
 #include "Core/Simulation/DepthProbeSimulation.h"
-#include "Core/Simulation/GISASSimulation.h"
-#include "Core/Simulation/OffSpecSimulation.h"
+#include "Core/Simulation/OffSpecularSimulation.h"
 #include "Core/Simulation/SpecularSimulation.h"
 #include "Core/Simulation/StandardSimulations.h"
+#include "Param/Base/RealParameter.h"
 
-SimulationFactory::SimulationFactory()
-{
+SimulationFactory::SimulationFactory() {
     registerItem("BasicGISAS", StandardSimulations::BasicGISAS);
 
     registerItem("BasicGISAS00", StandardSimulations::BasicGISAS00);
@@ -102,7 +100,7 @@ SimulationFactory::SimulationFactory()
 
     registerItem("TOFRWithPointwiseResolution", StandardSimulations::TOFRWithPointwiseResolution);
 
-    registerItem("OffSpecMini", StandardSimulations::MiniOffSpec);
+    registerItem("OffSpecularMini", StandardSimulations::MiniOffSpecular);
 
     // polarized specular
 
@@ -110,9 +108,17 @@ SimulationFactory::SimulationFactory()
 
     registerItem("BasicSpecularMM", StandardSimulations::BasicSpecularMM);
 
+    registerItem("BasicSpecularPM", StandardSimulations::BasicSpecularPM);
+
+    registerItem("BasicSpecularMP", StandardSimulations::BasicSpecularMP);
+
     registerItem("BasicQSpecularPP", StandardSimulations::BasicSpecularQPP);
 
     registerItem("BasicQSpecularMM", StandardSimulations::BasicSpecularQMM);
+
+    registerItem("BasicQSpecularPM", StandardSimulations::BasicSpecularQPM);
+
+    registerItem("BasicQSpecularMP", StandardSimulations::BasicSpecularQMP);
 
     // depth probe simulations
 

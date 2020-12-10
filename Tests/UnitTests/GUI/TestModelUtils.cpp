@@ -5,12 +5,10 @@
 #include "Tests/GTestWrapper/google_test.h"
 #include <QVector>
 
-class TestModelUtils : public ::testing::Test
-{
+class TestModelUtils : public ::testing::Test {
 public:
     //! Returns true if model contains given item using iterate_if procedure.
-    bool modelContainsItem(SessionModel* model, SessionItem* selectedItem)
-    {
+    bool modelContainsItem(SessionModel* model, SessionItem* selectedItem) {
         bool result = false;
         ModelUtils::iterate_if(QModelIndex(), model, [&](const QModelIndex& index) -> bool {
             SessionItem* item = model->itemForIndex(index);
@@ -24,8 +22,7 @@ public:
 
 //! Testing top item names.
 
-TEST_F(TestModelUtils, test_topItemNames)
-{
+TEST_F(TestModelUtils, test_topItemNames) {
     SessionModel model("TestModel");
 
     // testing empty list
@@ -34,7 +31,7 @@ TEST_F(TestModelUtils, test_topItemNames)
     // inserting three top items
     auto item = model.insertNewItem("MultiLayer");
     item->setItemName("name1");
-    item = model.insertNewItem("Layer");
+    model.insertNewItem("Layer");
     item = model.insertNewItem("MultiLayer");
     item->setItemName("name2");
 
@@ -50,8 +47,7 @@ TEST_F(TestModelUtils, test_topItemNames)
 
 //! Testing iteration over empty model.
 
-TEST_F(TestModelUtils, test_emptyModel)
-{
+TEST_F(TestModelUtils, test_emptyModel) {
     SessionModel model("TestModel");
 
     QVector<QModelIndex> indices;
@@ -64,8 +60,7 @@ TEST_F(TestModelUtils, test_emptyModel)
 
 //! Testing iteration over the model with one VectorItem inserted.
 
-TEST_F(TestModelUtils, test_vectorItem)
-{
+TEST_F(TestModelUtils, test_vectorItem) {
     SessionModel model("TestModel");
     SessionItem* vectorItem = model.insertNewItem("Vector");
 
@@ -90,8 +85,7 @@ TEST_F(TestModelUtils, test_vectorItem)
 
 //! Tests iteration when some children is invisible.
 
-TEST_F(TestModelUtils, test_iterateIf)
-{
+TEST_F(TestModelUtils, test_iterateIf) {
     SessionModel model("TestModel");
     SessionItem* multilayer = model.insertNewItem("MultiLayer");
     SessionItem* layer = model.insertNewItem("Layer", model.indexOfItem(multilayer));

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SessionModelDelegate.h"
 #include "GUI/coregui/Models/SessionItem.h"
@@ -19,16 +19,14 @@
 #include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QApplication>
 
-namespace
-{
+namespace {
 QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent);
 } // unnamed namespace
 
 SessionModelDelegate::SessionModelDelegate(QObject* parent) : QStyledItemDelegate(parent) {}
 
 void SessionModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
-                                 const QModelIndex& index) const
-{
+                                 const QModelIndex& index) const {
     if (PropertyEditorFactory::hasStringRepresentation(index)) {
         QString text = PropertyEditorFactory::toString(index);
         paintCustomLabel(painter, option, index, text);
@@ -37,8 +35,7 @@ void SessionModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 }
 
 QWidget* SessionModelDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
-                                            const QModelIndex& index) const
-{
+                                            const QModelIndex& index) const {
     auto result = createEditorFromIndex(index, parent);
 
     if (auto customEditor = dynamic_cast<CustomEditor*>(result)) {
@@ -56,8 +53,7 @@ QWidget* SessionModelDelegate::createEditor(QWidget* parent, const QStyleOptionV
 //! Propagates changed data from the editor to the model.
 
 void SessionModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
-                                        const QModelIndex& index) const
-{
+                                        const QModelIndex& index) const {
     if (!index.isValid())
         return;
 
@@ -69,8 +65,7 @@ void SessionModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* mod
 
 //! Propagates the data change from the model to the editor (if it is still opened).
 
-void SessionModelDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
-{
+void SessionModelDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const {
     if (!index.isValid())
         return;
 
@@ -83,8 +78,7 @@ void SessionModelDelegate::setEditorData(QWidget* editor, const QModelIndex& ind
 //! Increases height of the row by 20% wrt the default.
 
 QSize SessionModelDelegate::sizeHint(const QStyleOptionViewItem& option,
-                                     const QModelIndex& index) const
-{
+                                     const QModelIndex& index) const {
     QSize result = QStyledItemDelegate::sizeHint(option, index);
     result.setHeight(static_cast<int>(result.height() * 1.2));
     return result;
@@ -95,16 +89,14 @@ QSize SessionModelDelegate::sizeHint(const QStyleOptionViewItem& option,
 //! up and running.
 
 void SessionModelDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option,
-                                                const QModelIndex& index) const
-{
+                                                const QModelIndex& index) const {
     QStyledItemDelegate::updateEditorGeometry(editor, option, index);
     editor->setGeometry(option.rect);
 }
 
 //! Notifies everyone that the editor has completed editing the data.
 
-void SessionModelDelegate::onCustomEditorDataChanged(const QVariant&)
-{
+void SessionModelDelegate::onCustomEditorDataChanged(const QVariant&) {
     CustomEditor* editor = qobject_cast<CustomEditor*>(sender());
     ASSERT(editor);
     emit commitData(editor);
@@ -113,8 +105,7 @@ void SessionModelDelegate::onCustomEditorDataChanged(const QVariant&)
 //! Paints custom text in a a place corresponding given index.
 
 void SessionModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
-                                            const QModelIndex& index, const QString& text) const
-{
+                                            const QModelIndex& index, const QString& text) const {
     QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index); // calling original method to take into accounts colors etc
     opt.text = displayText(text, option.locale); // by overriding text with ours
@@ -123,10 +114,8 @@ void SessionModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptio
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 }
 
-namespace
-{
-QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent)
-{
+namespace {
+QWidget* createEditorFromIndex(const QModelIndex& index, QWidget* parent) {
     if (index.internalPointer()) {
         auto item = static_cast<SessionItem*>(index.internalPointer());
         return PropertyEditorFactory::CreateEditor(*item, parent);

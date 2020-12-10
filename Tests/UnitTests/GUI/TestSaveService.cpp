@@ -14,12 +14,10 @@
 #include "Tests/UnitTests/GUI/Utils.h"
 #include <QSignalSpy>
 
-class TestSaveService : public ::testing::Test
-{
+class TestSaveService : public ::testing::Test {
 protected:
     // helper method to modify something in a model
-    void modify_models(ApplicationModels* models)
-    {
+    void modify_models(ApplicationModels* models) {
         auto instrument = models->instrumentModel()->instrumentItem();
         instrument->setItemValue(InstrumentItem::P_IDENTIFIER, GUIHelpers::createUuid());
     }
@@ -29,8 +27,7 @@ protected:
 //! Testing AutosaveController. It watches ProjectDocument and sends autosaveRequest() when
 //! number of document changes has been accumulated.
 
-TEST_F(TestSaveService, test_autoSaveController)
-{
+TEST_F(TestSaveService, test_autoSaveController) {
     const QString projectDir("test_autoSaveController");
     GuiUnittestUtils::create_dir(projectDir);
 
@@ -80,8 +77,7 @@ TEST_F(TestSaveService, test_autoSaveController)
 
 //! AutosaveController shouldn't trigger autosaveRequest() if document has no name.
 
-TEST_F(TestSaveService, test_autoSaveControllerNewDocument)
-{
+TEST_F(TestSaveService, test_autoSaveControllerNewDocument) {
     ApplicationModels models;
     std::unique_ptr<ProjectDocument> document(new ProjectDocument);
     document->setApplicationModels(&models);
@@ -102,8 +98,7 @@ TEST_F(TestSaveService, test_autoSaveControllerNewDocument)
 //! Testing SaveService on simple documents (no heavy data).
 //! SaveService should be able to save project file and send documentSaved() signal.
 
-TEST_F(TestSaveService, test_saveService)
-{
+TEST_F(TestSaveService, test_saveService) {
     const QString projectDir("test_saveService");
     GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
@@ -123,18 +118,49 @@ TEST_F(TestSaveService, test_saveService)
 
     EXPECT_EQ(spySaveService.count(), 1);
     EXPECT_TRUE(ProjectUtils::exists(projectFileName));
+    EXPECT_FALSE(service.isSaving());
 
     // after save, document should be in non-modified state, project file name should be updated
     EXPECT_EQ(document->projectFileName(), projectFileName);
     EXPECT_FALSE(document->isModified());
 }
 
+//! Testing SaveService on simple documents (no heavy data).
+//! SaveService should not be able to save project file; state of service has to be !isSaving()
+//! Regression test for issue #1136 ("After a failed project saving, no saving takes place any more;
+//! crash when changing projects")
+
+TEST_F(TestSaveService, test_failingSaveService) {
+    const QString projectDir("test_failingSaveService");
+    // do NOT create dir in order to force saving to fail
+    const QString projectFileName(projectDir + "/document.pro");
+
+    ApplicationModels models;
+    std::unique_ptr<ProjectDocument> document(new ProjectDocument);
+    document->setApplicationModels(&models);
+    modify_models(&models);
+
+    EXPECT_FALSE(ProjectUtils::exists(projectFileName));
+
+    SaveService service;
+    QSignalSpy spySaveService(&service, SIGNAL(projectSaved()));
+
+    service.setDocument(document.get());
+    EXPECT_THROW(service.save(projectFileName), GUIHelpers::Error);
+
+    EXPECT_EQ(spySaveService.count(), 0);
+    EXPECT_FALSE(ProjectUtils::exists(projectFileName));
+    EXPECT_FALSE(service.isSaving());
+
+    // after failed save, document should still be in modified state
+    EXPECT_TRUE(document->isModified());
+}
+
 //! Testing SaveService on documents having nonXML data.
 //! SaveService should be able to save project file (in main thread) and project nonXML
 //! in second thread.
 
-TEST_F(TestSaveService, test_saveServiceWithData)
-{
+TEST_F(TestSaveService, test_saveServiceWithData) {
     const QString projectDir("test_saveServiceWithData");
     GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
@@ -168,8 +194,7 @@ TEST_F(TestSaveService, test_saveServiceWithData)
 
 //! Testing SaveService when autosave is enabled.
 
-TEST_F(TestSaveService, test_autosaveEnabled)
-{
+TEST_F(TestSaveService, test_autosaveEnabled) {
     const QString projectDir("test_autosaveEnabled");
     GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");

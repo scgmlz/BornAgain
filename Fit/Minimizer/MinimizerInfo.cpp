@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Fit/Minimizer/MinimizerInfo.h"
 #include <sstream>
 #include <stdexcept>
 
-void MinimizerInfo::setAlgorithmName(const std::string& algorithmName)
-{
+void MinimizerInfo::setAlgorithmName(const std::string& algorithmName) {
     for (const AlgorithmInfo& algo : m_algorithms) {
         if (algo.name() == algorithmName) {
             m_current_algorithm = algorithmName;
@@ -36,8 +35,7 @@ void MinimizerInfo::setAlgorithmName(const std::string& algorithmName)
 
 //! Return list of defined algorithm names.
 
-std::vector<std::string> MinimizerInfo::algorithmNames() const
-{
+std::vector<std::string> MinimizerInfo::algorithmNames() const {
     std::vector<std::string> result;
     for (const AlgorithmInfo& algo : m_algorithms)
         result.push_back(algo.name());
@@ -46,8 +44,7 @@ std::vector<std::string> MinimizerInfo::algorithmNames() const
 
 //! Returns list of string with description of all available algorithms.
 
-std::vector<std::string> MinimizerInfo::algorithmDescriptions() const
-{
+std::vector<std::string> MinimizerInfo::algorithmDescriptions() const {
     std::vector<std::string> result;
     for (const AlgorithmInfo& algo : m_algorithms)
         result.push_back(algo.description());
@@ -56,8 +53,7 @@ std::vector<std::string> MinimizerInfo::algorithmDescriptions() const
 
 //! Creates information for Minuit2Minimizer.
 
-MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string& defaultAlgo)
-{
+MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string& defaultAlgo) {
     MinimizerInfo result("Minuit2", "Minuit2 minimizer from ROOT library");
 
     result.addAlgorithm(
@@ -85,8 +81,7 @@ MinimizerInfo MinimizerInfo::buildMinuit2Info(const std::string& defaultAlgo)
 
 //! Creates information for GSLMultiMinMinimizer.
 
-MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string& defaultAlgo)
-{
+MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string& defaultAlgo) {
     MinimizerInfo result("GSLMultiMin", "MultiMin minimizer from GSL library");
 
     result.addAlgorithm("SteepestDescent", "Steepest descent");
@@ -105,8 +100,7 @@ MinimizerInfo MinimizerInfo::buildGSLMultiMinInfo(const std::string& defaultAlgo
 
 //! Creates information for GSL's Levenberg-Marquardt.
 
-MinimizerInfo MinimizerInfo::buildGSLLMAInfo()
-{
+MinimizerInfo MinimizerInfo::buildGSLLMAInfo() {
     MinimizerInfo result("GSLLMA", "Levenberg-Marquardt from GSL library");
     result.addAlgorithm("Default", "Default algorithm");
     return result;
@@ -114,8 +108,7 @@ MinimizerInfo MinimizerInfo::buildGSLLMAInfo()
 
 //! Creates information for GSL's simmulated annealing algorithm.
 
-MinimizerInfo MinimizerInfo::buildGSLSimAnInfo()
-{
+MinimizerInfo MinimizerInfo::buildGSLSimAnInfo() {
     MinimizerInfo result("GSLSimAn", "Simmulated annealing minimizer from GSL library");
     result.addAlgorithm("Default", "Default algorithm");
     return result;
@@ -123,8 +116,7 @@ MinimizerInfo MinimizerInfo::buildGSLSimAnInfo()
 
 //! Creates information for TMVA genetic minimizer
 
-MinimizerInfo MinimizerInfo::buildGeneticInfo()
-{
+MinimizerInfo MinimizerInfo::buildGeneticInfo() {
     MinimizerInfo result("Genetic", "Genetic minimizer from TMVA library");
     result.addAlgorithm("Default", "Default algorithm");
     return result;
@@ -132,8 +124,7 @@ MinimizerInfo MinimizerInfo::buildGeneticInfo()
 
 //! Creates information for simple test minimizer
 
-MinimizerInfo MinimizerInfo::buildTestMinimizerInfo()
-{
+MinimizerInfo MinimizerInfo::buildTestMinimizerInfo() {
     MinimizerInfo result("Test", "One-shot minimizer to test whole chain");
     result.addAlgorithm("Default", "Default algorithm");
     return result;
@@ -141,14 +132,12 @@ MinimizerInfo MinimizerInfo::buildTestMinimizerInfo()
 
 //! Adds minimizer algorithm to the list of defined algorithms.
 
-void MinimizerInfo::addAlgorithm(const AlgorithmInfo& algorithm)
-{
+void MinimizerInfo::addAlgorithm(const AlgorithmInfo& algorithm) {
     m_current_algorithm = algorithm.name();
     m_algorithms.push_back(algorithm);
 }
 
 void MinimizerInfo::addAlgorithm(const std::string& algorithmName,
-                                 const std::string& algorithmDescription)
-{
+                                 const std::string& algorithmDescription) {
     addAlgorithm(AlgorithmInfo(algorithmName, algorithmDescription));
 }

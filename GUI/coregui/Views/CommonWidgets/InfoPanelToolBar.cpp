@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/CommonWidgets/InfoPanelToolBar.h"
 #include <QAction>
 #include <QHBoxLayout>
 #include <QToolButton>
 
-namespace
-{
+namespace {
 const int minimum_size = 25;
 const QString icon_up = ":/images/dark-angle-up.svg";
 const QString icon_down = ":/images/dark-angle-down.svg";
@@ -28,9 +27,10 @@ const QString close_text = "Close view";
 } // namespace
 
 InfoPanelToolBar::InfoPanelToolBar(QWidget* parent)
-    : QToolBar(parent), m_expandAction(new QAction(expand_text, this)),
-      m_closeAction(new QAction(close_text, this)), m_expanded(false)
-{
+    : QToolBar(parent)
+    , m_expandAction(new QAction(expand_text, this))
+    , m_closeAction(new QAction(close_text, this))
+    , m_expanded(false) {
     setMinimumSize(minimum_size, minimum_size);
     setProperty("_q_custom_style_disabled", QVariant(true));
 
@@ -50,8 +50,7 @@ InfoPanelToolBar::InfoPanelToolBar(QWidget* parent)
     addAction(m_closeAction);
 }
 
-void InfoPanelToolBar::setExpandStatus(bool status)
-{
+void InfoPanelToolBar::setExpandStatus(bool status) {
     m_expanded = status;
     if (m_expanded)
         m_expandAction->setIcon(QIcon(icon_down));
@@ -59,8 +58,7 @@ void InfoPanelToolBar::setExpandStatus(bool status)
         m_expandAction->setIcon(QIcon(icon_up));
 }
 
-void InfoPanelToolBar::onExpandButtonClicked()
-{
+void InfoPanelToolBar::onExpandButtonClicked() {
     m_expanded = !m_expanded;
     setExpandStatus(m_expanded);
     emit expandButtonClicked();

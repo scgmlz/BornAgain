@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/ProjectionsEditorActions.h"
 #include "GUI/coregui/Models/SessionModel.h"
@@ -20,10 +20,14 @@
 #include <QModelIndexList>
 
 ProjectionsEditorActions::ProjectionsEditorActions(QWidget* parent)
-    : QObject(parent), m_resetViewAction(new QAction(this)), m_togglePanelAction(new QAction(this)),
-      m_deleteAction(new QAction("Remove selected", this)), m_model(nullptr),
-      m_intensityDataItem(nullptr), m_selectionModel(nullptr), m_parent(parent)
-{
+    : QObject(parent)
+    , m_resetViewAction(new QAction(this))
+    , m_togglePanelAction(new QAction(this))
+    , m_deleteAction(new QAction("Remove selected", this))
+    , m_model(nullptr)
+    , m_intensityDataItem(nullptr)
+    , m_selectionModel(nullptr)
+    , m_parent(parent) {
     // Actions for top toolbar
     m_resetViewAction->setText("Center view");
     m_resetViewAction->setIcon(QIcon(":/images/camera-metering-center.svg"));
@@ -44,25 +48,21 @@ ProjectionsEditorActions::ProjectionsEditorActions(QWidget* parent)
 }
 
 void ProjectionsEditorActions::setContext(SessionModel* model, const QModelIndex& containerIndex,
-                                          IntensityDataItem* intensityItem)
-{
+                                          IntensityDataItem* intensityItem) {
     m_model = model;
     m_containerIndex = containerIndex;
     m_intensityDataItem = intensityItem;
 }
 
-void ProjectionsEditorActions::setSelectionModel(QItemSelectionModel* selectionModel)
-{
+void ProjectionsEditorActions::setSelectionModel(QItemSelectionModel* selectionModel) {
     m_selectionModel = selectionModel;
 }
 
-QList<QAction*> ProjectionsEditorActions::topToolBarActions()
-{
+QList<QAction*> ProjectionsEditorActions::topToolBarActions() {
     return QList<QAction*>() << m_resetViewAction << m_togglePanelAction;
 }
 
-void ProjectionsEditorActions::onDeleteAction()
-{
+void ProjectionsEditorActions::onDeleteAction() {
     ASSERT(m_model);
     ASSERT(m_selectionModel);
 
@@ -74,8 +74,7 @@ void ProjectionsEditorActions::onDeleteAction()
 }
 
 //! Performs saving of projections in ascii file
-void ProjectionsEditorActions::onSaveAction()
-{
+void ProjectionsEditorActions::onSaveAction() {
     if (!m_intensityDataItem)
         return;
 

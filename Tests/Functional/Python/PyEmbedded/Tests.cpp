@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -9,30 +9,27 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "BABuild.h"
 #include "BAVersion.h"
+#include "Base/Py/PyCore.h"
+#include "Base/Py/PyUtils.h"
+#include "Base/Utils/SysUtils.h"
 #include "Core/Export/ExportToPython.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/PyIO/PyEmbeddedUtils.h"
-#include "Core/PyIO/PyImport.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
-#include "Core/Tools/PyFmt.h"
-#include "Core/Tools/PythonCore.h"
-#include "Core/Tools/SysUtils.h"
+#include "Core/Export/PyFmt.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/Multilayer/PyImport.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <sstream>
 
-class PyEmbedded : public ::testing::Test
-{
-};
+class PyEmbedded : public ::testing::Test {};
 
 //! Accessing to the information about Python used during the build, content of path.sys variable.
 
-TEST_F(PyEmbedded, SysPath)
-{
+TEST_F(PyEmbedded, SysPath) {
     // Python build info
     std::cout << "pythonExecutable(): " << BABuild::pythonExecutable() << std::endl;
     std::cout << "pythonInterpreterID(): " << BABuild::pythonInterpreterID() << std::endl;
@@ -47,15 +44,14 @@ TEST_F(PyEmbedded, SysPath)
     std::cout << "buildLibDir(): " << BABuild::buildLibDir() << std::endl;
 
     // Runtime info
-    auto content = PyEmbeddedUtils::pythonRuntimeInfo();
+    auto content = PyUtils::pythonRuntimeInfo();
 
     EXPECT_TRUE(!content.empty());
 }
 
 //! Importing numpy and accessing its version string.
 
-TEST_F(PyEmbedded, ImportNumpy)
-{
+TEST_F(PyEmbedded, ImportNumpy) {
     Py_Initialize();
 
     PyObject* pmod = PyImport_ImportModule("numpy");
@@ -67,7 +63,7 @@ TEST_F(PyEmbedded, ImportNumpy)
     if (!pvar)
         throw std::runtime_error("Can't get a variable");
 
-    auto version_string = PyEmbeddedUtils::toString(pvar);
+    auto version_string = PyUtils::toString(pvar);
     Py_DecRef(pvar);
     std::cout << "numpy_version_string=" << version_string << std::endl;
 
@@ -78,8 +74,7 @@ TEST_F(PyEmbedded, ImportNumpy)
 
 //! Comparing results of GetVersionNumber() function obtained in "embedded" and "native C++" ways.
 
-TEST_F(PyEmbedded, FunctionCall)
-{
+TEST_F(PyEmbedded, FunctionCall) {
     Py_Initialize();
 
     PyObject* sysPath = PySys_GetObject((char*)"path");
@@ -101,13 +96,13 @@ TEST_F(PyEmbedded, FunctionCall)
         throw std::runtime_error("Can't build arguments list");
     }
 
-    PyObject* result = PyEval_CallObject(pfun, pargs);
+    PyObject* result = PyObject_Call(pfun, pargs, nullptr);
     Py_DecRef(pfun);
     Py_DecRef(pargs);
     if (!result)
         throw std::runtime_error("Error while calling function");
 
-    auto str = PyEmbeddedUtils::toString(result);
+    auto str = PyUtils::toString(result);
     Py_DecRef(result);
 
     Py_Finalize();
@@ -126,8 +121,7 @@ TEST_F(PyEmbedded, FunctionCall)
 
 //! Creating instance of FormFactorCylinder and calling its method in embedded Python.
 
-TEST_F(PyEmbedded, MethodCall)
-{
+TEST_F(PyEmbedded, MethodCall) {
     const double radius(5.0), height(6.0);
     Py_Initialize();
 
@@ -150,7 +144,7 @@ TEST_F(PyEmbedded, MethodCall)
         throw std::runtime_error("Can't build arguments list");
     }
 
-    PyObject* pinst = PyEval_CallObject(pclass, pargs);
+    PyObject* pinst = PyObject_Call(pclass, pargs, nullptr);
     Py_DecRef(pclass);
     Py_DecRef(pargs);
 
@@ -169,7 +163,7 @@ TEST_F(PyEmbedded, MethodCall)
         throw std::runtime_error("Can't build arguments list");
     }
 
-    PyObject* pres = PyEval_CallObject(pmeth, pargs2);
+    PyObject* pres = PyObject_Call(pmeth, pargs2, nullptr);
     Py_DecRef(pmeth);
     Py_DecRef(pargs);
 
@@ -189,8 +183,7 @@ TEST_F(PyEmbedded, MethodCall)
 
 //! From https://www.awasu.com/weblog/embedding-python/calling-python-code-from-your-program/
 
-TEST_F(PyEmbedded, CompiledFunction)
-{
+TEST_F(PyEmbedded, CompiledFunction) {
     Py_Initialize();
 
     // compile our function
@@ -249,7 +242,7 @@ TEST_F(PyEmbedded, CompiledFunction)
 
     // convert the result to a string
     PyObject* pResultRepr = PyObject_Repr(pResult);
-    std::string result = PyEmbeddedUtils::toString(pResultRepr);
+    std::string result = PyUtils::toString(pResultRepr);
     Py_DecRef(pResultRepr);
 
     Py_Finalize();
@@ -260,8 +253,7 @@ TEST_F(PyEmbedded, CompiledFunction)
 //! Creating MultiLayer in Python and extracting object to C++.
 //! https://stackoverflow.com/questions/9040669/how-can-i-implement-a-c-class-in-python-to-be-called-by-c/
 
-TEST_F(PyEmbedded, ObjectExtract)
-{
+TEST_F(PyEmbedded, ObjectExtract) {
     Py_Initialize();
 
     PyObject* sysPath = PySys_GetObject((char*)"path");
@@ -299,8 +291,7 @@ TEST_F(PyEmbedded, ObjectExtract)
 //! Running Python snippet which creates a multilayer in embedded way.
 //! Casting resulting PyObject to C++ MultiLayer.
 
-TEST_F(PyEmbedded, EmbeddedMultiLayer)
-{
+TEST_F(PyEmbedded, EmbeddedMultiLayer) {
     Py_Initialize();
 
     PyObject* sysPath = PySys_GetObject((char*)"path");
@@ -315,10 +306,10 @@ TEST_F(PyEmbedded, EmbeddedMultiLayer)
     buf << "import bornagain as ba                                        \n";
     buf << "                                                              \n";
     buf << "def get_simulation():                                         \n";
-    buf << "    m_ambience = ba.HomogeneousMaterial(\"Air\", 0.0, 0.0)    \n";
-    buf << "    air_layer = ba.Layer(m_ambience)                          \n";
+    buf << "    m_vacuum = ba.HomogeneousMaterial(\"Vacuum\", 0.0, 0.0)    \n";
+    buf << "    vacuum_layer = ba.Layer(m_vacuum)                          \n";
     buf << "    multilayer = ba.MultiLayer()                              \n";
-    buf << "    multilayer.addLayer(air_layer)                            \n";
+    buf << "    multilayer.addLayer(vacuum_layer)                            \n";
     buf << "    return multilayer                                         \n";
 
     PyObject* pCompiledFn = Py_CompileString(buf.str().c_str(), "", Py_file_input);
@@ -367,37 +358,35 @@ TEST_F(PyEmbedded, EmbeddedMultiLayer)
 //! is casted back to C++ object and used again, to generate code snippet.
 //! Two code snippets must be identical.
 
-TEST_F(PyEmbedded, ExportToPythonAndBack)
-{
+TEST_F(PyEmbedded, ExportToPythonAndBack) {
     SampleBuilderFactory factory;
-    std::unique_ptr<MultiLayer> sample(factory.createSample("CylindersAndPrismsBuilder"));
+    std::unique_ptr<MultiLayer> sample(factory.createSampleByName("CylindersAndPrismsBuilder"));
 
     auto code = ExportToPython::generateSampleCode(*sample);
 
     std::stringstream snippet;
     snippet << pyfmt::scriptPreamble() << code;
 
-    auto multilayer = PyImport::createFromPython(snippet.str(), pyfmt::getSampleFunctionName(),
-                                                 BABuild::buildLibDir());
+    auto multilayer =
+        PyImport::createFromPython(snippet.str(), "get_sample", BABuild::buildLibDir());
     auto new_code = ExportToPython::generateSampleCode(*multilayer);
 
     EXPECT_TRUE(code == new_code);
 }
 
 //! Retrieves list of functions from the imported script and checks, that there is
-//! one function in a dictioonary with name "get_simulation".
+//! one function in a dictionary with name "get_simulation".
 
-TEST_F(PyEmbedded, ModuleFunctionsList)
-{
+TEST_F(PyEmbedded, ModuleFunctionsList) {
     // compile our function
     std::stringstream buf;
     buf << "import bornagain as ba                                        \n";
     buf << "                                                              \n";
     buf << "def get_simulation():                                         \n";
-    buf << "    m_ambience = ba.HomogeneousMaterial(\"Air\", 0.0, 0.0)    \n";
-    buf << "    air_layer = ba.Layer(m_ambience)                          \n";
+    buf << "    m_vacuum = ba.HomogeneousMaterial(\"Vacuum\", 0.0, 0.0)    \n";
+    buf << "    vacuum_layer = ba.Layer(m_vacuum)                          \n";
     buf << "    multilayer = ba.MultiLayer()                              \n";
-    buf << "    multilayer.addLayer(air_layer)                            \n";
+    buf << "    multilayer.addLayer(vacuum_layer)                            \n";
     buf << "    return multilayer                                         \n";
 
     auto listOfFunc = PyImport::listOfFunctions(buf.str(), BABuild::buildLibDir());

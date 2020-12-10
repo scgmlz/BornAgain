@@ -1,46 +1,38 @@
-#include "Core/Parametrization/INode.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Parametrization/NodeUtils.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Param/Node/INode.h"
+#include "Param/Base/ParameterPool.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Node/NodeUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-namespace
-{
+namespace {
 const std::string test_class_name = "TestClass";
 const std::string another_test_class_name = "AnotherTestClass";
 const double test_par1_value(1.0);
 } // namespace
 
-class INodeTest : public ::testing::Test
-{
+class INodeTest : public ::testing::Test {
 public:
-    class TestClass : public INode
-    {
+    class TestClass : public INode {
     public:
         TestClass(const std::string& name = test_class_name, double value = test_par1_value)
-            : m_parameter1(value)
-        {
+            : m_parameter1(value) {
             setName(name);
             registerParameter("par1", &m_parameter1);
         }
 
-        virtual ~TestClass()
-        {
+        virtual ~TestClass() {
             for (auto child : m_nodes)
                 delete child;
         }
         void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
-        void appendChild(INode* node)
-        {
+        void appendChild(INode* node) {
             m_nodes.push_back(node);
             registerChild(node);
         }
 
-        virtual std::vector<const INode*> getChildren() const
-        {
+        virtual std::vector<const INode*> getChildren() const {
             return {m_nodes.begin(), m_nodes.end()};
         }
 
@@ -49,15 +41,13 @@ public:
     };
 };
 
-TEST_F(INodeTest, initialState)
-{
+TEST_F(INodeTest, initialState) {
     INodeTest::TestClass node;
     EXPECT_EQ(node.getChildren().size(), 0u);
     EXPECT_EQ(node.parent(), nullptr);
 }
 
-TEST_F(INodeTest, appendChild)
-{
+TEST_F(INodeTest, appendChild) {
     INodeTest::TestClass node;
 
     INodeTest::TestClass* child0 = new INodeTest::TestClass();
@@ -73,8 +63,7 @@ TEST_F(INodeTest, appendChild)
 
 //! Checks change of parentship on insert/detach.
 
-TEST_F(INodeTest, parentship)
-{
+TEST_F(INodeTest, parentship) {
     INodeTest::TestClass node;
     EXPECT_EQ(node.parent(), nullptr);
 
@@ -85,8 +74,7 @@ TEST_F(INodeTest, parentship)
 
 //! Checks the display name.
 
-TEST_F(INodeTest, displayName)
-{
+TEST_F(INodeTest, displayName) {
     INodeTest::TestClass node;
 
     // Adding first child and checking its displayName
@@ -109,38 +97,36 @@ TEST_F(INodeTest, displayName)
 //! Checking the path of the node, which is a path composed of node's displayName and
 //! the displayName of parent.
 
-TEST_F(INodeTest, nodePath)
-{
+TEST_F(INodeTest, nodePath) {
     INodeTest::TestClass root("root");
-    EXPECT_EQ(NodeUtils::nodePath(root), "/root");
+    EXPECT_EQ(NodeUtils::nodePath(&root), "/root");
 
     // adding first child
     INodeTest::TestClass* child0 = new INodeTest::TestClass("child");
     root.appendChild(child0);
-    EXPECT_EQ(NodeUtils::nodePath(*child0), "/root/child");
+    EXPECT_EQ(NodeUtils::nodePath(child0), "/root/child");
 
     // adding second child with the same name
     INodeTest::TestClass* child1 = new INodeTest::TestClass("child");
     root.appendChild(child1);
-    EXPECT_EQ(NodeUtils::nodePath(*child0), "/root/child0");
-    EXPECT_EQ(NodeUtils::nodePath(*child1), "/root/child1");
+    EXPECT_EQ(NodeUtils::nodePath(child0), "/root/child0");
+    EXPECT_EQ(NodeUtils::nodePath(child1), "/root/child1");
 
     // adding grandchild
     INodeTest::TestClass* grandchild = new INodeTest::TestClass("grandchild");
     child0->appendChild(grandchild);
-    EXPECT_EQ(NodeUtils::nodePath(*grandchild), "/root/child0/grandchild");
+    EXPECT_EQ(NodeUtils::nodePath(grandchild), "/root/child0/grandchild");
 
     // Now check path of grandchild wrt it's direct parent
-    EXPECT_EQ(NodeUtils::nodePath(*grandchild, child0), "/grandchild");
+    EXPECT_EQ(NodeUtils::nodePath(grandchild, child0), "/grandchild");
 
     // Check if exception is thrown when grandchild doesn't belong to child's branch
-    EXPECT_THROW(NodeUtils::nodePath(*grandchild, child1), Exceptions::RuntimeErrorException);
+    EXPECT_THROW(NodeUtils::nodePath(grandchild, child1), std::runtime_error);
 }
 
 //! Checking parameter tree for INode structure.
 
-TEST_F(INodeTest, createParameterTree)
-{
+TEST_F(INodeTest, createParameterTree) {
     INodeTest::TestClass root("root");
 
     std::unique_ptr<ParameterPool> pool(root.createParameterTree());
@@ -159,8 +145,7 @@ TEST_F(INodeTest, createParameterTree)
 
 //! Checking parameter tree for INode structure (for one of children).
 
-TEST_F(INodeTest, createChildParameterTree)
-{
+TEST_F(INodeTest, createChildParameterTree) {
     INodeTest::TestClass root("root");
     INodeTest::TestClass* child = new INodeTest::TestClass("child", 1.0);
     root.appendChild(child);

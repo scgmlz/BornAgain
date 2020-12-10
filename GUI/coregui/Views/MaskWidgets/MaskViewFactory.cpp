@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,21 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/MaskViewFactory.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/MaskWidgets/EllipseView.h"
-#include "GUI/coregui/Views/MaskWidgets/IShape2DView.h"
 #include "GUI/coregui/Views/MaskWidgets/IntensityDataView.h"
 #include "GUI/coregui/Views/MaskWidgets/LineViews.h"
 #include "GUI/coregui/Views/MaskWidgets/MaskAllView.h"
 #include "GUI/coregui/Views/MaskWidgets/MaskContainerView.h"
 #include "GUI/coregui/Views/MaskWidgets/PolygonPointView.h"
 #include "GUI/coregui/Views/MaskWidgets/PolygonView.h"
-#include "GUI/coregui/Views/MaskWidgets/RectangleView.h"
 #include "GUI/coregui/Views/MaskWidgets/RegionOfInterestView.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-IShape2DView* MaskViewFactory::createMaskView(SessionItem* item, ISceneAdaptor* adaptor)
-{
+IShape2DView* MaskViewFactory::createMaskView(SessionItem* item, ISceneAdaptor* adaptor) {
     IShape2DView* result(0);
     QString model_type = item->modelType();
 

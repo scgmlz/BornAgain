@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Computation/IBackground.h"
 
 IBackground::IBackground(const NodeMeta& meta, const std::vector<double>& PValues)
-    : INode(meta, PValues)
-{
-}
+    : INode(meta, PValues) {}
 
 IBackground::~IBackground() = default;

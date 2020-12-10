@@ -4,28 +4,22 @@
 #include "GUI/coregui/Views/IntensityDataWidgets/PropertyRepeater.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-namespace
-{
+namespace {
 
-IntensityDataItem* createData(SessionModel& model)
-{
+IntensityDataItem* createData(SessionModel& model) {
     return dynamic_cast<IntensityDataItem*>(model.insertNewItem("IntensityData"));
 }
 
-BasicAxisItem* createAxis(SessionModel& model)
-{
+BasicAxisItem* createAxis(SessionModel& model) {
     return dynamic_cast<BasicAxisItem*>(model.insertNewItem("BasicAxis"));
 }
 } // namespace
 
-class TestPropertyRepeater : public ::testing::Test
-{
-};
+class TestPropertyRepeater : public ::testing::Test {};
 
 //! Repeater handles two items.
 
-TEST_F(TestPropertyRepeater, test_twoItems)
-{
+TEST_F(TestPropertyRepeater, test_twoItems) {
     SessionModel model("test");
 
     auto item1 = createAxis(model);
@@ -56,8 +50,7 @@ TEST_F(TestPropertyRepeater, test_twoItems)
 
 //! Repeater handles three items.
 
-TEST_F(TestPropertyRepeater, test_threeItems)
-{
+TEST_F(TestPropertyRepeater, test_threeItems) {
     SessionModel model("test");
 
     auto item1 = createAxis(model);
@@ -82,8 +75,7 @@ TEST_F(TestPropertyRepeater, test_threeItems)
 
 //! Checking repeater in "repeat childs properties" mode
 
-TEST_F(TestPropertyRepeater, test_repeatAll)
-{
+TEST_F(TestPropertyRepeater, test_repeatAll) {
     SessionModel model("test");
 
     auto item1 = createData(model);

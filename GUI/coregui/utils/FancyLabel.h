@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_UTILS_FANCYLABEL_H
 #define BORNAGAIN_GUI_COREGUI_UTILS_FANCYLABEL_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QLabel>
 
 //! The FancyLabel class is QLabel-like class with trivail animation, when text slowly
 //! appears on the screen from left to right pretending to be typed
-class BA_CORE_API_ FancyLabel : public QLabel
-{
+class FancyLabel : public QLabel {
     Q_OBJECT
 public:
     FancyLabel(const QString& text, QWidget* parent = 0);

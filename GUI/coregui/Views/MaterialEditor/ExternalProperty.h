@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_EXTERNALPROPERTY_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_EXTERNALPROPERTY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QColor>
 #include <QMetaType>
 #include <QPixmap>
@@ -25,8 +24,7 @@
 //! The ExternalProperty class defines custom QVariant property to carry the text, color and
 //! an identifier.
 
-class BA_CORE_API_ ExternalProperty
-{
+class ExternalProperty {
 public:
     explicit ExternalProperty();
 

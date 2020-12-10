@@ -1,18 +1,15 @@
-#include "Core/Basics/Units.h"
-#include "Core/Beam/Beam.h"
-#include "Core/Beam/FootprintGauss.h"
-#include "Core/Beam/FootprintSquare.h"
+#include "Base/Const/Units.h"
+#include "Device/Beam/Beam.h"
+#include "Device/Beam/FootprintGauss.h"
+#include "Device/Beam/FootprintSquare.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 #include <limits>
 #include <memory>
 
-class BeamFootprintTest : public ::testing::Test
-{
-};
+class BeamFootprintTest : public ::testing::Test {};
 
-TEST_F(BeamFootprintTest, ErroneousArguments)
-{
+TEST_F(BeamFootprintTest, ErroneousArguments) {
     EXPECT_THROW(std::make_unique<FootprintGauss>(-1.0), std::runtime_error);
     EXPECT_THROW(std::make_unique<FootprintSquare>(-1.0), std::runtime_error);
 
@@ -23,8 +20,7 @@ TEST_F(BeamFootprintTest, ErroneousArguments)
     EXPECT_EQ(0.0, square_ff.calculate(-90.0 * Units::deg));
 }
 
-TEST_F(BeamFootprintTest, CalcForCornerCases)
-{
+TEST_F(BeamFootprintTest, CalcForCornerCases) {
     FootprintGauss gaussian_ff(0.0);
     EXPECT_EQ(1.0, gaussian_ff.calculate(0.0));
     EXPECT_EQ(1.0, gaussian_ff.calculate(90.0 * Units::deg));
@@ -44,8 +40,7 @@ TEST_F(BeamFootprintTest, CalcForCornerCases)
     EXPECT_EQ(0.0, square_ff2.calculate(90.0 * Units::deg));
 }
 
-TEST_F(BeamFootprintTest, CalcForRegularCases)
-{
+TEST_F(BeamFootprintTest, CalcForRegularCases) {
     FootprintGauss gaussian_ff(1.0 / std::sqrt(2.0));
 
     EXPECT_EQ(0.0, gaussian_ff.calculate(0.0));
@@ -57,8 +52,7 @@ TEST_F(BeamFootprintTest, CalcForRegularCases)
     EXPECT_EQ(0.5, square_ff.calculate(90.0 * Units::deg));
 }
 
-TEST_F(BeamFootprintTest, Clone)
-{
+TEST_F(BeamFootprintTest, Clone) {
     FootprintGauss gaussian_ff(1.0);
     std::unique_ptr<FootprintGauss> gaussian_clone(gaussian_ff.clone());
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/FitParameterHelper.h"
 #include "GUI/coregui/Models/FitParameterItems.h"
@@ -23,8 +23,7 @@
 //! of ParameterItem, copies link.
 
 void FitParameterHelper::createFitParameter(FitParameterContainerItem* container,
-                                            ParameterItem* parameterItem)
-{
+                                            ParameterItem* parameterItem) {
     ASSERT(container);
     ASSERT(parameterItem);
 
@@ -44,8 +43,7 @@ void FitParameterHelper::createFitParameter(FitParameterContainerItem* container
 //! Removes link to given parameterItem from fit parameters
 
 void FitParameterHelper::removeFromFitParameters(FitParameterContainerItem* container,
-                                                 ParameterItem* parameterItem)
-{
+                                                 ParameterItem* parameterItem) {
     FitParameterItem* fitParItem = getFitParameterItem(container, parameterItem);
 
     if (fitParItem) {
@@ -63,8 +61,8 @@ void FitParameterHelper::removeFromFitParameters(FitParameterContainerItem* cont
 //! If parameterItem is already linked with another fitParameter, it will be relinked
 
 void FitParameterHelper::addToFitParameter(FitParameterContainerItem* container,
-                                           ParameterItem* parameterItem, const QString& fitParName)
-{
+                                           ParameterItem* parameterItem,
+                                           const QString& fitParName) {
     ASSERT(container);
 
     removeFromFitParameters(container, parameterItem);
@@ -80,16 +78,14 @@ void FitParameterHelper::addToFitParameter(FitParameterContainerItem* container,
 //! Returns fFitParameterItem corresponding to given ParameterItem
 
 FitParameterItem* FitParameterHelper::getFitParameterItem(FitParameterContainerItem* container,
-                                                          ParameterItem* parameterItem)
-{
+                                                          ParameterItem* parameterItem) {
     ASSERT(container);
     return container->fitParameterItem(getParameterItemPath(parameterItem));
 }
 
 //! Returns list of fit parameter display names
 
-QStringList FitParameterHelper::getFitParameterNames(FitParameterContainerItem* container)
-{
+QStringList FitParameterHelper::getFitParameterNames(FitParameterContainerItem* container) {
     ASSERT(container);
     QStringList result;
     for (auto item : container->getItems(FitParameterContainerItem::T_FIT_PARAMETERS)) {
@@ -100,8 +96,7 @@ QStringList FitParameterHelper::getFitParameterNames(FitParameterContainerItem* 
 
 //! return path to given item in the ParameterTreeContainer
 
-QString FitParameterHelper::getParameterItemPath(const ParameterItem* parameterItem)
-{
+QString FitParameterHelper::getParameterItemPath(const ParameterItem* parameterItem) {
     QString result = ModelPath::getPathFromIndex(parameterItem->index());
     QString containerPrefix = "Parameter Container/";
     int containerEnd = result.indexOf(containerPrefix) + containerPrefix.size();
@@ -113,8 +108,7 @@ QString FitParameterHelper::getParameterItemPath(const ParameterItem* parameterI
 //! Link is relative to ParameterContainerItem, so first we have to find it
 
 ParameterItem* FitParameterHelper::getParameterItem(FitParameterContainerItem* container,
-                                                    const QString& link)
-{
+                                                    const QString& link) {
     SessionItem* cur = container;
     while (cur && cur->modelType() != "JobItem") {
         cur = cur->parent();

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/RectangularDetectorEditor.h"
 #include "GUI/coregui/Models/ComboProperty.h"
@@ -19,10 +19,15 @@
 #include <QGridLayout>
 
 RectangularDetectorEditor::RectangularDetectorEditor(QWidget* parent)
-    : SessionItemWidget(parent), m_xAxisEditor(nullptr), m_yAxisEditor(nullptr),
-      m_resolutionFunctionEditor(nullptr), m_alignmentEditor(nullptr), m_positionsEditor(nullptr),
-      m_normalEditor(nullptr), m_directionEditor(nullptr), m_gridLayout(new QGridLayout)
-{
+    : SessionItemWidget(parent)
+    , m_xAxisEditor(nullptr)
+    , m_yAxisEditor(nullptr)
+    , m_resolutionFunctionEditor(nullptr)
+    , m_alignmentEditor(nullptr)
+    , m_positionsEditor(nullptr)
+    , m_normalEditor(nullptr)
+    , m_directionEditor(nullptr)
+    , m_gridLayout(new QGridLayout) {
     create_editors();
 
     auto mainLayout = new QVBoxLayout;
@@ -32,22 +37,19 @@ RectangularDetectorEditor::RectangularDetectorEditor(QWidget* parent)
     setLayout(mainLayout);
 }
 
-void RectangularDetectorEditor::onPropertyChanged(const QString& propertyName)
-{
+void RectangularDetectorEditor::onPropertyChanged(const QString& propertyName) {
     if (propertyName == RectangularDetectorItem::P_ALIGNMENT)
         init_alignment_editors();
 }
 
-void RectangularDetectorEditor::subscribeToItem()
-{
+void RectangularDetectorEditor::subscribeToItem() {
     detectorItem()->mapper()->setOnPropertyChange(
         [this](const QString& name) { onPropertyChanged(name); }, this);
 
     init_editors();
 }
 
-void RectangularDetectorEditor::unsubscribeFromItem()
-{
+void RectangularDetectorEditor::unsubscribeFromItem() {
     m_xAxisEditor->clearEditor();
     m_yAxisEditor->clearEditor();
     m_resolutionFunctionEditor->clearEditor();
@@ -57,15 +59,13 @@ void RectangularDetectorEditor::unsubscribeFromItem()
     m_directionEditor->clearEditor();
 }
 
-RectangularDetectorItem* RectangularDetectorEditor::detectorItem()
-{
+RectangularDetectorItem* RectangularDetectorEditor::detectorItem() {
     auto result = dynamic_cast<RectangularDetectorItem*>(currentItem());
     ASSERT(result);
     return result;
 }
 
-void RectangularDetectorEditor::create_editors()
-{
+void RectangularDetectorEditor::create_editors() {
     // axes and resolution function editors
     m_xAxisEditor = new ComponentEditor(ComponentEditor::GroupWidget, "X axis");
     m_gridLayout->addWidget(m_xAxisEditor, 1, 0);
@@ -92,8 +92,7 @@ void RectangularDetectorEditor::create_editors()
     m_gridLayout->addWidget(m_directionEditor, 3, 2);
 }
 
-void RectangularDetectorEditor::init_editors()
-{
+void RectangularDetectorEditor::init_editors() {
     m_xAxisEditor->clearEditor();
     auto xAxisItem = detectorItem()->getItem(RectangularDetectorItem::P_X_AXIS);
     m_xAxisEditor->setItem(xAxisItem);
@@ -112,8 +111,7 @@ void RectangularDetectorEditor::init_editors()
     init_alignment_editors();
 }
 
-void RectangularDetectorEditor::init_alignment_editors()
-{
+void RectangularDetectorEditor::init_alignment_editors() {
     m_positionsEditor->clearEditor();
     m_positionsEditor->hide();
 

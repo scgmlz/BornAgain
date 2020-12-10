@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/CommonWidgets/StatusLabel.h"
 #include "GUI/coregui/utils/StyleUtils.h"
@@ -18,51 +18,42 @@
 #include <QFont>
 #include <QPainter>
 
-namespace
-{
-int default_text_size()
-{
+namespace {
+int default_text_size() {
     return StyleUtils::SystemPointSize();
 }
-int default_label_height()
-{
+int default_label_height() {
     return StyleUtils::SizeOfLetterM().height() * 1.75;
 }
 } // namespace
 
 StatusLabel::StatusLabel(QWidget* parent)
-    : QFrame(parent), m_font("Monospace", default_text_size(), QFont::Normal, false)
-{
+    : QFrame(parent), m_font("Monospace", default_text_size(), QFont::Normal, false) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     setFixedHeight(default_label_height());
 }
 
-void StatusLabel::setText(const QString& text)
-{
+void StatusLabel::setText(const QString& text) {
     m_text = text;
     update();
 }
 
-void StatusLabel::setFont(const QFont& font)
-{
+void StatusLabel::setFont(const QFont& font) {
     m_font = font;
     update();
 }
 
-void StatusLabel::setPointSize(int pointSize)
-{
+void StatusLabel::setPointSize(int pointSize) {
     m_font.setPointSize(pointSize);
     update();
 }
 
-void StatusLabel::setAlignment(Qt::Alignment alignment)
-{
+void StatusLabel::setAlignment(Qt::Alignment alignment) {
     m_alignment = alignment;
     update();
 }
 
-void StatusLabel::paintEvent(QPaintEvent* event)
-{
+void StatusLabel::paintEvent(QPaintEvent* event) {
     QWidget::paintEvent(event);
 
     QPainter painter(this);

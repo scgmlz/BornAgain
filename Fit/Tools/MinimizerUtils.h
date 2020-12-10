@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,32 +10,35 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
 #define BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <map>
 #include <string>
 #include <vector>
 
 //! Utility functions for fit library
 
-namespace MinimizerUtils
-{
+namespace mumufit::utils {
 
-BA_CORE_API_ std::string toString(const std::vector<std::string>& v, const std::string& delim = "");
+std::string toString(const std::vector<std::string>& v, const std::string& delim = "");
 
-BA_CORE_API_ std::map<int, std::string> gslErrorDescriptionMap();
+std::map<int, std::string> gslErrorDescriptionMap();
 
-BA_CORE_API_ std::string gslErrorDescription(int errorCode);
+std::string gslErrorDescription(int errorCode);
 
-BA_CORE_API_ bool numbersDiffer(double a, double b, double tol);
+bool numbersDiffer(double a, double b, double tol);
 
-BA_CORE_API_ std::string sectionString(const std::string& sectionName = "",
-                                       size_t report_width = 80);
+std::string sectionString(const std::string& sectionName = "", size_t report_width = 80);
 
-} // namespace MinimizerUtils
+} // namespace mumufit::utils
 
 #endif // BORNAGAIN_FIT_TOOLS_MINIMIZERUTILS_H
+#endif // USER_API

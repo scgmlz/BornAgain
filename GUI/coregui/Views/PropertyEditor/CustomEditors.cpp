@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/PropertyEditor/CustomEditors.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/GroupItemController.h"
 #include "GUI/coregui/Views/JobWidgets/ScientificSpinBox.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "GUI/coregui/utils/CustomEventFilters.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
@@ -33,12 +32,10 @@
 #include <QToolButton>
 #include <cmath>
 
-namespace
-{
+namespace {
 //! Single step for QDoubleSpinBox.
 
-double singleStep(int decimals)
-{
+double singleStep(int decimals) {
     // For item with decimals=3 (i.e. 0.001) single step will be 0.1
     return 1. / std::pow(10., decimals - 1);
 }
@@ -47,8 +44,7 @@ double singleStep(int decimals)
 
 //! Sets the data from the model to editor.
 
-void CustomEditor::setData(const QVariant& data)
-{
+void CustomEditor::setData(const QVariant& data) {
     m_data = data;
     initEditor();
 }
@@ -59,8 +55,7 @@ void CustomEditor::initEditor() {}
 
 //! Saves the data from the editor and informs external delegates.
 
-void CustomEditor::setDataIntern(const QVariant& data)
-{
+void CustomEditor::setDataIntern(const QVariant& data) {
     m_data = data;
     dataChanged(m_data);
 }
@@ -68,9 +63,11 @@ void CustomEditor::setDataIntern(const QVariant& data)
 // --- MaterialPropertyEditor ---
 
 ExternalPropertyEditor::ExternalPropertyEditor(QWidget* parent)
-    : CustomEditor(parent), m_textLabel(new QLabel), m_pixmapLabel(new QLabel),
-      m_focusFilter(new LostFocusFilter(this)), m_extDialogType("ExtMaterialEditor")
-{
+    : CustomEditor(parent)
+    , m_textLabel(new QLabel)
+    , m_pixmapLabel(new QLabel)
+    , m_focusFilter(new LostFocusFilter(this))
+    , m_extDialogType("ExtMaterialEditor") {
     setMouseTracking(true);
     setAutoFillBackground(true);
 
@@ -96,13 +93,11 @@ ExternalPropertyEditor::ExternalPropertyEditor(QWidget* parent)
     setLayout(layout);
 }
 
-void ExternalPropertyEditor::setExternalDialogType(const QString& editorType)
-{
+void ExternalPropertyEditor::setExternalDialogType(const QString& editorType) {
     m_extDialogType = editorType;
 }
 
-void ExternalPropertyEditor::buttonClicked()
-{
+void ExternalPropertyEditor::buttonClicked() {
     // temporarily installing filter to prevent loss of focus caused by too insistent dialog
     installEventFilter(m_focusFilter);
     ExternalProperty property = m_data.value<ExternalProperty>();
@@ -122,8 +117,7 @@ void ExternalPropertyEditor::buttonClicked()
         setDataIntern(newProperty.variant());
 }
 
-void ExternalPropertyEditor::initEditor()
-{
+void ExternalPropertyEditor::initEditor() {
     ASSERT(m_data.canConvert<ExternalProperty>());
     ExternalProperty materialProperty = m_data.value<ExternalProperty>();
     m_textLabel->setText(materialProperty.text());
@@ -133,8 +127,7 @@ void ExternalPropertyEditor::initEditor()
 // --- CustomComboEditor ---
 
 ComboPropertyEditor::ComboPropertyEditor(QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox), m_wheel_event_filter(new WheelEventEater(this))
-{
+    : CustomEditor(parent), m_box(new QComboBox), m_wheel_event_filter(new WheelEventEater(this)) {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
@@ -149,18 +142,15 @@ ComboPropertyEditor::ComboPropertyEditor(QWidget* parent)
     setConnected(true);
 }
 
-QSize ComboPropertyEditor::sizeHint() const
-{
+QSize ComboPropertyEditor::sizeHint() const {
     return m_box->sizeHint();
 }
 
-QSize ComboPropertyEditor::minimumSizeHint() const
-{
+QSize ComboPropertyEditor::minimumSizeHint() const {
     return m_box->minimumSizeHint();
 }
 
-void ComboPropertyEditor::onIndexChanged(int index)
-{
+void ComboPropertyEditor::onIndexChanged(int index) {
     ComboProperty comboProperty = m_data.value<ComboProperty>();
 
     if (comboProperty.currentIndex() != index) {
@@ -169,8 +159,7 @@ void ComboPropertyEditor::onIndexChanged(int index)
     }
 }
 
-void ComboPropertyEditor::initEditor()
-{
+void ComboPropertyEditor::initEditor() {
     setConnected(false);
 
     m_box->clear();
@@ -182,8 +171,7 @@ void ComboPropertyEditor::initEditor()
 
 //! Returns list of labels for QComboBox
 
-QStringList ComboPropertyEditor::internLabels()
-{
+QStringList ComboPropertyEditor::internLabels() {
     if (!m_data.canConvert<ComboProperty>())
         return {};
     ComboProperty comboProperty = m_data.value<ComboProperty>();
@@ -192,16 +180,14 @@ QStringList ComboPropertyEditor::internLabels()
 
 //! Returns index for QComboBox.
 
-int ComboPropertyEditor::internIndex()
-{
+int ComboPropertyEditor::internIndex() {
     if (!m_data.canConvert<ComboProperty>())
         return 0;
     ComboProperty comboProperty = m_data.value<ComboProperty>();
     return comboProperty.currentIndex();
 }
 
-void ComboPropertyEditor::setConnected(bool isConnected)
-{
+void ComboPropertyEditor::setConnected(bool isConnected) {
     if (isConnected)
         connect(m_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
                 &ComboPropertyEditor::onIndexChanged, Qt::UniqueConnection);
@@ -213,8 +199,7 @@ void ComboPropertyEditor::setConnected(bool isConnected)
 // --- ScientificDoublePropertyEditor ---
 
 ScientificDoublePropertyEditor::ScientificDoublePropertyEditor(QWidget* parent)
-    : CustomEditor(parent), m_lineEdit(new QLineEdit), m_validator(nullptr)
-{
+    : CustomEditor(parent), m_lineEdit(new QLineEdit), m_validator(nullptr) {
     setAutoFillBackground(true);
 
     auto layout = new QVBoxLayout;
@@ -233,23 +218,20 @@ ScientificDoublePropertyEditor::ScientificDoublePropertyEditor(QWidget* parent)
     setLayout(layout);
 }
 
-void ScientificDoublePropertyEditor::setLimits(const RealLimits& limits)
-{
+void ScientificDoublePropertyEditor::setLimits(const RealLimits& limits) {
     double minimum = limits.hasLowerLimit() ? std::max(limits.lowerLimit(), -1e+200) : -1e+200;
     double maximum = limits.hasUpperLimit() ? std::min(limits.upperLimit(), +1e+200) : +1e+200;
     m_validator->setRange(minimum, maximum, 1000);
 }
 
-void ScientificDoublePropertyEditor::onEditingFinished()
-{
+void ScientificDoublePropertyEditor::onEditingFinished() {
     double new_value = m_lineEdit->text().toDouble();
 
     if (new_value != m_data.toDouble())
         setDataIntern(QVariant::fromValue(new_value));
 }
 
-void ScientificDoublePropertyEditor::initEditor()
-{
+void ScientificDoublePropertyEditor::initEditor() {
     ASSERT(m_data.type() == QVariant::Double);
     m_lineEdit->setText(QString::number(m_data.toDouble(), 'g'));
 }
@@ -257,8 +239,7 @@ void ScientificDoublePropertyEditor::initEditor()
 // --- DoubleEditor ---
 
 DoubleEditor::DoubleEditor(QWidget* parent)
-    : CustomEditor(parent), m_doubleEditor(new QDoubleSpinBox)
-{
+    : CustomEditor(parent), m_doubleEditor(new QDoubleSpinBox) {
     setAutoFillBackground(true);
     setFocusPolicy(Qt::StrongFocus);
     m_doubleEditor->setFocusPolicy(Qt::StrongFocus);
@@ -279,8 +260,7 @@ DoubleEditor::DoubleEditor(QWidget* parent)
     setFocusProxy(m_doubleEditor);
 }
 
-void DoubleEditor::setLimits(const RealLimits& limits)
-{
+void DoubleEditor::setLimits(const RealLimits& limits) {
     m_doubleEditor->setMaximum(std::numeric_limits<double>::max());
     m_doubleEditor->setMinimum(std::numeric_limits<double>::lowest());
 
@@ -290,22 +270,19 @@ void DoubleEditor::setLimits(const RealLimits& limits)
         m_doubleEditor->setMaximum(static_cast<int>(limits.upperLimit()));
 }
 
-void DoubleEditor::setDecimals(int decimals)
-{
+void DoubleEditor::setDecimals(int decimals) {
     m_doubleEditor->setDecimals(decimals);
     m_doubleEditor->setSingleStep(singleStep(decimals));
 }
 
-void DoubleEditor::onEditingFinished()
-{
+void DoubleEditor::onEditingFinished() {
     double new_value = m_doubleEditor->value();
 
     if (new_value != m_data.toDouble())
         setDataIntern(QVariant::fromValue(new_value));
 }
 
-void DoubleEditor::initEditor()
-{
+void DoubleEditor::initEditor() {
     ASSERT(m_data.type() == QVariant::Double);
     m_doubleEditor->setValue(m_data.toDouble());
 }
@@ -313,8 +290,7 @@ void DoubleEditor::initEditor()
 // --- DoubleEditor ---
 
 ScientificSpinBoxEditor::ScientificSpinBoxEditor(QWidget* parent)
-    : CustomEditor(parent), m_doubleEditor(new ScientificSpinBox)
-{
+    : CustomEditor(parent), m_doubleEditor(new ScientificSpinBox) {
     setAutoFillBackground(true);
     setFocusPolicy(Qt::StrongFocus);
     m_doubleEditor->setFocusPolicy(Qt::StrongFocus);
@@ -333,43 +309,37 @@ ScientificSpinBoxEditor::ScientificSpinBoxEditor(QWidget* parent)
     setFocusProxy(m_doubleEditor);
 }
 
-void ScientificSpinBoxEditor::setLimits(const RealLimits& limits)
-{
+void ScientificSpinBoxEditor::setLimits(const RealLimits& limits) {
     m_doubleEditor->setMinimum(limits.hasLowerLimit() ? limits.lowerLimit()
                                                       : std::numeric_limits<double>::lowest());
     m_doubleEditor->setMaximum(limits.hasUpperLimit() ? limits.upperLimit()
                                                       : std::numeric_limits<double>::max());
 }
 
-void ScientificSpinBoxEditor::setDecimals(int decimals)
-{
+void ScientificSpinBoxEditor::setDecimals(int decimals) {
     m_doubleEditor->setDecimals(decimals);
     m_doubleEditor->setSingleStep(singleStep(decimals));
 }
 
-void ScientificSpinBoxEditor::setSingleStep(double step)
-{
+void ScientificSpinBoxEditor::setSingleStep(double step) {
     m_doubleEditor->setSingleStep(step);
 }
 
-void ScientificSpinBoxEditor::onEditingFinished()
-{
+void ScientificSpinBoxEditor::onEditingFinished() {
     double new_value = m_doubleEditor->value();
 
     if (new_value != m_data.toDouble())
         setDataIntern(QVariant::fromValue(new_value));
 }
 
-void ScientificSpinBoxEditor::initEditor()
-{
+void ScientificSpinBoxEditor::initEditor() {
     ASSERT(m_data.type() == QVariant::Double);
     m_doubleEditor->setValue(m_data.toDouble());
 }
 
 // --- IntEditor ---
 
-IntEditor::IntEditor(QWidget* parent) : CustomEditor(parent), m_intEditor(new QSpinBox)
-{
+IntEditor::IntEditor(QWidget* parent) : CustomEditor(parent), m_intEditor(new QSpinBox) {
     setAutoFillBackground(true);
     m_intEditor->setFocusPolicy(Qt::StrongFocus);
     m_intEditor->setKeyboardTracking(false);
@@ -388,8 +358,7 @@ IntEditor::IntEditor(QWidget* parent) : CustomEditor(parent), m_intEditor(new QS
     setFocusProxy(m_intEditor);
 }
 
-void IntEditor::setLimits(const RealLimits& limits)
-{
+void IntEditor::setLimits(const RealLimits& limits) {
     m_intEditor->setMaximum(std::numeric_limits<int>::max());
 
     if (limits.hasLowerLimit())
@@ -398,16 +367,14 @@ void IntEditor::setLimits(const RealLimits& limits)
         m_intEditor->setMaximum(static_cast<int>(limits.upperLimit()));
 }
 
-void IntEditor::onEditingFinished()
-{
+void IntEditor::onEditingFinished() {
     int new_value = m_intEditor->value();
 
     if (new_value != m_data.toInt())
         setDataIntern(QVariant::fromValue(new_value));
 }
 
-void IntEditor::initEditor()
-{
+void IntEditor::initEditor() {
     if (!m_data.isValid() || m_data.type() != QVariant::Int)
         return;
     m_intEditor->setValue(m_data.toInt());
@@ -415,8 +382,7 @@ void IntEditor::initEditor()
 
 // --- BoolEditor ---
 
-BoolEditor::BoolEditor(QWidget* parent) : CustomEditor(parent), m_checkBox(new QCheckBox)
-{
+BoolEditor::BoolEditor(QWidget* parent) : CustomEditor(parent), m_checkBox(new QCheckBox) {
     setAutoFillBackground(true);
     auto layout = new QHBoxLayout;
     layout->setContentsMargins(4, 0, 0, 0);
@@ -428,14 +394,12 @@ BoolEditor::BoolEditor(QWidget* parent) : CustomEditor(parent), m_checkBox(new Q
     m_checkBox->setText(tr("True"));
 }
 
-void BoolEditor::onCheckBoxChange(bool value)
-{
+void BoolEditor::onCheckBoxChange(bool value) {
     if (value != m_data.toBool())
         setDataIntern(QVariant(value));
 }
 
-void BoolEditor::initEditor()
-{
+void BoolEditor::initEditor() {
     ASSERT(m_data.type() == QVariant::Bool);
     bool value = m_data.toBool();
 

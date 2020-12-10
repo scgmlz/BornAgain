@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H
 
-#include "Core/Parametrization/INodeVisitor.h"
+#include "Param/Node/INodeVisitor.h"
 #include <memory>
 #include <vector>
 
 class IPositionBuilder;
 
-class RealSpacePositionBuilder : public INodeVisitor
-{
+class RealSpacePositionBuilder : public INodeVisitor {
 public:
     RealSpacePositionBuilder();
     ~RealSpacePositionBuilder() override;
@@ -39,7 +38,7 @@ public:
                                                        double density = 0.0) const;
 
 private:
-    std::unique_ptr<IPositionBuilder> mP_pos_builder;
+    std::unique_ptr<IPositionBuilder> m_pos_builder;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_REALSPACEPOSITIONBUILDER_H

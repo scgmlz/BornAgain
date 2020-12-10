@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/MaterialItemContainer.h"
 #include "GUI/coregui/Models/MaterialItem.h"
@@ -19,14 +19,12 @@
 
 const QString MaterialItemContainer::T_MATERIALS = "MaterialVector";
 
-MaterialItemContainer::MaterialItemContainer() : SessionItem("MaterialContainer")
-{
+MaterialItemContainer::MaterialItemContainer() : SessionItem("MaterialContainer") {
     setItemName("Materials");
     registerTag(T_MATERIALS, 0, -1, QStringList{"Material"});
 }
 
-MaterialItem* MaterialItemContainer::insertCopy(MaterialItem* material_item)
-{
+MaterialItem* MaterialItemContainer::insertCopy(MaterialItem* material_item) {
     MaterialItem* item_copy =
         dynamic_cast<MaterialItem*>(model()->copyItem(material_item, this, T_MATERIALS));
     item_copy->setItemValue(MaterialItem::P_IDENTIFIER, GUIHelpers::createUuid());
@@ -34,14 +32,12 @@ MaterialItem* MaterialItemContainer::insertCopy(MaterialItem* material_item)
     return item_copy;
 }
 
-MaterialItem* MaterialItemContainer::findMaterialById(QString id)
-{
+MaterialItem* MaterialItemContainer::findMaterialById(QString id) {
     return const_cast<MaterialItem*>(
         static_cast<const MaterialItemContainer*>(this)->findMaterialById(id));
 }
 
-const MaterialItem* MaterialItemContainer::findMaterialById(QString id) const
-{
+const MaterialItem* MaterialItemContainer::findMaterialById(QString id) const {
     auto materials = getItems(T_MATERIALS);
     for (auto item : materials) {
         auto material = dynamic_cast<MaterialItem*>(item);

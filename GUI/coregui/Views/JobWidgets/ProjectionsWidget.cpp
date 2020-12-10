@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,23 +10,23 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/ProjectionsWidget.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/ProjectionsPlot.h"
 #include <QTabWidget>
 #include <QVBoxLayout>
 
-namespace
-{
+namespace {
 const int horizontal_projection_tab = 0;
 const int vertical_projection_tab = 1;
 } // namespace
 
 ProjectionsWidget::ProjectionsWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_xProjection(new ProjectionsPlot("HorizontalLineMask")),
-      m_yProjection(new ProjectionsPlot("VerticalLineMask")), m_tabWidget(new QTabWidget)
-{
+    : SessionItemWidget(parent)
+    , m_xProjection(new ProjectionsPlot("HorizontalLineMask"))
+    , m_yProjection(new ProjectionsPlot("VerticalLineMask"))
+    , m_tabWidget(new QTabWidget) {
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -41,15 +41,13 @@ ProjectionsWidget::ProjectionsWidget(QWidget* parent)
     setConnected(true);
 }
 
-void ProjectionsWidget::setItem(SessionItem* intensityItem)
-{
+void ProjectionsWidget::setItem(SessionItem* intensityItem) {
     SessionItemWidget::setItem(intensityItem);
     m_xProjection->setItem(intensityItem);
     m_yProjection->setItem(intensityItem);
 }
 
-void ProjectionsWidget::onActivityModeChanged(MaskEditorFlags::Activity value)
-{
+void ProjectionsWidget::onActivityModeChanged(MaskEditorFlags::Activity value) {
     setConnected(false);
 
     if (value == MaskEditorFlags::HORIZONTAL_LINE_MODE)
@@ -60,22 +58,19 @@ void ProjectionsWidget::onActivityModeChanged(MaskEditorFlags::Activity value)
     setConnected(true);
 }
 
-void ProjectionsWidget::onMarginsChanged(double left, double right)
-{
+void ProjectionsWidget::onMarginsChanged(double left, double right) {
     m_xProjection->onMarginsChanged(left, right);
     m_yProjection->onMarginsChanged(left, right);
 }
 
-void ProjectionsWidget::onTabChanged(int tab_index)
-{
+void ProjectionsWidget::onTabChanged(int tab_index) {
     if (tab_index == horizontal_projection_tab)
         emit changeActivityRequest(MaskEditorFlags::HORIZONTAL_LINE_MODE);
     else if (tab_index == vertical_projection_tab)
         emit changeActivityRequest(MaskEditorFlags::VERTICAL_LINE_MODE);
 }
 
-void ProjectionsWidget::setConnected(bool isConnected)
-{
+void ProjectionsWidget::setConnected(bool isConnected) {
     if (isConnected)
         connect(m_tabWidget, &QTabWidget::currentChanged, this, &ProjectionsWidget::onTabChanged);
     else

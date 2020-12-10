@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MESOCRYSTALVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_MESOCRYSTALVIEW_H
@@ -18,8 +18,7 @@
 #include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 
 //! Class representing view of a meso crystal item
-class BA_CORE_API_ MesoCrystalView : public ConnectableView
-{
+class MesoCrystalView : public ConnectableView {
     Q_OBJECT
 
 public:

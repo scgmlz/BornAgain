@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOTEVENTINFO_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOTEVENTINFO_H
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 
 class ColorMap;
@@ -24,8 +23,7 @@ class SpecularPlot;
 
 //! Contains parameters of mouse position in 1D or 2D plot.
 
-class BA_CORE_API_ PlotEventInfo
-{
+class PlotEventInfo {
     using PLOT_TYPE = ScientificPlot::PLOT_TYPE;
 
 public:

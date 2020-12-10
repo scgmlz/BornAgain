@@ -3,12 +3,9 @@
 #include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 
-class ObjectiveMetricTest : public ::testing::Test
-{
-};
+class ObjectiveMetricTest : public ::testing::Test {};
 
-TEST_F(ObjectiveMetricTest, Chi2WellFormed)
-{
+TEST_F(ObjectiveMetricTest, Chi2WellFormed) {
     std::vector<double> sim_data{1.0, 2.0, 3.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 4.0, 3.0};
     std::vector<double> uncertainties{0.1, 0.1, 0.5, 0.5};
@@ -45,8 +42,7 @@ TEST_F(ObjectiveMetricTest, Chi2WellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays({}, {}, {}), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, Chi2IllFormed)
-{
+TEST_F(ObjectiveMetricTest, Chi2IllFormed) {
     std::vector<double> sim_data{1.0, 2.0, 3.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 4.0, 3.0};
     std::vector<double> uncertainties{0.1, 0.1, 0.5, 0.5};
@@ -78,8 +74,7 @@ TEST_F(ObjectiveMetricTest, Chi2IllFormed)
                      std::numeric_limits<double>::max());
 }
 
-TEST_F(ObjectiveMetricTest, PoissionLikeWellFormed)
-{
+TEST_F(ObjectiveMetricTest, PoissionLikeWellFormed) {
     std::vector<double> sim_data{1.0, 2.0, 4.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 5.0, 3.0};
     std::vector<double> weight_factors{1.0, 1.0, 1.0, 2.0};
@@ -107,8 +102,7 @@ TEST_F(ObjectiveMetricTest, PoissionLikeWellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays({}, {}, {}), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, PoissionLikeIllFormed)
-{
+TEST_F(ObjectiveMetricTest, PoissionLikeIllFormed) {
     std::vector<double> sim_data{1.0, 2.0, 3.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 4.0, 3.0};
     std::vector<double> weight_factors{1.0, 1.0, 1.0, 2.0};
@@ -130,8 +124,7 @@ TEST_F(ObjectiveMetricTest, PoissionLikeIllFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors_1), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, LogWellFormed)
-{
+TEST_F(ObjectiveMetricTest, LogWellFormed) {
     std::vector<double> sim_data{1.0, 10.0, 1.e+2, 1.e+4};
     std::vector<double> exp_data{10.0, 1.0, 1.e+3, 1.e+5};
     std::vector<double> uncertainties{0.1, 0.1, 0.5, 0.5};
@@ -169,8 +162,7 @@ TEST_F(ObjectiveMetricTest, LogWellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays({}, {}, {}), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, LogIllFormed)
-{
+TEST_F(ObjectiveMetricTest, LogIllFormed) {
     std::vector<double> sim_data{1.0, 10.0, 1.e+2, 1.e+4};
     std::vector<double> exp_data{10.0, 1.0, 1.e+3, 1.e+5};
     std::vector<double> uncertainties{0.1, 0.1, 0.5, 0.5};
@@ -199,8 +191,7 @@ TEST_F(ObjectiveMetricTest, LogIllFormed)
                      std::numeric_limits<double>::max());
 }
 
-TEST_F(ObjectiveMetricTest, RelativeDifferenceWellFormed)
-{
+TEST_F(ObjectiveMetricTest, RelativeDifferenceWellFormed) {
     std::vector<double> sim_data{1.0, 2.0, 4.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 2.0, 2.0};
     std::vector<double> uncertainties{1.0, 1.0, 2.0, 1.0};
@@ -230,8 +221,7 @@ TEST_F(ObjectiveMetricTest, RelativeDifferenceWellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays({}, {}, {}), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, RelativeDifferenceIllFormed)
-{
+TEST_F(ObjectiveMetricTest, RelativeDifferenceIllFormed) {
     std::vector<double> sim_data{1.0, 2.0, 4.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 3.0, 2.0};
     std::vector<double> uncertainties{1.0, 1.0, 2.0, 1.0};
@@ -256,8 +246,7 @@ TEST_F(ObjectiveMetricTest, RelativeDifferenceIllFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors_1), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, RQ4WellFormed)
-{
+TEST_F(ObjectiveMetricTest, RQ4WellFormed) {
     std::vector<double> sim_data{1.0, 2.0, 4.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 2.0, 2.0};
     std::vector<double> uncertainties{1.0, 1.0, 2.0, 1.0};
@@ -287,8 +276,7 @@ TEST_F(ObjectiveMetricTest, RQ4WellFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays({}, {}, {}), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, RQ4IllFormed)
-{
+TEST_F(ObjectiveMetricTest, RQ4IllFormed) {
     std::vector<double> sim_data{1.0, 2.0, 4.0, 4.0};
     std::vector<double> exp_data{2.0, 1.0, 3.0, 2.0};
     std::vector<double> uncertainties{1.0, 1.0, 2.0, 1.0};
@@ -311,8 +299,7 @@ TEST_F(ObjectiveMetricTest, RQ4IllFormed)
     EXPECT_DOUBLE_EQ(metric.computeFromArrays(sim_data, exp_data, weight_factors_1), 0.0);
 }
 
-TEST_F(ObjectiveMetricTest, createMetric)
-{
+TEST_F(ObjectiveMetricTest, createMetric) {
     auto result = ObjectiveMetricUtils::createMetric("Poisson-like");
     EXPECT_TRUE(dynamic_cast<PoissonLikeMetric*>(result.get()));
     // Since norm functions lack equality comparison, check the equality of applying them

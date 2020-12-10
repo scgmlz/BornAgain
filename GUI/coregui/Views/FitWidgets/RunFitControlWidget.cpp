@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/RunFitControlWidget.h"
 #include "GUI/coregui/Models/FitSuiteItem.h"
@@ -24,8 +24,7 @@
 #include <QPushButton>
 #include <QSlider>
 
-namespace
-{
+namespace {
 const int default_interval = 10;
 const std::vector<int> slider_to_interval = {1,  2,  3,  4,   5,   10,  15,  20,
                                              25, 30, 50, 100, 200, 500, 1000};
@@ -33,10 +32,13 @@ const QString slider_tooltip = "Updates fit progress every Nth iteration";
 } // namespace
 
 RunFitControlWidget::RunFitControlWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_startButton(new QPushButton), m_stopButton(new QPushButton),
-      m_intervalSlider(new QSlider), m_updateIntervalLabel(new QLabel),
-      m_iterationsCountLabel(new QLabel), m_warningSign(new WarningSign(this))
-{
+    : SessionItemWidget(parent)
+    , m_startButton(new QPushButton)
+    , m_stopButton(new QPushButton)
+    , m_intervalSlider(new QSlider)
+    , m_updateIntervalLabel(new QLabel)
+    , m_iterationsCountLabel(new QLabel)
+    , m_warningSign(new WarningSign(this)) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     setFixedHeight(Constants::RUN_FIT_CONTROL_WIDGET_HEIGHT);
 
@@ -84,36 +86,31 @@ RunFitControlWidget::RunFitControlWidget(QWidget* parent)
     setEnabled(false);
 }
 
-RunFitControlWidget::~RunFitControlWidget()
-{
+RunFitControlWidget::~RunFitControlWidget() {
     unsubscribeFromChildren();
 }
 
-void RunFitControlWidget::onFittingError(const QString& what)
-{
+void RunFitControlWidget::onFittingError(const QString& what) {
     m_warningSign->clear();
     m_iterationsCountLabel->setText("");
     m_warningSign->setWarningMessage(what);
 }
 
-void RunFitControlWidget::onSliderValueChanged(int value)
-{
+void RunFitControlWidget::onSliderValueChanged(int value) {
     int interval = sliderValueToUpdateInterval(value);
     m_updateIntervalLabel->setText(QString::number(interval));
     if (fitSuiteItem())
         fitSuiteItem()->setItemValue(FitSuiteItem::P_UPDATE_INTERVAL, interval);
 }
 
-void RunFitControlWidget::onFitSuitePropertyChange(const QString& name)
-{
+void RunFitControlWidget::onFitSuitePropertyChange(const QString& name) {
     if (name == FitSuiteItem::P_ITERATION_COUNT) {
         int niter = fitSuiteItem()->getItemValue(FitSuiteItem::P_ITERATION_COUNT).toInt();
         m_iterationsCountLabel->setText(QString::number(niter));
     }
 }
 
-void RunFitControlWidget::subscribeToItem()
-{
+void RunFitControlWidget::subscribeToItem() {
     updateControlElements();
 
     fitSuiteItem()->setItemValue(FitSuiteItem::P_UPDATE_INTERVAL, sliderUpdateInterval());
@@ -131,29 +128,25 @@ void RunFitControlWidget::subscribeToItem()
         this);
 }
 
-void RunFitControlWidget::unsubscribeFromItem()
-{
+void RunFitControlWidget::unsubscribeFromItem() {
     setEnabled(false);
     unsubscribeFromChildren();
 }
 
-int RunFitControlWidget::sliderUpdateInterval()
-{
+int RunFitControlWidget::sliderUpdateInterval() {
     return sliderValueToUpdateInterval(m_intervalSlider->value());
 }
 
 //! converts slider value (1-15) to update interval to be propagated to FitSuiteWidget
 
-int RunFitControlWidget::sliderValueToUpdateInterval(int value)
-{
+int RunFitControlWidget::sliderValueToUpdateInterval(int value) {
     size_t svalue = static_cast<size_t>(value);
     return svalue < slider_to_interval.size() ? slider_to_interval[svalue] : default_interval;
 }
 
 //! Updates button "enabled" status and warning status depending on current job conditions.
 
-void RunFitControlWidget::updateControlElements()
-{
+void RunFitControlWidget::updateControlElements() {
     setEnabled(isValidJobItem());
 
     if (jobItem()->getStatus() == "Fitting") {
@@ -166,23 +159,19 @@ void RunFitControlWidget::updateControlElements()
     }
 }
 
-JobItem* RunFitControlWidget::jobItem()
-{
+JobItem* RunFitControlWidget::jobItem() {
     return dynamic_cast<JobItem*>(currentItem());
 }
 
-FitSuiteItem* RunFitControlWidget::fitSuiteItem()
-{
+FitSuiteItem* RunFitControlWidget::fitSuiteItem() {
     return jobItem() ? jobItem()->fitSuiteItem() : nullptr;
 }
 
-bool RunFitControlWidget::isValidJobItem()
-{
+bool RunFitControlWidget::isValidJobItem() {
     return jobItem() ? jobItem()->isValidForFitting() : false;
 }
 
-void RunFitControlWidget::unsubscribeFromChildren()
-{
+void RunFitControlWidget::unsubscribeFromChildren() {
     if (fitSuiteItem())
         fitSuiteItem()->mapper()->unsubscribe(this);
 }

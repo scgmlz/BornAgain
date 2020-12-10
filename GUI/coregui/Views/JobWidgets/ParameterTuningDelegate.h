@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PARAMETERTUNINGDELEGATE_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PARAMETERTUNINGDELEGATE_H
 
-#include "Fit/Tools/RealLimits.h"
+#include "Fit/Param/RealLimits.h"
 #include <QItemDelegate>
 #include <memory>
 
@@ -25,13 +25,11 @@ class ParameterItem;
 class ScientificSpinBox;
 class SessionItem;
 
-class BA_CORE_API_ ParameterTuningDelegate : public QItemDelegate
-{
+class ParameterTuningDelegate : public QItemDelegate {
     Q_OBJECT
 
 public:
-    class TuningData
-    {
+    class TuningData {
     public:
         TuningData();
         void setRangeFactor(double range_factor);
@@ -50,8 +48,7 @@ public:
     ParameterTuningDelegate(QObject* parent = 0);
     ~ParameterTuningDelegate();
 
-    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& /* index */) const
-    {
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& /* index */) const {
         return QSize(option.rect.width(), 25);
     }
 

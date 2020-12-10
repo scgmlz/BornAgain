@@ -13,19 +13,16 @@
 #include <QFileInfo>
 #include <QSignalSpy>
 
-class TestProjectDocument : public ::testing::Test
-{
+class TestProjectDocument : public ::testing::Test {
 protected:
     //! helper method to modify something in a model
-    void modify_models(ApplicationModels* models)
-    {
+    void modify_models(ApplicationModels* models) {
         auto instrument = models->instrumentModel()->instrumentItem();
         instrument->setItemValue(InstrumentItem::P_IDENTIFIER, GUIHelpers::createUuid());
     }
 };
 
-TEST_F(TestProjectDocument, test_documentFlags)
-{
+TEST_F(TestProjectDocument, test_documentFlags) {
     ProjectFlags::DocumentStatus flags;
     EXPECT_FALSE(flags.testFlag(ProjectFlags::STATUS_OK));
     EXPECT_FALSE(flags.testFlag(ProjectFlags::STATUS_WARNING));
@@ -54,8 +51,7 @@ TEST_F(TestProjectDocument, test_documentFlags)
     EXPECT_FALSE(document.hasErrors());
 }
 
-TEST_F(TestProjectDocument, test_projectDocument)
-{
+TEST_F(TestProjectDocument, test_projectDocument) {
     const QString projectDir("test_projectDocument");
     GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");
@@ -65,8 +61,8 @@ TEST_F(TestProjectDocument, test_projectDocument)
     document.setApplicationModels(&models);
 
     // Checking initial document status
-    EXPECT_TRUE(document.isModified() == false);
-    EXPECT_TRUE(document.hasValidNameAndPath() == false);
+    EXPECT_FALSE(document.isModified());
+    EXPECT_FALSE(document.hasValidNameAndPath());
     EXPECT_EQ(document.projectDir(), QString());
     EXPECT_EQ(document.projectName(), QString());
     EXPECT_EQ(document.projectFileName(), QString());
@@ -96,8 +92,7 @@ TEST_F(TestProjectDocument, test_projectDocument)
     EXPECT_TRUE(info.exists());
 }
 
-TEST_F(TestProjectDocument, test_projectDocumentWithData)
-{
+TEST_F(TestProjectDocument, test_projectDocumentWithData) {
     const QString projectDir("test_projectDocumentWithData");
     GuiUnittestUtils::create_dir(projectDir);
 

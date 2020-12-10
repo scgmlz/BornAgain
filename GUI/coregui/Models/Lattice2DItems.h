@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_LATTICE2DITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_LATTICE2DITEMS_H
@@ -18,8 +18,7 @@
 #include "GUI/coregui/Models/SessionItem.h"
 class Lattice2D;
 
-class BA_CORE_API_ Lattice2DItem : public SessionItem
-{
+class BA_CORE_API_ Lattice2DItem : public SessionItem {
 public:
     static const QString P_LATTICE_ROTATION_ANGLE;
     explicit Lattice2DItem(const QString& modelType);
@@ -27,29 +26,26 @@ public:
     double unitCellArea() const;
 };
 
-class BA_CORE_API_ BasicLatticeItem : public Lattice2DItem
-{
+class BA_CORE_API_ BasicLattice2DItem : public Lattice2DItem {
 public:
     static const QString P_LATTICE_LENGTH1;
     static const QString P_LATTICE_LENGTH2;
     static const QString P_LATTICE_ANGLE;
-    BasicLatticeItem();
+    BasicLattice2DItem();
     std::unique_ptr<Lattice2D> createLattice() const;
 };
 
-class BA_CORE_API_ SquareLatticeItem : public Lattice2DItem
-{
+class BA_CORE_API_ SquareLattice2DItem : public Lattice2DItem {
 public:
     static const QString P_LATTICE_LENGTH;
-    SquareLatticeItem();
+    SquareLattice2DItem();
     std::unique_ptr<Lattice2D> createLattice() const;
 };
 
-class BA_CORE_API_ HexagonalLatticeItem : public Lattice2DItem
-{
+class BA_CORE_API_ HexagonalLattice2DItem : public Lattice2DItem {
 public:
     static const QString P_LATTICE_LENGTH;
-    HexagonalLatticeItem();
+    HexagonalLattice2DItem();
     std::unique_ptr<Lattice2D> createLattice() const;
 };
 

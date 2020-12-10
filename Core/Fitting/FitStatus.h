@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,20 +10,22 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_FITTING_FITSTATUS_H
 #define BORNAGAIN_CORE_FITTING_FITSTATUS_H
 
 #include "Core/Fitting/FitObserver.h"
-#include "Core/Fitting/FitTypes.h"
 #include "Core/Fitting/IterationInfo.h"
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <vector>
 
-namespace Fit
-{
+namespace mumufit {
 class MinimizerResult;
 }
 class FitObjective;
@@ -33,8 +35,7 @@ class FitPrintService;
 //! information which has to be collected during the fit.
 //! Owned by FitObjective.
 
-class BA_CORE_API_ FitStatus
-{
+class FitStatus {
 public:
     FitStatus(const FitObjective* fit_objective);
     ~FitStatus();
@@ -43,7 +44,7 @@ public:
     bool isInterrupted() const;
     bool isCompleted() const;
 
-    void update(const Fit::Parameters& params, double chi2);
+    void update(const mumufit::Parameters& params, double chi2);
 
     void initPrint(int every_nth);
 
@@ -51,10 +52,10 @@ public:
 
     IterationInfo iterationInfo() const;
 
-    Fit::MinimizerResult minimizerResult() const;
+    mumufit::MinimizerResult minimizerResult() const;
 
     //! Should be explicitely called on last iteration to notify all observers.
-    void finalize(const Fit::MinimizerResult& result);
+    void finalize(const mumufit::MinimizerResult& result);
 
 private:
     enum EFitStatus { IDLE, RUNNING, COMPLETED, FAILED, INTERRUPTED };
@@ -63,7 +64,8 @@ private:
     std::unique_ptr<FitPrintService> m_print_service;
     const FitObjective* m_fit_objective;
     IterationInfo m_iterationInfo;
-    std::unique_ptr<Fit::MinimizerResult> m_minimizer_result;
+    std::unique_ptr<mumufit::MinimizerResult> m_minimizer_result;
 };
 
 #endif // BORNAGAIN_CORE_FITTING_FITSTATUS_H
+#endif // USER_API

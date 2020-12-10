@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,42 +10,36 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Tests/Functional/Core/Fitting/PlanCases.h"
-#include "Core/Aggregate/InterferenceFunction2DLattice.h"
-#include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
-#include "Core/Correlations/FTDecay1D.h"
-#include "Core/Correlations/FTDecay2D.h"
-#include "Core/Detector/RectangularDetector.h"
+#include "Base/Const/Units.h"
 #include "Core/Fitting/FitObjective.h"
-#include "Core/HardParticle/FormFactorCylinder.h"
-#include "Core/Mask/Rectangle.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Particle/Particle.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Fit/Kernel/Parameters.h"
+#include "Device/Detector/RectangularDetector.h"
+#include "Device/Mask/Rectangle.h"
+#include "Sample/Aggregate/InterferenceFunction2DLattice.h"
+#include "Sample/Aggregate/ParticleLayout.h"
+#include "Sample/HardParticle/FormFactorCylinder.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/Particle/Particle.h"
 
-using namespace Fit;
+using namespace mumufit;
 
-namespace
-{
-const double nm = Units::nanometer;
+namespace {
+const double nm = Units::nm;
 }
 
-CylindersInBAPlan::CylindersInBAPlan() : Plan("CylindersInBAPlan")
-{
+CylindersInBAPlan::CylindersInBAPlan() : Plan("CylindersInBAPlan") {
     setBuilderName("CylindersInBABuilder");
     setSimulationName("MiniGISAS");
     addParameter(Parameter("height", 4.5 * nm, AttLimits::lowerLimited(0.01), 0.01), 5.0 * nm);
     addParameter(Parameter("radius", 5.5 * nm, AttLimits::lowerLimited(0.01), 0.01), 5.0 * nm);
 }
 
-CylindersInBAEasyPlan::CylindersInBAEasyPlan() : Plan("CylindersInBAEasyPlan")
-{
+CylindersInBAEasyPlan::CylindersInBAEasyPlan() : Plan("CylindersInBAEasyPlan") {
     setBuilderName("CylindersInBABuilder");
     setSimulationName("MiniGISASFit");
     const double tolerance = 0.1;
@@ -56,8 +50,7 @@ CylindersInBAEasyPlan::CylindersInBAEasyPlan() : Plan("CylindersInBAEasyPlan")
 }
 
 CylindersInBAResidualPlan::CylindersInBAResidualPlan()
-    : Plan("CylindersInBAResidualPlan", /*residual_based*/ true)
-{
+    : Plan("CylindersInBAResidualPlan", /*residual_based*/ true) {
     setBuilderName("CylindersInBABuilder");
     setSimulationName("MiniGISAS");
     addParameter(Parameter("height", 4.5 * nm, AttLimits::limitless(), 0.01), 5.0 * nm);
@@ -66,8 +59,7 @@ CylindersInBAResidualPlan::CylindersInBAResidualPlan()
 
 // ----------------------------------------------------------------------------
 
-RectDetPlan::RectDetPlan() : Plan("RectDetPlan")
-{
+RectDetPlan::RectDetPlan() : Plan("RectDetPlan") {
     setBuilderName("CylindersInBABuilder");
     addParameter(Parameter("height", 4.5 * nm, AttLimits::limited(4.0, 6.0), 0.01), 5.0 * nm);
     addParameter(Parameter("radius", 5.5 * nm, AttLimits::limited(4.0, 6.0), 0.01), 5.0 * nm);
@@ -75,8 +67,7 @@ RectDetPlan::RectDetPlan() : Plan("RectDetPlan")
 
 RectDetPlan::~RectDetPlan() = default;
 
-std::unique_ptr<Simulation> RectDetPlan::createSimulation(const Parameters&) const
-{
+std::unique_ptr<ISimulation> RectDetPlan::createSimulation(const Parameters&) const {
     std::unique_ptr<GISASSimulation> result(new GISASSimulation());
 
     double detector_distance(500.0);
@@ -84,17 +75,16 @@ std::unique_ptr<Simulation> RectDetPlan::createSimulation(const Parameters&) con
     RectangularDetector detector(20u, width, 18u, height);
     detector.setPerpendicularToSampleX(detector_distance, width / 2., 0.0);
 
-    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
+    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::deg, 0.0 * Units::deg);
     result->setDetector(detector);
     result->setRegionOfInterest(5.0, 6.0, 15.0, 12.0);
     result->addMask(Rectangle(0.0, 0.0, 2.0, 2.0), true);
-    return std::unique_ptr<Simulation>(result.release());
+    return std::unique_ptr<ISimulation>(result.release());
 }
 
 // ----------------------------------------------------------------------------
 
-SpecularPlan::SpecularPlan() : Plan("SpecularPlan")
-{
+SpecularPlan::SpecularPlan() : Plan("SpecularPlan") {
     setSimulationName("BasicSpecular");
     setBuilderName("PlainMultiLayerBySLDBuilder");
     addParameter(Parameter("ti_thickness", 5.0 * nm, AttLimits::limited(1.0 * nm, 7.0 * nm), 0.1),
@@ -103,8 +93,7 @@ SpecularPlan::SpecularPlan() : Plan("SpecularPlan")
 
 // ----------------------------------------------------------------------------
 
-SpecularPlanQ::SpecularPlanQ() : Plan("SpecularPlanQ")
-{
+SpecularPlanQ::SpecularPlanQ() : Plan("SpecularPlanQ") {
     setSimulationName("BasicSpecularQ");
     setBuilderName("PlainMultiLayerBySLDBuilder");
     addParameter(Parameter("ti_thickness", 5.0 * nm, AttLimits::limited(1.0 * nm, 7.0 * nm), 0.1),
@@ -113,8 +102,7 @@ SpecularPlanQ::SpecularPlanQ() : Plan("SpecularPlanQ")
 
 // ----------------------------------------------------------------------------
 
-MultipleSpecPlan::MultipleSpecPlan() : Plan("MultipleSpecPlan")
-{
+MultipleSpecPlan::MultipleSpecPlan() : Plan("MultipleSpecPlan") {
     setSimulationName("BasicSpecular");
     setBuilderName("PlainMultiLayerBySLDBuilder");
     addParameter(Parameter("ti_thickness", 5.0 * nm, AttLimits::limited(1.0 * nm, 7.0 * nm), 0.1),
@@ -123,11 +111,10 @@ MultipleSpecPlan::MultipleSpecPlan() : Plan("MultipleSpecPlan")
 
 MultipleSpecPlan::~MultipleSpecPlan() = default;
 
-std::unique_ptr<FitObjective> MultipleSpecPlan::createFitObjective() const
-{
+std::unique_ptr<FitObjective> MultipleSpecPlan::createFitObjective() const {
     std::unique_ptr<FitObjective> result(new FitObjective);
 
-    simulation_builder_t builder = [&](const Fit::Parameters& params) {
+    simulation_builder_t builder = [&](const mumufit::Parameters& params) {
         return buildSimulation(params);
     };
 
@@ -140,10 +127,9 @@ std::unique_ptr<FitObjective> MultipleSpecPlan::createFitObjective() const
 
 // ----------------------------------------------------------------------------
 
-OffSpecPlan::OffSpecPlan() : Plan("OffSpecPlan")
-{
+OffSpecularPlan::OffSpecularPlan() : Plan("OffSpecularPlan") {
     setBuilderName("ResonatorBuilder");
-    setSimulationName("OffSpecMini");
+    setSimulationName("OffSpecularMini");
     addParameter(
         Parameter("ti_thickness", 12.0 * nm, AttLimits::limited(11.5 * nm, 14.0 * nm), 0.1 * nm),
         13.0 * nm);

@@ -1,9 +1,9 @@
 function(PerformanceTest NAME SPEED DEPS)
-    set(TEST "PTest${NAME}")
+    set(TEST PTest${NAME})
     add_executable(${TEST} ${NAME}.cpp ${DEPS})
     target_link_libraries(${TEST} BornAgainCore)
     if((${SPEED} STREQUAL "fast") OR SLOWTESTS)
-        add_test(Core:Perf:${NAME} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TEST})
+        add_test(Core.Performance.${NAME} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${TEST})
     endif()
 endfunction()
 

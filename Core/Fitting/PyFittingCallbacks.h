@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,29 +10,27 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_FITTING_PYFITTINGCALLBACKS_H
 #define BORNAGAIN_CORE_FITTING_PYFITTINGCALLBACKS_H
 
 //! Collection of wrapper classes to call Python callable from C++.
 
-#include "Fit/Kernel/Parameters.h"
-#include "Wrap/WinDllMacros.h"
+#include "Fit/Param/Parameters.h"
 
-class Simulation;
+class ISimulation;
 
 //! Builds simulation object using a Python callable.
 //! Base class to wrap Python callable and pass it to C++. Used in swig interface file,
 //! intended to be overloaded from Python.
 
-class BA_CORE_API_ PyBuilderCallback
-{
+class PyBuilderCallback {
 public:
     PyBuilderCallback();
     virtual ~PyBuilderCallback();
 
-    virtual Simulation* build_simulation(Fit::Parameters);
+    virtual ISimulation* build_simulation(mumufit::Parameters);
 };
 
 class FitObjective;
@@ -41,8 +39,7 @@ class FitObjective;
 //! Base class to wrap Python callable and pass it to C++. Used in swig interface file,
 //! intended to be overloaded from Python.
 
-class BA_CORE_API_ PyObserverCallback
-{
+class PyObserverCallback {
 public:
     PyObserverCallback();
     virtual ~PyObserverCallback();

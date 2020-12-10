@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,28 +10,26 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/CommonWidgets/DocksController.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
-#include "fancymainwindow.h"
 #include <QAbstractItemView>
 #include <QAction>
 #include <QDockWidget>
 #include <QTimer>
+#include <qt-manhattan-style/fancymainwindow.h>
 
 DocksController::DocksController(Manhattan::FancyMainWindow* mainWindow)
-    : QObject(mainWindow), m_mainWindow(mainWindow)
-{
+    : QObject(mainWindow), m_mainWindow(mainWindow) {
     m_mainWindow->setDocumentMode(true);
     m_mainWindow->setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::South);
     m_mainWindow->setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
     m_mainWindow->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 }
 
-void DocksController::addWidget(int id, QWidget* widget, Qt::DockWidgetArea area)
-{
+void DocksController::addWidget(int id, QWidget* widget, Qt::DockWidgetArea area) {
     if (m_docks.find(id) != m_docks.end())
         throw GUIHelpers::Error("DocksController::addWidget() -> Error. "
                                 "Attempt to add widget id twice");
@@ -44,8 +42,7 @@ void DocksController::addWidget(int id, QWidget* widget, Qt::DockWidgetArea area
         frames[i]->setFrameStyle(QFrame::NoFrame);
 }
 
-void DocksController::onResetLayout()
-{
+void DocksController::onResetLayout() {
     m_mainWindow->setTrackingEnabled(false);
     QList<QDockWidget*> dockWidgetList = m_mainWindow->dockWidgets();
     for (QDockWidget* dockWidget : dockWidgetList) {
@@ -69,13 +66,11 @@ void DocksController::onResetLayout()
     m_mainWindow->setTrackingEnabled(true);
 }
 
-QDockWidget* DocksController::findDock(int id)
-{
+QDockWidget* DocksController::findDock(int id) {
     return get_info(id).dock();
 }
 
-QDockWidget* DocksController::findDock(QWidget* widget)
-{
+QDockWidget* DocksController::findDock(QWidget* widget) {
     for (auto& it : m_docks)
         if (it.second.widget() == widget)
             return it.second.dock();
@@ -85,8 +80,7 @@ QDockWidget* DocksController::findDock(QWidget* widget)
 
 //! Show docks with id's from the list. Other docks will be hidden.
 
-void DocksController::show_docks(const std::vector<int>& docks_to_show)
-{
+void DocksController::show_docks(const std::vector<int>& docks_to_show) {
     for (auto& it : m_docks) {
         if (std::find(docks_to_show.begin(), docks_to_show.end(), it.first) != docks_to_show.end())
             it.second.dock()->show();
@@ -103,8 +97,7 @@ void DocksController::show_docks(const std::vector<int>& docks_to_show)
 //! single timer shot) we return min/max sizes of QDockWidget back to re-enable splitters
 //! functionality.
 
-void DocksController::setDockHeightForWidget(int height)
-{
+void DocksController::setDockHeightForWidget(int height) {
     QWidget* widget = qobject_cast<QWidget*>(sender());
     ASSERT(widget);
     QDockWidget* dock = findDock(widget);
@@ -124,16 +117,14 @@ void DocksController::setDockHeightForWidget(int height)
     QTimer::singleShot(1, this, &DocksController::dockToMinMaxSizes);
 }
 
-void DocksController::dockToMinMaxSizes()
-{
+void DocksController::dockToMinMaxSizes() {
     ASSERT(m_dock_info.m_dock);
     m_dock_info.m_dock->setMinimumSize(m_dock_info.m_min_size);
     m_dock_info.m_dock->setMaximumSize(m_dock_info.m_max_size);
     m_dock_info.m_dock = nullptr;
 }
 
-void DocksController::onWidgetCloseRequest()
-{
+void DocksController::onWidgetCloseRequest() {
     QWidget* widget = qobject_cast<QWidget*>(sender());
     ASSERT(widget);
     QDockWidget* dock = findDock(widget);
@@ -142,13 +133,11 @@ void DocksController::onWidgetCloseRequest()
     dock->toggleViewAction()->trigger();
 }
 
-Manhattan::FancyMainWindow* DocksController::mainWindow()
-{
+Manhattan::FancyMainWindow* DocksController::mainWindow() {
     return m_mainWindow;
 }
 
-DockWidgetInfo DocksController::get_info(int id)
-{
+DockWidgetInfo DocksController::get_info(int id) {
     if (m_docks.find(id) == m_docks.end())
         throw GUIHelpers::Error("DocksController::addWidget() -> Error. Non existing id.");
 

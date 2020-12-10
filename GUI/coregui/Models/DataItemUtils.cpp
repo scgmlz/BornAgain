@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/DataItemUtils.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -19,10 +19,8 @@
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-namespace
-{
-template <class DataItemType> DataItemType* dataItem(SessionItem* parent)
-{
+namespace {
+template <class DataItemType> DataItemType* dataItem(SessionItem* parent) {
     ASSERT(parent && "Assertion failed in DataItemUtils::dataItem: nullptr passed.");
 
     if (parent->modelType() == "JobItem")
@@ -36,12 +34,10 @@ template <class DataItemType> DataItemType* dataItem(SessionItem* parent)
 }
 } // namespace
 
-IntensityDataItem* DataItemUtils::intensityDataItem(SessionItem* parent)
-{
+IntensityDataItem* DataItemUtils::intensityDataItem(SessionItem* parent) {
     return dataItem<IntensityDataItem>(parent);
 }
 
-SpecularDataItem* DataItemUtils::specularDataItem(SessionItem* parent)
-{
+SpecularDataItem* DataItemUtils::specularDataItem(SessionItem* parent) {
     return dataItem<SpecularDataItem>(parent);
 }

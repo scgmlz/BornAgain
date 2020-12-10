@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,29 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_FITTING_FITTYPES_H
 #define BORNAGAIN_CORE_FITTING_FITTYPES_H
 
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <memory>
 
-class Simulation;
-namespace Fit
-{
+class ISimulation;
+namespace mumufit {
 class Parameters;
 }
 class FitObjective;
 
-using simulation_builder_t = std::function<std::unique_ptr<Simulation>(const Fit::Parameters&)>;
+using simulation_builder_t =
+    std::function<std::unique_ptr<ISimulation>(const mumufit::Parameters&)>;
 
 using fit_observer_t = std::function<void(const FitObjective&)>;
 
 #endif // BORNAGAIN_CORE_FITTING_FITTYPES_H
+#endif // USER_API

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/GroupItem.h"
 #include "GUI/coregui/Models/ComboProperty.h"
@@ -19,8 +19,7 @@
 
 const QString GroupItem::T_ITEMS = "Item tag";
 
-GroupItem::GroupItem() : SessionItem("GroupProperty")
-{
+GroupItem::GroupItem() : SessionItem("GroupProperty") {
     registerTag(T_ITEMS);
     setDefaultTag(T_ITEMS);
 
@@ -29,8 +28,7 @@ GroupItem::GroupItem() : SessionItem("GroupProperty")
 
 GroupItem::~GroupItem() = default;
 
-void GroupItem::setGroupInfo(const GroupInfo& groupInfo)
-{
+void GroupItem::setGroupInfo(const GroupInfo& groupInfo) {
     if (m_controller)
         throw GUIHelpers::Error("GroupItem::setGroup() -> Error. Attempt to set group twice.");
 
@@ -38,36 +36,30 @@ void GroupItem::setGroupInfo(const GroupInfo& groupInfo)
     updateComboValue();
 }
 
-SessionItem* GroupItem::currentItem() const
-{
+SessionItem* GroupItem::currentItem() const {
     return m_controller ? m_controller->currentItem() : nullptr;
 }
 
-QString GroupItem::currentType() const
-{
+QString GroupItem::currentType() const {
     return m_controller->currentType();
 }
 
-SessionItem* GroupItem::setCurrentType(const QString& modelType)
-{
+SessionItem* GroupItem::setCurrentType(const QString& modelType) {
     m_controller->setCurrentType(modelType);
     updateComboValue();
     return currentItem();
 }
 
-QStringList GroupItem::translateList(const QStringList& list) const
-{
+QStringList GroupItem::translateList(const QStringList& list) const {
     // we do not add here the name of itself
     return list;
 }
 
-SessionItem* GroupItem::getItemOfType(const QString& type)
-{
+SessionItem* GroupItem::getItemOfType(const QString& type) {
     return m_controller->getItemOfType(type);
 }
 
-void GroupItem::onValueChange()
-{
+void GroupItem::onValueChange() {
     if (!value().canConvert<ComboProperty>())
         throw GUIHelpers::Error("GroupItem::onValueChange() -> Error. Wrong property type");
 
@@ -81,7 +73,6 @@ void GroupItem::onValueChange()
     }
 }
 
-void GroupItem::updateComboValue()
-{
+void GroupItem::updateComboValue() {
     setValue(m_controller->createCombo());
 }

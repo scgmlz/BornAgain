@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/Models/AxesItems.h"
@@ -30,35 +30,30 @@
 #include "GUI/coregui/utils/GUIHelpers.h"
 
 JobModel::JobModel(QObject* parent)
-    : SessionModel(SessionXML::JobModelTag, parent), m_queue_data(nullptr)
-{
+    : SessionModel(SessionXML::JobModelTag, parent), m_queue_data(nullptr) {
     m_queue_data = new JobQueueData(this);
     connect(m_queue_data, SIGNAL(focusRequest(JobItem*)), this, SIGNAL(focusRequest(JobItem*)));
     connect(m_queue_data, SIGNAL(globalProgress(int)), this, SIGNAL(globalProgress(int)));
     setObjectName(SessionXML::JobModelTag);
 }
 
-JobModel::~JobModel()
-{
+JobModel::~JobModel() {
     delete m_queue_data;
 }
 
-const JobItem* JobModel::getJobItemForIndex(const QModelIndex& index) const
-{
+const JobItem* JobModel::getJobItemForIndex(const QModelIndex& index) const {
     const JobItem* result = dynamic_cast<const JobItem*>(itemForIndex(index));
     ASSERT(result);
     return result;
 }
 
-JobItem* JobModel::getJobItemForIndex(const QModelIndex& index)
-{
+JobItem* JobModel::getJobItemForIndex(const QModelIndex& index) {
     JobItem* result = dynamic_cast<JobItem*>(itemForIndex(index));
     ASSERT(result);
     return result;
 }
 
-JobItem* JobModel::getJobItemForIdentifier(const QString& identifier)
-{
+JobItem* JobModel::getJobItemForIdentifier(const QString& identifier) {
     QModelIndex parentIndex;
     for (int i_row = 0; i_row < rowCount(parentIndex); ++i_row) {
         QModelIndex itemIndex = index(i_row, 0, parentIndex);
@@ -72,8 +67,7 @@ JobItem* JobModel::getJobItemForIdentifier(const QString& identifier)
 //! Main method to add a job
 JobItem* JobModel::addJob(const MultiLayerItem* multiLayerItem,
                           const InstrumentItem* instrumentItem, const RealDataItem* realDataItem,
-                          const SimulationOptionsItem* optionItem)
-{
+                          const SimulationOptionsItem* optionItem) {
     ASSERT(multiLayerItem);
     ASSERT(instrumentItem);
     ASSERT(optionItem);
@@ -103,13 +97,11 @@ JobItem* JobModel::addJob(const MultiLayerItem* multiLayerItem,
 }
 
 //! restore instrument and sample model from backup for given JobItem
-void JobModel::restore(JobItem* jobItem)
-{
+void JobModel::restore(JobItem* jobItem) {
     restoreItem(jobItem->getItem(JobItem::T_PARAMETER_TREE));
 }
 
-bool JobModel::hasUnfinishedJobs()
-{
+bool JobModel::hasUnfinishedJobs() {
     bool result = m_queue_data->hasUnfinishedJobs();
     for (auto jobItem : topItems<JobItem>()) {
         if (jobItem->getStatus() == "Fitting")
@@ -119,16 +111,14 @@ bool JobModel::hasUnfinishedJobs()
     return result;
 }
 
-void JobModel::clear()
-{
+void JobModel::clear() {
     for (auto item : topItems())
         removeJob(item->index());
 
     SessionModel::clear();
 }
 
-QVector<SessionItem*> JobModel::nonXMLData() const
-{
+QVector<SessionItem*> JobModel::nonXMLData() const {
     QVector<SessionItem*> result;
 
     for (auto jobItem : topItems<JobItem>()) {
@@ -155,8 +145,7 @@ QVector<SessionItem*> JobModel::nonXMLData() const
 
 //! Link instruments to real data on project load.
 
-void JobModel::link_instruments()
-{
+void JobModel::link_instruments() {
     for (int i = 0; i < rowCount(QModelIndex()); ++i) {
         JobItem* jobItem = getJobItemForIndex(index(i, 0, QModelIndex()));
         if (RealDataItem* refItem = jobItem->realDataItem())
@@ -164,23 +153,19 @@ void JobModel::link_instruments()
     }
 }
 
-void JobModel::onCancelAllJobs()
-{
+void JobModel::onCancelAllJobs() {
     m_queue_data->onCancelAllJobs();
 }
 
-void JobModel::runJob(const QModelIndex& index)
-{
+void JobModel::runJob(const QModelIndex& index) {
     m_queue_data->runJob(getJobItemForIndex(index));
 }
 
-void JobModel::cancelJob(const QModelIndex& index)
-{
+void JobModel::cancelJob(const QModelIndex& index) {
     m_queue_data->cancelJob(getJobItemForIndex(index)->getIdentifier());
 }
 
-void JobModel::removeJob(const QModelIndex& index)
-{
+void JobModel::removeJob(const QModelIndex& index) {
     JobItem* jobItem = getJobItemForIndex(index);
     ASSERT(jobItem);
     m_queue_data->removeJob(jobItem->getIdentifier());
@@ -190,8 +175,7 @@ void JobModel::removeJob(const QModelIndex& index)
 }
 
 //! generates job name
-QString JobModel::generateJobName()
-{
+QString JobModel::generateJobName() {
     int glob_index = 0;
     QModelIndex parentIndex;
     for (int i_row = 0; i_row < rowCount(parentIndex); ++i_row) {
@@ -211,8 +195,7 @@ QString JobModel::generateJobName()
     return QString("job") + QString::number(++glob_index);
 }
 
-void JobModel::restoreItem(SessionItem* item)
-{
+void JobModel::restoreItem(SessionItem* item) {
     if (ParameterItem* parameter = dynamic_cast<ParameterItem*>(item))
         parameter->restoreFromBackup();
 

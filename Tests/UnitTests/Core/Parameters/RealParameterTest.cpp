@@ -1,15 +1,12 @@
-#include "Core/Parametrization/RealParameter.h"
-#include "Core/Parametrization/IParameterized.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Base/IParametricComponent.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <stdexcept>
 
-class RealParameterTest : public ::testing::Test
-{
-};
+class RealParameterTest : public ::testing::Test {};
 
-TEST_F(RealParameterTest, simpleConstructor)
-{
+TEST_F(RealParameterTest, simpleConstructor) {
     double value(42.0);
     std::unique_ptr<RealParameter> par(new RealParameter("name", &value));
     EXPECT_EQ(par->value(), value);
@@ -19,8 +16,7 @@ TEST_F(RealParameterTest, simpleConstructor)
     EXPECT_FALSE(par->isNull());
 }
 
-TEST_F(RealParameterTest, dataComparison)
-{
+TEST_F(RealParameterTest, dataComparison) {
     double value(1.0);
     RealParameter par1("name1", &value);
     RealParameter par2("name2", &value);
@@ -33,8 +29,7 @@ TEST_F(RealParameterTest, dataComparison)
     EXPECT_FALSE(par3.hasSameData(par1));
 }
 
-TEST_F(RealParameterTest, extendedConstructor)
-{
+TEST_F(RealParameterTest, extendedConstructor) {
     double value(42.0);
     bool is_changed(false);
     RealParameter par(
@@ -51,8 +46,7 @@ TEST_F(RealParameterTest, extendedConstructor)
     EXPECT_EQ(par.value(), new_value);
 }
 
-TEST_F(RealParameterTest, clone)
-{
+TEST_F(RealParameterTest, clone) {
     double value(42.0);
     bool is_changed(false);
     std::unique_ptr<RealParameter> par(new RealParameter(

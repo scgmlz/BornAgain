@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_FIT_KERNEL_FITOPTIONS_H
 #define BORNAGAIN_FIT_KERNEL_FITOPTIONS_H
 
-#include "Wrap/WinDllMacros.h"
-
 //! General fitting options.
 
-class BA_CORE_API_ FitOptions
-{
+class FitOptions {
 public:
     FitOptions();
 

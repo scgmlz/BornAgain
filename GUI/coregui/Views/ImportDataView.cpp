@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataView.h"
 #include "GUI/coregui/Models/RealDataModel.h"
@@ -18,20 +18,19 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorWidget.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
-#include "minisplitter.h"
 #include <QVBoxLayout>
+#include <qt-manhattan-style/minisplitter.h>
 
-namespace
-{
+namespace {
 const bool reuse_widget = true;
 }
 
 ImportDataView::ImportDataView(MainWindow* mainWindow)
-    : QWidget(mainWindow), m_splitter(new Manhattan::MiniSplitter),
-      m_selectorWidget(new RealDataSelectorWidget),
-      m_stackedWidget(new ItemStackPresenter<RealDataPresenter>(reuse_widget)),
-      m_realDataModel(mainWindow->realDataModel())
-{
+    : QWidget(mainWindow)
+    , m_splitter(new Manhattan::MiniSplitter)
+    , m_selectorWidget(new RealDataSelectorWidget)
+    , m_stackedWidget(new ItemStackPresenter<RealDataPresenter>(reuse_widget))
+    , m_realDataModel(mainWindow->realDataModel()) {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -59,13 +58,11 @@ ImportDataView::ImportDataView(MainWindow* mainWindow)
     m_stackedWidget->setModel(mainWindow->realDataModel());
 }
 
-void ImportDataView::onSelectionChanged(SessionItem* item)
-{
+void ImportDataView::onSelectionChanged(SessionItem* item) {
     m_stackedWidget->setItem(item);
 }
 
-void ImportDataView::setupConnections()
-{
+void ImportDataView::setupConnections() {
     connect(m_selectorWidget, &RealDataSelectorWidget::selectionChanged, this,
             &ImportDataView::onSelectionChanged);
 }

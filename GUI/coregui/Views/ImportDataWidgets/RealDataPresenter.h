@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPRESENTER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATAPRESENTER_H
@@ -23,8 +23,7 @@ class QAction;
 //! Presents imported data (RealDataItem) using stack of different widgets and combo box in the
 //! right top corner of ImportDataView, to switch between widgets.
 
-class BA_CORE_API_ RealDataPresenter : public ItemComboWidget
-{
+class RealDataPresenter : public ItemComboWidget {
     Q_OBJECT
 public:
     explicit RealDataPresenter(QWidget* parent = nullptr);

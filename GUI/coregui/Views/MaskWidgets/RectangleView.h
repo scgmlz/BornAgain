@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_RECTANGLEVIEW_H
@@ -20,8 +20,7 @@
 //! This is a View of rectangular mask (represented by RectangleItem) on GraphicsScene.
 //! Given view follows standard QGraphicsScene notations: (x,y) is top left corner.
 
-class BA_CORE_API_ RectangleView : public RectangleBaseView
-{
+class RectangleView : public RectangleBaseView {
     Q_OBJECT
 
 public:

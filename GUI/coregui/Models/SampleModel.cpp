@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,21 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/MultiLayerItem.h"
 
-SampleModel::SampleModel(QObject* parent) : SessionModel(SessionXML::SampleModelTag, parent)
-{
+SampleModel::SampleModel(QObject* parent) : SessionModel(SessionXML::SampleModelTag, parent) {
     setObjectName(SessionXML::SampleModelTag);
 }
 
-SampleModel* SampleModel::createCopy(SessionItem* parent)
-{
+SampleModel* SampleModel::createCopy(SessionItem* parent) {
     SampleModel* result = new SampleModel();
     result->initFrom(this, parent);
     return result;
 }
 
-MultiLayerItem* SampleModel::multiLayerItem()
-{
+MultiLayerItem* SampleModel::multiLayerItem() {
     return topItem<MultiLayerItem>();
 }

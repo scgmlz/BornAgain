@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/RectangleBaseView.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 
-namespace
-{
+namespace {
 const double bbox_margins = 5; // additional margins around rectangle to form bounding box
 }
 
-RectangleBaseView::RectangleBaseView() : m_activeHandleElement(0)
-{
+RectangleBaseView::RectangleBaseView() : m_activeHandleElement(0) {
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
@@ -30,8 +28,7 @@ RectangleBaseView::RectangleBaseView() : m_activeHandleElement(0)
 }
 
 //! triggered by SizeHandleElement
-void RectangleBaseView::onSizeHandleElementRequest(bool going_to_resize)
-{
+void RectangleBaseView::onSizeHandleElementRequest(bool going_to_resize) {
     if (going_to_resize) {
         setFlag(QGraphicsItem::ItemIsMovable, false);
         m_activeHandleElement = qobject_cast<SizeHandleElement*>(sender());
@@ -47,8 +44,7 @@ void RectangleBaseView::onSizeHandleElementRequest(bool going_to_resize)
 
 //! Track if item selected/deselected and show/hide size handles
 QVariant RectangleBaseView::itemChange(QGraphicsItem::GraphicsItemChange change,
-                                       const QVariant& value)
-{
+                                       const QVariant& value) {
     if (change == QGraphicsItem::ItemSelectedChange) {
         for (auto it = m_resize_handles.begin(); it != m_resize_handles.end(); ++it) {
             it.value()->setVisible(!this->isSelected());
@@ -57,14 +53,12 @@ QVariant RectangleBaseView::itemChange(QGraphicsItem::GraphicsItemChange change,
     return value;
 }
 
-void RectangleBaseView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
+void RectangleBaseView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     onSizeHandleElementRequest(false);
     IShape2DView::mouseReleaseEvent(event);
 }
 
-void RectangleBaseView::update_view()
-{
+void RectangleBaseView::update_view() {
     prepareGeometryChange();
     update_bounding_rect();
     update_position();
@@ -72,8 +66,7 @@ void RectangleBaseView::update_view()
 
 //! updates view's bounding rectangle using item properties
 
-void RectangleBaseView::update_bounding_rect()
-{
+void RectangleBaseView::update_bounding_rect() {
     if (m_item) {
         m_mask_rect = mask_rectangle();
         m_bounding_rect = m_mask_rect.marginsAdded(
@@ -88,18 +81,15 @@ void RectangleBaseView::update_bounding_rect()
 
 //! returns width of the rectangle
 
-qreal RectangleBaseView::width() const
-{
+qreal RectangleBaseView::width() const {
     return right() - left();
 }
 
-qreal RectangleBaseView::height() const
-{
+qreal RectangleBaseView::height() const {
     return bottom() - top();
 }
 
-void RectangleBaseView::create_size_handle_elements()
-{
+void RectangleBaseView::create_size_handle_elements() {
     QList<SizeHandleElement::EHandleLocation> points;
     points << SizeHandleElement::TOPLEFT << SizeHandleElement::TOPMIDDLE
            << SizeHandleElement::TOPRIGHT << SizeHandleElement::MIDDLERIGHT

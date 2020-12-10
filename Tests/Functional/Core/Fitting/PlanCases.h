@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_PLANCASES_H
 #define BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_PLANCASES_H
@@ -19,8 +19,7 @@
 
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
 
-class CylindersInBAPlan : public Plan
-{
+class CylindersInBAPlan : public Plan {
 public:
     CylindersInBAPlan();
 };
@@ -28,8 +27,7 @@ public:
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
 //! Large tolerance on expected parameter values to help stocastic minimizers to converge fatser.
 
-class CylindersInBAEasyPlan : public Plan
-{
+class CylindersInBAEasyPlan : public Plan {
 public:
     CylindersInBAEasyPlan();
 };
@@ -37,8 +35,7 @@ public:
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
 //! Residual like objective function is used
 
-class CylindersInBAResidualPlan : public Plan
-{
+class CylindersInBAResidualPlan : public Plan {
 public:
     CylindersInBAResidualPlan();
 };
@@ -46,36 +43,32 @@ public:
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
 //! Rectangular detector.
 
-class RectDetPlan : public Plan
-{
+class RectDetPlan : public Plan {
 public:
     RectDetPlan();
     ~RectDetPlan();
 
 protected:
-    std::unique_ptr<Simulation> createSimulation(const Fit::Parameters&) const;
+    std::unique_ptr<ISimulation> createSimulation(const mumufit::Parameters&) const;
 };
 
 //! Plan for fitting reflectometry curve on Ti/Ni multilayer
 
-class SpecularPlan : public Plan
-{
+class SpecularPlan : public Plan {
 public:
     SpecularPlan();
 };
 
 //! Plan for fitting reflectometry curve on Ti/Ni multilayer (q-defined beam)
 
-class SpecularPlanQ : public Plan
-{
+class SpecularPlanQ : public Plan {
 public:
     SpecularPlanQ();
 };
 
 //! The same as SpecularPlan, but with two (identical) datasets
 
-class MultipleSpecPlan : public Plan
-{
+class MultipleSpecPlan : public Plan {
 public:
     MultipleSpecPlan();
     ~MultipleSpecPlan() override;
@@ -86,11 +79,10 @@ protected:
 
 //! Fit for off-specular experiment
 
-class OffSpecPlan : public Plan
-{
+class OffSpecularPlan : public Plan {
 public:
-    OffSpecPlan();
-    ~OffSpecPlan() override = default;
+    OffSpecularPlan();
+    ~OffSpecularPlan() override = default;
 };
 
 #endif // BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_PLANCASES_H

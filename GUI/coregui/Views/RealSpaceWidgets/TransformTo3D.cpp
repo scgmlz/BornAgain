@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,40 +10,34 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.h"
-#include "Core/Basics/Units.h"
-#include "Core/Particle/ParticleComposition.h"
-#include "Core/includeIncludes/HardParticles.h"
+#include "Base/Const/Units.h"
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/GUIDomainSampleVisitor.h"
 #include "GUI/coregui/Models/LayerItem.h"
 #include "GUI/coregui/Models/MultiLayerItem.h"
 #include "GUI/coregui/Models/ParticleCompositionItem.h"
 #include "GUI/coregui/Models/ParticleItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceCanvas.h"
+#include "Sample/HardParticle/HardParticles.h"
 
-namespace
-{
-bool isTopLayer(const SessionItem& layerItem)
-{
+namespace {
+bool isTopLayer(const SessionItem& layerItem) {
     auto layers = layerItem.parent()->getItems(MultiLayerItem::T_LAYERS);
     return layers.indexOf(const_cast<SessionItem*>(&layerItem)) == 0;
 }
-bool isBottomLayer(const SessionItem& layerItem)
-{
+bool isBottomLayer(const SessionItem& layerItem) {
     auto layers = layerItem.parent()->getItems(MultiLayerItem::T_LAYERS);
     return layers.indexOf(const_cast<SessionItem*>(&layerItem)) == layers.size() - 1;
 }
 } // namespace
 
 double TransformTo3D::visualLayerThickness(const SessionItem& layerItem,
-                                           const SceneGeometry& sceneGeometry)
-{
+                                           const SceneGeometry& sceneGeometry) {
     ASSERT(layerItem.modelType() == "Layer");
 
     double thickness(0.0);
@@ -59,8 +53,7 @@ double TransformTo3D::visualLayerThickness(const SessionItem& layerItem,
 
 std::unique_ptr<RealSpace::Layer> TransformTo3D::createLayer(const SessionItem& layerItem,
                                                              const SceneGeometry& sceneGeometry,
-                                                             const QVector3D& origin)
-{
+                                                             const QVector3D& origin) {
     ASSERT(layerItem.modelType() == "Layer");
 
     double thickness = TransformTo3D::visualLayerThickness(layerItem, sceneGeometry);
@@ -84,8 +77,7 @@ std::unique_ptr<RealSpace::Layer> TransformTo3D::createLayer(const SessionItem& 
 }
 
 std::unique_ptr<RealSpace::Particles::Particle>
-TransformTo3D::createParticle3D(const SessionItem& particleItem)
-{
+TransformTo3D::createParticle3D(const SessionItem& particleItem) {
     ASSERT(particleItem.modelType() == "Particle");
 
     std::unique_ptr<RealSpace::Particles::Particle> result;
@@ -101,8 +93,7 @@ TransformTo3D::createParticle3D(const SessionItem& particleItem)
 }
 
 std::unique_ptr<RealSpace::Particles::Particle>
-TransformTo3D::createParticlefromIFormFactor(const IFormFactor* ff)
-{
+TransformTo3D::createParticlefromIFormFactor(const IFormFactor* ff) {
     std::unique_ptr<RealSpace::Particles::Particle> result;
 
     if (auto ff_AnisoPyramid = dynamic_cast<const FormFactorAnisoPyramid*>(ff)) {

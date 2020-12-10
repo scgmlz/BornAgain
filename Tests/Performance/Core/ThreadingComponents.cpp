@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,32 +10,30 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Tests/Performance/Core/ThreadingComponents.h"
-#include "Core/Aggregate/InterferenceFunction2DLattice.h"
-#include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
-#include "Core/Detector/RectangularDetector.h"
-#include "Core/HardParticle/FormFactorFullSphere.h"
-#include "Core/Mask/Rectangle.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Particle/Particle.h"
-#include "Core/Particle/ParticleDistribution.h"
+#include "Base/Const/Units.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Core/StandardSamples/CylindersBuilder.h"
+#include "Device/Detector/RectangularDetector.h"
+#include "Device/Mask/Rectangle.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterPattern.h"
+#include "Sample/Aggregate/InterferenceFunction2DLattice.h"
+#include "Sample/Aggregate/ParticleLayout.h"
+#include "Sample/HardParticle/FormFactorFullSphere.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/Particle/Particle.h"
+#include "Sample/Particle/ParticleDistribution.h"
+#include "Sample/StandardSamples/CylindersBuilder.h"
 
-namespace
-{
+namespace {
 
 //! Returns multilayer spheres distribution at lattice points.
-std::unique_ptr<MultiLayer> createSampleSpheresDistribution(int nspheres)
-{
-    auto material_1 = HomogeneousMaterial("example06_Air", 0.0, 0.0);
+std::unique_ptr<MultiLayer> createSampleSpheresDistribution(int nspheres) {
+    auto material_1 = HomogeneousMaterial("example06_Vacuum", 0.0, 0.0);
     auto material_2 = HomogeneousMaterial("example08_Particle", 0.0006, 2e-08);
     auto material_3 = HomogeneousMaterial("example06_Substrate", 6e-06, 2e-08);
 
@@ -50,8 +48,8 @@ std::unique_ptr<MultiLayer> createSampleSpheresDistribution(int nspheres)
                                       RealLimits::limited(5.0 * Units::nm, 15.0 * Units::nm));
     ParticleDistribution particleDistribution_1(particle_1, par_distr_1);
 
-    InterferenceFunction2DLattice interference_1(10.0 * Units::nm, 10.0 * Units::nm,
-                                                 90.0 * Units::deg, 0.0 * Units::deg);
+    InterferenceFunction2DLattice interference_1(
+        BasicLattice2D(10.0 * Units::nm, 10.0 * Units::nm, 90.0 * Units::deg, 0.0 * Units::deg));
     FTDecayFunction2DCauchy interference_1_pdf(47.7464829276 * Units::nm, 15.9154943092 * Units::nm,
                                                0.0 * Units::deg);
     interference_1.setDecayFunction(interference_1_pdf);
@@ -73,10 +71,9 @@ std::unique_ptr<MultiLayer> createSampleSpheresDistribution(int nspheres)
 //! Creates realistic GISAS simulation (without sample).
 //! Rectangular PILATUS detector 981x1043, ROI and masks.
 
-std::unique_ptr<Simulation> CreateRealisticGISASSimulation()
-{
+std::unique_ptr<ISimulation> CreateRealisticGISASSimulation() {
     auto result = std::make_unique<GISASSimulation>();
-    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
+    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::deg, 0.0 * Units::deg);
 
     // define detector
     const int pilatus_npx{981}, pilatus_npy{1043};
@@ -92,7 +89,7 @@ std::unique_ptr<Simulation> CreateRealisticGISASSimulation()
     // define ROI and masks
     result->setRegionOfInterest(45.0, 35.0, 120.0, 120.0);
     result->addMask(Rectangle(100, 60, 110, 100));
-    return std::unique_ptr<Simulation>(result.release());
+    return std::unique_ptr<ISimulation>(result.release());
 }
 
 } // namespace
@@ -101,23 +98,21 @@ std::unique_ptr<Simulation> CreateRealisticGISASSimulation()
 //! Spherical detector 100x100, cylinders in DWBA.
 //! Intended to study the performance of "real time" parameter tuning in GUI.
 
-std::unique_ptr<Simulation> TestComponents::CreateSimpleGISAS()
-{
+std::unique_ptr<ISimulation> TestComponents::CreateSimpleGISAS() {
     auto result = std::make_unique<GISASSimulation>();
-    result->setDetectorParameters(100, 0.0 * Units::degree, 2.0 * Units::degree, 100,
-                                  0.0 * Units::degree, 2.0 * Units::degree);
-    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
+    result->setDetectorParameters(100, 0.0 * Units::deg, 2.0 * Units::deg, 100, 0.0 * Units::deg,
+                                  2.0 * Units::deg);
+    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::deg, 0.0 * Units::deg);
 
     auto sample = std::unique_ptr<MultiLayer>(CylindersInDWBABuilder().buildSample());
     result->setSample(*sample);
-    return std::unique_ptr<Simulation>(result.release());
+    return std::unique_ptr<ISimulation>(result.release());
 }
 
 //! Creates simulation representing realistic GISAS.
 //! Intended to study the performance of some real life experiment.
 
-std::unique_ptr<Simulation> TestComponents::CreateRealisticGISAS()
-{
+std::unique_ptr<ISimulation> TestComponents::CreateRealisticGISAS() {
     auto result = CreateRealisticGISASSimulation();
     auto sample = std::unique_ptr<MultiLayer>(CylindersInDWBABuilder().buildSample());
     result->setSample(*sample);
@@ -129,8 +124,7 @@ std::unique_ptr<Simulation> TestComponents::CreateRealisticGISAS()
 //! ROI and masks, noise, background.
 //! Intended to study the performance of some real life experiment.
 
-std::unique_ptr<Simulation> TestComponents::CreateRealisticAndHeavyGISAS()
-{
+std::unique_ptr<ISimulation> TestComponents::CreateRealisticAndHeavyGISAS() {
     auto result = CreateRealisticGISASSimulation();
     auto sample = createSampleSpheresDistribution(50);
     result->setSample(*sample);
@@ -142,29 +136,27 @@ std::unique_ptr<Simulation> TestComponents::CreateRealisticAndHeavyGISAS()
 //! Intended to study the influence of SimulationElements and IPixel constructions on overall
 //! performance.
 
-std::unique_ptr<Simulation> TestComponents::CreateGiganticGISAS()
-{
+std::unique_ptr<ISimulation> TestComponents::CreateGiganticGISAS() {
     const int nbins = 2048;
     auto result = std::make_unique<GISASSimulation>();
-    result->setDetectorParameters(nbins, -2.0 * Units::degree, 2.0 * Units::degree, nbins,
-                                  0.0 * Units::degree, 2.0 * Units::degree);
-    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
+    result->setDetectorParameters(nbins, -2.0 * Units::deg, 2.0 * Units::deg, nbins,
+                                  0.0 * Units::deg, 2.0 * Units::deg);
+    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::deg, 0.0 * Units::deg);
     auto sample = std::unique_ptr<MultiLayer>(CylindersInBABuilder().buildSample());
     result->setSample(*sample);
-    return std::unique_ptr<Simulation>(result.release());
+    return std::unique_ptr<ISimulation>(result.release());
 }
 
 //! Creates simulation representing GISAS with huge wavelength.
 //! Tiny spherical detector 64x64, cylinders in BA, huge wavelength.
-//! Intended to study parameter distribution in Simulation::runSingleSimulation context.
+//! Intended to study parameter distribution in ISimulation::runSingleSimulation context.
 
-std::unique_ptr<Simulation> TestComponents::CreateWavelengthGISAS()
-{
+std::unique_ptr<ISimulation> TestComponents::CreateWavelengthGISAS() {
     const int nbins = 64;
     auto result = std::make_unique<GISASSimulation>();
-    result->setDetectorParameters(nbins, -2.0 * Units::degree, 2.0 * Units::degree, nbins,
-                                  0.0 * Units::degree, 2.0 * Units::degree);
-    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
+    result->setDetectorParameters(nbins, -2.0 * Units::deg, 2.0 * Units::deg, nbins,
+                                  0.0 * Units::deg, 2.0 * Units::deg);
+    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::deg, 0.0 * Units::deg);
 
     // create parameter distribution
     DistributionLogNormal wavelength_distr(1.0 * Units::angstrom, 0.1);
@@ -174,22 +166,21 @@ std::unique_ptr<Simulation> TestComponents::CreateWavelengthGISAS()
 
     auto sample = std::unique_ptr<MultiLayer>(CylindersInBABuilder().buildSample());
     result->setSample(*sample);
-    return std::unique_ptr<Simulation>(result.release());
+    return std::unique_ptr<ISimulation>(result.release());
 }
 
 //! Creates simulation representing simple GISAS with MonteCarlo ON.
 //! Spherical detector 100x100, cylinders in DWBA.
 //! Intended to study the performance in MonteCarlo mode.
 
-std::unique_ptr<Simulation> TestComponents::CreateMCGISAS()
-{
+std::unique_ptr<ISimulation> TestComponents::CreateMCGISAS() {
     auto result = std::make_unique<GISASSimulation>();
-    result->setDetectorParameters(100, 0.0 * Units::degree, 2.0 * Units::degree, 100,
-                                  0.0 * Units::degree, 2.0 * Units::degree);
-    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::degree, 0.0 * Units::degree);
+    result->setDetectorParameters(100, 0.0 * Units::deg, 2.0 * Units::deg, 100, 0.0 * Units::deg,
+                                  2.0 * Units::deg);
+    result->setBeamParameters(1.0 * Units::angstrom, 0.2 * Units::deg, 0.0 * Units::deg);
 
     auto sample = createSampleSpheresDistribution(10);
     result->setSample(*sample);
     result->getOptions().setMonteCarloIntegration(true, 50);
-    return std::unique_ptr<Simulation>(result.release());
+    return std::unique_ptr<ISimulation>(result.release());
 }

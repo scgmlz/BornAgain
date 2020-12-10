@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKPRESENTER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSTACKPRESENTER_H
 
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/CommonWidgets/ItemStackWidget.h"
 #include <QDebug>
 #include <QMap>
@@ -26,8 +26,7 @@ class SessionItem;
 //! The ItemStackPresenter templated class extends ItemStackWidget so it could operate with
 //! SesionItem editor's of specified type, while still keeping signal/slots alive.
 
-template <class T> class BA_CORE_API_ ItemStackPresenter : public ItemStackWidget
-{
+template <class T> class ItemStackPresenter : public ItemStackWidget {
 public:
     ItemStackPresenter(bool single_widget = false) : m_single_widget(single_widget) {}
 
@@ -48,8 +47,7 @@ private:
     bool m_single_widget; //!< Different items will be served by same widget
 };
 
-template <class T> template <class U> void ItemStackPresenter<T>::setItem(U* item, bool* isNew)
-{
+template <class T> template <class U> void ItemStackPresenter<T>::setItem(U* item, bool* isNew) {
     validateItem(item);
 
     if (isNew)
@@ -77,15 +75,13 @@ template <class T> template <class U> void ItemStackPresenter<T>::setItem(U* ite
     widget->setItem(item);
 }
 
-template <class T> T* ItemStackPresenter<T>::currentWidget()
-{
+template <class T> T* ItemStackPresenter<T>::currentWidget() {
     return dynamic_cast<T*>(m_stackedWidget->currentWidget());
 }
 
-template <class T> T* ItemStackPresenter<T>::itemWidget(SessionItem* item)
-{
+template <class T> T* ItemStackPresenter<T>::itemWidget(SessionItem* item) {
     if (m_single_widget) {
-        if (m_itemToWidget.size())
+        if (!m_itemToWidget.empty())
             return m_itemToWidget.first();
     } else {
         return m_itemToWidget[item];
@@ -94,14 +90,12 @@ template <class T> T* ItemStackPresenter<T>::itemWidget(SessionItem* item)
     return nullptr;
 }
 
-template <class T> void ItemStackPresenter<T>::hideWidgets()
-{
+template <class T> void ItemStackPresenter<T>::hideWidgets() {
     if (m_stackedWidget->currentWidget())
         m_stackedWidget->currentWidget()->hide();
 }
 
-template <class T> void ItemStackPresenter<T>::removeWidgetForItem(SessionItem* item)
-{
+template <class T> void ItemStackPresenter<T>::removeWidgetForItem(SessionItem* item) {
     ASSERT(item);
 
     if (m_single_widget)
@@ -123,8 +117,7 @@ template <class T> void ItemStackPresenter<T>::removeWidgetForItem(SessionItem* 
     delete widget;
 }
 
-template <class T> void ItemStackPresenter<T>::removeWidgets()
-{
+template <class T> void ItemStackPresenter<T>::removeWidgets() {
     typename QMap<SessionItem*, T*>::iterator it = m_itemToWidget.begin();
     while (it != m_itemToWidget.end()) {
         m_stackedWidget->removeWidget(it.value());

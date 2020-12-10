@@ -54,7 +54,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QSIMPLERESOURCE_P_H
 
 #include "GUI/coregui/Views/widgetbox/shared_global_p.h"
-//#include "abstractformbuilder.h"
 #include <QtCore/QStringList>
 #include <QtDesigner/abstractformbuilder.h>
 
@@ -67,13 +66,11 @@ class DomSlots;
 
 class QDesignerFormEditorInterface;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 class WidgetDataBaseItem;
 
-class QDESIGNER_SHARED_EXPORT QSimpleResource : public QAbstractFormBuilder
-{
+class QDESIGNER_SHARED_EXPORT QSimpleResource : public QAbstractFormBuilder {
 public:
     explicit QSimpleResource(QDesignerFormEditorInterface* core);
     virtual ~QSimpleResource();
@@ -134,8 +131,7 @@ struct QDESIGNER_SHARED_EXPORT FormBuilderClipboard {
 
 // Base class for a form builder used in the editor that
 // provides copy and paste.(move into base interface)
-class QDESIGNER_SHARED_EXPORT QEditorFormBuilder : public QSimpleResource
-{
+class QDESIGNER_SHARED_EXPORT QEditorFormBuilder : public QSimpleResource {
 public:
     explicit QEditorFormBuilder(QDesignerFormEditorInterface* core) : QSimpleResource(core) {}
 

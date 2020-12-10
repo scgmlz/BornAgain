@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SessionItemTags.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
@@ -19,8 +19,7 @@
 //! false if parameters are invalid or such tag was already registered.
 
 bool SessionItemTags::registerTag(const QString& name, int min, int max,
-                                  const QStringList& modelTypes)
-{
+                                  const QStringList& modelTypes) {
     if (min < 0 || (min > max && max >= 0))
         return false;
     if (name.isEmpty() || isValid(name))
@@ -33,8 +32,7 @@ bool SessionItemTags::registerTag(const QString& name, int min, int max,
 //! If modelType is not empty, than an additional check is performed if tag is
 //! intended for the given modelType.
 
-bool SessionItemTags::isValid(const QString& tagName, const QString& modelType) const
-{
+bool SessionItemTags::isValid(const QString& tagName, const QString& modelType) const {
     for (const auto& tag : m_tags) {
         if (tag.name == tagName) {
             if (modelType.isEmpty())
@@ -47,15 +45,13 @@ bool SessionItemTags::isValid(const QString& tagName, const QString& modelType) 
 
 //! Returns list of modelTypes the given tagName is intended for.
 
-QStringList SessionItemTags::modelTypesForTag(const QString& tagName) const
-{
+QStringList SessionItemTags::modelTypesForTag(const QString& tagName) const {
     return isValid(tagName) ? tagInfo(tagName).modelTypes : QStringList();
 }
 
 //! Returns start index of given tagName corresponding to the index of SessionItem's m_children.
 
-int SessionItemTags::tagStartIndex(const QString& tagName) const
-{
+int SessionItemTags::tagStartIndex(const QString& tagName) const {
     int index(0);
     for (const auto& tag : m_tags) {
         if (tag.name == tagName)
@@ -67,8 +63,7 @@ int SessionItemTags::tagStartIndex(const QString& tagName) const
 
 //! Returns index in SessionItem's m_children corresponding to given row in tagName.
 
-int SessionItemTags::indexFromTagRow(const QString& tagName, int row) const
-{
+int SessionItemTags::indexFromTagRow(const QString& tagName, int row) const {
     if (row < 0 || row >= tagInfo(tagName).childCount)
         throw GUIHelpers::Error("SessionItemTags::tagIndexFromRow() -> Error. Wrong row");
     return tagStartIndex(tagName) + row;
@@ -77,8 +72,7 @@ int SessionItemTags::indexFromTagRow(const QString& tagName, int row) const
 //! Returns index in SessionItem's m_children to insert new item.
 //! If number of items for given tagName exceeds maximum allowed, returns -1;
 
-int SessionItemTags::insertIndexFromTagRow(const QString& tagName, int row)
-{
+int SessionItemTags::insertIndexFromTagRow(const QString& tagName, int row) {
     if (maximumReached(tagName))
         return -1;
     auto& tag = tagInfo(tagName);
@@ -89,8 +83,7 @@ int SessionItemTags::insertIndexFromTagRow(const QString& tagName, int row)
     return tagStartIndex(tagName) + row;
 }
 
-QString SessionItemTags::tagFromIndex(int index) const
-{
+QString SessionItemTags::tagFromIndex(int index) const {
     if (index < 0)
         return "";
     for (const auto& tag : m_tags) {
@@ -101,26 +94,22 @@ QString SessionItemTags::tagFromIndex(int index) const
     return "";
 }
 
-int SessionItemTags::childCount(const QString& tagName)
-{
+int SessionItemTags::childCount(const QString& tagName) {
     return tagInfo(tagName).childCount;
 }
 
-int SessionItemTags::childMax(const QString& tagName)
-{
+int SessionItemTags::childMax(const QString& tagName) {
     return tagInfo(tagName).max;
 }
 
-void SessionItemTags::addChild(const QString& tagName)
-{
+void SessionItemTags::addChild(const QString& tagName) {
     if (maximumReached(tagName))
         throw GUIHelpers::Error("SessionItemTags::addChild() -> Error. Can't exceed maximum"
                                 "allowed number of children.");
     tagInfo(tagName).childCount++;
 }
 
-void SessionItemTags::removeChild(const QString& tagName)
-{
+void SessionItemTags::removeChild(const QString& tagName) {
     auto& tag = tagInfo(tagName);
     if (tag.childCount == 0)
         throw GUIHelpers::Error("SessionItemTags::removeChild() -> Error. Attempt to remove "
@@ -128,29 +117,25 @@ void SessionItemTags::removeChild(const QString& tagName)
     tag.childCount--;
 }
 
-bool SessionItemTags::isSingleItemTag(const QString& tagName)
-{
+bool SessionItemTags::isSingleItemTag(const QString& tagName) {
     if (!isValid(tagName))
         return false;
     const auto& tag = tagInfo(tagName);
     return tag.min == 1 && tag.max == 1 && tag.childCount == 1;
 }
 
-SessionItemTags::TagInfo& SessionItemTags::tagInfo(const QString& tagName)
-{
+SessionItemTags::TagInfo& SessionItemTags::tagInfo(const QString& tagName) {
     return const_cast<TagInfo&>(static_cast<const SessionItemTags*>(this)->tagInfo(tagName));
 }
 
-const SessionItemTags::TagInfo& SessionItemTags::tagInfo(const QString& tagName) const
-{
+const SessionItemTags::TagInfo& SessionItemTags::tagInfo(const QString& tagName) const {
     for (const auto& tag : m_tags)
         if (tag.name == tagName)
             return tag;
     throw GUIHelpers::Error("SessionItemTags::tagInfo() -> Error. No such tag '" + tagName + "'.");
 }
 
-bool SessionItemTags::maximumReached(const QString& tagName) const
-{
+bool SessionItemTags::maximumReached(const QString& tagName) const {
     const auto& tag = tagInfo(tagName);
     if (tag.max != -1 && tag.max == tag.childCount)
         return true;

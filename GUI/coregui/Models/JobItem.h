@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_JOBITEM_H
@@ -27,11 +27,10 @@ class MaterialItemContainer;
 class MultiLayerItem;
 class ParameterContainerItem;
 class RealDataItem;
-class Simulation;
+class ISimulation;
 class SimulationOptionsItem;
 
-class BA_CORE_API_ JobItem : public SessionItem
-{
+class BA_CORE_API_ JobItem : public SessionItem {
 
 public:
     static const QString P_IDENTIFIER;
@@ -94,7 +93,7 @@ public:
 
     SimulationOptionsItem* simulationOptionsItem();
 
-    void setResults(const Simulation* simulation);
+    void setResults(const ISimulation* simulation);
 
     FitSuiteItem* fitSuiteItem();
     ParameterContainerItem* parameterContainerItem();

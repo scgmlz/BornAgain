@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,40 +10,35 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Fit/Kernel/Kernel.h"
+#include "Fit/Kernel/MinimizerFactory.h"
 #include "Fit/Minimizer/IMinimizer.h"
-#include "Fit/Minimizer/MinimizerFactory.h"
 
-using namespace Fit;
+using namespace mumufit;
 
-namespace
-{
+namespace {
 const std::string default_minimizer = "Minuit2";
 const std::string default_algorithm = "Migrad";
 } // namespace
 
-Kernel::Kernel()
-{
+Kernel::Kernel() {
     setMinimizer(default_minimizer, default_algorithm);
 }
 
 Kernel::~Kernel() = default;
 
 void Kernel::setMinimizer(const std::string& minimizerName, const std::string& algorithmName,
-                          const std::string& options)
-{
+                          const std::string& options) {
     m_minimizer.reset(MinimizerFactory::createMinimizer(minimizerName, algorithmName, options));
 }
 
-void Kernel::setMinimizer(IMinimizer* minimizer)
-{
+void Kernel::setMinimizer(IMinimizer* minimizer) {
     m_minimizer.reset(minimizer);
 }
 
-MinimizerResult Kernel::minimize(fcn_scalar_t fcn, const Parameters& parameters)
-{
+MinimizerResult Kernel::minimize(fcn_scalar_t fcn, const Parameters& parameters) {
     setParameters(parameters);
 
     m_timer.start();
@@ -58,8 +53,7 @@ MinimizerResult Kernel::minimize(fcn_scalar_t fcn, const Parameters& parameters)
     return result;
 }
 
-MinimizerResult Kernel::minimize(fcn_residual_t fcn, const Parameters& parameters)
-{
+MinimizerResult Kernel::minimize(fcn_residual_t fcn, const Parameters& parameters) {
     setParameters(parameters);
 
     m_timer.start();
@@ -70,7 +64,6 @@ MinimizerResult Kernel::minimize(fcn_residual_t fcn, const Parameters& parameter
     return result;
 }
 
-void Kernel::setParameters(const Parameters& parameters)
-{
+void Kernel::setParameters(const Parameters& parameters) {
     m_parameters = parameters;
 }

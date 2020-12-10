@@ -10,8 +10,7 @@ class SessionItemController;
 
 //! Helper class to test object behaviour after their death.
 
-class TestListener
-{
+class TestListener {
 public:
     TestListener();
     void clear();
@@ -22,8 +21,7 @@ public:
 
 //! Helper class to test SessionItemController usage in widget context.
 
-class TestObject : public QObject
-{
+class TestObject : public QObject {
     Q_OBJECT
 public:
     TestObject(TestListener* listener);

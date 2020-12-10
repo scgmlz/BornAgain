@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_COMPONENTPROXYMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_COMPONENTPROXYMODEL_H
 
 #include "GUI/coregui/Models/ProxyModelStrategy.h"
-#include "Wrap/WinDllMacros.h"
 #include <QAbstractProxyModel>
 #include <QMap>
 #include <QPersistentModelIndex>
@@ -31,8 +30,7 @@ class ProxyModelStrategy;
 //! The model hides GroupPropertyItem children and shows grand-children of currently selected item
 //! one level up.
 
-class BA_CORE_API_ ComponentProxyModel : public QAbstractProxyModel
-{
+class ComponentProxyModel : public QAbstractProxyModel {
     Q_OBJECT
 
     friend class ProxyModelStrategy;

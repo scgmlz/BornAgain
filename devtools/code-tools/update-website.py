@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 To update examples on website:
 
@@ -5,34 +6,25 @@ To update examples on website:
 ctest -R PyExamples
 This will run all existing examples and generate intensity images for web site.
 
-2) Modify variables in this script
-WEBSITE_DIR, BORNAGAIN_SOURCE, EXAMPLE_IMAGES
-
-3) Run this script
-python update-examples.py
-
-TODO: move the script under ctest control
+2) Run this script
+python update-examples.py <website-source-dir> <BornAgain-source-dir> <BornAgain-build-dir>
 """
-import os
-import shutil
-import click
+
+import argparse, datetime, filecmp, os, shutil
 
 
-WEBSITE_DIR = "~/development/BornAgain/BornAgain-website"
-BORNAGAIN_SOURCE = "~/development/BornAgain/BornAgain"
-BUILD_DIR = "~/development/BornAgain/build-release/"
+def log(msg):
+    flog.write(msg+"\n")
 
 
-def copy_file_to_file(source, destination):
-    """
-    Copies file to another.
-    """
-    shutil.copyfile(source, destination)
+def log2(msg):
+    print(msg)
+    log(msg)
 
 
 def find_files(dir_name):
     """
-    Yield recursive list of files in given dir_name
+    Return recursive list of files in given dir_name.
     """
     for subdir, dirs, files in os.walk(dir_name):
         for filename in files:
@@ -45,9 +37,11 @@ def get_files(dir_name, extension):
     """
     result = []
     for subdir, filename in find_files(dir_name):
-            name, ext = os.path.splitext(filename)
-            if ext in extension:
-                result.append(os.sep.join([subdir, filename]))
+        if os.path.basename(subdir)=="utils":
+            continue
+        name, ext = os.path.splitext(filename)
+        if ext in extension:
+            result.append(os.sep.join([subdir, filename]))
     return result
 
 
@@ -60,78 +54,97 @@ def find_files_with_same_name(filename_list, name_to_find):
     return same_names
 
 
-def copy_files(source_list, destination_list):
+def update_one_file(source_list, dest):
     """
-    Every file in destination_list will be replaced by the file with the same
+    Update destination file 'dest', using a suitable source file from 'source_dir'.
+    Returns 2=error, 1=modified, 0=unchanged.
+    On succes (0 or 1), the source file is removed from source_list.
+    """
+    likely_sources = find_files_with_same_name(source_list, os.path.basename(dest))
+    if len(likely_sources) == 0:
+        log2(f'! file {dest}\n    not found in source dir (ERROR)')
+        return 2
+    if len(likely_sources) > 1:
+        log2(f'! {dest}\n    has {len(likely_sources)} possible sources (ERROR):')
+        for f in likely_sources:
+            log2(f'  - {f}')
+        return 2
+    src = likely_sources[0]
+    source_list.remove(src)
+    if filecmp.cmp(src, dest):
+        log(f'. {dest}\n    is same as {src}')
+        return 0
+    shutil.copyfile(src, dest)
+    log2(f'< {dest}\n    updated from {src}')
+    return 1
+
+
+def update_all_files_of_one_type(source_dir, dest_dir, extension):
+    """
+    Every file in dest_list will be replaced by the file with the same
     basename found in source_list
     """
-    missed_files = []
-    updated_files = []
-    for f in destination_list:
-        found_source = find_files_with_same_name(source_list, os.path.basename(f))
-        if len(found_source) == 1:
-            updated_files.append(f)
-            copy_file_to_file(found_source[0], f)
-        else:
-            print(len(found_source), "Problem with ", f)
-            missed_files.append(f)
 
-    print("Summary:")
+    source_list = get_files(source_dir, extension)
+    dest_list = get_files(dest_dir, extension)
 
-    print("Following files have been updated on website:")
-    for f in updated_files:
-        print(f)
+    log2(f'Update {len(dest_list)} {extension} files')
+    log2(f'  from {source_dir}')
+    log2(f'    to {dest_dir}')
+    log(f'     with source list {source_list}')
 
-    if len(missed_files):
-        print("Following files exist on website but not in source dir:")
-        for f in missed_files:
-            print(f)
+    nError = 0
+    nModified = 0
+    nUnchanged = 0
+    for dest in dest_list:
+        ret = update_one_file(source_list, dest)
+        if ret == 0:
+            nUnchanged += 1
+        elif ret == 1:
+            nModified += 1
+        elif ret == 2:
+            nError += 1
+
+    log2(f'=> {nUnchanged} files unchanged, {nModified} files updated, {nError} errors')
+
+    if len(source_list)>0:
+        log2(f'!! WARNING: {len(source_list)} source files are unused')
+        for src in source_list:
+            log(f'  unused: {src}')
 
 
-def update_example_images(website_dir, example_images):
+def update_website(website_source_dir, ba_source_dir, ba_build_dir):
     """
-    Copies example intensity images from build directory to website directory
+    Updates example scripts and images on website.
     """
-    website = os.path.join(website_dir, "content/documentation/examples")
-    source = example_images
-    website_files = get_files(website, ".png")
-    source_files = get_files(source, ".png")
 
-    copy_files(source_files, website_files)
+    # Start logging
+    website_dirpath = os.path.expanduser(website_source_dir)
+    log_path = os.path.join(website_dirpath, "update.examples.log")
+    global flog
+    flog = open(log_path, "a")
+    print(f'Appending log to {log_path}')
+    log(f'\n===\n{datetime.datetime.now().strftime("%d%b%y %H:%M:%S")}')
 
+    # Update scripts
+    update_all_files_of_one_type(
+        os.path.join(ba_source_dir, "Examples/Python"),
+        os.path.join(website_dirpath, "static/files/python"),
+        '.py')
 
-def update_example_scripts(website_dir, bornagain_source):
-    """
-    Copies example scripts from BornAgain directory to website directory
-    """
-    website = os.path.join(website_dir, "static/files/python")
-    source = os.path.join(bornagain_source, "Examples/python")
-    website_files = get_files(website, ".py")
-    source_files = get_files(source, ".py")
-    print(website_files)
-
-    copy_files(source_files, website_files)
-
-
-@click.command()
-@click.argument("website_dir", required=False, type=str, default=WEBSITE_DIR)
-@click.argument("bornagain_source", required=False, type=str, default=BORNAGAIN_SOURCE)
-@click.argument("build_dir", required=False, type=str, default=BUILD_DIR)
-def update_website(website_dir, bornagain_source, build_dir):
-    user_website_dir = os.path.expanduser(website_dir)
-    user_bornagain_source = os.path.expanduser(bornagain_source)
-    user_build_dir = os.path.expanduser(build_dir)
-    user_example_images = os.path.join(user_build_dir, "test_output/Functional/Python/PyExamples")
-
-    print("website_dir      : '{}'".format(user_website_dir))
-    print("bornagain_source      : '{}'".format(user_bornagain_source))
-    print("build_dir      : '{}'".format(user_build_dir))
-    print("example_images      : '{}'".format(user_example_images))
-
-    update_example_images(user_website_dir, user_example_images)
-    update_example_scripts(user_website_dir, user_bornagain_source)
+    # Update images
+    update_all_files_of_one_type(
+        os.path.join(ba_build_dir, "test_output/PyExamples"),
+        os.path.join(website_dirpath, "static/files/simulated"),
+        '.png')
 
 
 if __name__ == '__main__':
-    update_website()
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("website_source_dir", type=str)
+    parser.add_argument("ba_source_dir", type=str)
+    parser.add_argument("ba_build_dir", type=str)
+    args = parser.parse_args()
+
+    update_website(args.website_source_dir, args.ba_source_dir, args.ba_build_dir)

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,48 +10,33 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/TransformFromDomain.h"
-#include "Core/Basics/Units.h"
-#include "Core/Beam/Beam.h"
-#include "Core/Beam/FootprintGauss.h"
-#include "Core/Beam/FootprintSquare.h"
-#include "Core/Binning/FixedBinAxis.h"
+#include "Base/Const/Units.h"
 #include "Core/Computation/ConstantBackground.h"
 #include "Core/Computation/PoissonNoiseBackground.h"
-#include "Core/Correlations/FTDistributions1D.h"
-#include "Core/Correlations/FTDistributions2D.h"
-#include "Core/Detector/ConvolutionDetectorResolution.h"
-#include "Core/Detector/RectangularDetector.h"
-#include "Core/Detector/RegionOfInterest.h"
-#include "Core/Detector/ResolutionFunction2DGaussian.h"
-#include "Core/Detector/ScanResolution.h"
-#include "Core/Detector/SphericalDetector.h"
-#include "Core/Export/INodeUtils.h"
-#include "Core/Instrument/AngularSpecScan.h"
-#include "Core/Mask/Ellipse.h"
-#include "Core/Mask/InfinitePlane.h"
-#include "Core/Mask/Line.h"
-#include "Core/Mask/Polygon.h"
-#include "Core/Mask/Rectangle.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/LayerInterface.h"
-#include "Core/Multilayer/LayerRoughness.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/RangedDistributions.h"
-#include "Core/Particle/Particle.h"
-#include "Core/Particle/ParticleDistribution.h"
+#include "Core/Export/NodeProgeny.h"
+#include "Core/Scan/AngularSpecScan.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Core/Simulation/OffSpecSimulation.h"
+#include "Core/Simulation/OffSpecularSimulation.h"
 #include "Core/Simulation/SpecularSimulation.h"
-#include "Core/includeIncludes/InterferenceFunctions.h"
+#include "Device/Beam/FootprintGauss.h"
+#include "Device/Beam/FootprintSquare.h"
+#include "Device/Detector/RectangularDetector.h"
+#include "Device/Detector/RegionOfInterest.h"
+#include "Device/Detector/SphericalDetector.h"
+#include "Device/Mask/Ellipse.h"
+#include "Device/Mask/InfinitePlane.h"
+#include "Device/Mask/Line.h"
+#include "Device/Mask/Polygon.h"
+#include "Device/Mask/Rectangle.h"
+#include "Device/Resolution/ConvolutionDetectorResolution.h"
+#include "Device/Resolution/ResolutionFunction2DGaussian.h"
+#include "Device/Resolution/ScanResolution.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/BackgroundItems.h"
 #include "GUI/coregui/Models/BeamAngleItems.h"
-#include "GUI/coregui/Models/BeamItems.h"
-#include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/FTDecayFunctionItems.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "GUI/coregui/Models/FootprintItems.h"
@@ -69,12 +54,19 @@
 #include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
 #include "GUI/coregui/Models/SphericalDetectorItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Distrib/RangedDistributions.h"
+#include "Param/Varia/ParameterPattern.h"
+#include "Sample/Aggregate/InterferenceFunctions.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Particle/Particle.h"
+#include "Sample/Slice/LayerInterface.h"
+#include "Sample/Slice/LayerRoughness.h"
 
-using namespace INodeUtils;
+using namespace node_progeny;
 using SessionItemUtils::SetVectorItem;
 
-namespace
-{
+namespace {
 void SetPDF1D(SessionItem* item, const IFTDistribution1D* pdf, QString group_name);
 void setPDF2D(SessionItem* item, const IFTDistribution2D* pdf, QString group_name);
 void SetDecayFunction1D(SessionItem* item, const IFTDecayFunction1D* pdf, QString group_name);
@@ -90,13 +82,12 @@ void addDistributionToBeamItem(const std::string& parameter_name, const QString&
                                const ParameterDistribution& distribution,
                                const BeamItem* beam_item);
 
-void addRangedDistributionToItem(SessionItem* item, const RangedDistribution& ranged, double mean,
+void addRangedDistributionToItem(SessionItem* item, const IRangedDistribution& ranged, double mean,
                                  double std_dev);
 } // namespace
 
 void TransformFromDomain::set1DLatticeItem(SessionItem* item,
-                                           const InterferenceFunction1DLattice& sample)
-{
+                                           const InterferenceFunction1DLattice& sample) {
     item->setItemValue(InterferenceFunction1DLatticeItem::P_LENGTH, sample.getLength());
     item->setItemValue(InterferenceFunction1DLatticeItem::P_ROTATION_ANGLE,
                        Units::rad2deg(sample.getXi()));
@@ -108,8 +99,7 @@ void TransformFromDomain::set1DLatticeItem(SessionItem* item,
 }
 
 void TransformFromDomain::set2DLatticeItem(SessionItem* item,
-                                           const InterferenceFunction2DLattice& sample)
-{
+                                           const InterferenceFunction2DLattice& sample) {
     set2DLatticeParameters(item, sample.lattice());
 
     item->setItemValue(InterferenceFunction2DLatticeItem::P_XI_INTEGRATION,
@@ -122,8 +112,7 @@ void TransformFromDomain::set2DLatticeItem(SessionItem* item,
 }
 
 void TransformFromDomain::set2DParaCrystalItem(SessionItem* item,
-                                               const InterferenceFunction2DParaCrystal& sample)
-{
+                                               const InterferenceFunction2DParaCrystal& sample) {
     set2DLatticeParameters(item, sample.lattice());
 
     item->setItemValue(InterferenceFunction2DParaCrystalItem::P_DAMPING_LENGTH,
@@ -144,9 +133,8 @@ void TransformFromDomain::set2DParaCrystalItem(SessionItem* item,
     setPositionVariance(item, sample);
 }
 
-void TransformFromDomain::setFinite2DLatticeItem(SessionItem* item,
-                                                 const InterferenceFunctionFinite2DLattice& sample)
-{
+void TransformFromDomain::setFinite2DLatticeItem(
+    SessionItem* item, const InterferenceFunctionFinite2DLattice& sample) {
     set2DLatticeParameters(item, sample.lattice());
 
     item->setItemValue(InterferenceFunctionFinite2DLatticeItem::P_DOMAIN_SIZE_1,
@@ -161,16 +149,14 @@ void TransformFromDomain::setFinite2DLatticeItem(SessionItem* item,
 }
 
 void TransformFromDomain::setHardDiskItem(SessionItem* item,
-                                          const InterferenceFunctionHardDisk& sample)
-{
+                                          const InterferenceFunctionHardDisk& sample) {
     item->setItemValue(InterferenceFunctionHardDiskItem::P_RADIUS, sample.radius());
     item->setItemValue(InterferenceFunctionHardDiskItem::P_DENSITY, sample.density());
     setPositionVariance(item, sample);
 }
 
 void TransformFromDomain::setRadialParaCrystalItem(
-    SessionItem* item, const InterferenceFunctionRadialParaCrystal& sample)
-{
+    SessionItem* item, const InterferenceFunctionRadialParaCrystal& sample) {
     item->setItemValue(InterferenceFunctionRadialParaCrystalItem::P_PEAK_DISTANCE,
                        sample.peakDistance());
     item->setItemValue(InterferenceFunctionRadialParaCrystalItem::P_DAMPING_LENGTH,
@@ -186,8 +172,7 @@ void TransformFromDomain::setRadialParaCrystalItem(
 }
 
 void TransformFromDomain::setLayerItem(SessionItem* layerItem, const Layer* layer,
-                                       const LayerInterface* top_interface)
-{
+                                       const LayerInterface* top_interface) {
     layerItem->setItemValue(LayerItem::P_THICKNESS, layer->thickness());
     layerItem->setGroupProperty(LayerItem::P_ROUGHNESS, "LayerZeroRoughness");
     layerItem->setItemValue(LayerItem::P_NSLICES, (int)layer->numberOfSlices());
@@ -202,8 +187,7 @@ void TransformFromDomain::setLayerItem(SessionItem* layerItem, const Layer* laye
     }
 }
 
-void TransformFromDomain::setRoughnessItem(SessionItem* item, const LayerRoughness& sample)
-{
+void TransformFromDomain::setRoughnessItem(SessionItem* item, const LayerRoughness& sample) {
     item->setItemValue(LayerBasicRoughnessItem::P_SIGMA, sample.getSigma());
     item->setItemValue(LayerBasicRoughnessItem::P_HURST, sample.getHurstParameter());
     item->setItemValue(LayerBasicRoughnessItem::P_LATERAL_CORR_LENGTH,
@@ -212,8 +196,7 @@ void TransformFromDomain::setRoughnessItem(SessionItem* item, const LayerRoughne
 
 //! Initialization of ParticleDistributionItem
 void TransformFromDomain::setParticleDistributionItem(SessionItem* item,
-                                                      const ParticleDistribution& sample)
-{
+                                                      const ParticleDistribution& sample) {
     ParticleDistributionItem* distItem = dynamic_cast<ParticleDistributionItem*>(item);
     ASSERT(distItem);
 
@@ -227,15 +210,14 @@ void TransformFromDomain::setParticleDistributionItem(SessionItem* item,
 
     double unit_factor(1.0);
     if (sample.mainUnits() == "rad")
-        unit_factor = 1. / Units::degree;
+        unit_factor = 1. / Units::deg;
 
     QString group_name = ParticleDistributionItem::P_DISTRIBUTION;
     setDistribution(distItem, par_distr, group_name, unit_factor);
 }
 
 //! Returns true if given roughness is non-zero roughness
-bool TransformFromDomain::isValidRoughness(const LayerRoughness* roughness)
-{
+bool TransformFromDomain::isValidRoughness(const LayerRoughness* roughness) {
     if (!roughness)
         return false;
     if (roughness->getSigma() == 0 && roughness->getHurstParameter() == 0.0
@@ -244,15 +226,14 @@ bool TransformFromDomain::isValidRoughness(const LayerRoughness* roughness)
     return true;
 }
 
-void TransformFromDomain::setGISASBeamItem(BeamItem* beam_item, const GISASSimulation& simulation)
-{
+void TransformFromDomain::setGISASBeamItem(BeamItem* beam_item, const GISASSimulation& simulation) {
     ASSERT(beam_item);
-    Beam beam = simulation.getInstrument().getBeam();
+    Beam beam = simulation.instrument().beam();
 
-    beam_item->setIntensity(beam.getIntensity());
-    beam_item->setWavelength(beam.getWavelength());
-    beam_item->setInclinationAngle(Units::rad2deg(beam.getAlpha()));
-    beam_item->setAzimuthalAngle(Units::rad2deg(beam.getPhi()));
+    beam_item->setIntensity(beam.intensity());
+    beam_item->setWavelength(beam.wavelength());
+    beam_item->setInclinationAngle(Units::rad2deg(beam.direction().alpha()));
+    beam_item->setAzimuthalAngle(Units::rad2deg(beam.direction().phi()));
 
     // distribution parameters
     const DistributionHandler::Distributions_t distributions =
@@ -270,25 +251,23 @@ void TransformFromDomain::setGISASBeamItem(BeamItem* beam_item, const GISASSimul
     SetVectorItem(*beam_item, BeamItem::P_POLARIZATION, beam.getBlochVector());
 }
 
-void TransformFromDomain::setOffSpecBeamItem(BeamItem* beam_item,
-                                             const OffSpecSimulation& simulation)
-{
-    Beam beam = simulation.getInstrument().getBeam();
+void TransformFromDomain::setOffSpecularBeamItem(BeamItem* beam_item,
+                                                 const OffSpecularSimulation& simulation) {
+    Beam beam = simulation.instrument().beam();
 
-    beam_item->setIntensity(beam.getIntensity());
-    beam_item->setWavelength(beam.getWavelength());
-    beam_item->setInclinationAngle(Units::rad2deg(beam.getAlpha()));
-    beam_item->setAzimuthalAngle(Units::rad2deg(beam.getPhi()));
+    beam_item->setIntensity(beam.intensity());
+    beam_item->setWavelength(beam.wavelength());
+    beam_item->setInclinationAngle(Units::rad2deg(beam.direction().alpha()));
+    beam_item->setAzimuthalAngle(Units::rad2deg(beam.direction().phi()));
     // TODO implement beam divergence
 }
 
 void TransformFromDomain::setSpecularBeamItem(SpecularBeamItem* beam_item,
-                                              const SpecularSimulation& simulation)
-{
-    const Beam& beam = simulation.getInstrument().getBeam();
+                                              const SpecularSimulation& simulation) {
+    const Beam& beam = simulation.instrument().beam();
 
-    beam_item->setIntensity(beam.getIntensity());
-    beam_item->setWavelength(beam.getWavelength());
+    beam_item->setIntensity(beam.intensity());
+    beam_item->setWavelength(beam.wavelength());
     beam_item->setInclinationAngle(0.0); // inclination angle is hardcoded
     beam_item->setAzimuthalAngle(0.0);   // azimuthal angle is hardcoded
 
@@ -318,9 +297,8 @@ void TransformFromDomain::setSpecularBeamItem(SpecularBeamItem* beam_item,
 }
 
 void TransformFromDomain::setDetector(Instrument2DItem* instrument_item,
-                                      const Simulation2D& simulation)
-{
-    const IDetector* p_detector = simulation.getInstrument().getDetector();
+                                      const ISimulation2D& simulation) {
+    const IDetector* p_detector = simulation.instrument().getDetector();
     setDetectorGeometry(instrument_item, *p_detector);
 
     auto detector_item = instrument_item->detectorItem();
@@ -331,8 +309,7 @@ void TransformFromDomain::setDetector(Instrument2DItem* instrument_item,
 }
 
 void TransformFromDomain::setDetectorGeometry(Instrument2DItem* instrument_item,
-                                              const IDetector& detector)
-{
+                                              const IDetector& detector) {
     if (auto det = dynamic_cast<const SphericalDetector*>(&detector)) {
         instrument_item->setDetectorGroup("SphericalDetector");
         auto item = dynamic_cast<SphericalDetectorItem*>(instrument_item->detectorItem());
@@ -348,8 +325,7 @@ void TransformFromDomain::setDetectorGeometry(Instrument2DItem* instrument_item,
 }
 
 void TransformFromDomain::setDetectorResolution(DetectorItem* detector_item,
-                                                const IDetector& detector)
-{
+                                                const IDetector& detector) {
     const IDetectorResolution* p_resfunc = detector.detectorResolution();
 
     if (!p_resfunc)
@@ -362,7 +338,7 @@ void TransformFromDomain::setDetectorResolution(DetectorItem* detector_item,
                                                                 "ResolutionFunction2DGaussian");
             double scale(1.0);
             if (detector_item->modelType() == "SphericalDetector")
-                scale = 1. / Units::degree;
+                scale = 1. / Units::deg;
             item->setItemValue(ResolutionFunction2DGaussianItem::P_SIGMA_X,
                                scale * resfunc->getSigmaX());
             item->setItemValue(ResolutionFunction2DGaussianItem::P_SIGMA_Y,
@@ -378,8 +354,7 @@ void TransformFromDomain::setDetectorResolution(DetectorItem* detector_item,
 }
 
 void TransformFromDomain::setDetectorProperties(DetectorItem* detector_item,
-                                                const IDetector& detector)
-{
+                                                const IDetector& detector) {
     double total_transmission = detector.detectionProperties().analyzerTotalTransmission();
     if (total_transmission <= 0.0)
         return;
@@ -392,30 +367,28 @@ void TransformFromDomain::setDetectorProperties(DetectorItem* detector_item,
 }
 
 void TransformFromDomain::setSphericalDetector(SphericalDetectorItem* detector_item,
-                                               const SphericalDetector& detector)
-{
+                                               const SphericalDetector& detector) {
     // Axes
-    const IAxis& phi_axis = detector.getAxis(0);
-    const IAxis& alpha_axis = detector.getAxis(1);
+    const IAxis& phi_axis = detector.axis(0);
+    const IAxis& alpha_axis = detector.axis(1);
 
     BasicAxisItem* phiAxisItem =
         dynamic_cast<BasicAxisItem*>(detector_item->getItem(SphericalDetectorItem::P_PHI_AXIS));
     ASSERT(phiAxisItem);
     phiAxisItem->setItemValue(BasicAxisItem::P_NBINS, (int)phi_axis.size());
-    phiAxisItem->setItemValue(BasicAxisItem::P_MIN_DEG, Units::rad2deg(phi_axis.getMin()));
-    phiAxisItem->setItemValue(BasicAxisItem::P_MAX_DEG, Units::rad2deg(phi_axis.getMax()));
+    phiAxisItem->setItemValue(BasicAxisItem::P_MIN_DEG, Units::rad2deg(phi_axis.lowerBound()));
+    phiAxisItem->setItemValue(BasicAxisItem::P_MAX_DEG, Units::rad2deg(phi_axis.upperBound()));
 
     BasicAxisItem* alphaAxisItem =
         dynamic_cast<BasicAxisItem*>(detector_item->getItem(SphericalDetectorItem::P_ALPHA_AXIS));
     ASSERT(alphaAxisItem);
     alphaAxisItem->setItemValue(BasicAxisItem::P_NBINS, (int)alpha_axis.size());
-    alphaAxisItem->setItemValue(BasicAxisItem::P_MIN_DEG, Units::rad2deg(alpha_axis.getMin()));
-    alphaAxisItem->setItemValue(BasicAxisItem::P_MAX_DEG, Units::rad2deg(alpha_axis.getMax()));
+    alphaAxisItem->setItemValue(BasicAxisItem::P_MIN_DEG, Units::rad2deg(alpha_axis.lowerBound()));
+    alphaAxisItem->setItemValue(BasicAxisItem::P_MAX_DEG, Units::rad2deg(alpha_axis.upperBound()));
 }
 
 void TransformFromDomain::setRectangularDetector(RectangularDetectorItem* detector_item,
-                                                 const RectangularDetector& detector)
-{
+                                                 const RectangularDetector& detector) {
     // Axes
     BasicAxisItem* xAxisItem =
         dynamic_cast<BasicAxisItem*>(detector_item->getItem(RectangularDetectorItem::P_X_AXIS));
@@ -479,24 +452,22 @@ void TransformFromDomain::setRectangularDetector(RectangularDetectorItem* detect
 }
 
 void TransformFromDomain::setDetectorMasks(DetectorItem* detector_item,
-                                           const Simulation& simulation)
-{
-    const IDetector* detector = simulation.getInstrument().getDetector();
+                                           const ISimulation& simulation) {
+    const IDetector* detector = simulation.instrument().getDetector();
     if ((detector->detectorMask() && detector->detectorMask()->numberOfMasks())
         || detector->regionOfInterest()) {
         detector_item->createMaskContainer();
 
         double scale(1.0);
         if (detector_item->modelType() == "SphericalDetector")
-            scale = 1. / Units::degree;
+            scale = 1. / Units::deg;
 
         setMaskContainer(detector_item->maskContainerItem(), *detector, scale);
     }
 }
 
 void TransformFromDomain::setMaskContainer(MaskContainerItem* container_item,
-                                           const IDetector& detector, double scale)
-{
+                                           const IDetector& detector, double scale) {
     auto detectorMask = detector.detectorMask();
     for (size_t i_mask = 0; i_mask < detectorMask->numberOfMasks(); ++i_mask) {
         bool mask_value(false);
@@ -581,8 +552,7 @@ void TransformFromDomain::setMaskContainer(MaskContainerItem* container_item,
 }
 
 void TransformFromDomain::setItemFromSample(BeamDistributionItem* beam_distribution_item,
-                                            const ParameterDistribution& parameter_distribution)
-{
+                                            const ParameterDistribution& parameter_distribution) {
     ASSERT(beam_distribution_item);
 
     if (parameter_distribution.getMinValue() < parameter_distribution.getMaxValue()) {
@@ -598,8 +568,7 @@ void TransformFromDomain::setItemFromSample(BeamDistributionItem* beam_distribut
 }
 
 void TransformFromDomain::setBackground(InstrumentItem* instrument_item,
-                                        const Simulation& simulation)
-{
+                                        const ISimulation& simulation) {
     auto p_bg = simulation.background();
     if (auto p_constant_bg = dynamic_cast<const ConstantBackground*>(p_bg)) {
         auto constant_bg_item =
@@ -612,8 +581,7 @@ void TransformFromDomain::setBackground(InstrumentItem* instrument_item,
 }
 
 void TransformFromDomain::setFootprintFactor(const IFootprintFactor* footprint,
-                                             SpecularBeamItem* beam_item)
-{
+                                             SpecularBeamItem* beam_item) {
     if (!footprint)
         return;
     if (const auto gaussian_fp = dynamic_cast<const FootprintGauss*>(footprint)) {
@@ -629,8 +597,7 @@ void TransformFromDomain::setFootprintFactor(const IFootprintFactor* footprint,
     }
 }
 
-void TransformFromDomain::setAxisItem(SessionItem* item, const IAxis& axis, double factor)
-{
+void TransformFromDomain::setAxisItem(SessionItem* item, const IAxis& axis, double factor) {
     if (item->modelType() != "BasicAxis")
         throw GUIHelpers::Error("TransformFromDomain::setAxisItem() -> Error. Unexpected item.");
 
@@ -638,15 +605,13 @@ void TransformFromDomain::setAxisItem(SessionItem* item, const IAxis& axis, doub
         throw GUIHelpers::Error("TransformFromDomain::setAxisItem() -> Error. Unexpected axis");
 
     item->setItemValue(BasicAxisItem::P_NBINS, static_cast<int>(axis.size()));
-    item->setItemValue(BasicAxisItem::P_MIN_DEG, factor * axis.getMin());
-    item->setItemValue(BasicAxisItem::P_MAX_DEG, factor * axis.getMax());
+    item->setItemValue(BasicAxisItem::P_MIN_DEG, factor * axis.lowerBound());
+    item->setItemValue(BasicAxisItem::P_MAX_DEG, factor * axis.upperBound());
     item->setItemValue(BasicAxisItem::P_TITLE, QString::fromStdString(axis.getName()));
 }
 
-namespace
-{
-void SetPDF1D(SessionItem* item, const IFTDistribution1D* ipdf, QString group_name)
-{
+namespace {
+void SetPDF1D(SessionItem* item, const IFTDistribution1D* ipdf, QString group_name) {
     if (const FTDistribution1DCauchy* pdf = dynamic_cast<const FTDistribution1DCauchy*>(ipdf)) {
         SessionItem* pdfItem = item->setGroupProperty(group_name, "FTDistribution1DCauchy");
         pdfItem->setItemValue(FTDistribution1DCauchyItem::P_OMEGA, pdf->omega());
@@ -675,8 +640,7 @@ void SetPDF1D(SessionItem* item, const IFTDistribution1D* ipdf, QString group_na
     }
 }
 
-void setPDF2D(SessionItem* item, const IFTDistribution2D* pdf, QString group_name)
-{
+void setPDF2D(SessionItem* item, const IFTDistribution2D* pdf, QString group_name) {
     if (const FTDistribution2DCauchy* pdf_cauchy =
             dynamic_cast<const FTDistribution2DCauchy*>(pdf)) {
         SessionItem* pdfItem = item->setGroupProperty(group_name, "FTDistribution2DCauchy");
@@ -716,8 +680,7 @@ void setPDF2D(SessionItem* item, const IFTDistribution2D* pdf, QString group_nam
     }
 }
 
-void SetDecayFunction1D(SessionItem* item, const IFTDecayFunction1D* ipdf, QString group_name)
-{
+void SetDecayFunction1D(SessionItem* item, const IFTDecayFunction1D* ipdf, QString group_name) {
     if (const FTDecayFunction1DCauchy* pdf = dynamic_cast<const FTDecayFunction1DCauchy*>(ipdf)) {
         SessionItem* pdfItem = item->setGroupProperty(group_name, "FTDecayFunction1DCauchy");
         pdfItem->setItemValue(FTDecayFunction1DItem::P_DECAY_LENGTH, pdf->decayLength());
@@ -739,8 +702,7 @@ void SetDecayFunction1D(SessionItem* item, const IFTDecayFunction1D* ipdf, QStri
     }
 }
 
-void SetDecayFunction2D(SessionItem* item, const IFTDecayFunction2D* pdf, QString group_name)
-{
+void SetDecayFunction2D(SessionItem* item, const IFTDecayFunction2D* pdf, QString group_name) {
     if (const FTDecayFunction2DCauchy* pdf_cauchy =
             dynamic_cast<const FTDecayFunction2DCauchy*>(pdf)) {
         SessionItem* pdfItem = item->setGroupProperty(group_name, "FTDecayFunction2DCauchy");
@@ -765,47 +727,44 @@ void SetDecayFunction2D(SessionItem* item, const IFTDecayFunction2D* pdf, QStrin
     }
 }
 
-void set2DLatticeParameters(SessionItem* item, const Lattice2D& lattice)
-{
+void set2DLatticeParameters(SessionItem* item, const Lattice2D& lattice) {
     SessionItem* latticeItem(nullptr);
-    if (lattice.getName() == "SquareLattice") {
+    if (lattice.getName() == "SquareLattice2D") {
         latticeItem = item->setGroupProperty(InterferenceFunction2DLatticeItem::P_LATTICE_TYPE,
-                                             "SquareLattice");
-        latticeItem->setItemValue(SquareLatticeItem::P_LATTICE_LENGTH, lattice.length1());
+                                             "SquareLattice2D");
+        latticeItem->setItemValue(SquareLattice2DItem::P_LATTICE_LENGTH, lattice.length1());
 
-    } else if (lattice.getName() == "HexagonalLattice") {
+    } else if (lattice.getName() == "HexagonalLattice2D") {
         latticeItem = item->setGroupProperty(InterferenceFunction2DLatticeItem::P_LATTICE_TYPE,
-                                             "HexagonalLattice");
-        latticeItem->setItemValue(HexagonalLatticeItem::P_LATTICE_LENGTH, lattice.length1());
+                                             "HexagonalLattice2D");
+        latticeItem->setItemValue(HexagonalLattice2DItem::P_LATTICE_LENGTH, lattice.length1());
 
     } else {
         latticeItem = item->setGroupProperty(InterferenceFunction2DLatticeItem::P_LATTICE_TYPE,
-                                             "BasicLattice");
-        latticeItem->setItemValue(BasicLatticeItem::P_LATTICE_LENGTH1, lattice.length1());
-        latticeItem->setItemValue(BasicLatticeItem::P_LATTICE_LENGTH2, lattice.length2());
-        latticeItem->setItemValue(BasicLatticeItem::P_LATTICE_ANGLE,
+                                             "BasicLattice2D");
+        latticeItem->setItemValue(BasicLattice2DItem::P_LATTICE_LENGTH1, lattice.length1());
+        latticeItem->setItemValue(BasicLattice2DItem::P_LATTICE_LENGTH2, lattice.length2());
+        latticeItem->setItemValue(BasicLattice2DItem::P_LATTICE_ANGLE,
                                   Units::rad2deg(lattice.latticeAngle()));
     }
     latticeItem->setItemValue(Lattice2DItem::P_LATTICE_ROTATION_ANGLE,
                               Units::rad2deg(lattice.rotationAngle()));
 }
 
-void setPositionVariance(SessionItem* item, const IInterferenceFunction& iff)
-{
+void setPositionVariance(SessionItem* item, const IInterferenceFunction& iff) {
     double pos_var = iff.positionVariance();
     item->setItemValue(InterferenceFunctionItem::P_POSITION_VARIANCE, pos_var);
 }
 
 void setDistribution(SessionItem* part_distr_item, ParameterDistribution par_distr,
-                     QString group_name, double factor)
-{
+                     QString group_name, double factor) {
     const IDistribution1D* p_distribution = par_distr.getDistribution();
 
     SessionItem* item = 0;
     if (const DistributionGate* distr = dynamic_cast<const DistributionGate*>(p_distribution)) {
         item = part_distr_item->setGroupProperty(group_name, "DistributionGate");
-        item->setItemValue(DistributionGateItem::P_MIN, factor * distr->getMin());
-        item->setItemValue(DistributionGateItem::P_MAX, factor * distr->getMax());
+        item->setItemValue(DistributionGateItem::P_MIN, factor * distr->lowerBound());
+        item->setItemValue(DistributionGateItem::P_MAX, factor * distr->upperBound());
     } else if (const DistributionLorentz* distr =
                    dynamic_cast<const DistributionLorentz*>(p_distribution)) {
         item = part_distr_item->setGroupProperty(group_name, "DistributionLorentz");
@@ -853,8 +812,8 @@ void setDistribution(SessionItem* part_distr_item, ParameterDistribution par_dis
 }
 
 void addDistributionToBeamItem(const std::string& parameter_name, const QString& item_name,
-                               const ParameterDistribution& distribution, const BeamItem* beam_item)
-{
+                               const ParameterDistribution& distribution,
+                               const BeamItem* beam_item) {
     ParameterPattern pattern;
     pattern.beginsWith("*").add("Beam").add(parameter_name);
     if (distribution.getMainParameterName() != pattern.toStdString())
@@ -864,9 +823,8 @@ void addDistributionToBeamItem(const std::string& parameter_name, const QString&
     TransformFromDomain::setItemFromSample(beam_parameter, distribution);
 }
 
-void addRangedDistributionToItem(SessionItem* item, const RangedDistribution& ranged, double mean,
-                                 double std_dev)
-{
+void addRangedDistributionToItem(SessionItem* item, const IRangedDistribution& ranged, double mean,
+                                 double std_dev) {
     auto distr_item = dynamic_cast<BeamDistributionItem*>(item);
     if (!distr_item)
         return;

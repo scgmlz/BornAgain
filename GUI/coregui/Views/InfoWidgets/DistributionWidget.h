@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_DISTRIBUTIONWIDGET_H
 
-#include "qcustomplot.h"
 #include <QWidget>
+#include <qcustomplot.h>
 
 class SessionItem;
 class QLabel;
@@ -27,8 +27,7 @@ class RealLimits;
 class WarningSign;
 
 //! The DistributionWidget class plots 1d functions corresponding to domain's Distribution1D
-class DistributionWidget : public QWidget
-{
+class DistributionWidget : public QWidget {
     Q_OBJECT
 
 public:

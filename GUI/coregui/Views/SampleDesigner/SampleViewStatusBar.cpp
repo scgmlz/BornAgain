@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/SampleViewStatusBar.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QHBoxLayout>
 #include <QStatusBar>
 #include <QToolButton>
 
 SampleViewStatusBar::SampleViewStatusBar(MainWindow* mainWindow)
-    : QWidget(mainWindow), m_dockMenuButton(nullptr), m_mainWindow(mainWindow)
-{
+    : QWidget(mainWindow), m_dockMenuButton(nullptr), m_mainWindow(mainWindow) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto layout = new QHBoxLayout;
@@ -41,8 +40,7 @@ SampleViewStatusBar::SampleViewStatusBar(MainWindow* mainWindow)
 
 //! Init appearance of MainWindow's statusBar.
 
-void SampleViewStatusBar::initAppearance()
-{
+void SampleViewStatusBar::initAppearance() {
     ASSERT(m_mainWindow);
     m_mainWindow->statusBar()->addWidget(this, 1);
     m_mainWindow->statusBar()->setSizeGripEnabled(false);

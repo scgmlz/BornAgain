@@ -1,9 +1,8 @@
-#include "Core/Particle/TRange.h"
+#include "Sample/Particle/TRange.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <algorithm>
 
-class TRangeTest : public ::testing::Test
-{
+class TRangeTest : public ::testing::Test {
 protected:
     TRangeTest();
     virtual ~TRangeTest();
@@ -16,8 +15,7 @@ protected:
     const TSampledRange<double>* doubleSampledRange;
 };
 
-TRangeTest::TRangeTest()
-{
+TRangeTest::TRangeTest() {
     intRange = new TRange<int>(1, 100);
     floatRange = new TRange<float>(101.0f, 200.0f);
     doubleRange = new TRange<double>(201.0, 300.0);
@@ -27,8 +25,7 @@ TRangeTest::TRangeTest()
     doubleSampledRange = new TSampledRange<double>(6000u, 201.0, 300.0);
 }
 
-TRangeTest::~TRangeTest()
-{
+TRangeTest::~TRangeTest() {
     delete intRange;
     delete floatRange;
     delete doubleRange;
@@ -37,29 +34,25 @@ TRangeTest::~TRangeTest()
     delete doubleSampledRange;
 }
 
-TEST_F(TRangeTest, TRangeTestLowerBound)
-{
+TEST_F(TRangeTest, TRangeTestLowerBound) {
     EXPECT_EQ(1, intRange->getLowerBound());
     EXPECT_EQ(101.0f, floatRange->getLowerBound());
     EXPECT_EQ(201.0, doubleRange->getLowerBound());
 }
 
-TEST_F(TRangeTest, TRangeTestUpperBound)
-{
+TEST_F(TRangeTest, TRangeTestUpperBound) {
     EXPECT_EQ(100, intRange->getUpperBound());
     EXPECT_EQ(200.0f, floatRange->getUpperBound());
     EXPECT_EQ(300.0, doubleRange->getUpperBound());
 }
 
-TEST_F(TRangeTest, TRangeTestDifference)
-{
+TEST_F(TRangeTest, TRangeTestDifference) {
     EXPECT_EQ(99, intRange->getDifference());
     EXPECT_EQ(99.0f, floatRange->getDifference());
     EXPECT_EQ(99.0, doubleRange->getDifference());
 }
 
-TEST_F(TRangeTest, TRangeTestInRange)
-{
+TEST_F(TRangeTest, TRangeTestInRange) {
     EXPECT_TRUE(intRange->inRange(1));
     EXPECT_TRUE(floatRange->inRange(101.0f));
     EXPECT_TRUE(doubleRange->inRange(201.0));
@@ -81,8 +74,7 @@ TEST_F(TRangeTest, TRangeTestInRange)
     EXPECT_FALSE(doubleRange->inRange(301.0));
 }
 
-TEST_F(TRangeTest, TSampledRangeNSamples)
-{
+TEST_F(TRangeTest, TSampledRangeNSamples) {
     EXPECT_EQ(4000u, intSampledRange->getNSamples());
     EXPECT_EQ(5000u, floatSampledRange->getNSamples());
     EXPECT_EQ(6000u, doubleSampledRange->getNSamples());

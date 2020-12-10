@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,30 +10,26 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/MaskAllView.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Views/MaskWidgets/ColorMapSceneAdaptor.h"
-#include "GUI/coregui/Views/MaskWidgets/MaskEditorHelper.h"
 #include <QBrush>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-MaskAllView::MaskAllView()
-{
+MaskAllView::MaskAllView() {
     setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
-void MaskAllView::update_view()
-{
+void MaskAllView::update_view() {
     //    prepareGeometryChange();
     m_bounding_rect = m_adaptor->viewportRectangle();
     update();
 }
 
-void MaskAllView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
+void MaskAllView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
     //    painter->setRenderHints(QPainter::Antialiasing);
     QColor color(250, 250, 240, 150);
     painter->setBrush(color);

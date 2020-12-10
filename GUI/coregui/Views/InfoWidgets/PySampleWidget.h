@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYSAMPLEWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_PYSAMPLEWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QWidget>
 
 class SampleModel;
@@ -30,8 +29,7 @@ class QHideEvent;
 
 //! Displays Python script representing a MultiLayer at the bottom of SampleView.
 
-class BA_CORE_API_ PySampleWidget : public QWidget
-{
+class PySampleWidget : public QWidget {
     Q_OBJECT
 
 public:

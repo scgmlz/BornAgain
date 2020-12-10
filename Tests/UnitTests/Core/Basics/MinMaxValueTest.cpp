@@ -1,13 +1,10 @@
-#include "Core/Basics/Algorithms.h"
+#include "Base/Utils/Algorithms.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <cmath>
 
-class MinMaxValueTest : public ::testing::Test
-{
-};
+class MinMaxValueTest : public ::testing::Test {};
 
-TEST_F(MinMaxValueTest, MinMaxValueAlmostEq)
-{
+TEST_F(MinMaxValueTest, MinMaxValueAlmostEq) {
     double val;
     std::vector<double> A{0.};
     std::vector<int> C{1, 2, 3};

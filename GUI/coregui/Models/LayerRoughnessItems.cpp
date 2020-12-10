@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/LayerRoughnessItems.h"
 
-namespace
-{
+namespace {
 const QString hurst_tooltip =
     "Hurst parameter which describes how jagged the interface,\n "
     "dimensionless [0.0, 1.0], where 0.0 gives more spikes, \n1.0 more smoothness.";
@@ -28,8 +27,7 @@ const QString LayerBasicRoughnessItem::P_HURST = QString::fromStdString("Hurst")
 const QString LayerBasicRoughnessItem::P_LATERAL_CORR_LENGTH =
     QString::fromStdString("CorrelationLength");
 
-LayerBasicRoughnessItem::LayerBasicRoughnessItem() : SessionItem("LayerBasicRoughness")
-{
+LayerBasicRoughnessItem::LayerBasicRoughnessItem() : SessionItem("LayerBasicRoughness") {
     setToolTip("A roughness of interface between two layers.");
     addProperty(P_SIGMA, 1.0)->setToolTip("rms of the roughness in nanometers");
     addProperty(P_HURST, 0.3)->setLimits(RealLimits::limited(0.0, 1.0)).setToolTip(hurst_tooltip);

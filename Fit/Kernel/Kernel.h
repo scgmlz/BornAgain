@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,30 +10,31 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_KERNEL_KERNEL_H
 #define BORNAGAIN_FIT_KERNEL_KERNEL_H
 
-#include "Fit/Kernel/KernelTypes.h"
-#include "Fit/Kernel/MinimizerResult.h"
-#include "Fit/Kernel/Parameters.h"
+#include "Fit/Minimizer/MinimizerResult.h"
+#include "Fit/Minimizer/Types.h"
 #include "Fit/Tools/WallclockTimer.h"
-#include "Wrap/WinDllMacros.h"
 #include <functional>
 #include <memory>
 #include <vector>
 
 class IMinimizer;
 
-namespace Fit
-{
+namespace mumufit {
 
 //! A main class to run fitting.
 //! @ingroup fitting
 
-class BA_CORE_API_ Kernel
-{
+class Kernel {
 public:
     Kernel();
     ~Kernel();
@@ -54,6 +55,7 @@ private:
     WallclockTimer m_timer;
 };
 
-} // namespace Fit
+} // namespace mumufit
 
 #endif // BORNAGAIN_FIT_KERNEL_KERNEL_H
+#endif // USER_API

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,25 +10,22 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H
 #define BORNAGAIN_CORE_EXPORT_EXPORTTOPYTHON_H
 
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class MultiLayer;
-class Simulation;
+class ISimulation;
 
-//! Contains main methods to generate Python scripts from Core simulation objects.
+//! Wraps methods that serialize objects to Python.
 
-namespace ExportToPython
-{
+namespace ExportToPython {
 
-BA_CORE_API_ std::string generateSampleCode(const MultiLayer& multilayer);
-BA_CORE_API_ std::string generateSimulationCode(const Simulation& simulation);
-BA_CORE_API_ std::string generatePyExportTest(const Simulation& simulation);
+std::string generateSampleCode(const MultiLayer& multilayer);
+std::string generateSimulationCode(const ISimulation& simulation);
 
 } // namespace ExportToPython
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -11,21 +11,20 @@
 //! @authors   Scientific Computing Group at MLZ Garching
 //! @authors   C. Durniak, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Simulation/MPISimulation.h"
 
 #ifdef BORNAGAIN_MPI
 
-#include "Core/Simulation/Simulation.h"
+#include "Core/Simulation/ISimulation.h"
 #include <mpi.h>
 
 // -----------------------------------------------------------------------------
 // MPI support
 // -----------------------------------------------------------------------------
 
-void MPISimulation::runSimulation(Simulation* simulation)
-{
+void MPISimulation::runSimulation(ISimulation* simulation) {
     MPI_Status st;
 
     int world_size(0), world_rank(0);
@@ -72,8 +71,7 @@ void MPISimulation::runSimulation(Simulation* simulation)
 // No MPI support
 // -----------------------------------------------------------------------------
 
-void MPISimulation::runSimulation(Simulation* /* simulation */)
-{
+void MPISimulation::runSimulation(ISimulation* /* simulation */) {
     throw std::runtime_error(
         "MPISimulation::runSimulation() -> Error! Can't run MPI simulation. "
         "The package was compiled without MPI support (compile with -DBORNAGAIN_MPI=ON)");

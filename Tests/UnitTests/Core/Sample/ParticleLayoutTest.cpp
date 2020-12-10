@@ -1,15 +1,13 @@
-#include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Aggregate/InterferenceFunction1DLattice.h"
-#include "Core/Aggregate/InterferenceFunctionNone.h"
-#include "Core/Basics/Units.h"
-#include "Core/Export/INodeUtils.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Particle/IAbstractParticle.h"
-#include "Core/Particle/Particle.h"
+#include "Sample/Aggregate/ParticleLayout.h"
+#include "Base/Const/Units.h"
+#include "Core/Export/NodeProgeny.h"
+#include "Sample/Aggregate/InterferenceFunction1DLattice.h"
+#include "Sample/Aggregate/InterferenceFunctionNone.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Particle/Particle.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class ParticleLayoutTest : public ::testing::Test
-{
+class ParticleLayoutTest : public ::testing::Test {
 
 protected:
     ~ParticleLayoutTest();
@@ -17,22 +15,20 @@ protected:
 
 ParticleLayoutTest::~ParticleLayoutTest() = default;
 
-TEST_F(ParticleLayoutTest, ParticleLayoutInitial)
-{
+TEST_F(ParticleLayoutTest, ParticleLayoutInitial) {
     ParticleLayout particleDecoration;
-    auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
-    auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
+    auto p_iff = node_progeny::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
+    auto particles = node_progeny::ChildNodesOfType<IAbstractParticle>(particleDecoration);
     EXPECT_EQ(size_t(0), particles.size());
     EXPECT_EQ(nullptr, p_iff);
 }
 
-TEST_F(ParticleLayoutTest, ParticleLayoutInitByValue)
-{
-    Particle particle;
+TEST_F(ParticleLayoutTest, ParticleLayoutInitByValue) {
+    Particle particle(HomogeneousMaterial());
 
     ParticleLayout particleDecoration(particle, 2.0);
-    auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
-    auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
+    auto p_iff = node_progeny::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
+    auto particles = node_progeny::ChildNodesOfType<IAbstractParticle>(particleDecoration);
     EXPECT_EQ(size_t(1), particles.size());
     EXPECT_EQ(nullptr, p_iff);
 
@@ -41,23 +37,22 @@ TEST_F(ParticleLayoutTest, ParticleLayoutInitByValue)
     EXPECT_EQ(2.0, particleDecoration.getTotalAbundance());
 }
 
-TEST_F(ParticleLayoutTest, ParticleLayoutAddParticle)
-{
+TEST_F(ParticleLayoutTest, ParticleLayoutAddParticle) {
     ParticleLayout particleDecoration;
 
-    Particle particle1;
-    Particle particle2;
-    Particle particle3;
-    Particle particle4;
+    Particle particle1(HomogeneousMaterial());
+    Particle particle2(HomogeneousMaterial());
+    Particle particle3(HomogeneousMaterial());
+    Particle particle4(HomogeneousMaterial());
 
-    RotationZ transform3(45. * Units::degree);
-    RotationZ transform4(45. * Units::degree);
+    RotationZ transform3(45. * Units::deg);
+    RotationZ transform4(45. * Units::deg);
 
     particleDecoration.addParticle(particle1);
     particleDecoration.addParticle(particle2, 2.2);
     particleDecoration.addParticle(particle3, 1.0, kvector_t(0, 0, 0), transform3);
     particleDecoration.addParticle(particle4, 4.2, kvector_t(0, 0, 0), transform4);
-    auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(particleDecoration);
+    auto particles = node_progeny::ChildNodesOfType<IAbstractParticle>(particleDecoration);
 
     EXPECT_EQ(size_t(4), particles.size());
 
@@ -78,17 +73,16 @@ TEST_F(ParticleLayoutTest, ParticleLayoutAddParticle)
     EXPECT_EQ(4.2, p_particle4->abundance());
 }
 
-TEST_F(ParticleLayoutTest, ParticleLayoutAbundanceFraction)
-{
+TEST_F(ParticleLayoutTest, ParticleLayoutAbundanceFraction) {
     ParticleLayout particleDecoration;
 
-    Particle particle1;
-    Particle particle2;
-    Particle particle3;
-    Particle particle4;
+    Particle particle1(HomogeneousMaterial());
+    Particle particle2(HomogeneousMaterial());
+    Particle particle3(HomogeneousMaterial());
+    Particle particle4(HomogeneousMaterial());
 
-    RotationY transform3(45. * Units::degree);
-    RotationZ transform4(45. * Units::degree);
+    RotationY transform3(45. * Units::deg);
+    RotationZ transform4(45. * Units::deg);
 
     particleDecoration.addParticle(particle1);
     particleDecoration.addParticle(particle2, 2.0);
@@ -97,17 +91,16 @@ TEST_F(ParticleLayoutTest, ParticleLayoutAbundanceFraction)
     EXPECT_EQ(8.0, particleDecoration.getTotalAbundance());
 }
 
-TEST_F(ParticleLayoutTest, ParticleLayoutClone)
-{
+TEST_F(ParticleLayoutTest, ParticleLayoutClone) {
     ParticleLayout particleDecoration;
 
-    Particle particle1;
-    Particle particle2;
-    Particle particle3;
-    Particle particle4;
+    Particle particle1(HomogeneousMaterial());
+    Particle particle2(HomogeneousMaterial());
+    Particle particle3(HomogeneousMaterial());
+    Particle particle4(HomogeneousMaterial());
 
-    RotationY transform3(45. * Units::degree);
-    RotationZ transform4(45. * Units::degree);
+    RotationY transform3(45. * Units::deg);
+    RotationZ transform4(45. * Units::deg);
 
     particleDecoration.addParticle(particle1);
     particleDecoration.addParticle(particle2, 2.0);
@@ -124,7 +117,7 @@ TEST_F(ParticleLayoutTest, ParticleLayoutClone)
     particleDecoration.setInterferenceFunction(iff_none);
 
     ParticleLayout* clone = particleDecoration.clone();
-    auto particles = INodeUtils::ChildNodesOfType<IAbstractParticle>(*clone);
+    auto particles = node_progeny::ChildNodesOfType<IAbstractParticle>(*clone);
 
     const IAbstractParticle* p_particle1 = particles[0];
     EXPECT_TRUE(nullptr != p_particle1);
@@ -146,29 +139,27 @@ TEST_F(ParticleLayoutTest, ParticleLayoutClone)
     EXPECT_TRUE(nullptr != p_particle5);
     EXPECT_EQ(0.0, p_particle5->abundance());
 
-    auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(*clone);
+    auto p_iff = node_progeny::OnlyChildOfType<IInterferenceFunction>(*clone);
 
     EXPECT_TRUE(nullptr != p_iff);
 }
 
-TEST_F(ParticleLayoutTest, ParticleLayoutInterferenceFunction)
-{
+TEST_F(ParticleLayoutTest, ParticleLayoutInterferenceFunction) {
     ParticleLayout particleDecoration;
 
     InterferenceFunctionNone iff_none;
     particleDecoration.setInterferenceFunction(iff_none);
-    auto p_iff = INodeUtils::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
+    auto p_iff = node_progeny::OnlyChildOfType<IInterferenceFunction>(particleDecoration);
 
     EXPECT_TRUE(nullptr != p_iff);
 }
 
-TEST_F(ParticleLayoutTest, getChildren)
-{
+TEST_F(ParticleLayoutTest, getChildren) {
     ParticleLayout layout;
     std::vector<const INode*> children = layout.getChildren();
     EXPECT_EQ(children.size(), 0u);
 
-    layout.addParticle(Particle());
+    layout.addParticle(Particle(HomogeneousMaterial()));
     layout.setInterferenceFunction(InterferenceFunction1DLattice(1.0, 2.0));
     children = layout.getChildren();
     EXPECT_EQ(children.size(), 2u);

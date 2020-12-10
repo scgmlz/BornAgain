@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InfoWidgets/DetailedMessageBox.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
@@ -22,15 +22,13 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-namespace
-{
+namespace {
 const QSize default_dialog_size(512, 300);
 }
 
 DetailedMessageBox::DetailedMessageBox(QWidget* parent, const QString& title, const QString& text,
                                        const QString& details)
-    : QDialog(parent), m_topLabel(new QLabel), m_textEdit(new QTextEdit)
-{
+    : QDialog(parent), m_topLabel(new QLabel), m_textEdit(new QTextEdit) {
     setWindowTitle(title);
     m_topLabel->setText(text);
     m_textEdit->setText(details);
@@ -43,7 +41,7 @@ DetailedMessageBox::DetailedMessageBox(QWidget* parent, const QString& title, co
 
     QColor bgColor(240, 240, 240, 255);
     QPalette palette;
-    palette.setColor(QPalette::Background, bgColor);
+    palette.setColor(QPalette::Window, bgColor);
     setAutoFillBackground(true);
     setPalette(palette);
 
@@ -62,20 +60,17 @@ DetailedMessageBox::DetailedMessageBox(QWidget* parent, const QString& title, co
     setSizeGripEnabled(true);
 }
 
-void DetailedMessageBox::setText(const QString& text)
-{
+void DetailedMessageBox::setText(const QString& text) {
     m_topLabel->setText(text);
 }
 
-void DetailedMessageBox::setDetailedText(const QString& text)
-{
+void DetailedMessageBox::setDetailedText(const QString& text) {
     m_textEdit->setText(text);
 }
 
 //! Returns layout with icon for left part of the widget.
 
-QBoxLayout* DetailedMessageBox::createLogoLayout()
-{
+QBoxLayout* DetailedMessageBox::createLogoLayout() {
     auto result = new QVBoxLayout;
 
     QIcon icon = QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning);
@@ -89,10 +84,9 @@ QBoxLayout* DetailedMessageBox::createLogoLayout()
     return result;
 }
 
-//! Create right layout with text and QComboBox selection.
+//! Creates right layout with text and QComboBox selection.
 
-QBoxLayout* DetailedMessageBox::createInfoLayout()
-{
+QBoxLayout* DetailedMessageBox::createInfoLayout() {
     m_topLabel->setWordWrap(true);
 
     auto result = new QVBoxLayout;
@@ -103,8 +97,7 @@ QBoxLayout* DetailedMessageBox::createInfoLayout()
 
 //! Creates button layout with buttons.
 
-QBoxLayout* DetailedMessageBox::createButtonLayout()
-{
+QBoxLayout* DetailedMessageBox::createButtonLayout() {
     auto result = new QHBoxLayout;
 
     auto okButton = new QPushButton("Ok");

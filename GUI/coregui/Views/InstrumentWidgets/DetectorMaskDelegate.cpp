@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/DetectorMaskDelegate.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InstrumentModel.h"
@@ -25,15 +24,15 @@
 #include "GUI/coregui/Views/MaskWidgets/MaskEditor.h"
 
 DetectorMaskDelegate::DetectorMaskDelegate(QObject* parent)
-    : QObject(parent), m_tempIntensityDataModel(new SessionModel("TempIntensityDataModel", this)),
-      m_instrumentModel(nullptr), m_detectorItem(nullptr), m_intensityItem(nullptr)
-{
-}
+    : QObject(parent)
+    , m_tempIntensityDataModel(new SessionModel("TempIntensityDataModel", this))
+    , m_instrumentModel(nullptr)
+    , m_detectorItem(nullptr)
+    , m_intensityItem(nullptr) {}
 
 void DetectorMaskDelegate::initMaskEditorContext(MaskEditor* maskEditor,
                                                  InstrumentModel* instrumentModel,
-                                                 DetectorItem* detectorItem)
-{
+                                                 DetectorItem* detectorItem) {
     m_instrumentModel = instrumentModel;
     m_detectorItem = detectorItem;
 
@@ -51,8 +50,7 @@ void DetectorMaskDelegate::initMaskEditorContext(MaskEditor* maskEditor,
 //! Creates IntensityDataItem from DetectorItem for later usage in MaskEditor.
 //! As amplitude, value 1.0 is set for each bin.
 //! The object additionally tuned to appear nicely on ColorMap plot.
-void DetectorMaskDelegate::createIntensityDataItem()
-{
+void DetectorMaskDelegate::createIntensityDataItem() {
     m_tempIntensityDataModel->clear();
 
     m_intensityItem =

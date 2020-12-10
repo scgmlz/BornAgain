@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,26 +10,22 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_PARTICLE3DCONTAINER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_REALSPACEWIDGETS_PARTICLE3DCONTAINER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QString>
 #include <memory>
 #include <vector>
 
-namespace RealSpace
-{
-namespace Particles
-{
+namespace RealSpace {
+namespace Particles {
 class Particle;
 }
 } // namespace RealSpace
 
-class BA_CORE_API_ Particle3DContainer
-{
+class Particle3DContainer {
 public:
     Particle3DContainer() : m_cumulativeAbundance(0) {}
     Particle3DContainer(const Particle3DContainer& other);          // copy constructor

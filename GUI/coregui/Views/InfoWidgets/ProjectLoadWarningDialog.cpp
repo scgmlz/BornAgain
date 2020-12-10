@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InfoWidgets/ProjectLoadWarningDialog.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
@@ -25,16 +25,14 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 
-namespace
-{
+namespace {
 const int top_panel_height = 80;
 }
 
 ProjectLoadWarningDialog::ProjectLoadWarningDialog(QWidget* parent,
                                                    const MessageService* messageService,
                                                    const QString& documentVersion)
-    : QDialog(parent), m_messageService(messageService), m_projectDocumentVersion(documentVersion)
-{
+    : QDialog(parent), m_messageService(messageService), m_projectDocumentVersion(documentVersion) {
     setMinimumSize(256, 256);
     resize(520, 620);
     setWindowTitle("Problems encountered while loading project");
@@ -52,8 +50,7 @@ ProjectLoadWarningDialog::ProjectLoadWarningDialog(QWidget* parent,
 }
 
 //! Top panel with warning icon and the header
-QWidget* ProjectLoadWarningDialog::createTopPanel()
-{
+QWidget* ProjectLoadWarningDialog::createTopPanel() {
     auto result = new QWidget(this);
     auto layout = new QHBoxLayout;
 
@@ -85,8 +82,7 @@ QWidget* ProjectLoadWarningDialog::createTopPanel()
 }
 
 //! Info panel with summary over warnings in different models
-QWidget* ProjectLoadWarningDialog::createModelInfoPanel()
-{
+QWidget* ProjectLoadWarningDialog::createModelInfoPanel() {
     auto result = new QWidget(this);
     auto layout = new QHBoxLayout;
 
@@ -113,8 +109,7 @@ QWidget* ProjectLoadWarningDialog::createModelInfoPanel()
 }
 
 //! Info panel with explanations what had happened and what to do
-QWidget* ProjectLoadWarningDialog::createExplanationPanel()
-{
+QWidget* ProjectLoadWarningDialog::createExplanationPanel() {
     auto result = new QWidget(this);
     auto layout = new QVBoxLayout;
 
@@ -153,8 +148,7 @@ QWidget* ProjectLoadWarningDialog::createExplanationPanel()
 }
 
 //! Info panel with table widget containing error messages
-QWidget* ProjectLoadWarningDialog::createDetailsPanel()
-{
+QWidget* ProjectLoadWarningDialog::createDetailsPanel() {
     auto result = new QWidget(this);
     auto layout = new QVBoxLayout;
 
@@ -176,8 +170,7 @@ QWidget* ProjectLoadWarningDialog::createDetailsPanel()
 }
 
 //! Creates QTableWidget and fills it with error messages
-QTableWidget* ProjectLoadWarningDialog::createTableWidget()
-{
+QTableWidget* ProjectLoadWarningDialog::createTableWidget() {
     auto result = new QTableWidget;
     result->setWordWrap(true);
     //    result->setTextElideMode(Qt::ElideMiddle);
@@ -204,8 +197,7 @@ QTableWidget* ProjectLoadWarningDialog::createTableWidget()
     return result;
 }
 
-QLayout* ProjectLoadWarningDialog::buttonLayout()
-{
+QLayout* ProjectLoadWarningDialog::buttonLayout() {
     auto result = new QHBoxLayout;
 
     auto button = new QPushButton("Close", this);
@@ -220,21 +212,18 @@ QLayout* ProjectLoadWarningDialog::buttonLayout()
 }
 
 //! Returns number of rows in table with error messages, each row represents an error message
-int ProjectLoadWarningDialog::numberOfTableRows() const
-{
+int ProjectLoadWarningDialog::numberOfTableRows() const {
     return m_messageService->messages().size();
 }
 
 //! Returns labels for table header
-QStringList ProjectLoadWarningDialog::tableHeaderLabels() const
-{
+QStringList ProjectLoadWarningDialog::tableHeaderLabels() const {
     return QStringList() << "Sender"
                          << "Message"
                          << "Description";
 }
 
-QTableWidgetItem* ProjectLoadWarningDialog::createTableItem(const QString& name)
-{
+QTableWidgetItem* ProjectLoadWarningDialog::createTableItem(const QString& name) {
     auto result = new QTableWidgetItem(name);
     result->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -246,8 +235,7 @@ QTableWidgetItem* ProjectLoadWarningDialog::createTableItem(const QString& name)
 }
 
 //! Returns explanations what went wrong.
-QString ProjectLoadWarningDialog::explanationText() const
-{
+QString ProjectLoadWarningDialog::explanationText() const {
     QString result;
     if (m_projectDocumentVersion != GUIHelpers::getBornAgainVersionString()) {
         result =

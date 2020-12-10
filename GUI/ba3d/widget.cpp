@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,62 +10,52 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/ba3d/widget.h"
-#include "model/model.h"
-#include "view/camera.h"
-#include "view/canvas.h"
-#include "view/program.h"
+#include "GUI/ba3d/model/model.h"
+#include "GUI/ba3d/view/canvas.h"
+#include "GUI/ba3d/view/program.h"
 
 #include <QBoxLayout>
 
-namespace RealSpace
-{
+namespace RealSpace {
 //------------------------------------------------------------------------------
 
-Widget3D::Widget3D() : canvas(nullptr)
-{
+Widget3D::Widget3D() : canvas(nullptr) {
     auto box = new QHBoxLayout;
     setLayout(box);
     box->setMargin(0);
     box->addWidget((canvas = new Canvas));
 }
 
-Widget3D::~Widget3D() {}
+Widget3D::~Widget3D() = default;
 
-Camera& Widget3D::cam()
-{
+Camera& Widget3D::cam() {
     return *canvas->cam();
 }
 
-void Widget3D::setBackground(QColor const& color)
-{
+void Widget3D::setBackground(QColor const& color) {
     canvas->setBgColor(color);
 }
 
-void Widget3D::setModel(Model* model)
-{
+void Widget3D::setModel(Model* model) {
     canvas->setModel(model);
 }
 
-void Widget3D::defaultView()
-{
+void Widget3D::defaultView() {
     canvas->defaultView();
 }
 
-void Widget3D::sideView()
-{
+void Widget3D::sideView() {
     canvas->sideView();
 }
 
-void Widget3D::topView()
-{
+void Widget3D::topView() {
     canvas->topView();
 }
 
-Model* Widget3D::model()
-{
+Model* Widget3D::model() {
     return canvas->getModel();
 }
 

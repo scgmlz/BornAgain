@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 /*
  * Copyright 2011 Aurélien Gâteau <agateau@kde.org>
@@ -34,8 +34,7 @@ class ColumnResizerPrivate;
 
 //! The ColumnResizer class provides vertically aligned widgets from diferent layouts.
 
-class ColumnResizer : public QObject
-{
+class ColumnResizer : public QObject {
     Q_OBJECT
 public:
     ColumnResizer(QObject* parent = 0);

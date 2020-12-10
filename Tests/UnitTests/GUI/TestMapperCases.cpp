@@ -10,12 +10,9 @@
 
 using SessionItemUtils::ParentRow;
 
-class TestMapperCases : public ::testing::Test
-{
-};
+class TestMapperCases : public ::testing::Test {};
 
-TEST_F(TestMapperCases, test_ParticeleCompositionUpdate)
-{
+TEST_F(TestMapperCases, test_ParticeleCompositionUpdate) {
     SampleModel model;
     SessionItem* multilayer = model.insertNewItem("MultiLayer");
     SessionItem* layer = model.insertNewItem("Layer", multilayer->index());
@@ -28,15 +25,14 @@ TEST_F(TestMapperCases, test_ParticeleCompositionUpdate)
     // composition added to distribution should have abundance disabled
     SessionItem* distribution = model.insertNewItem("ParticleDistribution", layout->index());
     SessionItem* composition = model.insertNewItem("ParticleComposition", distribution->index());
-    EXPECT_TRUE(composition->getItem(ParticleItem::P_ABUNDANCE)->isEnabled() == false);
+    EXPECT_FALSE(composition->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
 
     composition = distribution->takeRow(ParentRow(*composition));
     EXPECT_TRUE(composition->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
     delete composition;
 }
 
-TEST_F(TestMapperCases, test_SimulationOptionsComputationToggle)
-{
+TEST_F(TestMapperCases, test_SimulationOptionsComputationToggle) {
     DocumentModel model;
     model.insertNewItem("SimulationOptions");
 
@@ -45,9 +41,9 @@ TEST_F(TestMapperCases, test_SimulationOptionsComputationToggle)
     ComboProperty combo =
         item->getItemValue(SimulationOptionsItem::P_COMPUTATION_METHOD).value<ComboProperty>();
     EXPECT_EQ(combo.getValue(), "Analytical");
-    EXPECT_TRUE(item->getItem(SimulationOptionsItem::P_MC_POINTS)->isEnabled() == false);
+    EXPECT_FALSE(item->getItem(SimulationOptionsItem::P_MC_POINTS)->isEnabled());
 
     combo.setValue("Monte-Carlo Integration");
     item->setItemValue(SimulationOptionsItem::P_COMPUTATION_METHOD, combo.variant());
-    EXPECT_TRUE(item->getItem(SimulationOptionsItem::P_MC_POINTS)->isEnabled() == true);
+    EXPECT_TRUE(item->getItem(SimulationOptionsItem::P_MC_POINTS)->isEnabled());
 }

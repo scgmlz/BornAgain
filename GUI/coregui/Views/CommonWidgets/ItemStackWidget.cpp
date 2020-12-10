@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/CommonWidgets/ItemStackWidget.h"
 #include "GUI/coregui/Models/SessionModel.h"
@@ -19,9 +19,10 @@
 #include <QVBoxLayout>
 
 ItemStackWidget::ItemStackWidget(QWidget* parent)
-    : QWidget(parent), m_stackedWidget(new QStackedWidget), m_model(nullptr),
-      m_size_hint(QSize(1024, 1024))
-{
+    : QWidget(parent)
+    , m_stackedWidget(new QStackedWidget)
+    , m_model(nullptr)
+    , m_size_hint(QSize(1024, 1024)) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_stackedWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -33,8 +34,7 @@ ItemStackWidget::ItemStackWidget(QWidget* parent)
     setLayout(layout);
 }
 
-void ItemStackWidget::setModel(SessionModel* model)
-{
+void ItemStackWidget::setModel(SessionModel* model) {
     if (model == m_model)
         return;
 
@@ -43,34 +43,28 @@ void ItemStackWidget::setModel(SessionModel* model)
     connectModel();
 }
 
-QSize ItemStackWidget::sizeHint() const
-{
+QSize ItemStackWidget::sizeHint() const {
     return m_size_hint;
 }
 
-QSize ItemStackWidget::minimumSizeHint() const
-{
+QSize ItemStackWidget::minimumSizeHint() const {
     return QSize(25, 25);
 }
 
-void ItemStackWidget::setSizeHint(const QSize& size_hint)
-{
+void ItemStackWidget::setSizeHint(const QSize& size_hint) {
     m_size_hint = size_hint;
 }
 
-void ItemStackWidget::onModelAboutToBeReset()
-{
+void ItemStackWidget::onModelAboutToBeReset() {
     removeWidgets();
 }
 
-void ItemStackWidget::onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int)
-{
+void ItemStackWidget::onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int) {
     SessionItem* item = m_model->itemForIndex(m_model->index(first, 0, parent));
     removeWidgetForItem(item);
 }
 
-void ItemStackWidget::connectModel()
-{
+void ItemStackWidget::connectModel() {
     if (!m_model)
         return;
 
@@ -81,8 +75,7 @@ void ItemStackWidget::connectModel()
             SLOT(onRowsAboutToBeRemoved(QModelIndex, int, int)), Qt::UniqueConnection);
 }
 
-void ItemStackWidget::disconnectModel()
-{
+void ItemStackWidget::disconnectModel() {
     if (!m_model)
         return;
 
@@ -94,8 +87,7 @@ void ItemStackWidget::disconnectModel()
 
 //! Checks if model was set correctly.
 
-void ItemStackWidget::validateItem(SessionItem* item)
-{
+void ItemStackWidget::validateItem(SessionItem* item) {
     if (!item)
         return;
 

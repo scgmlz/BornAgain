@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,26 +10,22 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Tests/Performance/GUI/CsvImportAssistantPerformanceTest.h"
-#include "Core/InputOutput/OutputDataReadFactory.h"
-#include "Core/InputOutput/OutputDataWriteFactory.h"
-#include "Core/Intensity/ArrayUtils.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
+#include "Device/Data/ArrayUtils.h"
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
 #include <ctime>
 #include <iostream>
 
-void CsvImportAssistantPerformanceTest::writeTestFile()
-{
+void CsvImportAssistantPerformanceTest::writeTestFile() {
     remove(m_testFilename.c_str());
-    OutputDataWriter* writer = OutputDataWriteFactory::getWriter(m_testFilename);
     OutputData<double>* data = ArrayUtils::createData(m_testVector).release();
-    writer->writeOutputData(*data);
+    IntensityDataIOFactory::writeOutputData(*data, m_testFilename);
 }
 
-void CsvImportAssistantPerformanceTest::writeTestFile(size_t nRows, size_t nCols)
-{
+void CsvImportAssistantPerformanceTest::writeTestFile(size_t nRows, size_t nCols) {
     remove(m_testFilename.c_str());
     std::ofstream myfile;
     myfile.open(m_testFilename);
@@ -42,15 +38,11 @@ void CsvImportAssistantPerformanceTest::writeTestFile(size_t nRows, size_t nCols
     myfile.close();
 }
 
-OutputData<double>* CsvImportAssistantPerformanceTest::readTestFile()
-{
-    OutputDataReader* reader = OutputDataReadFactory::getReader(m_testFilename);
-    OutputData<double>* data = reader->getOutputData();
-    return data;
+OutputData<double>* CsvImportAssistantPerformanceTest::readTestFile() {
+    return IntensityDataIOFactory::readOutputData(m_testFilename);
 }
 
-bool CsvImportAssistantPerformanceTest::runTest()
-{
+bool CsvImportAssistantPerformanceTest::runTest() {
     std::cout << "CsvImportAssistantPerformanceTest -> Running ..." << std::endl;
     size_t maxRows = 1000;
     size_t maxCols = 1000;
@@ -67,7 +59,7 @@ bool CsvImportAssistantPerformanceTest::runTest()
             // Reading and setting data to import:
             CsvImportAssistant assistant(testFilename());
             assistant.setIntensityColumn(1);
-            assistant.setCoordinateColumn(9, AxesUnits::DEGREES);
+            assistant.setCoordinateColumn(9, Axes::Units::DEGREES);
             assistant.setFirstRow(1);
             assistant.setLastRow(int(nRows));
 
@@ -90,7 +82,6 @@ bool CsvImportAssistantPerformanceTest::runTest()
     return true;
 }
 
-int main()
-{
+int main() {
     return !CsvImportAssistantPerformanceTest().runTest();
 }

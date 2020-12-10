@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/TransformationView.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 
-TransformationView::TransformationView(QGraphicsItem* parent) : ConnectableView(parent)
-{
+TransformationView::TransformationView(QGraphicsItem* parent) : ConnectableView(parent) {
     setName("Rotation");
     setColor(DesignerHelper::getDefaultTransformationColor());
     setRectangle(DesignerHelper::getTransformationBoundingRect());

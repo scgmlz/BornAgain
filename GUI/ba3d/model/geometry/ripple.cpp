@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "../geometry.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
+#include "GUI/ba3d/model/geometry.h"
 #include <qmath.h>
 
-namespace RealSpace
-{
+namespace RealSpace {
 
-Geometry::Mesh Geometry::meshRipple(float numSides, float ratio_asymmetry_W)
-{
+Geometry::Mesh Geometry::meshRipple(float numSides, float ratio_asymmetry_W) {
     int const sides = qRound(numSides);
     bool const smooth = (0 == sides); // sides = 0 implies smooth -> e.g. cosine ripple
     int const slices = smooth ? 4 * SLICES : sides;

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/RealDataModel.h"
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/RealDataItem.h"
 
-RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDataModelTag, parent)
-{
+RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDataModelTag, parent) {
     setObjectName(SessionXML::RealDataModelTag);
 }
 
@@ -28,8 +27,7 @@ RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDat
 //    return result_flags;
 //}
 
-QVector<SessionItem*> RealDataModel::nonXMLData() const
-{
+QVector<SessionItem*> RealDataModel::nonXMLData() const {
     QVector<SessionItem*> result;
 
     for (auto realData : topItems<RealDataItem>()) {

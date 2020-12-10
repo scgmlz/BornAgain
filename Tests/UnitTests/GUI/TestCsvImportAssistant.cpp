@@ -1,33 +1,28 @@
-#include "Core/InputOutput/OutputDataReadFactory.h"
-#include "Core/InputOutput/OutputDataWriteFactory.h"
-#include "Core/Intensity/ArrayUtils.h"
-#include "Core/Intensity/AxisNames.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
+#include "Device/Data/ArrayUtils.h"
+#include "Device/Unit/AxisNames.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <vector>
 
-class TestCsvImportAssistant : public ::testing::Test
-{
+class TestCsvImportAssistant : public ::testing::Test {
 protected:
-    const std::string m_testFilename = "tmp_TestCsvImportAssistant.txt";
+    const std::string m_testFilename = "tm_TestCsvImportAssistant.txt";
     const std::vector<std::vector<double>> m_testVector = {
         {0.0, 1.0, 2.0, 3.0},     {4.0, 5.0, 6.0, 7.0},     {8.0, 9.0, 10.0, 11.0},
         {12.0, 13.0, 14.0, 15.0}, {16.0, 17.0, 18.0, 19.0}, {20.0, 21.0, 22.0, 23.0}};
 
     const QString testFilename() { return QString::fromStdString(m_testFilename); }
 
-    void writeTestFile()
-    {
+    void writeTestFile() {
         remove(m_testFilename.c_str());
-        OutputDataWriter* writer = OutputDataWriteFactory::getWriter(m_testFilename);
         OutputData<double>* data = ArrayUtils::createData(m_testVector).release();
-        writer->writeOutputData(*data);
+        IntensityDataIOFactory::writeOutputData(*data, m_testFilename);
     }
 
-    void writeTestFile(size_t nRows, size_t nCols)
-    {
+    void writeTestFile(size_t nRows, size_t nCols) {
         remove(m_testFilename.c_str());
         std::ofstream myfile;
         myfile.open(m_testFilename);
@@ -40,17 +35,13 @@ protected:
         myfile.close();
     }
 
-    OutputData<double>* readTestFile()
-    {
-        OutputDataReader* reader = OutputDataReadFactory::getReader(m_testFilename);
-        OutputData<double>* data = reader->getOutputData();
-        return data;
+    OutputData<double>* readTestFile() {
+        return IntensityDataIOFactory::readOutputData(m_testFilename);
     }
 };
 
 //! Testing component items of particle item.
-TEST_F(TestCsvImportAssistant, test_readFile)
-{
+TEST_F(TestCsvImportAssistant, test_readFile) {
     /*
      * The file to read looks like this ['-' symbols added to clarify what is going on].
      * It has originaly ten columns, not four (The separator is a space).
@@ -79,7 +70,7 @@ TEST_F(TestCsvImportAssistant, test_readFile)
     CsvImportAssistant assistant(testFilename());
 
     assistant.setIntensityColumn(1);
-    assistant.setCoordinateColumn(3, AxesUnits::DEGREES);
+    assistant.setCoordinateColumn(3, Axes::Units::DEGREES);
     assistant.setFirstRow(5);
     assistant.setLastRow(7);
 
@@ -95,7 +86,7 @@ TEST_F(TestCsvImportAssistant, test_readFile)
     EXPECT_EQ(DataRank, 1u);
     EXPECT_EQ(AllocSize, 3u);
     EXPECT_EQ(RawDataVec, expected);
-    EXPECT_EQ(UnitsLabel, JobItemUtils::nameFromAxesUnits(AxesUnits::DEGREES));
-    EXPECT_EQ(AxisLabel0, QString::fromStdString(AxisNames::InitSpecAxis()[AxesUnits::DEGREES]));
+    EXPECT_EQ(UnitsLabel, JobItemUtils::nameFromAxesUnits(Axes::Units::DEGREES));
+    EXPECT_EQ(AxisLabel0, QString::fromStdString(AxisNames::InitSpecAxis()[Axes::Units::DEGREES]));
     EXPECT_EQ(AxisLabel1, SpecularDataAxesNames::y_axis_default_name);
 }

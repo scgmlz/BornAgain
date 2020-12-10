@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/JobMessagePanel.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
@@ -19,8 +19,7 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-JobMessagePanel::JobMessagePanel(QWidget* parent) : InfoPanel(parent), m_plainLog(new QTextEdit)
-{
+JobMessagePanel::JobMessagePanel(QWidget* parent) : InfoPanel(parent), m_plainLog(new QTextEdit) {
     setWindowTitle(Constants::JobMessagePanelName);
     setObjectName("JobMessagePanel");
 
@@ -35,13 +34,11 @@ JobMessagePanel::JobMessagePanel(QWidget* parent) : InfoPanel(parent), m_plainLo
     setContentVisible(false);
 }
 
-void JobMessagePanel::onClearLog()
-{
+void JobMessagePanel::onClearLog() {
     m_plainLog->clear();
 }
 
-void JobMessagePanel::onMessage(const QString& message, const QColor& color)
-{
+void JobMessagePanel::onMessage(const QString& message, const QColor& color) {
     QScrollBar* scrollbar = m_plainLog->verticalScrollBar();
     bool autoscroll = scrollbar->value() == scrollbar->maximum();
     //    m_plainLog->appendPlainText(message);

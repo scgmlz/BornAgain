@@ -57,11 +57,10 @@
 
 #include <QtDesigner/QDesignerFormWindowInterface>
 
+#include <QMainWindow>
 #include <QtCore/QMap>
 #include <QtCore/QSharedDataPointer>
 #include <QtCore/QVariant>
-//#include <QtWidgets/QMainWindow>
-#include <QMainWindow>
 #include <QtGui/QIcon>
 #include <QtGui/QPixmap>
 
@@ -69,8 +68,7 @@ QT_BEGIN_NAMESPACE
 
 class QDebug;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 class QDesignerFormWindowCommand;
 class DesignerIconCache;
 class FormWindowBase;
@@ -90,8 +88,7 @@ QDESIGNER_SHARED_EXPORT void reloadIconResources(DesignerIconCache* iconCache, Q
  * in both ways. Template of int type since unsigned is more suitable for flags.
  * The keyToValue() is ignorant of scopes, it can handle fully qualified or unqualified names. */
 
-template <class IntType> class MetaEnum
-{
+template <class IntType> class MetaEnum {
 public:
     typedef QMap<QString, IntType> KeyToValueMap;
 
@@ -123,26 +120,21 @@ private:
 
 template <class IntType>
 MetaEnum<IntType>::MetaEnum(const QString& name, const QString& scope, const QString& separator)
-    : m_name(name), m_scope(scope), m_separator(separator)
-{
-}
+    : m_name(name), m_scope(scope), m_separator(separator) {}
 
-template <class IntType> void MetaEnum<IntType>::addKey(IntType value, const QString& name)
-{
+template <class IntType> void MetaEnum<IntType>::addKey(IntType value, const QString& name) {
     m_keyToValueMap.insert(name, value);
     m_keys.append(name);
 }
 
-template <class IntType> QString MetaEnum<IntType>::valueToKey(IntType value, bool* ok) const
-{
+template <class IntType> QString MetaEnum<IntType>::valueToKey(IntType value, bool* ok) const {
     const QString rc = m_keyToValueMap.key(value);
     if (ok)
         *ok = !rc.isEmpty();
     return rc;
 }
 
-template <class IntType> IntType MetaEnum<IntType>::keyToValue(QString key, bool* ok) const
-{
+template <class IntType> IntType MetaEnum<IntType>::keyToValue(QString key, bool* ok) const {
     if (!m_scope.isEmpty() && key.startsWith(m_scope))
         key.remove(0, m_scope.size() + m_separator.size());
     const typename KeyToValueMap::const_iterator it = m_keyToValueMap.find(key);
@@ -153,8 +145,7 @@ template <class IntType> IntType MetaEnum<IntType>::keyToValue(QString key, bool
 }
 
 template <class IntType>
-void MetaEnum<IntType>::appendQualifiedName(const QString& key, QString& target) const
-{
+void MetaEnum<IntType>::appendQualifiedName(const QString& key, QString& target) const {
     if (!m_scope.isEmpty()) {
         target += m_scope;
         target += m_separator;
@@ -164,8 +155,7 @@ void MetaEnum<IntType>::appendQualifiedName(const QString& key, QString& target)
 
 // -------------- DesignerMetaEnum: Meta type for enumerations
 
-class QDESIGNER_SHARED_EXPORT DesignerMetaEnum : public MetaEnum<int>
-{
+class QDESIGNER_SHARED_EXPORT DesignerMetaEnum : public MetaEnum<int> {
 public:
     DesignerMetaEnum(const QString& name, const QString& scope, const QString& separator);
     DesignerMetaEnum() {}
@@ -184,8 +174,7 @@ public:
 // Note that while the handling of flags is done using unsigned integers, the actual values returned
 // by the property system  are integers.
 
-class QDESIGNER_SHARED_EXPORT DesignerMetaFlags : public MetaEnum<uint>
-{
+class QDESIGNER_SHARED_EXPORT DesignerMetaFlags : public MetaEnum<uint> {
 public:
     DesignerMetaFlags(const QString& name, const QString& scope, const QString& separator);
     DesignerMetaFlags() {}
@@ -220,8 +209,7 @@ struct QDESIGNER_SHARED_EXPORT PropertySheetFlagValue {
 };
 
 // -------------- PixmapValue: Returned by the property sheet for pixmaps
-class QDESIGNER_SHARED_EXPORT PropertySheetPixmapValue
-{
+class QDESIGNER_SHARED_EXPORT PropertySheetPixmapValue {
 public:
     PropertySheetPixmapValue(const QString& path);
     PropertySheetPixmapValue();
@@ -234,8 +222,7 @@ public:
     enum PixmapSource { LanguageResourcePixmap, ResourcePixmap, FilePixmap };
     static PixmapSource getPixmapSource(QDesignerFormEditorInterface* core, const QString& path);
 
-    PixmapSource pixmapSource(QDesignerFormEditorInterface* core) const
-    {
+    PixmapSource pixmapSource(QDesignerFormEditorInterface* core) const {
         return getPixmapSource(core, m_path);
     }
 
@@ -252,8 +239,7 @@ private:
 
 class PropertySheetIconValueData;
 
-class QDESIGNER_SHARED_EXPORT PropertySheetIconValue
-{
+class QDESIGNER_SHARED_EXPORT PropertySheetIconValue {
 public:
     PropertySheetIconValue(const PropertySheetPixmapValue& pixmap);
     PropertySheetIconValue();
@@ -295,8 +281,7 @@ private:
 
 QDESIGNER_SHARED_EXPORT QDebug operator<<(QDebug, const PropertySheetIconValue&);
 
-class QDESIGNER_SHARED_EXPORT DesignerPixmapCache : public QObject
-{
+class QDESIGNER_SHARED_EXPORT DesignerPixmapCache : public QObject {
     Q_OBJECT
 public:
     DesignerPixmapCache(QObject* parent = 0);
@@ -310,8 +295,7 @@ private:
     friend class FormWindowBase;
 };
 
-class QDESIGNER_SHARED_EXPORT DesignerIconCache : public QObject
-{
+class QDESIGNER_SHARED_EXPORT DesignerIconCache : public QObject {
     Q_OBJECT
 public:
     explicit DesignerIconCache(DesignerPixmapCache* pixmapCache, QObject* parent = 0);
@@ -327,8 +311,7 @@ private:
 };
 
 // -------------- PropertySheetTranslatableData: Base class for translatable properties.
-class QDESIGNER_SHARED_EXPORT PropertySheetTranslatableData
-{
+class QDESIGNER_SHARED_EXPORT PropertySheetTranslatableData {
 protected:
     PropertySheetTranslatableData(bool translatable = true, const QString& disambiguation = "",
                                   const QString& comment = "");
@@ -349,8 +332,7 @@ private:
 };
 
 // -------------- StringValue: Returned by the property sheet for strings
-class QDESIGNER_SHARED_EXPORT PropertySheetStringValue : public PropertySheetTranslatableData
-{
+class QDESIGNER_SHARED_EXPORT PropertySheetStringValue : public PropertySheetTranslatableData {
 public:
     PropertySheetStringValue(const QString& value = "", bool translatable = true,
                              const QString& disambiguation = "", const QString& comment = "");
@@ -368,8 +350,7 @@ private:
 };
 
 // -------------- StringValue: Returned by the property sheet for string lists
-class QDESIGNER_SHARED_EXPORT PropertySheetStringListValue : public PropertySheetTranslatableData
-{
+class QDESIGNER_SHARED_EXPORT PropertySheetStringListValue : public PropertySheetTranslatableData {
 public:
     PropertySheetStringListValue(const QStringList& value = {}, bool translatable = true,
                                  const QString& disambiguation = "", const QString& comment = "");
@@ -387,8 +368,7 @@ private:
 };
 
 // -------------- StringValue: Returned by the property sheet for strings
-class QDESIGNER_SHARED_EXPORT PropertySheetKeySequenceValue : public PropertySheetTranslatableData
-{
+class QDESIGNER_SHARED_EXPORT PropertySheetKeySequenceValue : public PropertySheetTranslatableData {
 public:
     PropertySheetKeySequenceValue(const QKeySequence& value = {}, bool translatable = true,
                                   const QString& disambiguation = "", const QString& comment = "");
@@ -427,8 +407,7 @@ Q_DECLARE_METATYPE(qdesigner_internal::PropertySheetKeySequenceValue)
 
 QT_BEGIN_NAMESPACE
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 // Create a command to change a text property (that is, create a reset property command if the text
 // is empty)
@@ -450,8 +429,7 @@ QDESIGNER_SHARED_EXPORT QString qtify(const QString& name);
  * Does nothing if the incoming widget already has updatesEnabled==false
  * which is important to avoid side-effects when putting it into QStackedLayout. */
 
-class QDESIGNER_SHARED_EXPORT UpdateBlocker
-{
+class QDESIGNER_SHARED_EXPORT UpdateBlocker {
     Q_DISABLE_COPY(UpdateBlocker)
 
 public:
@@ -463,11 +441,9 @@ private:
     const bool m_enabled;
 };
 
-namespace Utils
-{
+namespace Utils {
 
-inline int valueOf(const QVariant& value, bool* ok = 0)
-{
+inline int valueOf(const QVariant& value, bool* ok = 0) {
     if (value.canConvert<PropertySheetEnumValue>()) {
         if (ok)
             *ok = true;
@@ -480,8 +456,7 @@ inline int valueOf(const QVariant& value, bool* ok = 0)
     return value.toInt(ok);
 }
 
-inline bool isObjectAncestorOf(QObject* ancestor, QObject* child)
-{
+inline bool isObjectAncestorOf(QObject* ancestor, QObject* child) {
     QObject* obj = child;
     while (obj != 0) {
         if (obj == ancestor)
@@ -491,8 +466,7 @@ inline bool isObjectAncestorOf(QObject* ancestor, QObject* child)
     return false;
 }
 
-inline bool isCentralWidget(QDesignerFormWindowInterface* fw, QWidget* widget)
-{
+inline bool isCentralWidget(QDesignerFormWindowInterface* fw, QWidget* widget) {
     if (!fw || !widget)
         return false;
 

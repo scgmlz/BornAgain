@@ -1,15 +1,12 @@
-#include "Core/Instrument/FourierTransform.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Intensity/OutputData.h"
+#include "Base/Math/FourierTransform.h"
+#include "Base/Math/Constants.h"
+#include "Device/Data/OutputData.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class FourierTransformTest : public ::testing::Test
-{
-};
+class FourierTransformTest : public ::testing::Test {};
 
 // Testing implementation of 1D FT with with low freuency centering
-TEST_F(FourierTransformTest, fft1DTest)
-{
+TEST_F(FourierTransformTest, fft1DTest) {
     std::vector<double> signal_odd({0, 0, 1, 0, 0, 1, 1});     // odd # input size
     std::vector<double> signal_even({0, 0, 1, 0, 0, 1, 1, 2}); // even # input size
     std::vector<double> result_odd, result_even;
@@ -36,8 +33,7 @@ TEST_F(FourierTransformTest, fft1DTest)
 // Testing implementation of 2D FT with low freuency centering for the following:
 
 // 3x5 input of all zeros
-TEST_F(FourierTransformTest, fft2DTest1)
-{
+TEST_F(FourierTransformTest, fft2DTest1) {
     std::vector<std::vector<double>> signal({{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}});
     std::vector<std::vector<double>> result;
     std::vector<std::vector<double>> expected_result(
@@ -53,8 +49,7 @@ TEST_F(FourierTransformTest, fft2DTest1)
 }
 
 // 4x5 input of all zeros except for 1 element
-TEST_F(FourierTransformTest, fft2DTest2)
-{
+TEST_F(FourierTransformTest, fft2DTest2) {
     std::vector<std::vector<double>> signal(
         {{0, 0, 0, 0, 0}, {0, 0, 2, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}});
     std::vector<std::vector<double>> result;
@@ -71,8 +66,7 @@ TEST_F(FourierTransformTest, fft2DTest2)
 }
 
 // 6x6 input of all ones except for 1 element
-TEST_F(FourierTransformTest, fft2DTest3)
-{
+TEST_F(FourierTransformTest, fft2DTest3) {
     std::vector<std::vector<double>> signal({{1, 1, 1, 1, 1, 1},
                                              {1, 1, 1, 1, 1, 1},
                                              {1, 1, 1, 1, 1, 1},
@@ -97,8 +91,7 @@ TEST_F(FourierTransformTest, fft2DTest3)
 }
 
 // 3x5 input with 1 row of all zeros
-TEST_F(FourierTransformTest, fft2DTest4)
-{
+TEST_F(FourierTransformTest, fft2DTest4) {
     std::vector<std::vector<double>> signal({{1, 88, 0, 1, 0}, {0, 1, 1, 1, 0}, {0, 0, 0, 0, 0}});
     std::vector<std::vector<double>> result;
     std::vector<std::vector<double>> expected_result(
@@ -116,8 +109,7 @@ TEST_F(FourierTransformTest, fft2DTest4)
 }
 
 // 4x4 input
-TEST_F(FourierTransformTest, fft2DTest5)
-{
+TEST_F(FourierTransformTest, fft2DTest5) {
     std::vector<std::vector<double>> signal(
         {{1, 0, 0, 5}, {1, 0, 0, 0}, {0, 1, 1, 1}, {0, 1, 1, 1}});
     std::vector<std::vector<double>> result;
@@ -137,8 +129,7 @@ TEST_F(FourierTransformTest, fft2DTest5)
 }
 
 // 7x7 input
-TEST_F(FourierTransformTest, fft2DTest6)
-{
+TEST_F(FourierTransformTest, fft2DTest6) {
     std::vector<std::vector<double>> signal{
         {1., 0., 0., 0., 0., 0., 0.}, {1., 0., 0., 0., 0., 0., 0.}, {1., 0., 5., 0., 0., 0., 0.},
         {1., 0., 0., 0., 0., 0., 0.}, {1., 0., 0., 0., 0., 5., 0.}, {1., 0., 0., 0., 0., 0., 0.},

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSPROXY_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_MASKGRAPHICSPROXY_H
@@ -26,8 +26,7 @@ class IntensityDataItem;
 
 //! Graphics proxy to place QWidget inside QGraphicsScene, used by MaskEditorCanvas.
 
-class MaskGraphicsProxy : public QGraphicsProxyWidget
-{
+class MaskGraphicsProxy : public QGraphicsProxyWidget {
     Q_OBJECT
 
 public:

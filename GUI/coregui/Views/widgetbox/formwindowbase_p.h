@@ -50,6 +50,8 @@
 // We mean it.
 //
 
+// Patched JWu 12nov20 because QFlags(0) was deprecated
+
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_FORMWINDOWBASE_P_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_FORMWINDOWBASE_P_H
 
@@ -67,8 +69,7 @@ class QMenu;
 class QtResourceSet;
 class QDesignerPropertySheet;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 class QEditorFormBuilder;
 class DeviceProfile;
@@ -78,14 +79,13 @@ class DesignerPixmapCache;
 class DesignerIconCache;
 class FormWindowBasePrivate;
 
-class QDESIGNER_SHARED_EXPORT FormWindowBase : public QDesignerFormWindowInterface
-{
+class QDESIGNER_SHARED_EXPORT FormWindowBase : public QDesignerFormWindowInterface {
     Q_OBJECT
 public:
     enum HighlightMode { Restore, Highlight };
 
     explicit FormWindowBase(QDesignerFormEditorInterface* core, QWidget* parent = 0,
-                            Qt::WindowFlags flags = 0);
+                            Qt::WindowFlags flags = {});
     virtual ~FormWindowBase();
 
     QVariantMap formData();

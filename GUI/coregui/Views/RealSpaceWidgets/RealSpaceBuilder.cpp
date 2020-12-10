@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceBuilder.h"
-#include "Core/Basics/Units.h"
-#include "Core/Particle/Particle.h"
-#include "Core/Particle/ParticleCoreShell.h"
-#include "Core/includeIncludes/InterferenceFunctions.h"
-#include "GUI/ba3d/model/layer.h"
+#include "Base/Const/Units.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/Lattice2DItems.h"
 #include "GUI/coregui/Models/LayerItem.h"
@@ -28,7 +24,6 @@
 #include "GUI/coregui/Models/ParticleDistributionItem.h"
 #include "GUI/coregui/Models/ParticleItem.h"
 #include "GUI/coregui/Models/ParticleLayoutItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/Particle3DContainer.h"
@@ -37,21 +32,22 @@
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpaceModel.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/RealSpacePositionBuilder.h"
 #include "GUI/coregui/Views/RealSpaceWidgets/TransformTo3D.h"
+#include "Sample/Aggregate/InterferenceFunctions.h"
+#include "Sample/Particle/Particle.h"
+#include "Sample/Particle/ParticleCoreShell.h"
 #include <QDebug>
 
-namespace
-{
+namespace {
 std::unique_ptr<IInterferenceFunction> GetInterferenceFunction(const SessionItem& layoutItem);
 }
 
 RealSpaceBuilder::RealSpaceBuilder(QWidget* parent) : QWidget(parent) {}
 
-RealSpaceBuilder::~RealSpaceBuilder() {}
+RealSpaceBuilder::~RealSpaceBuilder() = default;
 
 void RealSpaceBuilder::populate(RealSpaceModel* model, const SessionItem& item,
                                 const SceneGeometry& sceneGeometry,
-                                const RealSpace::Camera::Position& cameraPosition)
-{
+                                const RealSpace::Camera::Position& cameraPosition) {
     // default value of cameraPosition is in RealSpaceBuilder.h
 
     model->defCamPos = cameraPosition;
@@ -82,13 +78,12 @@ void RealSpaceBuilder::populate(RealSpaceModel* model, const SessionItem& item,
 }
 
 void RealSpaceBuilder::populateMultiLayer(RealSpaceModel* model, const SessionItem& item,
-                                          const SceneGeometry& sceneGeometry, const QVector3D&)
-{
+                                          const SceneGeometry& sceneGeometry, const QVector3D&) {
     double total_height(0.0);
     int index(0);
     for (auto layer : item.getItems(MultiLayerItem::T_LAYERS)) {
 
-        bool isTopLayer = index == 0 ? true : false;
+        bool isTopLayer = index == 0;
         populateLayer(model, *layer, sceneGeometry,
                       QVector3D(0, 0, static_cast<float>(-total_height)), isTopLayer);
 
@@ -101,8 +96,7 @@ void RealSpaceBuilder::populateMultiLayer(RealSpaceModel* model, const SessionIt
 
 void RealSpaceBuilder::populateLayer(RealSpaceModel* model, const SessionItem& layerItem,
                                      const SceneGeometry& sceneGeometry, const QVector3D& origin,
-                                     const bool isTopLayer)
-{
+                                     const bool isTopLayer) {
     auto layer = TransformTo3D::createLayer(layerItem, sceneGeometry, origin);
     if (layer && !isTopLayer)
         model->addBlend(layer.release());
@@ -112,8 +106,7 @@ void RealSpaceBuilder::populateLayer(RealSpaceModel* model, const SessionItem& l
 }
 
 void RealSpaceBuilder::populateLayout(RealSpaceModel* model, const SessionItem& layoutItem,
-                                      const SceneGeometry& sceneGeometry, const QVector3D& origin)
-{
+                                      const SceneGeometry& sceneGeometry, const QVector3D& origin) {
     ASSERT(layoutItem.modelType() == "ParticleLayout");
 
     // If there is no particle to populate
@@ -137,8 +130,7 @@ void RealSpaceBuilder::populateLayout(RealSpaceModel* model, const SessionItem& 
 }
 
 void RealSpaceBuilder::populateParticleFromParticleItem(RealSpaceModel* model,
-                                                        const SessionItem& particleItem) const
-{
+                                                        const SessionItem& particleItem) const {
     Particle3DContainer particle3DContainer;
     if (particleItem.modelType() == "Particle") {
         auto pItem = dynamic_cast<const ParticleItem*>(&particleItem);
@@ -181,8 +173,7 @@ void RealSpaceBuilder::populateParticleFromParticleItem(RealSpaceModel* model,
 
 void RealSpaceBuilder::populateParticleFromParticle3DContainer(
     RealSpaceModel* model, const Particle3DContainer& particle3DContainer,
-    const QVector3D& lattice_position) const
-{
+    const QVector3D& lattice_position) const {
     if (particle3DContainer.containerSize()) {
         for (size_t i = 0; i < particle3DContainer.containerSize(); ++i) {
             auto particle3D = particle3DContainer.createParticle(i);
@@ -197,10 +188,8 @@ void RealSpaceBuilder::populateParticleFromParticle3DContainer(
     }
 }
 
-namespace
-{
-std::unique_ptr<IInterferenceFunction> GetInterferenceFunction(const SessionItem& layoutItem)
-{
+namespace {
+std::unique_ptr<IInterferenceFunction> GetInterferenceFunction(const SessionItem& layoutItem) {
     auto interferenceLattice = layoutItem.getItem(ParticleLayoutItem::T_INTERFERENCE);
     if (interferenceLattice) {
         auto interferenceItem = static_cast<const InterferenceFunctionItem*>(interferenceLattice);

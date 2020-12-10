@@ -55,8 +55,6 @@
 
 #include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
-//#include <QtWidgets/QWidget>
-//#include <QtWidgets/QSizePolicy>
 #include <QSizePolicy>
 #include <QWidget>
 
@@ -64,8 +62,7 @@ QT_BEGIN_NAMESPACE
 
 class QDesignerFormWindowInterface;
 
-class QDESIGNER_SHARED_EXPORT Spacer : public QWidget
-{
+class QDESIGNER_SHARED_EXPORT Spacer : public QWidget {
     Q_OBJECT
 
     Q_ENUMS(SizeType)

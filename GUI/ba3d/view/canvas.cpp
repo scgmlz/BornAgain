@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/ba3d/view/canvas.h"
-#include "../model/geometry.h"
-#include "../model/model.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
+#include "GUI/ba3d/model/geometry.h"
+#include "GUI/ba3d/model/model.h"
 #include "GUI/ba3d/view/buffer.h"
-#include "GUI/ba3d/view/camera.h"
 #include "GUI/ba3d/view/program.h"
 
 #include <QMouseEvent>
@@ -25,16 +24,13 @@
 #include <cmath>
 #include <cstdlib>
 
-namespace
-{
-float ZoomInScale()
-{
+namespace {
+float ZoomInScale() {
     if (QSysInfo::productType() == "osx")
         return 1.02f;
     return 1.25f;
 }
-float ZoomOutScale()
-{
+float ZoomOutScale() {
     if (QSysInfo::productType() == "osx")
         return 0.98f;
     return 0.8f;
@@ -48,45 +44,45 @@ const float cameraDefaultPosY = -200.0f; // default camera position on Y axis
 const float cameraDefaultPosZ = 120.0f;  // default camera position on Z axis
 } // namespace
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 Canvas::Canvas()
-    : aspectRatio(1), colorBgR(1), colorBgG(1), colorBgB(1), currentZoomLevel(0), camera(nullptr),
-      program(nullptr), model(nullptr), m_isInitializedGL(false)
-{
+    : aspectRatio(1)
+    , colorBgR(1)
+    , colorBgG(1)
+    , colorBgB(1)
+    , currentZoomLevel(0)
+    , camera(nullptr)
+    , program(nullptr)
+    , model(nullptr)
+    , m_isInitializedGL(false) {
     connect(&geometryStore(), &GeometryStore::deletingGeometry, this, &Canvas::releaseBuffer);
 }
 
-Canvas::~Canvas()
-{
+Canvas::~Canvas() {
     cleanup();
 }
 
-void Canvas::setBgColor(QColor const& c)
-{
+void Canvas::setBgColor(QColor const& c) {
     colorBgR = float(c.redF());
     colorBgG = float(c.greenF());
     colorBgB = float(c.blueF());
     update();
 }
 
-void Canvas::setCamera(Camera* c)
-{
+void Canvas::setCamera(Camera* c) {
     camera = c;
     setCamera();
 }
 
-void Canvas::setProgram(Program* p)
-{
+void Canvas::setProgram(Program* p) {
     program = p;
     if (program)
         program->needsInit();
     update();
 }
 
-void Canvas::setModel(Model* m)
-{
+void Canvas::setModel(Model* m) {
     releaseBuffers();
 
     disconnect(modelUpdated);
@@ -103,13 +99,11 @@ void Canvas::setModel(Model* m)
     camera->set();
 }
 
-Model* Canvas::getModel()
-{
+Model* Canvas::getModel() {
     return model;
 }
 
-void Canvas::setCamera(bool full)
-{
+void Canvas::setCamera(bool full) {
     if (camera) {
         camera->setAspectRatio(aspectRatio);
         if (full && model)
@@ -119,8 +113,7 @@ void Canvas::setCamera(bool full)
     update();
 }
 
-void Canvas::initializeGL()
-{
+void Canvas::initializeGL() {
     setCamera((camera = new Camera));
     setProgram((program = new Program));
 
@@ -132,16 +125,14 @@ void Canvas::initializeGL()
     m_isInitializedGL = true;
 }
 
-void Canvas::resizeGL(int w, int h)
-{
+void Canvas::resizeGL(int w, int h) {
     int w1 = qMax(1, w), h1 = qMax(1, h);
     viewport.setRect(0, 0, w1, h1);
     aspectRatio = float(w1) / float(h1);
     setCamera(false);
 }
 
-void Canvas::paintGL()
-{
+void Canvas::paintGL() {
     glClearColor(colorBgR, colorBgG, colorBgB, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -178,14 +169,12 @@ void Canvas::paintGL()
     }
 }
 
-QVector3D Canvas::unproject(QPoint const& p)
-{
+QVector3D Canvas::unproject(QPoint const& p) {
     float x = p.x(), y = viewport.height() - p.y();
     return QVector3D(x, y, 1).unproject(matModel, matProj, viewport);
 }
 
-void Canvas::mousePressEvent(QMouseEvent* e)
-{
+void Canvas::mousePressEvent(QMouseEvent* e) {
     switch (e->button()) {
     case Qt::LeftButton:
         mouseButton = btnTURN;
@@ -205,8 +194,7 @@ void Canvas::mousePressEvent(QMouseEvent* e)
     }
 }
 
-void Canvas::mouseMoveEvent(QMouseEvent* e)
-{
+void Canvas::mouseMoveEvent(QMouseEvent* e) {
     if (camera) {
         float delta_x = e->pos().x() - e_last.x();
         float delta_y = e->pos().y() - e_last.y();
@@ -235,18 +223,16 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
     }
 }
 
-void Canvas::mouseReleaseEvent(QMouseEvent*)
-{
+void Canvas::mouseReleaseEvent(QMouseEvent*) {
     if (camera) {
         camera->endTransform(true);
         update();
     }
 }
 
-void Canvas::wheelEvent(QWheelEvent* e)
-{
+void Canvas::wheelEvent(QWheelEvent* e) {
     if (camera) {
-        if (e->delta() < 0) {
+        if (e->angleDelta().y() < 0) {
             // Zoom in
             camera->zoomBy(ZoomInScale());
             currentZoomLevel += 1;
@@ -261,20 +247,17 @@ void Canvas::wheelEvent(QWheelEvent* e)
     e->accept(); // disabling the event from propagating further to the parent widgets
 }
 
-void Canvas::releaseBuffer(Geometry const* g)
-{
+void Canvas::releaseBuffer(Geometry const* g) {
     delete buffers.take(g);
 }
 
-void Canvas::releaseBuffers()
-{
+void Canvas::releaseBuffers() {
     for (auto b : buffers.values())
         delete b;
     buffers.clear();
 }
 
-void Canvas::draw(QColor const& color, QMatrix4x4 const& mat, Geometry const& geo)
-{
+void Canvas::draw(QColor const& color, QMatrix4x4 const& mat, Geometry const& geo) {
     auto it = buffers.find(&geo);
     Buffer* buf;
     if (buffers.end() == it)
@@ -288,8 +271,7 @@ void Canvas::draw(QColor const& color, QMatrix4x4 const& mat, Geometry const& ge
     buf->draw();
 }
 
-void Canvas::cleanup()
-{
+void Canvas::cleanup() {
     makeCurrent();
 
     releaseBuffers();
@@ -303,13 +285,11 @@ void Canvas::cleanup()
     doneCurrent();
 }
 
-bool Canvas::isInitialized() const
-{
+bool Canvas::isInitialized() const {
     return m_isInitializedGL && model != nullptr;
 }
 
-void Canvas::defaultView()
-{
+void Canvas::defaultView() {
     // Default view
     if (isInitialized()) {
         RealSpace::Camera::Position defPos(
@@ -327,8 +307,7 @@ void Canvas::defaultView()
     }
 }
 
-void Canvas::sideView()
-{
+void Canvas::sideView() {
     // Side view at current zoom level
     if (isInitialized()) {
         RealSpace::Vector3D eye(0, cameraDefaultPosY, 0);
@@ -353,8 +332,7 @@ void Canvas::sideView()
     }
 }
 
-void Canvas::topView()
-{
+void Canvas::topView() {
     // Top view at current zoom level
     if (isInitialized()) {
         // Setting a tiny offset in y value of eye such that eye and up vectors are not parallel
@@ -380,8 +358,7 @@ void Canvas::topView()
     }
 }
 
-void Canvas::horizontalCameraTurn(float angle)
-{
+void Canvas::horizontalCameraTurn(float angle) {
     if (isInitialized()) {
 
         float theta = angle * static_cast<float>(M_PI / 180.0); // in radians
@@ -426,8 +403,7 @@ void Canvas::horizontalCameraTurn(float angle)
     }
 }
 
-void Canvas::verticalCameraTurn(float angle)
-{
+void Canvas::verticalCameraTurn(float angle) {
     if (isInitialized()) {
 
         float theta = angle * static_cast<float>(M_PI / 180.0); // in radians

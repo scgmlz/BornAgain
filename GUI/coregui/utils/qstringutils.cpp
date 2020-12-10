@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/utils/qstringutils.h"
 #include "GUI/coregui/utils/hostosinfo.h"
 #include <QDir>
 
-namespace GUI_StringUtils
-{
+namespace GUI_StringUtils {
 
-QString withTildeHomePath(const QString& path)
-{
+QString withTildeHomePath(const QString& path) {
     if (GUI_OS_Utils::HostOsInfo::isWindowsHost())
         return path;
 

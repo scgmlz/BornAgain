@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTUNINGMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTUNINGMODEL_H
@@ -25,8 +25,7 @@ class ParameterItem;
 //! to the FitParametersWidget.
 //!
 
-class BA_CORE_API_ ParameterTuningModel : public FilterPropertyProxy
-{
+class ParameterTuningModel : public FilterPropertyProxy {
     Q_OBJECT
 
 public:
@@ -40,13 +39,11 @@ public:
     ParameterItem* getParameterItem(const QModelIndex& proxyIndex) const;
 };
 
-inline Qt::DropActions ParameterTuningModel::supportedDragActions() const
-{
+inline Qt::DropActions ParameterTuningModel::supportedDragActions() const {
     return Qt::CopyAction;
 }
 
-inline Qt::DropActions ParameterTuningModel::supportedDropActions() const
-{
+inline Qt::DropActions ParameterTuningModel::supportedDropActions() const {
     return Qt::IgnoreAction;
 }
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBOUTPUTDATAWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBOUTPUTDATAWIDGET_H
@@ -23,8 +23,7 @@ class JobItem;
 
 //! The JobOutputDataWidget class is a central widget of JobView, shows results of the simulation.
 
-class BA_CORE_API_ JobOutputDataWidget : public QWidget
-{
+class JobOutputDataWidget : public QWidget {
     Q_OBJECT
 public:
     JobOutputDataWidget(JobModel* jobModel, QWidget* parent = nullptr);

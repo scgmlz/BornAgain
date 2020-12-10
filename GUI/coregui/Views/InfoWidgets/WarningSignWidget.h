@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,20 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGNWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGNWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QPixmap>
 #include <QString>
 #include <QWidget>
 
 //! The WarningSignWidget is an transparent widget with warning sign pixmap intended to be
 //! overlayed onto other widget at some arbitrary position.
-class WarningSignWidget : public QWidget
-{
+class WarningSignWidget : public QWidget {
 public:
     WarningSignWidget(QWidget* parent = 0);
 

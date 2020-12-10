@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/FitProgressInfo.h"
 #include "GUI/coregui/mainwindow/SplashScreen.h"
@@ -23,8 +23,7 @@
 
 void messageHandler(QtMsgType, const QMessageLogContext&, const QString&) {}
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     ApplicationOptions options(argc, argv);
     if (!options.isConsistent())
         return 0;
@@ -54,5 +53,5 @@ int main(int argc, char* argv[])
     if (splash)
         splash->finish(&win);
 
-    return app.exec();
+    return QApplication::exec();
 }

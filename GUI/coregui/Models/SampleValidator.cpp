@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SampleValidator.h"
 #include "GUI/coregui/Models/LayerItem.h"
@@ -22,22 +22,19 @@
 
 SampleValidator::SampleValidator() : m_valid_sample(true) {}
 
-void SampleValidator::initValidator()
-{
+void SampleValidator::initValidator() {
     m_validation_message.clear();
     m_valid_sample = true;
 }
 
-void SampleValidator::iterateItems(const SessionItem* parentItem)
-{
+void SampleValidator::iterateItems(const SessionItem* parentItem) {
     for (const SessionItem* child : parentItem->children()) {
         validateItem(child);
         iterateItems(child);
     }
 }
 
-void SampleValidator::validateItem(const SessionItem* item)
-{
+void SampleValidator::validateItem(const SessionItem* item) {
     if (!item)
         return;
 
@@ -60,8 +57,7 @@ void SampleValidator::validateItem(const SessionItem* item)
     }
 }
 
-QString SampleValidator::validateMultiLayerItem(const SessionItem* item)
-{
+QString SampleValidator::validateMultiLayerItem(const SessionItem* item) {
     QString result;
 
     QVector<SessionItem*> layers = item->getItems(MultiLayerItem::T_LAYERS);
@@ -76,8 +72,7 @@ QString SampleValidator::validateMultiLayerItem(const SessionItem* item)
     return result;
 }
 
-QString SampleValidator::validateParticleLayoutItem(const SessionItem* item)
-{
+QString SampleValidator::validateParticleLayoutItem(const SessionItem* item) {
     QString result;
 
     QVector<SessionItem*> particles = item->getItems(ParticleLayoutItem::T_PARTICLES);
@@ -87,8 +82,7 @@ QString SampleValidator::validateParticleLayoutItem(const SessionItem* item)
     return result;
 }
 
-QString SampleValidator::validateParticleCoreShellItem(const SessionItem* item)
-{
+QString SampleValidator::validateParticleCoreShellItem(const SessionItem* item) {
     QString result;
 
     const SessionItem* core = item->getItem(ParticleCoreShellItem::T_CORE);
@@ -100,8 +94,7 @@ QString SampleValidator::validateParticleCoreShellItem(const SessionItem* item)
     return result;
 }
 
-QString SampleValidator::validateParticleCompositionItem(const SessionItem* item)
-{
+QString SampleValidator::validateParticleCompositionItem(const SessionItem* item) {
     QString result;
     if (item->getItems(ParticleCompositionItem::T_PARTICLES).isEmpty())
         result = "ParticleComposition doesn't have any particles.";
@@ -109,8 +102,7 @@ QString SampleValidator::validateParticleCompositionItem(const SessionItem* item
     return result;
 }
 
-QString SampleValidator::validateParticleDistributionItem(const SessionItem* item)
-{
+QString SampleValidator::validateParticleDistributionItem(const SessionItem* item) {
     QString result;
     if (item->getItems(ParticleDistributionItem::T_PARTICLES).isEmpty())
         result = "ParticleDistribution doesn't have any particle.";
@@ -118,8 +110,7 @@ QString SampleValidator::validateParticleDistributionItem(const SessionItem* ite
     return result;
 }
 
-bool SampleValidator::isValidMultiLayer(const MultiLayerItem* multilayer)
-{
+bool SampleValidator::isValidMultiLayer(const MultiLayerItem* multilayer) {
     initValidator();
 
     validateItem(multilayer);

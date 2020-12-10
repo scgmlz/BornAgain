@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,53 +10,46 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Fitting/FitObjective.h"
 #include "Core/Fitting/FitStatus.h"
 #include "Core/Fitting/ObjectiveMetric.h"
 #include "Core/Fitting/ObjectiveMetricUtils.h"
 #include "Core/Fitting/PyFittingCallbacks.h"
-#include "Core/Instrument/ChiSquaredModule.h"
-#include "Core/Intensity/ArrayUtils.h"
-#include "Core/Simulation/Simulation.h"
-#include "Fit/Kernel/MinimizerResult.h"
-#include "Fit/Kernel/Parameters.h"
+#include "Core/Simulation/ISimulation.h"
+#include "Core/Residual/ChiSquaredModule.h"
 #include <stdexcept>
 
-class IMetricWrapper
-{
+class IMetricWrapper {
 public:
     virtual ~IMetricWrapper();
     virtual double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const = 0;
 };
 
 //! Metric wrapper for back-compaptibility with old scripts
-class ChiModuleWrapper : public IMetricWrapper
-{
+class ChiModuleWrapper : public IMetricWrapper {
 public:
-    ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module);
+    explicit ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module);
     double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const override;
 
 private:
     std::unique_ptr<IChiSquaredModule> m_module;
 };
 
-class ObjectiveMetricWrapper : public IMetricWrapper
-{
+class ObjectiveMetricWrapper : public IMetricWrapper {
 public:
-    ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module);
+    explicit ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module);
     double compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const override;
 
 private:
     std::unique_ptr<ObjectiveMetric> m_module;
 };
 
-simulation_builder_t FitObjective::simulationBuilder(PyBuilderCallback& callback)
-{
-    return [&callback](const Fit::Parameters& params) {
+simulation_builder_t FitObjective::simulationBuilder(PyBuilderCallback& callback) {
+    return [&callback](const mumufit::Parameters& params) {
         auto simulation = callback.build_simulation(params);
-        std::unique_ptr<Simulation> clone(simulation->clone());
+        std::unique_ptr<ISimulation> clone(simulation->clone());
         delete simulation; // deleting Python object
         return clone;
     };
@@ -64,10 +57,8 @@ simulation_builder_t FitObjective::simulationBuilder(PyBuilderCallback& callback
 
 FitObjective::FitObjective()
     : m_metric_module(
-        std::make_unique<ObjectiveMetricWrapper>(std::make_unique<PoissonLikeMetric>())),
-      m_fit_status(std::make_unique<FitStatus>(this))
-{
-}
+        std::make_unique<ObjectiveMetricWrapper>(std::make_unique<PoissonLikeMetric>()))
+    , m_fit_status(std::make_unique<FitStatus>(this)) {}
 
 FitObjective::~FitObjective() = default;
 
@@ -79,21 +70,18 @@ FitObjective::~FitObjective() = default;
 void FitObjective::addSimulationAndData(simulation_builder_t builder,
                                         const OutputData<double>& data,
                                         std::unique_ptr<OutputData<double>> uncertainties,
-                                        double weight)
-{
+                                        double weight) {
     m_fit_objects.emplace_back(builder, data, std::move(uncertainties), weight);
 }
 
-double FitObjective::evaluate(const Fit::Parameters& params)
-{
+double FitObjective::evaluate(const mumufit::Parameters& params) {
     run_simulations(params);
     const double metric_value = m_metric_module->compute(m_fit_objects, params.size());
     m_fit_status->update(params, metric_value);
     return metric_value;
 }
 
-std::vector<double> FitObjective::evaluate_residuals(const Fit::Parameters& params)
-{
+std::vector<double> FitObjective::evaluate_residuals(const mumufit::Parameters& params) {
     evaluate(params);
 
     std::vector<double> result = experimental_array(); // init result with experimental data values
@@ -103,136 +91,113 @@ std::vector<double> FitObjective::evaluate_residuals(const Fit::Parameters& para
     return result;
 }
 
-size_t FitObjective::numberOfFitElements() const
-{
+size_t FitObjective::numberOfFitElements() const {
     return std::accumulate(
         m_fit_objects.begin(), m_fit_objects.end(), 0u,
         [](size_t acc, auto& obj) -> size_t { return acc + obj.numberOfFitElements(); });
 }
 
 //! Returns simulation result in the form of SimulationResult.
-SimulationResult FitObjective::simulationResult(size_t i_item) const
-{
+SimulationResult FitObjective::simulationResult(size_t i_item) const {
     return dataPair(i_item).simulationResult();
 }
 
 //! Returns experimental data in the form of SimulationResult.
-SimulationResult FitObjective::experimentalData(size_t i_item) const
-{
+SimulationResult FitObjective::experimentalData(size_t i_item) const {
     return dataPair(i_item).experimentalData();
 }
 
 //! Returns experimental data uncertainties in the form of SimulationResult.
-SimulationResult FitObjective::uncertaintyData(size_t i_item) const
-{
+SimulationResult FitObjective::uncertaintyData(size_t i_item) const {
     return dataPair(i_item).uncertainties();
 }
 
 //! Returns relative difference between simulation and experimental data
 //! in the form of SimulationResult.
-SimulationResult FitObjective::relativeDifference(size_t i_item) const
-{
+SimulationResult FitObjective::relativeDifference(size_t i_item) const {
     return dataPair(i_item).relativeDifference();
 }
 
 //! Returns absolute value of difference between simulation and experimental data
 //! in the form of SimulationResult.
-SimulationResult FitObjective::absoluteDifference(size_t i_item) const
-{
+SimulationResult FitObjective::absoluteDifference(size_t i_item) const {
     return dataPair(i_item).absoluteDifference();
 }
 
 //! Returns one dimensional array representing merged experimental data.
 //! The area outside of the region of interest is not included, masked data is nullified.
-std::vector<double> FitObjective::experimental_array() const
-{
+std::vector<double> FitObjective::experimental_array() const {
     return composeArray(&SimDataPair::experimental_array);
 }
 
 //! Returns one dimensional array representing merged simulated intensities data.
 //! The area outside of the region of interest is not included, masked data is nullified.
-std::vector<double> FitObjective::simulation_array() const
-{
+std::vector<double> FitObjective::simulation_array() const {
     return composeArray(&SimDataPair::simulation_array);
 }
 
 //! Returns one-dimensional array representing merged data uncertainties.
 //! The area outside of the region of interest is not included, masked data is nullified.
-std::vector<double> FitObjective::uncertainties() const
-{
+std::vector<double> FitObjective::uncertainties() const {
     return composeArray(&SimDataPair::uncertainties_array);
 }
 
 //! Returns one-dimensional array representing merged user weights.
 //! The area outside of the region of interest is not included, masked data is nullified.
-std::vector<double> FitObjective::weights_array() const
-{
+std::vector<double> FitObjective::weights_array() const {
     return composeArray(&SimDataPair::user_weights_array);
 }
 
-const SimDataPair& FitObjective::dataPair(size_t i_item) const
-{
+const SimDataPair& FitObjective::dataPair(size_t i_item) const {
     return m_fit_objects[check_index(i_item)];
 }
 
-void FitObjective::initPrint(int every_nth)
-{
+void FitObjective::initPrint(int every_nth) {
     m_fit_status->initPrint(every_nth);
 }
 
-void FitObjective::initPlot(int every_nth, fit_observer_t observer)
-{
+void FitObjective::initPlot(int every_nth, fit_observer_t observer) {
     m_fit_status->addObserver(every_nth, observer);
 }
 
-void FitObjective::initPlot(int every_nth, PyObserverCallback& callback)
-{
+void FitObjective::initPlot(int every_nth, PyObserverCallback& callback) {
     fit_observer_t observer = [&](const FitObjective& objective) { callback.update(objective); };
     m_fit_status->addObserver(every_nth, observer);
 }
 
-bool FitObjective::isCompleted() const
-{
+bool FitObjective::isCompleted() const {
     return m_fit_status->isCompleted();
 }
 
-IterationInfo FitObjective::iterationInfo() const
-{
+IterationInfo FitObjective::iterationInfo() const {
     return m_fit_status->iterationInfo();
 }
 
-Fit::MinimizerResult FitObjective::minimizerResult() const
-{
+mumufit::MinimizerResult FitObjective::minimizerResult() const {
     return m_fit_status->minimizerResult();
 }
 
-void FitObjective::finalize(const Fit::MinimizerResult& result)
-{
+void FitObjective::finalize(const mumufit::MinimizerResult& result) {
     m_fit_status->finalize(result);
 }
 
-unsigned FitObjective::fitObjectCount() const
-{
+unsigned FitObjective::fitObjectCount() const {
     return static_cast<unsigned>(m_fit_objects.size());
 }
 
-void FitObjective::interruptFitting()
-{
+void FitObjective::interruptFitting() {
     m_fit_status->setInterrupted();
 }
 
-bool FitObjective::isInterrupted() const
-{
+bool FitObjective::isInterrupted() const {
     return m_fit_status->isInterrupted();
 }
 
-bool FitObjective::isFirstIteration() const
-{
+bool FitObjective::isFirstIteration() const {
     return iterationInfo().iterationCount() == 1;
 }
 
-void FitObjective::run_simulations(const Fit::Parameters& params)
-{
+void FitObjective::run_simulations(const mumufit::Parameters& params) {
     if (m_fit_status->isInterrupted())
         throw std::runtime_error("Fitting was interrupted by the user.");
 
@@ -244,8 +209,7 @@ void FitObjective::run_simulations(const Fit::Parameters& params)
         obj.runSimulation(params);
 }
 
-void FitObjective::setChiSquaredModule(const IChiSquaredModule& module)
-{
+void FitObjective::setChiSquaredModule(const IChiSquaredModule& module) {
     std::cout << "Warning in FitObjective::setChiSquaredModule: setChiSquaredModule is deprecated "
                  "and will be removed in future versions. Please use "
                  "FitObjective::setObjectiveMetric instead."
@@ -255,32 +219,27 @@ void FitObjective::setChiSquaredModule(const IChiSquaredModule& module)
     m_metric_module = std::make_unique<ChiModuleWrapper>(std::move(chi_module));
 }
 
-void FitObjective::setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric)
-{
+void FitObjective::setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric) {
     m_metric_module = std::make_unique<ObjectiveMetricWrapper>(std::move(metric));
 }
 
-void FitObjective::setObjectiveMetric(const std::string& metric)
-{
+void FitObjective::setObjectiveMetric(const std::string& metric) {
     m_metric_module = std::make_unique<ObjectiveMetricWrapper>(
         ObjectiveMetricUtils::createMetric(metric, ObjectiveMetricUtils::defaultNormName()));
 }
 
-void FitObjective::setObjectiveMetric(const std::string& metric, const std::string& norm)
-{
+void FitObjective::setObjectiveMetric(const std::string& metric, const std::string& norm) {
     m_metric_module =
         std::make_unique<ObjectiveMetricWrapper>(ObjectiveMetricUtils::createMetric(metric, norm));
 }
 
 //! Returns true if the specified DataPair element contains uncertainties
-bool FitObjective::containsUncertainties(size_t i_item) const
-{
+bool FitObjective::containsUncertainties(size_t i_item) const {
     return dataPair(i_item).containsUncertainties();
 }
 
 //! Returns true if all the data pairs in FitObjective instance contain uncertainties
-bool FitObjective::allPairsHaveUncertainties() const
-{
+bool FitObjective::allPairsHaveUncertainties() const {
     bool result = true;
     for (size_t i = 0, size = fitObjectCount(); i < size; ++i)
         result = result && dataPair(i).containsUncertainties();
@@ -288,13 +247,11 @@ bool FitObjective::allPairsHaveUncertainties() const
 }
 
 //! Returns available metrics and norms
-std::string FitObjective::availableMetricOptions()
-{
+std::string FitObjective::availableMetricOptions() {
     return ObjectiveMetricUtils::availableMetricOptions();
 }
 
-std::vector<double> FitObjective::composeArray(DataPairAccessor getter) const
-{
+std::vector<double> FitObjective::composeArray(DataPairAccessor getter) const {
     const size_t n_objs = m_fit_objects.size();
     if (n_objs == 0)
         return {};
@@ -310,8 +267,7 @@ std::vector<double> FitObjective::composeArray(DataPairAccessor getter) const
     return result;
 }
 
-size_t FitObjective::check_index(size_t index) const
-{
+size_t FitObjective::check_index(size_t index) const {
     if (index >= m_fit_objects.size())
         throw std::runtime_error("FitObjective::check_index() -> Index outside of range");
     return index;
@@ -322,14 +278,12 @@ size_t FitObjective::check_index(size_t index) const
 IMetricWrapper::~IMetricWrapper() = default;
 
 ChiModuleWrapper::ChiModuleWrapper(std::unique_ptr<IChiSquaredModule> module)
-    : IMetricWrapper(), m_module(std::move(module))
-{
+    : IMetricWrapper(), m_module(std::move(module)) {
     if (!m_module)
         throw std::runtime_error("Error in ChiModuleWrapper: empty chi square module passed");
 }
 
-double ChiModuleWrapper::compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const
-{
+double ChiModuleWrapper::compute(const std::vector<SimDataPair>& fit_objects, size_t n_pars) const {
     size_t n_points = 0;
     double result = 0.0;
     for (auto& obj : fit_objects) {
@@ -352,14 +306,12 @@ double ChiModuleWrapper::compute(const std::vector<SimDataPair>& fit_objects, si
 }
 
 ObjectiveMetricWrapper::ObjectiveMetricWrapper(std::unique_ptr<ObjectiveMetric> module)
-    : IMetricWrapper(), m_module(std::move(module))
-{
+    : IMetricWrapper(), m_module(std::move(module)) {
     if (!m_module)
         throw std::runtime_error("Error in ObjectiveMetricWrapper: empty objective metric passed");
 }
 
-double ObjectiveMetricWrapper::compute(const std::vector<SimDataPair>& fit_objects, size_t) const
-{
+double ObjectiveMetricWrapper::compute(const std::vector<SimDataPair>& fit_objects, size_t) const {
     // deciding whether to use uncertainties in metrics computation.
     bool use_uncertainties = true;
     for (auto& obj : fit_objects)

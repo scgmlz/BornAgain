@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAPROPERTIES_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DATAPROPERTIES_H
@@ -22,8 +22,7 @@ class DataItem;
 //! Implements a link to DataItem. If path name
 //! of a DataItem changes, the link becomes invalid.
 //! Also serves as a base for Data1DProperties
-class BA_CORE_API_ DataProperties : public SessionItem
-{
+class BA_CORE_API_ DataProperties : public SessionItem {
 public:
     static const QString P_DATALINK;
 
@@ -35,8 +34,7 @@ protected:
 };
 
 //! Holds data required for 1D DataItem representation
-class BA_CORE_API_ Data1DProperties : public DataProperties
-{
+class BA_CORE_API_ Data1DProperties : public DataProperties {
 public:
     static const QString P_COLOR;
 

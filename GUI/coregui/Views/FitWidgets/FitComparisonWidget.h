@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITCOMPARISONWIDGET_H
@@ -32,8 +32,7 @@ class FitComparisonController2D;
 //! The FitComparisonWidget class plots realdata, simulated data and relative difference map
 //! during the course of the fit.
 
-class BA_CORE_API_ FitComparisonWidget : public SessionItemWidget
-{
+class FitComparisonWidget : public SessionItemWidget {
     Q_OBJECT
 
 public:

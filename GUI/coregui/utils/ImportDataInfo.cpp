@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,20 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "GUI/coregui/utils/ImportDataInfo.h"
-#include "Core/Intensity/AxisNames.h"
-#include "Core/Intensity/OutputData.h"
+#include "Device/Data/OutputData.h"
+#include "Device/Unit/AxisNames.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-namespace
-{
-std::vector<AxesUnits> specularUnits()
-{
-    std::vector<AxesUnits> result;
+namespace {
+std::vector<Axes::Units> specularUnits() {
+    std::vector<Axes::Units> result;
     const auto units_map = AxisNames::InitSpecAxis();
     for (auto& pair : units_map)
         result.push_back(pair.first);
@@ -31,68 +28,59 @@ std::vector<AxesUnits> specularUnits()
 }
 
 // map: data rank --> available units
-std::map<size_t, std::vector<AxesUnits>> available_units = {{1u, specularUnits()},
-                                                            {2u, {AxesUnits::NBINS}}};
+std::map<size_t, std::vector<Axes::Units>> available_units = {{1u, specularUnits()},
+                                                              {2u, {Axes::Units::NBINS}}};
 } // namespace
 
-ImportDataInfo::ImportDataInfo() {}
+ImportDataInfo::ImportDataInfo() = default;
 
 ImportDataInfo::ImportDataInfo(ImportDataInfo&& other)
-    : m_data(std::move(other.m_data)), m_units(other.m_units)
-{
-}
+    : m_data(std::move(other.m_data)), m_units(other.m_units) {}
 
-ImportDataInfo::ImportDataInfo(std::unique_ptr<OutputData<double>> data, AxesUnits units)
-    : m_data(units == AxesUnits::NBINS && data ? ImportDataUtils::CreateSimplifiedOutputData(*data)
-                                               : std::move(data)),
-      m_units(units)
-{
+ImportDataInfo::ImportDataInfo(std::unique_ptr<OutputData<double>> data, Axes::Units units)
+    : m_data(units == Axes::Units::NBINS && data
+                 ? ImportDataUtils::CreateSimplifiedOutputData(*data)
+                 : std::move(data))
+    , m_units(units) {
     checkValidity();
 }
 
 ImportDataInfo::ImportDataInfo(std::unique_ptr<OutputData<double>> data, const QString& units_label)
-    : m_data(std::move(data)), m_units(JobItemUtils::axesUnitsFromName(units_label))
-{
+    : m_data(std::move(data)), m_units(JobItemUtils::axesUnitsFromName(units_label)) {
     checkValidity();
 }
 
 ImportDataInfo::~ImportDataInfo() = default;
 
-ImportDataInfo::operator bool() const
-{
+ImportDataInfo::operator bool() const {
     return static_cast<bool>(m_data);
 }
 
-std::unique_ptr<OutputData<double>> ImportDataInfo::intensityData() const&
-{
+std::unique_ptr<OutputData<double>> ImportDataInfo::intensityData() const& {
     if (!m_data)
         return nullptr;
     return std::unique_ptr<OutputData<double>>(m_data->clone());
 }
 
-std::unique_ptr<OutputData<double>> ImportDataInfo::intensityData() &&
-{
+std::unique_ptr<OutputData<double>> ImportDataInfo::intensityData() && {
     return std::move(m_data);
 }
 
-size_t ImportDataInfo::dataRank() const
-{
+size_t ImportDataInfo::dataRank() const {
     if (!m_data)
         return 0;
-    return m_data->getRank();
+    return m_data->rank();
 }
 
-QString ImportDataInfo::unitsLabel() const
-{
+QString ImportDataInfo::unitsLabel() const {
     return JobItemUtils::nameFromAxesUnits(m_units);
 }
 
-QString ImportDataInfo::axisLabel(size_t axis_index) const
-{
+QString ImportDataInfo::axisLabel(size_t axis_index) const {
     if (!m_data)
         return "";
 
-    const size_t rank = m_data->getRank();
+    const size_t rank = m_data->rank();
     if (rank == 2)
         return axis_index == 0 ? "X [nbins]" : "Y [nbins]";
     else if (rank == 1) {
@@ -105,11 +93,10 @@ QString ImportDataInfo::axisLabel(size_t axis_index) const
     throw GUIHelpers::Error("Error in ImportDataInfo::axisLabel: unsupported data type");
 }
 
-void ImportDataInfo::checkValidity()
-{
+void ImportDataInfo::checkValidity() {
     if (!m_data)
         return;
-    auto iter = available_units.find(m_data->getRank());
+    auto iter = available_units.find(m_data->rank());
     if (iter == available_units.end())
         throw GUIHelpers::Error("Error in ImportDataInfo constructor: unsupported data type");
     for (auto& value : iter->second)

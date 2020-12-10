@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,10 +10,9 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/JobItem.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/Data1DViewItem.h"
 #include "GUI/coregui/Models/FitSuiteItem.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -47,11 +46,10 @@ const QString JobItem::T_OUTPUT = "Output tag";
 const QString JobItem::T_REALDATA = "Real Data tag";
 const QString JobItem::T_DATAVIEW = "Data View tag";
 const QString JobItem::T_PARAMETER_TREE = "Parameter tree tag";
-const QString JobItem::T_SIMULATION_OPTIONS = "Simulation options tag";
+const QString JobItem::T_SIMULATION_OPTIONS = "ISimulation options tag";
 const QString JobItem::T_FIT_SUITE = "Fit suite tag";
 
-JobItem::JobItem() : SessionItem("JobItem")
-{
+JobItem::JobItem() : SessionItem("JobItem") {
     setItemName("JobItem");
     addProperty(P_IDENTIFIER, QString())->setVisible(false);
     addProperty(P_SAMPLE_NAME, QString())->setEditable(false);
@@ -75,7 +73,7 @@ JobItem::JobItem() : SessionItem("JobItem")
     registerTag(T_MATERIAL_CONTAINER, 1, 1, QStringList{"MaterialContainer"});
     registerTag(T_INSTRUMENT, 1, 1,
                 QStringList() << "GISASInstrument"
-                              << "OffSpecInstrument"
+                              << "OffSpecularInstrument"
                               << "SpecularInstrument"
                               << "DepthProbeInstrument");
     registerTag(T_OUTPUT, 1, 1,
@@ -101,33 +99,27 @@ JobItem::JobItem() : SessionItem("JobItem")
     });
 }
 
-QString JobItem::getIdentifier() const
-{
+QString JobItem::getIdentifier() const {
     return getItemValue(P_IDENTIFIER).toString();
 }
 
-void JobItem::setIdentifier(const QString& identifier)
-{
+void JobItem::setIdentifier(const QString& identifier) {
     setItemValue(JobItem::P_IDENTIFIER, identifier);
 }
 
-IntensityDataItem* JobItem::intensityDataItem()
-{
+IntensityDataItem* JobItem::intensityDataItem() {
     return dynamic_cast<IntensityDataItem*>(getItem(T_OUTPUT));
 }
 
-DataItem* JobItem::dataItem()
-{
+DataItem* JobItem::dataItem() {
     return dynamic_cast<DataItem*>(getItem(T_OUTPUT));
 }
 
-QString JobItem::getStatus() const
-{
+QString JobItem::getStatus() const {
     return getItemValue(P_STATUS).toString();
 }
 
-void JobItem::setStatus(const QString& status)
-{
+void JobItem::setStatus(const QString& status) {
     setItemValue(P_STATUS, status);
     if (status == "Failed") {
         if (DataItem* intensityItem = dataItem()) {
@@ -138,144 +130,118 @@ void JobItem::setStatus(const QString& status)
     }
 }
 
-bool JobItem::isIdle() const
-{
+bool JobItem::isIdle() const {
     return getStatus() == "Idle";
 }
 
-bool JobItem::isRunning() const
-{
+bool JobItem::isRunning() const {
     return getStatus() == "Running";
 }
 
-bool JobItem::isCompleted() const
-{
+bool JobItem::isCompleted() const {
     return getStatus() == "Completed";
 }
 
-bool JobItem::isCanceled() const
-{
+bool JobItem::isCanceled() const {
     return getStatus() == "Canceled";
 }
 
-bool JobItem::isFailed() const
-{
+bool JobItem::isFailed() const {
     return getStatus() == "Failed";
 }
 
-bool JobItem::isValidForFitting()
-{
-    return isTag(T_REALDATA) && getItem(T_REALDATA) ? true : false;
+bool JobItem::isValidForFitting() {
+    return isTag(T_REALDATA) && getItem(T_REALDATA);
 }
 
-void JobItem::setBeginTime(const QString& begin_time)
-{
+void JobItem::setBeginTime(const QString& begin_time) {
     setItemValue(P_BEGIN_TIME, begin_time);
 }
 
-void JobItem::setEndTime(const QString& end_time)
-{
+void JobItem::setEndTime(const QString& end_time) {
     setItemValue(P_END_TIME, end_time);
 }
 
 // Sets duration (msec -> "sec.msec")
-void JobItem::setDuration(int duration)
-{
+void JobItem::setDuration(int duration) {
     QString str;
     if (duration != 0)
         str = QString("%7.3f").arg(duration / 1000.);
     setItemValue(P_DURATION, str.simplified());
 }
 
-QString JobItem::getComments() const
-{
+QString JobItem::getComments() const {
     return getItemValue(P_COMMENTS).toString();
 }
 
-void JobItem::setComments(const QString& comments)
-{
+void JobItem::setComments(const QString& comments) {
     setItemValue(P_COMMENTS, comments);
 }
 
-int JobItem::getProgress() const
-{
+int JobItem::getProgress() const {
     return getItemValue(P_PROGRESS).toInt();
 }
 
-void JobItem::setProgress(int progress)
-{
+void JobItem::setProgress(int progress) {
     setItemValue(P_PROGRESS, progress);
 }
 
-bool JobItem::runImmediately() const
-{
+bool JobItem::runImmediately() const {
     return simulationOptionsItem()->runImmediately();
 }
 
-bool JobItem::runInBackground() const
-{
+bool JobItem::runInBackground() const {
     return simulationOptionsItem()->runInBackground();
 }
 
-MultiLayerItem* JobItem::multiLayerItem()
-{
+MultiLayerItem* JobItem::multiLayerItem() {
     return dynamic_cast<MultiLayerItem*>(getItem(T_SAMPLE));
 }
 
-InstrumentItem* JobItem::instrumentItem()
-{
+InstrumentItem* JobItem::instrumentItem() {
     return dynamic_cast<InstrumentItem*>(getItem(T_INSTRUMENT));
 }
 
-void JobItem::setResults(const Simulation* simulation)
-{
+void JobItem::setResults(const ISimulation* simulation) {
     JobItemUtils::setResults(dataItem(), simulation);
     updateIntensityDataFileName();
 }
 
-FitSuiteItem* JobItem::fitSuiteItem()
-{
+FitSuiteItem* JobItem::fitSuiteItem() {
     return dynamic_cast<FitSuiteItem*>(getItem(JobItem::T_FIT_SUITE));
 }
 
-ParameterContainerItem* JobItem::parameterContainerItem()
-{
+ParameterContainerItem* JobItem::parameterContainerItem() {
     return const_cast<ParameterContainerItem*>(
         static_cast<const JobItem*>(this)->parameterContainerItem());
 }
 
-const ParameterContainerItem* JobItem::parameterContainerItem() const
-{
+const ParameterContainerItem* JobItem::parameterContainerItem() const {
     return dynamic_cast<ParameterContainerItem*>(getItem(JobItem::T_PARAMETER_TREE));
 }
 
-FitParameterContainerItem* JobItem::fitParameterContainerItem()
-{
+FitParameterContainerItem* JobItem::fitParameterContainerItem() {
     if (FitSuiteItem* item = fitSuiteItem())
         return item->fitParameterContainerItem();
 
     return nullptr;
 }
 
-RealDataItem* JobItem::realDataItem()
-{
+RealDataItem* JobItem::realDataItem() {
     return dynamic_cast<RealDataItem*>(getItem(JobItem::T_REALDATA));
 }
 
-const MaterialItemContainer* JobItem::materialContainerItem() const
-{
+const MaterialItemContainer* JobItem::materialContainerItem() const {
     return static_cast<MaterialItemContainer*>(getItem(JobItem::T_MATERIAL_CONTAINER));
 }
 
-Data1DViewItem* JobItem::dataItemView()
-{
+Data1DViewItem* JobItem::dataItemView() {
     return dynamic_cast<Data1DViewItem*>(getItem(JobItem::T_DATAVIEW));
 }
 
 //! Updates the name of file to store intensity data.
 
-void JobItem::updateIntensityDataFileName()
-{
+void JobItem::updateIntensityDataFileName() {
     if (DataItem* item = dataItem())
         item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::jobResultsFileName(*this));
 
@@ -290,13 +256,11 @@ void JobItem::updateIntensityDataFileName()
     }
 }
 
-SimulationOptionsItem* JobItem::simulationOptionsItem()
-{
+SimulationOptionsItem* JobItem::simulationOptionsItem() {
     return const_cast<SimulationOptionsItem*>(
         static_cast<const JobItem*>(this)->simulationOptionsItem());
 }
 
-const SimulationOptionsItem* JobItem::simulationOptionsItem() const
-{
+const SimulationOptionsItem* JobItem::simulationOptionsItem() const {
     return &item<const SimulationOptionsItem>(T_SIMULATION_OPTIONS);
 }

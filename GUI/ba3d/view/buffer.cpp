@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,22 +10,19 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/ba3d/view/buffer.h"
-#include "../model/geometry.h"
+#include "GUI/ba3d/model/geometry.h"
 
-namespace
-{
+namespace {
 const float cx = 120; // multiplication scale for controlling how long the axes shall be in xy
 const float cz = 100; // multiplication scale for controlling how long the axes shall be in z
 } // namespace
 
-namespace RealSpace
-{
+namespace RealSpace {
 
-Buffer::Buffer(Geometry const& geometry)
-{
+Buffer::Buffer(Geometry const& geometry) {
     initializeOpenGLFunctions();
 
     auto& mesh = geometry.m_mesh;
@@ -45,14 +42,12 @@ Buffer::Buffer(Geometry const& geometry)
                           reinterpret_cast<void*>(sizeof(Vector3D)));
 }
 
-void Buffer::draw()
-{
+void Buffer::draw() {
     QOpenGLVertexArrayObject::Binder __(&m_vao);
     glDrawArrays(GL_TRIANGLES, 0, m_vertexCount);
 }
 
-Buffer3DAxes::Buffer3DAxes()
-{
+Buffer3DAxes::Buffer3DAxes() {
     initializeOpenGLFunctions();
 
     QOpenGLVertexArrayObject::Binder __(&m_vao3DAxes);
@@ -104,8 +99,7 @@ Buffer3DAxes::Buffer3DAxes()
                           reinterpret_cast<void*>(3 * sizeof(float)));
 }
 
-void Buffer3DAxes::draw3DAxes()
-{
+void Buffer3DAxes::draw3DAxes() {
     QOpenGLVertexArrayObject::Binder __(&m_vao3DAxes);
     glLineWidth(1.4f);
     glDrawArrays(GL_LINES, 0, m_vertexCount3DAxes);

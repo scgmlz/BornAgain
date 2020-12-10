@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLETOOLBAR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_SAMPLETOOLBAR_H
@@ -29,8 +29,7 @@ class SampleViewActions;
 
 //! The SampleToolBar class represents a main toolbar on top of SampleView window
 
-class BA_CORE_API_ SampleToolBar : public StyledToolBar
-{
+class SampleToolBar : public StyledToolBar {
     Q_OBJECT
 
 public:

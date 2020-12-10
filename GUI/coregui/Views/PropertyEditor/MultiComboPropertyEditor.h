@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_MULTICOMBOPROPERTYEDITOR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_MULTICOMBOPROPERTYEDITOR_H
@@ -25,8 +25,7 @@ class QStyleOptionViewItem;
 
 //! Provides custom editor for ComboProperty with multi-select option.
 
-class BA_CORE_API_ MultiComboPropertyEditor : public CustomEditor
-{
+class MultiComboPropertyEditor : public CustomEditor {
     Q_OBJECT
 public:
     explicit MultiComboPropertyEditor(QWidget* parent = nullptr);
@@ -57,8 +56,7 @@ private:
 
 //! Provides custom style delegate for QComboBox to allow checkboxes.
 
-class QCheckListStyledItemDelegate : public QStyledItemDelegate
-{
+class QCheckListStyledItemDelegate : public QStyledItemDelegate {
 public:
     QCheckListStyledItemDelegate(QObject* parent = nullptr);
 

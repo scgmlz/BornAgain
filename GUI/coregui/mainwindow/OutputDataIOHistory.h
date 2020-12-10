@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_OUTPUTDATAIOHISTORY_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_OUTPUTDATAIOHISTORY_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QDateTime>
 #include <QMap>
 #include <QVector>
@@ -24,8 +23,7 @@ class SaveLoadInterface;
 
 //! Holds information about last save for items with non-XML data.
 
-class BA_CORE_API_ OutputDataSaveInfo
-{
+class OutputDataSaveInfo {
 public:
     OutputDataSaveInfo() : m_data(nullptr) {}
 
@@ -47,8 +45,7 @@ private:
 
 //! Save history information for collection of items with non-XML data.
 
-class BA_CORE_API_ OutputDataDirHistory
-{
+class OutputDataDirHistory {
 public:
     OutputDataDirHistory() {}
 
@@ -68,8 +65,7 @@ private:
 
 //! Save history information for set of directories.
 
-class BA_CORE_API_ OutputDataIOHistory
-{
+class OutputDataIOHistory {
 public:
     bool hasHistory(const QString& dirname) const;
 

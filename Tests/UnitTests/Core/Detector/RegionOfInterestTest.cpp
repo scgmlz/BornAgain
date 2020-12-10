@@ -1,17 +1,13 @@
-#include "Core/Detector/RegionOfInterest.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Detector/SphericalDetector.h"
+#include "Device/Detector/RegionOfInterest.h"
+#include "Device/Detector/SphericalDetector.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-class RegionOfInterestTest : public ::testing::Test
-{
-};
+class RegionOfInterestTest : public ::testing::Test {};
 
 //! Testing region of interest with reasonable area within the detector.
 
-TEST_F(RegionOfInterestTest, constructor)
-{
+TEST_F(RegionOfInterestTest, constructor) {
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("axis0", 8, -3.0, 5.0));
     detector.addAxis(FixedBinAxis("axis1", 4, 0.0, 4.0));
@@ -34,7 +30,7 @@ TEST_F(RegionOfInterestTest, constructor)
     EXPECT_EQ(roi.roiIndex(9), 2u);
     EXPECT_EQ(roi.roiIndex(21), 8u);
     EXPECT_EQ(roi.roiIndex(22), 9u);
-    EXPECT_THROW(roi.roiIndex(23), Exceptions::RuntimeErrorException);
+    EXPECT_THROW(roi.roiIndex(23), std::runtime_error);
 
     // converting local ro index to global detector index
     EXPECT_EQ(roi.detectorIndex(0), 5u);
@@ -45,8 +41,7 @@ TEST_F(RegionOfInterestTest, constructor)
 
 //! Testing region of interest which is larger than the detector.
 
-TEST_F(RegionOfInterestTest, largeArea)
-{
+TEST_F(RegionOfInterestTest, largeArea) {
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("axis0", 8, -3.0, 5.0));
     detector.addAxis(FixedBinAxis("axis1", 4, 0.0, 4.0));
@@ -72,8 +67,7 @@ TEST_F(RegionOfInterestTest, largeArea)
 
 //! Testing clone
 
-TEST_F(RegionOfInterestTest, clone)
-{
+TEST_F(RegionOfInterestTest, clone) {
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("axis0", 8, -3.0, 5.0));
     detector.addAxis(FixedBinAxis("axis1", 4, 0.0, 4.0));
@@ -99,7 +93,7 @@ TEST_F(RegionOfInterestTest, clone)
     EXPECT_EQ(clone->roiIndex(9), 2u);
     EXPECT_EQ(clone->roiIndex(21), 8u);
     EXPECT_EQ(clone->roiIndex(22), 9u);
-    EXPECT_THROW(clone->roiIndex(23), Exceptions::RuntimeErrorException);
+    EXPECT_THROW(clone->roiIndex(23), std::runtime_error);
 
     // converting local ro index to global detector index
     EXPECT_EQ(clone->detectorIndex(0), 5u);

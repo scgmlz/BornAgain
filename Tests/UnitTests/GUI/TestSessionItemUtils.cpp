@@ -1,19 +1,15 @@
 #include "GUI/coregui/Models/ComboProperty.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionItemUtils.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestSessionItemUtils : public ::testing::Test
-{
-};
+class TestSessionItemUtils : public ::testing::Test {};
 
 //! Test SessionItemUtils::ParentVisibleRow utility method.
 
-TEST_F(TestSessionItemUtils, test_ParentVisibleRow)
-{
+TEST_F(TestSessionItemUtils, test_ParentVisibleRow) {
     SessionModel model("TestModel");
 
     // 3 property items in root, all visible
@@ -53,8 +49,7 @@ TEST_F(TestSessionItemUtils, test_ParentVisibleRow)
 
 //! Comparing types of variant.
 
-TEST_F(TestSessionItemUtils, VariantType)
-{
+TEST_F(TestSessionItemUtils, VariantType) {
     EXPECT_TRUE(SessionItemUtils::VariantType(QVariant::fromValue(1.0))
                 == SessionItemUtils::VariantType(QVariant::fromValue(2.0)));
     EXPECT_FALSE(SessionItemUtils::VariantType(QVariant::fromValue(1.0))
@@ -88,8 +83,7 @@ TEST_F(TestSessionItemUtils, VariantType)
 
 //! Comparing types of variant.
 
-TEST_F(TestSessionItemUtils, CompatibleVariantTypes)
-{
+TEST_F(TestSessionItemUtils, CompatibleVariantTypes) {
     QVariant undefined;
     QVariant comboProperty = QVariant::fromValue(ComboProperty());
     QVariant externProperty = QVariant::fromValue(ExternalProperty());
@@ -109,8 +103,7 @@ TEST_F(TestSessionItemUtils, CompatibleVariantTypes)
 
 //! Test variant equality reported by SessionItemUtils::isTheSame
 
-TEST_F(TestSessionItemUtils, IsTheSameVariant)
-{
+TEST_F(TestSessionItemUtils, IsTheSameVariant) {
     // comparing undefined variants
     QVariant v1, v2;
     EXPECT_TRUE(SessionItemUtils::IsTheSame(v1, v2));

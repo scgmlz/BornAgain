@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,21 +10,24 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H
 #define BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H
 
 #include "Fit/Tools/WallclockTimer.h"
-#include "Wrap/WinDllMacros.h"
 #include <string>
 
 class FitObjective;
 
 //! Prints fit statistics to standard output during minimizer iterations.
 
-class BA_CORE_API_ FitPrintService
-{
+class FitPrintService {
 public:
     FitPrintService();
 
@@ -41,3 +44,4 @@ private:
 };
 
 #endif // BORNAGAIN_CORE_FITTING_FITPRINTSERVICE_H
+#endif // USER_API

@@ -7,8 +7,7 @@
 #include "GUI/coregui/Models/VectorItem.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-namespace
-{
+namespace {
 const QStringList expectedParticleParameterNames = {
     "Particle/Cylinder/Radius",   "Particle/Cylinder/Height",   "Particle/Abundance",
     "Particle/Position Offset/X", "Particle/Position Offset/Y", "Particle/Position Offset/Z"};
@@ -19,14 +18,11 @@ const QStringList expectedParticleParameterTranslations = {
 
 } // namespace
 
-class TestParameterTreeUtils : public ::testing::Test
-{
-};
+class TestParameterTreeUtils : public ::testing::Test {};
 
 //! Tests parameter names of given item.
 
-TEST_F(TestParameterTreeUtils, test_parameterTreeNames)
-{
+TEST_F(TestParameterTreeUtils, test_parameterTreeNames) {
     SampleModel model;
 
     SessionItem* layer = model.insertNewItem("Layer");
@@ -38,8 +34,7 @@ TEST_F(TestParameterTreeUtils, test_parameterTreeNames)
 
 //! Tests translated parameter names of given item.
 
-TEST_F(TestParameterTreeUtils, test_parameterTranslatedNames)
-{
+TEST_F(TestParameterTreeUtils, test_parameterTranslatedNames) {
     SampleModel model;
 
     SessionItem* particle = model.insertNewItem("Particle");
@@ -50,8 +45,7 @@ TEST_F(TestParameterTreeUtils, test_parameterTranslatedNames)
 
 //! Tests translated parameter names of given item.
 
-TEST_F(TestParameterTreeUtils, test_linkItemFromParameterName)
-{
+TEST_F(TestParameterTreeUtils, test_linkItemFromParameterName) {
     SampleModel model;
 
     SessionItem* particle = model.insertNewItem("Particle");

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_MATERIALEDITORTOOLBAR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MATERIALEDITOR_MATERIALEDITORTOOLBAR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QToolBar>
 
 class QAction;
@@ -26,8 +25,7 @@ class QMenu;
 
 //! Toolbar for MaterialEditor.
 
-class BA_CORE_API_ MaterialEditorToolBar : public QToolBar
-{
+class MaterialEditorToolBar : public QToolBar {
     Q_OBJECT
 public:
     MaterialEditorToolBar(MaterialModel* materialModel, QWidget* parent = nullptr);

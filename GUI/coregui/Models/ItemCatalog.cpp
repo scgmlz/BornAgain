@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ItemCatalog.h"
-#include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/BackgroundItems.h"
 #include "GUI/coregui/Models/BeamAngleItems.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/BeamWavelengthItem.h"
 #include "GUI/coregui/Models/Data1DViewItem.h"
 #include "GUI/coregui/Models/DataProperties.h"
 #include "GUI/coregui/Models/DataPropertyContainer.h"
 #include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
-#include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/FTDecayFunctionItems.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "GUI/coregui/Models/FitParameterItems.h"
@@ -30,7 +27,6 @@
 #include "GUI/coregui/Models/FootprintItems.h"
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/GroupItem.h"
-#include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/JobItem.h"
@@ -66,8 +62,7 @@
 #include "GUI/coregui/Models/VectorItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-ItemCatalog::ItemCatalog()
-{
+ItemCatalog::ItemCatalog() {
     add("MultiLayer", create_new<MultiLayerItem>);
     add("Layer", create_new<LayerItem>);
     add("ParticleLayout", create_new<ParticleLayoutItem>);
@@ -84,7 +79,7 @@ ItemCatalog::ItemCatalog()
     add("InterferenceHardDisk", create_new<InterferenceFunctionHardDiskItem>);
     add("InterferenceRadialParaCrystal", create_new<InterferenceFunctionRadialParaCrystalItem>);
     add("GISASInstrument", create_new<GISASInstrumentItem>);
-    add("OffSpecInstrument", create_new<OffSpecInstrumentItem>);
+    add("OffSpecularInstrument", create_new<OffSpecularInstrumentItem>);
     add("SpecularInstrument", create_new<SpecularInstrumentItem>);
     add("GISASBeam", create_new<GISASBeamItem>);
     add("SpecularBeam", create_new<SpecularBeamItem>);
@@ -167,9 +162,9 @@ ItemCatalog::ItemCatalog()
     add("FTDecayFunction2DGauss", create_new<FTDecayFunction2DGaussItem>);
     add("FTDecayFunction2DVoigt", create_new<FTDecayFunction2DVoigtItem>);
 
-    add("BasicLattice", create_new<BasicLatticeItem>);
-    add("SquareLattice", create_new<SquareLatticeItem>);
-    add("HexagonalLattice", create_new<HexagonalLatticeItem>);
+    add("BasicLattice2D", create_new<BasicLattice2DItem>);
+    add("SquareLattice2D", create_new<SquareLattice2DItem>);
+    add("HexagonalLattice2D", create_new<HexagonalLattice2DItem>);
 
     add("Material", create_new<MaterialItem>);
     add("MaterialContainer", create_new<MaterialItemContainer>);
@@ -244,8 +239,7 @@ ItemCatalog::ItemCatalog()
     add("DepthProbeInstrument", create_new<DepthProbeInstrumentItem>);
 }
 
-std::unique_ptr<SessionItem> ItemCatalog::createItemPtr(const QString& modelType) const
-{
+std::unique_ptr<SessionItem> ItemCatalog::createItemPtr(const QString& modelType) const {
     if (!m_data.contains(modelType))
         throw GUIHelpers::Error("ItemFactory::createItem() -> Error: Model name does not exist: "
                                 + modelType);
@@ -253,8 +247,7 @@ std::unique_ptr<SessionItem> ItemCatalog::createItemPtr(const QString& modelType
     return m_data.createItemPtr(modelType);
 }
 
-QStringList ItemCatalog::validTopItemTypes()
-{
+QStringList ItemCatalog::validTopItemTypes() {
     return {"MultiLayer",
             "Layer",
             "ParticleLayout",
@@ -272,7 +265,6 @@ QStringList ItemCatalog::validTopItemTypes()
             "InterferenceRadialParaCrystal"};
 }
 
-void ItemCatalog::add(const QString& modelType, std::function<SessionItem*()> f)
-{
+void ItemCatalog::add(const QString& modelType, std::function<SessionItem*()> f) {
     m_data.registerItem(modelType, f);
 }

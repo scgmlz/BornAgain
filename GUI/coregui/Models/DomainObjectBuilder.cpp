@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/DomainObjectBuilder.h"
-#include "Core/Basics/Units.h"
-#include "Core/Detector/IDetector2D.h"
-#include "Core/Intensity/SimpleUnitConverters.h"
-#include "Core/Intensity/UnitConverter1D.h"
+#include "Base/Const/Units.h"
+#include "Core/Scan/UnitConverter1D.h"
 #include "Core/Simulation/UnitConverterUtils.h"
+#include "Device/Detector/IDetector2D.h"
+#include "Device/Detector/SimpleUnitConverters.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
-#include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InterferenceFunctionItems.h"
 #include "GUI/coregui/Models/LayerItem.h"
 #include "GUI/coregui/Models/ParticleDistributionItem.h"
@@ -31,8 +29,8 @@
 #include "GUI/coregui/Models/TransformToDomain.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-std::unique_ptr<MultiLayer> DomainObjectBuilder::buildMultiLayer(const SessionItem& multilayer_item)
-{
+std::unique_ptr<MultiLayer>
+DomainObjectBuilder::buildMultiLayer(const SessionItem& multilayer_item) {
     auto P_multilayer = TransformToDomain::createMultiLayer(multilayer_item);
     QVector<SessionItem*> children = multilayer_item.children();
     for (int i = 0; i < children.size(); ++i) {
@@ -53,8 +51,7 @@ std::unique_ptr<MultiLayer> DomainObjectBuilder::buildMultiLayer(const SessionIt
     return P_multilayer;
 }
 
-std::unique_ptr<Layer> DomainObjectBuilder::buildLayer(const SessionItem& item)
-{
+std::unique_ptr<Layer> DomainObjectBuilder::buildLayer(const SessionItem& item) {
     auto P_layer = TransformToDomain::createLayer(item);
     QVector<SessionItem*> children = item.children();
     for (int i = 0; i < children.size(); ++i) {
@@ -68,8 +65,7 @@ std::unique_ptr<Layer> DomainObjectBuilder::buildLayer(const SessionItem& item)
     return P_layer;
 }
 
-std::unique_ptr<ParticleLayout> DomainObjectBuilder::buildParticleLayout(const SessionItem& item)
-{
+std::unique_ptr<ParticleLayout> DomainObjectBuilder::buildParticleLayout(const SessionItem& item) {
     auto P_layout = TransformToDomain::createParticleLayout(item);
     QVector<SessionItem*> children = item.getItems();
     for (int i = 0; i < children.size(); ++i) {
@@ -85,7 +81,7 @@ std::unique_ptr<ParticleLayout> DomainObjectBuilder::buildParticleLayout(const S
             QString par_name = prop.getValue();
             if (par_name == ParticleDistributionItem::NO_SELECTION) {
                 auto grandchildren = children[i]->getItems();
-                if (grandchildren.size() == 0) {
+                if (grandchildren.empty()) {
                     continue;
                 }
                 if (grandchildren.size() > 1) {
@@ -119,22 +115,19 @@ std::unique_ptr<ParticleLayout> DomainObjectBuilder::buildParticleLayout(const S
 }
 
 std::unique_ptr<IInterferenceFunction>
-DomainObjectBuilder::buildInterferenceFunction(const SessionItem& item)
-{
+DomainObjectBuilder::buildInterferenceFunction(const SessionItem& item) {
     auto iffItem = dynamic_cast<const InterferenceFunctionItem*>(&item);
     ASSERT(iffItem);
     return iffItem->createInterferenceFunction();
 }
 
 std::unique_ptr<Instrument>
-DomainObjectBuilder::buildInstrument(const InstrumentItem& instrumentItem)
-{
+DomainObjectBuilder::buildInstrument(const InstrumentItem& instrumentItem) {
     return instrumentItem.createInstrument();
 }
 
 std::unique_ptr<IUnitConverter>
-DomainObjectBuilder::createUnitConverter(const InstrumentItem* instrumentItem)
-{
+DomainObjectBuilder::createUnitConverter(const InstrumentItem* instrumentItem) {
     if (auto specular_instrument = dynamic_cast<const SpecularInstrumentItem*>(instrumentItem))
         return specular_instrument->createUnitConverter();
     else if (auto depth_instrument = dynamic_cast<const DepthProbeInstrumentItem*>(instrumentItem))
@@ -146,12 +139,12 @@ DomainObjectBuilder::createUnitConverter(const InstrumentItem* instrumentItem)
     if (instrumentItem->modelType() == "GISASInstrument")
         return UnitConverterUtils::createConverterForGISAS(*instrument);
 
-    if (instrumentItem->modelType() == "OffSpecInstrument") {
+    if (instrumentItem->modelType() == "OffSpecularInstrument") {
         auto axis_item = dynamic_cast<BasicAxisItem*>(
-            instrumentItem->getItem(OffSpecInstrumentItem::P_ALPHA_AXIS));
+            instrumentItem->getItem(OffSpecularInstrumentItem::P_ALPHA_AXIS));
         const auto detector2d = dynamic_cast<const IDetector2D*>(instrument->getDetector());
-        return std::make_unique<OffSpecularConverter>(*detector2d, instrument->getBeam(),
-                                                      *axis_item->createAxis(Units::degree));
+        return std::make_unique<OffSpecularConverter>(*detector2d, instrument->beam(),
+                                                      *axis_item->createAxis(Units::deg));
     }
 
     throw GUIHelpers::Error(

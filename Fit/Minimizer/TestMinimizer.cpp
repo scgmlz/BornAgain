@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,25 +10,22 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Fit/Minimizer/TestMinimizer.h"
-#include "Fit/Kernel/Parameters.h"
 #include <sstream>
 
-using namespace Fit;
+using namespace mumufit;
 
-TestMinimizer::TestMinimizer() {}
+TestMinimizer::TestMinimizer() = default;
 
 TestMinimizer::~TestMinimizer() = default;
 
-std::string TestMinimizer::minimizerName() const
-{
+std::string TestMinimizer::minimizerName() const {
     return "Test";
 }
 
-MinimizerResult TestMinimizer::minimize_scalar(fcn_scalar_t fcn, Fit::Parameters parameters)
-{
+MinimizerResult TestMinimizer::minimize_scalar(fcn_scalar_t fcn, mumufit::Parameters parameters) {
     // calling user function once
     auto min_value = fcn(parameters);
 

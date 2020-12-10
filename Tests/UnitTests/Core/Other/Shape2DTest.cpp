@@ -1,18 +1,15 @@
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
-#include "Core/Binning/Bin.h"
-#include "Core/Mask/Ellipse.h"
-#include "Core/Mask/Line.h"
-#include "Core/Mask/Rectangle.h"
+#include "Base/Axis/Bin.h"
+#include "Base/Const/Units.h"
+#include "Base/Math/Constants.h"
+#include "Device/Mask/Ellipse.h"
+#include "Device/Mask/Line.h"
+#include "Device/Mask/Rectangle.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-class Shape2DTest : public ::testing::Test
-{
-};
+class Shape2DTest : public ::testing::Test {};
 
-TEST_F(Shape2DTest, Rectangle)
-{
+TEST_F(Shape2DTest, Rectangle) {
     Rectangle rect(-4.0, -2.0, 4.0, 2.0);
     EXPECT_DOUBLE_EQ(32.0, rect.getArea());
     EXPECT_TRUE(rect.contains(0.0, 0.0));
@@ -42,8 +39,7 @@ TEST_F(Shape2DTest, Rectangle)
     EXPECT_FALSE(clone->contains(binx2, biny2));
 }
 
-TEST_F(Shape2DTest, Ellipse)
-{
+TEST_F(Shape2DTest, Ellipse) {
     Ellipse ellipse(10.0, 1.0, 8.0, 4.0);
     EXPECT_TRUE(ellipse.contains(10.0, 1.0));
     EXPECT_TRUE(ellipse.contains(18.0, 1.0));
@@ -55,7 +51,7 @@ TEST_F(Shape2DTest, Ellipse)
     EXPECT_FALSE(ellipse.contains(4.0, -2.0));
     EXPECT_TRUE(ellipse.contains(6.0, -2.0));
 
-    Ellipse ellipse2(10.0, 1.0, 8.0, 4.0, 45.0 * Units::degree);
+    Ellipse ellipse2(10.0, 1.0, 8.0, 4.0, 45.0 * Units::deg);
     EXPECT_TRUE(ellipse2.contains(10.0, 1.0));
     EXPECT_FALSE(ellipse2.contains(15.0, 0.0));
     EXPECT_TRUE(ellipse2.contains(7.0, 3.0));
@@ -66,8 +62,7 @@ TEST_F(Shape2DTest, Ellipse)
     EXPECT_TRUE(clone->contains(7.0, 3.0));
 }
 
-TEST_F(Shape2DTest, Line)
-{
+TEST_F(Shape2DTest, Line) {
     Line line(0.0, 0.0, 1.0, 0.0);
     EXPECT_TRUE(line.contains(0.0, 0.0));
     EXPECT_TRUE(line.contains(0.5, 0.0));
@@ -83,8 +78,7 @@ TEST_F(Shape2DTest, Line)
     EXPECT_FALSE(clone->contains(Bin1D(0.51, 1.0), Bin1D(0.0, 0.49)));
 }
 
-TEST_F(Shape2DTest, VerticalLine)
-{
+TEST_F(Shape2DTest, VerticalLine) {
     VerticalLine line(1.0);
     EXPECT_TRUE(line.contains(1.0, 0.0));
     EXPECT_FALSE(line.contains(1.01, 0.0));
@@ -93,8 +87,7 @@ TEST_F(Shape2DTest, VerticalLine)
     EXPECT_FALSE(line.contains(Bin1D(1.01, 2.0), Bin1D(0.0, 1.0)));
 }
 
-TEST_F(Shape2DTest, HorizontalLine)
-{
+TEST_F(Shape2DTest, HorizontalLine) {
     HorizontalLine line(1.0);
     EXPECT_TRUE(line.contains(0.0, 1.0));
     EXPECT_FALSE(line.contains(0.0, 1.01));

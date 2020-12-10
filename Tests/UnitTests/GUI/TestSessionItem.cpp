@@ -1,14 +1,12 @@
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestSessionItem : public ::testing::Test
-{
-};
+#define EXPECT_ASSERT_TRIGGERED(condition) EXPECT_THROW((condition), std::runtime_error)
 
-TEST_F(TestSessionItem, initialState)
-{
+class TestSessionItem : public ::testing::Test {};
+
+TEST_F(TestSessionItem, initialState) {
     const QString modeltype = "This is the model type";
     std::unique_ptr<SessionItem> item(new SessionItem(modeltype));
     EXPECT_TRUE(item->modelType() == modeltype);
@@ -17,8 +15,7 @@ TEST_F(TestSessionItem, initialState)
     // TODO add some more tests for children, roles, tags ...
 }
 
-TEST_F(TestSessionItem, defaultTag)
-{
+TEST_F(TestSessionItem, defaultTag) {
     const QString modelType = "TestItem";
 
     std::unique_ptr<SessionItem> item(new SessionItem(modelType));
@@ -26,13 +23,12 @@ TEST_F(TestSessionItem, defaultTag)
 
     // insertion without tag is forbidden
     SessionItem* child = new SessionItem(modelType);
-    EXPECT_DEATH(item->insertItem(0, child), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child));
     delete child;
     EXPECT_EQ(item->numberOfChildren(), 0);
 }
 
-TEST_F(TestSessionItem, singleTagAndItems)
-{
+TEST_F(TestSessionItem, singleTagAndItems) {
     const QString tag1 = "TAG1";
     const QString modelType = "TestItem";
 
@@ -56,7 +52,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
     SessionItem* child = new SessionItem(modelType);
     EXPECT_TRUE(item->insertItem(0, child, tag1));
     // double insertion is forbidden
-    EXPECT_DEATH(item->insertItem(0, child, tag1), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child, tag1));
     EXPECT_TRUE(child->parent() == item.get());
     EXPECT_EQ(item->numberOfChildren(), 1);
 
@@ -95,8 +91,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(item->getItem(tag1, 2), child2);
 }
 
-TEST_F(TestSessionItem, insertAndTake)
-{
+TEST_F(TestSessionItem, insertAndTake) {
     const QString tag1 = "TAG1";
     const QString modelType = "TestItem";
 
@@ -120,8 +115,7 @@ TEST_F(TestSessionItem, insertAndTake)
     delete first;
 }
 
-TEST_F(TestSessionItem, tagWithLimits)
-{
+TEST_F(TestSessionItem, tagWithLimits) {
     const QString tag1 = "TAG1";
     const QString modelType = "TestItem";
     const int maxItems(3);
@@ -136,11 +130,10 @@ TEST_F(TestSessionItem, tagWithLimits)
         EXPECT_TRUE(item->insertItem(-1, child, tag1));
     }
     auto extra = new SessionItem(modelType);
-    EXPECT_DEATH(item->insertItem(-1, extra, tag1), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(-1, extra, tag1));
 }
 
-TEST_F(TestSessionItem, tagsAndModelTypes)
-{
+TEST_F(TestSessionItem, tagsAndModelTypes) {
     const QString tag1 = "tag1";
     const QString tag2 = "tag2";
     const QString modelType1 = "ModelType1";
@@ -177,8 +170,7 @@ TEST_F(TestSessionItem, tagsAndModelTypes)
     EXPECT_EQ(item->getItems(tag2), expected2);
 }
 
-TEST_F(TestSessionItem, takeRow)
-{
+TEST_F(TestSessionItem, takeRow) {
     const QString tag1 = "tag1";
     const QString tag2 = "tag2";
     const QString modelType1 = "ModelType1";
@@ -221,8 +213,7 @@ TEST_F(TestSessionItem, takeRow)
     EXPECT_EQ(item->getItems(tag2), expected2);
 }
 
-TEST_F(TestSessionItem, dataRoles)
-{
+TEST_F(TestSessionItem, dataRoles) {
     std::unique_ptr<SessionItem> item(new SessionItem("Some model type"));
     item->setRoleProperty(Qt::DisplayRole, 1234);
     EXPECT_TRUE(item->roleProperty(Qt::DisplayRole) == 1234);
@@ -231,14 +222,13 @@ TEST_F(TestSessionItem, dataRoles)
     EXPECT_TRUE(item->roleProperty(Qt::DisplayRole) == 5432);
     EXPECT_TRUE(item->roleProperty(Qt::EditRole) == 5432);
     for (int i = 0; i < 10; i++) {
-        EXPECT_TRUE(item->roleProperty(SessionFlags::EndSessionRoles + i).isValid() == false);
+        EXPECT_FALSE(item->roleProperty(SessionFlags::EndSessionRoles + i).isValid());
         item->setRoleProperty(SessionFlags::EndSessionRoles + i, i);
         EXPECT_TRUE(item->roleProperty(SessionFlags::EndSessionRoles + i) == i);
     }
 }
 
-TEST_F(TestSessionItem, modelTypes)
-{
+TEST_F(TestSessionItem, modelTypes) {
     const QString model1 = "modeltype 1";
     const QString model2 = "modeltype 2";
     const QString model3 = "modeltype 3";
@@ -251,25 +241,25 @@ TEST_F(TestSessionItem, modelTypes)
     EXPECT_TRUE(item->insertItem(0, new SessionItem(model2), "Tag1"));
 
     auto child = new SessionItem(model3);
-    EXPECT_DEATH(item->insertItem(0, child, "Tag1"), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child, "Tag1"));
     delete child;
 
     child = new SessionItem(model4);
-    EXPECT_DEATH(item->insertItem(0, child, "Tag1"), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child, "Tag1"));
     delete child;
 
     child = new SessionItem(model5);
-    EXPECT_DEATH(item->insertItem(0, child, "Tag1"), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child, "Tag1"));
     delete child;
 
     EXPECT_TRUE(item->registerTag("Tag2", 0, -1, QStringList() << model3 << model4 << model5));
 
     child = new SessionItem(model1);
-    EXPECT_DEATH(item->insertItem(0, child, "Tag2"), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child, "Tag2"));
     delete child;
 
     child = new SessionItem(model2);
-    EXPECT_DEATH(item->insertItem(0, child, "Tag2"), ".*");
+    EXPECT_ASSERT_TRIGGERED(item->insertItem(0, child, "Tag2"));
     delete child;
 
     EXPECT_TRUE(item->insertItem(0, new SessionItem(model3), "Tag2"));

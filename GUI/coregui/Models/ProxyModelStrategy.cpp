@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "GUI/coregui/Models/ProxyModelStrategy.h"
 #include "GUI/coregui/Models/ComponentProxyModel.h"
 #include "GUI/coregui/Models/ModelUtils.h"
 #include "GUI/coregui/Models/SessionModel.h"
 
 ProxyModelStrategy::ProxyModelStrategy() : m_source(nullptr), m_proxy(nullptr) {}
 
-void ProxyModelStrategy::buildModelMap(SessionModel* source, ComponentProxyModel* proxy)
-{
+void ProxyModelStrategy::buildModelMap(SessionModel* source, ComponentProxyModel* proxy) {
     m_sourceToProxy.clear();
     m_proxySourceParent.clear();
     m_source = source;
@@ -35,41 +33,35 @@ void ProxyModelStrategy::buildModelMap(SessionModel* source, ComponentProxyModel
         processSourceIndex(m_sourceRootIndex.sibling(m_sourceRootIndex.row(), 1));
 }
 
-void ProxyModelStrategy::onDataChanged(SessionModel* source, ComponentProxyModel* proxy)
-{
+void ProxyModelStrategy::onDataChanged(SessionModel* source, ComponentProxyModel* proxy) {
     Q_UNUSED(source);
     Q_UNUSED(proxy);
     // we do not expect here change of model layout
 }
 
-const ProxyModelStrategy::map_t& ProxyModelStrategy::sourceToProxy()
-{
+const ProxyModelStrategy::map_t& ProxyModelStrategy::sourceToProxy() {
     return m_sourceToProxy;
 }
 
-const ProxyModelStrategy::map_t& ProxyModelStrategy::proxySourceParent()
-{
+const ProxyModelStrategy::map_t& ProxyModelStrategy::proxySourceParent() {
     return m_proxySourceParent;
 }
 
-void ProxyModelStrategy::setRootIndex(const QModelIndex& sourceRootIndex)
-{
+void ProxyModelStrategy::setRootIndex(const QModelIndex& sourceRootIndex) {
     m_sourceRootIndex = QPersistentModelIndex(sourceRootIndex);
 }
 
 //! Method to ask proxy to create an index using friendship of ProxyModelStrategy
 //! and ComponentProxyModel.
 
-QModelIndex ProxyModelStrategy::createProxyIndex(int nrow, int ncol, void* adata)
-{
+QModelIndex ProxyModelStrategy::createProxyIndex(int nrow, int ncol, void* adata) {
     ASSERT(m_proxy);
     return m_proxy->createIndex(nrow, ncol, adata);
 }
 
 //! Builds one-to-one mapping for source and proxy.
 
-bool IndentityProxyStrategy::processSourceIndex(const QModelIndex& index)
-{
+bool IndentityProxyStrategy::processSourceIndex(const QModelIndex& index) {
     QPersistentModelIndex proxyIndex =
         createProxyIndex(index.row(), index.column(), index.internalPointer());
     m_sourceToProxy.insert(QPersistentModelIndex(index), proxyIndex);

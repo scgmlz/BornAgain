@@ -4,29 +4,25 @@
 #include "GUI/coregui/Models/DataProperties.h"
 #include "GUI/coregui/Models/DataPropertyContainer.h"
 #include "GUI/coregui/Models/RealDataModel.h"
-#include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/mainwindow/projectdocument.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "GUI/coregui/utils/MessageService.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include "Tests/UnitTests/GUI/Utils.h"
 
-class TestDataItemViews : public ::testing::Test
-{
+class TestDataItemViews : public ::testing::Test {
 public:
     DataItem* insertNewDataItem(SessionModel& model, double val);
 };
 
-DataItem* TestDataItemViews::insertNewDataItem(SessionModel& model, double val)
-{
+DataItem* TestDataItemViews::insertNewDataItem(SessionModel& model, double val) {
     DataItem* item = dynamic_cast<DataItem*>(model.insertNewItem("SpecularData"));
     auto data = GuiUnittestUtils::createData(val, GuiUnittestUtils::DIM::D1);
     item->setOutputData(data.release());
     return item;
 }
 
-TEST_F(TestDataItemViews, testDataLinking)
-{
+TEST_F(TestDataItemViews, testDataLinking) {
     SessionModel model("TempModel");
     auto view_item =
         dynamic_cast<DataPropertyContainer*>(model.insertNewItem("DataPropertyContainer"));
@@ -38,8 +34,7 @@ TEST_F(TestDataItemViews, testDataLinking)
     EXPECT_EQ(stored_items[0]->dataItem(), item);
 }
 
-TEST_F(TestDataItemViews, testLinkingSeveralItems)
-{
+TEST_F(TestDataItemViews, testLinkingSeveralItems) {
     SessionModel model("TempModel");
     auto view_item =
         dynamic_cast<DataPropertyContainer*>(model.insertNewItem("DataPropertyContainer"));
@@ -57,8 +52,7 @@ TEST_F(TestDataItemViews, testLinkingSeveralItems)
     EXPECT_EQ(stored_items[2]->dataItem(), item3);
 }
 
-TEST_F(TestDataItemViews, testColors)
-{
+TEST_F(TestDataItemViews, testColors) {
     SessionModel model("TempModel");
     auto view_item =
         dynamic_cast<DataPropertyContainer*>(model.insertNewItem("DataPropertyContainer"));
@@ -94,8 +88,7 @@ TEST_F(TestDataItemViews, testColors)
     EXPECT_EQ(getColorName(stored_items[6]), "Black");
 }
 
-TEST_F(TestDataItemViews, testBrokenLink)
-{
+TEST_F(TestDataItemViews, testBrokenLink) {
     SessionModel model("TempModel");
     auto view_item =
         dynamic_cast<DataPropertyContainer*>(model.insertNewItem("DataPropertyContainer"));
@@ -111,8 +104,7 @@ TEST_F(TestDataItemViews, testBrokenLink)
     EXPECT_THROW(view_item->propertyItem(0)->dataItem(), GUIHelpers::Error);
 }
 
-TEST_F(TestDataItemViews, testWrongHostingModel)
-{
+TEST_F(TestDataItemViews, testWrongHostingModel) {
     SessionModel model("TempModel");
     DataItem* item = insertNewDataItem(model, 0.0);
     auto view_item =
@@ -128,8 +120,7 @@ TEST_F(TestDataItemViews, testWrongHostingModel)
     EXPECT_EQ(stored_items[0]->dataItem(), item);
 }
 
-TEST_F(TestDataItemViews, testSavingLinkedData)
-{
+TEST_F(TestDataItemViews, testSavingLinkedData) {
     const QString projectDir("test_savingLinkedData");
     GuiUnittestUtils::create_dir(projectDir);
     const QString projectFileName(projectDir + "/document.pro");

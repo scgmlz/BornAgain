@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,34 +10,30 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "BATesting.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Intensity/OutputData.h"
-#include "Core/Tools/FileSystemUtils.h"
+#include "Base/Utils/FileSystemUtils.h"
+#include "Device/Data/DataUtils.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 #include <memory>
 #include <vector>
 
-namespace
-{
+namespace {
 
 const double threshold = 1e-10;
 
 //! Returns name of fft image based on given image name.
-std::string fftReferenceImage(const std::string& input_image)
-{
+std::string fftReferenceImage(const std::string& input_image) {
     auto filename = FileSystemUtils::filename(input_image);
-    return FileSystemUtils::jointPath(BATesting::CoreReferenceDir(),
+    return FileSystemUtils::jointPath(BATesting::ReferenceDir_Core(),
                                       "FourierTransformation_" + filename);
 }
 
 //! Runs test over one image. Returns true upon success.
-bool test_fft(const std::string& input_image_name, const std::string& reference_fft_name)
-{
+bool test_fft(const std::string& input_image_name, const std::string& reference_fft_name) {
     std::cout << "Input image: " << input_image_name << std::endl;
     std::cout << "Reference fft: " << reference_fft_name << std::endl;
 
@@ -45,7 +41,7 @@ bool test_fft(const std::string& input_image_name, const std::string& reference_
     std::unique_ptr<OutputData<double>> input_image;
     try {
         const auto filename =
-            FileSystemUtils::jointPath(BATesting::StdReferenceDir(), input_image_name);
+            FileSystemUtils::jointPath(BATesting::ReferenceDir_Std(), input_image_name);
         input_image.reset(IntensityDataIOFactory::readOutputData(filename));
     } catch (const std::exception&) {
         std::cout << "Error: no input image.\n";
@@ -53,7 +49,7 @@ bool test_fft(const std::string& input_image_name, const std::string& reference_
     }
 
     std::cout << "transforming" << std::endl;
-    std::unique_ptr<OutputData<double>> fft = IntensityDataFunctions::createFFT(*input_image);
+    std::unique_ptr<OutputData<double>> fft = DataUtils::createFFT(*input_image);
 
     std::cout << "loading reference" << std::endl;
     std::unique_ptr<OutputData<double>> reference_fft;
@@ -66,12 +62,12 @@ bool test_fft(const std::string& input_image_name, const std::string& reference_
     std::cout << "comparing" << std::endl;
     bool success(false);
     if (reference_fft)
-        success = IntensityDataFunctions::getRelativeDifference(*fft, *reference_fft) <= threshold;
+        success = DataUtils::relativeDataDifference(*fft, *reference_fft) <= threshold;
 
     if (!success) {
-        FileSystemUtils::createDirectory(BATesting::CoreOutputDir());
+        FileSystemUtils::createDirectory(BATesting::TestOutDir_Core());
         std::string out_fname = FileSystemUtils::jointPath(
-            BATesting::CoreOutputDir(), FileSystemUtils::filename(reference_fft_name));
+            BATesting::TestOutDir_Core(), FileSystemUtils::filename(reference_fft_name));
         IntensityDataIOFactory::writeOutputData(*fft, out_fname);
         std::cout << "New fft image stored in " << out_fname << std::endl;
     }
@@ -81,12 +77,9 @@ bool test_fft(const std::string& input_image_name, const std::string& reference_
 
 } // namespace
 
-class FourierTransformationTest : public ::testing::Test
-{
-};
+class FourierTransformationTest : public ::testing::Test {};
 
-TEST_F(FourierTransformationTest, FourierTransformation)
-{
+TEST_F(FourierTransformationTest, FourierTransformation) {
     for (const char* inputImage : {"CylindersAndPrisms.int.gz", "RectDetectorGeneric.int.gz"})
         EXPECT_TRUE(test_fft(inputImage, fftReferenceImage(inputImage)));
 }

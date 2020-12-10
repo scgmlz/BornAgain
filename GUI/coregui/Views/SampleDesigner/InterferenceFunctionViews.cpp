@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/InterferenceFunctionViews.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 
 InterferenceFunction1DLatticeView::InterferenceFunction1DLatticeView(QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
+    : ConnectableView(parent) {
     setName("Interference1DLattice");
     setColor(QColor(255, 236, 139));
     setRectangle(DesignerHelper::getInterferenceFunctionBoundingRect());
@@ -26,8 +25,7 @@ InterferenceFunction1DLatticeView::InterferenceFunction1DLatticeView(QGraphicsIt
 }
 
 InterferenceFunction2DLatticeView::InterferenceFunction2DLatticeView(QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
+    : ConnectableView(parent) {
     setName("Interference2DLattice");
     setColor(QColor(255, 236, 139));
     setRectangle(DesignerHelper::getInterferenceFunctionBoundingRect());
@@ -36,8 +34,7 @@ InterferenceFunction2DLatticeView::InterferenceFunction2DLatticeView(QGraphicsIt
 }
 
 InterferenceFunction2DParaCrystalView::InterferenceFunction2DParaCrystalView(QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
+    : ConnectableView(parent) {
     setName("Interference2DParaCrystal");
     setColor(QColor(255, 236, 139));
     setRectangle(DesignerHelper::getInterferenceFunctionBoundingRect());
@@ -47,8 +44,7 @@ InterferenceFunction2DParaCrystalView::InterferenceFunction2DParaCrystalView(QGr
 
 InterferenceFunctionFinite2DLatticeView::InterferenceFunctionFinite2DLatticeView(
     QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
+    : ConnectableView(parent) {
     setName("InterferenceFinite2DLattice");
     setColor(QColor(255, 236, 139));
     setRectangle(DesignerHelper::getInterferenceFunctionBoundingRect());
@@ -57,8 +53,7 @@ InterferenceFunctionFinite2DLatticeView::InterferenceFunctionFinite2DLatticeView
 }
 
 InterferenceFunctionHardDiskView::InterferenceFunctionHardDiskView(QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
+    : ConnectableView(parent) {
     setName("InterferenceHardDisk");
     setColor(QColor(255, 236, 139));
     setRectangle(DesignerHelper::getInterferenceFunctionBoundingRect());
@@ -68,8 +63,7 @@ InterferenceFunctionHardDiskView::InterferenceFunctionHardDiskView(QGraphicsItem
 
 InterferenceFunctionRadialParaCrystalView::InterferenceFunctionRadialParaCrystalView(
     QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
+    : ConnectableView(parent) {
     setName("InterferenceRadialParaCrystal");
     setColor(QColor(255, 236, 139));
     setRectangle(DesignerHelper::getInterferenceFunctionBoundingRect());

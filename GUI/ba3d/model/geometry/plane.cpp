@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,16 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "../geometry.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
+#include "GUI/ba3d/model/geometry.h"
 
-namespace RealSpace
-{
+namespace RealSpace {
 
-Geometry::Mesh Geometry::meshPlane()
-{
+Geometry::Mesh Geometry::meshPlane() {
     float const D = .5f;
 
     Vertices vs;

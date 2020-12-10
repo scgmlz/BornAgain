@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SimulationOptionsItem.h"
 #include "GUI/coregui/Models/ComboProperty.h"
 #include <thread>
 
-namespace
-{
+namespace {
 
-QStringList getRunPolicyTooltips()
-{
+QStringList getRunPolicyTooltips() {
     QStringList result;
     result.append("Start simulation immediately, switch to Jobs view automatically when completed");
     result.append("Start simulation immediately, do not switch to Jobs view when completed");
@@ -47,8 +45,7 @@ const QString SimulationOptionsItem::P_FRESNEL_MATERIAL_METHOD =
     "Material for Fresnel calculations";
 const QString SimulationOptionsItem::P_INCLUDE_SPECULAR_PEAK = "Include specular peak";
 
-SimulationOptionsItem::SimulationOptionsItem() : SessionItem("SimulationOptions")
-{
+SimulationOptionsItem::SimulationOptionsItem() : SessionItem("SimulationOptions") {
 
     ComboProperty policy;
     policy << getRunPolicyNames();
@@ -96,87 +93,73 @@ SimulationOptionsItem::SimulationOptionsItem() : SessionItem("SimulationOptions"
     });
 }
 
-int SimulationOptionsItem::getNumberOfThreads() const
-{
+int SimulationOptionsItem::getNumberOfThreads() const {
     ComboProperty combo = getItemValue(P_NTHREADS).value<ComboProperty>();
     return m_text_to_nthreads[combo.getValue()];
 }
 
-bool SimulationOptionsItem::runImmediately() const
-{
+bool SimulationOptionsItem::runImmediately() const {
     return runPolicy() == "Immediately";
 }
 
-bool SimulationOptionsItem::runInBackground() const
-{
+bool SimulationOptionsItem::runInBackground() const {
     return runPolicy() == "In background";
 }
 
-void SimulationOptionsItem::setRunPolicy(const QString& policy)
-{
+void SimulationOptionsItem::setRunPolicy(const QString& policy) {
     ComboProperty combo = getItemValue(P_RUN_POLICY).value<ComboProperty>();
     combo.setValue(policy);
     setItemValue(P_RUN_POLICY, combo.variant());
 }
 
-void SimulationOptionsItem::setComputationMethod(const QString& name)
-{
+void SimulationOptionsItem::setComputationMethod(const QString& name) {
     ComboProperty combo = getItemValue(P_COMPUTATION_METHOD).value<ComboProperty>();
     combo.setValue(name);
     setItemValue(P_COMPUTATION_METHOD, combo.variant());
 }
 
-QString SimulationOptionsItem::getComputationMethod() const
-{
+QString SimulationOptionsItem::getComputationMethod() const {
     ComboProperty combo = getItemValue(P_COMPUTATION_METHOD).value<ComboProperty>();
     return combo.getValue();
 }
 
-int SimulationOptionsItem::getNumberOfMonteCarloPoints() const
-{
+int SimulationOptionsItem::getNumberOfMonteCarloPoints() const {
     return getItemValue(P_MC_POINTS).toInt();
 }
 
-void SimulationOptionsItem::setNumberOfMonteCarloPoints(int npoints)
-{
+void SimulationOptionsItem::setNumberOfMonteCarloPoints(int npoints) {
     setItemValue(P_MC_POINTS, npoints);
 }
 
-void SimulationOptionsItem::setFresnelMaterialMethod(const QString& name)
-{
+void SimulationOptionsItem::setFresnelMaterialMethod(const QString& name) {
     ComboProperty combo = getItemValue(P_FRESNEL_MATERIAL_METHOD).value<ComboProperty>();
     combo.setValue(name);
     setItemValue(P_FRESNEL_MATERIAL_METHOD, combo.variant());
 }
 
-QString SimulationOptionsItem::getFresnelMaterialMethod() const
-{
+QString SimulationOptionsItem::getFresnelMaterialMethod() const {
     ComboProperty combo = getItemValue(P_FRESNEL_MATERIAL_METHOD).value<ComboProperty>();
     return combo.getValue();
 }
 
-void SimulationOptionsItem::setIncludeSpecularPeak(const QString& name)
-{
+void SimulationOptionsItem::setIncludeSpecularPeak(const QString& name) {
     ComboProperty combo = getItemValue(P_INCLUDE_SPECULAR_PEAK).value<ComboProperty>();
     combo.setValue(name);
     setItemValue(P_INCLUDE_SPECULAR_PEAK, combo.variant());
 }
 
-QString SimulationOptionsItem::getIncludeSpecularPeak() const
-{
+QString SimulationOptionsItem::getIncludeSpecularPeak() const {
     ComboProperty combo = getItemValue(P_INCLUDE_SPECULAR_PEAK).value<ComboProperty>();
     return combo.getValue();
 }
 
-QString SimulationOptionsItem::runPolicy() const
-{
+QString SimulationOptionsItem::runPolicy() const {
     ComboProperty combo = getItemValue(P_RUN_POLICY).value<ComboProperty>();
     return combo.getValue();
 }
 
 //! returns list with number of threads to select
-QStringList SimulationOptionsItem::getCPUUsageOptions()
-{
+QStringList SimulationOptionsItem::getCPUUsageOptions() {
     m_text_to_nthreads.clear();
     QStringList result;
     int nthreads = static_cast<int>(std::thread::hardware_concurrency());
@@ -195,16 +178,14 @@ QStringList SimulationOptionsItem::getCPUUsageOptions()
     return result;
 }
 
-QStringList SimulationOptionsItem::getRunPolicyNames()
-{
+QStringList SimulationOptionsItem::getRunPolicyNames() {
     QStringList result;
     result << "Immediately"
            << "In background";
     return result;
 }
 
-void SimulationOptionsItem::updateComboItem(QString name, QStringList option_names)
-{
+void SimulationOptionsItem::updateComboItem(QString name, QStringList option_names) {
     ComboProperty combo = getItemValue(name).value<ComboProperty>();
     if (combo.getValues().size() != option_names.size()) {
         auto p_item = getItem(name);

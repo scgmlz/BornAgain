@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,38 +10,34 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_DEPTHPROBESIMULATION_H
 
-#include "Core/Intensity/OutputData.h"
-#include "Core/RT/ILayerRTCoefficients.h"
-#include "Core/Simulation/Simulation.h"
-#include "Core/SimulationElement/DepthProbeElement.h"
+#include "Core/Element/DepthProbeElement.h"
+#include "Core/Simulation/ISimulation.h"
+#include "Sample/RT/ILayerRTCoefficients.h"
 
 #include <vector>
 
 class IAxis;
 class IComputation;
 class IFootprintFactor;
-class ISample;
-class IMultiLayerBuilder;
+class ISampleNode;
+class ISampleBuilder;
 class MultiLayer;
 class Histogram1D;
 class IUnitConverter;
 
-class BA_CORE_API_ DepthProbeSimulation : public Simulation
-{
+class DepthProbeSimulation : public ISimulation {
 public:
     DepthProbeSimulation();
-    DepthProbeSimulation(const MultiLayer& sample);
-    DepthProbeSimulation(const std::shared_ptr<IMultiLayerBuilder> sample_builder);
     ~DepthProbeSimulation() override;
 
     DepthProbeSimulation* clone() const override;
 
-    void accept(INodeVisitor* visitor) const override final { visitor->visit(this); }
+    void accept(INodeVisitor* visitor) const final { visitor->visit(this); }
 
     //! Returns the results of the simulation in a format that supports unit conversion and export
     //! to numpy arrays
@@ -75,7 +71,7 @@ private:
     void setBeamParameters(double lambda, const IAxis& alpha_axis,
                            const IFootprintFactor* beam_shape);
 
-    //! Initializes the vector of Simulation elements
+    //! Initializes the vector of ISimulation elements
     void initSimulationElementVector() override;
 
     //! Gets the number of elements this simulation needs to calculate
@@ -106,7 +102,7 @@ private:
     //! @param n_elements Number of elements to process
     void normalize(size_t start_ind, size_t n_elements) override;
 
-    void addBackGroundIntensity(size_t start_ind, size_t n_elements) override;
+    void addBackgroundIntensity(size_t start_ind, size_t n_elements) override;
 
     void addDataToCache(double weight) override;
 

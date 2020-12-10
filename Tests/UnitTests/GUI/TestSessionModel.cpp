@@ -5,20 +5,16 @@
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SessionItemTags.h"
-#include "GUI/coregui/Models/SessionModel.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <QSignalSpy>
 #include <QXmlStreamWriter>
 #include <memory>
 
-class TestSessionModel : public ::testing::Test
-{
-};
+class TestSessionModel : public ::testing::Test {};
 
 //! Testing SessionModel::setData notifications.
 
-TEST_F(TestSessionModel, setData)
-{
+TEST_F(TestSessionModel, setData) {
     SessionModel model("TestModel");
     auto item = model.insertNewItem("Property");
 
@@ -42,8 +38,7 @@ TEST_F(TestSessionModel, setData)
     EXPECT_EQ(spy.count(), 1);
 }
 
-TEST_F(TestSessionModel, SampleModelCopy)
-{
+TEST_F(TestSessionModel, SampleModelCopy) {
     std::unique_ptr<MaterialModel> P_materialModel(new MaterialModel());
 
     SampleModel model1;
@@ -65,8 +60,7 @@ TEST_F(TestSessionModel, SampleModelCopy)
     EXPECT_EQ(buffer1, buffer2);
 }
 
-TEST_F(TestSessionModel, SampleModelPartialCopy)
-{
+TEST_F(TestSessionModel, SampleModelPartialCopy) {
     std::unique_ptr<MaterialModel> P_materialModel(new MaterialModel());
 
     SampleModel model1;
@@ -84,8 +78,7 @@ TEST_F(TestSessionModel, SampleModelPartialCopy)
     EXPECT_EQ(result->modelType(), multilayer1->modelType());
 }
 
-TEST_F(TestSessionModel, InstrumentModelCopy)
-{
+TEST_F(TestSessionModel, InstrumentModelCopy) {
     InstrumentModel model1;
     SessionItem* instrument1 = model1.insertNewItem("GISASInstrument");
     instrument1->setItemName("instrument1");
@@ -105,8 +98,7 @@ TEST_F(TestSessionModel, InstrumentModelCopy)
     EXPECT_EQ(buffer1, buffer2);
 }
 
-TEST_F(TestSessionModel, InstrumentModelPartialCopy)
-{
+TEST_F(TestSessionModel, InstrumentModelPartialCopy) {
     InstrumentModel model1;
     SessionItem* instrument1 = model1.insertNewItem("GISASInstrument");
     instrument1->setItemName("instrument1");
@@ -122,8 +114,7 @@ TEST_F(TestSessionModel, InstrumentModelPartialCopy)
 //! Test if SessionItem can be copied from one model to another. Particularly, we test
 //! here if a MultiLayerItem can be copied from SampleModel to the JobItem of JobModel
 
-TEST_F(TestSessionModel, copyItem)
-{
+TEST_F(TestSessionModel, copyItem) {
     std::unique_ptr<MaterialModel> P_materialModel(new MaterialModel());
 
     SampleModel sampleModel;
@@ -145,8 +136,7 @@ TEST_F(TestSessionModel, copyItem)
     EXPECT_EQ(jobItem->sessionItemTags()->childCount(JobItem::T_INSTRUMENT), 1);
 }
 
-TEST_F(TestSessionModel, moveItemFromRoot)
-{
+TEST_F(TestSessionModel, moveItemFromRoot) {
     SessionModel model("TestModel");
     auto poly = model.insertNewItem("PolygonMask");
     auto point = model.insertNewItem("PolygonPoint");
@@ -170,8 +160,7 @@ TEST_F(TestSessionModel, moveItemFromRoot)
     EXPECT_EQ(poly->getItem(), nullptr);
 }
 
-TEST_F(TestSessionModel, moveBetweenParents)
-{
+TEST_F(TestSessionModel, moveBetweenParents) {
     SessionModel model("TestModel");
     auto poly1 = model.insertNewItem("PolygonMask");
     auto point11 = model.insertNewItem("PolygonPoint", model.indexOfItem(poly1));
@@ -188,8 +177,7 @@ TEST_F(TestSessionModel, moveBetweenParents)
     EXPECT_EQ(poly1->getItem(), point12);
 }
 
-TEST_F(TestSessionModel, moveWithinSameParent)
-{
+TEST_F(TestSessionModel, moveWithinSameParent) {
     SessionModel model("TestModel");
     auto poly = model.insertNewItem("PolygonMask");
     auto pA = model.insertNewItem("PolygonPoint", model.indexOfItem(poly));

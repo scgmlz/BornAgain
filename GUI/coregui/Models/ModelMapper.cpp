@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,45 +10,38 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SessionModel.h"
 
 ModelMapper::ModelMapper(QObject* parent)
-    : QObject(parent), m_active(true), m_model(nullptr), m_item(nullptr)
-{
-}
+    : QObject(parent), m_active(true), m_model(nullptr), m_item(nullptr) {}
 
-void ModelMapper::setItem(SessionItem* item)
-{
+void ModelMapper::setItem(SessionItem* item) {
     if (item) {
         m_item = item;
         setModel(item->model());
     }
 }
 
-void ModelMapper::setOnValueChange(std::function<void(void)> f, const void* caller)
-{
+void ModelMapper::setOnValueChange(std::function<void(void)> f, const void* caller) {
     m_onValueChange.push_back(call_t(f, caller));
 }
 
-void ModelMapper::setOnPropertyChange(std::function<void(QString)> f, const void* caller)
-{
+void ModelMapper::setOnPropertyChange(std::function<void(QString)> f, const void* caller) {
     auto ff = [=](SessionItem* /*item*/, const QString& property) { f(property); };
     m_onPropertyChange.push_back(call_item_str_t(ff, caller));
 }
 
 void ModelMapper::setOnPropertyChange(std::function<void(SessionItem*, QString)> f,
-                                      const void* caller)
-{
+                                      const void* caller) {
     m_onPropertyChange.push_back(call_item_str_t(f, caller));
 }
 
 //! Calls back on child property change, report childItem and property name.
 
 void ModelMapper::setOnChildPropertyChange(std::function<void(SessionItem*, QString)> f,
-                                           const void* caller)
-{
+                                           const void* caller) {
     m_onChildPropertyChange.push_back(call_item_str_t(f, caller));
 }
 
@@ -57,21 +50,18 @@ void ModelMapper::setOnChildPropertyChange(std::function<void(SessionItem*, QStr
 //! will still report old parent.
 //! If newParent!=0, it is just the same as parent().
 
-void ModelMapper::setOnParentChange(std::function<void(SessionItem*)> f, const void* caller)
-{
+void ModelMapper::setOnParentChange(std::function<void(SessionItem*)> f, const void* caller) {
     m_onParentChange.push_back(call_item_t(f, caller));
 }
 
 //! Calls back when number of children has changed, reports newChild.
 //! newChild == nullptr denotes the case when number of children has decreased.
 
-void ModelMapper::setOnChildrenChange(std::function<void(SessionItem*)> f, const void* caller)
-{
+void ModelMapper::setOnChildrenChange(std::function<void(SessionItem*)> f, const void* caller) {
     m_onChildrenChange.push_back(call_item_t(f, caller));
 }
 
-void ModelMapper::setOnSiblingsChange(std::function<void()> f, const void* caller)
-{
+void ModelMapper::setOnSiblingsChange(std::function<void()> f, const void* caller) {
     m_onSiblingsChange.push_back(call_t(f, caller));
 }
 
@@ -79,24 +69,20 @@ void ModelMapper::setOnSiblingsChange(std::function<void()> f, const void* calle
 //! reports childItem.
 //! childItem == nullptr denotes the case when child was removed.
 
-void ModelMapper::setOnAnyChildChange(std::function<void(SessionItem*)> f, const void* caller)
-{
+void ModelMapper::setOnAnyChildChange(std::function<void(SessionItem*)> f, const void* caller) {
     m_onAnyChildChange.push_back(call_item_t(f, caller));
 }
 
-void ModelMapper::setOnItemDestroy(std::function<void(SessionItem*)> f, const void* caller)
-{
+void ModelMapper::setOnItemDestroy(std::function<void(SessionItem*)> f, const void* caller) {
     m_onItemDestroy.push_back(call_item_t(f, caller));
 }
 
-void ModelMapper::setOnAboutToRemoveChild(std::function<void(SessionItem*)> f, const void* caller)
-{
+void ModelMapper::setOnAboutToRemoveChild(std::function<void(SessionItem*)> f, const void* caller) {
     m_onAboutToRemoveChild.push_back(call_item_t(f, caller));
 }
 
 //! Cancells all subscribtion of given caller
-void ModelMapper::unsubscribe(const void* caller)
-{
+void ModelMapper::unsubscribe(const void* caller) {
     clean_container(m_onValueChange, caller);
     clean_container(m_onPropertyChange, caller);
     clean_container(m_onChildPropertyChange, caller);
@@ -108,8 +94,7 @@ void ModelMapper::unsubscribe(const void* caller)
     clean_container(m_onAboutToRemoveChild, caller);
 }
 
-void ModelMapper::setModel(SessionModel* model)
-{
+void ModelMapper::setModel(SessionModel* model) {
     if (m_model) {
         disconnect(m_model, &SessionModel::dataChanged, this, &ModelMapper::onDataChanged);
         disconnect(m_model, &SessionModel::rowsInserted, this, &ModelMapper::onRowsInserted);
@@ -127,8 +112,7 @@ void ModelMapper::setModel(SessionModel* model)
     }
 }
 
-int ModelMapper::nestlingDepth(SessionItem* item, int level)
-{
+int ModelMapper::nestlingDepth(SessionItem* item, int level) {
     if (item == nullptr || item == m_model->rootItem())
         return -1;
     if (item == m_item)
@@ -137,72 +121,62 @@ int ModelMapper::nestlingDepth(SessionItem* item, int level)
     return nestlingDepth(item->parent(), level + 1);
 }
 
-void ModelMapper::callOnValueChange()
-{
+void ModelMapper::callOnValueChange() {
     if (m_active && m_onValueChange.size() > 0)
         for (auto f : m_onValueChange)
             f.first();
 }
 
-void ModelMapper::callOnPropertyChange(const QString& name)
-{
+void ModelMapper::callOnPropertyChange(const QString& name) {
     if (m_active)
         for (auto f : m_onPropertyChange)
             f.first(m_item, name);
 }
 
-void ModelMapper::callOnChildPropertyChange(SessionItem* item, const QString& name)
-{
+void ModelMapper::callOnChildPropertyChange(SessionItem* item, const QString& name) {
     if (m_active)
         for (auto f : m_onChildPropertyChange)
             f.first(item, name);
 }
 
-void ModelMapper::callOnParentChange(SessionItem* new_parent)
-{
+void ModelMapper::callOnParentChange(SessionItem* new_parent) {
     if (m_active)
         for (auto f : m_onParentChange)
             f.first(new_parent);
 }
 
-void ModelMapper::callOnChildrenChange(SessionItem* item)
-{
+void ModelMapper::callOnChildrenChange(SessionItem* item) {
     if (m_active)
         for (auto f : m_onChildrenChange)
             f.first(item);
 }
 
-void ModelMapper::callOnSiblingsChange()
-{
+void ModelMapper::callOnSiblingsChange() {
     if (m_active)
         for (auto f : m_onSiblingsChange)
             f.first();
 }
 
-void ModelMapper::callOnAnyChildChange(SessionItem* item)
-{
+void ModelMapper::callOnAnyChildChange(SessionItem* item) {
     if (m_active)
         for (auto f : m_onAnyChildChange)
             f.first(item);
 }
 
-void ModelMapper::callOnAboutToRemoveChild(SessionItem* item)
-{
+void ModelMapper::callOnAboutToRemoveChild(SessionItem* item) {
     if (m_active)
         for (auto f : m_onAboutToRemoveChild)
             f.first(item);
 }
 
 //! Notifies subscribers if an item owning given mapper is about to be destroyed
-void ModelMapper::callOnItemDestroy()
-{
+void ModelMapper::callOnItemDestroy() {
     if (m_active)
         for (auto f : m_onItemDestroy)
             f.first(m_item);
 }
 
-void ModelMapper::clearMapper()
-{
+void ModelMapper::clearMapper() {
     m_item = nullptr;
     setModel(nullptr);
     m_onValueChange.clear();
@@ -217,8 +191,7 @@ void ModelMapper::clearMapper()
 }
 
 void ModelMapper::onDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight,
-                                const QVector<int>& /*roles*/)
-{
+                                const QVector<int>& /*roles*/) {
     if (topLeft.parent() != bottomRight.parent())
         return; // range must be from the same parent
 
@@ -250,8 +223,7 @@ void ModelMapper::onDataChanged(const QModelIndex& topLeft, const QModelIndex& b
         callOnAnyChildChange(item);
 }
 
-void ModelMapper::onRowsInserted(const QModelIndex& parent, int first, int /*last*/)
-{
+void ModelMapper::onRowsInserted(const QModelIndex& parent, int first, int /*last*/) {
     SessionItem* newChild = m_model->itemForIndex(m_model->index(first, 0, parent));
 
     int nestling = nestlingDepth(newChild);
@@ -272,8 +244,7 @@ void ModelMapper::onRowsInserted(const QModelIndex& parent, int first, int /*las
     }
 }
 
-void ModelMapper::onBeginRemoveRows(const QModelIndex& parent, int first, int /*last*/)
-{
+void ModelMapper::onBeginRemoveRows(const QModelIndex& parent, int first, int /*last*/) {
     SessionItem* oldChild = m_model->itemForIndex(m_model->index(first, 0, parent));
 
     int nestling = nestlingDepth(m_model->itemForIndex(parent));
@@ -289,8 +260,7 @@ void ModelMapper::onBeginRemoveRows(const QModelIndex& parent, int first, int /*
         m_aboutToDelete = m_model->index(first, 0, parent);
 }
 
-void ModelMapper::onRowRemoved(const QModelIndex& parent, int first, int /*last*/)
-{
+void ModelMapper::onRowRemoved(const QModelIndex& parent, int first, int /*last*/) {
     int nestling = nestlingDepth(m_model->itemForIndex(parent));
 
     if (nestling >= 0 || m_model->itemForIndex(parent) == m_item->parent()) {

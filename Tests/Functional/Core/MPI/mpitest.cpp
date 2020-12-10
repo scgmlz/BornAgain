@@ -1,15 +1,14 @@
 #include <mpi.h>
 
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
-#include "Core/Multilayer/MultiLayer.h"
 #include "Core/Simulation/SimulationFactory.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
+#include "Device/Data/DataUtils.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 
 #include <iostream>
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     MPI_Init(&argc, &argv);
 
     int world_size(0), world_rank(0);
@@ -17,10 +16,10 @@ int main(int argc, char** argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
     SimulationFactory sim_factory;
-    Simulation* p_simulation = sim_factory.createItem("BasicGISAS");
+    ISimulation* p_simulation = sim_factory.createItem("BasicGISAS");
     SampleBuilderFactory sample_factory;
     const std::unique_ptr<MultiLayer> P_sample(
-        sample_factory.createSample("CylindersInDWBABuilder"));
+        sample_factory.createSampleByName("CylindersInDWBABuilder"));
     p_simulation->setSample(*P_sample);
 
     // make backup of original simulation options
@@ -42,7 +41,7 @@ int main(int argc, char** argv)
         p_simulation->runSimulation();
         auto reference = p_simulation->result();
 
-        double diff = IntensityDataFunctions::RelativeDifference(result, reference);
+        double diff = DataUtils::RelativeDifference(result, reference);
         std::cout << "Difference: " << diff << std::endl;
     }
     MPI_Finalize();

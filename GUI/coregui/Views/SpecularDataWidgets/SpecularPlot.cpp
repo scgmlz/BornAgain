@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,10 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SpecularDataWidgets/SpecularPlot.h"
-#include "Core/Basics/MathConstants.h"
+#include "Base/Math/Constants.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/Views/CommonWidgets/UpdateTimer.h"
@@ -21,17 +21,17 @@
 #include "GUI/coregui/Views/IntensityDataWidgets/ColorMapUtils.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/PlotEventInfo.h"
 
-namespace
-{
+namespace {
 const int replot_update_interval = 10;
 
-int getBin(double x, const QCPGraph* graph);
+int bin(double x, const QCPGraph* graph);
 } // namespace
 
 SpecularPlot::SpecularPlot(QWidget* parent)
-    : ScientificPlot(parent, PLOT_TYPE::Plot1D), m_custom_plot(new QCustomPlot),
-      m_update_timer(new UpdateTimer(replot_update_interval, this)), m_block_update(true)
-{
+    : ScientificPlot(parent, PLOT_TYPE::Plot1D)
+    , m_custom_plot(new QCustomPlot)
+    , m_update_timer(new UpdateTimer(replot_update_interval, this))
+    , m_block_update(true) {
     initPlot();
 
     QVBoxLayout* vlayout = new QVBoxLayout(this);
@@ -43,8 +43,7 @@ SpecularPlot::SpecularPlot(QWidget* parent)
     setMouseTrackingEnabled(true);
 }
 
-PlotEventInfo SpecularPlot::eventInfo(double xpos, double ypos) const
-{
+PlotEventInfo SpecularPlot::eventInfo(double xpos, double ypos) const {
     PlotEventInfo result(plotType());
     if (!specularItem())
         return result;
@@ -53,24 +52,21 @@ PlotEventInfo SpecularPlot::eventInfo(double xpos, double ypos) const
     result.setValue(ypos);
 
     result.setInAxesRange(axesRangeContains(xpos, ypos));
-    result.setNx(getBin(result.x(), m_custom_plot->graph()));
+    result.setNx(bin(result.x(), m_custom_plot->graph()));
 
     return result;
 }
 
-void SpecularPlot::setLog(bool log)
-{
+void SpecularPlot::setLog(bool log) {
     ColorMapUtils::setLogz(m_custom_plot->yAxis, log);
     ColorMapUtils::setLogz(m_custom_plot->yAxis2, log);
 }
 
-void SpecularPlot::resetView()
-{
+void SpecularPlot::resetView() {
     specularItem()->resetView();
 }
 
-void SpecularPlot::onPropertyChanged(const QString& property_name)
-{
+void SpecularPlot::onPropertyChanged(const QString& property_name) {
     if (m_block_update)
         return;
 
@@ -80,29 +76,25 @@ void SpecularPlot::onPropertyChanged(const QString& property_name)
     }
 }
 
-void SpecularPlot::onXaxisRangeChanged(QCPRange newRange)
-{
+void SpecularPlot::onXaxisRangeChanged(QCPRange newRange) {
     m_block_update = true;
     specularItem()->setLowerX(newRange.lower);
     specularItem()->setUpperX(newRange.upper);
     m_block_update = false;
 }
 
-void SpecularPlot::onYaxisRangeChanged(QCPRange newRange)
-{
+void SpecularPlot::onYaxisRangeChanged(QCPRange newRange) {
     m_block_update = true;
     specularItem()->setLowerY(newRange.lower);
     specularItem()->setUpperY(newRange.upper);
     m_block_update = false;
 }
 
-void SpecularPlot::onTimeToReplot()
-{
+void SpecularPlot::onTimeToReplot() {
     m_custom_plot->replot();
 }
 
-void SpecularPlot::subscribeToItem()
-{
+void SpecularPlot::subscribeToItem() {
     setPlotFromItem(specularItem());
 
     specularItem()->mapper()->setOnPropertyChange(
@@ -121,13 +113,11 @@ void SpecularPlot::subscribeToItem()
     setConnected(true);
 }
 
-void SpecularPlot::unsubscribeFromItem()
-{
+void SpecularPlot::unsubscribeFromItem() {
     setConnected(false);
 }
 
-void SpecularPlot::initPlot()
-{
+void SpecularPlot::initPlot() {
     m_custom_plot->addGraph();
 
     QPen pen(QColor(0, 0, 255, 200));
@@ -140,14 +130,12 @@ void SpecularPlot::initPlot()
         QFont(QFont().family(), Constants::plot_tick_label_size()));
 }
 
-void SpecularPlot::setConnected(bool isConnected)
-{
+void SpecularPlot::setConnected(bool isConnected) {
     setAxesRangeConnected(isConnected);
     setUpdateTimerConnected(isConnected);
 }
 
-void SpecularPlot::setAxesRangeConnected(bool isConnected)
-{
+void SpecularPlot::setAxesRangeConnected(bool isConnected) {
     if (isConnected) {
         connect(m_custom_plot->xAxis,
                 static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged), this,
@@ -168,8 +156,7 @@ void SpecularPlot::setAxesRangeConnected(bool isConnected)
     }
 }
 
-void SpecularPlot::setUpdateTimerConnected(bool isConnected)
-{
+void SpecularPlot::setUpdateTimerConnected(bool isConnected) {
     if (isConnected)
         connect(m_update_timer, &UpdateTimer::timeToUpdate, this, &SpecularPlot::onTimeToReplot,
                 Qt::UniqueConnection);
@@ -177,8 +164,7 @@ void SpecularPlot::setUpdateTimerConnected(bool isConnected)
         disconnect(m_update_timer, &UpdateTimer::timeToUpdate, this, &SpecularPlot::onTimeToReplot);
 }
 
-void SpecularPlot::setPlotFromItem(SpecularDataItem* specularItem)
-{
+void SpecularPlot::setPlotFromItem(SpecularDataItem* specularItem) {
     ASSERT(specularItem);
 
     m_block_update = true;
@@ -193,8 +179,7 @@ void SpecularPlot::setPlotFromItem(SpecularDataItem* specularItem)
     m_block_update = false;
 }
 
-void SpecularPlot::setAxesRangeFromItem(SpecularDataItem* item)
-{
+void SpecularPlot::setAxesRangeFromItem(SpecularDataItem* item) {
     m_custom_plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
     m_custom_plot->axisRect()->setupFullAxesBox(true);
 
@@ -205,14 +190,12 @@ void SpecularPlot::setAxesRangeFromItem(SpecularDataItem* item)
     setAxesRangeConnected(true);
 }
 
-void SpecularPlot::setAxesLabelsFromItem(SpecularDataItem* item)
-{
+void SpecularPlot::setAxesLabelsFromItem(SpecularDataItem* item) {
     setLabel(item->xAxisItem(), m_custom_plot->xAxis, item->getXaxisTitle());
     setLabel(item->yAxisItem(), m_custom_plot->yAxis, item->getYaxisTitle());
 }
 
-void SpecularPlot::setLabel(const BasicAxisItem* item, QCPAxis* axis, QString label)
-{
+void SpecularPlot::setLabel(const BasicAxisItem* item, QCPAxis* axis, QString label) {
     ASSERT(item && axis);
     if (item->getItemValue(BasicAxisItem::P_TITLE_IS_VISIBLE).toBool())
         axis->setLabel(std::move(label));
@@ -220,8 +203,7 @@ void SpecularPlot::setLabel(const BasicAxisItem* item, QCPAxis* axis, QString la
         axis->setLabel(QString());
 }
 
-void SpecularPlot::setDataFromItem(SpecularDataItem* item)
-{
+void SpecularPlot::setDataFromItem(SpecularDataItem* item) {
     ASSERT(item);
     auto data = item->getOutputData();
     if (!data)
@@ -234,19 +216,16 @@ void SpecularPlot::setDataFromItem(SpecularDataItem* item)
     }
 }
 
-SpecularDataItem* SpecularPlot::specularItem()
-{
+SpecularDataItem* SpecularPlot::specularItem() {
     return const_cast<SpecularDataItem*>(static_cast<const SpecularPlot*>(this)->specularItem());
 }
 
-const SpecularDataItem* SpecularPlot::specularItem() const
-{
+const SpecularDataItem* SpecularPlot::specularItem() const {
     const auto result = dynamic_cast<const SpecularDataItem*>(currentItem());
     return result;
 }
 
-void SpecularPlot::modifyAxesProperties(const QString& axisName, const QString& propertyName)
-{
+void SpecularPlot::modifyAxesProperties(const QString& axisName, const QString& propertyName) {
     if (m_block_update)
         return;
 
@@ -278,15 +257,12 @@ void SpecularPlot::modifyAxesProperties(const QString& axisName, const QString& 
     }
 }
 
-void SpecularPlot::replot()
-{
+void SpecularPlot::replot() {
     m_update_timer->scheduleUpdate();
 }
 
-namespace
-{
-int getBin(double x, const QCPGraph* graph)
-{
+namespace {
+int bin(double x, const QCPGraph* graph) {
     const int key_start = graph->findBegin(x);
     const int key_end = graph->findBegin(x, false); // false = do not expand range
     if (key_end == key_start || key_end == graph->dataCount())

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,8 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_MINIMIZER_TESTMINIMIZER_H
 #define BORNAGAIN_FIT_MINIMIZER_TESTMINIMIZER_H
 
@@ -19,8 +24,7 @@
 
 //! A trivial minimizer that calls the objective function once. Used to test the whole chain.
 
-class BA_CORE_API_ TestMinimizer : public IMinimizer
-{
+class TestMinimizer : public IMinimizer {
 public:
     TestMinimizer();
     ~TestMinimizer() override;
@@ -28,7 +32,8 @@ public:
     std::string minimizerName() const final;
     std::string algorithmName() const final { return ""; }
 
-    Fit::MinimizerResult minimize_scalar(fcn_scalar_t fcn, Fit::Parameters parameters) override;
+    mumufit::MinimizerResult minimize_scalar(fcn_scalar_t fcn,
+                                             mumufit::Parameters parameters) override;
 
 private:
     std::vector<double> m_parameter_values;
@@ -36,3 +41,4 @@ private:
 };
 
 #endif // BORNAGAIN_FIT_MINIMIZER_TESTMINIMIZER_H
+#endif // USER_API

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
 #define BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
 
-#include "Core/Basics/Complex.h"
+#include "Base/Types/Complex.h"
 
 class ProcessedSample;
 class SimulationElement;
@@ -24,17 +29,17 @@ class SimulationElement;
 //! Used by DWBAComputation.
 //! @ingroup algorithms_internal
 
-class RoughMultiLayerComputation final
-{
+class RoughMultiLayerComputation final {
 public:
     RoughMultiLayerComputation(const ProcessedSample* p_sample);
 
     void compute(SimulationElement& elem) const;
 
 private:
-    const ProcessedSample* mp_sample;
+    const ProcessedSample* m_sample;
     complex_t get_refractive_term(size_t ilayer, double wavelength) const;
     complex_t get_sum8terms(size_t ilayer, const SimulationElement& sim_element) const;
 };
 
 #endif // BORNAGAIN_CORE_COMPUTATION_ROUGHMULTILAYERCOMPUTATION_H
+#endif // USER_API

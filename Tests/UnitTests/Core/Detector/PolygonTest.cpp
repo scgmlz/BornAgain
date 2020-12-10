@@ -1,14 +1,11 @@
-#include "Core/Mask/Polygon.h"
-#include "Core/Binning/Bin.h"
+#include "Device/Mask/Polygon.h"
+#include "Base/Axis/Bin.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-class PolygonTest : public ::testing::Test
-{
-};
+class PolygonTest : public ::testing::Test {};
 
-TEST_F(PolygonTest, SimpleRectangle)
-{
+TEST_F(PolygonTest, SimpleRectangle) {
     // simple closed rectangle
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
@@ -34,16 +31,15 @@ TEST_F(PolygonTest, SimpleRectangle)
     EXPECT_FALSE(polygon2.contains(4.0, -2.01));
 }
 
-//     *******
+//  ************************************************************************************************
 //      *   *
 //       * *
 //        *
 //       * *
 //      *   *
-//     *******
+//  ************************************************************************************************
 
-TEST_F(PolygonTest, SandWatchShape)
-{
+TEST_F(PolygonTest, SandWatchShape) {
     std::vector<double> x = {2.0, -2.0, 2.0, -2.0, 2.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
     Polygon polygon(x, y);
@@ -61,8 +57,7 @@ TEST_F(PolygonTest, SandWatchShape)
     EXPECT_FALSE(polygon.contains(-1.5, 0.5));
 }
 
-TEST_F(PolygonTest, ContainsBin)
-{
+TEST_F(PolygonTest, ContainsBin) {
     // simple closed rectangle
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
@@ -77,8 +72,7 @@ TEST_F(PolygonTest, ContainsBin)
     EXPECT_FALSE(polygon.contains(binx2, biny2));
 }
 
-TEST_F(PolygonTest, Clone)
-{
+TEST_F(PolygonTest, Clone) {
     std::vector<double> x = {4.0, -4.0, -4.0, 4.0, 4.0};
     std::vector<double> y = {2.0, 2.0, -2.0, -2.0, 2.0};
     Polygon polygon(x, y);
@@ -93,8 +87,7 @@ TEST_F(PolygonTest, Clone)
     EXPECT_FALSE(clone->contains(4.0, -2.01));
 }
 
-TEST_F(PolygonTest, ConstructFrom2DArray)
-{
+TEST_F(PolygonTest, ConstructFrom2DArray) {
     // simple closed rectangle
     const size_t npoints(5);
     double array[npoints][2] = {{4.0, 2.0}, {-4.0, 2.0}, {-4.0, -2.0}, {4.0, -2.0}, {4.0, 2.0}};

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,23 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/GUIExamplesFactory.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 #include <memory>
 
 //! Defines correspondance between example name and real name of simulation from SimulationFactory
-QMap<QString, QString> init_NameToRegistry()
-{
+QMap<QString, QString> init_NameToRegistry() {
     QMap<QString, QString> result;
     result["example01"] = "CylindersAndPrismsBuilder";
     result["example02"] = "RadialParaCrystalBuilder";
     result["example03"] = "HexParaCrystalBuilder";
     result["example04"] = "CoreShellParticleBuilder";
     result["example05"] = "MultiLayerWithRoughnessBuilder";
-    result["example06"] = "SquareLatticeBuilder";
+    result["example06"] = "SquareLattice2DBuilder";
     result["example07"] = "RotatedPyramidsBuilder";
     result["example08"] = "CylindersWithSizeDistributionBuilder";
     result["example09"] = "ParticleCompositionBuilder";
@@ -54,19 +53,17 @@ QMap<QString, QString> init_NameToRegistry()
 
 QMap<QString, QString> GUIExamplesFactory::m_name_to_registry = init_NameToRegistry();
 
-bool GUIExamplesFactory::isValidExampleName(const QString& name)
-{
+bool GUIExamplesFactory::isValidExampleName(const QString& name) {
     return m_name_to_registry.contains(name);
 }
 
 //! Populate sample model with
 SessionItem* GUIExamplesFactory::createSampleItems(const QString& name, SampleModel* sampleModel,
-                                                   MaterialModel* materialModel)
-{
+                                                   MaterialModel* materialModel) {
     QString exampleName = m_name_to_registry[name];
 
     SampleBuilderFactory factory;
-    const std::unique_ptr<MultiLayer> sample(factory.createSample(exampleName.toStdString()));
+    const std::unique_ptr<MultiLayer> sample(factory.createSampleByName(exampleName.toStdString()));
 
     return GUIObjectBuilder::populateSampleModel(sampleModel, materialModel, *sample.get(), name);
 }

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportAssistant.h"
-#include "Core/InputOutput/DataFormatUtils.cpp"
+#include "Device/InputOutput/DataFormatUtils.cpp"
 // TODO avoid importing a cpp file
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/DataSelector.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
-#include "GUI/coregui/utils/ImportDataInfo.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 #include <QFileDialog>
 #include <QFormLayout>
@@ -30,10 +28,18 @@
 #include <algorithm>
 
 CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, QWidget* parent)
-    : m_fileName(file), m_csvFile(nullptr), m_csvArray(), m_separator('\0'), m_intensityColNum(-1),
-      m_intensityMultiplier(1.0), m_coordinateColNum(-1), m_coordinateMultiplier(1.0),
-      m_firstRow(-1), m_lastRow(-1), m_units(AxesUnits::NBINS), m_dataAvailable(false)
-{
+    : m_fileName(file)
+    , m_csvFile(nullptr)
+    , m_csvArray()
+    , m_separator('\0')
+    , m_intensityColNum(-1)
+    , m_intensityMultiplier(1.0)
+    , m_coordinateColNum(-1)
+    , m_coordinateMultiplier(1.0)
+    , m_firstRow(-1)
+    , m_lastRow(-1)
+    , m_units(Axes::Units::NBINS)
+    , m_dataAvailable(false) {
     if (!loadCsvFile()) {
         return;
     }
@@ -43,15 +49,14 @@ CsvImportAssistant::CsvImportAssistant(const QString& file, const bool useGUI, Q
     } else {
         m_intensityColNum = 0;
         m_coordinateColNum = -1;
-        m_units = AxesUnits::NBINS;
+        m_units = Axes::Units::NBINS;
         m_firstRow = 0;
         m_lastRow = int(m_csvFile->NumberOfRows() - 1);
         m_dataAvailable = true;
     }
 }
 
-void CsvImportAssistant::runDataSelector(QWidget* parent)
-{
+void CsvImportAssistant::runDataSelector(QWidget* parent) {
     DataSelector selector(m_csvArray, parent);
     m_separator = guessSeparator();
     selector.setSeparator(guessSeparator());
@@ -82,28 +87,23 @@ void CsvImportAssistant::runDataSelector(QWidget* parent)
     }
 }
 
-void CsvImportAssistant::setIntensityColumn(int iCol, double multiplier)
-{
+void CsvImportAssistant::setIntensityColumn(int iCol, double multiplier) {
     m_intensityColNum = iCol - 1;
     m_intensityMultiplier = multiplier;
 }
-void CsvImportAssistant::setCoordinateColumn(int iCol, AxesUnits units, double multiplier)
-{
+void CsvImportAssistant::setCoordinateColumn(int iCol, Axes::Units units, double multiplier) {
     m_coordinateColNum = iCol - 1;
     m_units = units;
     m_coordinateMultiplier = multiplier;
 }
-void CsvImportAssistant::setFirstRow(int iRow)
-{
+void CsvImportAssistant::setFirstRow(int iRow) {
     m_firstRow = iRow - 1;
 }
-void CsvImportAssistant::setLastRow(int iRow)
-{
+void CsvImportAssistant::setLastRow(int iRow) {
     m_lastRow = iRow - 1;
 }
 
-bool CsvImportAssistant::loadCsvFile()
-{
+bool CsvImportAssistant::loadCsvFile() {
 
     try {
         if (m_separator == '\0')
@@ -149,14 +149,12 @@ bool CsvImportAssistant::loadCsvFile()
     return true;
 }
 
-void CsvImportAssistant::resetAssistant()
-{
+void CsvImportAssistant::resetAssistant() {
     resetSelection();
     loadCsvFile();
 }
 
-ImportDataInfo CsvImportAssistant::fillData()
-{
+ImportDataInfo CsvImportAssistant::fillData() {
     // In case a 2d import is needed in the future
     // Use ArrayUtils::Create2dData(vector<vector<double>>)
     // ArrayUtils::Create2d
@@ -167,7 +165,7 @@ ImportDataInfo CsvImportAssistant::fillData()
 
     getValuesFromColumns(intensityValues, coordinateValues);
 
-    auto axisName = csv::UnitsLabels[m_units].toStdString();
+    const auto axisName = axisUnitLabel.at(m_units);
     PointwiseAxis coordAxis(axisName, coordinateValues);
     resultOutputData->addAxis(coordAxis);
     resultOutputData->setRawDataVector(intensityValues);
@@ -177,8 +175,7 @@ ImportDataInfo CsvImportAssistant::fillData()
 }
 
 void CsvImportAssistant::getValuesFromColumns(std::vector<double>& intensityValues,
-                                              std::vector<double>& coordinateValues)
-{
+                                              std::vector<double>& coordinateValues) {
     bool intensityOk = true;
     bool coordinateOk = true;
     auto firstRow = size_t(m_firstRow);
@@ -213,8 +210,7 @@ void CsvImportAssistant::getValuesFromColumns(std::vector<double>& intensityValu
     }
 }
 
-void CsvImportAssistant::removeMultipleWhiteSpaces()
-{
+void CsvImportAssistant::removeMultipleWhiteSpaces() {
     if (m_csvArray.empty())
         return;
 
@@ -251,8 +247,7 @@ void CsvImportAssistant::removeMultipleWhiteSpaces()
     m_csvArray.swap(buffer2d);
 }
 
-void CsvImportAssistant::removeBlankColumns()
-{
+void CsvImportAssistant::removeBlankColumns() {
 
     if (m_csvArray.empty())
         return;
@@ -265,8 +260,7 @@ void CsvImportAssistant::removeBlankColumns()
     size_t nCols = m_csvArray[0].size();
 
     if (!hasEqualLengthLines(m_csvArray)) {
-        throw Exceptions::NotImplementedException(
-            "All inner vectors should have the same length already.");
+        throw std::runtime_error("All inner vectors should have the same length already.");
     }
 
     // traverse the array columnwise -- this may be inneficient.
@@ -303,8 +297,7 @@ void CsvImportAssistant::removeBlankColumns()
     }
 }
 
-char CsvImportAssistant::guessSeparator() const
-{
+char CsvImportAssistant::guessSeparator() const {
     int frequencies[127] = {0};
 
     // The actual characters that may be realistically
@@ -354,29 +347,26 @@ char CsvImportAssistant::guessSeparator() const
     return guessedSep;
 }
 
-bool CsvImportAssistant::hasEqualLengthLines(csv::DataArray& dataArray)
-{
+bool CsvImportAssistant::hasEqualLengthLines(csv::DataArray& dataArray) {
     auto tf = all_of(begin(dataArray), end(dataArray), [dataArray](const csv::DataRow& x) {
         return x.size() == dataArray.front().size();
     });
     return tf;
 }
 
-void CsvImportAssistant::showErrorMessage(std::string message)
-{
+void CsvImportAssistant::showErrorMessage(std::string message) {
     QMessageBox msgBox;
     msgBox.setText(QString::fromStdString(message));
     msgBox.setIcon(msgBox.Critical);
     msgBox.exec();
 }
 
-void CsvImportAssistant::resetSelection()
-{
+void CsvImportAssistant::resetSelection() {
     m_csvArray.clear();
     m_intensityColNum = -1;
     m_coordinateColNum = -1;
     m_firstRow = -1;
     m_lastRow = -1;
-    m_units = AxesUnits::NBINS;
+    m_units = Axes::Units::NBINS;
     m_dataAvailable = false;
 }

@@ -35,15 +35,13 @@
 
 using namespace Utils;
 
-namespace
-{
+namespace {
 const bool FlatProjectsMode(false);
 const QColor DetailsButtonBackgroundColorHover("#eff0f1");
 } // namespace
 
 FadingWidget::FadingWidget(QWidget* parent)
-    : FadingPanel(parent), m_opacityEffect(new QGraphicsOpacityEffect)
-{
+    : FadingPanel(parent), m_opacityEffect(new QGraphicsOpacityEffect) {
     m_opacityEffect->setOpacity(0);
     setGraphicsEffect(m_opacityEffect);
 
@@ -55,33 +53,28 @@ FadingWidget::FadingWidget(QWidget* parent)
     setPalette(pal);
 }
 
-void FadingWidget::setOpacity(qreal value)
-{
+void FadingWidget::setOpacity(qreal value) {
     m_opacityEffect->setOpacity(value);
 }
 
-void FadingWidget::fadeTo(qreal value)
-{
+void FadingWidget::fadeTo(qreal value) {
     QPropertyAnimation* animation = new QPropertyAnimation(m_opacityEffect, "opacity");
     animation->setDuration(200);
     animation->setEndValue(value);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-qreal FadingWidget::opacity()
-{
+qreal FadingWidget::opacity() {
     return m_opacityEffect->opacity();
 }
 
-DetailsButton::DetailsButton(QWidget* parent) : QAbstractButton(parent), m_fader(0)
-{
+DetailsButton::DetailsButton(QWidget* parent) : QAbstractButton(parent), m_fader(0) {
     setCheckable(true);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
     setText(tr("Details"));
 }
 
-QSize DetailsButton::sizeHint() const
-{
+QSize DetailsButton::sizeHint() const {
     // TODO: Adjust this when icons become available!
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
@@ -94,8 +87,7 @@ QSize DetailsButton::sizeHint() const
     return QSize(w, 22);
 }
 
-bool DetailsButton::event(QEvent* e)
-{
+bool DetailsButton::event(QEvent* e) {
     switch (e->type()) {
     case QEvent::Enter: {
         QPropertyAnimation* animation = new QPropertyAnimation(this, "fader");
@@ -115,8 +107,7 @@ bool DetailsButton::event(QEvent* e)
     return false;
 }
 
-void DetailsButton::paintEvent(QPaintEvent* e)
-{
+void DetailsButton::paintEvent(QPaintEvent* e) {
     QWidget::paintEvent(e);
 
     QPainter p(this);
@@ -156,8 +147,7 @@ void DetailsButton::paintEvent(QPaintEvent* e)
     }
 }
 
-QPixmap DetailsButton::cacheRendering(const QSize& size, bool checked)
-{
+QPixmap DetailsButton::cacheRendering(const QSize& size, bool checked) {
     const qreal pixelRatio = devicePixelRatio();
     QPixmap pixmap(size * pixelRatio);
     pixmap.setDevicePixelRatio(pixelRatio);

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 /*
 This is a C++ port of the following PyQt example
@@ -42,11 +42,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 //! Container to describe a highlighting rule. Based on a regular expression, a relevant match # and
 //! the format.
-class HighlightingRule
-{
+class HighlightingRule {
 public:
-    HighlightingRule(const QString& patternStr, int n, const QTextCharFormat& matchingFormat)
-    {
+    HighlightingRule(const QString& patternStr, int n, const QTextCharFormat& matchingFormat) {
         originalRuleStr = patternStr;
         pattern = QRegExp(patternStr);
         nth = n;
@@ -59,8 +57,7 @@ public:
 };
 
 //! Implementation of highlighting for Python code.
-class PythonSyntaxHighlighter : public QSyntaxHighlighter
-{
+class PythonSyntaxHighlighter : public QSyntaxHighlighter {
     Q_OBJECT
 public:
     PythonSyntaxHighlighter(QTextDocument* parent = 0);

@@ -1,17 +1,14 @@
-#include "Core/Parametrization/IParameterized.h"
+#include "Param/Base/IParametricComponent.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <stdexcept>
 
-class IParameterizedTest : public ::testing::Test
-{
+class IParametricComponentTest : public ::testing::Test {
 protected:
-    IParameterized m_initial_object;
+    IParametricComponent m_initial_object;
 
-    class ParameterizedObject : public IParameterized
-    {
+    class ParameterizedObject : public IParametricComponent {
     public:
-        ParameterizedObject() : m_real_par1(0), m_real_par2(0)
-        {
+        ParameterizedObject() : m_real_par1(0), m_real_par2(0) {
             setName("Parameterized");
             registerParameter("par1", &m_real_par1);
             registerParameter("par2", &m_real_par2);
@@ -24,20 +21,18 @@ protected:
 
 // TODO enable tests
 
-TEST_F(IParameterizedTest, InitialState)
-{
+TEST_F(IParametricComponentTest, InitialState) {
     /* TEMPORARILY DISABLED getParameterPool()
     EXPECT_EQ( size_t(0), m_initial_object.getParameterPool()->size() );
-    IParameterized obj2(m_initial_object);
+    IParametricComponent obj2(m_initial_object);
     EXPECT_EQ( size_t(0), obj2.getParameterPool()->size() );
     */
 }
 
-TEST_F(IParameterizedTest, DealingWithPool)
-{
+TEST_F(IParametricComponentTest, DealingWithPool) {
     /* TEMPORARILY DISABLED getParameterPool()
     EXPECT_EQ( size_t(2), m_parameterized.getParameterPool()->size());
-    IParameterizedTest::ParameterizedObject obj2 = m_parameterized;
+    IParametricComponentTest::ParameterizedObject obj2 = m_parameterized;
     EXPECT_EQ( size_t(0), obj2.getParameterPool()->size());
     ParameterPool *pool = m_parameterized.createParameterTree();
     //POOL_2('/Parameterized/par1':0 '/Parameterized/par2':0 )
@@ -49,8 +44,7 @@ TEST_F(IParameterizedTest, DealingWithPool)
     */
 }
 
-TEST_F(IParameterizedTest, SetParameterValue)
-{
+TEST_F(IParametricComponentTest, SetParameterValue) {
     //    m_parameterized.m_real_par1 = 1.0;
     //    m_parameterized.m_real_par2 = 2.0;
     //    m_parameterized.setParameterValue("par1", 3.0);

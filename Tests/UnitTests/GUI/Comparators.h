@@ -4,8 +4,7 @@
 //! Helper class to register custom variants comparators and to report
 //! unit tests if comparators should be tested.
 
-class Comparators
-{
+class Comparators {
 public:
     static void registerComparators();
     static bool registered();

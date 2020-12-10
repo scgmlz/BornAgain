@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,39 +10,37 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_FITTING_ITERATIONINFO_H
 #define BORNAGAIN_CORE_FITTING_ITERATIONINFO_H
 
-#include "Fit/Kernel/Parameters.h"
-#include "Wrap/WinDllMacros.h"
+#include "Fit/Param/Parameters.h"
 #include <map>
 #include <string>
 
 //! Stores fit iteration info to track fit flow from various observers.
 //! Used in context of FitObjective.
 
-class BA_CORE_API_ IterationInfo
-{
+class IterationInfo {
 public:
     IterationInfo();
 
-    void update(const Fit::Parameters& params, double chi2);
+    void update(const mumufit::Parameters& params, double chi2);
 
     //! Returns current number of minimizer iterations.
     unsigned iterationCount() const;
 
     double chi2() const;
 
-    Fit::Parameters parameters() const;
+    mumufit::Parameters parameters() const;
 
     //! Returns map of fit parameter names and its current values.
     std::map<std::string, double> parameterMap() const;
 
 private:
     double m_chi2;
-    Fit::Parameters m_current_parameters;
+    mumufit::Parameters m_current_parameters;
     unsigned m_iteration_count;
 };
 

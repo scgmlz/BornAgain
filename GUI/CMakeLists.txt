@@ -10,6 +10,7 @@ add_subdirectory(ba3d)
 add_subdirectory(coregui)
 add_subdirectory(main)
 
+# Transmit variables for use in tests
 set(BornAgainGUI_INCLUDE_DIRS ${BornAgainGUI_INCLUDE_DIRS} PARENT_SCOPE)
 set(BornAgainGUI_LIBRARY ${BornAgainGUI_LIBRARY} PARENT_SCOPE)
 

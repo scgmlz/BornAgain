@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/FitLog.h"
 #include "GUI/coregui/Views/JobWidgets/JobMessagePanel.h"
 
 FitLog::FitLog() : m_messagePanel(nullptr) {}
 
-void FitLog::setMessagePanel(JobMessagePanel* messagePanel)
-{
+void FitLog::setMessagePanel(JobMessagePanel* messagePanel) {
     m_messagePanel = messagePanel;
     if (!m_messagePanel)
         return;
@@ -31,16 +30,14 @@ void FitLog::setMessagePanel(JobMessagePanel* messagePanel)
     }
 }
 
-void FitLog::append(const std::string& text, FitLogFlags::MessageType type)
-{
+void FitLog::append(const std::string& text, FitLogFlags::MessageType type) {
     m_records.push_back({text, type});
 
     if (m_messagePanel)
         m_messagePanel->onMessage(QString::fromStdString(text), QColor(FitLogFlags::color(type)));
 }
 
-void FitLog::clearLog()
-{
+void FitLog::clearLog() {
     m_records.clear();
     if (m_messagePanel)
         m_messagePanel->onClearLog();

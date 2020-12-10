@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 // This file is part of qAccordion. An Accordion widget for Qt
 // Copyright (C) 2015 Christian Rapp <0x2a at posteo dot org>
@@ -28,10 +28,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Patched JWu 12nov20 because QFlags(0) was deprecated
+
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_CLICKABLEFRAME_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 #include <QGraphicsView>
 #include <QHBoxLayout>
@@ -47,8 +48,7 @@
 
 // TODO: No need to use a namespace for our constants as we are using them only
 // in this class
-namespace ClickableFrame_constants
-{
+namespace ClickableFrame_constants {
 const char* const CARRET_ICON_CLOSED =
     ":/qAccordionIcons/caret-right.png"; /**< Qt qrc "path" for the closed icon */
 const char* const CARRET_ICON_OPENED =
@@ -61,8 +61,7 @@ const char* const CARRET_ICON_OPENED =
  * This class represents a clickable QFrame. It is used by a ContentPane. The class
  * is used internally.
  */
-class BA_CORE_API_ ClickableFrame : public QFrame
-{
+class ClickableFrame : public QFrame {
 
     Q_OBJECT
 public:
@@ -72,7 +71,7 @@ public:
      * @param parent Parent widget or 0
      * @param f Qt::WindowFlags
      */
-    explicit ClickableFrame(QString header, QWidget* parent = 0, Qt::WindowFlags f = 0);
+    explicit ClickableFrame(QString header, QWidget* parent = 0, Qt::WindowFlags f = {});
 
     // TODO: Expose this function to the ContentPane api
     /**

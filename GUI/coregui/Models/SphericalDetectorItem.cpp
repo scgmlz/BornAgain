@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/SphericalDetectorItem.h"
-#include "Core/Basics/Units.h"
-#include "Core/Detector/SphericalDetector.h"
+#include "Base/Const/Units.h"
+#include "Device/Detector/SphericalDetector.h"
 #include "GUI/coregui/Models/AxesItems.h"
 
 const QString SphericalDetectorItem::P_PHI_AXIS = "Phi axis";
 const QString SphericalDetectorItem::P_ALPHA_AXIS = "Alpha axis";
 
-SphericalDetectorItem::SphericalDetectorItem() : DetectorItem("SphericalDetector")
-{
+SphericalDetectorItem::SphericalDetectorItem() : DetectorItem("SphericalDetector") {
     SessionItem* item = addGroupProperty(P_PHI_AXIS, "BasicAxis");
     item->getItem(BasicAxisItem::P_TITLE)->setVisible(false);
     item->setItemValue(BasicAxisItem::P_MIN_DEG, -1.0);
@@ -43,8 +42,7 @@ SphericalDetectorItem::SphericalDetectorItem() : DetectorItem("SphericalDetector
     register_resolution_function();
 }
 
-std::unique_ptr<IDetector2D> SphericalDetectorItem::createDomainDetector() const
-{
+std::unique_ptr<IDetector2D> SphericalDetectorItem::createDomainDetector() const {
     std::unique_ptr<SphericalDetector> result(new SphericalDetector());
 
     auto x_axis = dynamic_cast<BasicAxisItem*>(getItem(SphericalDetectorItem::P_PHI_AXIS));
@@ -64,29 +62,24 @@ std::unique_ptr<IDetector2D> SphericalDetectorItem::createDomainDetector() const
     return std::unique_ptr<IDetector2D>(result.release());
 }
 
-int SphericalDetectorItem::xSize() const
-{
+int SphericalDetectorItem::xSize() const {
     return getItem(SphericalDetectorItem::P_PHI_AXIS)->getItemValue(BasicAxisItem::P_NBINS).toInt();
 }
 
-int SphericalDetectorItem::ySize() const
-{
+int SphericalDetectorItem::ySize() const {
     return getItem(SphericalDetectorItem::P_ALPHA_AXIS)
         ->getItemValue(BasicAxisItem::P_NBINS)
         .toInt();
 }
 
-void SphericalDetectorItem::setXSize(int nx)
-{
+void SphericalDetectorItem::setXSize(int nx) {
     getItem(SphericalDetectorItem::P_PHI_AXIS)->setItemValue(BasicAxisItem::P_NBINS, nx);
 }
 
-void SphericalDetectorItem::setYSize(int ny)
-{
+void SphericalDetectorItem::setYSize(int ny) {
     getItem(SphericalDetectorItem::P_ALPHA_AXIS)->setItemValue(BasicAxisItem::P_NBINS, ny);
 }
 
-double SphericalDetectorItem::axesToDomainUnitsFactor() const
-{
-    return Units::degree;
+double SphericalDetectorItem::axesToDomainUnitsFactor() const {
+    return Units::deg;
 }

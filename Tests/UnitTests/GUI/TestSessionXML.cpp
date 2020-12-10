@@ -1,37 +1,30 @@
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/ParticleItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <memory>
 
-namespace
-{
-QString itemToXML(SessionItem* item)
-{
+namespace {
+QString itemToXML(SessionItem* item) {
     QString result;
     QXmlStreamWriter writer(&result);
     SessionXML::writeTo(&writer, item);
     return result;
 }
 
-void itemFromXML(QString buffer, SessionItem* item)
-{
+void itemFromXML(QString buffer, SessionItem* item) {
     QXmlStreamReader reader(buffer);
     SessionXML::readItems(&reader, item);
 }
 } // namespace
 
-class TestSessionXML : public ::testing::Test
-{
-};
+class TestSessionXML : public ::testing::Test {};
 
 //! Testing to/from xml: simple property item.
 
-TEST_F(TestSessionXML, test_sessionItem)
-{
+TEST_F(TestSessionXML, test_sessionItem) {
     QString expected;
 
     SessionModel source("TestModel");
@@ -54,8 +47,7 @@ TEST_F(TestSessionXML, test_sessionItem)
 
 //! Testing to/from xml: FullSphereItem
 
-TEST_F(TestSessionXML, test_FullSphereItem)
-{
+TEST_F(TestSessionXML, test_FullSphereItem) {
     // source model, to xml
     SessionModel source("TestModel");
     SessionItem* sphere = source.insertNewItem("FullSphere");
@@ -87,8 +79,7 @@ TEST_F(TestSessionXML, test_FullSphereItem)
     EXPECT_EQ(buffer, itemToXML(target.rootItem()));
 }
 
-TEST_F(TestSessionXML, test_twoFullSphereItems)
-{
+TEST_F(TestSessionXML, test_twoFullSphereItems) {
     // source model, to xml
     SessionModel source("TestModel");
     SessionItem* sphere1 = source.insertNewItem("FullSphere");
@@ -104,8 +95,7 @@ TEST_F(TestSessionXML, test_twoFullSphereItems)
     EXPECT_EQ(buffer, itemToXML(target.rootItem()));
 }
 
-TEST_F(TestSessionXML, test_emptyMultiLayer)
-{
+TEST_F(TestSessionXML, test_emptyMultiLayer) {
     SessionModel source("TestModel");
     source.insertNewItem("MultiLayer");
     QString buffer = itemToXML(source.rootItem());
@@ -117,8 +107,7 @@ TEST_F(TestSessionXML, test_emptyMultiLayer)
     EXPECT_EQ(buffer, itemToXML(target.rootItem()));
 }
 
-TEST_F(TestSessionXML, test_Layer)
-{
+TEST_F(TestSessionXML, test_Layer) {
     SessionModel source("TestModel");
     source.insertNewItem("Layer");
     QString buffer = itemToXML(source.rootItem());
@@ -130,8 +119,7 @@ TEST_F(TestSessionXML, test_Layer)
     EXPECT_EQ(buffer, itemToXML(target.rootItem()));
 }
 
-TEST_F(TestSessionXML, test_Particle)
-{
+TEST_F(TestSessionXML, test_Particle) {
     SessionModel source("TestModel");
     source.insertNewItem("Particle");
     QString buffer = itemToXML(source.rootItem());
@@ -143,8 +131,7 @@ TEST_F(TestSessionXML, test_Particle)
     EXPECT_EQ(buffer, itemToXML(target.rootItem()));
 }
 
-TEST_F(TestSessionXML, test_ParticleWithFF)
-{
+TEST_F(TestSessionXML, test_ParticleWithFF) {
     SessionModel source("TestModel");
     SessionItem* particle = source.insertNewItem("Particle");
 

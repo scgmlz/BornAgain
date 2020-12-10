@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARTICLEDISTRIBUTIONITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_PARTICLEDISTRIBUTIONITEM_H
 
-#include "Core/Particle/ParticleDistribution.h"
 #include "GUI/coregui/Models/SessionGraphicsItem.h"
+#include "Sample/Particle/ParticleDistribution.h"
 #include <string>
 #include <vector>
 
-class BA_CORE_API_ ParticleDistributionItem : public SessionGraphicsItem
-{
+class BA_CORE_API_ ParticleDistributionItem : public SessionGraphicsItem {
 public:
     static const QString P_DISTRIBUTED_PARAMETER;
     static const QString P_LINKED_PARAMETER;

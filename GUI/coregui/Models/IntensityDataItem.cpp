@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/AxesItems.h"
-#include "GUI/coregui/Models/ComboProperty.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
@@ -22,10 +21,8 @@
 #include "GUI/coregui/Views/MaskWidgets/MaskUnitsConverter.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-namespace
-{
-ComboProperty gradientCombo()
-{
+namespace {
+ComboProperty gradientCombo() {
     ComboProperty result;
     result << "Grayscale"
            << "Hot"
@@ -57,8 +54,7 @@ const QString IntensityDataItem::P_ZAXIS = "color-axis";
 const QString IntensityDataItem::T_MASKS = "Mask tag";
 const QString IntensityDataItem::T_PROJECTIONS = "Projection tag";
 
-IntensityDataItem::IntensityDataItem() : DataItem("IntensityData")
-{
+IntensityDataItem::IntensityDataItem() : DataItem("IntensityData") {
     addProperty(P_TITLE, QString())->setVisible(false);
 
     addProperty(P_PROJECTIONS_FLAG, false)->setVisible(false);
@@ -83,10 +79,9 @@ IntensityDataItem::IntensityDataItem() : DataItem("IntensityData")
     registerTag(T_PROJECTIONS, 0, -1, QStringList() << "ProjectionContainer");
 }
 
-void IntensityDataItem::setOutputData(OutputData<double>* data)
-{
+void IntensityDataItem::setOutputData(OutputData<double>* data) {
     ASSERT(data && "Assertion failed in IntensityDataItem::setOutputData: nullptr data passed");
-    if (data->getRank() != 2)
+    if (data->rank() != 2)
         throw GUIHelpers::Error(
             "Error in IntensityDataItem::setOutputData: cannot handle non-2D data");
     DataItem::setOutputData(data);
@@ -98,127 +93,104 @@ void IntensityDataItem::setOutputData(OutputData<double>* data)
     emitDataChanged();
 }
 
-int IntensityDataItem::getNbinsX() const
-{
+int IntensityDataItem::getNbinsX() const {
     return xAxisItem()->getItemValue(BasicAxisItem::P_NBINS).toInt();
 }
 
-int IntensityDataItem::getNbinsY() const
-{
+int IntensityDataItem::getNbinsY() const {
     return yAxisItem()->getItemValue(BasicAxisItem::P_NBINS).toInt();
 }
 
-double IntensityDataItem::getLowerX() const
-{
+double IntensityDataItem::getLowerX() const {
     return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble();
 }
 
-double IntensityDataItem::getUpperX() const
-{
+double IntensityDataItem::getUpperX() const {
     return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble();
 }
 
-double IntensityDataItem::getXmin() const
-{
+double IntensityDataItem::getXmin() const {
     const double defaultXmin(0.0);
-    return m_data ? m_data->getAxis(0).getMin() : defaultXmin;
+    return m_data ? m_data->axis(0).lowerBound() : defaultXmin;
 }
 
-double IntensityDataItem::getXmax() const
-{
+double IntensityDataItem::getXmax() const {
     const double defaultXmax(1.0);
-    return m_data ? m_data->getAxis(0).getMax() : defaultXmax;
+    return m_data ? m_data->axis(0).upperBound() : defaultXmax;
 }
 
-double IntensityDataItem::getLowerY() const
-{
+double IntensityDataItem::getLowerY() const {
     return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble();
 }
 
-double IntensityDataItem::getUpperY() const
-{
+double IntensityDataItem::getUpperY() const {
     return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble();
 }
 
-double IntensityDataItem::getYmin() const
-{
+double IntensityDataItem::getYmin() const {
     const double defaultYmin(0.0);
-    return m_data ? m_data->getAxis(1).getMin() : defaultYmin;
+    return m_data ? m_data->axis(1).lowerBound() : defaultYmin;
 }
 
-double IntensityDataItem::getYmax() const
-{
+double IntensityDataItem::getYmax() const {
     const double defaultYmax(1.0);
-    return m_data ? m_data->getAxis(1).getMax() : defaultYmax;
+    return m_data ? m_data->axis(1).upperBound() : defaultYmax;
 }
 
-double IntensityDataItem::getLowerZ() const
-{
+double IntensityDataItem::getLowerZ() const {
     return getItem(P_ZAXIS)->getItemValue(BasicAxisItem::P_MIN_DEG).toDouble();
 }
 
-double IntensityDataItem::getUpperZ() const
-{
+double IntensityDataItem::getUpperZ() const {
     return getItem(P_ZAXIS)->getItemValue(BasicAxisItem::P_MAX_DEG).toDouble();
 }
 
-QString IntensityDataItem::getGradient() const
-{
+QString IntensityDataItem::getGradient() const {
     ComboProperty combo_property = getItemValue(P_GRADIENT).value<ComboProperty>();
     return combo_property.getValue();
 }
 
-bool IntensityDataItem::isLogz() const
-{
+bool IntensityDataItem::isLogz() const {
     return getItem(P_ZAXIS)->getItemValue(AmplitudeAxisItem::P_IS_LOGSCALE).toBool();
 }
 
-bool IntensityDataItem::isInterpolated() const
-{
+bool IntensityDataItem::isInterpolated() const {
     return getItemValue(P_IS_INTERPOLATED).toBool();
 }
 
-QString IntensityDataItem::getXaxisTitle() const
-{
+QString IntensityDataItem::getXaxisTitle() const {
     return getItem(P_XAXIS)->getItemValue(BasicAxisItem::P_TITLE).toString();
 }
 
-QString IntensityDataItem::getYaxisTitle() const
-{
+QString IntensityDataItem::getYaxisTitle() const {
     return getItem(P_YAXIS)->getItemValue(BasicAxisItem::P_TITLE).toString();
 }
 
-bool IntensityDataItem::isZAxisLocked() const
-{
+bool IntensityDataItem::isZAxisLocked() const {
     return getItem(P_ZAXIS)->getItemValue(AmplitudeAxisItem::P_LOCK_MIN_MAX).toBool();
 }
 
-void IntensityDataItem::setZAxisLocked(bool state)
-{
+void IntensityDataItem::setZAxisLocked(bool state) {
     return getItem(P_ZAXIS)->setItemValue(AmplitudeAxisItem::P_LOCK_MIN_MAX, state);
 }
 
-void IntensityDataItem::setXaxisTitle(QString xtitle)
-{
+void IntensityDataItem::setXaxisTitle(QString xtitle) {
     getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_TITLE, xtitle);
 }
 
-void IntensityDataItem::setYaxisTitle(QString ytitle)
-{
+void IntensityDataItem::setYaxisTitle(QString ytitle) {
     getItem(P_YAXIS)->setItemValue(BasicAxisItem::P_TITLE, ytitle);
 }
 
 //! set zoom range of x,y axes to axes of input data
-void IntensityDataItem::setAxesRangeToData()
-{
+void IntensityDataItem::setAxesRangeToData() {
     setLowerX(getXmin());
     setUpperX(getXmax());
     setLowerY(getYmin());
     setUpperY(getYmax());
 }
 
-void IntensityDataItem::updateAxesUnits(const InstrumentItem* instrument)
-{
+void IntensityDataItem::updateAxesUnits(const InstrumentItem* instrument) {
     MaskUnitsConverter converter;
     converter.convertToNbins(this);
 
@@ -227,13 +199,11 @@ void IntensityDataItem::updateAxesUnits(const InstrumentItem* instrument)
     converter.convertFromNbins(this);
 }
 
-std::vector<int> IntensityDataItem::shape() const
-{
+std::vector<int> IntensityDataItem::shape() const {
     return {getNbinsX(), getNbinsY()};
 }
 
-void IntensityDataItem::reset(ImportDataInfo data)
-{
+void IntensityDataItem::reset(ImportDataInfo data) {
     ASSERT(data.unitsLabel() == "nbins");
     ComboProperty combo = ComboProperty() << data.unitsLabel();
     setItemValue(IntensityDataItem::P_AXES_UNITS, combo.variant());
@@ -248,28 +218,23 @@ void IntensityDataItem::reset(ImportDataInfo data)
     converter.convertFromNbins(this);
 }
 
-void IntensityDataItem::setLowerX(double xmin)
-{
+void IntensityDataItem::setLowerX(double xmin) {
     getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_MIN_DEG, xmin);
 }
 
-void IntensityDataItem::setUpperX(double xmax)
-{
+void IntensityDataItem::setUpperX(double xmax) {
     getItem(P_XAXIS)->setItemValue(BasicAxisItem::P_MAX_DEG, xmax);
 }
 
-void IntensityDataItem::setLowerY(double ymin)
-{
+void IntensityDataItem::setLowerY(double ymin) {
     getItem(P_YAXIS)->setItemValue(BasicAxisItem::P_MIN_DEG, ymin);
 }
 
-void IntensityDataItem::setUpperY(double ymax)
-{
+void IntensityDataItem::setUpperY(double ymax) {
     getItem(P_YAXIS)->setItemValue(BasicAxisItem::P_MAX_DEG, ymax);
 }
 
-void IntensityDataItem::setLowerAndUpperZ(double zmin, double zmax)
-{
+void IntensityDataItem::setLowerAndUpperZ(double zmin, double zmax) {
     if (getLowerZ() != zmin)
         getItem(P_ZAXIS)->setItemValue(BasicAxisItem::P_MIN_DEG, zmin);
 
@@ -277,30 +242,25 @@ void IntensityDataItem::setLowerAndUpperZ(double zmin, double zmax)
         getItem(P_ZAXIS)->setItemValue(BasicAxisItem::P_MAX_DEG, zmax);
 }
 
-void IntensityDataItem::setLowerZ(double zmin)
-{
+void IntensityDataItem::setLowerZ(double zmin) {
     getItem(P_ZAXIS)->setItemValue(BasicAxisItem::P_MIN_DEG, zmin);
 }
 
-void IntensityDataItem::setUpperZ(double zmax)
-{
+void IntensityDataItem::setUpperZ(double zmax) {
     getItem(P_ZAXIS)->setItemValue(BasicAxisItem::P_MAX_DEG, zmax);
 }
 
-void IntensityDataItem::setLogz(bool logz)
-{
+void IntensityDataItem::setLogz(bool logz) {
     getItem(P_ZAXIS)->setItemValue(AmplitudeAxisItem::P_IS_LOGSCALE, logz);
 }
 
-void IntensityDataItem::setInterpolated(bool interp)
-{
+void IntensityDataItem::setInterpolated(bool interp) {
     setItemValue(P_IS_INTERPOLATED, interp);
 }
 
 //! Sets zoom range of X,Y axes, if it was not yet defined.
 
-void IntensityDataItem::updateAxesZoomLevel()
-{
+void IntensityDataItem::updateAxesZoomLevel() {
     // set zoom range of x-axis to min, max values if it was not set already
     if (getUpperX() < getLowerX()) {
         setLowerX(getXmin());
@@ -313,42 +273,38 @@ void IntensityDataItem::updateAxesZoomLevel()
         setUpperY(getYmax());
     }
 
-    const int nx = static_cast<int>(m_data->getAxis(0).size());
+    const int nx = static_cast<int>(m_data->axis(0).size());
     xAxisItem()->setItemValue(BasicAxisItem::P_NBINS, nx);
-    const int ny = static_cast<int>(m_data->getAxis(1).size());
+    const int ny = static_cast<int>(m_data->axis(1).size());
     yAxisItem()->setItemValue(BasicAxisItem::P_NBINS, ny);
 }
 
 //! Init axes labels, if it was not done already.
 
-void IntensityDataItem::updateAxesLabels()
-{
+void IntensityDataItem::updateAxesLabels() {
     if (getXaxisTitle().isEmpty())
-        setXaxisTitle(QString::fromStdString(m_data->getAxis(0).getName()));
+        setXaxisTitle(QString::fromStdString(m_data->axis(0).getName()));
 
     if (getYaxisTitle().isEmpty())
-        setYaxisTitle(QString::fromStdString(m_data->getAxis(1).getName()));
+        setYaxisTitle(QString::fromStdString(m_data->axis(1).getName()));
 }
 
 //! Sets min,max values for z-axis, if axes is not locked, and ranges are not yet set.
 
-void IntensityDataItem::updateDataRange()
-{
+void IntensityDataItem::updateDataRange() {
     if (isZAxisLocked())
         return;
 
     computeDataRange();
 }
 
-void IntensityDataItem::computeDataRange()
-{
+void IntensityDataItem::computeDataRange() {
     QPair<double, double> minmax = dataRange();
     setLowerAndUpperZ(minmax.first, minmax.second);
 }
 
 //! Init zmin, zmax to match the intensity values range.
-QPair<double, double> IntensityDataItem::dataRange() const
-{
+QPair<double, double> IntensityDataItem::dataRange() const {
     const OutputData<double>* data = getOutputData();
     double min(*std::min_element(data->begin(), data->end()));
     double max(*std::max_element(data->begin(), data->end()));
@@ -367,40 +323,33 @@ QPair<double, double> IntensityDataItem::dataRange() const
     return QPair<double, double>(min, max);
 }
 
-const BasicAxisItem* IntensityDataItem::xAxisItem() const
-{
+const BasicAxisItem* IntensityDataItem::xAxisItem() const {
     return dynamic_cast<const BasicAxisItem*>(getItem(P_XAXIS));
 }
 
-BasicAxisItem* IntensityDataItem::xAxisItem()
-{
+BasicAxisItem* IntensityDataItem::xAxisItem() {
     return const_cast<BasicAxisItem*>(static_cast<const IntensityDataItem*>(this)->xAxisItem());
 }
 
-const BasicAxisItem* IntensityDataItem::yAxisItem() const
-{
+const BasicAxisItem* IntensityDataItem::yAxisItem() const {
     return dynamic_cast<const BasicAxisItem*>(getItem(P_YAXIS));
 }
 
-BasicAxisItem* IntensityDataItem::yAxisItem()
-{
+BasicAxisItem* IntensityDataItem::yAxisItem() {
     return const_cast<BasicAxisItem*>(static_cast<const IntensityDataItem*>(this)->yAxisItem());
 }
 
-const BasicAxisItem* IntensityDataItem::zAxisItem() const
-{
+const BasicAxisItem* IntensityDataItem::zAxisItem() const {
     return dynamic_cast<const BasicAxisItem*>(getItem(P_ZAXIS));
 }
 
-BasicAxisItem* IntensityDataItem::zAxisItem()
-{
+BasicAxisItem* IntensityDataItem::zAxisItem() {
     return const_cast<BasicAxisItem*>(static_cast<const IntensityDataItem*>(this)->zAxisItem());
 }
 
 //! Set axes viewport to original data.
 
-void IntensityDataItem::resetView()
-{
+void IntensityDataItem::resetView() {
     if (!m_data)
         return;
 
@@ -409,12 +358,10 @@ void IntensityDataItem::resetView()
         computeDataRange();
 }
 
-MaskContainerItem* IntensityDataItem::maskContainerItem()
-{
+MaskContainerItem* IntensityDataItem::maskContainerItem() {
     return dynamic_cast<MaskContainerItem*>(getItem(IntensityDataItem::T_MASKS));
 }
 
-ProjectionContainerItem* IntensityDataItem::projectionContainerItem()
-{
+ProjectionContainerItem* IntensityDataItem::projectionContainerItem() {
     return dynamic_cast<ProjectionContainerItem*>(getItem(IntensityDataItem::T_PROJECTIONS));
 }

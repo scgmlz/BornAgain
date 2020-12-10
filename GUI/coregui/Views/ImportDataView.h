@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAVIEW_H
@@ -20,15 +20,13 @@
 
 class RealDataModel;
 class RealDataSelectorWidget;
-namespace Manhattan
-{
+namespace Manhattan {
 class MiniSplitter;
 }
 
 //! The ImportDataView class is a main view for importing experimental data.
 
-class BA_CORE_API_ ImportDataView : public QWidget
-{
+class ImportDataView : public QWidget {
     Q_OBJECT
 
 public:

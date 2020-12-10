@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -11,17 +11,22 @@
 //! @authors   Scientific Computing Group at MLZ Garching
 //! @authors   C. Durniak, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_CORE_SIMULATION_MPISIMULATION_H
 #define BORNAGAIN_CORE_SIMULATION_MPISIMULATION_H
 
-class Simulation;
+class ISimulation;
 
-class MPISimulation
-{
+class MPISimulation {
 public:
-    void runSimulation(Simulation* simulation);
+    void runSimulation(ISimulation* simulation);
 };
 
 #endif // BORNAGAIN_CORE_SIMULATION_MPISIMULATION_H
+#endif // USER_API

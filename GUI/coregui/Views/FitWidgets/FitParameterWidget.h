@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPARAMETERWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITPARAMETERWIDGET_H
@@ -35,8 +35,7 @@ class OverlayLabelController;
 //! The FitParametersWidget class contains a tree view to set fit parameters (fix/release,
 //! starting value, min/max bounds). It occupies buttom right corner of JobView.
 
-class BA_CORE_API_ FitParameterWidget : public SessionItemWidget
-{
+class FitParameterWidget : public SessionItemWidget {
     Q_OBJECT
 public:
     FitParameterWidget(QWidget* parent = 0);

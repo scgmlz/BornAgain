@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataWidget.h"
 #include "GUI/coregui/Models/DataItemUtils.h"
@@ -23,9 +23,9 @@
 #include <QMenu>
 
 SpecularDataWidget::SpecularDataWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_intensity_canvas(new SpecularDataCanvas),
-      m_property_widget(new IntensityDataPropertyWidget)
-{
+    : SessionItemWidget(parent)
+    , m_intensity_canvas(new SpecularDataCanvas)
+    , m_property_widget(new IntensityDataPropertyWidget) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto hlayout = new QHBoxLayout;
@@ -47,27 +47,23 @@ SpecularDataWidget::SpecularDataWidget(QWidget* parent)
     m_property_widget->setVisible(false);
 }
 
-void SpecularDataWidget::setItem(SessionItem* jobItem)
-{
+void SpecularDataWidget::setItem(SessionItem* jobItem) {
     SessionItemWidget::setItem(jobItem);
     m_intensity_canvas->setItem(specularDataItem());
     m_property_widget->setItem(specularDataItem());
 }
 
-QList<QAction*> SpecularDataWidget::actionList()
-{
+QList<QAction*> SpecularDataWidget::actionList() {
     return m_intensity_canvas->actionList() + m_property_widget->actionList();
 }
 
-void SpecularDataWidget::onContextMenuRequest(const QPoint& point)
-{
+void SpecularDataWidget::onContextMenuRequest(const QPoint& point) {
     QMenu menu;
     for (auto action : actionList())
         menu.addAction(action);
     menu.exec(point);
 }
 
-SpecularDataItem* SpecularDataWidget::specularDataItem()
-{
+SpecularDataItem* SpecularDataWidget::specularDataItem() {
     return DataItemUtils::specularDataItem(currentItem());
 }

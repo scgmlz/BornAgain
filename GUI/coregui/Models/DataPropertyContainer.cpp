@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/DataPropertyContainer.h"
 #include "GUI/coregui/Models/DataItem.h"
@@ -19,14 +19,12 @@
 
 const QString DataPropertyContainer::T_CHILDREN = "data links";
 
-DataPropertyContainer::DataPropertyContainer() : SessionItem("DataPropertyContainer")
-{
+DataPropertyContainer::DataPropertyContainer() : SessionItem("DataPropertyContainer") {
     registerTag(T_CHILDREN, 0, -1, QStringList() << "DataItem1DProperties");
     setDefaultTag(T_CHILDREN);
 }
 
-QVector<Data1DProperties*> DataPropertyContainer::propertyItems()
-{
+QVector<Data1DProperties*> DataPropertyContainer::propertyItems() {
     QVector<Data1DProperties*> result;
     auto source = getItems();
     std::transform(source.begin(), source.end(), std::back_inserter(result),
@@ -34,8 +32,7 @@ QVector<Data1DProperties*> DataPropertyContainer::propertyItems()
     return result;
 }
 
-Data1DProperties* DataPropertyContainer::propertyItem(size_t i) const
-{
+Data1DProperties* DataPropertyContainer::propertyItem(size_t i) const {
     auto children = getItems();
     if (children.empty())
         return nullptr;
@@ -44,16 +41,14 @@ Data1DProperties* DataPropertyContainer::propertyItem(size_t i) const
     return property_item;
 }
 
-DataItem* DataPropertyContainer::basicDataItem()
-{
+DataItem* DataPropertyContainer::basicDataItem() {
     auto basic_property_item = propertyItem(0);
     if (!basic_property_item)
         return nullptr;
     return basic_property_item->dataItem();
 }
 
-void DataPropertyContainer::addItem(DataItem* data_item)
-{
+void DataPropertyContainer::addItem(DataItem* data_item) {
     if (this->model() != data_item->model())
         throw GUIHelpers::Error(
             "Error in DataPropertyContainer::addItem: hosting models are different");
@@ -69,8 +64,7 @@ void DataPropertyContainer::addItem(DataItem* data_item)
     property_item->setColorProperty(Data1DProperties::nextColorName(previous_item));
 }
 
-std::vector<DataItem*> DataPropertyContainer::dataItems()
-{
+std::vector<DataItem*> DataPropertyContainer::dataItems() {
     std::vector<DataItem*> result;
     auto items = propertyItems();
     std::transform(items.begin(), items.end(), std::back_inserter(result),
@@ -82,7 +76,6 @@ std::vector<DataItem*> DataPropertyContainer::dataItems()
     return result;
 }
 
-DataItem* DataPropertyContainer::dataItem(size_t i) const
-{
+DataItem* DataPropertyContainer::dataItem(size_t i) const {
     return propertyItem(i)->dataItem();
 }

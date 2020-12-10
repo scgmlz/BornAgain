@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/PropertyEditor/TestComponentView.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Scattering/ISample.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
 #include "GUI/coregui/Models/MaterialDataItems.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SessionModelDelegate.h"
@@ -28,24 +24,29 @@
 #include "GUI/coregui/Views/PropertyEditor/ComponentTreeView.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include "GUI/coregui/utils/StyleUtils.h"
-#include "minisplitter.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 #include <QBoxLayout>
 #include <QDebug>
 #include <QItemSelectionModel>
 #include <QPushButton>
 #include <QTreeView>
 #include <limits>
+#include <qt-manhattan-style/minisplitter.h>
 
 TestComponentView::TestComponentView(MainWindow* mainWindow)
-    : m_mainWindow(mainWindow), m_sampleModel(new SampleModel(this)),
-      m_materialModel(new MaterialModel(this)), m_sourceTree(new QTreeView),
-      m_componentTree(new ComponentEditor(ComponentEditor::FullTree)),
-      m_componentFlat(new ComponentEditor(ComponentEditor::PlainWidget)),
-      m_updateButton(new QPushButton("Update models")),
-      m_addItemButton(new QPushButton("Add item")), m_expandButton(new QPushButton("Expand tree")),
-      m_splitter(new Manhattan::MiniSplitter), m_delegate(new SessionModelDelegate(this)),
-      m_isExpaned(false)
-{
+    : m_mainWindow(mainWindow)
+    , m_sampleModel(new SampleModel(this))
+    , m_materialModel(new MaterialModel(this))
+    , m_sourceTree(new QTreeView)
+    , m_componentTree(new ComponentEditor(ComponentEditor::FullTree))
+    , m_componentFlat(new ComponentEditor(ComponentEditor::PlainWidget))
+    , m_updateButton(new QPushButton("Update models"))
+    , m_addItemButton(new QPushButton("Add item"))
+    , m_expandButton(new QPushButton("Expand tree"))
+    , m_splitter(new Manhattan::MiniSplitter)
+    , m_delegate(new SessionModelDelegate(this))
+    , m_isExpaned(false) {
     auto buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(m_updateButton);
     buttonLayout->addWidget(m_addItemButton);
@@ -79,18 +80,15 @@ TestComponentView::TestComponentView(MainWindow* mainWindow)
             &TestComponentView::onSelectionChanged);
 }
 
-void TestComponentView::onUpdateRequest()
-{
+void TestComponentView::onUpdateRequest() {
     //    m_componentTree->setModel(m_sourceModel);
 }
 
-void TestComponentView::onAddItemRequest()
-{
+void TestComponentView::onAddItemRequest() {
     m_sampleModel->insertNewItem("Particle");
 }
 
-void TestComponentView::onExpandRequest()
-{
+void TestComponentView::onExpandRequest() {
     if (!m_isExpaned) {
         m_sourceTree->expandAll();
         m_sourceTree->resizeColumnToContents(0);
@@ -113,11 +111,10 @@ void TestComponentView::onExpandRequest()
 
 //! Inserts test items into source model.
 
-void TestComponentView::init_source()
-{
+void TestComponentView::init_source() {
     SampleBuilderFactory factory;
     const std::unique_ptr<MultiLayer> sample(
-        factory.createSample("CylindersWithSizeDistributionBuilder"));
+        factory.createSampleByName("CylindersWithSizeDistributionBuilder"));
     GUIObjectBuilder::populateSampleModel(m_sampleModel, m_materialModel, *sample);
     m_sampleModel->insertNewItem("Vector");
     m_sampleModel->insertNewItem("GISASBeam");
@@ -126,11 +123,10 @@ void TestComponentView::init_source()
     m_sampleModel->insertNewItem("IntensityData");
 }
 
-void TestComponentView::onSelectionChanged(const QItemSelection& selected, const QItemSelection&)
-{
+void TestComponentView::onSelectionChanged(const QItemSelection& selected, const QItemSelection&) {
     QModelIndexList indices = selected.indexes();
 
-    if (indices.size()) {
+    if (!indices.empty()) {
         //        QModelIndex selectedIndex = indices.front();
         //        m_componentTree->setRootIndex(selectedIndex);
         //        m_componentTree->treeView()->expandAll();
@@ -141,8 +137,7 @@ void TestComponentView::onSelectionChanged(const QItemSelection& selected, const
     }
 }
 
-QWidget* TestComponentView::componentTreePanel()
-{
+QWidget* TestComponentView::componentTreePanel() {
     Manhattan::MiniSplitter* result = new Manhattan::MiniSplitter(Qt::Vertical);
     result->addWidget(m_componentTree);
 
@@ -150,8 +145,7 @@ QWidget* TestComponentView::componentTreePanel()
     return result;
 }
 
-QWidget* TestComponentView::componentBoxPanel()
-{
+QWidget* TestComponentView::componentBoxPanel() {
     Manhattan::MiniSplitter* result = new Manhattan::MiniSplitter(Qt::Vertical);
     result->addWidget(m_componentFlat);
 

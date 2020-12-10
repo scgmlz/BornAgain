@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/utils/CustomEventFilters.h"
 #include <QApplication>
@@ -20,8 +20,7 @@
 
 SpaceKeyEater::SpaceKeyEater(QObject* parent) : QObject(parent) {}
 
-bool SpaceKeyEater::eventFilter(QObject* obj, QEvent* event)
-{
+bool SpaceKeyEater::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         bool res = QObject::eventFilter(obj, event);
@@ -41,8 +40,7 @@ bool SpaceKeyEater::eventFilter(QObject* obj, QEvent* event)
 
 WheelEventEater::WheelEventEater(QObject* parent) : QObject(parent) {}
 
-bool WheelEventEater::eventFilter(QObject* obj, QEvent* event)
-{
+bool WheelEventEater::eventFilter(QObject* obj, QEvent* event) {
     if (QAbstractSpinBox* spinBox = qobject_cast<QAbstractSpinBox*>(obj)) {
 
         if (event->type() == QEvent::Wheel) {
@@ -72,8 +70,7 @@ bool WheelEventEater::eventFilter(QObject* obj, QEvent* event)
 
 // ----------------------------------------------------------------------------
 
-bool DeleteEventFilter::eventFilter(QObject* dist, QEvent* event)
-{
+bool DeleteEventFilter::eventFilter(QObject* dist, QEvent* event) {
     Q_UNUSED(dist);
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
@@ -87,8 +84,7 @@ bool DeleteEventFilter::eventFilter(QObject* dist, QEvent* event)
 
 LostFocusFilter::LostFocusFilter(QObject* parent) : QObject(parent) {}
 
-bool LostFocusFilter::eventFilter(QObject* obj, QEvent* event)
-{
+bool LostFocusFilter::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::FocusOut)
         return true;
 
@@ -98,12 +94,9 @@ bool LostFocusFilter::eventFilter(QObject* obj, QEvent* event)
 // ----------------------------------------------------------------------------
 
 ShortcodeFilter::ShortcodeFilter(const QString& shortcode, QObject* parent)
-    : QObject(parent), m_shortcode(shortcode), m_index(0)
-{
-}
+    : QObject(parent), m_shortcode(shortcode), m_index(0) {}
 
-bool ShortcodeFilter::eventFilter(QObject* obj, QEvent* event)
-{
+bool ShortcodeFilter::eventFilter(QObject* obj, QEvent* event) {
     Q_UNUSED(obj);
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
@@ -129,8 +122,7 @@ bool ShortcodeFilter::eventFilter(QObject* obj, QEvent* event)
 
 RightMouseButtonEater::RightMouseButtonEater(QObject* parent) : QObject(parent) {}
 
-bool RightMouseButtonEater::eventFilter(QObject* obj, QEvent* event)
-{
+bool RightMouseButtonEater::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         if (mouseEvent->button() == Qt::RightButton) {
@@ -150,14 +142,12 @@ bool RightMouseButtonEater::eventFilter(QObject* obj, QEvent* event)
 //! to trigger QTreeView delegate's mechanism to switch editors on "tab" press key.
 //! https://stackoverflow.com/questions/12145522/why-pressing-of-tab-key-emits-only-qeventshortcutoverride-event
 
-TabFromFocusProxy::TabFromFocusProxy(QWidget* parent) : QObject(parent), m_parent(parent)
-{
+TabFromFocusProxy::TabFromFocusProxy(QWidget* parent) : QObject(parent), m_parent(parent) {
     if (parent->focusProxy())
         parent->focusProxy()->installEventFilter(this);
 }
 
-bool TabFromFocusProxy::eventFilter(QObject* obj, QEvent* event)
-{
+bool TabFromFocusProxy::eventFilter(QObject* obj, QEvent* event) {
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_Tab || keyEvent->key() == Qt::Key_Backtab) {

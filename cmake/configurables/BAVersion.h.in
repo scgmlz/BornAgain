@@ -16,30 +16,33 @@
 #ifndef BAVERSION_H
 #define BAVERSION_H
 
-#include <string>
 #include <sstream>
+#include <string>
 
 namespace BornAgain {
-    const int major_version_number = @BornAgain_VERSION_MAJOR@;
-    const int minor_version_number = @BornAgain_VERSION_MINOR@;
-    const int patch_version_number = @BornAgain_VERSION_PATCH@;
+const int major_version_number = @BornAgain_VERSION_MAJOR@;
+const int minor_version_number = @BornAgain_VERSION_MINOR@;
+const int patch_version_number = @BornAgain_VERSION_PATCH@;
 
-    inline int GetMajorVersionNumber() { return major_version_number; }
-    inline int GetMinorVersionNumber() { return minor_version_number; }
-    inline int GetPatchVersionNumber() { return patch_version_number; }
-    inline std::string GetName() { return std::string("BornAgain"); }
-
-    inline std::string GetVersionNumber()
-    {
-        std::ostringstream ostr;
-        ostr << major_version_number
-             << "."
-             << minor_version_number
-             << "."
-             << patch_version_number ;
-
-        return ostr.str();
-    }
+inline int GetMajorVersionNumber() {
+    return major_version_number;
 }
+inline int GetMinorVersionNumber() {
+    return minor_version_number;
+}
+inline int GetPatchVersionNumber() {
+    return patch_version_number;
+}
+inline std::string GetName() {
+    return std::string("BornAgain");
+}
+
+inline std::string GetVersionNumber() {
+    std::ostringstream ostr;
+    ostr << major_version_number << "." << minor_version_number << "." << patch_version_number;
+
+    return ostr.str();
+}
+} // namespace BornAgain
 
 #endif // BAVERSION_H

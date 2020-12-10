@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/mainwindow/ProjectUtils.h"
 #include "GUI/coregui/Models/ItemFileNameUtils.h"
@@ -23,57 +23,48 @@
 #include <QDir>
 #include <QFileInfo>
 
-QString ProjectUtils::projectName(const QString& projectFileName)
-{
+QString ProjectUtils::projectName(const QString& projectFileName) {
     QFileInfo info(projectFileName);
     return info.baseName();
 }
 
-QString ProjectUtils::projectDir(const QString& projectFileName)
-{
+QString ProjectUtils::projectDir(const QString& projectFileName) {
     QFileInfo info(projectFileName);
     return info.path();
 }
 
-QString ProjectUtils::autosaveSubdir()
-{
+QString ProjectUtils::autosaveSubdir() {
     return "autosave";
 }
 
 //! From '/projects/Untitled2/Untitled2.pro' returns '/projects/Untitled2/autosave'.
 
-QString ProjectUtils::autosaveDir(const QString& projectFileName)
-{
+QString ProjectUtils::autosaveDir(const QString& projectFileName) {
     return ProjectUtils::projectDir(projectFileName) + "/" + autosaveSubdir();
 }
 
 //! From '/projects/Untitled2/Untitled2.pro' returns '/projects/Untitled2/autosave/Untitled2.pro'.
 
-QString ProjectUtils::autosaveName(const QString& projectFileName)
-{
+QString ProjectUtils::autosaveName(const QString& projectFileName) {
     return ProjectUtils::autosaveDir(projectFileName) + "/"
            + ProjectUtils::projectName(projectFileName) + ProjectDocument::projectFileExtension();
 }
 
-bool ProjectUtils::exists(const QString& fileName)
-{
+bool ProjectUtils::exists(const QString& fileName) {
     QFileInfo info(fileName);
     return info.exists();
 }
 
-bool ProjectUtils::hasAutosavedData(const QString& projectFileName)
-{
+bool ProjectUtils::hasAutosavedData(const QString& projectFileName) {
     return exists(projectFileName) && exists(autosaveName(projectFileName));
 }
 
-QString ProjectUtils::lastModified(const QString& fileName)
-{
+QString ProjectUtils::lastModified(const QString& fileName) {
     QFileInfo info(fileName);
     return info.lastModified().toString("hh:mm:ss, MMMM d, yyyy");
 }
 
-QStringList ProjectUtils::nonXMLDataInDir(const QString& dirname)
-{
+QStringList ProjectUtils::nonXMLDataInDir(const QString& dirname) {
     QDir dir(dirname);
 
     if (!dir.exists())
@@ -84,8 +75,7 @@ QStringList ProjectUtils::nonXMLDataInDir(const QString& dirname)
     return dir.entryList(ItemFileNameUtils::nonXMLFileNameFilters());
 }
 
-bool ProjectUtils::removeRecursively(const QString& dirname)
-{
+bool ProjectUtils::removeRecursively(const QString& dirname) {
     QDir dir(dirname);
 
     if (!dir.exists())
@@ -96,8 +86,7 @@ bool ProjectUtils::removeRecursively(const QString& dirname)
     return dir.removeRecursively();
 }
 
-bool ProjectUtils::removeFile(const QString& dirname, const QString& filename)
-{
+bool ProjectUtils::removeFile(const QString& dirname, const QString& filename) {
     QString name = dirname + "/" + filename;
     QFile fin(name);
 
@@ -109,8 +98,7 @@ bool ProjectUtils::removeFile(const QString& dirname, const QString& filename)
     return fin.remove();
 }
 
-bool ProjectUtils::removeFiles(const QString& dirname, const QStringList& filenames)
-{
+bool ProjectUtils::removeFiles(const QString& dirname, const QStringList& filenames) {
     bool success(true);
 
     for (auto& name : filenames)
@@ -119,8 +107,7 @@ bool ProjectUtils::removeFiles(const QString& dirname, const QStringList& filena
     return success;
 }
 
-QStringList ProjectUtils::substract(const QStringList& lhs, const QStringList& rhs)
-{
+QStringList ProjectUtils::substract(const QStringList& lhs, const QStringList& rhs) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     auto lhs_set = QSet<QString>{lhs.begin(), lhs.end()};
     auto rhs_set = QSet<QString>{rhs.begin(), rhs.end()};
@@ -132,8 +119,7 @@ QStringList ProjectUtils::substract(const QStringList& lhs, const QStringList& r
 #endif
 }
 
-QString ProjectUtils::readTextFile(const QString& fileName)
-{
+QString ProjectUtils::readTextFile(const QString& fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         throw GUIHelpers::Error("ProjectUtils::readTextFile -> Error. Can't open the file '"
@@ -142,7 +128,6 @@ QString ProjectUtils::readTextFile(const QString& fileName)
     return in.readAll();
 }
 
-QString ProjectUtils::userExportDir()
-{
+QString ProjectUtils::userExportDir() {
     return AppSvc::projectManager()->userExportDir();
 }

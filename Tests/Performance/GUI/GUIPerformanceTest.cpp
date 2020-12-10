@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Tests/Performance/GUI/GUIPerformanceTest.h"
-#include "Core/Multilayer/MultiLayer.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/DocumentModel.h"
@@ -32,26 +30,24 @@
 #include "GUI/coregui/Models/ParameterTreeUtils.h"
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 #include "Tests/Performance/Benchmark.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QElapsedTimer>
 #include <random>
 
-namespace
-{
+namespace {
 std::random_device rd;
 std::mt19937 mt(rd());
 std::uniform_real_distribution<double> rndm_radius(5., 6.);
 } // namespace
 
 GUIPerformanceTest::GUIPerformanceTest()
-    : m_models(new ApplicationModels(nullptr)), m_sample_name("ParticleCompositionBuilder")
-{
-}
+    : m_models(new ApplicationModels(nullptr)), m_sample_name("ParticleCompositionBuilder") {}
 
-bool GUIPerformanceTest::runTest()
-{
+bool GUIPerformanceTest::runTest() {
 #ifndef NDEBUG
     const int mult = 1;
 #else
@@ -74,14 +70,13 @@ bool GUIPerformanceTest::runTest()
 
 //! Creates domain sample once and then populates sample model.
 
-void GUIPerformanceTest::test_domain_to_gui()
-{
+void GUIPerformanceTest::test_domain_to_gui() {
     static std::unique_ptr<MultiLayer> sample;
 
     if (!sample) {
         m_models->resetModels();
         SampleBuilderFactory factory;
-        sample.reset(factory.createSample(m_sample_name.toStdString()));
+        sample.reset(factory.createSampleByName(m_sample_name.toStdString()));
     }
 
     m_models->sampleModel()->clear();
@@ -91,8 +86,7 @@ void GUIPerformanceTest::test_domain_to_gui()
 
 //! Creates gui sample once and then populates domain.
 
-void GUIPerformanceTest::test_gui_to_domain()
-{
+void GUIPerformanceTest::test_gui_to_domain() {
     static bool is_initialized(false);
 
     if (!is_initialized) {
@@ -101,7 +95,8 @@ void GUIPerformanceTest::test_gui_to_domain()
         m_models->resetModels();
 
         SampleBuilderFactory factory;
-        const std::unique_ptr<MultiLayer> sample(factory.createSample(m_sample_name.toStdString()));
+        const std::unique_ptr<MultiLayer> sample(
+            factory.createSampleByName(m_sample_name.toStdString()));
 
         GUIObjectBuilder::populateSampleModel(m_models->sampleModel(), m_models->materialModel(),
                                               *sample);
@@ -111,8 +106,7 @@ void GUIPerformanceTest::test_gui_to_domain()
         m_models->sampleModel()->multiLayerItem(), m_models->instrumentModel()->instrumentItem());
 }
 
-void GUIPerformanceTest::test_real_time()
-{
+void GUIPerformanceTest::test_real_time() {
     static JobItem* jobItem(0);
 
     if (!jobItem) {
@@ -121,7 +115,8 @@ void GUIPerformanceTest::test_real_time()
         SimulationOptionsItem* optionsItem = m_models->documentModel()->simulationOptionsItem();
 
         SampleBuilderFactory factory;
-        const std::unique_ptr<MultiLayer> sample(factory.createSample(m_sample_name.toStdString()));
+        const std::unique_ptr<MultiLayer> sample(
+            factory.createSampleByName(m_sample_name.toStdString()));
 
         GUIObjectBuilder::populateSampleModel(m_models->sampleModel(), m_models->materialModel(),
                                               *sample);
@@ -163,7 +158,6 @@ void GUIPerformanceTest::test_real_time()
     }
 }
 
-int main()
-{
+int main() {
     return !GUIPerformanceTest().runTest();
 }

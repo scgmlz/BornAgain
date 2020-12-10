@@ -1,19 +1,15 @@
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/Units.h"
-#include "Core/Material/MaterialBySLDImpl.h"
-#include "Core/Material/RefractiveMaterialImpl.h"
-#include "Core/Particle/HomogeneousRegion.h"
-#include "Core/Scattering/Rotations.h"
-#include "Core/Vector/Transform3D.h"
-#include "Core/Vector/WavevectorInfo.h"
+#include "Base/Const/Units.h"
+#include "Base/Vector/Transform3D.h"
+#include "Sample/Material/MaterialBySLDImpl.h"
+#include "Sample/Material/RefractiveMaterialImpl.h"
+#include "Sample/Material/WavevectorInfo.h"
+#include "Sample/Particle/HomogeneousRegion.h"
+#include "Sample/Scattering/Rotations.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class MaterialTest : public ::testing::Test
-{
-};
+class MaterialTest : public ::testing::Test {};
 
-TEST_F(MaterialTest, MaterialConstruction)
-{
+TEST_F(MaterialTest, MaterialConstruction) {
     complex_t material_data = complex_t(0.0, 2.0);
     complex_t refIndex = complex_t(1.0 - material_data.real(), material_data.imag());
     kvector_t magnetism = kvector_t(3.0, 4.0, 5.0);
@@ -47,12 +43,11 @@ TEST_F(MaterialTest, MaterialConstruction)
     EXPECT_EQ(default_magnetism, material6.magnetization());
 }
 
-TEST_F(MaterialTest, MaterialTransform)
-{
+TEST_F(MaterialTest, MaterialTransform) {
     complex_t material_data = complex_t(1.0, 0.0);
     complex_t refIndex = complex_t(1.0 - material_data.real(), material_data.imag());
     kvector_t magnetism = kvector_t(1.0, 0.0, 0.0);
-    RotationZ transform(90. * Units::degree);
+    RotationZ transform(90. * Units::deg);
     kvector_t transformed_mag = transform.transformed(magnetism);
 
     Material material = HomogeneousMaterial("Material", refIndex, magnetism);
@@ -67,8 +62,7 @@ TEST_F(MaterialTest, MaterialTransform)
     EXPECT_EQ(transformed_mag, material4.magnetization());
 }
 
-TEST_F(MaterialTest, DefaultMaterials)
-{
+TEST_F(MaterialTest, DefaultMaterials) {
     Material material = HomogeneousMaterial();
     const double dummy_wavelength = 1.0;
 
@@ -86,8 +80,7 @@ TEST_F(MaterialTest, DefaultMaterials)
     EXPECT_FALSE(material.typeID() == MaterialBySLD().typeID());
 }
 
-TEST_F(MaterialTest, ComputationTest)
-{
+TEST_F(MaterialTest, ComputationTest) {
     // Reference data for Fe taken from
     // https://sld-calculator.appspot.com
     // http://www.ati.ac.at/~neutropt/scattering/table.html
@@ -139,21 +132,20 @@ TEST_F(MaterialTest, ComputationTest)
     EXPECT_NEAR(subtrSLD.imag(), subtrSLDWlIndep.imag(), 1e-10);
 }
 
-TEST_F(MaterialTest, AveragedMaterialTest)
-{
+TEST_F(MaterialTest, AveragedMaterialTest) {
     kvector_t magnetization = kvector_t{1.0, 0.0, 0.0};
     const Material material = HomogeneousMaterial("Material", 0.5, 0.5, magnetization);
     const std::vector<HomogeneousRegion> regions = {HomogeneousRegion{0.25, material},
                                                     HomogeneousRegion{0.25, material}};
 
-    const Material material_avr = CreateAveragedMaterial(material, regions);
+    const Material material_avr = createAveragedMaterial(material, regions);
     EXPECT_EQ(material_avr.magnetization(), magnetization);
     EXPECT_DOUBLE_EQ(material_avr.materialData().real(), 0.5);
     EXPECT_DOUBLE_EQ(material_avr.materialData().imag(), 0.5);
     EXPECT_TRUE(material_avr.typeID() == MATERIAL_TYPES::RefractiveMaterial);
 
     const Material material2 = MaterialBySLD();
-    const Material material_avr2 = CreateAveragedMaterial(material2, regions);
+    const Material material_avr2 = createAveragedMaterial(material2, regions);
     const complex_t expected_res = std::conj(1.0 - std::sqrt(complex_t(0.5, 0.25)));
     EXPECT_DOUBLE_EQ(material_avr2.materialData().real(), expected_res.real());
     EXPECT_DOUBLE_EQ(material_avr2.materialData().imag(), expected_res.imag());
@@ -161,20 +153,19 @@ TEST_F(MaterialTest, AveragedMaterialTest)
     EXPECT_TRUE(material_avr2.typeID() == MATERIAL_TYPES::RefractiveMaterial);
 
     const Material material3 = MaterialBySLD("Material3", 0.5, 0.5, magnetization);
-    EXPECT_THROW(CreateAveragedMaterial(material3, regions), std::runtime_error);
+    EXPECT_THROW(createAveragedMaterial(material3, regions), std::runtime_error);
 
     const Material material4 = HomogeneousMaterial();
     const std::vector<HomogeneousRegion> regions2 = {HomogeneousRegion{0.25, material3},
                                                      HomogeneousRegion{0.25, material3}};
-    const Material material_avr3 = CreateAveragedMaterial(material4, regions2);
+    const Material material_avr3 = createAveragedMaterial(material4, regions2);
     EXPECT_DOUBLE_EQ(material_avr3.materialData().real(), 0.25);
     EXPECT_DOUBLE_EQ(material_avr3.materialData().imag(), 0.25);
     EXPECT_EQ(material_avr3.magnetization(), kvector_t(0.5, 0.0, 0.0));
     EXPECT_TRUE(material_avr3.typeID() == MATERIAL_TYPES::MaterialBySLD);
 }
 
-TEST_F(MaterialTest, TypeIdsTest)
-{
+TEST_F(MaterialTest, TypeIdsTest) {
     Material material = MaterialBySLD("Material", 1.0, 1.0);
     Material material2 = HomogeneousMaterial("Material", 1.0, 1.0);
     EXPECT_TRUE(material.typeID() == MATERIAL_TYPES::MaterialBySLD);
@@ -184,8 +175,7 @@ TEST_F(MaterialTest, TypeIdsTest)
     EXPECT_TRUE(material.typeID() == material3.typeID());
 }
 
-TEST_F(MaterialTest, MaterialComparison)
-{
+TEST_F(MaterialTest, MaterialComparison) {
     Material material = MaterialBySLD("Material", 1.0, 1.0);
     Material material2 = HomogeneousMaterial("Material", 1.0, 1.0);
     EXPECT_TRUE(material == material);
@@ -204,8 +194,7 @@ TEST_F(MaterialTest, MaterialComparison)
     EXPECT_TRUE(HomogeneousMaterial() != MaterialBySLD());
 }
 
-TEST_F(MaterialTest, MaterialCopy)
-{
+TEST_F(MaterialTest, MaterialCopy) {
     complex_t material_data = complex_t(0.0, 2.0);
     complex_t refIndex = complex_t(1.0 - material_data.real(), material_data.imag());
     kvector_t magnetism = kvector_t(3.0, 4.0, 5.0);
@@ -217,8 +206,7 @@ TEST_F(MaterialTest, MaterialCopy)
     EXPECT_TRUE(material == copy);
 }
 
-TEST_F(MaterialTest, MaterialMove)
-{
+TEST_F(MaterialTest, MaterialMove) {
     complex_t material_data = complex_t(0.0, 2.0);
     complex_t refIndex = complex_t(1.0 - material_data.real(), material_data.imag());
     kvector_t magnetism = kvector_t(3.0, 4.0, 5.0);
@@ -227,6 +215,4 @@ TEST_F(MaterialTest, MaterialMove)
     Material moved_material(std::move(material));
     EXPECT_EQ(material_data, moved_material.materialData());
     EXPECT_EQ(magnetism, moved_material.magnetization());
-    EXPECT_TRUE(material.isEmpty());
-    EXPECT_THROW(Material material2 = material, Exceptions::NullPointerException);
 }

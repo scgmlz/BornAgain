@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/SampleViewDocks.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
@@ -27,15 +27,14 @@
 #include <QTreeView>
 
 SampleViewDocks::SampleViewDocks(SampleView* parent)
-    : DocksController(parent), m_sampleDesigner(new SampleDesigner(parent)),
-      m_widgetBox(new SampleWidgetBox(sampleDesigner(), parent)),
-      m_treeWidget(new SampleTreeWidget(parent, parent->models()->sampleModel())),
-      m_propertyWidget(
-          new SamplePropertyWidget(m_treeWidget->treeView()->selectionModel(), parent)),
-      m_scriptPanel(new ScriptPanel(parent)),
-      m_realSpacePanel(new RealSpacePanel(parent->models()->sampleModel(),
-                                          m_treeWidget->treeView()->selectionModel(), parent))
-{
+    : DocksController(parent)
+    , m_sampleDesigner(new SampleDesigner(parent))
+    , m_widgetBox(new SampleWidgetBox(sampleDesigner(), parent))
+    , m_treeWidget(new SampleTreeWidget(parent, parent->models()->sampleModel()))
+    , m_propertyWidget(new SamplePropertyWidget(m_treeWidget->treeView()->selectionModel(), parent))
+    , m_scriptPanel(new ScriptPanel(parent))
+    , m_realSpacePanel(new RealSpacePanel(parent->models()->sampleModel(),
+                                          m_treeWidget->treeView()->selectionModel(), parent)) {
     addWidget(WIDGET_BOX, m_widgetBox, Qt::LeftDockWidgetArea);
     addWidget(SAMPLE_TREE, m_treeWidget, Qt::RightDockWidgetArea);
     addWidget(PROPERTY_EDITOR, m_propertyWidget, Qt::RightDockWidgetArea);
@@ -60,23 +59,19 @@ SampleViewDocks::SampleViewDocks(SampleView* parent)
     onResetLayout();
 }
 
-SampleWidgetBox* SampleViewDocks::widgetBox()
-{
+SampleWidgetBox* SampleViewDocks::widgetBox() {
     return m_widgetBox;
 }
 
-SampleTreeWidget* SampleViewDocks::treeWidget()
-{
+SampleTreeWidget* SampleViewDocks::treeWidget() {
     return m_treeWidget;
 }
 
-SamplePropertyWidget* SampleViewDocks::propertyWidget()
-{
+SamplePropertyWidget* SampleViewDocks::propertyWidget() {
     return m_propertyWidget;
 }
 
-void SampleViewDocks::onResetLayout()
-{
+void SampleViewDocks::onResetLayout() {
     DocksController::onResetLayout();
     mainWindow()->tabifyDockWidget(findDock(REALSPACEPANEL), findDock(INFO));
     findDock(REALSPACEPANEL)->raise(); // makes first tab active
@@ -85,13 +80,11 @@ void SampleViewDocks::onResetLayout()
     findDock(INFO)->hide();
 }
 
-void SampleViewDocks::toggleDock(int id)
-{
+void SampleViewDocks::toggleDock(int id) {
     auto dock = findDock(id);
     dock->setHidden(!dock->isHidden());
 }
 
-SampleDesigner* SampleViewDocks::sampleDesigner()
-{
+SampleDesigner* SampleViewDocks::sampleDesigner() {
     return m_sampleDesigner;
 }

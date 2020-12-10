@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_OUTPUTDATAIOSERVICE_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_OUTPUTDATAIOSERVICE_H
 
 #include "GUI/coregui/mainwindow/OutputDataIOHistory.h"
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class ApplicationModels;
@@ -28,8 +27,7 @@ class SaveLoadInterface;
 //! Listens all models and keep tracks of changes in items. Provides logic to
 //! not to re-save already saved data.
 
-class BA_CORE_API_ OutputDataIOService : public QObject
-{
+class OutputDataIOService : public QObject {
     Q_OBJECT
 public:
     explicit OutputDataIOService(QObject* parent = nullptr);

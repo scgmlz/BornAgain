@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "Core/Multilayer/MultiLayer.h"
+#include "Sample/Multilayer/MultiLayer.h"
 #include "Core/Simulation/SpecularSimulation.h"
 #include "Core/Simulation/StandardSimulations.h"
-#include "Core/StandardSamples/PlainMultiLayerBySLDBuilder.h"
+#include "Sample/StandardSamples/PlainMultiLayerBySLDBuilder.h"
 #include <chrono>
 
 using Results = std::vector<std::pair<int, long>>;
 
-namespace
-{
+namespace {
 const std::vector<int> n_layers = {10, 100, 200, 500, 1000};
 
 const auto now = std::chrono::high_resolution_clock::now;
@@ -29,15 +28,13 @@ const auto duration = [](auto time_interval) {
     return std::chrono::duration_cast<std::chrono::milliseconds>(time_interval).count();
 };
 
-void report(const Results& results)
-{
+void report(const Results& results) {
     for (auto& pair : results)
         std::cout << "n_layers = " << pair.first << ",\t time = " << pair.second << " ms\n";
 }
 } // namespace
 
-int main()
-{
+int main() {
     Results results;
     results.reserve(n_layers.size());
 

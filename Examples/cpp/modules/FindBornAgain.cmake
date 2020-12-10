@@ -17,22 +17,20 @@
 
 
 set(BORNAGAINSYS $ENV{BORNAGAINSYS})
+set(CoreComponents "Base;Param;Sample;Device;Core")
 
 if(BORNAGAINSYS)
-    set(BORNAGAIN_LIBRARY_DIR ${BORNAGAINSYS}/lib/BornAgain-1.6)
-    set(BORNAGAIN_INCLUDE_DIR ${BORNAGAINSYS}/include/BornAgain-1.6)
+    set(BORNAGAIN_LIBRARY_DIR ${BORNAGAINSYS}/lib/BornAgain-1.18)
+    set(BORNAGAIN_INCLUDE_DIR ${BORNAGAINSYS}/include/BornAgain-1.18)
 endif()
 
-find_library (BORNAGAIN_CORE _libBornAgainCore.so
+foreach(lib ${CoreComponents})
+    message(STATUS ${lib})
+    find_library (BORNAGAIN_${lib}  _libBornAgain${lib}.so 
     PATHS ${BORNAGAIN_LIBRARY_DIR}
-    HINTS ${BORNAGAIN_LIBRARY_DIR}
-)
-
-find_library (BORNAGAIN_FIT _libBornAgainFit.so
-    PATHS ${BORNAGAIN_LIBRARY_DIR}
-    HINTS ${BORNAGAIN_LIBRARY_DIR}
-)
-set(BORNAGAIN_LIBRARIES ${BORNAGAIN_CORE} ${BORNAGAIN_FIT})
+    HINTS ${BORNAGAIN_LIBRARY_DIR})
+    list(APPEND BORNAGAIN_LIBRARIES ${BORNAGAIN_${lib}})
+endforeach()
 
 find_path(BORNAGAIN_INCLUDE_DIR BAVersion.h
     PATHS /usr/include /usr/local/include /opt/local/include ${BORNAGAIN_INCLUDE_DIR}

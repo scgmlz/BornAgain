@@ -5,8 +5,6 @@ import sys
 import os
 import unittest
 import numpy as np
-
-sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 import bornagain as ba
 
 
@@ -29,8 +27,10 @@ class SimulationBuilder:
         ml.addLayer(ba.Layer(material))
         ml.addLayer(ba.Layer(material))
 
-        simulation = ba.GISASSimulation(ml)
-        simulation.setDetectorParameters(self.m_ncol, 0.0, 1.0, self.m_nrow, 0.0, 1.0)
+        simulation = ba.GISASSimulation()
+        simulation.setSample(ml)
+        simulation.setDetectorParameters(self.m_ncol, 0.0, 1.0, self.m_nrow,
+                                         0.0, 1.0)
         return simulation
 
     def create_data(self):
@@ -48,7 +48,6 @@ class FitObserver:
 
 
 class FitObjectiveAPITest(unittest.TestCase):
-
     def test_SimulationBuilderCallback(self):
         """
         Testing simulation construction using Python callback
@@ -75,7 +74,7 @@ class FitObjectiveAPITest(unittest.TestCase):
 
         # checking arrays of experimental and simulated data
         expected_sim = []
-        expected_data=[]
+        expected_data = []
         for i in range(0, builder.size()):
             expected_sim.append(0.0)
             expected_data.append(1.0)

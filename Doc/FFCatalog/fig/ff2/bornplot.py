@@ -5,12 +5,12 @@ import math, numpy
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import rc
-rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+rc('font', **{'family': 'sans-serif', 'sans-serif': ['Helvetica']})
 rc('text', usetex=True)
 rc('image', cmap='inferno')
 
 import bornagain as ba
-from bornagain import nanometer, degree, angstrom, deg2rad
+from bornagain import deg, angstrom
 
 
 class BinRange:
@@ -20,11 +20,12 @@ class BinRange:
         self.n = n
 
     def central_index(self):
-        return int((0.-self.vmin)/(self.vmax-self.vmin)*self.n)
+        return int((0. - self.vmin)/(self.vmax - self.vmin)*self.n)
 
 
 class Detector:
-    def __init__(self, bins_per_dimension, phi_min, phi_max, alpha_min, alpha_max):
+    def __init__(self, bins_per_dimension, phi_min, phi_max, alpha_min,
+                 alpha_max):
         self.phi = BinRange(phi_min, phi_max, bins_per_dimension)
         self.alpha = BinRange(alpha_min, alpha_max, bins_per_dimension)
 
@@ -51,16 +52,16 @@ def make_plot(results, det, name, nrow=1):
     """
     mpl.rcParams['image.interpolation'] = 'none'
     n = len(results)
-    ncol = 1+(n-1)//nrow
+    ncol = 1 + (n - 1) // nrow
     # Parameters as fraction of subfig size.
     yskip = 0.2  # +ncol*0.02
     bottomskip = yskip
     topskip = yskip/2
     xskip = 0.18
     leftskip = xskip
-    rightskip = 0.28+ncol*0.03
-    xtot = ncol*1.0 + (ncol-1)*xskip + leftskip + rightskip
-    ytot = nrow*1.0 + (nrow-1)*yskip + bottomskip + topskip
+    rightskip = 0.28 + ncol*0.03
+    xtot = ncol*1.0 + (ncol - 1)*xskip + leftskip + rightskip
+    ytot = nrow*1.0 + (nrow - 1)*yskip + bottomskip + topskip
     # We need parameters as fraction of total fig size.
     xskip /= xtot
     leftskip /= xtot
@@ -70,7 +71,7 @@ def make_plot(results, det, name, nrow=1):
     topskip /= ytot
     # Set total figure dimensions.
     ftot = 5
-    fontsize = 18+36.0/(ncol+2)
+    fontsize = 18 + 36.0/(ncol + 2)
     # Create the figure 'fig' and its subplots axes ('tmp'->'axes').
     fig, tmp = plt.subplots(nrow, ncol, figsize=(ftot*xtot, ftot*ytot))
     if n > 1:
@@ -82,10 +83,7 @@ def make_plot(results, det, name, nrow=1):
     # Plot the subfigures.
     for res in results:
         ax = axes[res.idx]
-        im = ax.imshow(res.data,
-                       norm=norm,
-                       extent=det.rectangle(),
-                       aspect=1)
+        im = ax.imshow(res.data, norm=norm, extent=det.rectangle(), aspect=1)
         ax.set_xlabel(r'$\phi_{\rm f} (^{\circ})$', fontsize=fontsize)
         if res.idx % ncol == 0:
             ax.set_ylabel(r'$\alpha_{\rm f} (^{\circ})$', fontsize=fontsize)
@@ -93,22 +91,27 @@ def make_plot(results, det, name, nrow=1):
             ax.set_title(res.title, fontsize=fontsize)
         ax.tick_params(axis='both', which='major', labelsize=fontsize*21/24)
     # Adjust whitespace around and between subfigures.
-    plt.subplots_adjust(wspace=xskip, hspace=yskip,
-                        left=leftskip, right=1-rightskip,
-                        bottom=bottomskip, top=1-topskip)
+    plt.subplots_adjust(wspace=xskip,
+                        hspace=yskip,
+                        left=leftskip,
+                        right=1 - rightskip,
+                        bottom=bottomskip,
+                        top=1 - topskip)
     # Plot the color scale.
-    cbar_ax = fig.add_axes([1-rightskip+0.4*xskip, bottomskip,
-                            0.25*xskip, 1-bottomskip-topskip])
+    cbar_ax = fig.add_axes([
+        1 - rightskip + 0.4*xskip, bottomskip, 0.25*xskip,
+        1 - bottomskip - topskip
+    ])
     cb = fig.colorbar(im, cax=cbar_ax)
     cb.set_label(r'$\left|F(q)\right|^2/V^{\,2}$', fontsize=fontsize)
     # Output to data file, image file, and display.
-    nDigits = int(math.log10(len(results)))+1
+    nDigits = int(math.log10(len(results))) + 1
     formatN = "%" + str(nDigits) + "i"
     for i in range(len(results)):
-        fname = name+"."+(formatN % i)+".int"
+        fname = name + "." + (formatN % i) + ".int"
         print(fname)
         numpy.savetxt(fname, results[i].data)
-    plt.savefig(name+".pdf", format="pdf", bbox_inches='tight')
+    plt.savefig(name + ".pdf", format="pdf", bbox_inches='tight')
     # plt.show()
 
 
@@ -120,7 +123,7 @@ def get_sample(ff, trafo):
     :param trafo: Optional rotation
     """
     # defining materials
-    m_ambience = ba.HomogeneousMaterial("Air", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
     m_particle = ba.HomogeneousMaterial("Particle", 1e-5, 0)
 
     # collection of particles
@@ -132,11 +135,11 @@ def get_sample(ff, trafo):
     else:
         particle_layout.addParticle(particle)
 
-    air_layer = ba.Layer(m_ambience)
-    air_layer.addLayout(particle_layout)
+    vacuum_layer = ba.Layer(m_vacuum)
+    vacuum_layer.addLayout(particle_layout)
 
     multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(air_layer)
+    multi_layer.addLayer(vacuum_layer)
     return multi_layer
 
 
@@ -146,9 +149,9 @@ def get_simulation(det):
     :param det: Detector limits
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(
-        det.phi.n, det.phi.vmin*degree, det.phi.vmax*degree,
-        det.alpha.n, det.alpha.vmin*degree, det.alpha.vmax*degree )
+    simulation.setDetectorParameters(det.phi.n, det.phi.vmin*deg,
+                                     det.phi.vmax*deg, det.alpha.n,
+                                     det.alpha.vmin*deg, det.alpha.vmax*deg)
     simulation.setBeamParameters(1.0*angstrom, 0, 0)
     return simulation
 
@@ -168,6 +171,7 @@ def run_simulation(det, ff, trafo=None):
     simulation.setSample(sample)
     simulation.runSimulation()
     data = simulation.result().array()
-    nor = data[det.alpha.n - det.alpha.central_index() - 1, det.phi.central_index()]
+    nor = data[det.alpha.n - det.alpha.central_index() - 1,
+               det.phi.central_index()]
     data /= nor
     return data + 1e-80  # for log scale

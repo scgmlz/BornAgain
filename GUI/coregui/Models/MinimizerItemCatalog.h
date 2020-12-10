@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MINIMIZERITEMCATALOG_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MINIMIZERITEMCATALOG_H
@@ -22,8 +22,7 @@ class MinimizerItem;
 //! The MinimizerItemCatalog class is a static class to provide MinimizerItem
 //! with the list of available minimizers/algorithms.
 
-class BA_CORE_API_ MinimizerItemCatalog
-{
+class MinimizerItemCatalog {
 public:
     static ComboProperty algorithmCombo(const QString& minimizerType);
 

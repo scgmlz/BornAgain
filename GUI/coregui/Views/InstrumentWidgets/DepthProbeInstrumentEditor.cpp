@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,9 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/DepthProbeInstrumentEditor.h"
-#include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
 #include "GUI/coregui/Models/SpecularBeamInclinationItem.h"
 #include "GUI/coregui/Views/InfoWidgets/DistributionDialog.h"
@@ -24,20 +22,18 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 
-namespace
-{
+namespace {
 const QString wavelength_title("Wavelength [nm]");
 const QString inclination_title("Inclination angles [deg]");
 const QString depth_axis_title("Depth axis [nm]");
 } // namespace
 
 DepthProbeInstrumentEditor::DepthProbeInstrumentEditor(QWidget* parent)
-    : SessionItemWidget(parent),
-      m_wavelengthEditor(new ComponentEditor(ComponentEditor::InfoWidget, wavelength_title)),
-      m_inclinationEditor(new ComponentEditor(ComponentEditor::InfoWidget, inclination_title)),
-      m_depthAxisEditor(new ComponentEditor(ComponentEditor::InfoWidget, depth_axis_title)),
-      m_gridLayout(new QGridLayout)
-{
+    : SessionItemWidget(parent)
+    , m_wavelengthEditor(new ComponentEditor(ComponentEditor::InfoWidget, wavelength_title))
+    , m_inclinationEditor(new ComponentEditor(ComponentEditor::InfoWidget, inclination_title))
+    , m_depthAxisEditor(new ComponentEditor(ComponentEditor::InfoWidget, depth_axis_title))
+    , m_gridLayout(new QGridLayout) {
     m_gridLayout->addWidget(m_wavelengthEditor, 1, 0);
     m_gridLayout->addWidget(m_inclinationEditor, 1, 1);
     m_gridLayout->addWidget(m_depthAxisEditor, 1, 2);
@@ -53,8 +49,7 @@ DepthProbeInstrumentEditor::DepthProbeInstrumentEditor(QWidget* parent)
             &DepthProbeInstrumentEditor::onDialogRequest);
 }
 
-void DepthProbeInstrumentEditor::subscribeToItem()
-{
+void DepthProbeInstrumentEditor::subscribeToItem() {
     const auto beam_item = instrumentItem()->getItem(DepthProbeInstrumentItem::P_BEAM);
 
     auto wavelengthItem = beam_item->getItem(SpecularBeamItem::P_WAVELENGTH);
@@ -68,19 +63,16 @@ void DepthProbeInstrumentEditor::subscribeToItem()
     m_depthAxisEditor->setItem(instrumentItem()->getItem(DepthProbeInstrumentItem::P_Z_AXIS));
 }
 
-void DepthProbeInstrumentEditor::unsubscribeFromItem()
-{
+void DepthProbeInstrumentEditor::unsubscribeFromItem() {
     m_wavelengthEditor->clearEditor();
     m_inclinationEditor->clearEditor();
 }
 
-DepthProbeInstrumentItem* DepthProbeInstrumentEditor::instrumentItem()
-{
+DepthProbeInstrumentItem* DepthProbeInstrumentEditor::instrumentItem() {
     return dynamic_cast<DepthProbeInstrumentItem*>(currentItem());
 }
 
-void DepthProbeInstrumentEditor::onDialogRequest(SessionItem* item, const QString& name)
-{
+void DepthProbeInstrumentEditor::onDialogRequest(SessionItem* item, const QString& name) {
     if (!item)
         return;
 

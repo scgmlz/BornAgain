@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/DetectorItems.h"
-#include "Core/Detector/IDetector2D.h"
-#include "Core/Detector/ResolutionFunction2DGaussian.h"
+#include "Device/Detector/IDetector2D.h"
+#include "Device/Resolution/ResolutionFunction2DGaussian.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ParameterTranslators.h"
 #include "GUI/coregui/Models/ResolutionFunctionItems.h"
@@ -23,8 +23,7 @@
 
 using SessionItemUtils::GetVectorItem;
 
-namespace
-{
+namespace {
 const QString res_func_group_label = "Type";
 const QString analyzer_direction_tooltip = "Direction of the polarization analysis";
 const QString analyzer_efficiency_tooltip = "Efficiency of the polarization analysis";
@@ -37,8 +36,7 @@ const QString DetectorItem::P_ANALYZER_DIRECTION = "Analyzer direction";
 const QString DetectorItem::P_ANALYZER_EFFICIENCY = QString::fromStdString("Efficiency");
 const QString DetectorItem::P_ANALYZER_TOTAL_TRANSMISSION = QString::fromStdString("Transmission");
 
-DetectorItem::DetectorItem(const QString& modelType) : SessionItem(modelType)
-{
+DetectorItem::DetectorItem(const QString& modelType) : SessionItem(modelType) {
     registerTag(T_MASKS, 0, -1, QStringList() << "MaskContainer");
     setDefaultTag(T_MASKS);
 
@@ -59,8 +57,7 @@ DetectorItem::DetectorItem(const QString& modelType) : SessionItem(modelType)
     });
 }
 
-std::unique_ptr<IDetector2D> DetectorItem::createDetector() const
-{
+std::unique_ptr<IDetector2D> DetectorItem::createDetector() const {
     auto result = createDomainDetector();
     addMasksToDomain(result.get());
 
@@ -76,40 +73,34 @@ std::unique_ptr<IDetector2D> DetectorItem::createDetector() const
     return result;
 }
 
-void DetectorItem::clearMasks()
-{
+void DetectorItem::clearMasks() {
     if (auto maskContainer = maskContainerItem())
         delete takeRow(rowOfChild(maskContainer));
 }
 
-MaskContainerItem* DetectorItem::maskContainerItem() const
-{
+MaskContainerItem* DetectorItem::maskContainerItem() const {
     return dynamic_cast<MaskContainerItem*>(getItem(T_MASKS));
 }
 
-void DetectorItem::createMaskContainer()
-{
+void DetectorItem::createMaskContainer() {
     if (!maskContainerItem())
         model()->insertNewItem("MaskContainer", this->index());
 }
 
-void DetectorItem::importMasks(const MaskContainerItem* maskContainer)
-{
+void DetectorItem::importMasks(const MaskContainerItem* maskContainer) {
     clearMasks();
 
     if (maskContainer)
         model()->copyItem(maskContainer, this, T_MASKS);
 }
 
-void DetectorItem::register_resolution_function()
-{
+void DetectorItem::register_resolution_function() {
     auto item = addGroupProperty(P_RESOLUTION_FUNCTION, "Resolution function group");
     item->setDisplayName(res_func_group_label);
     item->setToolTip("Detector resolution function");
 }
 
-void DetectorItem::update_resolution_function_tooltips()
-{
+void DetectorItem::update_resolution_function_tooltips() {
     auto& resfuncItem = groupItem<ResolutionFunctionItem>(DetectorItem::P_RESOLUTION_FUNCTION);
 
     if (resfuncItem.modelType() == "ResolutionFunction2DGaussian") {
@@ -122,14 +113,12 @@ void DetectorItem::update_resolution_function_tooltips()
     }
 }
 
-std::unique_ptr<IResolutionFunction2D> DetectorItem::createResolutionFunction() const
-{
+std::unique_ptr<IResolutionFunction2D> DetectorItem::createResolutionFunction() const {
     auto& resfuncItem = groupItem<ResolutionFunctionItem>(DetectorItem::P_RESOLUTION_FUNCTION);
     return resfuncItem.createResolutionFunction(axesToDomainUnitsFactor());
 }
 
-void DetectorItem::addMasksToDomain(IDetector2D* detector) const
-{
+void DetectorItem::addMasksToDomain(IDetector2D* detector) const {
     auto maskContainer = maskContainerItem();
 
     if (!maskContainer)

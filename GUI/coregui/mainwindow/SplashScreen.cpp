@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/mainwindow/SplashScreen.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
@@ -21,20 +21,20 @@
 #include <QStyle>
 #include <QTime>
 
-SplashScreen::SplashScreen(QWidget* parent) : QSplashScreen(parent), m_percentage_done(0)
+SplashScreen::SplashScreen(QWidget*)
+    : QSplashScreen(QPixmap(":/images/splashscreen.png"))
+    , m_percentage_done(0)
 
 {
-    this->setPixmap(QPixmap(":/images/splashscreen.png"));
-    this->setCursor(Qt::BusyCursor);
+    QSplashScreen::setCursor(Qt::BusyCursor);
 
     QFont font;
     font.setPointSize(StyleUtils::SystemPointSize() * 0.9);
     font.setBold(false);
-    this->setFont(font);
+    QSplashScreen::setFont(font);
 }
 
-void SplashScreen::start(int show_during)
-{
+void SplashScreen::start(int show_during) {
     show();
     QTime dieTime = QTime::currentTime().addMSecs(show_during);
     QElapsedTimer timer;
@@ -45,8 +45,7 @@ void SplashScreen::start(int show_during)
     }
 }
 
-void SplashScreen::setProgress(int value)
-{
+void SplashScreen::setProgress(int value) {
     m_percentage_done = value;
     if (m_percentage_done > 100)
         m_percentage_done = 100;
@@ -55,8 +54,7 @@ void SplashScreen::setProgress(int value)
     update();
 }
 
-void SplashScreen::drawContents(QPainter* painter)
-{
+void SplashScreen::drawContents(QPainter* painter) {
     QSplashScreen::drawContents(painter);
 
     auto img_rect = frameGeometry();

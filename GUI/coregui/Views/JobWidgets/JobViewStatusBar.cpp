@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,10 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/JobViewStatusBar.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QComboBox>
@@ -22,9 +22,11 @@
 #include <QToolButton>
 
 JobViewStatusBar::JobViewStatusBar(MainWindow* mainWindow)
-    : QWidget(mainWindow), m_toggleJobListButton(nullptr), m_activityCombo(nullptr),
-      m_dockMenuButton(nullptr), m_mainWindow(mainWindow)
-{
+    : QWidget(mainWindow)
+    , m_toggleJobListButton(nullptr)
+    , m_activityCombo(nullptr)
+    , m_dockMenuButton(nullptr)
+    , m_mainWindow(mainWindow) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto layout = new QHBoxLayout;
@@ -58,8 +60,7 @@ JobViewStatusBar::JobViewStatusBar(MainWindow* mainWindow)
     initAppearance();
 }
 
-void JobViewStatusBar::onActivityChanged(int activity)
-{
+void JobViewStatusBar::onActivityChanged(int activity) {
     disconnect(m_activityCombo,
                static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
                &JobViewStatusBar::changeActivityRequest);
@@ -72,8 +73,7 @@ void JobViewStatusBar::onActivityChanged(int activity)
 
 //! Init appearance of MainWindow's statusBar.
 
-void JobViewStatusBar::initAppearance()
-{
+void JobViewStatusBar::initAppearance() {
     ASSERT(m_mainWindow);
     m_mainWindow->statusBar()->addWidget(this, 1);
     m_mainWindow->statusBar()->setSizeGripEnabled(false);

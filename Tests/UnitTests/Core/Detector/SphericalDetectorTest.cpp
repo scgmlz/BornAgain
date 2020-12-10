@@ -1,31 +1,24 @@
-#include "Core/Detector/SphericalDetector.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/Units.h"
-#include "Core/Beam/Beam.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Detector/ConvolutionDetectorResolution.h"
-#include "Core/Detector/DetectorFunctions.h"
-#include "Core/Detector/RegionOfInterest.h"
-#include "Core/Detector/ResolutionFunction2DGaussian.h"
-#include "Core/Detector/SimulationArea.h"
-#include "Core/Intensity/OutputData.h"
-#include "Core/Mask/Polygon.h"
-#include "Core/Mask/Rectangle.h"
+#include "Device/Detector/SphericalDetector.h"
+#include "Base/Const/Units.h"
+#include "Device/Beam/Beam.h"
+#include "Device/Detector/RegionOfInterest.h"
+#include "Device/Detector/SimulationArea.h"
+#include "Device/Mask/Polygon.h"
+#include "Device/Mask/Rectangle.h"
+#include "Device/Resolution/ConvolutionDetectorResolution.h"
+#include "Device/Resolution/ResolutionFunction2DGaussian.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <memory>
 
-class SphericalDetectorTest : public ::testing::Test
-{
-};
+class SphericalDetectorTest : public ::testing::Test {};
 
 // Default detector construction
-TEST_F(SphericalDetectorTest, initialState)
-{
+TEST_F(SphericalDetectorTest, initialState) {
     SphericalDetector detector;
 
     // checking size
     EXPECT_EQ(0u, detector.dimension());
-    EXPECT_EQ(AxesUnits::RADIANS, detector.defaultAxesUnits());
+    EXPECT_EQ(Axes::Units::RADIANS, detector.defaultAxesUnits());
 
     // masks
     EXPECT_FALSE(detector.detectorMask()->hasMasks());
@@ -38,14 +31,13 @@ TEST_F(SphericalDetectorTest, initialState)
     EXPECT_EQ(nullptr, detector.regionOfInterest());
 
     // behavior
-    ASSERT_THROW(detector.getAxis(0), std::runtime_error);
+    ASSERT_THROW(detector.axis(0), std::runtime_error);
     OutputData<double>* p_intensity_map(nullptr);
     ASSERT_THROW(detector.applyDetectorResolution(p_intensity_map), std::runtime_error);
 }
 
 // Construction of the detector with axes.
-TEST_F(SphericalDetectorTest, constructionWithAxes)
-{
+TEST_F(SphericalDetectorTest, constructionWithAxes) {
     SphericalDetector detector;
     FixedBinAxis axis0("axis0", 10, 0.0, 10.0);
     FixedBinAxis axis1("axis1", 20, 0.0, 20.0);
@@ -54,47 +46,40 @@ TEST_F(SphericalDetectorTest, constructionWithAxes)
 
     // checking dimension and axes
     EXPECT_EQ(2u, detector.dimension());
-    EXPECT_EQ(axis0.getMin(), detector.getAxis(0).getMin());
-    EXPECT_EQ(axis0.getMax(), detector.getAxis(0).getMax());
-    EXPECT_EQ(axis1.getMin(), detector.getAxis(1).getMin());
-    EXPECT_EQ(axis1.getMax(), detector.getAxis(1).getMax());
-
-    // clearing detector
-    detector.clear();
-    EXPECT_EQ(0u, detector.dimension());
+    EXPECT_EQ(axis0.lowerBound(), detector.axis(0).lowerBound());
+    EXPECT_EQ(axis0.upperBound(), detector.axis(0).upperBound());
+    EXPECT_EQ(axis1.lowerBound(), detector.axis(1).lowerBound());
+    EXPECT_EQ(axis1.upperBound(), detector.axis(1).upperBound());
 }
 
 // Construction of the detector via classical constructor.
-TEST_F(SphericalDetectorTest, constructionWithParameters)
-{
+TEST_F(SphericalDetectorTest, constructionWithParameters) {
     SphericalDetector detector(10, -1.0, 1.0, 20, 0.0, 2.0);
-    EXPECT_EQ(10u, detector.getAxis(0).size());
-    EXPECT_EQ(-1.0, detector.getAxis(0).getMin());
-    EXPECT_EQ(1.0, detector.getAxis(0).getMax());
-    EXPECT_EQ(20u, detector.getAxis(1).size());
-    EXPECT_EQ(0.0, detector.getAxis(1).getMin());
-    EXPECT_EQ(2.0, detector.getAxis(1).getMax());
+    EXPECT_EQ(10u, detector.axis(0).size());
+    EXPECT_EQ(-1.0, detector.axis(0).lowerBound());
+    EXPECT_EQ(1.0, detector.axis(0).upperBound());
+    EXPECT_EQ(20u, detector.axis(1).size());
+    EXPECT_EQ(0.0, detector.axis(1).lowerBound());
+    EXPECT_EQ(2.0, detector.axis(1).upperBound());
 }
 
 // Creation of the detector map with axes in given units
-TEST_F(SphericalDetectorTest, createDetectorMap)
-{
+TEST_F(SphericalDetectorTest, createDetectorMap) {
     SphericalDetector detector(10, -1.0 * Units::deg, 1.0 * Units::deg, 20, 0.0 * Units::deg,
                                2.0 * Units::deg);
 
     // creating map in default units, which are radians and checking axes
     auto data = detector.createDetectorMap();
-    EXPECT_EQ(data->getAxis(0).size(), 10u);
-    EXPECT_EQ(data->getAxis(0).getMin(), -1.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(0).getMax(), 1.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(1).size(), 20u);
-    EXPECT_EQ(data->getAxis(1).getMin(), 0.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(1).getMax(), 2.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).size(), 10u);
+    EXPECT_EQ(data->axis(0).lowerBound(), -1.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).upperBound(), 1.0 * Units::deg);
+    EXPECT_EQ(data->axis(1).size(), 20u);
+    EXPECT_EQ(data->axis(1).lowerBound(), 0.0 * Units::deg);
+    EXPECT_EQ(data->axis(1).upperBound(), 2.0 * Units::deg);
 }
 
 // Testing region of interest.
-TEST_F(SphericalDetectorTest, regionOfInterest)
-{
+TEST_F(SphericalDetectorTest, regionOfInterest) {
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("axis0", 8, -3.0, 5.0));
     detector.addAxis(FixedBinAxis("axis1", 4, 0.0, 4.0));
@@ -122,8 +107,7 @@ TEST_F(SphericalDetectorTest, regionOfInterest)
 }
 
 // Create detector map in the presence of region of interest.
-TEST_F(SphericalDetectorTest, regionOfInterestAndDetectorMap)
-{
+TEST_F(SphericalDetectorTest, regionOfInterestAndDetectorMap) {
     SphericalDetector detector(6, -1.0 * Units::deg, 5.0 * Units::deg, 4, 0.0 * Units::deg,
                                4.0 * Units::deg);
 
@@ -132,16 +116,15 @@ TEST_F(SphericalDetectorTest, regionOfInterestAndDetectorMap)
     // Creating map in default units, which are radians and checking that axes are clipped
     // to region of interest.
     auto data = detector.createDetectorMap();
-    EXPECT_EQ(data->getAxis(0).size(), 4u);
-    EXPECT_EQ(data->getAxis(0).getMin(), 0.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(0).getMax(), 4.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(1).size(), 2u);
-    EXPECT_EQ(data->getAxis(1).getMin(), 1.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(1).getMax(), 3.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).size(), 4u);
+    EXPECT_EQ(data->axis(0).lowerBound(), 0.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).upperBound(), 4.0 * Units::deg);
+    EXPECT_EQ(data->axis(1).size(), 2u);
+    EXPECT_EQ(data->axis(1).lowerBound(), 1.0 * Units::deg);
+    EXPECT_EQ(data->axis(1).upperBound(), 3.0 * Units::deg);
 }
 
-TEST_F(SphericalDetectorTest, MaskOfDetector)
-{
+TEST_F(SphericalDetectorTest, MaskOfDetector) {
     SphericalDetector detector;
     detector.addAxis(FixedBinAxis("x-axis", 12, -4.0, 8.0));
     detector.addAxis(FixedBinAxis("y-axis", 6, -2.0, 4.0));
@@ -188,8 +171,7 @@ TEST_F(SphericalDetectorTest, MaskOfDetector)
 }
 
 // Checking clone in the presence of ROI and masks.
-TEST_F(SphericalDetectorTest, Clone)
-{
+TEST_F(SphericalDetectorTest, Clone) {
     SphericalDetector detector(6, -1.0 * Units::deg, 5.0 * Units::deg, 4, 0.0 * Units::deg,
                                4.0 * Units::deg);
     detector.setRegionOfInterest(0.1 * Units::deg, 1.1 * Units::deg, 3.0 * Units::deg,
@@ -204,12 +186,12 @@ TEST_F(SphericalDetectorTest, Clone)
     std::unique_ptr<SphericalDetector> clone(detector.clone());
 
     auto data = clone->createDetectorMap();
-    EXPECT_EQ(data->getAxis(0).size(), 4u);
-    EXPECT_EQ(data->getAxis(0).getMin(), 0.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(0).getMax(), 4.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(1).size(), 2u);
-    EXPECT_EQ(data->getAxis(1).getMin(), 1.0 * Units::deg);
-    EXPECT_EQ(data->getAxis(1).getMax(), 3.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).size(), 4u);
+    EXPECT_EQ(data->axis(0).lowerBound(), 0.0 * Units::deg);
+    EXPECT_EQ(data->axis(0).upperBound(), 4.0 * Units::deg);
+    EXPECT_EQ(data->axis(1).size(), 2u);
+    EXPECT_EQ(data->axis(1).lowerBound(), 1.0 * Units::deg);
+    EXPECT_EQ(data->axis(1).upperBound(), 3.0 * Units::deg);
 
     EXPECT_EQ(clone->detectorMask()->numberOfMaskedChannels(), 8);
 
@@ -228,8 +210,7 @@ TEST_F(SphericalDetectorTest, Clone)
 }
 
 // Test retrieval of analyzer properties
-TEST_F(SphericalDetectorTest, AnalyzerProperties)
-{
+TEST_F(SphericalDetectorTest, AnalyzerProperties) {
     SphericalDetector detector(6, -1.0 * Units::deg, 5.0 * Units::deg, 4, 0.0 * Units::deg,
                                4.0 * Units::deg);
 
@@ -240,7 +221,7 @@ TEST_F(SphericalDetectorTest, AnalyzerProperties)
 
     // if direction is the zero vector, an exception is thrown
     EXPECT_THROW(detector.setAnalyzerProperties(direction, efficiency, total_transmission),
-                 Exceptions::ClassInitializationException);
+                 std::runtime_error);
 
     // zero efficiency
     direction = kvector_t(1.0, 0.0, 0.0);

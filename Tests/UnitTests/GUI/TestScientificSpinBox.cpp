@@ -2,12 +2,9 @@
 #include "Tests/GTestWrapper/google_test.h"
 #include <limits>
 
-class TestScientificSpinBox : public ::testing::Test
-{
-};
+class TestScientificSpinBox : public ::testing::Test {};
 
-TEST_F(TestScientificSpinBox, testValueFromText)
-{
+TEST_F(TestScientificSpinBox, testValueFromText) {
     QLocale locale(QLocale::C);
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
 
@@ -52,8 +49,7 @@ TEST_F(TestScientificSpinBox, testValueFromText)
     EXPECT_EQ(0.012, to_value_2("0.012"));
 }
 
-TEST_F(TestScientificSpinBox, testTextFromValue)
-{
+TEST_F(TestScientificSpinBox, testTextFromValue) {
     int decimals = 3;
     auto to_string = [&decimals](double val) { return ScientificSpinBox::toString(val, decimals); };
 
@@ -100,8 +96,7 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     EXPECT_EQ("1.26556e+12", to_string(1.265556e+12).toStdString());
 }
 
-TEST_F(TestScientificSpinBox, testRound)
-{
+TEST_F(TestScientificSpinBox, testRound) {
     auto round_3 = [](double val) { return ScientificSpinBox::round(val, 3); };
     EXPECT_DOUBLE_EQ(1.232e-12, round_3(1.2323e-12));
     EXPECT_DOUBLE_EQ(0.1232, round_3(0.12323));

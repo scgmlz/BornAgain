@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/DetectorPresenter.h"
 #include "GUI/coregui/Models/SessionItem.h"
@@ -18,21 +18,18 @@
 #include "GUI/coregui/Views/InstrumentWidgets/SphericalDetectorEditor.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-namespace
-{
+namespace {
 const QString SphericalDetectorPresentation = "Spherical";
 const QString RectangularDetectorPresentation = "Rectangular";
 } // namespace
 
-DetectorPresenter::DetectorPresenter(QWidget* parent) : ItemComboWidget(parent)
-{
+DetectorPresenter::DetectorPresenter(QWidget* parent) : ItemComboWidget(parent) {
     registerWidget(SphericalDetectorPresentation, create_new<SphericalDetectorEditor>);
     registerWidget(RectangularDetectorPresentation, create_new<RectangularDetectorEditor>);
     setToolBarVisible(false);
 }
 
-QString DetectorPresenter::itemPresentation() const
-{
+QString DetectorPresenter::itemPresentation() const {
     if (!currentItem())
         return {};
 
@@ -46,8 +43,7 @@ QString DetectorPresenter::itemPresentation() const
                                 + currentItem()->modelType() + "'");
 }
 
-QStringList DetectorPresenter::activePresentationList(SessionItem* item)
-{
+QStringList DetectorPresenter::activePresentationList(SessionItem* item) {
     Q_UNUSED(item);
     return QStringList() << SphericalDetectorPresentation << RectangularDetectorPresentation;
 }

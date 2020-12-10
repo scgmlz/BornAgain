@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -11,7 +11,7 @@
 //! @authors   Scientific Computing Group at MLZ Garching
 //! @authors   C. Durniak, M. Ganeva, G. Pospelov, W. Van Herck, J. Wuttke
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_WRAP_WINDLLMACROS_H
 #define BORNAGAIN_WRAP_WINDLLMACROS_H

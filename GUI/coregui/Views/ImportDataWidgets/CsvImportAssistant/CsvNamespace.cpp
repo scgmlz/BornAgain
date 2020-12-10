@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,14 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvNamespace.h"
 #include <fstream>
 #include <sstream>
 
-bool csv::isAscii(QString filename)
-{
+bool csv::isAscii(QString filename) {
     return true;
     // TODO
     // This function needs to be defined properly (if at all)

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_STATUSLABEL_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_STATUSLABEL_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QFrame>
 
 class QPaintEvent;
@@ -26,8 +25,7 @@ class QPaintEvent;
 //! This class is intended for ColorMapLabel, where the size of font is adjusted automatically
 //! depending from available space.
 
-class BA_CORE_API_ StatusLabel : public QFrame
-{
+class StatusLabel : public QFrame {
     Q_OBJECT
 
 public:

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/FitComparisonWidget.h"
 #include "GUI/coregui/Models/FitSuiteItem.h"
@@ -28,12 +28,15 @@
 #include <QVBoxLayout>
 
 FitComparisonWidget::FitComparisonWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_realDataPlot(new ColorMapCanvas),
-      m_simulatedDataPlot(new ColorMapCanvas), m_relativeDiffPlot(new ColorMapCanvas),
-      m_fitFlowWidget(new FitFlowWidget), m_statusLabel(new PlotStatusLabel(nullptr, this)),
-      m_propertyWidget(new IntensityDataPropertyWidget), m_resetViewAction(new QAction(this)),
-      m_comparisonController(new FitComparisonController2D(this))
-{
+    : SessionItemWidget(parent)
+    , m_realDataPlot(new ColorMapCanvas)
+    , m_simulatedDataPlot(new ColorMapCanvas)
+    , m_relativeDiffPlot(new ColorMapCanvas)
+    , m_fitFlowWidget(new FitFlowWidget)
+    , m_statusLabel(new PlotStatusLabel(nullptr, this))
+    , m_propertyWidget(new IntensityDataPropertyWidget)
+    , m_resetViewAction(new QAction(this))
+    , m_comparisonController(new FitComparisonController2D(this)) {
     auto vlayout = new QVBoxLayout;
     vlayout->setMargin(0);
     vlayout->setSpacing(0);
@@ -67,13 +70,11 @@ FitComparisonWidget::FitComparisonWidget(QWidget* parent)
 
 FitComparisonWidget::~FitComparisonWidget() = default;
 
-QList<QAction*> FitComparisonWidget::actionList()
-{
+QList<QAction*> FitComparisonWidget::actionList() {
     return QList<QAction*>() << m_resetViewAction << m_propertyWidget->actionList();
 }
 
-void FitComparisonWidget::subscribeToItem()
-{
+void FitComparisonWidget::subscribeToItem() {
     if (!jobItem()->isValidForFitting())
         return;
 
@@ -100,36 +101,30 @@ void FitComparisonWidget::subscribeToItem()
     m_propertyWidget->setItem(simulatedDataItem());
 }
 
-void FitComparisonWidget::unsubscribeFromItem()
-{
+void FitComparisonWidget::unsubscribeFromItem() {
     m_comparisonController->clear();
 }
 
-void FitComparisonWidget::onResetViewAction()
-{
+void FitComparisonWidget::onResetViewAction() {
     if (auto item = realDataItem())
         item->resetView();
 
     m_comparisonController->resetDiffItem();
 }
 
-JobItem* FitComparisonWidget::jobItem()
-{
+JobItem* FitComparisonWidget::jobItem() {
     JobItem* jobItem = dynamic_cast<JobItem*>(currentItem());
     return jobItem;
 }
 
-IntensityDataItem* FitComparisonWidget::realDataItem()
-{
+IntensityDataItem* FitComparisonWidget::realDataItem() {
     return jobItem()->realDataItem()->intensityDataItem();
 }
 
-IntensityDataItem* FitComparisonWidget::simulatedDataItem()
-{
+IntensityDataItem* FitComparisonWidget::simulatedDataItem() {
     return jobItem()->intensityDataItem();
 }
 
-IntensityDataItem* FitComparisonWidget::diffItem()
-{
+IntensityDataItem* FitComparisonWidget::diffItem() {
     return m_comparisonController->diffItem();
 }

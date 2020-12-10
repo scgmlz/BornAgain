@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Tests/Functional/GUI/Translate/GUITranslationTest.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/ParameterPool.h"
-#include "Core/Simulation/GISASSimulation.h"
+#include "Base/Utils/StringUtils.h"
 #include "Core/Simulation/SimulationFactory.h"
-#include "Core/StandardSamples/SampleBuilderFactory.h"
-#include "Fit/Tools/StringUtils.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DocumentModel.h"
 #include "GUI/coregui/Models/FitParameterHelper.h"
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
@@ -37,13 +32,14 @@
 #include "GUI/coregui/Models/SampleModel.h"
 #include "GUI/coregui/Models/SphericalDetectorItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Param/Base/ParameterPool.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/StandardSamples/SampleBuilderFactory.h"
 #include <QStack>
 
-namespace
-{
+namespace {
 
-bool containsNames(const QString& text, const QStringList& names)
-{
+bool containsNames(const QString& text, const QStringList& names) {
     for (const auto& name : names)
         if (text.contains(name))
             return true;
@@ -55,7 +51,7 @@ const QVector<QPair<QStringList, QStringList>> black_list{
      {""},
      {"Sigma factor", "MaterialRefractiveData", "MaterialSLDData", MaterialItem::P_MAGNETIZATION}},
     {// Instrument scope
-     {"GISASInstrument", "OffSpecInstrument", "SpecularInstrument"},
+     {"GISASInstrument", "OffSpecularInstrument", "SpecularInstrument"},
      {// Distribution types
       "DistributionGate", "DistributionLorentz", "DistributionGaussian", "DistributionLogNormal",
       "DistributionCosine", "DistributionTrapezoid",
@@ -63,7 +59,7 @@ const QVector<QPair<QStringList, QStringList>> black_list{
       // Detector axes
       SphericalDetectorItem::P_PHI_AXIS, SphericalDetectorItem::P_ALPHA_AXIS,
       RectangularDetectorItem::P_X_AXIS, RectangularDetectorItem::P_Y_AXIS,
-      OffSpecInstrumentItem::P_ALPHA_AXIS,
+      OffSpecularInstrumentItem::P_ALPHA_AXIS,
 
       // Rectangular detector positioning
       RectangularDetectorItem::P_ALIGNMENT, RectangularDetectorItem::P_NORMAL,
@@ -79,8 +75,7 @@ const QVector<QPair<QStringList, QStringList>> black_list{
 
 //! Returns true, if it makes sence to look for GUI translation for given domain name.
 //! Intended to supress warnings about not-yet implemented translations.
-bool requiresTranslation(ParameterItem* parItem)
-{
+bool requiresTranslation(ParameterItem* parItem) {
     if (!parItem)
         return false;
 
@@ -98,18 +93,18 @@ bool requiresTranslation(ParameterItem* parItem)
     return true;
 }
 
-std::string header(size_t width = 80)
-{
+std::string header(size_t width = 80) {
     return std::string(width, '-');
 }
 
 } // namespace
 
 GUITranslationTest::GUITranslationTest(const std::string& simName, const std::string& sampleName)
-    : m_models(new ApplicationModels(nullptr)), m_simulationName(simName), m_sampleName(sampleName)
-{
+    : m_models(new ApplicationModels(nullptr))
+    , m_simulationName(simName)
+    , m_sampleName(sampleName) {
     SimulationFactory simFactory;
-    std::unique_ptr<Simulation> simulation = simFactory.createItemPtr(m_simulationName);
+    std::unique_ptr<ISimulation> simulation = simFactory.createItemPtr(m_simulationName);
     if (GISASSimulation* gisas = dynamic_cast<GISASSimulation*>(simulation.get())) {
         m_simulation.reset(gisas);
         simulation.release();
@@ -117,13 +112,12 @@ GUITranslationTest::GUITranslationTest(const std::string& simName, const std::st
         throw std::runtime_error("Error in GUITranslationTest: wrong simulation type.");
 
     SampleBuilderFactory sampleFactory;
-    m_simulation->setSample(*sampleFactory.createSample(m_sampleName));
+    m_simulation->setSample(*sampleFactory.createSampleByName(m_sampleName));
 }
 
-GUITranslationTest::~GUITranslationTest() {}
+GUITranslationTest::~GUITranslationTest() = default;
 
-bool GUITranslationTest::runTest()
-{
+bool GUITranslationTest::runTest() {
     processParameterTree();
     std::cout << translationResultsToString() << std::endl;
 
@@ -140,8 +134,7 @@ bool GUITranslationTest::runTest()
 
 //! Runs through GUI models and constructs list of available domain fit parameters names.
 
-void GUITranslationTest::processParameterTree()
-{
+void GUITranslationTest::processParameterTree() {
     m_models->instrumentModel()->clear();
     // populating GUI models from domain
     GUIObjectBuilder::populateSampleModelFromSim(m_models->sampleModel(), m_models->materialModel(),
@@ -176,8 +169,7 @@ void GUITranslationTest::processParameterTree()
 
 //! Returns multiline string representing results of translation
 
-std::string GUITranslationTest::translationResultsToString() const
-{
+std::string GUITranslationTest::translationResultsToString() const {
     std::ostringstream ostr;
 
     ostr << "\n" << header() << "\n";
@@ -199,8 +191,7 @@ std::string GUITranslationTest::translationResultsToString() const
     return ostr.str();
 }
 
-bool GUITranslationTest::isValidDomainName(const std::string& domainName) const
-{
+bool GUITranslationTest::isValidDomainName(const std::string& domainName) const {
     std::vector<std::string> invalidNames{"Direction", "Efficiency", "Transmission",
                                           "InclinationAngle", "AzimuthalAngle"};
     for (auto name : invalidNames) {
@@ -213,8 +204,7 @@ bool GUITranslationTest::isValidDomainName(const std::string& domainName) const
 //! Returns true, if it makes sence to look for domain translation for given GUI name.
 //! Intended to supress warnings about not-yet implemented translations.
 
-bool GUITranslationTest::isValidGUIName(const std::string& guiName) const
-{
+bool GUITranslationTest::isValidGUIName(const std::string& guiName) const {
     std::vector<std::string> invalidNames{};
     for (auto name : invalidNames) {
         if (guiName.find(name) != std::string::npos)
@@ -226,8 +216,7 @@ bool GUITranslationTest::isValidGUIName(const std::string& guiName) const
 //! Validates GUI translations against simulation parameters. Tries to retrieve fit parameter
 //! from domain parameter pool using translated name.
 
-bool GUITranslationTest::checkExistingTranslations()
-{
+bool GUITranslationTest::checkExistingTranslations() {
     if (m_translations.empty())
         throw GUIHelpers::Error("GUITranslationTest::validateParameterTree() -> Error. "
                                 "Empty list of translations.");
@@ -258,14 +247,13 @@ bool GUITranslationTest::checkExistingTranslations()
     }
     std::cout << ostr.str();
 
-    bool isSuccess = (wrong_translations.empty() ? true : false);
+    bool isSuccess = (wrong_translations.empty());
     return isSuccess;
 }
 
 //! Checks if all simulation parameters have translation.
 
-bool GUITranslationTest::checkMissedTranslations()
-{
+bool GUITranslationTest::checkMissedTranslations() {
     if (m_translations.empty())
         throw GUIHelpers::Error("GUITranslationTest::validateParameterTree() -> Error. "
                                 "Empty list of translations.");
@@ -288,7 +276,7 @@ bool GUITranslationTest::checkMissedTranslations()
         }
     }
 
-    if (missedNames.size()) {
+    if (!missedNames.empty()) {
         std::cout << header() << std::endl;
         std::cout << "Translation doesn't exist:" << std::endl;
         std::cout << header() << std::endl;
@@ -296,6 +284,6 @@ bool GUITranslationTest::checkMissedTranslations()
             std::cout << "domain : " << name << std::endl;
     }
 
-    bool isSuccess = (missedNames.empty() ? true : false);
+    bool isSuccess = (missedNames.empty());
     return isSuccess;
 }

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSWIDGET_H
@@ -23,8 +23,7 @@ class QTabWidget;
 
 //! Holds tabs of vertical and horizontal projections, located at the bottom of ProjectionsEditor.
 
-class BA_CORE_API_ ProjectionsWidget : public SessionItemWidget
-{
+class ProjectionsWidget : public SessionItemWidget {
     Q_OBJECT
 
 public:

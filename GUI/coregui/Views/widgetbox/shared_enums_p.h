@@ -57,8 +57,7 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 // Validation mode of text property line edits
 enum TextPropertyValidationMode {

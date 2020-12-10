@@ -54,7 +54,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_FORMBUILDER_P_H
 
 #include "GUI/coregui/Views/widgetbox/deviceprofile_p.h"
-#include "GUI/coregui/Views/widgetbox/shared_global_p.h"
 
 #include <QtDesigner/formbuilder.h>
 
@@ -69,8 +68,7 @@ class QDesignerFormWindowInterface;
 class QPixmap;
 class QtResourceSet;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 class DesignerPixmapCache;
 class DesignerIconCache;
@@ -78,8 +76,7 @@ class DesignerIconCache;
 /* Form builder used for previewing forms and widget box.
  * It applies the system settings to its toplevel window. */
 
-class QDESIGNER_SHARED_EXPORT QDesignerFormBuilder : public QFormBuilder
-{
+class QDESIGNER_SHARED_EXPORT QDesignerFormBuilder : public QFormBuilder {
 public:
     QDesignerFormBuilder(QDesignerFormEditorInterface* core,
                          const DeviceProfile& deviceProfile = DeviceProfile());
@@ -89,8 +86,7 @@ public:
     QDesignerFormBuilder(QDesignerFormEditorInterface* core, Mode mode,
                          const DeviceProfile& deviceProfile = DeviceProfile());
 
-    virtual QWidget* createWidget(DomWidget* ui_widget, QWidget* parentWidget = 0)
-    {
+    virtual QWidget* createWidget(DomWidget* ui_widget, QWidget* parentWidget = 0) {
         return QFormBuilder::createItemPtr(ui_widget, parentWidget);
     }
 
@@ -166,8 +162,7 @@ private:
 // widgets in the template, it implements the handling of custom widgets
 // (adding of them to the widget database).
 
-class QDESIGNER_SHARED_EXPORT NewFormWidgetFormBuilder : public QDesignerFormBuilder
-{
+class QDESIGNER_SHARED_EXPORT NewFormWidgetFormBuilder : public QDesignerFormBuilder {
 public:
     NewFormWidgetFormBuilder(QDesignerFormEditorInterface* core,
                              const DeviceProfile& deviceProfile = DeviceProfile());

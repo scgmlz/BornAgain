@@ -1,13 +1,9 @@
-#include "Core/Correlations/FTDistributions1D.h"
 #include "GUI/coregui/Models/FTDistributionItems.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestFTDistributionItems : public ::testing::Test
-{
-};
+class TestFTDistributionItems : public ::testing::Test {};
 
-TEST_F(TestFTDistributionItems, test_FTDistribution1DCauchy)
-{
+TEST_F(TestFTDistributionItems, test_FTDistribution1DCauchy) {
     // to domain
     FTDistribution1DCauchyItem item;
     item.setItemValue(FTDistribution1DItem::P_OMEGA, 2.0);

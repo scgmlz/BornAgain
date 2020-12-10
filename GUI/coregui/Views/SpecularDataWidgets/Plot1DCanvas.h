@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_PLOT1DCANVAS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_PLOT1DCANVAS_H
@@ -26,8 +26,7 @@ class Plot1D;
 //! for specular data presentation, and provides
 //! status string appearance.
 
-class BA_CORE_API_ Plot1DCanvas : public SessionItemWidget
-{
+class Plot1DCanvas : public SessionItemWidget {
     Q_OBJECT
 
 public:

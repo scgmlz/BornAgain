@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/PolygonView.h"
 #include "GUI/coregui/Models/MaskItems.h"
@@ -18,20 +18,17 @@
 #include <QCursor>
 #include <QPainter>
 
-namespace
-{
+namespace {
 const double bbox_margins = 5; // additional margins around points to form bounding box
 }
 
-PolygonView::PolygonView() : m_block_on_point_update(false), m_close_polygon_request(false)
-{
+PolygonView::PolygonView() : m_block_on_point_update(false), m_close_polygon_request(false) {
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
 
-void PolygonView::addView(IShape2DView* childView, int row)
-{
+void PolygonView::addView(IShape2DView* childView, int row) {
     Q_UNUSED(row);
 
     if (childItems().contains(childView))
@@ -54,15 +51,13 @@ void PolygonView::addView(IShape2DView* childView, int row)
 }
 
 //! returns last added poligon point in scene coordinates
-QPointF PolygonView::lastAddedPoint() const
-{
+QPointF PolygonView::lastAddedPoint() const {
     return childItems().size() ? childItems().back()->scenePos() : QPointF();
 }
 
 //! Returns true if there was a request to close polygon (emitted by its start point),
 //! and then closes a polygon. Returns true if polygon was closed.
-bool PolygonView::closePolygonIfNecessary()
-{
+bool PolygonView::closePolygonIfNecessary() {
     if (m_close_polygon_request) {
         for (QGraphicsItem* childItem : childItems()) {
             childItem->setFlag(QGraphicsItem::ItemIsMovable);
@@ -76,18 +71,15 @@ bool PolygonView::closePolygonIfNecessary()
     return isClosedPolygon();
 }
 
-void PolygonView::onClosePolygonRequest(bool value)
-{
+void PolygonView::onClosePolygonRequest(bool value) {
     m_close_polygon_request = value;
 }
 
-bool PolygonView::isClosedPolygon()
-{
+bool PolygonView::isClosedPolygon() {
     return m_item->getItemValue(PolygonItem::P_ISCLOSED).toBool();
 }
 
-void PolygonView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
+void PolygonView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
     ASSERT(m_item);
     painter->setRenderHints(QPainter::Antialiasing);
 
@@ -103,22 +95,19 @@ void PolygonView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
         painter->drawPolygon(m_polygon.toPolygon());
 }
 
-QVariant PolygonView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
-{
+QVariant PolygonView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value) {
     if (change == QGraphicsItem::ItemSelectedHasChanged)
         setChildrenVisible(this->isSelected());
 
     return value;
 }
 
-void PolygonView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
+void PolygonView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
     IShape2DView::mouseMoveEvent(event);
     update_points();
 }
 
-void PolygonView::update_view()
-{
+void PolygonView::update_view() {
     update_polygon();
     update();
 }
@@ -126,8 +115,7 @@ void PolygonView::update_view()
 //! Runs through all PolygonPointItem and calculate bounding rectangle.
 //! Determines position of the rectangle in scene.
 //! Calculates position of PolygonPointView in local polygon coordinates
-void PolygonView::update_polygon()
-{
+void PolygonView::update_polygon() {
     if (m_block_on_point_update)
         return;
 
@@ -167,8 +155,7 @@ void PolygonView::update_polygon()
 
 //! When polygon moves as a whole thing across the scene, given method updates coordinates
 //! of PolygonPointItem's
-void PolygonView::update_points()
-{
+void PolygonView::update_points() {
     if (m_block_on_point_update)
         return;
 
@@ -181,8 +168,7 @@ void PolygonView::update_points()
     }
 }
 
-void PolygonView::setChildrenVisible(bool value)
-{
+void PolygonView::setChildrenVisible(bool value) {
     for (QGraphicsItem* childItem : childItems())
         childItem->setVisible(value);
 }

@@ -1,4 +1,30 @@
-BornAgain-1.17.99, work in progress
+BornAgain-1.18.99, ongoing development
+  > API changes:
+    * Compact constructors like GISASimulation(beam, sample, detector)
+    * Removed "get" from several accessor functions
+    * Class Instrument removed  from Python API (instead use simulation.beam() etc)
+    * Lattice has been renamed to Lattice3D, for clearer disambuation from Lattice2D
+    * "OffSpecular" instead of "OffSpec"
+    * Removed some interference functions constructors
+    * Remove old R&T computations from API (now in Code/Legacy and Tests)
+    * Python plot API entirely keyword based
+  > Fixes of unreported bugs:
+    * Several GUI bugs that caused crashes
+    * For alpha_i=0, set scattered intensity to 0
+  > Documentation:
+    * Unified API usage in many examples, using BornAgain's Python exporter
+    * Removed many entries from Doxygen user API
+  > Internal refactoring:
+    * Moved code to break directory include cycles
+    * Renamed a few classes (ISimulation)
+    * Simplified and commented std test machinery
+    * Simplified iteration over INode children
+    * Simplified export of get_sample function
+    * Simplified data read/write wrapper
+    * Replaced boost::filesystem by C++17 std
+    * IComputeFF and children drawn out of IFormFactor inheritance tree
+
+BornAgain-1.18.0, released 2020.10.30
   > API changes:
     1) Shorter names for FootprintSquare, FootprintGauss
     2) FormFactorHollowSphere (moved from soft to hard particles, and renamed)
@@ -9,15 +35,36 @@ BornAgain-1.17.99, work in progress
     6) Swap order of arguments gamma and eta in 2D decay and distribution Voigt functions
     7) FormFactorSphereLogNormalRadius is now positioned at center, not at bottom
     8) Ripple1 and Ripple2 form factors renamed to CosineRipple and SawtoothRipple
+    9) Support for structural roughness (Tanh + Névot-Croce) in polarized computations
+  > Important changes in examples and tests:
+    1) Renamed "Air" -> "Vacuum"
   > Changes in build configuration:
     1) Python2 no longer supported
     2) OpenGL can no longer be deselected
-    3) Eigen3 removed from ThirdParty; it is now a regular external dependence
+    3) Eigen3 and libcerf removed from ThirdParty; they are now regular external dependences
   > Internal refactoring and fixes of unreported bugs
     1) Unit tests now under CTest control, no longer enforced during compilation
     2) Uniform handling of assertions
     3) Success of test_nonXMLDataInDir was dependent on test execution order
     4) Parameter registration now centralized in INode class
+    5) New, and more stable, implementation of polarized Fresnel computation
+    6) Scalar Fresnel computation unified with polarized implementation
+    7) Directory Core broken into a hierarchy: Core, Device, Sample, Param, Base
+    8) Request C++17
+    9) Error handling: core decoupled from Qt
+  > Issues from external (GitHub) tracker:
+    * #918:  Specular peak location wrong when using flat detector
+    * #946:  CTest points to broken visualization scripts
+    * #959:  UnitTestNumeric fails on mac os x 10.15 bug
+    * #963:  Problem building BornAgain using GitHub actions
+    * #987:  plot_intensity_data.py prints deprecation warning
+    * #1026: Q_ASSERT ignored
+    * #1033: Bug when importing BA from python environment und windows
+  > Issues from Redmine tracker:
+    * Documentation #2459: Update and reorganize Doxyfiles
+    * Refactoring #2466: Use full paths in #include directives
+    * Configuration #2465: CMake: more standard find modules for fftw3 and tiff
+    * and several more, accidentally not marked for being listed here
 
 BornAgain-1.17.0, released 2020.06.16
   > API changes:

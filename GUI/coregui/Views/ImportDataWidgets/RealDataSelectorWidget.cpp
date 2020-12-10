@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorWidget.h"
 #include "GUI/coregui/Models/RealDataModel.h"
@@ -19,17 +19,18 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorHBar.h"
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorToolBar.h"
-#include "minisplitter.h"
 #include <QItemSelectionModel>
 #include <QVBoxLayout>
+#include <qt-manhattan-style/minisplitter.h>
 
 RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
-    : QWidget(parent), m_selectorActions(new RealDataSelectorActions(this)),
-      m_toolBar(new RealDataSelectorToolBar(m_selectorActions, this)),
-      m_hamBar(new RealDataSelectorHBar(m_selectorActions, this)),
-      m_splitter(new Manhattan::MiniSplitter), m_selectorWidget(new ItemSelectorWidget),
-      m_propertiesWidget(new RealDataPropertiesWidget)
-{
+    : QWidget(parent)
+    , m_selectorActions(new RealDataSelectorActions(this))
+    , m_toolBar(new RealDataSelectorToolBar(m_selectorActions, this))
+    , m_hamBar(new RealDataSelectorHBar(m_selectorActions, this))
+    , m_splitter(new Manhattan::MiniSplitter)
+    , m_selectorWidget(new ItemSelectorWidget)
+    , m_propertiesWidget(new RealDataPropertiesWidget) {
     setMinimumSize(128, 600);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setWindowTitle("RealDataSelectorWidget");
@@ -55,19 +56,16 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
             &RealDataSelectorWidget::onSelectionChanged);
 }
 
-QSize RealDataSelectorWidget::sizeHint() const
-{
+QSize RealDataSelectorWidget::sizeHint() const {
     return QSize(200, 400);
 }
 
-QSize RealDataSelectorWidget::minimumSizeHint() const
-{
+QSize RealDataSelectorWidget::minimumSizeHint() const {
     return QSize(128, 200);
 }
 
 void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
-                                       RealDataModel* realDataModel)
-{
+                                       RealDataModel* realDataModel) {
     m_selectorWidget->setModel(realDataModel);
     m_propertiesWidget->setModels(instrumentModel, realDataModel);
 
@@ -75,8 +73,7 @@ void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
     m_selectorActions->setSelectionModel(m_selectorWidget->selectionModel());
 }
 
-void RealDataSelectorWidget::onSelectionChanged(SessionItem* item)
-{
+void RealDataSelectorWidget::onSelectionChanged(SessionItem* item) {
     m_propertiesWidget->setItem(item);
     emit selectionChanged(item);
 }

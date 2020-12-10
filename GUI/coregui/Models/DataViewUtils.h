@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_DATAVIEWUTILS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_DATAVIEWUTILS_H
 
-#include "Core/Intensity/IUnitConverter.h"
+#include "Device/Unit/IUnitConverter.h"
 #include <QString>
 #include <memory>
 
@@ -24,8 +24,7 @@ class Data1DViewItem;
 class JobItem;
 template <class T> class OutputData;
 
-namespace DataViewUtils
-{
+namespace DataViewUtils {
 void updateAxesTitle(Data1DViewItem* view_item);
 
 std::unique_ptr<OutputData<double>> getTranslatedData(Data1DViewItem* view_item,

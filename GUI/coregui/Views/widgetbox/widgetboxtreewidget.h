@@ -60,14 +60,12 @@ class QTimer;
 
 class SampleDesignerInterface;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 class WidgetBoxCategoryListView;
 
 //! WidgetBoxTreeWidget: A tree of categories
-class WidgetBoxTreeWidget : public QTreeWidget
-{
+class WidgetBoxTreeWidget : public QTreeWidget {
     Q_OBJECT
 
 public:

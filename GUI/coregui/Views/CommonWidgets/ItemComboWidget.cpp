@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/CommonWidgets/ItemComboWidget.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/CommonWidgets/ItemComboToolBar.h"
-#include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include <QComboBox>
 #include <QEvent>
@@ -23,9 +22,9 @@
 #include <QVBoxLayout>
 
 ItemComboWidget::ItemComboWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_toolBar(new ItemComboToolBar),
-      m_stackedWidget(new QStackedWidget)
-{
+    : SessionItemWidget(parent)
+    , m_toolBar(new ItemComboToolBar)
+    , m_stackedWidget(new QStackedWidget) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_stackedWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -40,15 +39,13 @@ ItemComboWidget::ItemComboWidget(QWidget* parent)
     connect(m_toolBar, SIGNAL(comboChanged(QString)), this, SLOT(onComboChanged(QString)));
 }
 
-void ItemComboWidget::registerWidget(const QString& presentationType, factory_function_t f)
-{
+void ItemComboWidget::registerWidget(const QString& presentationType, factory_function_t f) {
     m_widgetFactory.registerItem(presentationType, f);
 }
 
 //! Sets stack to show widget corresponding to given presentation
 
-void ItemComboWidget::setPresentation(const QString& presentationType)
-{
+void ItemComboWidget::setPresentation(const QString& presentationType) {
     if (!activePresentationList(currentItem()).contains(presentationType))
         return;
 
@@ -73,8 +70,7 @@ void ItemComboWidget::setPresentation(const QString& presentationType)
     setSizeToCurrentWidget();
 }
 
-void ItemComboWidget::setToolBarVisible(bool value)
-{
+void ItemComboWidget::setToolBarVisible(bool value) {
     m_toolBar->setVisible(value);
 }
 
@@ -82,49 +78,42 @@ void ItemComboWidget::setToolBarVisible(bool value)
 //! which is present in QComboBox selector and can be selected. For example, if JobItem
 //! is fittable, the list will contain "FitComparisonWidgetName".
 
-QStringList ItemComboWidget::activePresentationList(SessionItem* item)
-{
+QStringList ItemComboWidget::activePresentationList(SessionItem* item) {
     Q_UNUSED(item);
     return QStringList();
 }
 
 //! Returns full list of presentations available for given item.
 
-QStringList ItemComboWidget::presentationList(SessionItem* item)
-{
+QStringList ItemComboWidget::presentationList(SessionItem* item) {
     return activePresentationList(item);
 }
 
 //! Presentation which should be shown for current item.
 
-QString ItemComboWidget::itemPresentation() const
-{
+QString ItemComboWidget::itemPresentation() const {
     return selectedPresentation();
 }
 
 //! Presentation selected in combo selector.
 
-QString ItemComboWidget::selectedPresentation() const
-{
+QString ItemComboWidget::selectedPresentation() const {
     return m_toolBar->currentPresentation();
 }
 
-void ItemComboWidget::subscribeToItem()
-{
+void ItemComboWidget::subscribeToItem() {
     m_toolBar->setPresentationList(presentationList(currentItem()),
                                    activePresentationList(currentItem()));
     setPresentation(itemPresentation());
 }
 
-void ItemComboWidget::onComboChanged(const QString&)
-{
+void ItemComboWidget::onComboChanged(const QString&) {
     setPresentation(selectedPresentation());
 }
 
 //! Resizes QStackedWidget to currently active page.
 
-void ItemComboWidget::setSizeToCurrentWidget()
-{
+void ItemComboWidget::setSizeToCurrentWidget() {
     for (int i = 0; i < m_stackedWidget->count(); ++i) {
         // determine the vertical size policy
         QSizePolicy::Policy policy = QSizePolicy::Ignored;

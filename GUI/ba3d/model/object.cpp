@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,23 +10,20 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "GUI/ba3d/model/object.h"
-#include "../view/canvas.h"
 #include "GUI/ba3d/model/geometry.h"
 #include "GUI/ba3d/model/model.h"
+#include "GUI/ba3d/view/canvas.h"
 #include <cmath>
 
-namespace
-{
+namespace {
 QQuaternion EulerToQuaternion(const RealSpace::Vector3D& euler);
 
 RealSpace::Vector3D QuaternionToEuler(const QQuaternion& q);
 } // namespace
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 #ifdef Q_OS_LINUX
 QColor const clrObject = Qt::lightGray;
@@ -34,32 +31,27 @@ QColor const clrObject = Qt::lightGray;
 QColor const clrObject = Qt::black;
 #endif
 
-Object::Object(GeometricID::Key gky_) : color(clrObject), isNull(false), model(nullptr), gky(gky_)
-{
-}
+Object::Object(GeometricID::Key gky_)
+    : color(clrObject), isNull(false), model(nullptr), gky(gky_) {}
 
-Object::~Object()
-{
+Object::~Object() {
     releaseGeometry();
     if (model)
         model->rem(this);
 }
 
-void Object::transform(float scale, Vector3D rotate, Vector3D translate)
-{
+void Object::transform(float scale, Vector3D rotate, Vector3D translate) {
     transform(Vector3D(scale, scale, scale), rotate, translate);
 }
 
-void Object::transform(Vector3D scale, Vector3D rotate, Vector3D translate)
-{
+void Object::transform(Vector3D scale, Vector3D rotate, Vector3D translate) {
     mat.setToIdentity();
     mat.translate(translate);
     mat.rotate(EulerToQuaternion(rotate));
     mat.scale(scale);
 }
 
-void Object::transform(Vector3D turn, Vector3D scale, Vector3D rotate, Vector3D translate)
-{
+void Object::transform(Vector3D turn, Vector3D scale, Vector3D rotate, Vector3D translate) {
     // 1. turn to align with x/y/z as needed
     // 2. scale to desired x/y/z size
     // 3. rotate as needed by the scene
@@ -74,8 +66,7 @@ void Object::transform(Vector3D turn, Vector3D scale, Vector3D rotate, Vector3D 
 // This method allows the addition of an extrinsic global rotation to an object i.e.
 // it rotates the object about the global origin of the coordinate system
 void Object::addExtrinsicRotation(Vector3D turn, Vector3D scale, Vector3D& rotate,
-                                  Vector3D rotateExtrinsic, Vector3D& translate)
-{
+                                  Vector3D rotateExtrinsic, Vector3D& translate) {
     mat.setToIdentity();
     mat.rotate(EulerToQuaternion(rotateExtrinsic));
     mat.translate(translate);
@@ -91,13 +82,11 @@ void Object::addExtrinsicRotation(Vector3D turn, Vector3D scale, Vector3D& rotat
     translate = EulerToQuaternion(rotateExtrinsic).rotatedVector(translate);
 }
 
-void Object::releaseGeometry()
-{
+void Object::releaseGeometry() {
     geo.reset();
 }
 
-void Object::draw(Canvas& canvas)
-{
+void Object::draw(Canvas& canvas) {
     if (isNull)
         return;
 
@@ -108,10 +97,8 @@ void Object::draw(Canvas& canvas)
 
 } // namespace RealSpace
 
-namespace
-{
-QQuaternion EulerToQuaternion(const RealSpace::Vector3D& euler)
-{
+namespace {
+QQuaternion EulerToQuaternion(const RealSpace::Vector3D& euler) {
     float cpsi2 = std::cos(euler.x / 2.0f);
     float spsi2 = std::sin(euler.x / 2.0f);
     float cth2 = std::cos(euler.y / 2.0f);
@@ -125,8 +112,7 @@ QQuaternion EulerToQuaternion(const RealSpace::Vector3D& euler)
     return QQuaternion{a, b, c, d};
 }
 
-RealSpace::Vector3D QuaternionToEuler(const QQuaternion& q)
-{
+RealSpace::Vector3D QuaternionToEuler(const QQuaternion& q) {
     auto qvec = q.toVector4D();
 
     float a = qvec.w(); // scalar part of quaternion

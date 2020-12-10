@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "BAVersion.h"
@@ -24,10 +24,8 @@
 #include <QTextStream>
 #include <QUuid>
 
-namespace
-{
-QMap<QString, QString> initializeCharacterMap()
-{
+namespace {
+QMap<QString, QString> initializeCharacterMap() {
     QMap<QString, QString> result;
     result["\\"] = "_backslash_";
     result["/"] = "_slash_";
@@ -42,19 +40,16 @@ QMap<QString, QString> initializeCharacterMap()
 const QMap<QString, QString> invalidCharacterMap = initializeCharacterMap();
 } // Anonymous namespace
 
-namespace GUIHelpers
-{
+namespace GUIHelpers {
 
 Error::~Error() noexcept = default;
 
-const char* Error::what() const noexcept
-{
-    return message.toLatin1().data();
+const char* Error::what() const noexcept {
+    return m_messageAsLatin1.data();
 }
 
 void information(QWidget* parent, const QString& title, const QString& text,
-                 const QString& detailedText)
-{
+                 const QString& detailedText) {
     QScopedPointer<QMessageBox> messageBox(new QMessageBox(parent));
     if (parent)
         messageBox->setWindowModality(Qt::WindowModal);
@@ -68,8 +63,7 @@ void information(QWidget* parent, const QString& title, const QString& text,
 }
 
 void warning(QWidget* parent, const QString& title, const QString& text,
-             const QString& detailedText)
-{
+             const QString& detailedText) {
     QScopedPointer<QMessageBox> messageBox(new QMessageBox(parent));
     if (parent)
         messageBox->setWindowModality(Qt::WindowModal);
@@ -83,8 +77,7 @@ void warning(QWidget* parent, const QString& title, const QString& text,
 }
 
 bool question(QWidget* parent, const QString& title, const QString& text,
-              const QString& detailedText, const QString& yesText, const QString& noText)
-{
+              const QString& detailedText, const QString& yesText, const QString& noText) {
     QScopedPointer<QMessageBox> messageBox(new QMessageBox(parent));
     if (parent)
         messageBox->setWindowModality(Qt::WindowModal);
@@ -101,8 +94,7 @@ bool question(QWidget* parent, const QString& title, const QString& text,
 }
 
 bool okToDelete(QWidget* parent, const QString& title, const QString& text,
-                const QString& detailedText)
-{
+                const QString& detailedText) {
     QScopedPointer<QMessageBox> messageBox(new QMessageBox(parent));
     if (parent)
         messageBox->setWindowModality(Qt::WindowModal);
@@ -118,8 +110,7 @@ bool okToDelete(QWidget* parent, const QString& title, const QString& text,
     return messageBox->clickedButton() == deleteButton;
 }
 
-QString getBornAgainVersionString()
-{
+QString getBornAgainVersionString() {
     return QString::fromStdString(BornAgain::GetVersionNumber());
 }
 
@@ -132,8 +123,7 @@ QString getBornAgainVersionString()
 //! > greaterthan
 //! | pipe
 //! ? questionmark
-QString getValidFileName(const QString& proposed_name)
-{
+QString getValidFileName(const QString& proposed_name) {
     QString result = proposed_name;
     for (auto it = invalidCharacterMap.begin(); it != invalidCharacterMap.end(); ++it) {
         result.replace(it.key(), it.value());
@@ -142,8 +132,7 @@ QString getValidFileName(const QString& proposed_name)
 }
 
 //! parses version string into 3 numbers, returns true in the case of success
-bool parseVersion(const QString& version, int& major_num, int& minor_num, int& patch_num)
-{
+bool parseVersion(const QString& version, int& major_num, int& minor_num, int& patch_num) {
     major_num = minor_num = patch_num = 0;
     bool success(true);
     QStringList nums = version.split(".");
@@ -161,8 +150,7 @@ bool parseVersion(const QString& version, int& major_num, int& minor_num, int& p
     return success;
 }
 
-int versionCode(const QString& version)
-{
+int versionCode(const QString& version) {
     int result(-1);
 
     int ba_major(0), ba_minor(0), ba_patch(0);
@@ -175,14 +163,12 @@ int versionCode(const QString& version)
 }
 
 //! returns true if current BornAgain version match minimal required version
-bool isVersionMatchMinimal(const QString& version, const QString& minimal_version)
-{
+bool isVersionMatchMinimal(const QString& version, const QString& minimal_version) {
     return versionCode(version) >= versionCode(minimal_version);
 }
 
 //! Returns file directory from the full file path
-QString fileDir(const QString& fileName)
-{
+QString fileDir(const QString& fileName) {
     QFileInfo info(fileName);
     if (info.exists()) {
         return info.dir().path();
@@ -192,27 +178,12 @@ QString fileDir(const QString& fileName)
 
 //! Returns base name of file.
 
-QString baseName(const QString& fileName)
-{
+QString baseName(const QString& fileName) {
     QFileInfo info(fileName);
     return info.baseName();
 }
 
-//! Creates sub directory in given parent directory (should exist).
-//! If sub-directory already exists, no action will be taken.
-
-void createSubdir(const QString& parentName, const QString& subdirName)
-{
-    QDir projectDir(parentName);
-    if (!projectDir.exists(subdirName)) {
-        if (!projectDir.mkdir(subdirName))
-            throw GUIHelpers::Error("GUIHelpers::createSubdir() -> Error. Can't create '"
-                                    + subdirName + "' in parent directory '" + parentName + "'.");
-    }
-}
-
-QString currentDateTime()
-{
+QString currentDateTime() {
     return QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss");
     ;
 }
@@ -226,16 +197,14 @@ QString currentDateTime()
 //    return result;
 //}
 
-QVector<double> fromStdVector(const std::vector<double>& data)
-{
+QVector<double> fromStdVector(const std::vector<double>& data) {
     QVector<double> result;
     result.reserve(int(data.size()));
     std::copy(data.begin(), data.end(), std::back_inserter(result));
     return result;
 }
 
-QStringList fromStdStrings(const std::vector<std::string>& container)
-{
+QStringList fromStdStrings(const std::vector<std::string>& container) {
     QStringList result;
     for (std::string str : container) {
         result.append(QString::fromStdString(str));
@@ -243,13 +212,11 @@ QStringList fromStdStrings(const std::vector<std::string>& container)
     return result;
 }
 
-QString createUuid()
-{
+QString createUuid() {
     return QUuid::createUuid().toString();
 }
 
-QString readTextFile(const QString& fileName)
-{
+QString readTextFile(const QString& fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         throw GUIHelpers::Error("PyImportAssistant::readFile() -> Error. Can't read file '"

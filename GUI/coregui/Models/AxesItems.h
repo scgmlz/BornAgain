@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_AXESITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_AXESITEMS_H
@@ -20,8 +20,7 @@
 
 class IAxis;
 
-class BA_CORE_API_ BasicAxisItem : public SessionItem
-{
+class BA_CORE_API_ BasicAxisItem : public SessionItem {
 public:
     static const QString P_IS_VISIBLE;
     static const QString P_NBINS;
@@ -39,8 +38,7 @@ protected:
     void register_basic_properties();
 };
 
-class BA_CORE_API_ AmplitudeAxisItem : public BasicAxisItem
-{
+class BA_CORE_API_ AmplitudeAxisItem : public BasicAxisItem {
 public:
     static const QString P_IS_LOGSCALE;
     static const QString P_LOCK_MIN_MAX;

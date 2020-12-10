@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SESSIONGRAPHICSITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SESSIONGRAPHICSITEM_H
 
 #include "GUI/coregui/Models/SessionItem.h"
 
-class BA_CORE_API_ SessionGraphicsItem : public SessionItem
-{
+class BA_CORE_API_ SessionGraphicsItem : public SessionItem {
 
 public:
     static const QString P_XPOS;

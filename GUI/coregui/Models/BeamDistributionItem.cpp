@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,21 +10,20 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/BeamDistributionItem.h"
-#include "Core/Basics/Assert.h"
-#include "Core/Basics/Units.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterDistribution.h"
+#include "Base/Const/Units.h"
 #include "GUI/coregui/Models/GroupItem.h"
 #include "GUI/coregui/Models/ParameterTranslators.h"
 #include "GUI/coregui/Models/RealLimitsItems.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Distrib/ParameterDistribution.h"
 
 const QString BeamDistributionItem::P_DISTRIBUTION = "Distribution";
 
-BeamDistributionItem::BeamDistributionItem(const QString& name, bool show_mean) : SessionItem(name)
-{
+BeamDistributionItem::BeamDistributionItem(const QString& name, bool show_mean)
+    : SessionItem(name) {
     addTranslator(DistributionNoneTranslator());
 
     mapper()->setOnChildPropertyChange([this, show_mean](SessionItem* item, const QString&) {
@@ -33,10 +32,9 @@ BeamDistributionItem::BeamDistributionItem(const QString& name, bool show_mean) 
     });
 }
 
-//! returns parameter distribution to add into the Simulation
+//! returns parameter distribution to add into the ISimulation
 std::unique_ptr<ParameterDistribution>
-BeamDistributionItem::getParameterDistributionForName(const std::string& parameter_name) const
-{
+BeamDistributionItem::getParameterDistributionForName(const std::string& parameter_name) const {
     std::unique_ptr<ParameterDistribution> P_par_distr{};
     if (auto distributionItem = dynamic_cast<DistributionItem*>(getGroupItem(P_DISTRIBUTION))) {
         auto P_distribution = createDistribution1D();
@@ -65,8 +63,7 @@ BeamDistributionItem::getParameterDistributionForName(const std::string& paramet
 
 //! Propagates the value and limits stored in DistributionNone type into alls distributions.
 
-void BeamDistributionItem::initDistributionItem(bool show_mean)
-{
+void BeamDistributionItem::initDistributionItem(bool show_mean) {
     GroupItem* groupItem = dynamic_cast<GroupItem*>(getItem(P_DISTRIBUTION));
     ASSERT(groupItem);
 
@@ -107,8 +104,7 @@ void BeamDistributionItem::initDistributionItem(bool show_mean)
 
 //! Returns mean value of the distribution.
 
-double BeamDistributionItem::meanValue() const
-{
+double BeamDistributionItem::meanValue() const {
     std::unique_ptr<IDistribution1D> domainDistr = createDistribution1D();
     if (domainDistr)
         return domainDistr->getMean() / scaleFactor();
@@ -116,8 +112,7 @@ double BeamDistributionItem::meanValue() const
         return getGroupItem(P_DISTRIBUTION)->getItemValue(DistributionNoneItem::P_MEAN).toDouble();
 }
 
-void BeamDistributionItem::resetToValue(double value)
-{
+void BeamDistributionItem::resetToValue(double value) {
     SessionItem* distributionItem =
         setGroupProperty(BeamDistributionItem::P_DISTRIBUTION, "DistributionNone");
     ASSERT(distributionItem);
@@ -127,20 +122,17 @@ void BeamDistributionItem::resetToValue(double value)
 //! Scales the values provided by distribution (to perform deg->rad conversion in the case
 //! of AngleDistributionItems.
 
-double BeamDistributionItem::scaleFactor() const
-{
+double BeamDistributionItem::scaleFactor() const {
     return 1.0;
 }
 
-void BeamDistributionItem::register_distribution_group(const QString& group_type)
-{
+void BeamDistributionItem::register_distribution_group(const QString& group_type) {
     ASSERT(group_type == "Distribution extended group"
            || group_type == "Symmetric distribution group");
     addGroupProperty(P_DISTRIBUTION, group_type);
 }
 
-std::unique_ptr<IDistribution1D> BeamDistributionItem::createDistribution1D() const
-{
+std::unique_ptr<IDistribution1D> BeamDistributionItem::createDistribution1D() const {
     if (auto distItem = dynamic_cast<DistributionItem*>(getGroupItem(P_DISTRIBUTION)))
         return distItem->createDistribution(scaleFactor());
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTRANSLATORS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_PARAMETERTRANSLATORS_H
@@ -19,8 +19,7 @@
 
 class SessionItem;
 
-class IPathTranslator
-{
+class IPathTranslator {
 public:
     virtual ~IPathTranslator();
 
@@ -29,82 +28,76 @@ public:
     virtual QStringList translate(const QStringList& list) const = 0;
 };
 
-class ModelTypeTranslator : public IPathTranslator
-{
+class ModelTypeTranslator : public IPathTranslator {
 public:
     ModelTypeTranslator(QString gui_model_type, QString domain_name);
-    ~ModelTypeTranslator() final {}
+    ~ModelTypeTranslator() override {}
 
-    ModelTypeTranslator* clone() const final;
+    ModelTypeTranslator* clone() const override;
 
-    QStringList translate(const QStringList& list) const final;
+    QStringList translate(const QStringList& list) const override;
 
 private:
     QString m_gui_model_type;
     QString m_domain_name;
 };
 
-class AddElementTranslator : public IPathTranslator
-{
+class AddElementTranslator : public IPathTranslator {
 public:
     AddElementTranslator(QString gui_name, QString additional_name);
-    ~AddElementTranslator() final {}
+    ~AddElementTranslator() override {}
 
-    AddElementTranslator* clone() const final;
+    AddElementTranslator* clone() const override;
 
-    QStringList translate(const QStringList& list) const final;
+    QStringList translate(const QStringList& list) const override;
 
 private:
     QString m_gui_name;
     QString m_additional_name;
 };
 
-class RotationTranslator : public IPathTranslator
-{
+class RotationTranslator : public IPathTranslator {
 public:
-    ~RotationTranslator() final {}
+    ~RotationTranslator() override {}
 
-    RotationTranslator* clone() const final { return new RotationTranslator; }
+    RotationTranslator* clone() const override { return new RotationTranslator; }
 
-    QStringList translate(const QStringList& list) const final;
+    QStringList translate(const QStringList& list) const override;
 };
 
-class DistributionNoneTranslator : public IPathTranslator
-{
+class DistributionNoneTranslator : public IPathTranslator {
 public:
-    ~DistributionNoneTranslator() final {}
+    ~DistributionNoneTranslator() override {}
 
-    DistributionNoneTranslator* clone() const final { return new DistributionNoneTranslator; }
+    DistributionNoneTranslator* clone() const override { return new DistributionNoneTranslator; }
 
-    QStringList translate(const QStringList& list) const final;
+    QStringList translate(const QStringList& list) const override;
 };
 
-class RoughnessTranslator : public IPathTranslator
-{
+class RoughnessTranslator : public IPathTranslator {
 public:
     RoughnessTranslator(const SessionItem* p_parent);
-    ~RoughnessTranslator() final {}
+    ~RoughnessTranslator() override {}
 
-    RoughnessTranslator* clone() const final;
+    RoughnessTranslator* clone() const override;
 
-    QStringList translate(const QStringList& list) const final;
+    QStringList translate(const QStringList& list) const override;
 
 private:
     int getLayerIndex(QString layerName) const;
     int numberOfLayers() const;
-    const SessionItem* mp_parent;
+    const SessionItem* m_parent;
 };
 
-class VectorParameterTranslator : public IPathTranslator
-{
+class VectorParameterTranslator : public IPathTranslator {
 public:
     VectorParameterTranslator(QString gui_name, std::string base_name,
                               QStringList additional_names = {});
-    ~VectorParameterTranslator() final {}
+    ~VectorParameterTranslator() override {}
 
-    VectorParameterTranslator* clone() const final;
+    VectorParameterTranslator* clone() const override;
 
-    QStringList translate(const QStringList& list) const final;
+    QStringList translate(const QStringList& list) const override;
 
 private:
     QString m_gui_name;

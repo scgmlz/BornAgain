@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/BeamWavelengthItem.h"
 
-namespace
-{
+namespace {
 const double default_wl = 0.1;
 }
 
 BeamWavelengthItem::BeamWavelengthItem(const QString& model_type, const QString& distribution_group)
-    : BeamDistributionItem(model_type, m_show_mean)
-{
+    : BeamDistributionItem(model_type, m_show_mean) {
     register_distribution_group(distribution_group);
 
     SessionItem* valueItem = getGroupItem(P_DISTRIBUTION)->getItem(DistributionNoneItem::P_MEAN);
@@ -35,18 +33,14 @@ BeamWavelengthItem::BeamWavelengthItem(const QString& model_type, const QString&
 
 //! Returns wavelength. In the case of distribution applied, returns its mean.
 
-double BeamWavelengthItem::wavelength() const
-{
+double BeamWavelengthItem::wavelength() const {
     return BeamDistributionItem::meanValue();
 }
 
 SpecularBeamWavelengthItem::SpecularBeamWavelengthItem()
-    : BeamWavelengthItem("SpecularBeamWavelength", "Symmetric distribution group")
-{
-}
+    : BeamWavelengthItem("SpecularBeamWavelength", "Symmetric distribution group") {}
 
-void SpecularBeamWavelengthItem::setToRange(const RealLimits& limits)
-{
+void SpecularBeamWavelengthItem::setToRange(const RealLimits& limits) {
     SessionItem* valueItem =
         getGroupItem(P_DISTRIBUTION)->getItem(SymmetricDistributionItem::P_MEAN);
     if (!limits.isInRange(wavelength())) {

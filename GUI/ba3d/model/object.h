@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,24 +10,21 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_OBJECT_H
 #define BORNAGAIN_GUI_BA3D_MODEL_OBJECT_H
 
-#include "../def.h"
 #include "GUI/ba3d/model/geometry_inc.h"
 #include <QColor>
 #include <QMatrix4x4>
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 class Model;
 class Canvas;
 
-class Object
-{
+class Object {
     friend class Model;
 
 public:

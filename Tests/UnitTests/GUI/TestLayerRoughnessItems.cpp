@@ -1,15 +1,11 @@
-#include "Core/Multilayer/LayerRoughness.h"
 #include "GUI/coregui/Models/LayerRoughnessItems.h"
 #include "GUI/coregui/Models/TransformFromDomain.h"
 #include "GUI/coregui/Models/TransformToDomain.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestLayerRoughnessItems : public ::testing::Test
-{
-};
+class TestLayerRoughnessItems : public ::testing::Test {};
 
-TEST_F(TestLayerRoughnessItems, test_LayerRoughnessToDomain)
-{
+TEST_F(TestLayerRoughnessItems, test_LayerRoughnessToDomain) {
     LayerBasicRoughnessItem roughnessItem;
     roughnessItem.setItemValue(LayerBasicRoughnessItem::P_SIGMA, 10.0);
     roughnessItem.setItemValue(LayerBasicRoughnessItem::P_HURST, 20.0);
@@ -28,8 +24,7 @@ TEST_F(TestLayerRoughnessItems, test_LayerRoughnessToDomain)
     EXPECT_TRUE(TransformToDomain::createLayerRoughness(zeroRoughnessItem) == nullptr);
 }
 
-TEST_F(TestLayerRoughnessItems, test_LayerRoughnessFromDomain)
-{
+TEST_F(TestLayerRoughnessItems, test_LayerRoughnessFromDomain) {
     LayerRoughness roughness(10.0, 20.0, 30.0);
     LayerBasicRoughnessItem roughnessItem;
     TransformFromDomain::setRoughnessItem(&roughnessItem, roughness);

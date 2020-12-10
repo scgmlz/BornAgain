@@ -2,12 +2,9 @@
 #include "Tests/GTestWrapper/google_test.h"
 #include <QSignalSpy>
 
-class TestUpdateTimer : public ::testing::Test
-{
-};
+class TestUpdateTimer : public ::testing::Test {};
 
-TEST_F(TestUpdateTimer, test_updateTimerShort)
-{
+TEST_F(TestUpdateTimer, test_updateTimerShort) {
     const int timer_interval(100);
     UpdateTimer timer(timer_interval);
 

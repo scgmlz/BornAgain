@@ -47,17 +47,13 @@
 #include <QtDesigner/QDesignerFormWindowManagerInterface>
 
 #include "GUI/coregui/Views/widgetbox/qdesigner_utils_p.h"
-//#include <filterwidget_p.h>
 
-#include <QtGui/QDropEvent>
-//#include <QtWidgets/QVBoxLayout>
-//#include <QtWidgets/QApplication>
-//#include <QtWidgets/QToolBar>
 #include <QApplication>
 #include <QDrag>
 #include <QLineEdit>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QtGui/QDropEvent>
 
 #include <QtGui/QIcon>
 
@@ -68,15 +64,12 @@
 #include <iostream>
 QT_BEGIN_NAMESPACE
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
-class WidgetBoxFilterLineEdit : public QLineEdit
-{
+class WidgetBoxFilterLineEdit : public QLineEdit {
 public:
     explicit WidgetBoxFilterLineEdit(QWidget* parent = 0)
-        : QLineEdit(parent), m_defaultFocusPolicy(focusPolicy())
-    {
+        : QLineEdit(parent), m_defaultFocusPolicy(focusPolicy()) {
         setFocusPolicy(Qt::NoFocus);
     }
 
@@ -88,15 +81,13 @@ private:
     const Qt::FocusPolicy m_defaultFocusPolicy;
 };
 
-void WidgetBoxFilterLineEdit::mousePressEvent(QMouseEvent* e)
-{
+void WidgetBoxFilterLineEdit::mousePressEvent(QMouseEvent* e) {
     if (!hasFocus()) // Explicitly focus on click.
         setFocus(Qt::OtherFocusReason);
     QLineEdit::mousePressEvent(e);
 }
 
-void WidgetBoxFilterLineEdit::focusInEvent(QFocusEvent* e)
-{
+void WidgetBoxFilterLineEdit::focusInEvent(QFocusEvent* e) {
     // Refuse the focus if the mouse it outside. In addition to the mouse
     // press logic, this prevents a re-focussing which occurs once
     // we actually had focus
@@ -114,8 +105,7 @@ void WidgetBoxFilterLineEdit::focusInEvent(QFocusEvent* e)
 
 // WidgetBox::WidgetBox(QDesignerFormEditorInterface *core, QWidget *parent, Qt::WindowFlags flags)
 WidgetBox::WidgetBox(SampleDesignerInterface* core, QWidget* parent, Qt::WindowFlags flags)
-    : QDesignerWidgetBox(parent, flags), m_core(core), m_view(new WidgetBoxTreeWidget(m_core))
-{
+    : QDesignerWidgetBox(parent, flags), m_core(core), m_view(new WidgetBoxTreeWidget(m_core)) {
     QVBoxLayout* l = new QVBoxLayout(this);
     l->setMargin(0);
     l->setSpacing(0);
@@ -157,21 +147,19 @@ WidgetBox::WidgetBox(SampleDesignerInterface* core, QWidget* parent, Qt::WindowF
     //    setAcceptDrops (true);
 }
 
-WidgetBox::~WidgetBox() {}
+WidgetBox::~WidgetBox() = default;
 
 // QDesignerFormEditorInterface *WidgetBox::core() const
 //{
 //    return m_core;
 //}
 
-SampleDesignerInterface* WidgetBox::core() const
-{
+SampleDesignerInterface* WidgetBox::core() const {
     return m_core;
 }
 
 void WidgetBox::handleMousePress(const QString& name, const QString& xml,
-                                 const QPoint& global_mouse_pos)
-{
+                                 const QPoint& global_mouse_pos) {
     Q_UNUSED(global_mouse_pos);
     if (QApplication::mouseButtons() != Qt::LeftButton)
         return;
@@ -180,79 +168,64 @@ void WidgetBox::handleMousePress(const QString& name, const QString& xml,
     DesignerMimeData::execDrag(name, xml, this);
 }
 
-int WidgetBox::categoryCount() const
-{
+int WidgetBox::categoryCount() const {
     return m_view->categoryCount();
 }
 
-QDesignerWidgetBoxInterface::Category WidgetBox::category(int cat_idx) const
-{
+QDesignerWidgetBoxInterface::Category WidgetBox::category(int cat_idx) const {
     return m_view->category(cat_idx);
 }
 
-void WidgetBox::addCategory(const Category& cat)
-{
+void WidgetBox::addCategory(const Category& cat) {
     m_view->addCategory(cat);
 }
 
-void WidgetBox::removeCategory(int cat_idx)
-{
+void WidgetBox::removeCategory(int cat_idx) {
     m_view->removeCategory(cat_idx);
 }
 
-int WidgetBox::widgetCount(int cat_idx) const
-{
+int WidgetBox::widgetCount(int cat_idx) const {
     return m_view->widgetCount(cat_idx);
 }
 
-QDesignerWidgetBoxInterface::Widget WidgetBox::widget(int cat_idx, int wgt_idx) const
-{
+QDesignerWidgetBoxInterface::Widget WidgetBox::widget(int cat_idx, int wgt_idx) const {
     return m_view->widget(cat_idx, wgt_idx);
 }
 
-void WidgetBox::addWidget(int cat_idx, const Widget& wgt)
-{
+void WidgetBox::addWidget(int cat_idx, const Widget& wgt) {
     m_view->addWidget(cat_idx, wgt);
 }
 
-void WidgetBox::removeWidget(int cat_idx, int wgt_idx)
-{
+void WidgetBox::removeWidget(int cat_idx, int wgt_idx) {
     m_view->removeWidget(cat_idx, wgt_idx);
 }
 
-void WidgetBox::dropWidgets(const QList<QDesignerDnDItemInterface*>& item_list, const QPoint&)
-{
+void WidgetBox::dropWidgets(const QList<QDesignerDnDItemInterface*>& item_list, const QPoint&) {
     m_view->dropWidgets(item_list);
 }
 
-void WidgetBox::setFileName(const QString& file_name)
-{
+void WidgetBox::setFileName(const QString& file_name) {
     m_view->setFileName(file_name);
 }
 
-QString WidgetBox::fileName() const
-{
+QString WidgetBox::fileName() const {
     return m_view->fileName();
 }
 
-bool WidgetBox::load()
-{
+bool WidgetBox::load() {
     // std::cout << "WidgetBox::load() -> We are here" << std::endl;
     return m_view->load(loadMode());
 }
 
-bool WidgetBox::loadContents(const QString& contents)
-{
+bool WidgetBox::loadContents(const QString& contents) {
     return m_view->loadContents(contents);
 }
 
-bool WidgetBox::save()
-{
+bool WidgetBox::save() {
     return m_view->save();
 }
 
-static const QDesignerMimeData* checkDragEvent(QDropEvent* event, bool acceptEventsFromWidgetBox)
-{
+static const QDesignerMimeData* checkDragEvent(QDropEvent* event, bool acceptEventsFromWidgetBox) {
     // std::cout << "QDesignerMimeData *checkDragEvent() -> ?" << std::endl;
     const QDesignerMimeData* mimeData = qobject_cast<const QDesignerMimeData*>(event->mimeData());
     if (!mimeData) {
@@ -272,20 +245,17 @@ static const QDesignerMimeData* checkDragEvent(QDropEvent* event, bool acceptEve
     return mimeData;
 }
 
-void WidgetBox::dragEnterEvent(QDragEnterEvent* event)
-{
+void WidgetBox::dragEnterEvent(QDragEnterEvent* event) {
     // We accept event originating from the widget box also here,
     // because otherwise Windows will not show the DnD pixmap.
     checkDragEvent(event, true);
 }
 
-void WidgetBox::dragMoveEvent(QDragMoveEvent* event)
-{
+void WidgetBox::dragMoveEvent(QDragMoveEvent* event) {
     checkDragEvent(event, true);
 }
 
-void WidgetBox::dropEvent(QDropEvent* event)
-{
+void WidgetBox::dropEvent(QDropEvent* event) {
     const QDesignerMimeData* mimeData = checkDragEvent(event, false);
     if (!mimeData)
         return;
@@ -294,8 +264,7 @@ void WidgetBox::dropEvent(QDropEvent* event)
     QDesignerMimeData::removeMovedWidgetsFromSourceForm(mimeData->items());
 }
 
-QIcon WidgetBox::iconForWidget(const QString& className, const QString& category) const
-{
+QIcon WidgetBox::iconForWidget(const QString& className, const QString& category) const {
     Widget widgetData;
     if (!findWidget(this, className, category, &widgetData))
         return QIcon();

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,46 +10,40 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/ba3d/model/geometry.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/ba3d/model/model.h"
 
-namespace RealSpace
-{
+namespace RealSpace {
 //------------------------------------------------------------------------------
 
 Geometry::Vert_Normal::Vert_Normal(const Vector3D& v_, const Vector3D& n_) : v(v_), n(n_) {}
 
-void Geometry::Vertices::addVertex(const Vector3D& v, int n)
-{
+void Geometry::Vertices::addVertex(const Vector3D& v, int n) {
     for (int i = 0; i < n; ++i)
         append(v);
 }
 
-void Geometry::Vertices::addTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3)
-{
+void Geometry::Vertices::addTriangle(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3) {
     append(v1);
     append(v2);
     append(v3);
 }
 
 void Geometry::Vertices::addQuad(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3,
-                                 const Vector3D& v4)
-{
+                                 const Vector3D& v4) {
     addTriangle(v1, v2, v3);
     addTriangle(v3, v4, v1);
 }
 
 void Geometry::Vertices::addQuad(const Vertices& vs, unsigned i1, unsigned i2, unsigned i3,
-                                 unsigned i4)
-{
+                                 unsigned i4) {
     addQuad(vs.at(i1), vs.at(i2), vs.at(i3), vs.at(i4));
 }
 
-void Geometry::Vertices::addStrip(const Vertices& vs, const Indices& is)
-{
+void Geometry::Vertices::addStrip(const Vertices& vs, const Indices& is) {
     ASSERT(is.size() >= 3); // at least one triangle
     for (unsigned i = 0; i + 2 < is.size(); ++i)
         if (i % 2)
@@ -58,8 +52,7 @@ void Geometry::Vertices::addStrip(const Vertices& vs, const Indices& is)
             addTriangle(vs.at(is.at(i)), vs.at(is.at(2 + i)), vs.at(is.at(1 + i)));
 }
 
-void Geometry::Vertices::addFan(const Vertices& vs, const Indices& is)
-{
+void Geometry::Vertices::addFan(const Vertices& vs, const Indices& is) {
     ASSERT(is.size() >= 3); // at least one triangle
     auto& ctr = vs.at(is.at(0));
     for (unsigned i = 0; i + 2 < is.size(); ++i)
@@ -68,8 +61,7 @@ void Geometry::Vertices::addFan(const Vertices& vs, const Indices& is)
 
 //------------------------------------------------------------------------------
 
-Geometry::Geometry(GeometricID::Key key_) : m_key(key_)
-{
+Geometry::Geometry(GeometricID::Key key_) : m_key(key_) {
     using namespace GeometricID;
 
     switch (m_key.id) {
@@ -103,14 +95,12 @@ Geometry::Geometry(GeometricID::Key key_) : m_key(key_)
     }
 }
 
-Geometry::~Geometry()
-{
+Geometry::~Geometry() {
     // remove self from the store
     geometryStore().geometryDeleted(*this);
 }
 
-Geometry::Mesh Geometry::makeMesh(const Vertices& vs, Vertices const* ns)
-{
+Geometry::Mesh Geometry::makeMesh(const Vertices& vs, Vertices const* ns) {
     int nv = vs.count();
     ASSERT(0 == nv % 3);
     ASSERT(!ns || nv == ns->count()); // if normals not given, will be computed
@@ -139,15 +129,13 @@ Geometry::Mesh Geometry::makeMesh(const Vertices& vs, Vertices const* ns)
     return mesh;
 }
 
-Geometry::Mesh Geometry::makeMesh(const Vertices& vs, const Vertices& ns)
-{
+Geometry::Mesh Geometry::makeMesh(const Vertices& vs, const Vertices& ns) {
     return makeMesh(vs, &ns);
 }
 
 //------------------------------------------------------------------------------
 
-GeometryHandle GeometryStore::getGeometry(GeometricID::Key key)
-{
+GeometryHandle GeometryStore::getGeometry(GeometricID::Key key) {
     auto it = m_geometries.find(key);
     if (m_geometries.end() != it) {
         if (auto g = it->second.lock())
@@ -158,14 +146,12 @@ GeometryHandle GeometryStore::getGeometry(GeometricID::Key key)
     return g;
 }
 
-void GeometryStore::geometryDeleted(Geometry const& g)
-{
+void GeometryStore::geometryDeleted(Geometry const& g) {
     emit deletingGeometry(&g);
     m_geometries.erase(g.m_key);
 }
 
-GeometryStore& geometryStore()
-{
+GeometryStore& geometryStore() {
     static GeometryStore gs;
     return gs;
 }

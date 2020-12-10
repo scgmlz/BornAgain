@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,23 +10,21 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_JOBWORKER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_JOBWORKER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
-class Simulation;
+class ISimulation;
 
 //! The JobWorker class provides running the domain simulation in a thread.
 
-class BA_CORE_API_ JobWorker : public QObject
-{
+class JobWorker : public QObject {
     Q_OBJECT
 public:
-    JobWorker(const QString& identifier, Simulation* simulation);
+    JobWorker(const QString& identifier, ISimulation* simulation);
 
     QString identifier() const;
 
@@ -51,7 +49,7 @@ private:
     bool updateProgress(int percentage_done);
 
     QString m_identifier;
-    Simulation* m_simulation;
+    ISimulation* m_simulation;
     int m_percentage_done;
     QString m_job_status;
     bool m_terminate_request_flag;

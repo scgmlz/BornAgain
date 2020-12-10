@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/FitFlowWidget.h"
 #include "GUI/coregui/Models/FitSuiteItem.h"
@@ -18,8 +18,7 @@
 #include <QVBoxLayout>
 
 FitFlowWidget::FitFlowWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_histPlot(new HistogramPlot)
-{
+    : SessionItemWidget(parent), m_histPlot(new HistogramPlot) {
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     auto layout = new QVBoxLayout;
@@ -30,8 +29,7 @@ FitFlowWidget::FitFlowWidget(QWidget* parent)
     setLayout(layout);
 }
 
-void FitFlowWidget::subscribeToItem()
-{
+void FitFlowWidget::subscribeToItem() {
     fitSuiteItem()->mapper()->setOnPropertyChange(
         [this](const QString& name) {
             if (name == FitSuiteItem::P_ITERATION_COUNT) {
@@ -45,14 +43,12 @@ void FitFlowWidget::subscribeToItem()
         this);
 }
 
-void FitFlowWidget::unsubscribeFromItem()
-{
+void FitFlowWidget::unsubscribeFromItem() {
     m_histPlot->clearData();
     m_x.clear();
     m_y.clear();
 }
 
-FitSuiteItem* FitFlowWidget::fitSuiteItem()
-{
+FitSuiteItem* FitFlowWidget::fitSuiteItem() {
     return dynamic_cast<FitSuiteItem*>(currentItem());
 }

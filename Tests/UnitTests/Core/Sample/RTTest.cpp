@@ -1,28 +1,24 @@
-#include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Computation/ProcessedSample.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/LayerInterface.h"
-#include "Core/Multilayer/LayerRoughness.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Multilayer/SpecularScalarTanhStrategy.h"
-#include "Core/Parametrization/SimulationOptions.h"
+#include "Base/Math/Constants.h"
+#include "Sample/Aggregate/ParticleLayout.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/Processed/ProcessedSample.h"
+#include "Sample/RT/SimulationOptions.h"
+#include "Sample/Slice/LayerInterface.h"
+#include "Sample/Slice/LayerRoughness.h"
+#include "Sample/Specular/SpecularScalarTanhStrategy.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class RTTest : public ::testing::Test
-{
+class RTTest : public ::testing::Test {
 protected:
-    ~RTTest();
-    void printCoeffs(const std::vector<ScalarRTCoefficients>& coeffs)
-    { // for debug phases
+    void printCoeffs(const std::vector<ScalarRTCoefficients>& coeffs) { // for debug phases
         for (size_t i = 0; i < coeffs.size(); ++i) {
             const ScalarRTCoefficients& coeff = coeffs[i];
             std::cout << i << " " << coeff.t_r(0) << " " << coeff.t_r(1) << "\n";
         }
     }
-    void compareCoeffs(const ScalarRTCoefficients& coeff1, const ScalarRTCoefficients& coeff2)
-    {
+    void compareCoeffs(const ScalarRTCoefficients& coeff1, const ScalarRTCoefficients& coeff2) {
         EXPECT_NEAR(abs(coeff1.t_r(0)), abs(coeff2.t_r(0)), 5e-14);
         EXPECT_NEAR(coeff1.t_r(0).real(), coeff2.t_r(0).real(), 1e-10);
         EXPECT_NEAR(coeff1.t_r(0).imag(), coeff2.t_r(0).imag(), 1e-10);
@@ -30,15 +26,14 @@ protected:
         EXPECT_NEAR(coeff1.t_r(1).real(), coeff2.t_r(1).real(), 1e-10);
         EXPECT_NEAR(coeff1.t_r(1).imag(), coeff2.t_r(1).imag(), 1e-10);
     }
-    std::vector<ScalarRTCoefficients> getCoeffs(ISpecularStrategy::coeffs_t&& inputCoeffs)
-    {
+    std::vector<ScalarRTCoefficients> getCoeffs(ISpecularStrategy::coeffs_t&& inputCoeffs) {
         std::vector<ScalarRTCoefficients> result;
         for (auto& coeff : inputCoeffs)
             result.push_back(*dynamic_cast<const ScalarRTCoefficients*>(coeff.get()));
 
         return result;
     }
-    const Material air = HomogeneousMaterial("air", 1e-8, 1e-8);
+    const Material air = HomogeneousMaterial("Air", 1e-8, 1e-8);
     const Material amat = HomogeneousMaterial("material A", 2e-6, 8e-7);
     const Material bmat = HomogeneousMaterial("material B (high absorption)", 3e-5, 2e-4);
     const Material stone = HomogeneousMaterial("substrate material", 1e-6, 1e-7);
@@ -49,10 +44,7 @@ protected:
     std::vector<ScalarRTCoefficients> coeffs1, coeffs2;
 };
 
-RTTest::~RTTest() = default;
-
-TEST_F(RTTest, SplitLayer)
-{
+TEST_F(RTTest, SplitLayer) {
     const int n = 40;
 
     sample1.addLayer(topLayer);
@@ -81,11 +73,10 @@ TEST_F(RTTest, SplitLayer)
     compareCoeffs(coeffs1.back(), coeffs2.back());
 }
 
-TEST_F(RTTest, SplitBilayers)
-{
+TEST_F(RTTest, SplitBilayers) {
     // With exaggerated values of #layers, layer thickness, and absorption
     // so that we also test correct handling of floating-point overflow.
-    const int n = 200;
+    const int n = 250;
 
     sample1.addLayer(topLayer);
     for (size_t i = 0; i < n; ++i) {
@@ -126,8 +117,7 @@ TEST_F(RTTest, SplitBilayers)
     EXPECT_EQ(complex_t(), coeffs2[coeffs2.size() - 2].t_r(1));
 }
 
-TEST_F(RTTest, Overflow)
-{
+TEST_F(RTTest, Overflow) {
     // Text extra thick layers to also provoke an overflow in the new algorithm
     const int n = 5;
 

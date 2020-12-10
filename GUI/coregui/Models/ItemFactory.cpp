@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,26 +10,23 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ItemFactory.h"
 #include "GUI/coregui/Models/ItemCatalog.h"
 #include "GUI/coregui/Models/SessionItem.h"
 
-namespace
-{
+namespace {
 
 //! Returns the single instance of ItemCatalog.
-const ItemCatalog& catalog()
-{
+const ItemCatalog& catalog() {
     static ItemCatalog item_catalog;
     return item_catalog;
 }
 
 } // namespace
 
-SessionItem* ItemFactory::CreateItem(const QString& model_name, SessionItem* parent)
-{
+SessionItem* ItemFactory::CreateItem(const QString& model_name, SessionItem* parent) {
     SessionItem* result = catalog().createItemPtr(model_name).release();
     if (parent)
         parent->insertItem(-1, result);
@@ -37,12 +34,10 @@ SessionItem* ItemFactory::CreateItem(const QString& model_name, SessionItem* par
     return result;
 }
 
-SessionItem* ItemFactory::CreateEmptyItem()
-{
+SessionItem* ItemFactory::CreateEmptyItem() {
     return new SessionItem("ROOT_ITEM");
 }
 
-QStringList ItemFactory::ValidTopItemTypes()
-{
+QStringList ItemFactory::ValidTopItemTypes() {
     return catalog().validTopItemTypes();
 }

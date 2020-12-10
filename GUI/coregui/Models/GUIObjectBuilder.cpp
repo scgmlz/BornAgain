@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,16 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/GUIObjectBuilder.h"
-#include "Core/Basics/Units.h"
-#include "Core/Multilayer/MultiLayer.h"
+#include "Base/Const/Units.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Core/Simulation/OffSpecSimulation.h"
-#include "Core/Simulation/Simulation.h"
+#include "Core/Simulation/OffSpecularSimulation.h"
 #include "Core/Simulation/SpecularSimulation.h"
-#include "GUI/coregui/Models/BeamItems.h"
 #include "GUI/coregui/Models/DocumentModel.h"
 #include "GUI/coregui/Models/GUIDomainSampleVisitor.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -28,16 +25,16 @@
 #include "GUI/coregui/Models/SimulationOptionsItem.h"
 #include "GUI/coregui/Models/TransformFromDomain.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
+#include "Sample/Multilayer/MultiLayer.h"
 
-namespace
-{
+namespace {
 GISASInstrumentItem* createGISASInstrumentItem(InstrumentModel* model,
                                                const GISASSimulation& simulation,
                                                const QString& name);
 
-OffSpecInstrumentItem* createOffSpecInstrumentItem(InstrumentModel* model,
-                                                   const OffSpecSimulation& simulation,
-                                                   const QString& name);
+OffSpecularInstrumentItem* createOffSpecularInstrumentItem(InstrumentModel* model,
+                                                           const OffSpecularSimulation& simulation,
+                                                           const QString& name);
 
 SpecularInstrumentItem* createSpecularInstrumentItem(InstrumentModel* model,
                                                      const SpecularSimulation& simulation,
@@ -46,9 +43,8 @@ SpecularInstrumentItem* createSpecularInstrumentItem(InstrumentModel* model,
 
 SessionItem* GUIObjectBuilder::populateSampleModelFromSim(SampleModel* sampleModel,
                                                           MaterialModel* materialModel,
-                                                          const Simulation& simulation)
-{
-    std::unique_ptr<Simulation> sim(simulation.clone());
+                                                          const ISimulation& simulation) {
+    std::unique_ptr<ISimulation> sim(simulation.clone());
     sim->prepareSimulation();
     SessionItem* item = populateSampleModel(sampleModel, materialModel, *sim->sample());
     return item;
@@ -57,37 +53,34 @@ SessionItem* GUIObjectBuilder::populateSampleModelFromSim(SampleModel* sampleMod
 SessionItem* GUIObjectBuilder::populateSampleModel(SampleModel* sampleModel,
                                                    MaterialModel* materialModel,
                                                    const MultiLayer& sample,
-                                                   const QString& sample_name)
-{
+                                                   const QString& sample_name) {
     GUIDomainSampleVisitor visitor;
     return visitor.populateSampleModel(sampleModel, materialModel, sample, sample_name);
 }
 
 SessionItem* GUIObjectBuilder::populateInstrumentModel(InstrumentModel* p_instrument_model,
-                                                       const Simulation& simulation,
-                                                       const QString& instrument_name)
-{
+                                                       const ISimulation& simulation,
+                                                       const QString& instrument_name) {
     ASSERT(p_instrument_model);
 
     QString name = instrument_name.isEmpty()
-                       ? QString::fromStdString(simulation.getInstrument().getName())
+                       ? QString::fromStdString(simulation.instrument().getName())
                        : instrument_name;
 
     if (auto gisasSimulation = dynamic_cast<const GISASSimulation*>(&simulation)) {
         return createGISASInstrumentItem(p_instrument_model, *gisasSimulation, name);
-    } else if (auto offSpecSimulation = dynamic_cast<const OffSpecSimulation*>(&simulation)) {
-        return createOffSpecInstrumentItem(p_instrument_model, *offSpecSimulation, name);
+    } else if (auto offSpecSimulation = dynamic_cast<const OffSpecularSimulation*>(&simulation)) {
+        return createOffSpecularInstrumentItem(p_instrument_model, *offSpecSimulation, name);
     } else if (auto spec_simulation = dynamic_cast<const SpecularSimulation*>(&simulation)) {
         return createSpecularInstrumentItem(p_instrument_model, *spec_simulation, name);
     }
 
-    throw GUIHelpers::Error("GUIObjectBuilder::populateInstrumentModel() -> Error. Simulation is "
+    throw GUIHelpers::Error("GUIObjectBuilder::populateInstrumentModel() -> Error. ISimulation is "
                             "not yet supported");
 }
 
 SessionItem* GUIObjectBuilder::populateDocumentModel(DocumentModel* p_document_model,
-                                                     const Simulation& simulation)
-{
+                                                     const ISimulation& simulation) {
     SimulationOptionsItem* p_options_item =
         dynamic_cast<SimulationOptionsItem*>(p_document_model->insertNewItem("SimulationOptions"));
     ASSERT(p_options_item);
@@ -105,12 +98,10 @@ SessionItem* GUIObjectBuilder::populateDocumentModel(DocumentModel* p_document_m
     return p_options_item;
 }
 
-namespace
-{
+namespace {
 GISASInstrumentItem* createGISASInstrumentItem(InstrumentModel* model,
                                                const GISASSimulation& simulation,
-                                               const QString& name)
-{
+                                               const QString& name) {
     auto result = dynamic_cast<GISASInstrumentItem*>(model->insertNewItem("GISASInstrument"));
 
     result->setItemName(name);
@@ -121,18 +112,18 @@ GISASInstrumentItem* createGISASInstrumentItem(InstrumentModel* model,
     return result;
 }
 
-OffSpecInstrumentItem* createOffSpecInstrumentItem(InstrumentModel* model,
-                                                   const OffSpecSimulation& simulation,
-                                                   const QString& name)
-{
-    auto result = dynamic_cast<OffSpecInstrumentItem*>(model->insertNewItem("OffSpecInstrument"));
+OffSpecularInstrumentItem* createOffSpecularInstrumentItem(InstrumentModel* model,
+                                                           const OffSpecularSimulation& simulation,
+                                                           const QString& name) {
+    auto result =
+        dynamic_cast<OffSpecularInstrumentItem*>(model->insertNewItem("OffSpecularInstrument"));
 
     result->setItemName(name);
-    TransformFromDomain::setOffSpecBeamItem(result->beamItem(), simulation);
+    TransformFromDomain::setOffSpecularBeamItem(result->beamItem(), simulation);
     TransformFromDomain::setDetector(result, simulation);
     TransformFromDomain::setBackground(result, simulation);
 
-    auto axisItem = result->getItem(OffSpecInstrumentItem::P_ALPHA_AXIS);
+    auto axisItem = result->getItem(OffSpecularInstrumentItem::P_ALPHA_AXIS);
     TransformFromDomain::setAxisItem(axisItem, *simulation.beamAxis(), 1. / Units::deg);
 
     return result;
@@ -140,8 +131,7 @@ OffSpecInstrumentItem* createOffSpecInstrumentItem(InstrumentModel* model,
 
 SpecularInstrumentItem* createSpecularInstrumentItem(InstrumentModel* model,
                                                      const SpecularSimulation& simulation,
-                                                     const QString& name)
-{
+                                                     const QString& name) {
     auto result = dynamic_cast<SpecularInstrumentItem*>(model->insertNewItem("SpecularInstrument"));
 
     result->setItemName(name);

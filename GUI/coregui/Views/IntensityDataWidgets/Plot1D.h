@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOT1D_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_PLOT1D_H
 
 #include "GUI/coregui/Views/IntensityDataWidgets/ScientificPlot.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 class BasicAxisItem;
 class DataItem;
@@ -29,8 +29,7 @@ class UpdateTimer;
 //! Data1DViewItem. Provides minimal functionality for data plotting and axes interaction. Should be
 //! a component for more complicated plotting widgets.
 
-class Plot1D : public ScientificPlot
-{
+class Plot1D : public ScientificPlot {
     Q_OBJECT
 
 public:

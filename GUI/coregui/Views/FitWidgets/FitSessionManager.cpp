@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/FitWidgets/FitSessionManager.h"
 #include "GUI/coregui/Models/JobItem.h"
@@ -20,17 +20,13 @@
 #include "GUI/coregui/utils/GUIHelpers.h"
 
 FitSessionManager::FitSessionManager(QObject* parent)
-    : QObject(parent), m_activeController(nullptr), m_jobMessagePanel(nullptr)
-{
-}
+    : QObject(parent), m_activeController(nullptr), m_jobMessagePanel(nullptr) {}
 
-void FitSessionManager::setMessagePanel(JobMessagePanel* messagePanel)
-{
+void FitSessionManager::setMessagePanel(JobMessagePanel* messagePanel) {
     m_jobMessagePanel = messagePanel;
 }
 
-FitSessionController* FitSessionManager::sessionController(JobItem* item)
-{
+FitSessionController* FitSessionManager::sessionController(JobItem* item) {
     FitSessionController* result(nullptr);
 
     auto it = m_item_to_controller.find(item);
@@ -49,16 +45,14 @@ FitSessionController* FitSessionManager::sessionController(JobItem* item)
     return result;
 }
 
-void FitSessionManager::disableLogging()
-{
+void FitSessionManager::disableLogging() {
     if (m_activeController)
         m_activeController->fitLog()->setMessagePanel(nullptr);
 
     m_jobMessagePanel->onClearLog();
 }
 
-FitSessionController* FitSessionManager::createController(JobItem* jobItem)
-{
+FitSessionController* FitSessionManager::createController(JobItem* jobItem) {
     jobItem->mapper()->setOnItemDestroy([this](SessionItem* item) { removeController(item); },
                                         this);
 
@@ -69,8 +63,7 @@ FitSessionController* FitSessionManager::createController(JobItem* jobItem)
 
 //! Removes manager for given jobItem
 
-void FitSessionManager::removeController(SessionItem* jobItem)
-{
+void FitSessionManager::removeController(SessionItem* jobItem) {
     auto it = m_item_to_controller.find(jobItem);
     if (it == m_item_to_controller.end())
         throw GUIHelpers::Error("FitActivityManager::removeFitSession() -> Error. "

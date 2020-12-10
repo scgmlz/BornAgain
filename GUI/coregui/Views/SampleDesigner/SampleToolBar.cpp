@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/SampleToolBar.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
@@ -27,8 +27,7 @@
 
 //! main tool bar on top of SampleView window
 SampleToolBar::SampleToolBar(SampleViewActions* sampleActions, QWidget* parent)
-    : StyledToolBar(parent), m_sampleViewActions(sampleActions)
-{
+    : StyledToolBar(parent), m_sampleViewActions(sampleActions) {
     // Select & Pan
     auto selectionPointerButton = new QToolButton;
     selectionPointerButton->setCheckable(true);
@@ -47,6 +46,7 @@ SampleToolBar::SampleToolBar(SampleViewActions* sampleActions, QWidget* parent)
     connect(m_pointerModeGroup,
             static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this,
             &SampleToolBar::selectionMode);
+    // TODO: replace buttonClicked by idClicked when Qt5.14 is available
     addWidget(selectionPointerButton);
     addWidget(handPointerButton);
 
@@ -123,19 +123,16 @@ SampleToolBar::SampleToolBar(SampleViewActions* sampleActions, QWidget* parent)
     addWidget(m_RealSpaceViewerButton);
 }
 
-void SampleToolBar::onViewSelectionMode(int mode)
-{
+void SampleToolBar::onViewSelectionMode(int mode) {
     if (mode == DesignerView::RUBBER_SELECTION || mode == DesignerView::HAND_DRAG)
         m_pointerModeGroup->button(mode)->setChecked(true);
 }
 
-void SampleToolBar::onScaleComboChanged(const QString& scale_string)
-{
+void SampleToolBar::onScaleComboChanged(const QString& scale_string) {
     double scale = scale_string.left(scale_string.indexOf("%")).toDouble() / 100.0;
     emit changeScale(scale);
 }
 
-void SampleToolBar::onMaterialEditorCall()
-{
+void SampleToolBar::onMaterialEditorCall() {
     ExternalProperty mp = MaterialItemUtils::selectMaterialProperty();
 }

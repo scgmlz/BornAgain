@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INTENSITYDATAWIDGETS_INTENSITYDATAWIDGET_H
@@ -29,8 +29,7 @@ class IntensityDataFFTPresenter;
 //! A common widget to display color map (IntensityDataCanvas) and properties
 //! (IntensityDataPropertyWidget) of intensity data item.
 
-class BA_CORE_API_ IntensityDataWidget : public SessionItemWidget
-{
+class IntensityDataWidget : public SessionItemWidget {
     Q_OBJECT
 
 public:

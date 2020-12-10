@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_PERFORMANCE_CORE_THREADING_H
 #define BORNAGAIN_TESTS_PERFORMANCE_CORE_THREADING_H
@@ -22,8 +22,7 @@
 //! Two aspects are addressed: performance scaling with number of threads, influence of
 //! simulation settings on scaling.
 
-class MultiThreadPerformanceTest
-{
+class MultiThreadPerformanceTest {
 public:
     bool runTest();
 

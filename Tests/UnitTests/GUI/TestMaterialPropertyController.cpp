@@ -1,16 +1,12 @@
 #include "GUI/coregui/Models/LayerItem.h"
-#include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/MaterialModel.h"
 #include "GUI/coregui/Models/MaterialPropertyController.h"
 #include "GUI/coregui/Models/SampleModel.h"
-#include "GUI/coregui/Views/MaterialEditor/ExternalProperty.h"
 #include "GUI/coregui/Views/MaterialEditor/MaterialItemUtils.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <QtTest>
 
-class TestMaterialPropertyController : public ::testing::Test
-{
-};
+class TestMaterialPropertyController : public ::testing::Test {};
 
 // TEST_F(TestMaterialPropertyController, test_ControllerForLayer)
 //{
@@ -56,13 +52,12 @@ class TestMaterialPropertyController : public ::testing::Test
 //    materialModel.removeRows(0, 1, QModelIndex());
 //    EXPECT_EQ(property_changed, 3);
 //    property = layer->getItemValue(LayerItem::P_MATERIAL).value<ExternalProperty>();
-//    EXPECT_TRUE(property.isValid() == false);
+//    EXPECT_FALSE(property.isValid() );
 //}
 
 //! Test MaterialProperty update in sample items when working on model clone.
 
-TEST_F(TestMaterialPropertyController, test_ControllerInEditorContext)
-{
+TEST_F(TestMaterialPropertyController, test_ControllerInEditorContext) {
     MaterialModel materialModel;
     auto mat1 = materialModel.addRefractiveMaterial("name1", 1.0, 2.0);
     auto mat2 = materialModel.addRefractiveMaterial("name2", 1.0, 2.0);
@@ -122,7 +117,7 @@ TEST_F(TestMaterialPropertyController, test_ControllerInEditorContext)
     // layer2 should have undefined material property
     ExternalProperty property =
         layer2->getItemValue(LayerItem::P_MATERIAL).value<ExternalProperty>();
-    EXPECT_TRUE(property.isValid() == false);
+    EXPECT_FALSE(property.isValid());
 
     // layer3 should have different MaterialProperty name
     property = layer3->getItemValue(LayerItem::P_MATERIAL).value<ExternalProperty>();

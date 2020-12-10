@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,20 +10,18 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ISCENEADAPTOR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_ISCENEADAPTOR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <QRectF>
 
 //! Interface to adapt MaskItems coordinates (expressed in units of IntensityDataItem)
 //! to/from scene coordinates.
 
-class BA_CORE_API_ ISceneAdaptor : public QObject
-{
+class ISceneAdaptor : public QObject {
     Q_OBJECT
 public:
     virtual ~ISceneAdaptor() {}
@@ -47,8 +45,7 @@ protected:
     QRectF m_viewport_rectangle;
 };
 
-class BA_CORE_API_ DefaultSceneAdaptor : public ISceneAdaptor
-{
+class DefaultSceneAdaptor : public ISceneAdaptor {
     Q_OBJECT
 public:
     DefaultSceneAdaptor() {}

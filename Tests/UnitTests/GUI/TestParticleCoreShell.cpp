@@ -10,12 +10,9 @@
 
 using namespace SessionItemUtils;
 
-class TestParticleCoreShell : public ::testing::Test
-{
-};
+class TestParticleCoreShell : public ::testing::Test {};
 
-TEST_F(TestParticleCoreShell, test_moveCoreAndShell)
-{
+TEST_F(TestParticleCoreShell, test_moveCoreAndShell) {
     SampleModel model;
     SessionItem* coreshell = model.insertNewItem("ParticleCoreShell");
     SessionItem* particle1 = model.insertNewItem("Particle");
@@ -49,8 +46,7 @@ TEST_F(TestParticleCoreShell, test_moveCoreAndShell)
 //! Checking that adding and removing core/shell leads to enabling/disabling of their position
 //! and abundance properties.
 
-TEST_F(TestParticleCoreShell, test_propertyAppearance)
-{
+TEST_F(TestParticleCoreShell, test_propertyAppearance) {
     SampleModel model;
 
     // empty coreshell particle
@@ -99,14 +95,13 @@ TEST_F(TestParticleCoreShell, test_propertyAppearance)
 
 //! Checking that abundance gets disabled in particle distribution context.
 
-TEST_F(TestParticleCoreShell, test_distributionContext)
-{
+TEST_F(TestParticleCoreShell, test_distributionContext) {
     SampleModel model;
 
     // coreshell particle
     SessionItem* coreshell = model.insertNewItem("ParticleCoreShell");
     coreshell->setItemValue(ParticleItem::P_ABUNDANCE, 0.2);
-    EXPECT_TRUE(coreshell->getItem(ParticleItem::P_ABUNDANCE)->isEnabled() == true);
+    EXPECT_TRUE(coreshell->getItem(ParticleItem::P_ABUNDANCE)->isEnabled());
     EXPECT_EQ(coreshell->getItemValue(ParticleItem::P_ABUNDANCE).toDouble(), 0.2);
 
     // create distribution, adding coreshell to it
@@ -124,8 +119,7 @@ TEST_F(TestParticleCoreShell, test_distributionContext)
 
 //! Checking that abundance gets disabled in particle composition context.
 
-TEST_F(TestParticleCoreShell, test_compositionContext)
-{
+TEST_F(TestParticleCoreShell, test_compositionContext) {
     SampleModel model;
 
     // coreshell particle

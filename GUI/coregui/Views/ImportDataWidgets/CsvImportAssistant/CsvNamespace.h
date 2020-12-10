@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVNAMESPACE_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVNAMESPACE_H
@@ -19,8 +19,7 @@
 #include <QStringList>
 #include <vector>
 
-namespace csv
-{
+namespace csv {
 enum ColumnType { _intensity_, _theta_, _q_ };
 const QStringList HeaderLabels{"Intensity", "theta", "q"};
 const QStringList UnitsLabels{"default", "bin", "rad", "deg", "mm", "1/nm"};

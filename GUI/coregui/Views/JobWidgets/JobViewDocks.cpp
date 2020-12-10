@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/JobWidgets/JobViewDocks.h"
 #include "GUI/coregui/Models/JobModel.h"
@@ -21,23 +21,22 @@
 #include "GUI/coregui/Views/JobWidgets/JobRealTimeWidget.h"
 #include "GUI/coregui/Views/JobWidgets/JobSelectorWidget.h"
 #include "GUI/coregui/Views/JobWidgets/JobViewActivities.h"
-#include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
 #include <QDockWidget>
 
-namespace
-{
+namespace {
 const JobViewFlags::Activity default_activity = JobViewFlags::JOB_VIEW_ACTIVITY;
 }
 
 JobViewDocks::JobViewDocks(JobView* parent)
-    : DocksController(parent), m_jobSelector(nullptr), m_jobOutputDataWidget(nullptr),
-      m_jobRealTimeWidget(nullptr), m_fitActivityPanel(nullptr), m_jobMessagePanel(nullptr),
-      m_jobView(parent)
-{
-}
+    : DocksController(parent)
+    , m_jobSelector(nullptr)
+    , m_jobOutputDataWidget(nullptr)
+    , m_jobRealTimeWidget(nullptr)
+    , m_fitActivityPanel(nullptr)
+    , m_jobMessagePanel(nullptr)
+    , m_jobView(parent) {}
 
-void JobViewDocks::initViews(JobModel* jobModel)
-{
+void JobViewDocks::initViews(JobModel* jobModel) {
     m_jobOutputDataWidget = new JobOutputDataWidget(jobModel, m_jobView);
 
     m_jobSelector = new JobSelectorWidget(jobModel, m_jobView);
@@ -65,35 +64,29 @@ void JobViewDocks::initViews(JobModel* jobModel)
     onResetLayout();
 }
 
-JobRealTimeWidget* JobViewDocks::jobRealTimeWidget()
-{
+JobRealTimeWidget* JobViewDocks::jobRealTimeWidget() {
     return m_jobRealTimeWidget;
 }
 
-FitActivityPanel* JobViewDocks::fitActivityPanel()
-{
+FitActivityPanel* JobViewDocks::fitActivityPanel() {
     return m_fitActivityPanel;
 }
 
-JobSelectorWidget* JobViewDocks::jobSelector()
-{
+JobSelectorWidget* JobViewDocks::jobSelector() {
     return m_jobSelector;
 }
 
-JobOutputDataWidget* JobViewDocks::jobOutputDataWidget()
-{
+JobOutputDataWidget* JobViewDocks::jobOutputDataWidget() {
     return m_jobOutputDataWidget;
 }
 
-JobMessagePanel* JobViewDocks::jobMessagePanel()
-{
+JobMessagePanel* JobViewDocks::jobMessagePanel() {
     return m_jobMessagePanel;
 }
 
 //! Sets docks visibility so they match the activity flag.
 
-void JobViewDocks::setActivity(int activity)
-{
+void JobViewDocks::setActivity(int activity) {
     QVector<JobViewFlags::Dock> docksToShow =
         JobViewActivities::activeDocks(JobViewFlags::Activity(activity));
 
@@ -104,8 +97,7 @@ void JobViewDocks::setActivity(int activity)
     show_docks(docks_id);
 }
 
-void JobViewDocks::setItem(JobItem* jobItem)
-{
+void JobViewDocks::setItem(JobItem* jobItem) {
     jobOutputDataWidget()->setItem(jobItem);
     jobRealTimeWidget()->setItem(jobItem);
     fitActivityPanel()->setItem(jobItem);
@@ -113,16 +105,14 @@ void JobViewDocks::setItem(JobItem* jobItem)
 
 //! Sets the state of JobView to the default.
 
-void JobViewDocks::onResetLayout()
-{
+void JobViewDocks::onResetLayout() {
     DocksController::onResetLayout();
     setActivity(static_cast<int>(default_activity));
 }
 
 //! Shows/hides JobSelectorWidget.
 
-void JobViewDocks::onToggleJobSelector()
-{
+void JobViewDocks::onToggleJobSelector() {
     auto selectorDock = findDock(JobViewFlags::JOB_LIST_DOCK);
     selectorDock->setHidden(!selectorDock->isHidden());
 }

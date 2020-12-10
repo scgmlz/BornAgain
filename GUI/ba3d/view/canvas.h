@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,20 +10,19 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_BA3D_VIEW_CANVAS_H
 #define BORNAGAIN_GUI_BA3D_VIEW_CANVAS_H
 
-#include "../def.h"
+#include "GUI/ba3d/def.h"
 #include <QHash>
 
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLWidget>
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 class Camera;
 class Program;
@@ -32,8 +31,7 @@ class Geometry;
 class Buffer;
 class Object;
 
-class Canvas : public QOpenGLWidget, protected QOpenGLFunctions
-{
+class Canvas : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
     friend class Object;
 

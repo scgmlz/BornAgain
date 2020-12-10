@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/main/appoptions.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
@@ -20,14 +20,12 @@
 #include <fstream>
 #include <iostream>
 
-namespace
-{
+namespace {
 const char* geometry = "geometry";
 const char* nohighdpi = "nohighdpi";
 
 //! Converts string "1600x1000" to QSize(1600, 1000)
-QSize windowSize(const QString& size_string)
-{
+QSize windowSize(const QString& size_string) {
     auto list = size_string.split("x");
 
     if (list.size() != 2)
@@ -37,8 +35,7 @@ QSize windowSize(const QString& size_string)
 }
 
 //! Returns true if windows size makes sence.
-bool isValid(const QSize& win_size)
-{
+bool isValid(const QSize& win_size) {
     if (win_size.width() > 640 && win_size.height() > 480)
         return true;
 
@@ -47,8 +44,7 @@ bool isValid(const QSize& win_size)
 
 } // namespace
 
-ApplicationOptions::ApplicationOptions(int argc, char** argv) : m_options_is_consistent(false)
-{
+ApplicationOptions::ApplicationOptions(int argc, char** argv) : m_options_is_consistent(false) {
     m_options.add_options()("help,h", "print help message");
     m_options.add_options()("with-debug", "run application with debug printout");
     m_options.add_options()("no-splash", "do not show splash screen");
@@ -63,25 +59,21 @@ ApplicationOptions::ApplicationOptions(int argc, char** argv) : m_options_is_con
 
 //! access variables
 
-const bpo::variable_value& ApplicationOptions::operator[](const std::string& s) const
-{
+const bpo::variable_value& ApplicationOptions::operator[](const std::string& s) const {
     return m_variables_map[s.c_str()];
 }
 
-bool ApplicationOptions::find(std::string name) const
-{
-    return (m_variables_map.count(name.c_str()) ? true : false);
+bool ApplicationOptions::find(std::string name) const {
+    return (m_variables_map.count(name.c_str()));
 }
 
-bool ApplicationOptions::isConsistent() const
-{
+bool ApplicationOptions::isConsistent() const {
     return m_options_is_consistent;
 }
 
 //! parse command line arguments
 
-void ApplicationOptions::parseCommandLine(int argc, char** argv)
-{
+void ApplicationOptions::parseCommandLine(int argc, char** argv) {
     m_options_is_consistent = false;
     // parsing command line arguments
     try {
@@ -106,18 +98,15 @@ void ApplicationOptions::parseCommandLine(int argc, char** argv)
     }
 }
 
-boost::program_options::variables_map& ApplicationOptions::getVariables()
-{
+boost::program_options::variables_map& ApplicationOptions::getVariables() {
     return m_variables_map;
 }
 
-boost::program_options::options_description& ApplicationOptions::getOptions()
-{
+boost::program_options::options_description& ApplicationOptions::getOptions() {
     return m_options;
 }
 
-void ApplicationOptions::processOptions()
-{
+void ApplicationOptions::processOptions() {
     if (m_variables_map.count("help")) {
         printHelpMessage();
         m_options_is_consistent = false;
@@ -137,19 +126,16 @@ void ApplicationOptions::processOptions()
     }
 }
 
-void ApplicationOptions::printHelpMessage() const
-{
+void ApplicationOptions::printHelpMessage() const {
     std::cout << "BornAgain Graphical User Interface" << std::endl;
     std::cout << m_options << std::endl;
 }
 
-QSize ApplicationOptions::mainWindowSize() const
-{
+QSize ApplicationOptions::mainWindowSize() const {
     QString size_str = QString::fromStdString(m_variables_map[geometry].as<std::string>());
     return windowSize(size_str);
 }
 
-bool ApplicationOptions::disableHighDPISupport()
-{
+bool ApplicationOptions::disableHighDPISupport() {
     return find(nohighdpi);
 }

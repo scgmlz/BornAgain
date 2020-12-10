@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_INFOWIDGETS_WARNINGSIGN_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class WarningSignWidget;
@@ -23,8 +22,7 @@ class QWidget;
 
 //! The WarningSign controls appearance of WarningSignWidget on top of parent widget.
 
-class WarningSign : public QObject
-{
+class WarningSign : public QObject {
 public:
     WarningSign(QWidget* parent);
 

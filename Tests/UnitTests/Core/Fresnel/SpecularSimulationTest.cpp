@@ -1,24 +1,21 @@
 #include "Core/Simulation/SpecularSimulation.h"
-#include "Core/Basics/Exceptions.h"
-#include "Core/Basics/MathConstants.h"
-#include "Core/Basics/Units.h"
-#include "Core/Binning/FixedBinAxis.h"
-#include "Core/Binning/VariableBinAxis.h"
-#include "Core/Instrument/AngularSpecScan.h"
-#include "Core/Instrument/QSpecScan.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Parametrization/ParameterPattern.h"
-#include "Core/Parametrization/RealParameter.h"
+#include "Base/Axis/VariableBinAxis.h"
+#include "Base/Const/Units.h"
+#include "Base/Math/Constants.h"
+#include "Core/Scan/AngularSpecScan.h"
+#include "Core/Scan/QSpecScan.h"
+#include "Device/Histo/Histogram1D.h"
+#include "Param/Base/RealParameter.h"
+#include "Param/Distrib/Distributions.h"
+#include "Param/Varia/ParameterPattern.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/SampleBuilderEngine/ISampleBuilder.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <iostream>
 
-class SpecularSimulationTest : public ::testing::Test
-{
+class SpecularSimulationTest : public ::testing::Test {
 protected:
     SpecularSimulationTest();
 
@@ -28,14 +25,13 @@ protected:
     MultiLayer multilayer;
 };
 
-SpecularSimulationTest::SpecularSimulationTest()
-{
+SpecularSimulationTest::SpecularSimulationTest() {
     Material mat0 = HomogeneousMaterial("ambience", 0.0, 0.0);
     Material mat1 = HomogeneousMaterial("PartA", 5e-6, 0.0);
     Material mat2 = HomogeneousMaterial("substrate", 15e-6, 0.0);
 
     Layer layer0(mat0);
-    Layer layer1(mat1, 10 * Units::nanometer);
+    Layer layer1(mat1, 10 * Units::nm);
     Layer layer2(mat2);
 
     multilayer.addLayer(layer0);
@@ -43,8 +39,7 @@ SpecularSimulationTest::SpecularSimulationTest()
     multilayer.addLayer(layer2);
 }
 
-TEST_F(SpecularSimulationTest, InitialState)
-{
+TEST_F(SpecularSimulationTest, InitialState) {
     SpecularSimulation sim;
     ASSERT_THROW(sim.runSimulation(), std::runtime_error);
     ASSERT_THROW(sim.coordinateAxis(), std::runtime_error);
@@ -52,25 +47,22 @@ TEST_F(SpecularSimulationTest, InitialState)
     ASSERT_THROW(sim.result(), std::runtime_error);
 }
 
-std::unique_ptr<SpecularSimulation> SpecularSimulationTest::defaultSimulation()
-{
+std::unique_ptr<SpecularSimulation> SpecularSimulationTest::defaultSimulation() {
     auto result = std::make_unique<SpecularSimulation>();
-    AngularSpecScan scan(1.0, FixedBinAxis("axis", 10, 0.0 * Units::degree, 2.0 * Units::degree));
+    AngularSpecScan scan(1.0, FixedBinAxis("axis", 10, 0.0 * Units::deg, 2.0 * Units::deg));
     result->setScan(scan);
     result->setSample(multilayer);
     return result;
 }
 
-void SpecularSimulationTest::checkBeamState(const SpecularSimulation& sim)
-{
-    const auto* inclination = sim.getInstrument().getBeam().parameter("InclinationAngle");
+void SpecularSimulationTest::checkBeamState(const SpecularSimulation& sim) {
+    const auto* inclination = sim.instrument().beam().parameter("InclinationAngle");
     const auto test_limits = RealLimits::limited(-M_PI_2, M_PI_2);
     EXPECT_EQ(test_limits, inclination->limits());
     EXPECT_EQ(0.0, inclination->value());
 }
 
-TEST_F(SpecularSimulationTest, CloneOfEmpty)
-{
+TEST_F(SpecularSimulationTest, CloneOfEmpty) {
     SpecularSimulation sim;
 
     std::unique_ptr<SpecularSimulation> clone(sim.clone());
@@ -83,89 +75,86 @@ TEST_F(SpecularSimulationTest, CloneOfEmpty)
     checkBeamState(*clone);
 }
 
-TEST_F(SpecularSimulationTest, SetAngularScan)
-{
+TEST_F(SpecularSimulationTest, SetAngularScan) {
     SpecularSimulation sim;
     AngularSpecScan scan(1.0, std::vector<double>{1.0 * Units::deg, 3.0 * Units::deg});
     sim.setScan(scan);
-    const auto& beam = sim.getInstrument().getBeam();
+    const auto& beam = sim.instrument().beam();
 
     EXPECT_EQ(2u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->getMin());
-    EXPECT_EQ(3.0 * Units::deg, sim.coordinateAxis()->getMax());
-    EXPECT_EQ(1.0, beam.getIntensity());
-    EXPECT_EQ(1.0, beam.getWavelength());
-    EXPECT_EQ(0.0, beam.getAlpha());
-    EXPECT_EQ(0.0, beam.getPhi());
+    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
+    EXPECT_EQ(3.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    EXPECT_EQ(1.0, beam.intensity());
+    EXPECT_EQ(1.0, beam.wavelength());
+    EXPECT_EQ(0.0, beam.direction().alpha());
+    EXPECT_EQ(0.0, beam.direction().phi());
 
     checkBeamState(sim);
 
-    sim.setBeamIntensity(2.0);
-    EXPECT_EQ(2.0, beam.getIntensity());
+    sim.beam().setIntensity(2.0);
+    EXPECT_EQ(2.0, beam.intensity());
 
-    AngularSpecScan scan2(1.0, 10, 1.0 * Units::degree, 10.0 * Units::degree);
+    AngularSpecScan scan2(1.0, 10, 1.0 * Units::deg, 10.0 * Units::deg);
     sim.setScan(scan2);
     EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::degree, sim.coordinateAxis()->getMin());
-    EXPECT_EQ(10.0 * Units::degree, sim.coordinateAxis()->getMax());
-    EXPECT_EQ(2.0, beam.getIntensity());
-    EXPECT_EQ(1.0, beam.getWavelength());
-    EXPECT_EQ(0.0, beam.getAlpha());
-    EXPECT_EQ(0.0, beam.getPhi());
+    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    EXPECT_EQ(2.0, beam.intensity());
+    EXPECT_EQ(1.0, beam.wavelength());
+    EXPECT_EQ(0.0, beam.direction().alpha());
+    EXPECT_EQ(0.0, beam.direction().phi());
     checkBeamState(sim);
 
-    AngularSpecScan scan3(1.0, 10, -1.0 * Units::degree, 2.0 * Units::degree);
+    AngularSpecScan scan3(1.0, 10, -1.0 * Units::deg, 2.0 * Units::deg);
     EXPECT_THROW(sim.setScan(scan3), std::runtime_error);
 
     EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::degree, sim.coordinateAxis()->getMin());
-    EXPECT_EQ(10.0 * Units::degree, sim.coordinateAxis()->getMax());
-    EXPECT_EQ(2.0, beam.getIntensity());
-    EXPECT_EQ(1.0, beam.getWavelength());
-    EXPECT_EQ(0.0, beam.getAlpha());
-    EXPECT_EQ(0.0, beam.getPhi());
+    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    EXPECT_EQ(2.0, beam.intensity());
+    EXPECT_EQ(1.0, beam.wavelength());
+    EXPECT_EQ(0.0, beam.direction().alpha());
+    EXPECT_EQ(0.0, beam.direction().phi());
     checkBeamState(sim);
 
     sim.setInstrument(Instrument());
     checkBeamState(sim);
 }
 
-TEST_F(SpecularSimulationTest, SetQScan)
-{
+TEST_F(SpecularSimulationTest, SetQScan) {
     SpecularSimulation sim;
 
     QSpecScan scan(std::vector<double>{1.0, 3.0});
     sim.setScan(scan);
 
-    const auto& beam = sim.getInstrument().getBeam();
+    const auto& beam = sim.instrument().beam();
 
     EXPECT_EQ(2u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0, sim.coordinateAxis()->getMin());
-    EXPECT_EQ(3.0, sim.coordinateAxis()->getMax());
-    EXPECT_EQ(1.0, beam.getIntensity());
-    EXPECT_EQ(1.0, beam.getWavelength());
-    EXPECT_EQ(0.0, beam.getAlpha());
-    EXPECT_EQ(0.0, beam.getPhi());
+    EXPECT_EQ(1.0, sim.coordinateAxis()->lowerBound());
+    EXPECT_EQ(3.0, sim.coordinateAxis()->upperBound());
+    EXPECT_EQ(1.0, beam.intensity());
+    EXPECT_EQ(1.0, beam.wavelength());
+    EXPECT_EQ(0.0, beam.direction().alpha());
+    EXPECT_EQ(0.0, beam.direction().phi());
 
     checkBeamState(sim);
 
-    sim.setBeamIntensity(2.0);
-    EXPECT_EQ(2.0, beam.getIntensity());
+    sim.beam().setIntensity(2.0);
+    EXPECT_EQ(2.0, beam.intensity());
 
     QSpecScan scan2(10, 1.0, 10.0);
     sim.setScan(scan2);
     EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0, sim.coordinateAxis()->getMin());
-    EXPECT_EQ(10.0, sim.coordinateAxis()->getMax());
-    EXPECT_EQ(2.0, beam.getIntensity());
-    EXPECT_EQ(1.0, beam.getWavelength());
-    EXPECT_EQ(0.0, beam.getAlpha());
-    EXPECT_EQ(0.0, beam.getPhi());
+    EXPECT_EQ(1.0, sim.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0, sim.coordinateAxis()->upperBound());
+    EXPECT_EQ(2.0, beam.intensity());
+    EXPECT_EQ(1.0, beam.wavelength());
+    EXPECT_EQ(0.0, beam.direction().alpha());
+    EXPECT_EQ(0.0, beam.direction().phi());
     checkBeamState(sim);
 }
 
-TEST_F(SpecularSimulationTest, ConstructSimulation)
-{
+TEST_F(SpecularSimulationTest, ConstructSimulation) {
     auto sim = defaultSimulation();
 
     EXPECT_EQ(3u, sim->sample()->numberOfLayers());
@@ -174,25 +163,23 @@ TEST_F(SpecularSimulationTest, ConstructSimulation)
     auto data = sim_result.data();
     EXPECT_EQ(data->getAllocatedSize(), 10u);
     EXPECT_EQ(data->totalSum(), 0.0);
-    EXPECT_EQ(data->getRank(), 1u);
+    EXPECT_EQ(data->rank(), 1u);
 
     sim->runSimulation();
     sim_result = sim->result();
 
     data = sim_result.data();
     EXPECT_EQ(data->getAllocatedSize(), 10u);
-    EXPECT_EQ(data->getRank(), 1u);
+    EXPECT_EQ(data->rank(), 1u);
 
-    EXPECT_NEAR(0.1 * Units::degree, sim_result.axis(AxesUnits::RADIANS).front(),
-                Units::degree * 1e-11);
-    EXPECT_NEAR(1.9 * Units::degree, sim_result.axis(AxesUnits::RADIANS).back(),
-                Units::degree * 1e-10);
+    EXPECT_NEAR(0.1 * Units::deg, sim_result.axis(Axes::Units::RADIANS).front(),
+                Units::deg * 1e-11);
+    EXPECT_NEAR(1.9 * Units::deg, sim_result.axis(Axes::Units::RADIANS).back(), Units::deg * 1e-10);
 
     checkBeamState(*sim);
 }
 
-TEST_F(SpecularSimulationTest, SimulationClone)
-{
+TEST_F(SpecularSimulationTest, SimulationClone) {
     auto sim = defaultSimulation();
 
     std::unique_ptr<SpecularSimulation> clone(sim->clone());
@@ -217,8 +204,7 @@ TEST_F(SpecularSimulationTest, SimulationClone)
     checkBeamState(*clone2);
 }
 
-TEST_F(SpecularSimulationTest, AddingBeamDistributions)
-{
+TEST_F(SpecularSimulationTest, AddingBeamDistributions) {
     auto sim = defaultSimulation();
     DistributionGaussian distribution(1.0, 2.0);
 
@@ -244,10 +230,9 @@ TEST_F(SpecularSimulationTest, AddingBeamDistributions)
     checkBeamState(*sim);
 }
 
-TEST_F(SpecularSimulationTest, OutOfRangeAngles)
-{
+TEST_F(SpecularSimulationTest, OutOfRangeAngles) {
     auto sim = defaultSimulation();
-    auto& beam = sim->getInstrument().getBeam();
+    auto& beam = sim->instrument().beam();
     beam.parameter("InclinationAngle")->setValue(-0.2 * Units::deg);
 
     sim->runSimulation();

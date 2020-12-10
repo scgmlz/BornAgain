@@ -4,12 +4,9 @@
 #include "GUI/coregui/Models/JobModel.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestFitParameterModel : public ::testing::Test
-{
-};
+class TestFitParameterModel : public ::testing::Test {};
 
-TEST_F(TestFitParameterModel, test_InitialState)
-{
+TEST_F(TestFitParameterModel, test_InitialState) {
     JobModel source;
     SessionItem* fitSuiteItem = source.insertNewItem("FitSuite");
     SessionItem* container = source.insertNewItem("FitParameterContainer", fitSuiteItem->index(),
@@ -22,8 +19,7 @@ TEST_F(TestFitParameterModel, test_InitialState)
     EXPECT_EQ(container, proxy.itemForIndex(QModelIndex()));
 }
 
-TEST_F(TestFitParameterModel, test_addFitParameter)
-{
+TEST_F(TestFitParameterModel, test_addFitParameter) {
     JobModel source;
     SessionItem* fitSuiteItem = source.insertNewItem("FitSuite");
     SessionItem* container = source.insertNewItem("FitParameterContainer", fitSuiteItem->index(),
@@ -126,8 +122,7 @@ TEST_F(TestFitParameterModel, test_addFitParameter)
     EXPECT_EQ(index, proxy.indexOfItem(fitPar1->getItem(FitParameterItem::P_START_VALUE)));
 }
 
-TEST_F(TestFitParameterModel, test_addFitParameterAndLink)
-{
+TEST_F(TestFitParameterModel, test_addFitParameterAndLink) {
     JobModel source;
     SessionItem* fitSuiteItem = source.insertNewItem("FitSuite");
     SessionItem* container = source.insertNewItem("FitParameterContainer", fitSuiteItem->index(),
@@ -189,8 +184,7 @@ TEST_F(TestFitParameterModel, test_addFitParameterAndLink)
     EXPECT_EQ(proxy.itemForIndex(linkIndex), link1->getItem(FitParameterLinkItem::P_LINK));
 }
 
-TEST_F(TestFitParameterModel, test_addTwoFitParameterAndLinks)
-{
+TEST_F(TestFitParameterModel, test_addTwoFitParameterAndLinks) {
     JobModel source;
     SessionItem* fitSuiteItem = source.insertNewItem("FitSuite");
     SessionItem* container = source.insertNewItem("FitParameterContainer", fitSuiteItem->index(),

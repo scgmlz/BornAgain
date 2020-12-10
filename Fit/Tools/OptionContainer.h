@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_TOOLS_OPTIONCONTAINER_H
 #define BORNAGAIN_FIT_TOOLS_OPTIONCONTAINER_H
 
 #include "Fit/Tools/MultiOption.h"
-#include "Wrap/WinDllMacros.h"
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -25,8 +29,7 @@
 //! Stores multi option (int,double,string) in a container.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ OptionContainer
-{
+class OptionContainer {
 public:
     using option_t = std::shared_ptr<MultiOption>;
     using container_t = std::vector<option_t>;
@@ -55,6 +58,7 @@ public:
     const_iterator end() const { return m_options.end(); }
 
     size_t size() const { return m_options.size(); }
+    bool empty() const { return size() == 0; }
 
 protected:
     bool exists(const std::string& name);
@@ -64,8 +68,7 @@ protected:
 
 template <class T>
 OptionContainer::option_t OptionContainer::addOption(const std::string& optionName, T value,
-                                                     const std::string& description)
-{
+                                                     const std::string& description) {
     if (exists(optionName))
         throw std::runtime_error("OptionContainer::addOption() -> Error. Option '" + optionName
                                  + "' exists.");
@@ -75,13 +78,11 @@ OptionContainer::option_t OptionContainer::addOption(const std::string& optionNa
     return result;
 }
 
-template <class T> T OptionContainer::optionValue(const std::string& optionName) const
-{
+template <class T> T OptionContainer::optionValue(const std::string& optionName) const {
     return option(optionName)->get<T>();
 }
 
-template <class T> void OptionContainer::setOptionValue(const std::string& optionName, T value)
-{
+template <class T> void OptionContainer::setOptionValue(const std::string& optionName, T value) {
     option(optionName)->value() = value;
     if (option(optionName)->value().which() != option(optionName)->defaultValue().which())
         throw std::runtime_error(
@@ -91,3 +92,4 @@ template <class T> void OptionContainer::setOptionValue(const std::string& optio
 }
 
 #endif // BORNAGAIN_FIT_TOOLS_OPTIONCONTAINER_H
+#endif // USER_API

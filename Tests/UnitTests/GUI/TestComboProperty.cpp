@@ -3,17 +3,14 @@
 #include "Tests/UnitTests/GUI/Comparators.h"
 #include "Tests/UnitTests/GUI/Utils.h"
 
-class TestComboProperty : public ::testing::Test
-{
+class TestComboProperty : public ::testing::Test {
 public:
-    ComboProperty propertyFromXML(const QString& buffer)
-    {
+    ComboProperty propertyFromXML(const QString& buffer) {
         return GuiUnittestUtils::propertyFromXML<ComboProperty>(buffer);
     }
 };
 
-TEST_F(TestComboProperty, initialState)
-{
+TEST_F(TestComboProperty, initialState) {
     ComboProperty combo;
     EXPECT_EQ(combo.getValue(), "");
     EXPECT_EQ(combo.getValues(), QStringList());
@@ -23,8 +20,7 @@ TEST_F(TestComboProperty, initialState)
     EXPECT_EQ(combo.selectedIndices(), QVector<int>());
 }
 
-TEST_F(TestComboProperty, factoryMethods)
-{
+TEST_F(TestComboProperty, factoryMethods) {
     // initialization from list sets values only, no index selected
     QStringList expected = QStringList() << "a1"
                                          << "a2";
@@ -35,8 +31,7 @@ TEST_F(TestComboProperty, factoryMethods)
     EXPECT_EQ(combo.selectedIndices(), QVector<int>());
 }
 
-TEST_F(TestComboProperty, setValues)
-{
+TEST_F(TestComboProperty, setValues) {
     // seting values through stream
     QStringList expectedValues = QStringList() << "a1"
                                                << "a2";
@@ -67,8 +62,7 @@ TEST_F(TestComboProperty, setValues)
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({1}));
 }
 
-TEST_F(TestComboProperty, setCurrentIndex)
-{
+TEST_F(TestComboProperty, setCurrentIndex) {
     ComboProperty combo;
     EXPECT_EQ(combo.currentIndex(), -1);
 
@@ -86,8 +80,7 @@ TEST_F(TestComboProperty, setCurrentIndex)
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({0}));
 }
 
-TEST_F(TestComboProperty, stringOfValues)
-{
+TEST_F(TestComboProperty, stringOfValues) {
     QStringList expectedValues = QStringList() << "a1"
                                                << "a2";
     ComboProperty combo = ComboProperty() << expectedValues;
@@ -114,8 +107,7 @@ TEST_F(TestComboProperty, stringOfValues)
     EXPECT_EQ(combo.selectedIndices(), QVector<int>({1}));
 }
 
-TEST_F(TestComboProperty, selectedIndices)
-{
+TEST_F(TestComboProperty, selectedIndices) {
     QStringList expectedValues = QStringList() << "a1"
                                                << "a2"
                                                << "a3";
@@ -157,8 +149,7 @@ TEST_F(TestComboProperty, selectedIndices)
     EXPECT_EQ(combo.selectedValues(), QStringList({"a1", "a3"}));
 }
 
-TEST_F(TestComboProperty, stringOfSelections)
-{
+TEST_F(TestComboProperty, stringOfSelections) {
     ComboProperty combo;
     EXPECT_EQ(combo.stringOfSelections(), "");
 
@@ -190,8 +181,7 @@ TEST_F(TestComboProperty, stringOfSelections)
     EXPECT_EQ(combo.stringOfSelections(), "0");
 }
 
-TEST_F(TestComboProperty, comboEquality)
-{
+TEST_F(TestComboProperty, comboEquality) {
     ComboProperty c1;
     ComboProperty c2;
     EXPECT_TRUE(c1 == c2);
@@ -236,8 +226,7 @@ TEST_F(TestComboProperty, comboEquality)
 //! Check equality of ComboPeroperty's variants.
 //! If comparators are not registered, the behavior is undefined.
 
-TEST_F(TestComboProperty, variantEquality)
-{
+TEST_F(TestComboProperty, variantEquality) {
     ComboProperty c1 = ComboProperty() << "a1"
                                        << "a2";
     ComboProperty c2 = ComboProperty() << "a1"
@@ -265,8 +254,7 @@ TEST_F(TestComboProperty, variantEquality)
     }
 }
 
-TEST_F(TestComboProperty, comboXML)
-{
+TEST_F(TestComboProperty, comboXML) {
     // Writing combo to XML
     ComboProperty combo = ComboProperty() << "a1"
                                           << "a2"

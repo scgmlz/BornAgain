@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,10 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/mainwindow/OutputDataIOService.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/JobItem.h"
 #include "GUI/coregui/Models/ModelPath.h"
@@ -21,31 +21,26 @@
 #include "GUI/coregui/mainwindow/SaveLoadInterface.h"
 #include "GUI/coregui/utils/MessageService.h"
 
-namespace
-{
+namespace {
 JobItem* parentJobItem(SaveLoadInterface* item);
 } // namespace
 
 OutputDataIOService::OutputDataIOService(QObject* parent)
-    : QObject(parent), m_applicationModels(nullptr)
-{
+    : QObject(parent), m_applicationModels(nullptr) {
     setObjectName("OutputDataIOService");
 }
 
 OutputDataIOService::OutputDataIOService(ApplicationModels* models, QObject* parent)
-    : QObject(parent), m_applicationModels(nullptr)
-{
+    : QObject(parent), m_applicationModels(nullptr) {
     setObjectName("OutputDataIOService");
     setApplicationModels(models);
 }
 
-void OutputDataIOService::setApplicationModels(ApplicationModels* models)
-{
+void OutputDataIOService::setApplicationModels(ApplicationModels* models) {
     m_applicationModels = models;
 }
 
-void OutputDataIOService::save(const QString& projectDir)
-{
+void OutputDataIOService::save(const QString& projectDir) {
     if (!m_history.hasHistory(projectDir))
         m_history.setHistory(projectDir, OutputDataDirHistory());
 
@@ -66,8 +61,7 @@ void OutputDataIOService::save(const QString& projectDir)
     m_history.setHistory(projectDir, newHistory);
 }
 
-void OutputDataIOService::load(const QString& projectDir, MessageService* messageService)
-{
+void OutputDataIOService::load(const QString& projectDir, MessageService* messageService) {
     OutputDataDirHistory newHistory;
 
     for (auto item : nonXMLItems()) {
@@ -100,8 +94,7 @@ void OutputDataIOService::load(const QString& projectDir, MessageService* messag
 
 //! Returns all non-XML items available for save/load.
 
-QVector<SaveLoadInterface*> OutputDataIOService::nonXMLItems() const
-{
+QVector<SaveLoadInterface*> OutputDataIOService::nonXMLItems() const {
     QVector<SaveLoadInterface*> result;
 
     if (!m_applicationModels)
@@ -118,16 +111,13 @@ QVector<SaveLoadInterface*> OutputDataIOService::nonXMLItems() const
 //! All files in oldSaves list, which are not in newSaves list, will be removed.
 
 void OutputDataIOService::cleanOldFiles(const QString& projectDir, const QStringList& oldSaves,
-                                        const QStringList& newSaves)
-{
+                                        const QStringList& newSaves) {
     QStringList to_remove = ProjectUtils::substract(oldSaves, newSaves);
     ProjectUtils::removeFiles(projectDir, to_remove);
 }
 
-namespace
-{
-JobItem* parentJobItem(SaveLoadInterface* item)
-{
+namespace {
+JobItem* parentJobItem(SaveLoadInterface* item) {
     auto session_item = dynamic_cast<SessionItem*>(item); // sidecast
     auto jobItem = dynamic_cast<const JobItem*>(ModelPath::ancestor(session_item, "JobItem"));
     return const_cast<JobItem*>(jobItem);

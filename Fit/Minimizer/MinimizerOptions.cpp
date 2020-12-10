@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Fit/Minimizer/MinimizerOptions.h"
 #include "Fit/Tools/StringUtils.h"
@@ -18,13 +18,11 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const std::string delimeter = ";";
 }
 
-std::string MinimizerOptions::toOptionString() const
-{
+std::string MinimizerOptions::toOptionString() const {
     std::ostringstream result;
     for (auto option : m_options) {
         result << option->name() << "=" << option->value() << delimeter;
@@ -32,13 +30,12 @@ std::string MinimizerOptions::toOptionString() const
     return result.str();
 }
 
-void MinimizerOptions::setOptionString(const std::string& options)
-{
+void MinimizerOptions::setOptionString(const std::string& options) {
     // splits multiple option string "Strategy=1;Tolerance=0.01;"
-    std::vector<std::string> tokens = StringUtils::split(options, delimeter);
+    std::vector<std::string> tokens = mumufit::stringUtils::split(options, delimeter);
     try {
         for (std::string opt : tokens)
-            if (opt.size())
+            if (!opt.empty())
                 processCommand(opt);
     } catch (std::exception& ex) {
         std::ostringstream ostr;
@@ -51,9 +48,8 @@ void MinimizerOptions::setOptionString(const std::string& options)
 //! Process single option string 'Tolerance=0.01' and sets the value
 //! to corresponding MultiOption
 
-void MinimizerOptions::processCommand(const std::string& command)
-{
-    std::vector<std::string> tokens = StringUtils::split(command, "=");
+void MinimizerOptions::processCommand(const std::string& command) {
+    std::vector<std::string> tokens = mumufit::stringUtils::split(command, "=");
     if (tokens.size() != 2)
         throw std::runtime_error("MinimizerOptions::processOption() -> Can't parse option '"
                                  + command + "'");

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_COMPUTATION_POISSONNOISEBACKGROUND_H
 #define BORNAGAIN_CORE_COMPUTATION_POISSONNOISEBACKGROUND_H
@@ -21,15 +21,14 @@
 //!
 //! @ingroup simulation
 
-class BA_CORE_API_ PoissonNoiseBackground : public IBackground
-{
+class PoissonNoiseBackground : public IBackground {
 public:
     PoissonNoiseBackground();
-    PoissonNoiseBackground* clone() const override final;
+    PoissonNoiseBackground* clone() const final;
 
     void accept(INodeVisitor* visitor) const override { visitor->visit(this); }
 
-    double addBackGround(double intensity) const override final;
+    double addBackground(double intensity) const final;
 };
 
 #endif // BORNAGAIN_CORE_COMPUTATION_POISSONNOISEBACKGROUND_H

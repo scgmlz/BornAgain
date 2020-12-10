@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,13 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_FIT_KERNEL_MINIMIZER_H
 #define BORNAGAIN_FIT_KERNEL_MINIMIZER_H
 
-#include "Fit/Kernel/KernelTypes.h"
-#include "Fit/Kernel/MinimizerResult.h"
-#include "Fit/Kernel/Parameters.h"
-#include "Wrap/WinDllMacros.h"
+#include "Fit/Minimizer/MinimizerResult.h"
+#include "Fit/Minimizer/Types.h"
 #include <functional>
 #include <memory>
 #include <string>
@@ -27,16 +25,16 @@
 class PyCallback;
 class IMinimizer;
 
-namespace Fit
-{
+//! The multi-library, multi-algorithm fit wrapper library.
+
+namespace mumufit {
 
 class Kernel;
 
 //! A main class to run fitting.
 //! @ingroup fitting
 
-class BA_CORE_API_ Minimizer
-{
+class Minimizer {
 public:
     Minimizer();
     ~Minimizer();
@@ -59,6 +57,6 @@ private:
     std::unique_ptr<Kernel> m_kernel;
 };
 
-} // namespace Fit
+} // namespace mumufit
 
 #endif // BORNAGAIN_FIT_KERNEL_MINIMIZER_H

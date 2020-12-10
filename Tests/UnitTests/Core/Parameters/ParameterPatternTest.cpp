@@ -1,13 +1,10 @@
-#include "Core/Parametrization/ParameterPattern.h"
+#include "Param/Varia/ParameterPattern.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <string>
 
-class ParameterPatternTest : public ::testing::Test
-{
-};
+class ParameterPatternTest : public ::testing::Test {};
 
-TEST_F(ParameterPatternTest, declarationTest)
-{
+TEST_F(ParameterPatternTest, declarationTest) {
     ParameterPattern p1;
     EXPECT_EQ("", p1.toStdString());
 
@@ -15,8 +12,7 @@ TEST_F(ParameterPatternTest, declarationTest)
     EXPECT_EQ("/home", p2.toStdString());
 }
 
-TEST_F(ParameterPatternTest, beginsWithTest)
-{
+TEST_F(ParameterPatternTest, beginsWithTest) {
     ParameterPattern p1("Downloads");
     EXPECT_EQ("/Downloads", p1.toStdString());
 
@@ -24,8 +20,7 @@ TEST_F(ParameterPatternTest, beginsWithTest)
     EXPECT_EQ("Desktop", p1.toStdString());
 }
 
-TEST_F(ParameterPatternTest, addTest)
-{
+TEST_F(ParameterPatternTest, addTest) {
     ParameterPattern p1("Desktop");
     EXPECT_EQ("/Desktop", p1.toStdString());
 
@@ -39,8 +34,7 @@ TEST_F(ParameterPatternTest, addTest)
     EXPECT_EQ("user", p1.toStdString());
 }
 
-TEST_F(ParameterPatternTest, copyTest)
-{
+TEST_F(ParameterPatternTest, copyTest) {
     ParameterPattern p1("Desktop");
     p1.add("BornAgain").add("Core").add("Tests");
     EXPECT_EQ("/Desktop/BornAgain/Core/Tests", p1.toStdString());

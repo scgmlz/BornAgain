@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataCanvas.h"
 #include "GUI/coregui/Models/ComboProperty.h"
@@ -26,27 +26,24 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-namespace
-{
+namespace {
 
-QString group_name()
-{
+QString group_name() {
     return "IntensityDataCanvas/";
 }
-QString gradient_setting_name()
-{
+QString gradient_setting_name() {
     return group_name() + IntensityDataItem::P_GRADIENT;
 }
-QString interpolation_setting_name()
-{
+QString interpolation_setting_name() {
     return group_name() + IntensityDataItem::P_IS_INTERPOLATED;
 }
 } // namespace
 
 IntensityDataCanvas::IntensityDataCanvas(QWidget* parent)
-    : SessionItemWidget(parent), m_colorMap(new ColorMapCanvas), m_resetViewAction(nullptr),
-      m_savePlotAction(nullptr)
-{
+    : SessionItemWidget(parent)
+    , m_colorMap(new ColorMapCanvas)
+    , m_resetViewAction(nullptr)
+    , m_savePlotAction(nullptr) {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     auto layout = new QVBoxLayout;
@@ -63,62 +60,52 @@ IntensityDataCanvas::IntensityDataCanvas(QWidget* parent)
             &IntensityDataCanvas::onMousePress, Qt::UniqueConnection);
 }
 
-void IntensityDataCanvas::setItem(SessionItem* intensityItem)
-{
+void IntensityDataCanvas::setItem(SessionItem* intensityItem) {
     SessionItemWidget::setItem(intensityItem);
     m_colorMap->setItem(intensityDataItem());
 
     applyPersistentSettings();
 }
 
-QSize IntensityDataCanvas::sizeHint() const
-{
+QSize IntensityDataCanvas::sizeHint() const {
     return QSize(500, 400);
 }
 
-QSize IntensityDataCanvas::minimumSizeHint() const
-{
+QSize IntensityDataCanvas::minimumSizeHint() const {
     return QSize(128, 128);
 }
 
-QList<QAction*> IntensityDataCanvas::actionList()
-{
+QList<QAction*> IntensityDataCanvas::actionList() {
     return QList<QAction*>() << m_resetViewAction << m_savePlotAction;
 }
 
-void IntensityDataCanvas::onResetViewAction()
-{
+void IntensityDataCanvas::onResetViewAction() {
     intensityDataItem()->resetView();
 }
 
-void IntensityDataCanvas::onSavePlotAction()
-{
+void IntensityDataCanvas::onSavePlotAction() {
     QString dirname = AppSvc::projectManager()->userExportDir();
     SavePlotAssistant saveAssistant;
     saveAssistant.savePlot(dirname, m_colorMap->customPlot(), intensityDataItem()->getOutputData());
 }
 
-void IntensityDataCanvas::onMousePress(QMouseEvent* event)
-{
+void IntensityDataCanvas::onMousePress(QMouseEvent* event) {
     if (event->button() == Qt::RightButton)
         emit customContextMenuRequested(event->globalPos());
 }
 
-void IntensityDataCanvas::subscribeToItem()
-{
+void IntensityDataCanvas::subscribeToItem() {
     intensityDataItem()->mapper()->setOnPropertyChange(
         [this](const QString& name) { onPropertyChanged(name); }, this);
 }
 
-IntensityDataItem* IntensityDataCanvas::intensityDataItem()
-{
+IntensityDataItem* IntensityDataCanvas::intensityDataItem() {
     IntensityDataItem* result = dynamic_cast<IntensityDataItem*>(currentItem());
     ASSERT(result);
     return result;
 }
 
-void IntensityDataCanvas::initActions()
-{
+void IntensityDataCanvas::initActions() {
     m_resetViewAction = new QAction(this);
     m_resetViewAction->setText("Center view");
     m_resetViewAction->setIcon(QIcon(":/images/camera-metering-center.svg"));
@@ -136,8 +123,7 @@ void IntensityDataCanvas::initActions()
 //! Reads gradient/ interpolation settings from IntensityDataItem and writes to persistant
 //! project settings.
 
-void IntensityDataCanvas::onPropertyChanged(const QString& name)
-{
+void IntensityDataCanvas::onPropertyChanged(const QString& name) {
     if (name == IntensityDataItem::P_GRADIENT) {
         QSettings settings;
         settings.setValue(gradient_setting_name(), intensityDataItem()->getGradient());
@@ -149,8 +135,7 @@ void IntensityDataCanvas::onPropertyChanged(const QString& name)
 
 //! Apply persistent settings (gradient, interpolation) to IntensityDataItem.
 
-void IntensityDataCanvas::applyPersistentSettings()
-{
+void IntensityDataCanvas::applyPersistentSettings() {
     QSettings settings;
 
     if (settings.contains(gradient_setting_name())) {

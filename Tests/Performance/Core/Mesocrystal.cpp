@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,30 +10,28 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
-#include "Core/Particle/MesoCrystal.h"
-#include "Core/Aggregate/ParticleLayout.h"
-#include "Core/Basics/Units.h"
-#include "Core/Detector/RectangularDetector.h"
-#include "Core/HardParticle/FormFactorCylinder.h"
-#include "Core/Lattice/ISelectionRule.h"
-#include "Core/Lattice/Lattice.h"
-#include "Core/Material/Material.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Multilayer/IMultiLayerBuilder.h"
-#include "Core/Multilayer/Layer.h"
-#include "Core/Multilayer/LayerRoughness.h"
-#include "Core/Multilayer/MultiLayer.h"
-#include "Core/Particle/Crystal.h"
-#include "Core/Particle/Particle.h"
-#include "Core/Particle/ParticleComposition.h"
+#include "Sample/Particle/MesoCrystal.h"
+#include "Base/Const/Units.h"
 #include "Core/Simulation/GISASSimulation.h"
-#include "Core/SoftParticle/FormFactorSphereLogNormalRadius.h"
+#include "Device/Detector/RectangularDetector.h"
+#include "Sample/Aggregate/ParticleLayout.h"
+#include "Sample/HardParticle/FormFactorCylinder.h"
+#include "Sample/Lattice/BakeLattice.h"
+#include "Sample/Lattice/ISelectionRule.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Multilayer/Layer.h"
+#include "Sample/Multilayer/MultiLayer.h"
+#include "Sample/Particle/Crystal.h"
+#include "Sample/Particle/Particle.h"
+#include "Sample/Particle/ParticleComposition.h"
+#include "Sample/SampleBuilderEngine/ISampleBuilder.h"
+#include "Sample/Slice/LayerRoughness.h"
+#include "Sample/SoftParticle/FormFactorSphereLogNormalRadius.h"
 #include <iostream>
 
-namespace
-{
+namespace {
 
 const double m_distance(909.99);
 const double m_pixel_size = 4 * 41.74e-3;
@@ -42,8 +40,7 @@ const int m_ny = 1024;
 const double m_center_x = 108.2;
 const double m_center_y = 942.0;
 
-std::unique_ptr<RectangularDetector> create_detector()
-{
+std::unique_ptr<RectangularDetector> create_detector() {
     double width = m_nx * m_pixel_size;
     double height = m_ny * m_pixel_size;
     double u0 = m_center_x * m_pixel_size;
@@ -54,9 +51,8 @@ std::unique_ptr<RectangularDetector> create_detector()
     return result;
 }
 
-Lattice createLattice(double a, double c)
-{
-    Lattice result = Lattice::createHexagonalLattice(a, c);
+Lattice3D createLattice(double a, double c) {
+    Lattice3D result = bake::HexagonalLattice(a, c);
     result.setSelectionRule(SimpleSelectionRule(-1, 1, 1, 3));
     return result;
 }
@@ -68,14 +64,12 @@ using Units::nm;
 
 //! Runs heavy mesocrystal simulation to investigate where it spends time.
 
-class MesoCrystalPerformanceBuilder : public IMultiLayerBuilder
-{
+class MesoCrystalPerformanceBuilder : public ISampleBuilder {
 public:
     MesoCrystalPerformanceBuilder();
-    ~MesoCrystalPerformanceBuilder();
 
 protected:
-    MultiLayer* buildSample() const;
+    MultiLayer* buildSample() const override;
 
 private:
     std::unique_ptr<MesoCrystal> createMeso(Material material,
@@ -99,19 +93,23 @@ private:
 };
 
 MesoCrystalPerformanceBuilder::MesoCrystalPerformanceBuilder()
-    : m_lattice_length_a(12.45 * nm), m_lattice_length_c(31.0 * nm),
-      m_nanoparticle_radius(5.0 * nm), m_sigma_nanoparticle_radius(0.3 * nm),
-      m_meso_height(200 * nm), m_meso_radius(800 * nm), m_sigma_lattice_length_a(0.5 * nm),
-      m_roughness(6.0 * nm), m_surface_filling_ratio(0.25), m_phi_start(0.0 * deg),
-      m_phi_stop(360.0 * deg), m_phi_rotation_steps(5), m_tilt_start(0.0 * deg),
-      m_tilt_stop(1.0 * deg), m_tilt_steps(1)
-{
-}
+    : m_lattice_length_a(12.45 * nm)
+    , m_lattice_length_c(31.0 * nm)
+    , m_nanoparticle_radius(5.0 * nm)
+    , m_sigma_nanoparticle_radius(0.3 * nm)
+    , m_meso_height(200 * nm)
+    , m_meso_radius(800 * nm)
+    , m_sigma_lattice_length_a(0.5 * nm)
+    , m_roughness(6.0 * nm)
+    , m_surface_filling_ratio(0.25)
+    , m_phi_start(0.0 * deg)
+    , m_phi_stop(360.0 * deg)
+    , m_phi_rotation_steps(5)
+    , m_tilt_start(0.0 * deg)
+    , m_tilt_stop(1.0 * deg)
+    , m_tilt_steps(1) {}
 
-MesoCrystalPerformanceBuilder::~MesoCrystalPerformanceBuilder() = default;
-
-MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
-{
+MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const {
     double surface_density = m_surface_filling_ratio / M_PI / m_meso_radius / m_meso_radius;
     complex_t n_particle(1.0 - 2.84e-5, 4.7e-7);
     auto avg_n_squared_meso = 0.7886 * n_particle * n_particle + 0.2114;
@@ -124,10 +122,10 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
 
     auto multi_layer = new MultiLayer;
 
-    auto air_material = HomogeneousMaterial("Air", 0.0, 0.0);
+    auto vacuum_material = HomogeneousMaterial("Vacuum", 0.0, 0.0);
     auto substrate_material = HomogeneousMaterial("Substrate", 7.57e-6, 1.73e-7);
     auto average_layer_material = HomogeneousMaterial("AverageLayer", n_avg);
-    Layer air_layer(air_material);
+    Layer vacuum_layer(vacuum_material);
     Layer avg_layer(average_layer_material, m_meso_height);
     Layer substrate_layer(substrate_material);
     ParticleLayout particle_decoration;
@@ -146,8 +144,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
             RotationX rotX(tilt);
             mesocrystal->setRotation(rotZ);
             mesocrystal->rotate(rotX);
-            particle_decoration.addParticle(*mesocrystal.get(), 1.0,
-                                            kvector_t(0, 0, -m_meso_height));
+            particle_decoration.addParticle(*mesocrystal, 1.0, kvector_t(0, 0, -m_meso_height));
         }
     }
 
@@ -156,7 +153,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
 
     LayerRoughness roughness(m_roughness, 0.3, 500.0 * nm);
 
-    multi_layer->addLayer(air_layer);
+    multi_layer->addLayer(vacuum_layer);
     multi_layer->addLayer(avg_layer);
     multi_layer->addLayerWithTopRoughness(substrate_layer, roughness);
 
@@ -164,8 +161,7 @@ MultiLayer* MesoCrystalPerformanceBuilder::buildSample() const
 }
 
 std::unique_ptr<MesoCrystal>
-MesoCrystalPerformanceBuilder::createMeso(Material material, const IFormFactor& form_factor) const
-{
+MesoCrystalPerformanceBuilder::createMeso(Material material, const IFormFactor& form_factor) const {
 
     auto lattice = createLattice(m_lattice_length_a, m_lattice_length_c);
     auto bas_a = lattice.getBasisVectorA();
@@ -183,27 +179,25 @@ MesoCrystalPerformanceBuilder::createMeso(Material material, const IFormFactor& 
     std::vector<kvector_t> pos_vector = {position_0, position_1, position_2};
     ParticleComposition basis;
     basis.addParticles(particle, pos_vector);
-    Crystal npc(basis, lattice);
     double position_variance = m_sigma_lattice_length_a * m_sigma_lattice_length_a / 3.0;
-    npc.setPositionVariance(position_variance);
+    Crystal npc(basis, lattice, position_variance);
 
     return std::make_unique<MesoCrystal>(npc, form_factor);
 }
 
-int main()
-{
+int main() {
     GISASSimulation simulation;
 
     simulation.setTerminalProgressMonitor();
 
     auto detector = create_detector();
 
-    simulation.setDetector(*detector.get());
+    simulation.setDetector(*detector);
 
     simulation.setBeamParameters(1.77 * Units::angstrom, 0.4 * Units::deg, 0.0);
-    simulation.setBeamIntensity(6.1e+12);
+    simulation.beam().setIntensity(6.1e+12);
 
-    std::shared_ptr<IMultiLayerBuilder> builder(new MesoCrystalPerformanceBuilder);
+    std::shared_ptr<ISampleBuilder> builder(new MesoCrystalPerformanceBuilder);
     simulation.setSampleBuilder(builder);
 
     simulation.setRegionOfInterest(40.0, 40.0, 41.0, 41.0);

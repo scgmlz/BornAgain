@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_CORE_FITTING_FITOBJECTIVE_H
 #define BORNAGAIN_CORE_FITTING_FITOBJECTIVE_H
 
-#include "Core/Fitting/FitTypes.h"
 #include "Core/Fitting/IterationInfo.h"
 #include "Core/Fitting/SimDataPair.h"
-#include "Core/Intensity/ArrayUtils.h"
-#include "Core/Intensity/OutputData.h"
-#include "Fit/Kernel/MinimizerResult.h"
+#include "Device/Data/ArrayUtils.h"
+#include "Fit/Minimizer/MinimizerResult.h"
 
 class FitStatus;
 class IChiSquaredModule;
@@ -32,8 +30,7 @@ class PyObserverCallback;
 //! Holds vector of `SimDataPair`s (experimental data and simulation results) for use in fitting.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ FitObjective
-{
+class FitObjective {
     static simulation_builder_t simulationBuilder(PyBuilderCallback& callback);
 
 public:
@@ -50,8 +47,7 @@ public:
     //! @param data: experimental data array
     //! @param weight: weight of dataset in metric calculations
     template <class T>
-    void addSimulationAndData(PyBuilderCallback& callback, const T& data, double weight = 1.0)
-    {
+    void addSimulationAndData(PyBuilderCallback& callback, const T& data, double weight = 1.0) {
         addSimulationAndData(simulationBuilder(callback), *ArrayUtils::createData(data), nullptr,
                              weight);
     }
@@ -63,15 +59,14 @@ public:
     //! @param weight: weight of dataset in metric calculations
     template <class T>
     void addSimulationAndData(PyBuilderCallback& callback, const T& data, const T& uncertainties,
-                              double weight = 1.0)
-    {
+                              double weight = 1.0) {
         addSimulationAndData(simulationBuilder(callback), *ArrayUtils::createData(data),
                              ArrayUtils::createData(uncertainties), weight);
     }
 
-    virtual double evaluate(const Fit::Parameters& params);
+    virtual double evaluate(const mumufit::Parameters& params);
 
-    virtual std::vector<double> evaluate_residuals(const Fit::Parameters& params);
+    virtual std::vector<double> evaluate_residuals(const mumufit::Parameters& params);
 
     size_t numberOfFitElements() const;
 
@@ -86,24 +81,22 @@ public:
     std::vector<double> uncertainties() const;
     std::vector<double> weights_array() const;
 
-    //! Initializes printing to standard output during the fitting.
-    //! @param every_nth: Print every n'th iteration.
+    //! Initializes printing to standard output on every_nth fit iteration.
     void initPrint(int every_nth);
 
-    //! Initializes plotting during the fitting using Python callable.
-    //! @param every_nth: Called on every n'th iteration.
+    //! Initializes observer callback to be called on every_nth fit iteration.
     void initPlot(int every_nth, PyObserverCallback& callback);
 
     IterationInfo iterationInfo() const;
 
-    Fit::MinimizerResult minimizerResult() const;
+    mumufit::MinimizerResult minimizerResult() const;
 
     //! Should be explicitely called on last iteration to notify all observers.
-    void finalize(const Fit::MinimizerResult& result);
+    void finalize(const mumufit::MinimizerResult& result);
 
     unsigned fitObjectCount() const;
 
-    void run_simulations(const Fit::Parameters& params);
+    void run_simulations(const mumufit::Parameters& params);
 
     void setChiSquaredModule(const IChiSquaredModule& module);
 
@@ -133,7 +126,7 @@ public:
     bool isFirstIteration() const;
 
     void setObjectiveMetric(std::unique_ptr<ObjectiveMetric> metric);
-#endif // SWIG
+#endif // USER_API
 
 private:
     typedef std::vector<double> (SimDataPair::*DataPairAccessor)() const;

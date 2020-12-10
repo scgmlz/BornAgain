@@ -3,19 +3,15 @@
 #include "GUI/coregui/Models/FormFactorItems.h"
 #include "GUI/coregui/Models/ModelUtils.h"
 #include "GUI/coregui/Models/ParticleItem.h"
-#include "GUI/coregui/Models/ProxyModelStrategy.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Models/VectorItem.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestProxyModelStrategy : public ::testing::Test
-{
-};
+class TestProxyModelStrategy : public ::testing::Test {};
 
 //! Checking the mapping in the case of PropertyItem inserted in the source.
 
-TEST_F(TestProxyModelStrategy, test_identityStrategy)
-{
+TEST_F(TestProxyModelStrategy, test_identityStrategy) {
     SessionModel model("TestModel");
     ComponentProxyModel proxy;
     IndentityProxyStrategy strategy;
@@ -64,8 +60,7 @@ TEST_F(TestProxyModelStrategy, test_identityStrategy)
 
 //! Checking the mapping in the case of ParticleItem inserted in the source.
 
-TEST_F(TestProxyModelStrategy, test_identityStrategyParticle)
-{
+TEST_F(TestProxyModelStrategy, test_identityStrategyParticle) {
     SessionModel model("TestModel");
     ComponentProxyModel proxy;
     IndentityProxyStrategy strategy;
@@ -95,8 +90,7 @@ TEST_F(TestProxyModelStrategy, test_identityStrategyParticle)
 //! Checking the mapping of ComponentProxyStrategy in the case of ParticleItem inserted in
 //! the source.
 
-TEST_F(TestProxyModelStrategy, test_componentStrategyParticle)
-{
+TEST_F(TestProxyModelStrategy, test_componentStrategyParticle) {
     SessionModel model("TestModel");
     ComponentProxyModel proxy;
     ComponentProxyStrategy strategy;
@@ -123,7 +117,7 @@ TEST_F(TestProxyModelStrategy, test_componentStrategyParticle)
     QModelIndex radiusProxyIndex = strategy.sourceToProxy().value(radiusIndex);
     EXPECT_TRUE(particleProxyIndex.isValid());
     EXPECT_TRUE(groupProxyIndex.isValid());
-    EXPECT_TRUE(ffProxyIndex.isValid() == false); // ff is excluded from hierarchy
+    EXPECT_FALSE(ffProxyIndex.isValid()); // ff is excluded from hierarchy
     EXPECT_TRUE(radiusProxyIndex.isValid());
 
     // Checking "real" parents of indices
@@ -135,8 +129,7 @@ TEST_F(TestProxyModelStrategy, test_componentStrategyParticle)
 //! Checking setRootIndex: proxy model should contain only items corresponding
 //! to rootIndex and its children.
 
-TEST_F(TestProxyModelStrategy, test_setRootIndex)
-{
+TEST_F(TestProxyModelStrategy, test_setRootIndex) {
     SessionModel model("TestModel");
     ComponentProxyModel proxy;
     ComponentProxyStrategy strategy;
@@ -159,12 +152,12 @@ TEST_F(TestProxyModelStrategy, test_setRootIndex)
     QModelIndex groupProxyIndex = strategy.sourceToProxy().value(groupIndex);
     QModelIndex ffProxyIndex = strategy.sourceToProxy().value(ffIndex);
     QModelIndex radiusProxyIndex = strategy.sourceToProxy().value(radiusIndex);
-    EXPECT_TRUE(particleProxyIndex.isValid() == false); // particle is not in a tree
+    EXPECT_FALSE(particleProxyIndex.isValid()); // particle is not in a tree
     EXPECT_TRUE(groupProxyIndex.isValid());
     EXPECT_EQ(groupProxyIndex.row(), 0);
     EXPECT_EQ(groupProxyIndex.column(), 0);
     EXPECT_TRUE(groupProxyIndex.parent() == QModelIndex());
-    EXPECT_TRUE(ffProxyIndex.isValid() == false); // ff is excluded from hierarchy
+    EXPECT_FALSE(ffProxyIndex.isValid()); // ff is excluded from hierarchy
     EXPECT_TRUE(radiusProxyIndex.isValid());
 
     // checking that new parent of groupItem is root

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_ADJUSTMINIMIZERPLAN_H
 #define BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_ADJUSTMINIMIZERPLAN_H
@@ -20,12 +20,11 @@
 //! Two parameter fit: cylinders in BA with mini GISAS simulation.
 //! Parameters are made far from their original values, Genetic+Minuit used in pair.
 
-class AdjustMinimizerPlan : public Plan
-{
+class AdjustMinimizerPlan : public Plan {
 public:
     AdjustMinimizerPlan();
 
-    bool checkMinimizer(Fit::Minimizer& minimizer);
+    bool checkMinimizer(mumufit::Minimizer& minimizer);
 };
 
 #endif // BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_ADJUSTMINIMIZERPLAN_H

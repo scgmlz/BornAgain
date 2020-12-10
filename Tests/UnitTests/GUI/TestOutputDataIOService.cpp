@@ -1,5 +1,4 @@
-#include "Core/InputOutput/IntensityDataIOFactory.h"
-#include "Core/Intensity/OutputData.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/JobItem.h"
@@ -8,7 +7,6 @@
 #include "GUI/coregui/Models/JobModelFunctions.h"
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/RealDataModel.h"
-#include "GUI/coregui/mainwindow/OutputDataIOHistory.h"
 #include "GUI/coregui/mainwindow/OutputDataIOService.h"
 #include "GUI/coregui/mainwindow/ProjectUtils.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
@@ -18,15 +16,13 @@
 #include <QTest>
 #include <memory>
 
-class TestOutputDataIOService : public ::testing::Test
-{
+class TestOutputDataIOService : public ::testing::Test {
 protected:
     TestOutputDataIOService();
     OutputData<double> m_data;
 };
 
-TestOutputDataIOService::TestOutputDataIOService()
-{
+TestOutputDataIOService::TestOutputDataIOService() {
     FixedBinAxis axis0("x", 10, 0.0, 1.0);
     FixedBinAxis axis1("y", 10, -1.0, 1.0);
     m_data.addAxis(axis0);
@@ -35,8 +31,7 @@ TestOutputDataIOService::TestOutputDataIOService()
 
 //! Test methods for retrieving nonXML data.
 
-TEST_F(TestOutputDataIOService, test_nonXMLData)
-{
+TEST_F(TestOutputDataIOService, test_nonXMLData) {
     ApplicationModels models;
 
     // initial state
@@ -88,8 +83,7 @@ TEST_F(TestOutputDataIOService, test_nonXMLData)
 
 //! Tests OutputDataSaveInfo class intended for storing info about the last save.
 
-TEST_F(TestOutputDataIOService, test_OutputDataSaveInfo)
-{
+TEST_F(TestOutputDataIOService, test_OutputDataSaveInfo) {
     SessionModel model("TempModel");
     DataItem* item = dynamic_cast<DataItem*>(model.insertNewItem("IntensityData"));
 
@@ -99,18 +93,17 @@ TEST_F(TestOutputDataIOService, test_OutputDataSaveInfo)
     QTest::qSleep(nap_time);
 
     OutputDataSaveInfo info = OutputDataSaveInfo::createSaved(item);
-    EXPECT_TRUE(info.wasModifiedSinceLastSave() == false);
+    EXPECT_FALSE(info.wasModifiedSinceLastSave());
 
     QTest::qSleep(nap_time);
     item->setLastModified(QDateTime::currentDateTime());
-    EXPECT_TRUE(info.wasModifiedSinceLastSave() == true);
+    EXPECT_TRUE(info.wasModifiedSinceLastSave());
 }
 
 //! Tests OutputDataDirHistory class intended for storing save history of several
 //! IntensityDataItems in a directory.
 
-TEST_F(TestOutputDataIOService, test_OutputDataDirHistory)
-{
+TEST_F(TestOutputDataIOService, test_OutputDataDirHistory) {
     SessionModel model("TempModel");
     DataItem* item1 = dynamic_cast<DataItem*>(model.insertNewItem("IntensityData"));
 
@@ -121,18 +114,18 @@ TEST_F(TestOutputDataIOService, test_OutputDataDirHistory)
 
     // empty history
     OutputDataDirHistory history;
-    EXPECT_TRUE(history.contains(item1) == false);
+    EXPECT_FALSE(history.contains(item1));
     // non-existing item is treated as modified
-    EXPECT_TRUE(history.wasModifiedSinceLastSave(item1) == true);
+    EXPECT_TRUE(history.wasModifiedSinceLastSave(item1));
 
     // Saving item in a history
     history.markAsSaved(item1);
     history.markAsSaved(item2);
 
-    EXPECT_TRUE(history.contains(item1) == true);
+    EXPECT_TRUE(history.contains(item1));
     // Empty DataItems are not added to history:
-    EXPECT_TRUE(history.contains(item2) == false);
-    EXPECT_TRUE(history.wasModifiedSinceLastSave(item1) == false);
+    EXPECT_FALSE(history.contains(item2));
+    EXPECT_FALSE(history.wasModifiedSinceLastSave(item1));
 
     // Attempt to save same item second time
     EXPECT_THROW(history.markAsSaved(item1), GUIHelpers::Error);
@@ -141,13 +134,12 @@ TEST_F(TestOutputDataIOService, test_OutputDataDirHistory)
     QTest::qSleep(10);
     item1->setLastModified(QDateTime::currentDateTime());
 
-    EXPECT_TRUE(history.wasModifiedSinceLastSave(item1) == true);
+    EXPECT_TRUE(history.wasModifiedSinceLastSave(item1));
 }
 
 //! Tests OutputDataIOHistory class (save info for several independent directories).
 
-TEST_F(TestOutputDataIOService, test_OutputDataIOHistory)
-{
+TEST_F(TestOutputDataIOService, test_OutputDataIOHistory) {
     SessionModel model("TempModel");
     DataItem* item1 = dynamic_cast<DataItem*>(model.insertNewItem("IntensityData"));
 
@@ -174,10 +166,10 @@ TEST_F(TestOutputDataIOService, test_OutputDataIOHistory)
     history.setHistory("dir1", dirHistory1);
     history.setHistory("dir2", dirHistory2);
 
-    EXPECT_TRUE(history.wasModifiedSinceLastSave("dir1", item1) == true);
-    EXPECT_TRUE(history.wasModifiedSinceLastSave("dir2", item1) == true);
+    EXPECT_TRUE(history.wasModifiedSinceLastSave("dir1", item1));
+    EXPECT_TRUE(history.wasModifiedSinceLastSave("dir2", item1));
 
-    EXPECT_TRUE(history.wasModifiedSinceLastSave("dir1", item2) == false);
+    EXPECT_FALSE(history.wasModifiedSinceLastSave("dir1", item2));
     EXPECT_TRUE(history.wasModifiedSinceLastSave("dir2", item2)
                 == true); // since item2 doesn't exist
 
@@ -187,8 +179,7 @@ TEST_F(TestOutputDataIOService, test_OutputDataIOHistory)
 
 //! Testing saving abilities of OutputDataIOService class.
 
-TEST_F(TestOutputDataIOService, test_OutputDataIOService)
-{
+TEST_F(TestOutputDataIOService, test_OutputDataIOService) {
     const QString projectDir("test_OutputDataIOService");
     GuiUnittestUtils::create_dir(projectDir);
 
@@ -241,11 +232,10 @@ TEST_F(TestOutputDataIOService, test_OutputDataIOService)
     EXPECT_TRUE(GuiUnittestUtils::isTheSame(fname2new, *realData2->dataItem()->getOutputData()));
 
     // Check that file with old name was removed.
-    EXPECT_TRUE(ProjectUtils::exists(fname2) == false);
+    EXPECT_FALSE(ProjectUtils::exists(fname2));
 }
 
-TEST_F(TestOutputDataIOService, test_RealDataItemWithNativeData)
-{
+TEST_F(TestOutputDataIOService, test_RealDataItemWithNativeData) {
     ApplicationModels models;
 
     // initial state

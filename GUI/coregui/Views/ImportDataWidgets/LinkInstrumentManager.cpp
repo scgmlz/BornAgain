@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
 #include "GUI/coregui/Models/AxesItems.h"
@@ -24,28 +24,22 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-namespace
-{
+namespace {
 const QString undefinedInstrumentName = "Undefined";
 
 bool QuestionOnInstrumentReshaping(const QString& message);
 } // namespace
 
 LinkInstrumentManager::InstrumentInfo::InstrumentInfo()
-    : m_name(undefinedInstrumentName), m_instrument(nullptr)
-{
-}
+    : m_name(undefinedInstrumentName), m_instrument(nullptr) {}
 
 LinkInstrumentManager::LinkInstrumentManager(QObject* parent)
-    : QObject(parent), m_instrumentModel(nullptr), m_realDataModel(nullptr)
-{
-}
+    : QObject(parent), m_instrumentModel(nullptr), m_realDataModel(nullptr) {}
 
 //! Sets models and builds initial links.
 
 void LinkInstrumentManager::setModels(InstrumentModel* instrumentModel,
-                                      RealDataModel* realDataModel)
-{
+                                      RealDataModel* realDataModel) {
     setInstrumentModel(instrumentModel);
     setRealDataModel(realDataModel);
     updateInstrumentMap();
@@ -55,8 +49,7 @@ void LinkInstrumentManager::setModels(InstrumentModel* instrumentModel,
 
 //! Returns InstrumentItem for given identifier.
 
-InstrumentItem* LinkInstrumentManager::getInstrument(const QString& identifier)
-{
+InstrumentItem* LinkInstrumentManager::instrument(const QString& identifier) {
     for (int i = 0; i < m_instrumentVec.size(); ++i)
         if (m_instrumentVec[i].m_identifier == identifier)
             return m_instrumentVec[i].m_instrument;
@@ -66,8 +59,7 @@ InstrumentItem* LinkInstrumentManager::getInstrument(const QString& identifier)
 
 //! Returns list of instrument names including artificial name "Undefined".
 
-QStringList LinkInstrumentManager::instrumentNames() const
-{
+QStringList LinkInstrumentManager::instrumentNames() const {
     QStringList result;
     for (int i = 0; i < m_instrumentVec.size(); ++i)
         result.append(m_instrumentVec[i].m_name);
@@ -76,8 +68,7 @@ QStringList LinkInstrumentManager::instrumentNames() const
 
 //! Returns combo index for instrument selector from given identifier.
 
-int LinkInstrumentManager::instrumentComboIndex(const QString& identifier)
-{
+int LinkInstrumentManager::instrumentComboIndex(const QString& identifier) {
     for (int i = 0; i < m_instrumentVec.size(); ++i)
         if (m_instrumentVec[i].m_identifier == identifier)
             return i;
@@ -87,8 +78,7 @@ int LinkInstrumentManager::instrumentComboIndex(const QString& identifier)
 
 //! Returns instrument identifier from given index in combo instrument selector.
 
-QString LinkInstrumentManager::instrumentIdentifier(int comboIndex)
-{
+QString LinkInstrumentManager::instrumentIdentifier(int comboIndex) {
     ASSERT(comboIndex >= 0 && comboIndex < m_instrumentVec.size());
     return m_instrumentVec[comboIndex].m_identifier;
 }
@@ -97,9 +87,8 @@ QString LinkInstrumentManager::instrumentIdentifier(int comboIndex)
 //! Also offers dialog to adjust instrument to match shape of real data.
 
 bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realDataItem,
-                                                    const QString& identifier)
-{
-    auto instrumentItem = getInstrument(identifier);
+                                                    const QString& identifier) {
+    auto instrumentItem = instrument(identifier);
 
     // linking to null instrument is possible, it means unlinking from currently linked
     if (!instrumentItem)
@@ -128,8 +117,7 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
 //! Calls rebuild of instrument map if the name or identifier of the instrument have changed.
 
 void LinkInstrumentManager::setOnInstrumentPropertyChange(SessionItem* instrument,
-                                                          const QString& property)
-{
+                                                          const QString& property) {
     Q_UNUSED(instrument);
     if (property == SessionItem::P_NAME || property == InstrumentItem::P_IDENTIFIER)
         updateInstrumentMap();
@@ -138,19 +126,18 @@ void LinkInstrumentManager::setOnInstrumentPropertyChange(SessionItem* instrumen
 //! Link or re-link RealDataItem to the instrument on identifier change.
 
 void LinkInstrumentManager::setOnRealDataPropertyChange(SessionItem* dataItem,
-                                                        const QString& property)
-{
+                                                        const QString& property) {
     if (property == RealDataItem::P_INSTRUMENT_ID) {
         RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(dataItem);
         QString identifier = dataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
-        realDataItem->linkToInstrument(getInstrument(identifier));
+        realDataItem->linkToInstrument(instrument(identifier));
     }
 }
 
 //! Perform actions on instrument children change.
 
-void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument, SessionItem* child)
-{
+void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument,
+                                                    SessionItem* child) {
     if (child == nullptr)
         return;
 
@@ -159,8 +146,7 @@ void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument, 
 
 //! Updates map of instruments on insert/remove InstrumentItem event.
 
-void LinkInstrumentManager::onInstrumentRowsChange(const QModelIndex& parent, int, int)
-{
+void LinkInstrumentManager::onInstrumentRowsChange(const QModelIndex& parent, int, int) {
     // valid parent means not an instrument (which is top level item) but something below
     if (parent.isValid())
         return;
@@ -171,8 +157,7 @@ void LinkInstrumentManager::onInstrumentRowsChange(const QModelIndex& parent, in
 
 //! Updates map of data on insert/remove RealDataItem event.
 
-void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int, int)
-{
+void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int, int) {
     // valid parent means not a data (which is top level item) but something below
     if (parent.isValid())
         return;
@@ -183,11 +168,10 @@ void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int,
 
 //! Runs through all RealDataItem and check all links.
 
-void LinkInstrumentManager::updateLinks()
-{
+void LinkInstrumentManager::updateLinks() {
     for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
         QString identifier = realDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
-        auto instrumentItem = getInstrument(identifier);
+        auto instrumentItem = instrument(identifier);
 
         if (!instrumentItem) {
             // if no instrument with P_INSTRUMENT_ID exists, break the link
@@ -201,8 +185,7 @@ void LinkInstrumentManager::updateLinks()
 
 //! Builds the map of existing instruments, their names, identifiers and sets up callbacks.
 
-void LinkInstrumentManager::updateInstrumentMap()
-{
+void LinkInstrumentManager::updateInstrumentMap() {
     m_instrumentVec.clear();
     m_instrumentVec.append(InstrumentInfo()); // undefined instrument
     for (auto instrumentItem : m_instrumentModel->topItems<InstrumentItem>()) {
@@ -232,8 +215,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 
 //! Sets callbacks for all RealDataItem.
 
-void LinkInstrumentManager::updateRealDataMap()
-{
+void LinkInstrumentManager::updateRealDataMap() {
     for (auto dataItem : m_realDataModel->topItems<RealDataItem>()) {
         dataItem->mapper()->unsubscribe(this);
 
@@ -246,8 +228,7 @@ void LinkInstrumentManager::updateRealDataMap()
 //! Runs through all RealDataItem and refresh linking to match possible change in detector
 //! axes definition.
 
-void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInstrument)
-{
+void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInstrument) {
     for (auto realDataItem : linkedItems(changedInstrument))
         if (!changedInstrument->alignedWith(realDataItem))
             realDataItem->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
@@ -257,8 +238,7 @@ void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInst
 
 //! Returns list of RealDataItem's linked to given instrument.
 
-QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrumentItem)
-{
+QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrumentItem) {
     QList<RealDataItem*> result;
     for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
         QString linkedIdentifier =
@@ -274,8 +254,7 @@ QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrume
 
 //! Sets connections for instrument model.
 
-void LinkInstrumentManager::setInstrumentModel(InstrumentModel* model)
-{
+void LinkInstrumentManager::setInstrumentModel(InstrumentModel* model) {
     if (m_instrumentModel) {
         disconnect(m_instrumentModel, &InstrumentModel::rowsInserted, this,
                    &LinkInstrumentManager::onInstrumentRowsChange);
@@ -295,8 +274,7 @@ void LinkInstrumentManager::setInstrumentModel(InstrumentModel* model)
 
 //! Sets connections for real data model.
 
-void LinkInstrumentManager::setRealDataModel(RealDataModel* model)
-{
+void LinkInstrumentManager::setRealDataModel(RealDataModel* model) {
     if (m_realDataModel) {
         disconnect(m_realDataModel, &RealDataModel::rowsInserted, this,
                    &LinkInstrumentManager::onRealDataRowsChange);
@@ -314,10 +292,8 @@ void LinkInstrumentManager::setRealDataModel(RealDataModel* model)
     }
 }
 
-namespace
-{
-bool QuestionOnInstrumentReshaping(const QString& message)
-{
+namespace {
+bool QuestionOnInstrumentReshaping(const QString& message) {
     QMessageBox msgBox;
     msgBox.setText("Instrument description conflicts with the experimental data.");
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_INTERFERENCEFUNCTIONITEMS_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_INTERFERENCEFUNCTIONITEMS_H
@@ -18,8 +18,7 @@
 #include "GUI/coregui/Models/SessionGraphicsItem.h"
 class IInterferenceFunction;
 
-class BA_CORE_API_ InterferenceFunctionItem : public SessionGraphicsItem
-{
+class BA_CORE_API_ InterferenceFunctionItem : public SessionGraphicsItem {
 public:
     static const QString P_POSITION_VARIANCE;
     explicit InterferenceFunctionItem(const QString& modelType);
@@ -30,8 +29,7 @@ protected:
     void setPositionVariance(IInterferenceFunction* p_iff) const;
 };
 
-class BA_CORE_API_ InterferenceFunction1DLatticeItem : public InterferenceFunctionItem
-{
+class BA_CORE_API_ InterferenceFunction1DLatticeItem : public InterferenceFunctionItem {
 public:
     static const QString P_LENGTH;
     static const QString P_ROTATION_ANGLE;
@@ -40,8 +38,7 @@ public:
     std::unique_ptr<IInterferenceFunction> createInterferenceFunction() const;
 };
 
-class BA_CORE_API_ InterferenceFunction2DLatticeItem : public InterferenceFunctionItem
-{
+class BA_CORE_API_ InterferenceFunction2DLatticeItem : public InterferenceFunctionItem {
 public:
     static const QString P_LATTICE_TYPE;
     static const QString P_DECAY_FUNCTION;
@@ -53,8 +50,7 @@ private:
     void update_rotation_availability();
 };
 
-class BA_CORE_API_ InterferenceFunction2DParaCrystalItem : public InterferenceFunctionItem
-{
+class BA_CORE_API_ InterferenceFunction2DParaCrystalItem : public InterferenceFunctionItem {
 public:
     static const QString P_DAMPING_LENGTH;
     static const QString P_DOMAIN_SIZE1;
@@ -70,8 +66,7 @@ private:
     void update_distribution_displaynames();
 };
 
-class BA_CORE_API_ InterferenceFunctionFinite2DLatticeItem : public InterferenceFunctionItem
-{
+class BA_CORE_API_ InterferenceFunctionFinite2DLatticeItem : public InterferenceFunctionItem {
 public:
     static const QString P_XI_INTEGRATION;
     static const QString P_DOMAIN_SIZE_1;
@@ -83,8 +78,7 @@ private:
     void update_rotation_availability();
 };
 
-class BA_CORE_API_ InterferenceFunctionHardDiskItem : public InterferenceFunctionItem
-{
+class BA_CORE_API_ InterferenceFunctionHardDiskItem : public InterferenceFunctionItem {
 public:
     static const QString P_RADIUS;
     static const QString P_DENSITY;
@@ -92,8 +86,7 @@ public:
     std::unique_ptr<IInterferenceFunction> createInterferenceFunction() const;
 };
 
-class BA_CORE_API_ InterferenceFunctionRadialParaCrystalItem : public InterferenceFunctionItem
-{
+class BA_CORE_API_ InterferenceFunctionRadialParaCrystalItem : public InterferenceFunctionItem {
 public:
     static const QString P_PEAK_DISTANCE;
     static const QString P_DAMPING_LENGTH;

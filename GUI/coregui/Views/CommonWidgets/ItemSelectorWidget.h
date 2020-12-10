@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSELECTORWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_COMMONWIDGETS_ITEMSELECTORWIDGET_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QItemSelectionModel>
 #include <QWidget>
 #include <memory>
@@ -31,8 +30,7 @@ class SessionDecorationModel;
 //! The ItemSelectorWidget class holds QListView to show top level items of SessionModel.
 //! Used in InstrumentView, ImportDataView, JobSelectorView to switch between items.
 
-class BA_CORE_API_ ItemSelectorWidget : public QWidget
-{
+class ItemSelectorWidget : public QWidget {
     Q_OBJECT
 
 public:

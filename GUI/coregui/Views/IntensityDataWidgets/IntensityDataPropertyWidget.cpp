@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataPropertyWidget.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -21,9 +21,9 @@
 #include <QVBoxLayout>
 
 IntensityDataPropertyWidget::IntensityDataPropertyWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_togglePanelAction(new QAction(this)),
-      m_componentEditor(new ComponentEditor)
-{
+    : SessionItemWidget(parent)
+    , m_togglePanelAction(new QAction(this))
+    , m_componentEditor(new ComponentEditor) {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     setWindowTitle(QLatin1String("Intensity Data Properties"));
     setObjectName(QLatin1String("Intensity Data Properties"));
@@ -41,37 +41,30 @@ IntensityDataPropertyWidget::IntensityDataPropertyWidget(QWidget* parent)
             &IntensityDataPropertyWidget::onTogglePanelAction);
 }
 
-QSize IntensityDataPropertyWidget::sizeHint() const
-{
+QSize IntensityDataPropertyWidget::sizeHint() const {
     return QSize(StyleUtils::PropertyPanelWidth() * 1.2, StyleUtils::PropertyPanelWidth() * 2);
 }
 
-QSize IntensityDataPropertyWidget::minimumSizeHint() const
-{
+QSize IntensityDataPropertyWidget::minimumSizeHint() const {
     return QSize(StyleUtils::PropertyPanelWidth() * 1.2, StyleUtils::PropertyPanelWidth());
 }
 
-QList<QAction*> IntensityDataPropertyWidget::actionList()
-{
+QList<QAction*> IntensityDataPropertyWidget::actionList() {
     return QList<QAction*>() << m_togglePanelAction;
 }
 
-void IntensityDataPropertyWidget::onTogglePanelAction()
-{
+void IntensityDataPropertyWidget::onTogglePanelAction() {
     setVisible(!isVisible());
 }
 
-void IntensityDataPropertyWidget::subscribeToItem()
-{
+void IntensityDataPropertyWidget::subscribeToItem() {
     m_componentEditor->setItem(currentItem());
 }
 
-void IntensityDataPropertyWidget::unsubscribeFromItem()
-{
+void IntensityDataPropertyWidget::unsubscribeFromItem() {
     m_componentEditor->setItem(nullptr);
 }
 
-void IntensityDataPropertyWidget::contextMenuEvent(QContextMenuEvent*)
-{
+void IntensityDataPropertyWidget::contextMenuEvent(QContextMenuEvent*) {
     // Reimplemented to suppress menu from main window
 }

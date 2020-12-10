@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,13 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/ConnectableView.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/Views/SampleDesigner/NodeEditorConnection.h"
-#include "GUI/coregui/Views/SampleDesigner/NodeEditorPort.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 #include <QObject>
@@ -25,9 +24,12 @@
 #include <iostream>
 
 ConnectableView::ConnectableView(QGraphicsItem* parent, QRectF rect)
-    : IView(parent), m_name("Unnamed"), m_color(Qt::gray), m_rect(rect), m_roundpar(0),
-      m_label_vspace(0)
-{
+    : IView(parent)
+    , m_name("Unnamed")
+    , m_color(Qt::gray)
+    , m_rect(rect)
+    , m_roundpar(0)
+    , m_label_vspace(0) {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
@@ -36,8 +38,7 @@ ConnectableView::ConnectableView(QGraphicsItem* parent, QRectF rect)
 }
 
 void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-                            QWidget* widget)
-{
+                            QWidget* widget) {
     Q_UNUSED(widget);
 
     painter->setPen(Qt::gray);
@@ -64,8 +65,7 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
 NodeEditorPort* ConnectableView::addPort(const QString& name,
                                          NodeEditorPort::EPortDirection direction,
-                                         NodeEditorPort::EPortType port_type)
-{
+                                         NodeEditorPort::EPortType port_type) {
     NodeEditorPort* port = new NodeEditorPort(this, name, direction, port_type);
     if (direction == NodeEditorPort::INPUT) {
         m_input_ports.append(port);
@@ -78,14 +78,12 @@ NodeEditorPort* ConnectableView::addPort(const QString& name,
     return port;
 }
 
-void ConnectableView::setLabel(const QString& name)
-{
+void ConnectableView::setLabel(const QString& name) {
     m_label = name;
     setPortCoordinates();
 }
 
-void ConnectableView::connectInputPort(ConnectableView* other, int port_number)
-{
+void ConnectableView::connectInputPort(ConnectableView* other, int port_number) {
     ASSERT(other);
 
     if (port_number >= m_input_ports.size())
@@ -108,14 +106,12 @@ void ConnectableView::connectInputPort(ConnectableView* other, int port_number)
     }
 }
 
-int ConnectableView::getInputPortIndex(NodeEditorPort* port)
-{
+int ConnectableView::getInputPortIndex(NodeEditorPort* port) {
     return m_input_ports.indexOf(port);
 }
 
 // calculation of y-pos for ports
-void ConnectableView::setPortCoordinates()
-{
+void ConnectableView::setPortCoordinates() {
     if (!getNumberOfPorts())
         return;
 
@@ -152,29 +148,24 @@ void ConnectableView::setPortCoordinates()
     }
 }
 
-int ConnectableView::getNumberOfPorts()
-{
+int ConnectableView::getNumberOfPorts() {
     return m_input_ports.size() + m_output_ports.size();
 }
 
-int ConnectableView::getNumberOfOutputPorts()
-{
+int ConnectableView::getNumberOfOutputPorts() {
     return m_output_ports.size();
 }
 
-int ConnectableView::getNumberOfInputPorts()
-{
+int ConnectableView::getNumberOfInputPorts() {
     return m_input_ports.size();
 }
 
-void ConnectableView::update_appearance()
-{
+void ConnectableView::update_appearance() {
     setLabel(hyphenate(m_item->displayName()));
     IView::update_appearance();
 }
 
-QString ConnectableView::hyphenate(const QString& name) const
-{
+QString ConnectableView::hyphenate(const QString& name) const {
     QRegExp capital_letter("[A-Z]");
     QRegExp number("[0-9]");
     int next_capital = capital_letter.indexIn(name, 1);

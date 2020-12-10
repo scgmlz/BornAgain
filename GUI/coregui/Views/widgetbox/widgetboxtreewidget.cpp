@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "GUI/coregui/Views/widgetbox/widgetboxtreewidget.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/widgetbox/widgetboxcategorylistview.h"
 
 // shared
@@ -87,8 +87,7 @@ static const char* scratchPadValueC = "scratchpad";
 static const char* qtLogoC = "qtlogo.png";
 static const char* invisibleNameC = "[invisible]";
 
-QIcon createIconSet(const QString& name)
-{
+QIcon createIconSet(const QString& name) {
     return QIcon(QString::fromUtf8(":/widgetbox/") + name);
 }
 
@@ -96,22 +95,18 @@ enum ETopLevelRole { NORMAL_ITEM, SCRATCHPAD_ITEM, CUSTOM_ITEM };
 
 QT_BEGIN_NAMESPACE
 
-static void setTopLevelRole(ETopLevelRole tlr, QTreeWidgetItem* item)
-{
+static void setTopLevelRole(ETopLevelRole tlr, QTreeWidgetItem* item) {
     item->setData(0, Qt::UserRole, QVariant(tlr));
 }
 
-static ETopLevelRole topLevelRole(const QTreeWidgetItem* item)
-{
+static ETopLevelRole topLevelRole(const QTreeWidgetItem* item) {
     return static_cast<ETopLevelRole>(item->data(0, Qt::UserRole).toInt());
 }
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 WidgetBoxTreeWidget::WidgetBoxTreeWidget(SampleDesignerInterface* core, QWidget* parent)
-    : QTreeWidget(parent), m_core(core), m_iconMode(false), m_scratchPadDeleteTimer(nullptr)
-{
+    : QTreeWidget(parent), m_core(core), m_iconMode(false), m_scratchPadDeleteTimer(nullptr) {
     setFocusPolicy(Qt::NoFocus);
     setIndentation(0);
     setRootIsDecorated(false);
@@ -129,8 +124,7 @@ WidgetBoxTreeWidget::WidgetBoxTreeWidget(SampleDesignerInterface* core, QWidget*
             SLOT(handleMousePress(QTreeWidgetItem*)));
 }
 
-QIcon WidgetBoxTreeWidget::iconForWidget(QString iconName) const
-{
+QIcon WidgetBoxTreeWidget::iconForWidget(QString iconName) const {
     if (iconName.isEmpty())
         iconName = QLatin1String(qtLogoC);
 
@@ -142,8 +136,7 @@ QIcon WidgetBoxTreeWidget::iconForWidget(QString iconName) const
     return createIconSet(iconName);
 }
 
-WidgetBoxCategoryListView* WidgetBoxTreeWidget::categoryViewAt(int idx) const
-{
+WidgetBoxCategoryListView* WidgetBoxTreeWidget::categoryViewAt(int idx) const {
     WidgetBoxCategoryListView* rc = nullptr;
     if (QTreeWidgetItem* cat_item = topLevelItem(idx))
         if (QTreeWidgetItem* embedItem = cat_item->child(0))
@@ -152,34 +145,28 @@ WidgetBoxCategoryListView* WidgetBoxTreeWidget::categoryViewAt(int idx) const
     return rc;
 }
 
-void WidgetBoxTreeWidget::saveExpandedState() const
-{
+void WidgetBoxTreeWidget::saveExpandedState() const {
     return;
 }
 
-void WidgetBoxTreeWidget::restoreExpandedState()
-{
+void WidgetBoxTreeWidget::restoreExpandedState() {
     std::cout << "WidgetBoxTreeWidget::restoreExpandedState() -> XXX Not implemented." << std::endl;
     return;
 }
 
-WidgetBoxTreeWidget::~WidgetBoxTreeWidget()
-{
+WidgetBoxTreeWidget::~WidgetBoxTreeWidget() {
     saveExpandedState();
 }
 
-void WidgetBoxTreeWidget::setFileName(const QString& file_name)
-{
+void WidgetBoxTreeWidget::setFileName(const QString& file_name) {
     m_file_name = file_name;
 }
 
-QString WidgetBoxTreeWidget::fileName() const
-{
+QString WidgetBoxTreeWidget::fileName() const {
     return m_file_name;
 }
 
-bool WidgetBoxTreeWidget::save()
-{
+bool WidgetBoxTreeWidget::save() {
     if (fileName().isEmpty())
         return false;
 
@@ -202,13 +189,11 @@ bool WidgetBoxTreeWidget::save()
     return true;
 }
 
-void WidgetBoxTreeWidget::slotSave()
-{
+void WidgetBoxTreeWidget::slotSave() {
     save();
 }
 
-void WidgetBoxTreeWidget::handleMousePress(QTreeWidgetItem* item)
-{
+void WidgetBoxTreeWidget::handleMousePress(QTreeWidgetItem* item) {
     if (item == nullptr)
         return;
 
@@ -225,8 +210,7 @@ void WidgetBoxTreeWidget::handleMousePress(QTreeWidgetItem* item)
     }
 }
 
-int WidgetBoxTreeWidget::ensureScratchpad()
-{
+int WidgetBoxTreeWidget::ensureScratchpad() {
     const int existingIndex = indexOfScratchpad();
     if (existingIndex != -1)
         return existingIndex;
@@ -239,8 +223,7 @@ int WidgetBoxTreeWidget::ensureScratchpad()
 }
 
 WidgetBoxCategoryListView* WidgetBoxTreeWidget::addCategoryView(QTreeWidgetItem* parent,
-                                                                bool iconMode)
-{
+                                                                bool iconMode) {
     QTreeWidgetItem* embed_item = new QTreeWidgetItem(parent);
     embed_item->setFlags(Qt::ItemIsEnabled);
     WidgetBoxCategoryListView* categoryView = new WidgetBoxCategoryListView(m_core, this);
@@ -254,8 +237,7 @@ WidgetBoxCategoryListView* WidgetBoxTreeWidget::addCategoryView(QTreeWidgetItem*
     return categoryView;
 }
 
-int WidgetBoxTreeWidget::indexOfScratchpad() const
-{
+int WidgetBoxTreeWidget::indexOfScratchpad() const {
     if (const int numTopLevels = topLevelItemCount()) {
         for (int i = numTopLevels - 1; i >= 0; --i) {
             if (topLevelRole(topLevelItem(i)) == SCRATCHPAD_ITEM)
@@ -265,8 +247,7 @@ int WidgetBoxTreeWidget::indexOfScratchpad() const
     return -1;
 }
 
-int WidgetBoxTreeWidget::indexOfCategory(const QString& name) const
-{
+int WidgetBoxTreeWidget::indexOfCategory(const QString& name) const {
     const int topLevelCount = topLevelItemCount();
     for (int i = 0; i < topLevelCount; ++i) {
         if (topLevelItem(i)->text(0) == name)
@@ -275,8 +256,7 @@ int WidgetBoxTreeWidget::indexOfCategory(const QString& name) const
     return -1;
 }
 
-bool WidgetBoxTreeWidget::load(QDesignerWidgetBox::LoadMode loadMode)
-{
+bool WidgetBoxTreeWidget::load(QDesignerWidgetBox::LoadMode loadMode) {
     switch (loadMode) {
     case QDesignerWidgetBox::LoadReplace:
         clear();
@@ -298,8 +278,7 @@ bool WidgetBoxTreeWidget::load(QDesignerWidgetBox::LoadMode loadMode)
     return loadContents(contents);
 }
 
-bool WidgetBoxTreeWidget::loadContents(const QString& contents)
-{
+bool WidgetBoxTreeWidget::loadContents(const QString& contents) {
     QString errorMessage;
     CategoryList cat_list;
     if (!readCategories(m_file_name, contents, &cat_list, &errorMessage)) {
@@ -312,8 +291,7 @@ bool WidgetBoxTreeWidget::loadContents(const QString& contents)
     return true;
 }
 
-void WidgetBoxTreeWidget::addCustomCategories(bool replace)
-{
+void WidgetBoxTreeWidget::addCustomCategories(bool replace) {
     if (replace) {
         // clear out all existing custom widgets
         if (const int numTopLevels = topLevelItemCount()) {
@@ -328,16 +306,14 @@ void WidgetBoxTreeWidget::addCustomCategories(bool replace)
         addCategory(*it);
 }
 
-static inline QString msgXmlError(const QString& fileName, const QXmlStreamReader& r)
-{
+static inline QString msgXmlError(const QString& fileName, const QXmlStreamReader& r) {
     return QString("An error has been encountered at line %1 of %2: %3")
         .arg(r.lineNumber())
         .arg(fileName, r.errorString());
 }
 
 bool WidgetBoxTreeWidget::readCategories(const QString& fileName, const QString& contents,
-                                         CategoryList* cats, QString* errorMessage)
-{
+                                         CategoryList* cats, QString* errorMessage) {
     // Read widget box XML:
     //
     //<widgetbox version="4.5">
@@ -450,8 +426,7 @@ bool WidgetBoxTreeWidget::readCategories(const QString& fileName, const QString&
  * in which case the reader has its error flag set. If successful, the current item
  * of the reader will be the closing element (</ui> or </widget>)
  */
-bool WidgetBoxTreeWidget::readWidget(Widget* w, const QString& xml, QXmlStreamReader& r)
-{
+bool WidgetBoxTreeWidget::readWidget(Widget* w, const QString& xml, QXmlStreamReader& r) {
     qint64 startTagPosition = 0, endTagPosition = 0;
 
     int nesting = 0;
@@ -515,8 +490,7 @@ bool WidgetBoxTreeWidget::readWidget(Widget* w, const QString& xml, QXmlStreamRe
 }
 
 void WidgetBoxTreeWidget::writeCategories(QXmlStreamWriter& writer,
-                                          const CategoryList& cat_list) const
-{
+                                          const CategoryList& cat_list) const {
     const QString widgetbox = QLatin1String(widgetBoxRootElementC);
     const QString name = QLatin1String(nameAttributeC);
     const QString type = QLatin1String(typeAttributeC);
@@ -574,8 +548,7 @@ void WidgetBoxTreeWidget::writeCategories(QXmlStreamWriter& writer,
     writer.writeEndElement(); // widgetBox
 }
 
-WidgetBoxTreeWidget::CategoryList WidgetBoxTreeWidget::loadCustomCategoryList() const
-{
+WidgetBoxTreeWidget::CategoryList WidgetBoxTreeWidget::loadCustomCategoryList() const {
     CategoryList result;
 
     std::cout << "WidgetBoxTreeWidget::loadCustomCategoryList() -> XXX Not implemented."
@@ -583,8 +556,7 @@ WidgetBoxTreeWidget::CategoryList WidgetBoxTreeWidget::loadCustomCategoryList() 
     return result;
 }
 
-void WidgetBoxTreeWidget::adjustSubListSize(QTreeWidgetItem* cat_item)
-{
+void WidgetBoxTreeWidget::adjustSubListSize(QTreeWidgetItem* cat_item) {
     QTreeWidgetItem* embedItem = cat_item->child(0);
     if (embedItem == nullptr)
         return;
@@ -598,13 +570,11 @@ void WidgetBoxTreeWidget::adjustSubListSize(QTreeWidgetItem* cat_item)
     embedItem->setSizeHint(0, QSize(-1, height - 1));
 }
 
-int WidgetBoxTreeWidget::categoryCount() const
-{
+int WidgetBoxTreeWidget::categoryCount() const {
     return topLevelItemCount();
 }
 
-WidgetBoxTreeWidget::Category WidgetBoxTreeWidget::category(int cat_idx) const
-{
+WidgetBoxTreeWidget::Category WidgetBoxTreeWidget::category(int cat_idx) const {
     if (cat_idx >= topLevelItemCount())
         return Category();
 
@@ -628,8 +598,7 @@ WidgetBoxTreeWidget::Category WidgetBoxTreeWidget::category(int cat_idx) const
     return result;
 }
 
-void WidgetBoxTreeWidget::addCategory(const Category& cat)
-{
+void WidgetBoxTreeWidget::addCategory(const Category& cat) {
     if (cat.widgetCount() == 0)
         return;
 
@@ -676,23 +645,20 @@ void WidgetBoxTreeWidget::addCategory(const Category& cat)
     adjustSubListSize(cat_item);
 }
 
-void WidgetBoxTreeWidget::removeCategory(int cat_idx)
-{
+void WidgetBoxTreeWidget::removeCategory(int cat_idx) {
     if (cat_idx >= topLevelItemCount())
         return;
     delete takeTopLevelItem(cat_idx);
 }
 
-int WidgetBoxTreeWidget::widgetCount(int cat_idx) const
-{
+int WidgetBoxTreeWidget::widgetCount(int cat_idx) const {
     if (cat_idx >= topLevelItemCount())
         return 0;
     // SDK functions want unfiltered access
     return categoryViewAt(cat_idx)->count(WidgetBoxCategoryListView::UNFILTERED);
 }
 
-WidgetBoxTreeWidget::Widget WidgetBoxTreeWidget::widget(int cat_idx, int wgt_idx) const
-{
+WidgetBoxTreeWidget::Widget WidgetBoxTreeWidget::widget(int cat_idx, int wgt_idx) const {
     if (cat_idx >= topLevelItemCount())
         return Widget();
     // SDK functions want unfiltered access
@@ -700,8 +666,7 @@ WidgetBoxTreeWidget::Widget WidgetBoxTreeWidget::widget(int cat_idx, int wgt_idx
     return categoryView->widgetAt(WidgetBoxCategoryListView::UNFILTERED, wgt_idx);
 }
 
-void WidgetBoxTreeWidget::addWidget(int cat_idx, const Widget& wgt)
-{
+void WidgetBoxTreeWidget::addWidget(int cat_idx, const Widget& wgt) {
     if (cat_idx >= topLevelItemCount())
         return;
 
@@ -713,8 +678,7 @@ void WidgetBoxTreeWidget::addWidget(int cat_idx, const Widget& wgt)
     adjustSubListSize(cat_item);
 }
 
-void WidgetBoxTreeWidget::removeWidget(int cat_idx, int wgt_idx)
-{
+void WidgetBoxTreeWidget::removeWidget(int cat_idx, int wgt_idx) {
     if (cat_idx >= topLevelItemCount())
         return;
 
@@ -728,16 +692,14 @@ void WidgetBoxTreeWidget::removeWidget(int cat_idx, int wgt_idx)
     categoryView->removeRow(am, wgt_idx);
 }
 
-void WidgetBoxTreeWidget::slotScratchPadItemDeleted()
-{
+void WidgetBoxTreeWidget::slotScratchPadItemDeleted() {
     const int scratch_idx = indexOfScratchpad();
     QTreeWidgetItem* scratch_item = topLevelItem(scratch_idx);
     adjustSubListSize(scratch_item);
     save();
 }
 
-void WidgetBoxTreeWidget::slotLastScratchPadItemDeleted()
-{
+void WidgetBoxTreeWidget::slotLastScratchPadItemDeleted() {
     // Remove the scratchpad in the next idle loop
     if (!m_scratchPadDeleteTimer) {
         m_scratchPadDeleteTimer = new QTimer(this);
@@ -749,8 +711,7 @@ void WidgetBoxTreeWidget::slotLastScratchPadItemDeleted()
         m_scratchPadDeleteTimer->start();
 }
 
-void WidgetBoxTreeWidget::deleteScratchpad()
-{
+void WidgetBoxTreeWidget::deleteScratchpad() {
     const int idx = indexOfScratchpad();
     if (idx == -1)
         return;
@@ -758,20 +719,17 @@ void WidgetBoxTreeWidget::deleteScratchpad()
     save();
 }
 
-void WidgetBoxTreeWidget::slotListMode()
-{
+void WidgetBoxTreeWidget::slotListMode() {
     m_iconMode = false;
     updateViewMode();
 }
 
-void WidgetBoxTreeWidget::slotIconMode()
-{
+void WidgetBoxTreeWidget::slotIconMode() {
     m_iconMode = true;
     updateViewMode();
 }
 
-void WidgetBoxTreeWidget::updateViewMode()
-{
+void WidgetBoxTreeWidget::updateViewMode() {
     if (const int numTopLevels = topLevelItemCount()) {
         for (int i = numTopLevels - 1; i >= 0; --i) {
             QTreeWidgetItem* topLevel = topLevelItem(i);
@@ -789,8 +747,7 @@ void WidgetBoxTreeWidget::updateViewMode()
     updateGeometries();
 }
 
-void WidgetBoxTreeWidget::resizeEvent(QResizeEvent* e)
-{
+void WidgetBoxTreeWidget::resizeEvent(QResizeEvent* e) {
     QTreeWidget::resizeEvent(e);
     if (const int numTopLevels = topLevelItemCount()) {
         for (int i = numTopLevels - 1; i >= 0; --i)
@@ -798,8 +755,7 @@ void WidgetBoxTreeWidget::resizeEvent(QResizeEvent* e)
     }
 }
 
-void WidgetBoxTreeWidget::contextMenuEvent(QContextMenuEvent* e)
-{
+void WidgetBoxTreeWidget::contextMenuEvent(QContextMenuEvent* e) {
     QTreeWidgetItem* item = itemAt(e->pos());
 
     const bool scratchpad_menu = item != nullptr && item->parent() != nullptr
@@ -834,8 +790,7 @@ void WidgetBoxTreeWidget::contextMenuEvent(QContextMenuEvent* e)
     menu.exec(mapToGlobal(e->pos()));
 }
 
-void WidgetBoxTreeWidget::dropWidgets(const QList<QDesignerDnDItemInterface*>& item_list)
-{
+void WidgetBoxTreeWidget::dropWidgets(const QList<QDesignerDnDItemInterface*>& item_list) {
     QTreeWidgetItem* scratch_item = nullptr;
     WidgetBoxCategoryListView* categoryView = nullptr;
     bool added = false;
@@ -899,8 +854,7 @@ void WidgetBoxTreeWidget::dropWidgets(const QList<QDesignerDnDItemInterface*>& i
     }
 }
 
-void WidgetBoxTreeWidget::filter(const QString& f)
-{
+void WidgetBoxTreeWidget::filter(const QString& f) {
     const bool empty = f.isEmpty();
     QRegExp re = empty ? QRegExp() : QRegExp(f, Qt::CaseInsensitive, QRegExp::FixedString);
     const int numTopLevels = topLevelItemCount();

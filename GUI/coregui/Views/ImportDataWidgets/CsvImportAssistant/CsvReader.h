@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVREADER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_CSVIMPORTASSISTANT_CSVREADER_H
@@ -22,8 +22,7 @@
 #include <sstream>
 #include <vector>
 
-class CSVRow
-{
+class CSVRow {
 public:
     std::string const& operator[](unsigned index) const;
     unsigned long size() const;
@@ -38,14 +37,12 @@ private:
     char separator = '-';
 };
 
-inline std::istream& operator>>(std::istream& str, CSVRow& data)
-{
+inline std::istream& operator>>(std::istream& str, CSVRow& data) {
     data.readNextRow(str);
     return str;
 }
 
-class CSVIterator
-{
+class CSVIterator {
 public:
     typedef std::input_iterator_tag iterator_category;
     typedef CSVRow value_type;
@@ -53,16 +50,14 @@ public:
     typedef CSVRow* pointer;
     typedef CSVRow& reference;
 
-    CSVIterator(std::istream& str, char sep) : m_str(str.good() ? &str : nullptr)
-    {
+    CSVIterator(std::istream& str, char sep) : m_str(str.good() ? &str : nullptr) {
         m_sep = sep;
         ++(*this);
     }
     CSVIterator() : m_str(nullptr) {}
 
     // Pre Increment
-    CSVIterator& operator++()
-    {
+    CSVIterator& operator++() {
         if (m_str) {
             m_row.setSeparator(m_sep);
             if (!((*m_str) >> m_row)) {
@@ -72,16 +67,14 @@ public:
         return *this;
     }
     // Post increment
-    CSVIterator operator++(int)
-    {
+    CSVIterator operator++(int) {
         CSVIterator tmp(*this);
         ++(*this);
         return tmp;
     }
     CSVRow const& operator*() const { return m_row; }
     CSVRow const* operator->() const { return &m_row; }
-    bool operator==(CSVIterator const& rhs)
-    {
+    bool operator==(CSVIterator const& rhs) {
         return ((this == &rhs) || ((this->m_str == nullptr) && (rhs.m_str == nullptr)));
     }
     bool operator!=(CSVIterator const& rhs) { return !((*this) == rhs); }
@@ -92,14 +85,12 @@ private:
     char m_sep;
 };
 
-class CSVFile
-{
+class CSVFile {
 public:
     CSVFile(std::string path_to_file) : filepath(path_to_file) { Init(); }
     CSVFile(std::string path_to_file, char sep) : filepath(path_to_file), separator(sep) { Init(); }
     CSVFile(std::string path_to_file, char sep, unsigned headRow)
-        : filepath(path_to_file), separator(sep), headersRow(headRow)
-    {
+        : filepath(path_to_file), separator(sep), headersRow(headRow) {
         Init();
     }
 

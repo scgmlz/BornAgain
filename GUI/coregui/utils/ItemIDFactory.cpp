@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/utils/ItemIDFactory.h"
 
-ItemIDFactory& ItemIDFactory::instance()
-{
+ItemIDFactory& ItemIDFactory::instance() {
     static ItemIDFactory instance;
     return instance;
 }
 
-QString ItemIDFactory::createID(SessionItem* toBeInsertedItem)
-{
+QString ItemIDFactory::createID(SessionItem* toBeInsertedItem) {
 
     QUuid id = QUuid::createUuid();
     QString id_String = id.toString();
@@ -37,24 +35,21 @@ QString ItemIDFactory::createID(SessionItem* toBeInsertedItem)
     return id_String;
 }
 
-QString ItemIDFactory::getID(SessionItem* existingItem)
-{
+QString ItemIDFactory::getID(SessionItem* existingItem) {
     if (instance().ItemtoIDMap.contains(existingItem))
         return instance().ItemtoIDMap.value(existingItem);
     else
         return "";
 }
 
-SessionItem* ItemIDFactory::getItem(QString existingID)
-{
+SessionItem* ItemIDFactory::getItem(QString existingID) {
     if (instance().IDtoItemMap.contains(existingID))
         return instance().IDtoItemMap.value(existingID);
     else
         return nullptr;
 }
 
-int ItemIDFactory::IDSize()
-{
+int ItemIDFactory::IDSize() {
     static QUuid id = QUuid::createUuid();
     return id.toString().size();
 }

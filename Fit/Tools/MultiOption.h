@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
+#ifdef SWIG
+#error no need to expose this header to Swig
+#endif
+
+#ifndef USER_API
 #ifndef BORNAGAIN_FIT_TOOLS_MULTIOPTION_H
 #define BORNAGAIN_FIT_TOOLS_MULTIOPTION_H
 
-#include "Wrap/WinDllMacros.h"
 #include <boost/variant.hpp>
 #include <string>
 
@@ -23,8 +27,7 @@
 //! Relies on boost::variant, will be switched to std::variant in C++-17.
 //! @ingroup fitting_internal
 
-class BA_CORE_API_ MultiOption
-{
+class MultiOption {
 public:
     using variant_t = boost::variant<int, double, std::string>;
 
@@ -57,22 +60,20 @@ private:
 };
 
 template <typename T>
-MultiOption::MultiOption(const std::string& name, const T& t, const std::string& descripion)
-{
+MultiOption::MultiOption(const std::string& name, const T& t, const std::string& descripion) {
     m_name = name;
     m_description = descripion;
     m_value = t;
     m_default_value = t;
 }
 
-template <typename T> T MultiOption::get() const
-{
+template <typename T> T MultiOption::get() const {
     return boost::get<T>(m_value);
 }
 
-template <typename T> T MultiOption::getDefault() const
-{
+template <typename T> T MultiOption::getDefault() const {
     return boost::get<T>(m_default_value);
 }
 
 #endif // BORNAGAIN_FIT_TOOLS_MULTIOPTION_H
+#endif // USER_API

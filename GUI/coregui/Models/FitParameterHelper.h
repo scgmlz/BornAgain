@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERHELPER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_FITPARAMETERHELPER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QStringList>
 
 class ParameterItem;
@@ -25,8 +24,7 @@ class FitParameterContainerItem;
 //! The FitParameterHelper class contains set of convenience static methods to handle
 //! various fitting items in given JobItem.
 
-class BA_CORE_API_ FitParameterHelper
-{
+class FitParameterHelper {
 public:
     static void createFitParameter(FitParameterContainerItem* container,
                                    ParameterItem* parameterItem);

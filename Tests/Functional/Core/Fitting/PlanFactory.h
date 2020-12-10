@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,18 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_PLANFACTORY_H
 #define BORNAGAIN_TESTS_FUNCTIONAL_CORE_FITTING_PLANFACTORY_H
 
-#include "Fit/TestEngine/IFactory.h"
+#include "Base/Utils/IFactory.h"
 #include "Fit/TestEngine/MinimizerTestPlan.h"
 
 //! Factory to generate plans for fitting with FitObjective.
 
-class PlanFactory : public IFactory<std::string, MinimizerTestPlan>
-{
+class PlanFactory : public IFactory<std::string, MinimizerTestPlan> {
 public:
     PlanFactory();
 };

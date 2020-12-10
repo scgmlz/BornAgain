@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SimulationWidgets/SimulationOptionsWidget.h"
 #include "GUI/coregui/Models/SimulationOptionsItem.h"
@@ -19,9 +19,8 @@
 #include <QVBoxLayout>
 
 SimulationOptionsWidget::SimulationOptionsWidget(QWidget* parent)
-    : QWidget(parent), m_boxEditor(new ComponentFlatView)
-{
-    auto groupBox = new QGroupBox("Simulation Parameters");
+    : QWidget(parent), m_boxEditor(new ComponentFlatView) {
+    auto groupBox = new QGroupBox("Simulation parameters");
 
     auto groupLayout = new QVBoxLayout;
     groupBox->setLayout(groupLayout);
@@ -35,8 +34,7 @@ SimulationOptionsWidget::SimulationOptionsWidget(QWidget* parent)
     setLayout(mainLayout);
 }
 
-void SimulationOptionsWidget::setItem(SimulationOptionsItem* item)
-{
+void SimulationOptionsWidget::setItem(SimulationOptionsItem* item) {
     m_boxEditor->clearEditor();
     m_boxEditor->setItem(item);
 }

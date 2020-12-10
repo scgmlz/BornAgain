@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,12 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/SaveProjectionsAssistant.h"
-#include "Core/Intensity/Histogram1D.h"
-#include "Core/Intensity/Histogram2D.h"
-#include "Core/Tools/PyFmt.h"
+#include "Core/Export/PyFmt.h"
+#include "Device/Histo/Histogram1D.h"
+#include "Device/Histo/Histogram2D.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
@@ -24,19 +24,16 @@
 #include <QFileDialog>
 #include <QTextStream>
 
-namespace
-{
+namespace {
 const int bin_centers_colwidth = 12;
 const int bin_values_colwidth = 20;
 
-QString to_scientific_str(double value)
-{
+QString to_scientific_str(double value) {
     auto str = pyfmt::printScientificDouble(value);
     return QString("%1").arg(QString::fromStdString(str), -bin_values_colwidth);
 }
 
-QString to_double_str(double value)
-{
+QString to_double_str(double value) {
     auto str = pyfmt::printDouble(value);
     return QString("%1").arg(QString::fromStdString(str), -bin_centers_colwidth);
 }
@@ -47,8 +44,7 @@ SaveProjectionsAssistant::~SaveProjectionsAssistant() = default;
 
 //! Calls file open dialog and writes projection data as ASCII
 
-void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataItem* intensityItem)
-{
+void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataItem* intensityItem) {
     ASSERT(intensityItem);
 
     QString defaultName = ProjectUtils::userExportDir() + "/untitled.txt";
@@ -62,7 +58,7 @@ void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataIte
         throw GUIHelpers::Error("TestProjectUtils::createTestFile() -> Error. "
                                 "Can't create file");
 
-    m_hist2d.reset(new Histogram2D(*intensityItem->getOutputData()));
+    m_hist2d = std::make_unique<Histogram2D>(*intensityItem->getOutputData());
 
     QTextStream out(&file);
 
@@ -80,8 +76,7 @@ void SaveProjectionsAssistant::saveProjections(QWidget* parent, IntensityDataIte
 //! Generates multi-line string with projections data of given type (horizontal, vertical).
 
 QString SaveProjectionsAssistant::projectionsToString(const QString& projectionsType,
-                                                      IntensityDataItem* intensityItem)
-{
+                                                      IntensityDataItem* intensityItem) {
     QString result;
     QTextStream out(&result);
 
@@ -108,8 +103,7 @@ QString SaveProjectionsAssistant::projectionsToString(const QString& projections
 
 SaveProjectionsAssistant::ProjectionsData
 SaveProjectionsAssistant::projectionsData(const QString& projectionsType,
-                                          IntensityDataItem* intensityItem)
-{
+                                          IntensityDataItem* intensityItem) {
     ProjectionsData result;
     projectionsType == "VerticalLineMask" ? result.is_horizontal = false
                                           : result.is_horizontal = true;
@@ -127,15 +121,15 @@ SaveProjectionsAssistant::projectionsData(const QString& projectionsType,
         }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-        auto values = hist->getBinValues();
-        auto centers = hist->getBinCenters();
+        auto values = hist->binValues();
+        auto centers = hist->binCenters();
         data.bin_values = QVector<double>(values.begin(), values.end());
         if (result.bin_centers.isEmpty())
             result.bin_centers = QVector<double>(centers.begin(), centers.end());
 #else
-        data.bin_values = QVector<double>::fromStdVector(hist->getBinValues());
+        data.bin_values = QVector<double>::fromStdVector(hist->binValues());
         if (result.bin_centers.isEmpty())
-            result.bin_centers = QVector<double>::fromStdVector(hist->getBinCenters());
+            result.bin_centers = QVector<double>::fromStdVector(hist->binCenters());
 #endif
 
         result.projections.push_back(data);
@@ -146,8 +140,7 @@ SaveProjectionsAssistant::projectionsData(const QString& projectionsType,
 //! Returns vector of ProjectionItems sorted according to axis value.
 
 QVector<SessionItem*> SaveProjectionsAssistant::projectionItems(const QString& projectionsType,
-                                                                IntensityDataItem* intensityItem)
-{
+                                                                IntensityDataItem* intensityItem) {
     auto result = intensityItem->projectionContainerItem()->getChildrenOfType(projectionsType);
     std::sort(result.begin(), result.end(), [=](SessionItem* item1, SessionItem* item2) {
         QString propertyName = HorizontalLineItem::P_POSY;
@@ -163,8 +156,7 @@ QVector<SessionItem*> SaveProjectionsAssistant::projectionItems(const QString& p
 //! Returns projections header. For projections along x it will be
 //! "# x         y=6.0194            y=33.5922           y=61.9417"
 
-QString SaveProjectionsAssistant::projectionFileHeader(ProjectionsData& projectionsData)
-{
+QString SaveProjectionsAssistant::projectionFileHeader(ProjectionsData& projectionsData) {
     QString xcol, ycol;
 
     projectionsData.is_horizontal ? xcol = "# x" : xcol = "# y";

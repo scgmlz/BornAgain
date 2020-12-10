@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_MAIN_APPOPTIONS_H
 #define BORNAGAIN_GUI_MAIN_APPOPTIONS_H
@@ -29,8 +29,7 @@ namespace bpo = boost::program_options;
 //! @ingroup tools_internal
 //! @brief Handles command line and config file program options
 
-class ApplicationOptions
-{
+class ApplicationOptions {
 public:
     ApplicationOptions(int argc = 0, char** argv = 0);
 

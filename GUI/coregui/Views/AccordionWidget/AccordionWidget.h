@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 // This file is part of qAccordion. An Accordion widget for Qt
 // Copyright (C) 2015 Christian Rapp <0x2a at posteo dot org>
@@ -32,8 +32,6 @@
 #define BORNAGAIN_GUI_COREGUI_VIEWS_ACCORDIONWIDGET_ACCORDIONWIDGET_H
 
 #include "GUI/coregui/Views/AccordionWidget/ClickableFrame.h"
-#include "GUI/coregui/Views/AccordionWidget/ContentPane.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -76,8 +74,7 @@ class ContentPane;
  * Currently Headers have to be unique
  *
  */
-class BA_CORE_API_ AccordionWidget : public QWidget
-{
+class AccordionWidget : public QWidget {
     Q_OBJECT
 public:
     /**

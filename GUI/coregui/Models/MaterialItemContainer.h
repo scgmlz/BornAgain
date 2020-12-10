@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_MATERIALITEMCONTAINER_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_MATERIALITEMCONTAINER_H
@@ -19,8 +19,7 @@
 
 class MaterialItem;
 
-class MaterialItemContainer : public SessionItem
-{
+class MaterialItemContainer : public SessionItem {
 public:
     static const QString T_MATERIALS;
 

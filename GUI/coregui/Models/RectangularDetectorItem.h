@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,16 +10,15 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_RECTANGULARDETECTORITEM_H
 
-#include "Core/Vector/Vectors3D.h"
+#include "Base/Vector/Vectors3D.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 
-class BA_CORE_API_ RectangularDetectorItem : public DetectorItem
-{
+class BA_CORE_API_ RectangularDetectorItem : public DetectorItem {
 public:
     static const QString P_X_AXIS;
     static const QString P_Y_AXIS;

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONCONTROLLER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_FITWIDGETS_FITSESSIONCONTROLLER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 #include <memory>
 
@@ -29,8 +28,7 @@ class FitObjectiveBuilder;
 //! Controls all activity related to the single fitting task for JobItem.
 //! Provides interaction between FitSessionWidget and fit observers.
 
-class BA_CORE_API_ FitSessionController : public QObject
-{
+class FitSessionController : public QObject {
     Q_OBJECT
 public:
     FitSessionController(QObject* parent = nullptr);

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,16 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/ParticleCompositionView.h"
 #include "GUI/coregui/Models/ParticleItem.h"
-#include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 
-ParticleCompositionView::ParticleCompositionView(QGraphicsItem* parent) : ConnectableView(parent)
-{
+ParticleCompositionView::ParticleCompositionView(QGraphicsItem* parent) : ConnectableView(parent) {
     setName("ParticleComposition");
     setColor(DesignerHelper::getDefaultParticleColor());
     setRectangle(DesignerHelper::getDefaultBoundingRect("ParticleCoreShell"));
@@ -32,8 +30,7 @@ ParticleCompositionView::ParticleCompositionView(QGraphicsItem* parent) : Connec
     m_label_vspace = StyleUtils::SizeOfLetterM().height() * 3.0;
 }
 
-void ParticleCompositionView::addView(IView* childView, int /* row */)
-{
+void ParticleCompositionView::addView(IView* childView, int /* row */) {
     int index = 0;
     if (this->getItem()->tagFromItem(childView->getItem()) == ParticleItem::T_TRANSFORMATION)
         index = 1;

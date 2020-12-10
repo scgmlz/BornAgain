@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_CONSTANTS_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_CONSTANTS_H
 
 #include <QString>
 
-namespace Constants
-{
+namespace Constants {
 
 // general application settings
 const char APPLICATION_NAME[] = "BornAgain";

@@ -1,13 +1,10 @@
-#include "Core/Multilayer/LayerRoughness.h"
-#include "Core/Parametrization/ParameterPattern.h"
+#include "Sample/Slice/LayerRoughness.h"
+#include "Param/Varia/ParameterPattern.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class LayerRoughnessTest : public ::testing::Test
-{
-};
+class LayerRoughnessTest : public ::testing::Test {};
 
-TEST_F(LayerRoughnessTest, LayerRoughnessInitial)
-{
+TEST_F(LayerRoughnessTest, LayerRoughnessInitial) {
     // test with default parameter
     LayerRoughness roughness;
     EXPECT_EQ(0.0, roughness.getSigma());
@@ -32,8 +29,7 @@ TEST_F(LayerRoughnessTest, LayerRoughnessInitial)
 }
 
 // test clone LayerRoughness
-TEST_F(LayerRoughnessTest, LayerRoughnessClone)
-{
+TEST_F(LayerRoughnessTest, LayerRoughnessClone) {
     LayerRoughness original(3.1, 3.2, 3.3);
 
     LayerRoughness* clone = original.clone();
@@ -44,8 +40,7 @@ TEST_F(LayerRoughnessTest, LayerRoughnessClone)
 }
 
 // test parameter pool
-TEST_F(LayerRoughnessTest, LayerRoughnessPool)
-{
+TEST_F(LayerRoughnessTest, LayerRoughnessPool) {
     LayerRoughness roughnessPool;
     EXPECT_EQ(0.0, roughnessPool.getSigma());
     EXPECT_EQ(0.0, roughnessPool.getHurstParameter());

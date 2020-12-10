@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MAINWINDOW_UPDATENOTIFIER_H
 #define BORNAGAIN_GUI_COREGUI_MAINWINDOW_UPDATENOTIFIER_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QObject>
 
 class QNetworkAccessManager;
 class QNetworkReply;
 
-class BA_CORE_API_ UpdateNotifier : public QObject
-{
+class UpdateNotifier : public QObject {
     Q_OBJECT
 public:
     UpdateNotifier(QObject* parent = 0);

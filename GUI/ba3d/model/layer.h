@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_BA3D_MODEL_LAYER_H
 #define BORNAGAIN_GUI_BA3D_MODEL_LAYER_H
 
 #include "GUI/ba3d/model/object.h"
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 // particle layer: a transparent box
-class Layer : public Object
-{
+class Layer : public Object {
 public:
     Layer(VectorRange);
 };

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_DESIGNERVIEW_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsView>
 
 class QGraphicsView;
@@ -28,8 +27,7 @@ class QKeyEvent;
 //!
 //! Belongs to SampleDesigner
 //! Currently contains logic for zooming, deleting objects
-class BA_CORE_API_ DesignerView : public QGraphicsView
-{
+class DesignerView : public QGraphicsView {
     Q_OBJECT
 
 public:

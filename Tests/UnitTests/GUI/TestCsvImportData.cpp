@@ -1,12 +1,9 @@
 #include "GUI/coregui/Views/ImportDataWidgets/CsvImportAssistant/CsvImportTable.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class TestCsvImportData : public ::testing::Test
-{
-};
+class TestCsvImportData : public ::testing::Test {};
 
-TEST_F(TestCsvImportData, test_setting_data)
-{
+TEST_F(TestCsvImportData, test_setting_data) {
     csv::DataArray test_data{{"1.0", "2.0"}, {"3.0", "4.0"}, {"5.0", "6.0"}};
 
     CsvImportData model;
@@ -25,8 +22,7 @@ TEST_F(TestCsvImportData, test_setting_data)
     EXPECT_EQ(model.nCols(), 0u);
 }
 
-TEST_F(TestCsvImportData, test_data_columns)
-{
+TEST_F(TestCsvImportData, test_data_columns) {
     CsvImportData model;
     EXPECT_EQ(model.column(CsvImportData::Intensity), -1);
     EXPECT_EQ(model.column(CsvImportData::Coordinate), -1);
@@ -72,8 +68,7 @@ TEST_F(TestCsvImportData, test_data_columns)
     EXPECT_EQ(model.values(1), result1);
 }
 
-TEST_F(TestCsvImportData, test_multpiliers)
-{
+TEST_F(TestCsvImportData, test_multpiliers) {
     CsvImportData model;
     EXPECT_EQ(model.multiplier(CsvImportData::Intensity), 1.0);
     EXPECT_EQ(model.multiplier(CsvImportData::Coordinate), 1.0);
@@ -98,8 +93,7 @@ TEST_F(TestCsvImportData, test_multpiliers)
     EXPECT_EQ(result[2], "12");
 }
 
-TEST_F(TestCsvImportData, test_labels)
-{
+TEST_F(TestCsvImportData, test_labels) {
     CsvImportData model;
     EXPECT_EQ(model.columnLabel(CsvImportData::Intensity), QString());
     EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate), QString());
@@ -124,8 +118,7 @@ TEST_F(TestCsvImportData, test_labels)
     EXPECT_EQ(model.columnLabel(CsvImportData::Coordinate).toStdString(), std::string());
 }
 
-TEST_F(TestCsvImportData, test_format_check)
-{
+TEST_F(TestCsvImportData, test_format_check) {
     CsvImportData model;
     EXPECT_TRUE(model.checkData().empty());
 

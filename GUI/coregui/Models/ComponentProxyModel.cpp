@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Models/ComponentProxyModel.h"
 #include "GUI/coregui/Models/ComponentProxyStrategy.h"
@@ -20,15 +20,12 @@
 #include <functional>
 
 ComponentProxyModel::ComponentProxyModel(QObject* parent)
-    : QAbstractProxyModel(parent), m_model(nullptr)
-      //    , m_proxyStrategy(new IndentityProxyStrategy)
-      ,
-      m_proxyStrategy(new ComponentProxyStrategy)
-{
-}
+    : QAbstractProxyModel(parent)
+    , m_model(nullptr)
+    //    , m_proxyStrategy(new IndentityProxyStrategy)
+    , m_proxyStrategy(new ComponentProxyStrategy) {}
 
-void ComponentProxyModel::setSessionModel(SessionModel* model)
-{
+void ComponentProxyModel::setSessionModel(SessionModel* model) {
     beginResetModel();
 
     if (sourceModel()) {
@@ -57,36 +54,31 @@ void ComponentProxyModel::setSessionModel(SessionModel* model)
     buildModelMap();
 }
 
-void ComponentProxyModel::setRootIndex(const QModelIndex& sourceRootIndex)
-{
+void ComponentProxyModel::setRootIndex(const QModelIndex& sourceRootIndex) {
     m_proxyStrategy->setRootIndex(sourceRootIndex);
     buildModelMap();
 }
 
-void ComponentProxyModel::setProxyStrategy(ProxyModelStrategy* strategy)
-{
+void ComponentProxyModel::setProxyStrategy(ProxyModelStrategy* strategy) {
     m_proxyStrategy.reset(strategy);
     buildModelMap();
 }
 
-QModelIndex ComponentProxyModel::mapToSource(const QModelIndex& proxyIndex) const
-{
+QModelIndex ComponentProxyModel::mapToSource(const QModelIndex& proxyIndex) const {
     if (!proxyIndex.isValid())
         return QModelIndex();
 
     return m_proxyStrategy->sourceToProxy().key(proxyIndex);
 }
 
-QModelIndex ComponentProxyModel::mapFromSource(const QModelIndex& sourceIndex) const
-{
+QModelIndex ComponentProxyModel::mapFromSource(const QModelIndex& sourceIndex) const {
     if (!sourceIndex.isValid())
         return QModelIndex();
 
     return m_proxyStrategy->sourceToProxy().value(sourceIndex);
 }
 
-QModelIndex ComponentProxyModel::index(int row, int column, const QModelIndex& parent) const
-{
+QModelIndex ComponentProxyModel::index(int row, int column, const QModelIndex& parent) const {
     QModelIndex sourceParent;
     if (parent.isValid())
         sourceParent = mapToSource(parent);
@@ -101,8 +93,7 @@ QModelIndex ComponentProxyModel::index(int row, int column, const QModelIndex& p
     return QModelIndex();
 }
 
-QModelIndex ComponentProxyModel::parent(const QModelIndex& child) const
-{
+QModelIndex ComponentProxyModel::parent(const QModelIndex& child) const {
     QModelIndex sourceParent = m_proxyStrategy->proxySourceParent().value(child);
     if (sourceParent.isValid())
         return mapFromSource(sourceParent);
@@ -110,8 +101,7 @@ QModelIndex ComponentProxyModel::parent(const QModelIndex& child) const
     return QModelIndex();
 }
 
-int ComponentProxyModel::rowCount(const QModelIndex& parent) const
-{
+int ComponentProxyModel::rowCount(const QModelIndex& parent) const {
     QModelIndex sourceParent;
     if (parent.isValid())
         sourceParent = mapToSource(parent);
@@ -127,15 +117,13 @@ int ComponentProxyModel::rowCount(const QModelIndex& parent) const
     return rows.size();
 }
 
-int ComponentProxyModel::columnCount(const QModelIndex& parent) const
-{
+int ComponentProxyModel::columnCount(const QModelIndex& parent) const {
     if (parent.isValid() && parent.column() != 0)
         return 0;
     return SessionFlags::MAX_COLUMNS;
 }
 
-bool ComponentProxyModel::hasChildren(const QModelIndex& parent) const
-{
+bool ComponentProxyModel::hasChildren(const QModelIndex& parent) const {
     QModelIndex source_parent = mapToSource(parent);
     if (parent.isValid() && !source_parent.isValid())
         return false;
@@ -145,8 +133,7 @@ bool ComponentProxyModel::hasChildren(const QModelIndex& parent) const
 
 void ComponentProxyModel::sourceDataChanged(const QModelIndex& topLeft,
                                             const QModelIndex& bottomRight,
-                                            const QVector<int>& roles)
-{
+                                            const QVector<int>& roles) {
     ASSERT(topLeft.isValid() ? topLeft.model() == sourceModel() : true);
     ASSERT(bottomRight.isValid() ? bottomRight.model() == sourceModel() : true);
 
@@ -157,16 +144,14 @@ void ComponentProxyModel::sourceDataChanged(const QModelIndex& topLeft,
     dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }
 
-void ComponentProxyModel::sourceRowsInserted(const QModelIndex& parent, int start, int end)
-{
+void ComponentProxyModel::sourceRowsInserted(const QModelIndex& parent, int start, int end) {
     Q_UNUSED(parent);
     Q_UNUSED(start);
     Q_UNUSED(end);
     buildModelMap();
 }
 
-void ComponentProxyModel::sourceRowsRemoved(const QModelIndex& parent, int start, int end)
-{
+void ComponentProxyModel::sourceRowsRemoved(const QModelIndex& parent, int start, int end) {
     Q_UNUSED(parent);
     Q_UNUSED(start);
     Q_UNUSED(end);
@@ -175,15 +160,13 @@ void ComponentProxyModel::sourceRowsRemoved(const QModelIndex& parent, int start
 
 //! Main method to build the map of persistent indeses.
 
-void ComponentProxyModel::buildModelMap()
-{
+void ComponentProxyModel::buildModelMap() {
     if (!m_model)
         return;
     m_proxyStrategy->buildModelMap(m_model, this);
     layoutChanged();
 }
 
-void ComponentProxyModel::updateModelMap()
-{
+void ComponentProxyModel::updateModelMap() {
     m_proxyStrategy->onDataChanged(m_model, this);
 }

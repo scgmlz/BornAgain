@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "Core/Fitting/ObjectiveMetricUtils.h"
 #include "Core/Fitting/ObjectiveMetric.h"
@@ -19,8 +19,7 @@
 #include <map>
 #include <sstream>
 
-namespace
-{
+namespace {
 const std::function<double(double)> l1_norm = [](double term) { return std::abs(term); };
 const std::function<double(double)> l2_norm = [](double term) { return term * term; };
 
@@ -36,8 +35,7 @@ const std::map<std::string, std::function<double(double)>> norm_factory = {{"l1"
                                                                            {"l2", l2_norm}};
 const std::string default_norm_name = "l2";
 
-template <class U> std::vector<std::string> keys(const std::map<std::string, U>& map)
-{
+template <class U> std::vector<std::string> keys(const std::map<std::string, U>& map) {
     std::vector<std::string> result;
     result.reserve(map.size());
     for (auto& item : map)
@@ -46,24 +44,20 @@ template <class U> std::vector<std::string> keys(const std::map<std::string, U>&
 }
 } // namespace
 
-const std::function<double(double)> ObjectiveMetricUtils::l1Norm()
-{
+const std::function<double(double)> ObjectiveMetricUtils::l1Norm() {
     return l1_norm;
 }
 
-const std::function<double(double)> ObjectiveMetricUtils::l2Norm()
-{
+const std::function<double(double)> ObjectiveMetricUtils::l2Norm() {
     return l2_norm;
 }
 
-std::unique_ptr<ObjectiveMetric> ObjectiveMetricUtils::createMetric(const std::string& metric)
-{
+std::unique_ptr<ObjectiveMetric> ObjectiveMetricUtils::createMetric(const std::string& metric) {
     return createMetric(metric, defaultNormName());
 }
 
 std::unique_ptr<ObjectiveMetric> ObjectiveMetricUtils::createMetric(std::string metric,
-                                                                    std::string norm)
-{
+                                                                    std::string norm) {
     std::transform(metric.begin(), metric.end(), metric.begin(), ::tolower);
     std::transform(norm.begin(), norm.end(), norm.begin(), ::tolower);
     const auto metric_iter = metric_factory.find(metric);
@@ -81,8 +75,7 @@ std::unique_ptr<ObjectiveMetric> ObjectiveMetricUtils::createMetric(std::string 
     return result;
 }
 
-std::string ObjectiveMetricUtils::availableMetricOptions()
-{
+std::string ObjectiveMetricUtils::availableMetricOptions() {
     std::stringstream ss;
     ss << "Available metrics:\n";
     for (auto& item : metricNames())
@@ -95,22 +88,18 @@ std::string ObjectiveMetricUtils::availableMetricOptions()
     return ss.str();
 }
 
-std::vector<std::string> ObjectiveMetricUtils::normNames()
-{
+std::vector<std::string> ObjectiveMetricUtils::normNames() {
     return keys(norm_factory);
 }
 
-std::vector<std::string> ObjectiveMetricUtils::metricNames()
-{
+std::vector<std::string> ObjectiveMetricUtils::metricNames() {
     return keys(metric_factory);
 }
 
-std::string ObjectiveMetricUtils::defaultNormName()
-{
+std::string ObjectiveMetricUtils::defaultNormName() {
     return default_norm_name;
 }
 
-std::string ObjectiveMetricUtils::defaultMetricName()
-{
+std::string ObjectiveMetricUtils::defaultMetricName() {
     return default_metric_name;
 }

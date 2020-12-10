@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATAWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATAWIDGET_H
@@ -21,8 +21,7 @@ class SpecularDataCanvas;
 class SpecularDataItem;
 class IntensityDataPropertyWidget;
 
-class SpecularDataWidget : public SessionItemWidget
-{
+class SpecularDataWidget : public SessionItemWidget {
     Q_OBJECT
 
 public:

@@ -1,9 +1,9 @@
-#include "Core/SimulationElement/DepthProbeElement.h"
-#include "Core/Binning/FixedBinAxis.h"
+#include "Core/Element/DepthProbeElement.h"
+#include "Base/Axis/FixedBinAxis.h"
+#include "Base/Vector/Direction.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class DepthProbeElementTest : public ::testing::Test
-{
+class DepthProbeElementTest : public ::testing::Test {
 protected:
     DepthProbeElementTest();
     DepthProbeElement createDefaultElement();
@@ -13,21 +13,18 @@ protected:
     std::unique_ptr<FixedBinAxis> m_z_positions;
 };
 
-DepthProbeElementTest::DepthProbeElementTest() : m_z_positions(new FixedBinAxis("z", 10, 0.0, 10.0))
-{
-}
+DepthProbeElementTest::DepthProbeElementTest()
+    : m_z_positions(new FixedBinAxis("z", 10, 0.0, 10.0)) {}
 
-DepthProbeElement DepthProbeElementTest::createDefaultElement()
-{
+DepthProbeElement DepthProbeElementTest::createDefaultElement() {
     const double wavelength = 1.0;
     const double angle = 2.0;
     return DepthProbeElement(wavelength, angle, m_z_positions.get());
 }
 
 void DepthProbeElementTest::compareEqualElements(const DepthProbeElement& lhs,
-                                                 const DepthProbeElement& rhs)
-{
-    EXPECT_EQ(lhs.getWavelength(), rhs.getWavelength());
+                                                 const DepthProbeElement& rhs) {
+    EXPECT_EQ(lhs.wavelength(), rhs.wavelength());
     EXPECT_EQ(lhs.getAlphaI(), rhs.getAlphaI());
     bool intensity_comparison_result = (lhs.getIntensities() == rhs.getIntensities()).min();
     EXPECT_TRUE(intensity_comparison_result);
@@ -35,15 +32,14 @@ void DepthProbeElementTest::compareEqualElements(const DepthProbeElement& lhs,
     EXPECT_EQ(lhs.isCalculated(), rhs.isCalculated());
 }
 
-TEST_F(DepthProbeElementTest, InitialState)
-{
+TEST_F(DepthProbeElementTest, InitialState) {
     const double wavelength = 1.0;
     const double angle = 2.0;
     const double phi = 0.0;
     const kvector_t k_i = vecOfLambdaAlphaPhi(wavelength, angle, phi);
     const DepthProbeElement& element = createDefaultElement();
 
-    EXPECT_EQ(wavelength, element.getWavelength());
+    EXPECT_EQ(wavelength, element.wavelength());
     EXPECT_EQ(angle, element.getAlphaI());
     bool intensity_comparison_result = (element.getIntensities() == 0.0).min();
     EXPECT_TRUE(intensity_comparison_result);
@@ -51,8 +47,7 @@ TEST_F(DepthProbeElementTest, InitialState)
     EXPECT_TRUE(element.isCalculated());
 }
 
-TEST_F(DepthProbeElementTest, CopyMoveAssign)
-{
+TEST_F(DepthProbeElementTest, CopyMoveAssign) {
     auto element = createDefaultElement();
 
     element.setCalculationFlag(false);

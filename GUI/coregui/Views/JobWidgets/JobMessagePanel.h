@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBMESSAGEPANEL_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBMESSAGEPANEL_H
@@ -23,8 +23,7 @@ class QTextEdit;
 //! The JobMessagePanel class shows log messages from FitActivityPanel at the
 //! bottom part of JobView.
 
-class BA_CORE_API_ JobMessagePanel : public InfoPanel
-{
+class JobMessagePanel : public InfoPanel {
     Q_OBJECT
 public:
     JobMessagePanel(QWidget* parent = 0);

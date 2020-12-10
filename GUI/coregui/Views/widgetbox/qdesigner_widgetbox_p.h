@@ -50,6 +50,8 @@
 // We mean it.
 //
 
+// Patched JWu 12nov20 because QFlags(0) was deprecated
+
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_WIDGETBOX_P_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_WIDGETBOX_QDESIGNER_WIDGETBOX_P_H
 
@@ -60,18 +62,16 @@ QT_BEGIN_NAMESPACE
 
 class DomUI;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 // A widget box with a load mode that allows for updating custom widgets.
 
-class QDESIGNER_SHARED_EXPORT QDesignerWidgetBox : public QDesignerWidgetBoxInterface
-{
+class QDESIGNER_SHARED_EXPORT QDesignerWidgetBox : public QDesignerWidgetBoxInterface {
     Q_OBJECT
 public:
     enum LoadMode { LoadMerge, LoadReplace, LoadCustomWidgetsOnly };
 
-    explicit QDesignerWidgetBox(QWidget* parent = 0, Qt::WindowFlags flags = 0);
+    explicit QDesignerWidgetBox(QWidget* parent = 0, Qt::WindowFlags flags = {});
 
     LoadMode loadMode() const;
     void setLoadMode(LoadMode lm);

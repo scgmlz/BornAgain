@@ -1,22 +1,21 @@
-#include "Core/Particle/ParticleDistribution.h"
-#include "Core/Basics/Units.h"
-#include "Core/Material/MaterialFactoryFuncs.h"
-#include "Core/Parametrization/Distributions.h"
-#include "Core/Particle/Particle.h"
-#include "Core/includeIncludes/FormFactors.h"
+#include "Sample/Particle/ParticleDistribution.h"
+#include "Base/Const/Units.h"
+#include "Param/Distrib/Distributions.h"
+#include "Sample/HardParticle/FormFactorCone.h"
+#include "Sample/HardParticle/FormFactorFullSphere.h"
+#include "Sample/Material/MaterialFactoryFuncs.h"
+#include "Sample/Particle/Particle.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class ParticleDistributionTest : public ::testing::Test
-{
+class ParticleDistributionTest : public ::testing::Test {
 protected:
     ~ParticleDistributionTest();
 };
 
 ParticleDistributionTest::~ParticleDistributionTest() = default;
 
-TEST_F(ParticleDistributionTest, getChildren)
-{
-    Particle particle(HomogeneousMaterial("Air", 0.0, 0.0), FormFactorFullSphere(1.0));
+TEST_F(ParticleDistributionTest, getChildren) {
+    Particle particle(HomogeneousMaterial("Vacuum", 0.0, 0.0), FormFactorFullSphere(1.0));
     ParameterDistribution parameter("name", DistributionGate(1.0, 2.0), 5, 0.0, 1.0);
     ParticleDistribution distr(particle, parameter);
 
@@ -25,9 +24,8 @@ TEST_F(ParticleDistributionTest, getChildren)
     EXPECT_EQ(children.size(), 2u);
 }
 
-TEST_F(ParticleDistributionTest, mainParameterUnits)
-{
-    Material mat = HomogeneousMaterial("Air", 0.0, 0.0);
+TEST_F(ParticleDistributionTest, mainParameterUnits) {
+    Material mat = HomogeneousMaterial("Vacuum", 0.0, 0.0);
     DistributionGate gate(1.0, 2.0);
 
     ParameterDistribution par("/Particle/FullSphere/Radius", gate, 5);

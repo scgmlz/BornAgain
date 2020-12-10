@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_POLYGONVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_MASKWIDGETS_POLYGONVIEW_H
@@ -20,8 +20,7 @@
 
 //! This is a View of polygon mask (represented by PolygonItem) on GraphicsScene.
 
-class BA_CORE_API_ PolygonView : public IShape2DView
-{
+class PolygonView : public IShape2DView {
     Q_OBJECT
 
 public:

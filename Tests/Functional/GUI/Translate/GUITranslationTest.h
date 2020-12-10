@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_FUNCTIONAL_GUI_TRANSLATE_GUITRANSLATIONTEST_H
 #define BORNAGAIN_TESTS_FUNCTIONAL_GUI_TRANSLATE_GUITRANSLATIONTEST_H
@@ -30,8 +30,7 @@ class ApplicationModels;
 //! * Complains, if translated names doesn't match registered parameters of domain simulation.
 //! * Complains, if simulation contains parameters which do not have translations.
 
-class GUITranslationTest
-{
+class GUITranslationTest {
 public:
     GUITranslationTest(const std::string& simName, const std::string& sampleName);
 

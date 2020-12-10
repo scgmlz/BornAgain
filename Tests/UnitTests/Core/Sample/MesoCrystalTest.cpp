@@ -1,17 +1,15 @@
-#include "Core/Particle/MesoCrystal.h"
-#include "Core/HardParticle/FormFactorFullSphere.h"
-#include "Core/Lattice/Lattice.h"
-#include "Core/Particle/Crystal.h"
-#include "Core/Particle/ParticleComposition.h"
+#include "Sample/Particle/MesoCrystal.h"
+#include "Sample/HardParticle/FormFactorFullSphere.h"
+#include "Sample/Lattice/BakeLattice.h"
+#include "Sample/Particle/Crystal.h"
+#include "Sample/Particle/ParticleComposition.h"
+#include "Sample/Scattering/Rotations.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class MesoCrystalTest : public ::testing::Test
-{
-};
+class MesoCrystalTest : public ::testing::Test {};
 
-TEST_F(MesoCrystalTest, getChildren)
-{
-    Lattice lattice = Lattice::createHexagonalLattice(1.0, 2.0);
+TEST_F(MesoCrystalTest, getChildren) {
+    Lattice3D lattice = bake::HexagonalLattice(1.0, 2.0);
     ParticleComposition composition;
     Crystal crystal(composition, lattice);
     MesoCrystal meso(crystal, FormFactorFullSphere(1.0));

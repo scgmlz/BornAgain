@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/SampleDesigner/SampleViewFactory.h"
 #include "GUI/coregui/Views/SampleDesigner/InterferenceFunctionViews.h"
@@ -41,8 +41,7 @@ QStringList SampleViewFactory::m_valid_item_names = QStringList()
                                                     << "InterferenceHardDisk"
                                                     << "InterferenceRadialParaCrystal";
 
-bool SampleViewFactory::isValidType(const QString& name)
-{
+bool SampleViewFactory::isValidType(const QString& name) {
     if (name.startsWith("FormFactor")) {
         return true;
     } else {
@@ -50,8 +49,7 @@ bool SampleViewFactory::isValidType(const QString& name)
     }
 }
 
-IView* SampleViewFactory::createSampleView(const QString& name)
-{
+IView* SampleViewFactory::createSampleView(const QString& name) {
     if (name == "MultiLayer") {
         return new MultiLayerView();
     } else if (name == "Layer") {

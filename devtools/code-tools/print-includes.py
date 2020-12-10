@@ -25,7 +25,7 @@ flist = sys.argv[1:]
 for fn in flist:
     inspect( fn )
 
-# remove duplicates and sort (how much more elegant would this be in Ruby...)
+# remove duplicates and sort
 tmp = set(result)
 result = list(tmp)
 result.sort()

@@ -1,15 +1,12 @@
-#include "Core/Scattering/Rotations.h"
-#include "Core/Vector/Transform3D.h"
+#include "Base/Vector/Transform3D.h"
+#include "Sample/Scattering/Rotations.h"
 #include "Tests/GTestWrapper/google_test.h"
 
 #include <memory>
 
-class RotationTest : public ::testing::Test
-{
-};
+class RotationTest : public ::testing::Test {};
 
-TEST_F(RotationTest, XRotations)
-{
+TEST_F(RotationTest, XRotations) {
     double angle = 1.0;
     RotationX rot(angle);
     auto rot_matrix = rot.getTransform3D();
@@ -19,8 +16,7 @@ TEST_F(RotationTest, XRotations)
     EXPECT_DOUBLE_EQ(p_rot_cast->getAngle(), angle);
 }
 
-TEST_F(RotationTest, YRotations)
-{
+TEST_F(RotationTest, YRotations) {
     double angle = 1.0;
     RotationY rot(angle);
     auto rot_matrix = rot.getTransform3D();
@@ -30,8 +26,7 @@ TEST_F(RotationTest, YRotations)
     EXPECT_DOUBLE_EQ(p_rot_cast->getAngle(), angle);
 }
 
-TEST_F(RotationTest, ZRotations)
-{
+TEST_F(RotationTest, ZRotations) {
     double angle = 1.0;
     RotationZ rot(angle);
     auto rot_matrix = rot.getTransform3D();
@@ -41,8 +36,7 @@ TEST_F(RotationTest, ZRotations)
     EXPECT_DOUBLE_EQ(p_rot_cast->getAngle(), angle);
 }
 
-TEST_F(RotationTest, EulerRotations)
-{
+TEST_F(RotationTest, EulerRotations) {
     double alpha = 1.0;
     double beta = 0.2;
     double gamma = -0.5;

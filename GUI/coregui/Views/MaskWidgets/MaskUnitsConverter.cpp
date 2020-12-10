@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,21 +10,20 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/MaskUnitsConverter.h"
-#include "Core/Intensity/IntensityDataFunctions.h"
+#include "Device/Data/DataUtils.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 
-MaskUnitsConverter::MaskUnitsConverter() : mp_data(nullptr), m_direction(UNDEFINED) {}
+MaskUnitsConverter::MaskUnitsConverter() : m_data(nullptr), m_direction(UNDEFINED) {}
 
 //! Converts all masks on board of IntensityDataItem into bin-fraction coordinates.
 
-void MaskUnitsConverter::convertToNbins(IntensityDataItem* intensityData)
-{
+void MaskUnitsConverter::convertToNbins(IntensityDataItem* intensityData) {
     m_direction = TO_NBINS;
     convertIntensityDataItem(intensityData);
 }
@@ -32,20 +31,18 @@ void MaskUnitsConverter::convertToNbins(IntensityDataItem* intensityData)
 //! Converts all masks on board of IntensityDataItem from bin-fraction coordinates to coordinates
 //! of axes currently defined in OutputData.
 
-void MaskUnitsConverter::convertFromNbins(IntensityDataItem* intensityData)
-{
+void MaskUnitsConverter::convertFromNbins(IntensityDataItem* intensityData) {
     m_direction = FROM_NBINS;
     convertIntensityDataItem(intensityData);
 }
 
 //! Converts all masks on board of IntensityDataItem from/to bin-fraction coordinates
 
-void MaskUnitsConverter::convertIntensityDataItem(IntensityDataItem* intensityData)
-{
+void MaskUnitsConverter::convertIntensityDataItem(IntensityDataItem* intensityData) {
     if (!intensityData || !intensityData->getOutputData())
         return;
 
-    mp_data = intensityData->getOutputData();
+    m_data = intensityData->getOutputData();
 
     if (intensityData->maskContainerItem())
         for (SessionItem* maskItem : intensityData->maskContainerItem()->getItems())
@@ -58,8 +55,7 @@ void MaskUnitsConverter::convertIntensityDataItem(IntensityDataItem* intensityDa
 
 //! Converts single mask from/to bin-fraction coordinates
 
-void MaskUnitsConverter::convertMask(SessionItem* maskItem)
-{
+void MaskUnitsConverter::convertMask(SessionItem* maskItem) {
     if (maskItem->modelType() == "RectangleMask" || maskItem->modelType() == "RegionOfInterest") {
         convertCoordinate(maskItem, RectangleItem::P_XLOW, RectangleItem::P_YLOW);
         convertCoordinate(maskItem, RectangleItem::P_XUP, RectangleItem::P_YUP);
@@ -80,11 +76,11 @@ void MaskUnitsConverter::convertMask(SessionItem* maskItem)
         double y2 = yc + yR;
 
         if (m_direction == TO_NBINS) {
-            IntensityDataFunctions::coordinateToBinf(xc, yc, *mp_data);
-            IntensityDataFunctions::coordinateToBinf(x2, y2, *mp_data);
+            DataUtils::coordinateToBinf(xc, yc, *m_data);
+            DataUtils::coordinateToBinf(x2, y2, *m_data);
         } else {
-            IntensityDataFunctions::coordinateFromBinf(xc, yc, *mp_data);
-            IntensityDataFunctions::coordinateFromBinf(x2, y2, *mp_data);
+            DataUtils::coordinateFromBinf(xc, yc, *m_data);
+            DataUtils::coordinateFromBinf(x2, y2, *m_data);
         }
         maskItem->setItemValue(EllipseItem::P_XCENTER, xc);
         maskItem->setItemValue(EllipseItem::P_YCENTER, yc);
@@ -97,8 +93,7 @@ void MaskUnitsConverter::convertMask(SessionItem* maskItem)
 //! bin-fraction coordinates. Result of operation are new values for registered properties.
 
 void MaskUnitsConverter::convertCoordinate(SessionItem* maskItem, const QString& xname,
-                                           const QString& yname)
-{
+                                           const QString& yname) {
     if (maskItem->isTag(xname)) {
         double x = convert(maskItem->getItemValue(xname).toDouble(), 0);
         maskItem->setItemValue(xname, x);
@@ -111,15 +106,14 @@ void MaskUnitsConverter::convertCoordinate(SessionItem* maskItem, const QString&
 
 //! Convert value of axis from/to bin-fraction coordinates.
 
-double MaskUnitsConverter::convert(double value, int axis_index)
-{
-    ASSERT(mp_data);
+double MaskUnitsConverter::convert(double value, int axis_index) {
+    ASSERT(m_data);
     ASSERT(axis_index == 0 || axis_index == 1);
 
     if (m_direction == TO_NBINS) {
-        return IntensityDataFunctions::coordinateToBinf(value, mp_data->getAxis(axis_index));
+        return DataUtils::coordinateToBinf(value, m_data->axis(axis_index));
     } else if (m_direction == FROM_NBINS) {
-        return IntensityDataFunctions::coordinateFromBinf(value, mp_data->getAxis(axis_index));
+        return DataUtils::coordinateFromBinf(value, m_data->axis(axis_index));
     }
     throw GUIHelpers::Error("MaskUnitsConverter::convertX() -> Error. Unknown conversion");
 }

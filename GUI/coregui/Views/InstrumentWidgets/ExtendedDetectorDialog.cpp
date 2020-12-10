@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/ExtendedDetectorDialog.h"
 #include "GUI/coregui/Views/InstrumentWidgets/DetectorMaskDelegate.h"
@@ -22,8 +22,9 @@
 #include <QVBoxLayout>
 
 ExtendedDetectorDialog::ExtendedDetectorDialog(QWidget* parent)
-    : QDialog(parent), m_maskEditor(new MaskEditor), m_maskDelegate(new DetectorMaskDelegate(this))
-{
+    : QDialog(parent)
+    , m_maskEditor(new MaskEditor)
+    , m_maskDelegate(new DetectorMaskDelegate(this)) {
     setMinimumSize(256, 256);
 
     readSettings();
@@ -59,19 +60,16 @@ ExtendedDetectorDialog::ExtendedDetectorDialog(QWidget* parent)
 }
 
 void ExtendedDetectorDialog::setDetectorContext(InstrumentModel* instrumentModel,
-                                                DetectorItem* detectorItem)
-{
+                                                DetectorItem* detectorItem) {
     m_maskDelegate->initMaskEditorContext(m_maskEditor, instrumentModel, detectorItem);
 }
 
-void ExtendedDetectorDialog::reject()
-{
+void ExtendedDetectorDialog::reject() {
     writeSettings();
     QDialog::reject();
 }
 
-void ExtendedDetectorDialog::readSettings()
-{
+void ExtendedDetectorDialog::readSettings() {
     QSettings settings;
     if (settings.childGroups().contains(Constants::S_MASKEDITOR)) {
         settings.beginGroup(Constants::S_MASKEDITOR);
@@ -82,8 +80,7 @@ void ExtendedDetectorDialog::readSettings()
     }
 }
 
-void ExtendedDetectorDialog::writeSettings()
-{
+void ExtendedDetectorDialog::writeSettings() {
     QSettings settings;
     settings.beginGroup(Constants::S_MASKEDITOR);
     settings.setValue(Constants::S_WINDOWSIZE, this->size());

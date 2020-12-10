@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataProjectionsWidget.h"
 #include "GUI/coregui/Models/DataItemUtils.h"
@@ -22,8 +22,7 @@
 #include <QVBoxLayout>
 
 IntensityDataProjectionsWidget::IntensityDataProjectionsWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_projectionsEditor(new ProjectionsEditor)
-{
+    : SessionItemWidget(parent), m_projectionsEditor(new ProjectionsEditor) {
     QVBoxLayout* vlayout = new QVBoxLayout(this);
     vlayout->setMargin(0);
     vlayout->setSpacing(0);
@@ -32,32 +31,27 @@ IntensityDataProjectionsWidget::IntensityDataProjectionsWidget(QWidget* parent)
     setLayout(vlayout);
 }
 
-QList<QAction*> IntensityDataProjectionsWidget::actionList()
-{
+QList<QAction*> IntensityDataProjectionsWidget::actionList() {
     return m_projectionsEditor->topToolBarActions();
 }
 
-void IntensityDataProjectionsWidget::subscribeToItem()
-{
+void IntensityDataProjectionsWidget::subscribeToItem() {
     auto container = projectionContainer(intensityDataItem());
 
     m_projectionsEditor->setContext(intensityDataItem()->model(), container->index(),
                                     intensityDataItem());
 }
 
-void IntensityDataProjectionsWidget::unsubscribeFromItem()
-{
+void IntensityDataProjectionsWidget::unsubscribeFromItem() {
     m_projectionsEditor->resetContext();
 }
 
-IntensityDataItem* IntensityDataProjectionsWidget::intensityDataItem()
-{
+IntensityDataItem* IntensityDataProjectionsWidget::intensityDataItem() {
     return DataItemUtils::intensityDataItem(currentItem());
 }
 
 ProjectionContainerItem*
-IntensityDataProjectionsWidget::projectionContainer(IntensityDataItem* intensityItem)
-{
+IntensityDataProjectionsWidget::projectionContainer(IntensityDataItem* intensityItem) {
     ASSERT(intensityItem);
 
     auto containerItem = intensityItem->getItem(IntensityDataItem::T_PROJECTIONS);

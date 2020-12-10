@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_SPECULARDATAITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_SPECULARDATAITEM_H
@@ -20,14 +20,12 @@
 class AmplitudeAxisItem;
 class BasicAxisItem;
 
-namespace SpecularDataAxesNames
-{
+namespace SpecularDataAxesNames {
 const QString x_axis_default_name = "X [nbins]";
 const QString y_axis_default_name = "Signal [a.u.]";
 } // namespace SpecularDataAxesNames
 
-class BA_CORE_API_ SpecularDataItem : public DataItem
-{
+class BA_CORE_API_ SpecularDataItem : public DataItem {
 public:
     static const QString P_TITLE;
     static const QString P_XAXIS;

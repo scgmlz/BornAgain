@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,19 +10,17 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/ba3d/model/model.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/ba3d/model/geometry.h"
 
-namespace RealSpace
-{
+namespace RealSpace {
 
 Model::Model() : defCamPos(Vector3D::_1, Vector3D::_0, Vector3D::_z) {}
 
-Model::~Model()
-{
+Model::~Model() {
     for (auto o : objects) {
         o->model = nullptr;
         delete o;
@@ -34,22 +32,19 @@ Model::~Model()
     }
 }
 
-void Model::clearOpaque()
-{
+void Model::clearOpaque() {
     while (!objects.isEmpty())
         delete objects.first();
     emit updated(false);
 }
 
-void Model::clearBlend()
-{
+void Model::clearBlend() {
     while (!objectsBlend.isEmpty())
         delete objectsBlend.first();
     emit updated(false);
 }
 
-Particles::Particle* Model::newParticle(Particles::EShape k, float R)
-{
+Particles::Particle* Model::newParticle(Particles::EShape k, float R) {
     using namespace Particles;
 
     float D = 2 * R;
@@ -117,24 +112,21 @@ Particles::Particle* Model::newParticle(Particles::EShape k, float R)
     return nullptr;
 }
 
-void Model::add(Object* o)
-{
+void Model::add(Object* o) {
     ASSERT(o);
     ASSERT(!o->model);
     o->model = this;
     objects.append(o);
 }
 
-void Model::addBlend(Object* o)
-{
+void Model::addBlend(Object* o) {
     ASSERT(o);
     ASSERT(!o->model);
     o->model = this;
     objectsBlend.append(o);
 }
 
-void Model::rem(Object* o)
-{
+void Model::rem(Object* o) {
     int i;
     if ((i = objects.indexOf(o)) >= 0)
         objects.remove(i);
@@ -147,30 +139,26 @@ void Model::rem(Object* o)
     o->model = nullptr;
 }
 
-void Model::releaseGeometries()
-{
+void Model::releaseGeometries() {
     for (auto o : objects)
         o->releaseGeometry();
     for (auto o : objectsBlend)
         o->releaseGeometry();
 }
 
-bool Model::modelIsEmpty()
-{
+bool Model::modelIsEmpty() {
     if (objects.isEmpty() && objectsBlend.isEmpty())
         return true;
     else
         return false;
 }
 
-void Model::draw(Canvas& canvas) const
-{
+void Model::draw(Canvas& canvas) const {
     for (auto o : objects)
         o->draw(canvas);
 }
 
-void Model::drawBlend(Canvas& canvas) const
-{
+void Model::drawBlend(Canvas& canvas) const {
     for (auto o : objectsBlend)
         o->draw(canvas);
 }

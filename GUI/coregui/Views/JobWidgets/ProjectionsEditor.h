@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITOR_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITOR_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QMainWindow>
 
 class SessionModel;
@@ -29,15 +28,13 @@ class ProjectionsPropertyPanel;
 class ProjectionsWidget;
 class QItemSelectionModel;
 class QSplitter;
-namespace Manhattan
-{
+namespace Manhattan {
 class MiniSplitter;
 }
 
 //! Editor to draw projections on top of intensity plot. Part of
 
-class BA_CORE_API_ ProjectionsEditor : public QMainWindow
-{
+class ProjectionsEditor : public QMainWindow {
     Q_OBJECT
 
 public:

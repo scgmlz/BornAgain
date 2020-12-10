@@ -4,8 +4,6 @@ Testing python specific API for Minimizer related classes.
 import sys
 import os
 import unittest
-
-sys.path.append("@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 import bornagain as ba
 
 
@@ -21,7 +19,6 @@ class TestMinimizerHelper:
 
 
 class MinimizerAPITest(unittest.TestCase):
-
     def test_ParameterAttribute(self):
         """
         Testing p.value attribute
@@ -68,7 +65,6 @@ class MinimizerAPITest(unittest.TestCase):
         self.assertEqual(params["par3"].limits().upperLimit(), 2.0)
 
         self.assertTrue(params["par4"].limits().isFixed())
-
 
     def test_SimpleMinimizer(self):
         minimizer = ba.Minimizer()

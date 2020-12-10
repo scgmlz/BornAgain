@@ -5,8 +5,7 @@
 #include <QObject>
 #include <QString>
 
-namespace
-{
+namespace {
 const QString senderName1("senderName1");
 const QString senderName2("senderName2");
 
@@ -20,18 +19,15 @@ const QString messageType3("messageType3");
 const QString description3("description3");
 } // namespace
 
-class TestMessageService : public ::testing::Test
-{
+class TestMessageService : public ::testing::Test {
 public:
-    class Sender : public QObject
-    {
+    class Sender : public QObject {
     public:
-        Sender(const QString& name) { setObjectName(name); }
+        explicit Sender(const QString& name) { setObjectName(name); }
     };
 };
 
-TEST_F(TestMessageService, guiMessage)
-{
+TEST_F(TestMessageService, guiMessage) {
     GUIMessage message(senderName1, messageType1, description1);
 
     EXPECT_EQ(message.senderName(), senderName1);
@@ -39,14 +35,12 @@ TEST_F(TestMessageService, guiMessage)
     EXPECT_EQ(message.messageDescription(), description1);
 }
 
-TEST_F(TestMessageService, initialState)
-{
+TEST_F(TestMessageService, initialState) {
     MessageService svc;
     EXPECT_TRUE(svc.messages().isEmpty());
 }
 
-TEST_F(TestMessageService, sendMessage)
-{
+TEST_F(TestMessageService, sendMessage) {
     MessageService svc;
     Sender sender(senderName1);
 
@@ -70,8 +64,7 @@ TEST_F(TestMessageService, sendMessage)
     EXPECT_EQ(svc.senderList().size(), 1);
 }
 
-TEST_F(TestMessageService, twoSenders)
-{
+TEST_F(TestMessageService, twoSenders) {
     MessageService svc;
     Sender sender1(senderName1);
     Sender sender2(senderName2);
@@ -98,8 +91,7 @@ TEST_F(TestMessageService, twoSenders)
     EXPECT_TRUE(svc.senderList().contains(senderName2));
 }
 
-TEST_F(TestMessageService, messageCount)
-{
+TEST_F(TestMessageService, messageCount) {
     MessageService svc;
     Sender sender1(senderName1);
     Sender sender2(senderName2);
@@ -124,8 +116,7 @@ TEST_F(TestMessageService, messageCount)
     EXPECT_EQ(svc.messageCount(&sender3), 0);
 }
 
-TEST_F(TestMessageService, warningAndErrorCount)
-{
+TEST_F(TestMessageService, warningAndErrorCount) {
     MessageService svc;
     Sender sender1(senderName1);
     Sender sender2(senderName2);

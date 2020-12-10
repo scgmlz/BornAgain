@@ -1,30 +1,28 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
 //! @file      GUI/coregui/Views/SampleDesigner/IView.h
-//! @brief     Defines class IView
+//! @brief     Defines interface IView
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_IVIEW_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SAMPLEDESIGNER_IVIEW_H
 
 #include "GUI/coregui/Views/SampleDesigner/ViewTypes.h"
-#include "Wrap/WinDllMacros.h"
 #include <QGraphicsObject>
 #include <memory>
 
 class SessionItem;
 
-//! parent class for graphic representation of all ISample's
-class BA_CORE_API_ IView : public QGraphicsObject
-{
+//! parent class for graphic representation of all ISampleNode's
+class IView : public QGraphicsObject {
     Q_OBJECT
 public:
     IView(QGraphicsItem* parent = 0);
@@ -53,13 +51,11 @@ protected:
     SessionItem* m_item;
 };
 
-inline int IView::type() const
-{
+inline int IView::type() const {
     return ViewTypes::IVIEW;
 }
 
-inline SessionItem* IView::getItem()
-{
+inline SessionItem* IView::getItem() {
     return m_item;
 }
 

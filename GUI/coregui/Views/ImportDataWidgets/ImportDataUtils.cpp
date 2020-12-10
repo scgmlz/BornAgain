@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,11 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
-#include "Core/Binning/PointwiseAxis.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Base/Axis/PointwiseAxis.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -27,26 +27,22 @@
 #include <QFileInfo>
 #include <QMessageBox>
 
-namespace
-{
+namespace {
 const QString filter_string_ba = "Intensity File (*.int *.gz *.tif *.tiff *.txt *.csv);;"
                                  "Other (*.*)";
 const QString filter_string_ascii = "Intensity File (*.int *.int.gz *.txt *.csv *.dat *.ascii);;"
                                     "Ascii column-wise data (*.*)";
 
-int getRank(const RealDataItem& item)
-{
+int rank(const RealDataItem& item) {
     return static_cast<int>(item.shape().size());
 }
 
-int getRank(const InstrumentItem& item)
-{
+int rank(const InstrumentItem& item) {
     return static_cast<int>(item.shape().size());
 }
 } // namespace
 
-std::unique_ptr<OutputData<double>> ImportDataUtils::ImportKnownData(QString& fileName)
-{
+std::unique_ptr<OutputData<double>> ImportDataUtils::ImportKnownData(QString& fileName) {
     // Try to use the canonical tools for importing data
     std::unique_ptr<OutputData<double>> result;
     try {
@@ -62,8 +58,7 @@ std::unique_ptr<OutputData<double>> ImportDataUtils::ImportKnownData(QString& fi
     return result;
 }
 
-std::unique_ptr<OutputData<double>> ImportDataUtils::ImportReflectometryData(QString& fileName)
-{
+std::unique_ptr<OutputData<double>> ImportDataUtils::ImportReflectometryData(QString& fileName) {
     std::unique_ptr<OutputData<double>> result;
     try {
         std::unique_ptr<OutputData<double>> data(
@@ -78,24 +73,22 @@ std::unique_ptr<OutputData<double>> ImportDataUtils::ImportReflectometryData(QSt
     return result;
 }
 
-std::unique_ptr<OutputData<double>> ImportDataUtils::Import2dData(QString& fileName)
-{
+std::unique_ptr<OutputData<double>> ImportDataUtils::Import2dData(QString& fileName) {
     return ImportKnownData(fileName);
 }
 
-ImportDataInfo ImportDataUtils::Import1dData(QString& fileName)
-{
+ImportDataInfo ImportDataUtils::Import1dData(QString& fileName) {
     if (DataFormatUtils::isCompressed(fileName.toStdString())
         || DataFormatUtils::isIntFile(fileName.toStdString())
         || DataFormatUtils::isTiffFile(fileName.toStdString())) {
         try {
-            return ImportDataInfo(ImportKnownData(fileName), AxesUnits::QSPACE);
+            return ImportDataInfo(ImportKnownData(fileName), Axes::Units::QSPACE);
         } catch (...) {
             return getFromImportAssistant(fileName);
         }
     } else {
         try {
-            return ImportDataInfo(ImportReflectometryData(fileName), AxesUnits::QSPACE);
+            return ImportDataInfo(ImportReflectometryData(fileName), Axes::Units::QSPACE);
         } catch (...) {
             QString message =
                 QString("There was a problem while trying to import data from "
@@ -110,8 +103,7 @@ ImportDataInfo ImportDataUtils::Import1dData(QString& fileName)
     }
 }
 
-ImportDataInfo ImportDataUtils::getFromImportAssistant(QString& fileName)
-{
+ImportDataInfo ImportDataUtils::getFromImportAssistant(QString& fileName) {
     if (!csv::isAscii(fileName)) {
         QString message =
             QString(
@@ -136,22 +128,20 @@ ImportDataInfo ImportDataUtils::getFromImportAssistant(QString& fileName)
 }
 
 bool ImportDataUtils::Compatible(const InstrumentItem& instrumentItem,
-                                 const RealDataItem& realDataItem)
-{
-    return getRank(instrumentItem) == getRank(realDataItem);
+                                 const RealDataItem& realDataItem) {
+    return rank(instrumentItem) == rank(realDataItem);
 }
 
 std::unique_ptr<OutputData<double>>
-ImportDataUtils::CreateSimplifiedOutputData(const OutputData<double>& data)
-{
-    const size_t data_rank = data.getRank();
+ImportDataUtils::CreateSimplifiedOutputData(const OutputData<double>& data) {
+    const size_t data_rank = data.rank();
     if (data_rank > 2 || data_rank < 1)
         throw std::runtime_error("Error in ImportDataUtils::CreateSimplifiedOutputData: passed "
                                  "array is neither 1D nor 2D");
 
     std::unique_ptr<OutputData<double>> result(new OutputData<double>);
     for (size_t i = 0; i < data_rank; ++i) {
-        const IAxis& axis = data.getAxis(i);
+        const IAxis& axis = data.axis(i);
         const size_t axis_size = axis.size();
         const double min = 0.0;
         const double max = axis_size;
@@ -163,8 +153,7 @@ ImportDataUtils::CreateSimplifiedOutputData(const OutputData<double>& data)
 }
 
 QString ImportDataUtils::printShapeMessage(const std::vector<int>& instrument_shape,
-                                           const std::vector<int>& data_shape)
-{
+                                           const std::vector<int>& data_shape) {
     auto to_str = [](const std::vector<int>& shape) {
         std::string result;
         for (size_t i = 0, size = shape.size(); i < size; ++i) {

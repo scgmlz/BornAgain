@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,30 +10,29 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_TESTS_PERFORMANCE_CORE_THREADINGCOMPONENTS_H
 #define BORNAGAIN_TESTS_PERFORMANCE_CORE_THREADINGCOMPONENTS_H
 
 #include <memory>
 
-class Simulation;
+class ISimulation;
 
 //! Collection of simulations for MultiThreadPerformanceTest.
-namespace TestComponents
-{
+namespace TestComponents {
 
-std::unique_ptr<Simulation> CreateSimpleGISAS();
+std::unique_ptr<ISimulation> CreateSimpleGISAS();
 
-std::unique_ptr<Simulation> CreateRealisticGISAS();
+std::unique_ptr<ISimulation> CreateRealisticGISAS();
 
-std::unique_ptr<Simulation> CreateRealisticAndHeavyGISAS();
+std::unique_ptr<ISimulation> CreateRealisticAndHeavyGISAS();
 
-std::unique_ptr<Simulation> CreateGiganticGISAS();
+std::unique_ptr<ISimulation> CreateGiganticGISAS();
 
-std::unique_ptr<Simulation> CreateWavelengthGISAS();
+std::unique_ptr<ISimulation> CreateWavelengthGISAS();
 
-std::unique_ptr<Simulation> CreateMCGISAS();
+std::unique_ptr<ISimulation> CreateMCGISAS();
 
 } // namespace TestComponents
 

@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/InfoWidgets/GroupInfoBox.h"
 #include "GUI/coregui/utils/hostosinfo.h"
@@ -24,32 +24,27 @@
 #include <QToolTip>
 #include <iostream>
 
-namespace
-{
+namespace {
 int imageWidth = 16;
 int imageheigth = 16;
 int offset_of_tooltip_position = 20;
 int offset_of_icon_position = 24;
 } // namespace
 
-GroupInfoBox::GroupInfoBox(QWidget* parent) : QGroupBox(parent), m_xImage(0), m_yImage(0)
-{
+GroupInfoBox::GroupInfoBox(QWidget* parent) : QGroupBox(parent), m_xImage(0), m_yImage(0) {
     init_box();
 }
 
 GroupInfoBox::GroupInfoBox(const QString& title, QWidget* parent)
-    : QGroupBox(title, parent), m_title(title)
-{
+    : QGroupBox(title, parent), m_title(title) {
     init_box();
 }
 
-void GroupInfoBox::setButtonToolTip(const QString& text)
-{
+void GroupInfoBox::setButtonToolTip(const QString& text) {
     m_toolTipText = text;
 }
 
-void GroupInfoBox::mousePressEvent(QMouseEvent* e)
-{
+void GroupInfoBox::mousePressEvent(QMouseEvent* e) {
     if (e->button() == Qt::LeftButton) {
         QStyleOptionGroupBox option;
         initStyleOption(&option);
@@ -59,8 +54,7 @@ void GroupInfoBox::mousePressEvent(QMouseEvent* e)
     }
 }
 
-void GroupInfoBox::mouseMoveEvent(QMouseEvent* event)
-{
+void GroupInfoBox::mouseMoveEvent(QMouseEvent* event) {
     QRect buttonArea(m_xImage, m_yImage, imageWidth, imageheigth);
 
     if (buttonArea.contains(event->pos())) {
@@ -70,14 +64,12 @@ void GroupInfoBox::mouseMoveEvent(QMouseEvent* event)
     }
 }
 
-void GroupInfoBox::init_box()
-{
+void GroupInfoBox::init_box() {
     setMouseTracking(true);
     m_toolTipText = "Gives access to the extended distribution viewer.";
 }
 
-void GroupInfoBox::paintEvent(QPaintEvent*)
-{
+void GroupInfoBox::paintEvent(QPaintEvent*) {
     QStylePainter paint(this);
     QStyleOptionGroupBox option;
     initStyleOption(&option);

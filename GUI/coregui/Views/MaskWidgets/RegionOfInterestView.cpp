@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,15 +10,14 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/MaskWidgets/RegionOfInterestView.h"
 #include <QPainter>
 
 //! Paints two-color tiny frame without filling.
 
-void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
-{
+void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
     painter->setPen(QPen(QColor(34, 67, 255)));
     painter->drawRect(m_mask_rect);
 

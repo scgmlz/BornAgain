@@ -1,11 +1,9 @@
 #include "Core/Fitting/FitObserver.h"
 #include "Tests/GTestWrapper/google_test.h"
 
-class FitObserverTest : public ::testing::Test
-{
+class FitObserverTest : public ::testing::Test {
 public:
-    class TestHelper
-    {
+    class TestHelper {
     public:
         TestHelper() : m_ncalls(0), m_data(42) {}
         int m_ncalls;
@@ -15,8 +13,7 @@ public:
 
 //! Checks that single observer is called on every iteration.
 
-TEST_F(FitObserverTest, oneObserverOneEveryIteration)
-{
+TEST_F(FitObserverTest, oneObserverOneEveryIteration) {
     TestHelper helper;
     FitObserver<TestHelper> observer;
 
@@ -44,8 +41,7 @@ TEST_F(FitObserverTest, oneObserverOneEveryIteration)
 
 //! Checks that single observer called every 2-nd iteration.
 
-TEST_F(FitObserverTest, oneObserverEverySecondIteration)
-{
+TEST_F(FitObserverTest, oneObserverEverySecondIteration) {
     TestHelper helper;
     FitObserver<TestHelper> observer;
 
@@ -62,8 +58,7 @@ TEST_F(FitObserverTest, oneObserverEverySecondIteration)
 
 //! Checks that two observers are called: one every 10-th iteration, another every 20-th.
 
-TEST_F(FitObserverTest, twoObservers)
-{
+TEST_F(FitObserverTest, twoObservers) {
     TestHelper helper;
     FitObserver<TestHelper> observer;
 

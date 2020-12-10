@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,12 +10,11 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_CUSTOMEDITORS_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_PROPERTYEDITOR_CUSTOMEDITORS_H
 
-#include "Wrap/WinDllMacros.h"
 #include <QVariant>
 #include <QWidget>
 
@@ -26,8 +25,7 @@ class RealLimits;
 
 //! Base class for all custom variants editors.
 
-class BA_CORE_API_ CustomEditor : public QWidget
-{
+class CustomEditor : public QWidget {
     Q_OBJECT
 public:
     explicit CustomEditor(QWidget* parent = nullptr) : QWidget(parent) {}
@@ -49,8 +47,7 @@ protected:
 
 //! Editor for ExternalProperty variant.
 
-class BA_CORE_API_ ExternalPropertyEditor : public CustomEditor
-{
+class ExternalPropertyEditor : public CustomEditor {
     Q_OBJECT
 public:
     explicit ExternalPropertyEditor(QWidget* parent = nullptr);
@@ -72,8 +69,7 @@ private:
 
 //! Editor for ComboProperty variant.
 
-class BA_CORE_API_ ComboPropertyEditor : public CustomEditor
-{
+class ComboPropertyEditor : public CustomEditor {
     Q_OBJECT
 public:
     explicit ComboPropertyEditor(QWidget* parent = nullptr);
@@ -96,8 +92,7 @@ protected:
 
 //! Editor for ScientificDoubleProperty variant.
 
-class BA_CORE_API_ ScientificDoublePropertyEditor : public CustomEditor
-{
+class ScientificDoublePropertyEditor : public CustomEditor {
     Q_OBJECT
 public:
     ScientificDoublePropertyEditor(QWidget* parent = nullptr);
@@ -117,8 +112,7 @@ private:
 
 //! Editor for Double variant.
 
-class BA_CORE_API_ DoubleEditor : public CustomEditor
-{
+class DoubleEditor : public CustomEditor {
     Q_OBJECT
 public:
     DoubleEditor(QWidget* parent = nullptr);
@@ -138,8 +132,7 @@ private:
 
 //! Editor for Double variant using ScientificSpinBox.
 
-class BA_CORE_API_ ScientificSpinBoxEditor : public CustomEditor
-{
+class ScientificSpinBoxEditor : public CustomEditor {
     Q_OBJECT
 public:
     ScientificSpinBoxEditor(QWidget* parent = nullptr);
@@ -160,8 +153,7 @@ private:
 
 //! Editor for Int variant.
 
-class BA_CORE_API_ IntEditor : public CustomEditor
-{
+class IntEditor : public CustomEditor {
     Q_OBJECT
 public:
     IntEditor(QWidget* parent = nullptr);
@@ -182,8 +174,7 @@ private:
 
 class QCheckBox;
 
-class BA_CORE_API_ BoolEditor : public CustomEditor
-{
+class BoolEditor : public CustomEditor {
     Q_OBJECT
 public:
     BoolEditor(QWidget* parent = nullptr);

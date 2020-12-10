@@ -44,7 +44,6 @@
 
 #include <QtDesigner/QDesignerWidgetBoxInterface>
 
-//#include <QtWidgets/QListView>
 #include <QListView>
 #include <QtCore/QList>
 
@@ -58,15 +57,13 @@ class QRegExp;
 
 class SampleDesignerInterface;
 
-namespace qdesigner_internal
-{
+namespace qdesigner_internal {
 
 class WidgetBoxCategoryModel;
 
 // List view of a category, switchable between icon and list mode.
 // Provides a filtered view.
-class WidgetBoxCategoryListView : public QListView
-{
+class WidgetBoxCategoryListView : public QListView {
     Q_OBJECT
 public:
     // Whether to access the filtered or unfiltered view

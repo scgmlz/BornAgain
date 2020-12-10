@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,10 +10,10 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/utils/StyleUtils.h"
-#include "Core/Basics/Assert.h"
+#include "Base/Utils/Assert.h"
 #include "GUI/coregui/Views/CommonWidgets/detailswidget.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/utils/hostosinfo.h"
@@ -22,27 +22,23 @@
 #include <QDialog>
 #include <QTreeView>
 
-namespace
-{
+namespace {
 Utils::DetailsWidget* createEmptyDetailsWidget(const QString& name, bool expanded);
 QSize FindSizeOfLetterM(const QWidget* widget);
 
-QSize DefaultSizeOfLetterM()
-{
+QSize DefaultSizeOfLetterM() {
     QWidget widget;
     return FindSizeOfLetterM(&widget);
 }
 } // namespace
 
-void StyleUtils::setPropertyStyle(QTreeView* tree)
-{
+void StyleUtils::setPropertyStyle(QTreeView* tree) {
     ASSERT(tree);
     tree->setStyleSheet(StyleUtils::propertyTreeStyle());
     tree->setAlternatingRowColors(true);
 }
 
-QString StyleUtils::propertyTreeStyle()
-{
+QString StyleUtils::propertyTreeStyle() {
     QString result;
 
     // lines arount cell content
@@ -67,8 +63,7 @@ QString StyleUtils::propertyTreeStyle()
     return result;
 }
 
-QFont StyleUtils::sectionFont(bool bold)
-{
+QFont StyleUtils::sectionFont(bool bold) {
     QFont result;
     result.setPointSize(DesignerHelper::getSectionFontSize());
     result.setBold(bold);
@@ -76,8 +71,7 @@ QFont StyleUtils::sectionFont(bool bold)
     return result;
 }
 
-QFont StyleUtils::labelFont(bool bold)
-{
+QFont StyleUtils::labelFont(bool bold) {
     QFont result;
     result.setPointSize(DesignerHelper::getLabelFontSize());
     result.setBold(bold);
@@ -85,8 +79,7 @@ QFont StyleUtils::labelFont(bool bold)
     return result;
 }
 
-void StyleUtils::setResizable(QDialog* dialog)
-{
+void StyleUtils::setResizable(QDialog* dialog) {
     if (GUI_OS_Utils::HostOsInfo::isMacHost()) {
         dialog->setWindowFlags(Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint
                                | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint
@@ -94,41 +87,34 @@ void StyleUtils::setResizable(QDialog* dialog)
     }
 }
 
-QWidget* StyleUtils::createDetailsWidget(QWidget* content, const QString& name, bool expanded)
-{
+QWidget* StyleUtils::createDetailsWidget(QWidget* content, const QString& name, bool expanded) {
     auto result = createEmptyDetailsWidget(name, expanded);
     result->setWidget(content);
     return result;
 }
 
-QWidget* StyleUtils::createDetailsWidget(QLayout* layout, const QString& name, bool expanded)
-{
+QWidget* StyleUtils::createDetailsWidget(QLayout* layout, const QString& name, bool expanded) {
     auto placeholder = new QWidget();
     placeholder->setLayout(layout);
     return createDetailsWidget(placeholder, name, expanded);
 }
 
-QSize StyleUtils::SizeOfLetterM(const QWidget* widget)
-{
+QSize StyleUtils::SizeOfLetterM(const QWidget* widget) {
     static QSize default_size = DefaultSizeOfLetterM();
     return widget ? FindSizeOfLetterM(widget) : default_size;
 }
 
-int StyleUtils::SystemPointSize()
-{
+int StyleUtils::SystemPointSize() {
     return QApplication::font().pointSize();
 }
 
-int StyleUtils::PropertyPanelWidth()
-{
+int StyleUtils::PropertyPanelWidth() {
     return SizeOfLetterM().width() * 16;
 }
 
-namespace
-{
+namespace {
 
-Utils::DetailsWidget* createEmptyDetailsWidget(const QString& name, bool expanded)
-{
+Utils::DetailsWidget* createEmptyDetailsWidget(const QString& name, bool expanded) {
     auto result = new Utils::DetailsWidget;
     result->setSummaryText(name);
     result->setSummaryFontBold(true);
@@ -139,8 +125,7 @@ Utils::DetailsWidget* createEmptyDetailsWidget(const QString& name, bool expande
 
 //! Calculates size of letter `M` for current system font settings.
 
-QSize FindSizeOfLetterM(const QWidget* widget)
-{
+QSize FindSizeOfLetterM(const QWidget* widget) {
     QFontMetrics fontMetric(widget->font());
 #if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
     auto em = fontMetric.horizontalAdvance('M');

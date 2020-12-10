@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,7 +10,7 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #ifndef BORNAGAIN_GUI_BA3D_DEF_H
 #define BORNAGAIN_GUI_BA3D_DEF_H
@@ -26,8 +26,7 @@
 
 #include <QVector3D>
 
-namespace RealSpace
-{
+namespace RealSpace {
 //------------------------------------------------------------------------------
 
 struct Vector3D {

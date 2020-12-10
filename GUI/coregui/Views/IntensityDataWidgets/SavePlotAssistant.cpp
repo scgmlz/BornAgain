@@ -1,4 +1,4 @@
-// ************************************************************************** //
+//  ************************************************************************************************
 //
 //  BornAgain: simulate and fit scattering at grazing incidence
 //
@@ -10,17 +10,16 @@
 //! @copyright Forschungszentrum Jülich GmbH 2018
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
-// ************************************************************************** //
+//  ************************************************************************************************
 
 #include "GUI/coregui/Views/IntensityDataWidgets/SavePlotAssistant.h"
-#include "Core/Basics/Assert.h"
-#include "Core/InputOutput/IntensityDataIOFactory.h"
+#include "Base/Utils/Assert.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/ColorMap.h"
 #include <QFileDialog>
 #include <QMessageBox>
 
-namespace
-{
+namespace {
 const QString png_extension = ".png";
 const QString jpg_extension = ".jpg";
 const QString pdf_extension = ".pdf";
@@ -28,8 +27,7 @@ const QString int_extension = ".int";
 const QString tif_extension = ".tif";
 const QString txt_extension = ".txt";
 
-QVector<SavePlotAssistant::Format> initializeFormats()
-{
+QVector<SavePlotAssistant::Format> initializeFormats() {
     QVector<SavePlotAssistant::Format> result;
     result.push_back(SavePlotAssistant::Format(png_extension, "png Image (*.png)"));
     result.push_back(SavePlotAssistant::Format(jpg_extension, "jpg Image (*.jpg)"));
@@ -47,9 +45,7 @@ QVector<SavePlotAssistant::Format> initializeFormats()
 QVector<SavePlotAssistant::Format> SavePlotAssistant::m_formats = initializeFormats();
 
 SavePlotAssistant::Format::Format(const QString& file_extention, const QString& filter)
-    : m_file_extention(file_extention), m_filter(filter)
-{
-}
+    : m_file_extention(file_extention), m_filter(filter) {}
 
 void SavePlotAssistant::savePlot(const QString& dirname, QCustomPlot* plot,
                                  OutputData<double>* output_data)
@@ -76,8 +72,7 @@ void SavePlotAssistant::savePlot(const QString& dirname, QCustomPlot* plot,
 }
 
 void SavePlotAssistant::saveToFile(const QString& fileName, QCustomPlot* plot,
-                                   OutputData<double>* output_data)
-{
+                                   OutputData<double>* output_data) {
     if (isPngFile(fileName)) {
         plot->savePng(fileName);
     }
@@ -97,8 +92,7 @@ void SavePlotAssistant::saveToFile(const QString& fileName, QCustomPlot* plot,
 }
 
 //! Returns string contraining all defined filters in the format suitable for QFileDialog
-QString SavePlotAssistant::getFilterString() const
-{
+QString SavePlotAssistant::getFilterString() const {
     QString result;
     for (int i = 0; i < m_formats.size(); ++i) {
         result.append(m_formats[i].m_filter);
@@ -109,8 +103,8 @@ QString SavePlotAssistant::getFilterString() const
 }
 
 //! Compose file name to save plot from information provided by QFileDialog
-QString SavePlotAssistant::composeFileName(const QString& fileName, const QString& filterName) const
-{
+QString SavePlotAssistant::composeFileName(const QString& fileName,
+                                           const QString& filterName) const {
     QString result;
     if (!fileName.isEmpty() && !filterName.isEmpty()) {
         if (isValidExtension(fileName)) {
@@ -122,8 +116,7 @@ QString SavePlotAssistant::composeFileName(const QString& fileName, const QStrin
     return result;
 }
 
-bool SavePlotAssistant::isValidExtension(const QString& fileName) const
-{
+bool SavePlotAssistant::isValidExtension(const QString& fileName) const {
     for (int i = 0; i < m_formats.size(); ++i) {
         if (fileName.endsWith(m_formats[i].m_file_extention, Qt::CaseInsensitive)) {
             return true;
@@ -132,8 +125,7 @@ bool SavePlotAssistant::isValidExtension(const QString& fileName) const
     return false;
 }
 
-QString SavePlotAssistant::getExtensionFromFilterName(const QString& filterName) const
-{
+QString SavePlotAssistant::getExtensionFromFilterName(const QString& filterName) const {
     for (int i = 0; i < m_formats.size(); ++i) {
         if (m_formats[i].m_filter == filterName) {
             return m_formats[i].m_file_extention;
@@ -142,17 +134,14 @@ QString SavePlotAssistant::getExtensionFromFilterName(const QString& filterName)
     return "";
 }
 
-bool SavePlotAssistant::isPngFile(const QString& fileName) const
-{
+bool SavePlotAssistant::isPngFile(const QString& fileName) const {
     return fileName.endsWith(png_extension, Qt::CaseInsensitive);
 }
 
-bool SavePlotAssistant::isJpgFile(const QString& fileName) const
-{
+bool SavePlotAssistant::isJpgFile(const QString& fileName) const {
     return fileName.endsWith(jpg_extension, Qt::CaseInsensitive);
 }
 
-bool SavePlotAssistant::isPdfFile(const QString& fileName) const
-{
+bool SavePlotAssistant::isPdfFile(const QString& fileName) const {
     return fileName.endsWith(pdf_extension, Qt::CaseInsensitive);
 }
