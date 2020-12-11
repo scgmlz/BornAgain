@@ -18,8 +18,8 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorWidget.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
+#include <QSplitter>
 #include <QVBoxLayout>
-#include <qt-manhattan-style/minisplitter.h>
 
 namespace {
 const bool reuse_widget = true;
@@ -27,7 +27,6 @@ const bool reuse_widget = true;
 
 ImportDataView::ImportDataView(MainWindow* mainWindow)
     : QWidget(mainWindow)
-    , m_splitter(new Manhattan::MiniSplitter)
     , m_selectorWidget(new RealDataSelectorWidget)
     , m_stackedWidget(new ItemStackPresenter<RealDataPresenter>(reuse_widget))
     , m_realDataModel(mainWindow->realDataModel()) {
@@ -40,15 +39,16 @@ ImportDataView::ImportDataView(MainWindow* mainWindow)
     m_selectorWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     m_stackedWidget->setSizeHint(QSize(1024, 1024));
 
-    m_splitter->addWidget(m_selectorWidget);
-    m_splitter->addWidget(m_stackedWidget);
-    m_splitter->setCollapsible(0, false);
-    m_splitter->setCollapsible(1, false);
+    auto splitter = new QSplitter;
+    splitter->addWidget(m_selectorWidget);
+    splitter->addWidget(m_stackedWidget);
+    splitter->setCollapsible(0, false);
+    splitter->setCollapsible(1, false);
 
-    m_splitter->setSizes(QList<int>() << Constants::ITEM_SELECTOR_WIDGET_WIDTH
-                                      << Constants::ITEM_SELECTOR_WIDGET_WIDTH * 7);
+    splitter->setSizes(QList<int>() << Constants::ITEM_SELECTOR_WIDGET_WIDTH
+                                    << Constants::ITEM_SELECTOR_WIDGET_WIDTH * 7);
 
-    mainLayout->addWidget(m_splitter);
+    mainLayout->addWidget(splitter);
 
     setLayout(mainLayout);
 

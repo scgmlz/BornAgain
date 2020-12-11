@@ -27,10 +27,6 @@ class ProjectionsEditorCanvas;
 class ProjectionsPropertyPanel;
 class ProjectionsWidget;
 class QItemSelectionModel;
-class QSplitter;
-namespace Manhattan {
-class MiniSplitter;
-}
 
 //! Editor to draw projections on top of intensity plot. Part of
 
@@ -56,8 +52,6 @@ private:
     ProjectionsWidget* m_projectionsWidget;       //! bottom widget to draw projections plot
     ProjectionsPropertyPanel* m_propertyPanel;    //! pannel at the right with properties
     QItemSelectionModel* m_selectionModel;
-    Manhattan::MiniSplitter* m_rightSplitter;
-    QSplitter* m_bottomSplitter;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_PROJECTIONSEDITOR_H

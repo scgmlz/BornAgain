@@ -16,7 +16,7 @@
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/Models/JobQueueData.h"
 #include "GUI/coregui/mainwindow/mainwindow.h"
-#include <qt-manhattan-style/progressbar.h>
+#include <QProgressBar>
 
 JobProgressAssistant::JobProgressAssistant(MainWindow* mainWindow)
     : QObject(mainWindow), m_mainWindow(mainWindow) {
@@ -29,12 +29,10 @@ JobProgressAssistant::JobProgressAssistant(MainWindow* mainWindow)
 
 void JobProgressAssistant::onGlobalProgress(int progress) {
     ASSERT(m_mainWindow->progressBar());
-    if (progress < 0 || progress >= 100) {
-        m_mainWindow->progressBar()->setFinished(true);
+    if (progress < 0 || progress >= 100)
         m_mainWindow->progressBar()->hide();
-    } else {
+    else {
         m_mainWindow->progressBar()->show();
-        m_mainWindow->progressBar()->setFinished(false);
         m_mainWindow->progressBar()->setValue(progress);
     }
 }

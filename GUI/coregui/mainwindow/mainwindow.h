@@ -19,7 +19,6 @@
 
 namespace Manhattan {
 class FancyTabWidget;
-class ProgressBar;
 } // namespace Manhattan
 
 class WelcomeView;
@@ -40,6 +39,7 @@ class ProjectManager;
 class ActionManager;
 class ToolTipDataBase;
 class UpdateNotifier;
+class QProgressBar;
 
 class MainWindow : public Manhattan::FancyMainWindow {
     Q_OBJECT
@@ -48,6 +48,10 @@ public:
     enum ETabViewId { WELCOME, INSTRUMENT, SAMPLE, IMPORT, SIMULATION, JOB, MAXVIEWCOUNT };
 
     explicit MainWindow();
+    ~MainWindow();
+
+    //! Returns the one and only instance of this class
+    static MainWindow* instance();
 
     MaterialModel* materialModel();
     InstrumentModel* instrumentModel();
@@ -56,7 +60,7 @@ public:
     JobModel* jobModel();
     ApplicationModels* models();
 
-    Manhattan::ProgressBar* progressBar();
+    QProgressBar* progressBar();
     QStatusBar* statusBar();
 
     ProjectManager* projectManager();
@@ -81,7 +85,7 @@ private:
     void initConnections();
 
     Manhattan::FancyTabWidget* m_tabWidget;
-    Manhattan::ProgressBar* m_progressBar;
+    QProgressBar* m_progressBar;
 
     ApplicationModels* m_applicationModels;
     ProjectManager* m_projectManager;
@@ -96,6 +100,9 @@ private:
     SimulationView* m_simulationView;
     JobView* m_jobView;
     SessionModelView* m_sessionModelView;
+
+    //! Holds the one and only instance of this class
+    static MainWindow* s_instance;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MAINWINDOW_MAINWINDOW_H

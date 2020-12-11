@@ -25,10 +25,8 @@ class SessionModelDelegate;
 class QItemSelection;
 class ComponentEditor;
 class ComponentTreeView;
-namespace Manhattan {
-class MiniSplitter;
-}
 class QBoxLayout;
+class QSplitter;
 class ComponentFlatView;
 class MaterialModel;
 
@@ -59,7 +57,7 @@ private:
     QPushButton* m_updateButton;
     QPushButton* m_addItemButton;
     QPushButton* m_expandButton;
-    Manhattan::MiniSplitter* m_splitter;
+    QSplitter* m_splitter;
     SessionModelDelegate* m_delegate;
     bool m_isExpaned;
 };

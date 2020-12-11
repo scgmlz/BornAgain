@@ -48,16 +48,17 @@ SimulationDataSelectorWidget::SimulationDataSelectorWidget(QWidget* parent)
     // selection of input parameters
     QGroupBox* groupBox = new QGroupBox("Data selection");
 
-    QLabel* instrumentSelectionLabel = new QLabel("Select Instrument:");
+    QLabel* instrumentSelectionLabel = new QLabel("Instrument:");
     instrumentSelectionLabel->setToolTip(select_instrument_tooltip);
     m_instrumentCombo->setToolTip(select_instrument_tooltip);
     m_instrumentCombo->setAttribute(Qt::WA_MacShowFocusRect, false);
+    m_instrumentCombo->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-    QLabel* sampleSelectionLabel = new QLabel("Select Sample:");
+    QLabel* sampleSelectionLabel = new QLabel("Sample:");
     sampleSelectionLabel->setToolTip(select_sample_tooltip);
     m_sampleCombo->setToolTip(select_sample_tooltip);
 
-    QLabel* readDataSelectionLabel = new QLabel("Select Real Data:");
+    QLabel* readDataSelectionLabel = new QLabel("Real Data:");
     readDataSelectionLabel->setToolTip(select_realdata_tooltip);
     m_realDataCombo->setToolTip(select_realdata_tooltip);
 

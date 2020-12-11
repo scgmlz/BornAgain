@@ -30,9 +30,9 @@
 #include <QDebug>
 #include <QItemSelectionModel>
 #include <QPushButton>
+#include <QSplitter>
 #include <QTreeView>
 #include <limits>
-#include <qt-manhattan-style/minisplitter.h>
 
 TestComponentView::TestComponentView(MainWindow* mainWindow)
     : m_mainWindow(mainWindow)
@@ -44,7 +44,7 @@ TestComponentView::TestComponentView(MainWindow* mainWindow)
     , m_updateButton(new QPushButton("Update models"))
     , m_addItemButton(new QPushButton("Add item"))
     , m_expandButton(new QPushButton("Expand tree"))
-    , m_splitter(new Manhattan::MiniSplitter)
+    , m_splitter(new QSplitter)
     , m_delegate(new SessionModelDelegate(this))
     , m_isExpaned(false) {
     auto buttonLayout = new QHBoxLayout;
@@ -138,7 +138,7 @@ void TestComponentView::onSelectionChanged(const QItemSelection& selected, const
 }
 
 QWidget* TestComponentView::componentTreePanel() {
-    Manhattan::MiniSplitter* result = new Manhattan::MiniSplitter(Qt::Vertical);
+    auto* result = new QSplitter(Qt::Vertical);
     result->addWidget(m_componentTree);
 
     m_componentTree->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
@@ -146,7 +146,7 @@ QWidget* TestComponentView::componentTreePanel() {
 }
 
 QWidget* TestComponentView::componentBoxPanel() {
-    Manhattan::MiniSplitter* result = new Manhattan::MiniSplitter(Qt::Vertical);
+    auto* result = new QSplitter(Qt::Vertical);
     result->addWidget(m_componentFlat);
 
     m_componentFlat->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);

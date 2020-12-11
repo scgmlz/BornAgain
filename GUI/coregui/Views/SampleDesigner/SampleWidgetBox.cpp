@@ -15,7 +15,6 @@
 #include "GUI/coregui/Views/SampleDesigner/SampleWidgetBox.h"
 #include "GUI/coregui/Views/widgetbox/widgetbox.h"
 #include <QVBoxLayout>
-#include <qt-manhattan-style/styledbar.h>
 
 #if QT_VERSION < 0x050000
 #define QStringLiteral QString
@@ -25,7 +24,6 @@ SampleWidgetBox::SampleWidgetBox(SampleDesignerInterface* core, QWidget* parent)
     : QWidget(parent), m_core(core), m_widgetBox(0) {
     setWindowTitle(QLatin1String("Widget Box"));
     setObjectName(QLatin1String("WidgetBox"));
-    // Manhattan::StyledBar *bar = new Manhattan::StyledBar(this);
 
     setWindowTitle("Items Toolbox");
 

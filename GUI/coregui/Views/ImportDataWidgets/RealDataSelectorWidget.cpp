@@ -20,25 +20,25 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorHBar.h"
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorToolBar.h"
 #include <QItemSelectionModel>
+#include <QSplitter>
 #include <QVBoxLayout>
-#include <qt-manhattan-style/minisplitter.h>
 
 RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     : QWidget(parent)
     , m_selectorActions(new RealDataSelectorActions(this))
     , m_toolBar(new RealDataSelectorToolBar(m_selectorActions, this))
     , m_hamBar(new RealDataSelectorHBar(m_selectorActions, this))
-    , m_splitter(new Manhattan::MiniSplitter)
     , m_selectorWidget(new ItemSelectorWidget)
     , m_propertiesWidget(new RealDataPropertiesWidget) {
     setMinimumSize(128, 600);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setWindowTitle("RealDataSelectorWidget");
 
-    m_splitter->setOrientation(Qt::Vertical);
-    m_splitter->addWidget(m_selectorWidget);
-    m_splitter->addWidget(m_propertiesWidget);
-    m_splitter->setChildrenCollapsible(true);
+    auto splitter = new QSplitter;
+    splitter->setOrientation(Qt::Vertical);
+    splitter->addWidget(m_selectorWidget);
+    splitter->addWidget(m_propertiesWidget);
+    splitter->setChildrenCollapsible(true);
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
@@ -46,7 +46,7 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(m_toolBar);
     mainLayout->addWidget(m_hamBar);
-    mainLayout->addWidget(m_splitter);
+    mainLayout->addWidget(splitter);
     setLayout(mainLayout);
 
     connect(m_selectorWidget, &ItemSelectorWidget::contextMenuRequest, m_selectorActions,

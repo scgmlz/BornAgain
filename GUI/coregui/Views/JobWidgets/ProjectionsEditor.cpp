@@ -22,7 +22,6 @@
 #include "GUI/coregui/Views/JobWidgets/ProjectionsWidget.h"
 #include <QItemSelectionModel>
 #include <QSplitter>
-#include <qt-manhattan-style/minisplitter.h>
 
 ProjectionsEditor::ProjectionsEditor(QWidget* parent)
     : QMainWindow(parent)
@@ -31,20 +30,19 @@ ProjectionsEditor::ProjectionsEditor(QWidget* parent)
     , m_projectionsCanvas(new ProjectionsEditorCanvas)
     , m_projectionsWidget(new ProjectionsWidget)
     , m_propertyPanel(new ProjectionsPropertyPanel)
-    , m_selectionModel(nullptr)
-    , m_rightSplitter(new Manhattan::MiniSplitter)
-    , m_bottomSplitter(new QSplitter) {
+    , m_selectionModel(nullptr) {
     addToolBar(Qt::RightToolBarArea, m_toolBar);
 
-    m_bottomSplitter->setOrientation(Qt::Vertical);
-    m_bottomSplitter->addWidget(m_projectionsCanvas);
-    m_bottomSplitter->addWidget(m_projectionsWidget);
-    m_bottomSplitter->setStyleSheet("background-color:white;");
+    auto bottomSplitter = new QSplitter;
+    bottomSplitter->setOrientation(Qt::Vertical);
+    bottomSplitter->addWidget(m_projectionsCanvas);
+    bottomSplitter->addWidget(m_projectionsWidget);
 
-    m_rightSplitter->addWidget(m_bottomSplitter);
-    m_rightSplitter->addWidget(m_propertyPanel);
+    auto rightSplitter(new QSplitter);
+    rightSplitter->addWidget(bottomSplitter);
+    rightSplitter->addWidget(m_propertyPanel);
 
-    setCentralWidget(m_rightSplitter);
+    setCentralWidget(rightSplitter);
 
     m_propertyPanel->setHidden(true);
     setup_connections();

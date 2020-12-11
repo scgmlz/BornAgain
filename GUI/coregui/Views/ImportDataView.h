@@ -20,9 +20,6 @@
 
 class RealDataModel;
 class RealDataSelectorWidget;
-namespace Manhattan {
-class MiniSplitter;
-}
 
 //! The ImportDataView class is a main view for importing experimental data.
 
@@ -38,7 +35,6 @@ public slots:
 private:
     void setupConnections();
 
-    Manhattan::MiniSplitter* m_splitter;
     RealDataSelectorWidget* m_selectorWidget;
     ItemStackPresenter<RealDataPresenter>* m_stackedWidget;
     RealDataModel* m_realDataModel;

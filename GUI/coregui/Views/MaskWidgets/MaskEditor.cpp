@@ -21,25 +21,25 @@
 #include "GUI/coregui/Views/MaskWidgets/MaskGraphicsScene.h"
 #include <QBoxLayout>
 #include <QContextMenuEvent>
-#include <qt-manhattan-style/minisplitter.h>
+#include <QSplitter>
 
 MaskEditor::MaskEditor(QWidget* parent)
     : QMainWindow(parent)
     , m_editorActions(new MaskEditorActions(this))
     , m_toolBar(new MaskEditorToolBar(m_editorActions))
     , m_editorPropertyPanel(new MaskEditorPropertyPanel)
-    , m_editorCanvas(new MaskEditorCanvas)
-    , m_splitter(new Manhattan::MiniSplitter) {
+    , m_editorCanvas(new MaskEditorCanvas) {
     setObjectName("MaskEditor");
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    m_splitter->addWidget(m_editorCanvas);
-    m_splitter->addWidget(m_editorPropertyPanel);
-    m_splitter->setCollapsible(1, true);
+    auto splitter = new QSplitter;
+    splitter->addWidget(m_editorCanvas);
+    splitter->addWidget(m_editorPropertyPanel);
+    splitter->setCollapsible(1, true);
 
     addToolBar(Qt::RightToolBarArea, m_toolBar);
 
-    setCentralWidget(m_splitter);
+    setCentralWidget(splitter);
 
     setup_connections();
 

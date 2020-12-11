@@ -22,11 +22,10 @@
 #include "GUI/coregui/mainwindow/mainwindow_constants.h"
 #include "GUI/coregui/utils/StyleUtils.h"
 #include <QHBoxLayout>
-#include <qt-manhattan-style/minisplitter.h>
+#include <QSplitter>
 
 JobSelectorWidget::JobSelectorWidget(JobModel* jobModel, QWidget* parent)
     : QWidget(parent)
-    , m_splitter(new Manhattan::MiniSplitter)
     , m_jobSelectorActions(new JobSelectorActions(jobModel, this))
     , m_toolBar(new JobSelectorToolBar(m_jobSelectorActions, this))
     , m_jobListWidget(new JobListWidget)
@@ -39,17 +38,18 @@ JobSelectorWidget::JobSelectorWidget(JobModel* jobModel, QWidget* parent)
 
     setModel(jobModel);
 
-    m_splitter->setOrientation(Qt::Vertical);
-    m_splitter->addWidget(m_jobListWidget);
-    m_splitter->addWidget(m_jobProperties);
-    m_splitter->setChildrenCollapsible(true);
+    auto splitter = new QSplitter;
+    splitter->setOrientation(Qt::Vertical);
+    splitter->addWidget(m_jobListWidget);
+    splitter->addWidget(m_jobProperties);
+    splitter->setChildrenCollapsible(true);
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(m_toolBar);
-    mainLayout->addWidget(m_splitter);
+    mainLayout->addWidget(splitter);
     setLayout(mainLayout);
 
     m_jobSelectorActions->setSelectionModel(m_jobListWidget->selectionModel());

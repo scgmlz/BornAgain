@@ -27,6 +27,7 @@
 #include "GUI/coregui/Views/MaterialEditor/MaterialEditorDialog.h"
 #include "GUI/coregui/Views/SampleDesigner/DesignerHelper.h"
 #include "GUI/coregui/mainwindow/AppSvc.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "Sample/Material/Material.h"
 #include <QColorDialog>
@@ -141,7 +142,7 @@ ExternalProperty MaterialItemUtils::colorProperty(const QColor& color) {
 }
 
 ExternalProperty MaterialItemUtils::selectMaterialProperty(const ExternalProperty& previous) {
-    MaterialEditorDialog dialog(AppSvc::materialModel());
+    MaterialEditorDialog dialog(AppSvc::materialModel(), MainWindow::instance());
     dialog.setMaterialProperty(previous);
     if (dialog.exec() == QDialog::Accepted) {
         return dialog.selectedMaterialProperty();
