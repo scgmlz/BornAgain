@@ -93,17 +93,19 @@ def plot_array(array, axes_limits=None, **kwargs):
     zmin = kwargs.pop('intensity_min', 1e-6*zmax)
 
     if zmin == zmax == 0.0:
-        norm = colors.Normalize(0, 1)
+        kwargs['norm'] = colors.Normalize(0, 1)
     else:
-        norm = colors.LogNorm(zmin, zmax)
+        kwargs['norm'] = colors.LogNorm(zmin, zmax)
 
     xlabel = kwargs.pop('xlabel', None)
     ylabel = kwargs.pop('ylabel', None)
     zlabel = kwargs.pop('zlabel', "Intensity")
 
     title = kwargs.pop('title', None)
+    if not 'cmap' in kwargs:
+        kwargs['cmap'] = 'inferno'
 
-    im = plt.imshow(array, norm=norm, extent=axes_limits, **kwargs)
+    im = plt.imshow(array, extent=axes_limits, **kwargs)
     cb = plt.colorbar(im, pad=0.025)
 
     if xlabel:
