@@ -1,9 +1,16 @@
 BornAgain usage examples.
 
-This directory contains three sets of examples aimed to demonstrate 
-to the user how to simulate and fit with BornAgain.
-
 Content:
-./Python - A number of Python examples ( <--- First thing to look at)
-./cpp    - Single example how to compile standalone C++ application
-./Demos  - A collection of scripts used in different demonstrations
+- cpp        : How to use BornAgain from C++ (all other examples are in Python)
+- scatter2d  : Scattering simulations with 2d detector
+- specular   : Specular reflectometry examples
+- varia      :
+- fit...
+
+All _simulation_ examples are under continuous test coverage
+through Tests/Functional/Python/PyExamples/CMakeLists.txt.
+
+Additionally, many _simulation_ examples are also tested
+through Tests/Functional/Python/PyPersistence/CMakeLists.txt.
+
+There is no autoamatic test coverage for _fit_ examples.

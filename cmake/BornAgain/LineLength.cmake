@@ -19,7 +19,7 @@ if(NOT MSVC)
             COMMAND ${LINECOUNT} ${SRC_LEN_LIM} ${src1})
     endforeach()
 
-    file(GLOB_RECURSE sources ${PY_EXAMPLES_DIR}/*.py)
+    file(GLOB_RECURSE sources ${EXAMPLES_DIR}/*.py)
     add_test(NAME LineLength.PyExamples
         COMMAND ${LINECOUNT} ${WEB_LEN_LIM} ${sources})
 

@@ -7,7 +7,7 @@ file(MAKE_DIRECTORY ${OUTPUT_DIR})
 
 # Python persistence test
 function(test_example example tolerance)
-    set(script_path ${PY_EXAMPLES_DIR}/${example}.py)
+    set(script_path ${EXAMPLES_DIR}/${example}.py)
     get_filename_component(EXAMPLE_NAME ${script_path} NAME_WE)
     get_filename_component(EXAMPLE_DIR ${script_path} DIRECTORY)
 
