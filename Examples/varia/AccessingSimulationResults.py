@@ -2,8 +2,7 @@
 Extended example for simulation results treatment (cropping, slicing, exporting)
 The standard "Cylinders in DWBA" sample is used to setup the simulation.
 """
-import math
-import random
+import math, random, sys
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
 from matplotlib import pyplot as plt
@@ -49,11 +48,10 @@ def get_simulation():
     """
     Returns a GISAXS simulation with beam and detector defined.
     """
-    simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(201, -2.0*deg, 2.0*deg, 201, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
-    simulation.beam().setIntensity(1e+05)
+    beam = ba.Beam(1e5, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
+    nbin = 201
+    detector = ba.SphericalDetector(nbin, -2*deg, 2*deg, nbin, 0*deg, 2*deg)
+    simulation = ba.GISASSimulation(beam, get_sample(), detector)
     return simulation
 
 
