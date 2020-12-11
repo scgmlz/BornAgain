@@ -8,6 +8,6 @@ if(APPLE)
 endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." ON)
-option(BUILD_GMOCK "" OFF)
+option(BUILD_GMOCK "" ON)
 option(INSTALL_GTEST "" OFF)
 add_subdirectory(gtest-1.10.0)

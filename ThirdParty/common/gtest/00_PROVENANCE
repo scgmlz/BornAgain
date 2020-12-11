@@ -14,3 +14,12 @@ Due to changes in the cmake machinery, the full folder is used, but googlemock i
 move the whole thing (minus googlemock) to gtest-1.10.0
 removed subdirectory samples
 add modified options to gtest/CMakesLists.txt
+
+[11dec20]
+from website https://github.com/google/googletest/releases
+download https://github.com/google/googletest/archive/v1.10.x.tar.gz
+unpacking yields googletest-release-1.10.0
+Due to changes in the cmake machinery, the full folder is used
+move the whole thing to gtest-1.10.0
+removed subdirectory samples
+add modified options to gtest/CMakesLists.txt
