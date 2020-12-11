@@ -106,6 +106,8 @@ def plot_array(array, axes_limits=None, **kwargs):
     title = kwargs.pop('title', None)
     if not 'cmap' in kwargs:
         kwargs['cmap'] = 'inferno'
+    if not 'aspect' in kwargs:
+        kwargs['aspect'] = 'auto'
 
     im = plt.imshow(array, extent=axes_limits, **kwargs)
     cb = plt.colorbar(im, pad=0.025)
