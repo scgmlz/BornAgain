@@ -7,7 +7,7 @@ ctest -R PyExamples
 This will run all existing examples and generate intensity images for web site.
 
 2) Run this script
-python update-examples.py <website-source-dir> <BornAgain-source-dir> <BornAgain-build-dir>
+python update-examples.py <website-source-dir> <examples_root> <img-dir>
 """
 
 import argparse, datetime, filecmp, os, shutil
@@ -56,7 +56,7 @@ def find_files_with_same_name(filename_list, name_to_find):
 
 def update_one_file(source_list, dest):
     """
-    Update destination file 'dest', using a suitable source file from 'source_dir'.
+    Update destination file 'dest', using a suitable source file from 'example_root'.
     Returns 2=error, 1=modified, 0=unchanged.
     On succes (0 or 1), the source file is removed from source_list.
     """
@@ -79,17 +79,17 @@ def update_one_file(source_list, dest):
     return 1
 
 
-def update_all_files_of_one_type(source_dir, dest_dir, extension):
+def update_all_files_of_one_type(example_root, dest_dir, extension):
     """
     Every file in dest_list will be replaced by the file with the same
     basename found in source_list
     """
 
-    source_list = get_files(source_dir, extension)
+    source_list = get_files(example_root, extension)
     dest_list = get_files(dest_dir, extension)
 
     log2(f'Update {len(dest_list)} {extension} files')
-    log2(f'  from {source_dir}')
+    log2(f'  from {example_root}')
     log2(f'    to {dest_dir}')
     log(f'     with source list {source_list}')
 
@@ -113,13 +113,13 @@ def update_all_files_of_one_type(source_dir, dest_dir, extension):
             log(f'  unused: {src}')
 
 
-def update_website(website_source_dir, ba_source_dir, ba_build_dir):
+def update_website(website_example_root, ba_example_root, ba_img_dir):
     """
     Updates example scripts and images on website.
     """
 
     # Start logging
-    website_dirpath = os.path.expanduser(website_source_dir)
+    website_dirpath = os.path.expanduser(website_example_root)
     log_path = os.path.join(website_dirpath, "update.examples.log")
     global flog
     flog = open(log_path, "a")
@@ -128,13 +128,13 @@ def update_website(website_source_dir, ba_source_dir, ba_build_dir):
 
     # Update scripts
     update_all_files_of_one_type(
-        os.path.join(ba_source_dir, "Examples/Python"),
+        ba_examples_root,
         os.path.join(website_dirpath, "static/files/python"),
         '.py')
 
     # Update images
     update_all_files_of_one_type(
-        os.path.join(ba_build_dir, "test_output/PyExamples"),
+        ba_img_dir
         os.path.join(website_dirpath, "static/files/simulated"),
         '.png')
 
@@ -142,9 +142,9 @@ def update_website(website_source_dir, ba_source_dir, ba_build_dir):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("website_source_dir", type=str)
-    parser.add_argument("ba_source_dir", type=str)
-    parser.add_argument("ba_build_dir", type=str)
+    parser.add_argument("website_example_root", type=str)
+    parser.add_argument("ba_example_root", type=str)
+    parser.add_argument("ba_img_dir", type=str)
     args = parser.parse_args()
 
-    update_website(args.website_source_dir, args.ba_source_dir, args.ba_build_dir)
+    update_website(args.website_example_root, args.ba_example_root, args.ba_img_dir)

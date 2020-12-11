@@ -23,7 +23,7 @@ def exec_full(script, filename):
         "__name__": "__main__",
         "__no_terminal__": True
     }
-    sys.argv = []
+    sys.argv = [filename, 'noshow']
     exec(compile(script, filename, 'exec'), global_namespace)
 
 def reduce_nbin(t):
