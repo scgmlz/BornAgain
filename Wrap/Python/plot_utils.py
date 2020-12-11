@@ -210,6 +210,7 @@ def plot_simulation_result(result, *args, **kwargs):
             kwargs[k] = v
         except ValueError:
             kwargs[arg] = True
+    noshow = kwargs.pop('noshow', False)
 
     if len(result.array().shape) == 1:  # 1D data, specular simulation assumed
         plot_specular_simulation_result(result, **kwargs)
@@ -217,5 +218,5 @@ def plot_simulation_result(result, *args, **kwargs):
         plot_colormap(result, **kwargs)
     plt.tight_layout()
 
-    if not kwargs.pop('noshow', False):
+    if not noshow:
         plt.show()

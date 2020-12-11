@@ -104,7 +104,7 @@ def plot(results):
     """
     from matplotlib import pyplot as plt
 
-    ba.plot_simulation_result(results, postpone_show=True)
+    ba.plot_simulation_result(results, noshow=True)
 
     genx_axis, genx_values = create_real_data()
 
