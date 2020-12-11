@@ -89,11 +89,13 @@ def plot_array(array, axes_limits=None, **kwargs):
     Plots numpy array as a colormap in log scale.
     """
 
-    zmax = kwargs.pop('intensity_max', np.amax(array))
-    zmin = kwargs.pop('intensity_min', 1e-6*zmax)
+    zmax = float(kwargs.pop('intensity_max', np.amax(array)))
+    zmin = float(kwargs.pop('intensity_min', 1e-6*zmax))
 
     if zmin == zmax == 0.0:
         kwargs['norm'] = colors.Normalize(0, 1)
+    elif zmin >= zmax:
+        raise Exception("intensity_min >= intensity_max")
     else:
         kwargs['norm'] = colors.LogNorm(zmin, zmax)
 
