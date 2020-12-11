@@ -3,6 +3,7 @@ Long boxes at 1D lattice, ba.OffSpecular simulation
 """
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
+import sys
 
 phi_f_min, phi_f_max = -1.0, 1.0
 alpha_f_min, alpha_f_max = 0.0, 10.0

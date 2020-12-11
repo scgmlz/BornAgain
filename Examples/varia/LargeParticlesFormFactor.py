@@ -9,6 +9,7 @@ In this case Monte-Carlo integration over detector bin should be used.
 import bornagain as ba
 from bornagain import deg, angstrom, nm
 from matplotlib import pyplot as plt
+import sys
 
 default_cylinder_radius = 10*nm
 default_cylinder_height = 20*nm

@@ -5,7 +5,7 @@ large-particle form factor oscillations.
 """
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
-
+import sys
 
 def get_sample():
     """

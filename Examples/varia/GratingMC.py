@@ -6,6 +6,7 @@ large-particle form factor oscillations.
 import bornagain as ba
 from bornagain import deg, angstrom, nm, micrometer
 from matplotlib import pyplot as plt
+import sys
 
 
 def get_sample(lattice_rotation_angle=0.0*deg):

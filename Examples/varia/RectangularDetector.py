@@ -2,7 +2,7 @@
 Simulation with rectangular detector. Pilatus3-1M detector is used as an example.
 Results will be compared against simulation with spherical detector.
 """
-import numpy
+import numpy, sys
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
 import matplotlib

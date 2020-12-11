@@ -1,9 +1,9 @@
 """
 Cylinder form factor in DWBA with beam divergence
 """
-import numpy, sys
 import bornagain as ba
 from bornagain import angstrom, deg, micrometer, nm, nm2, kvector_t
+import numpy, sys
 
 
 def get_sample():

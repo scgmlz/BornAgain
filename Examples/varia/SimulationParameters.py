@@ -5,9 +5,9 @@ This example shows how to create a simulation with fixed parameters, and then ch
 these parameters on the fly during runtime.
 """
 
-from __future__ import print_function
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
+import sys
 
 
 def get_sample():

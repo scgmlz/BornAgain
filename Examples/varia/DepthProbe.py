@@ -25,6 +25,7 @@ surface
 """
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
+import sys
 
 # layer thicknesses in angstroms
 t_Ti = 130.0*angstrom

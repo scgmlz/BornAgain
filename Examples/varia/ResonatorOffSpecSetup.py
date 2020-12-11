@@ -3,6 +3,7 @@ Resonator in off-specular experiment.
 """
 import bornagain as ba
 from bornagain import deg, nm, micrometer, angstrom
+import sys
 
 
 def get_sample(nlayers=3):
