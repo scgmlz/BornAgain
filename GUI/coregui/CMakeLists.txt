@@ -94,11 +94,9 @@ set(${library_name}_LIBRARY ${library_name} PARENT_SCOPE)
 # --- dependencies ---------
 target_include_directories(${library_name} PUBLIC
     ${CMAKE_SOURCE_DIR}/ThirdParty/GUI # for qt-manhattan-style
-    ${qcustomplot_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR})
 target_link_libraries(${library_name}
     ${ManhattanStyle_LIBRARY}
-    ${qcustomplot_LIBRARY}
     ${BornAgainCore_LIBRARY}
     ${ba3d_LIBRARY}
     Qt5::Widgets
@@ -107,6 +105,7 @@ target_link_libraries(${library_name}
     Qt5::Designer
     Qt5::PrintSupport
     Qt5::Network
+    qcustomplot
 )
 
 # --- Installation ---------
