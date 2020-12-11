@@ -7,7 +7,7 @@ ctest -R PyExamples
 This will run all existing examples and generate intensity images for web site.
 
 2) Run this script
-python update-examples.py <website-source-dir> <examples_root> <img-dir>
+python update-examples.py <website-source-dir> <example_root> <img-dir>
 """
 
 import argparse, datetime, filecmp, os, shutil
@@ -113,14 +113,14 @@ def update_all_files_of_one_type(example_root, dest_dir, extension):
             log(f'  unused: {src}')
 
 
-def update_website(website_example_root, ba_example_root, ba_img_dir):
+def update_website(website_root, example_root, img_dir):
     """
     Updates example scripts and images on website.
     """
 
     # Start logging
-    website_dirpath = os.path.expanduser(website_example_root)
-    log_path = os.path.join(website_dirpath, "update.examples.log")
+    website_root = os.path.expanduser(website_root)
+    log_path = os.path.join(website_root, "update.examples.log")
     global flog
     flog = open(log_path, "a")
     print(f'Appending log to {log_path}')
@@ -128,23 +128,23 @@ def update_website(website_example_root, ba_example_root, ba_img_dir):
 
     # Update scripts
     update_all_files_of_one_type(
-        ba_examples_root,
-        os.path.join(website_dirpath, "static/files/python"),
+        example_root,
+        os.path.join(website_root, "static/files/python"),
         '.py')
 
     # Update images
     update_all_files_of_one_type(
-        ba_img_dir
-        os.path.join(website_dirpath, "static/files/simulated"),
+        img_dir,
+        os.path.join(website_root, "static/files/simulated"),
         '.png')
 
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("website_example_root", type=str)
-    parser.add_argument("ba_example_root", type=str)
-    parser.add_argument("ba_img_dir", type=str)
+    parser.add_argument("website_root", type=str)
+    parser.add_argument("example_root", type=str)
+    parser.add_argument("img_dir", type=str)
     args = parser.parse_args()
 
-    update_website(args.website_example_root, args.ba_example_root, args.ba_img_dir)
+    update_website(args.website_root, args.example_root, args.img_dir)
