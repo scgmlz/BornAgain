@@ -61,13 +61,13 @@ void FormFactorTruncatedCube::onChange()
     }
 
     double a = m_length / 2;
-    double b = m_removed_length;
+    double c = a - m_removed_length;
 
     setPolyhedron(topology, -a,
-                  {{-a + b, -a, -a}, {-a, -a + b, -a}, {-a, -a, -a + b}, {a - b, -a, -a},
-                   {a, -a + b, -a},  {a, -a, -a + b},  {-a + b, a, -a},  {-a, a - b, -a},
-                   {-a, a, -a + b},  {a - b, a, -a},   {a, a - b, -a},   {a, a, -a + b},
-                   {-a + b, -a, a},  {-a, -a + b, a},  {-a, -a, a - b},  {a - b, -a, a},
-                   {a, -a + b, a},   {a, -a, a - b},   {-a + b, a, a},   {-a, a - b, a},
-                   {-a, a, a - b},   {a - b, a, a},    {a, a - b, a},    {a, a, a - b}});
+                  {{-c, -a, -a}, {-a, -c, -a}, {-a, -a, -c}, {c, -a, -a},
+                   {a, -c, -a},  {a, -a, -c},  {-c, a, -a},  {-a, c, -a},
+                   {-a, a, -c},  {c, a, -a},   {a, c, -a},   {a, a, -c},
+                   {-c, -a, a},  {-a, -c, a},  {-a, -a, c},  {c, -a, a},
+                   {a, -c, a},   {a, -a, c},   {-c, a, a},   {-a, c, a},
+                   {-a, a, c},   {c, a, a},    {a, c, a},    {a, a, c}});
 }
