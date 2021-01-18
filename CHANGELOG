@@ -1,5 +1,6 @@
 BornAgain-1.19.0, released 2021.01.xx
   > API changes:
+    * Add support for q offset in QSpecScan (redmine 2496)
     * Provide compact constructors like GISASimulation(beam, sample, detector)
     * Remove "get" from several accessor functions
     * Hide many internal classes from API
@@ -8,13 +9,11 @@ BornAgain-1.19.0, released 2021.01.xx
     * Remove some interference functions constructors
     * Remove old R&T computations from API (now in Code/Legacy and Tests)
     * Make Python plot API entirely keyword based
-    * Add support for q offset in QSpecScan (redmine 2496)
   > GUI changes:
     * Add top-level menu View, with functionality moved in from other places
     * Add accelerator keys to menus
     * Minor layout improvements
   > Bug fixes:
-    * Make polarized R,T coefficients numerically stable (redmine 726)
     * For alpha_i=0, set scattered intensity to 0
     * Rectify native path representation for Windows (redmine 2502)
     * Several GUI bugs that caused crashes (github 1034, 1060, 117, 1136)
@@ -33,7 +32,7 @@ BornAgain-1.19.0, released 2021.01.xx
     * Replace boost::filesystem by C++17 std
     * Draw IComputeFF and children out of IFormFactor inheritance tree
     * Replace any SIGNAL() & SLOT() by the non-macro-versions (github 1168)
-    * Removed dependence of GUI on qt-manhattan-style
+    * Removed dependence of GUI on qt-manhattan-style (redmine 2482)
 
 BornAgain-1.18.0, released 2020.10.30
   > API changes:
