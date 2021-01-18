@@ -13,7 +13,7 @@ set(CONFIGURABLES_DIR ${CMAKE_SOURCE_DIR}/cmake/configurables)
 include(commons/PreventInSourceBuilds)
 
 project(BornAgain
-    VERSION 1.18.99
+    VERSION 1.19.0
     DESCRIPTION "BornAgain: simulate and fit scattering at grazing incidence."
     HOMEPAGE_URL https://www.bornagainproject.org
     ) # LANGUAGES CXX)
