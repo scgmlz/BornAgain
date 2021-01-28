@@ -41,6 +41,7 @@ public:
     QString userExportDir() const;
     QString userImportDir() const;
     void setImportDir(const QString& dirname);
+    void setImportDirFromFilePath(const QString& filePath);
 
     bool isAutosaveEnabled() const;
 
