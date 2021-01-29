@@ -35,10 +35,10 @@ set(form_files)
 foreach(dir ${include_dirs})
     file(GLOB source ${dir}/*.cpp)
     file(GLOB include ${dir}/*.h)
-	file(GLOB forms ${dir}/*.ui)
+    file(GLOB forms ${dir}/*.ui)
     list(APPEND source_files ${source})
     list(APPEND include_files ${include})
-	list(APPEND form_files ${forms})
+    list(APPEND form_files ${forms})
 endforeach()
 
 set(source_widgetbox
