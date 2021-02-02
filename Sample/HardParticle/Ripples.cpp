@@ -41,7 +41,7 @@ complex_t ripples::profile_yz_bar(complex_t qy, complex_t qz, double width, doub
     return height * width * exp_I(qzHdiv2) * Math::sinc(qyWdiv2) * Math::sinc(qzHdiv2);
 }
 
-//! Complex form factor of triangular ripple.
+//! Complex form factor of cosine ripple.
 complex_t ripples::profile_yz_cosine(complex_t qy, complex_t qz, double width, double height)
 {
     complex_t factor = width / M_PI;
