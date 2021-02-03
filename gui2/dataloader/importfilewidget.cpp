@@ -65,7 +65,7 @@ void ImportFileWidget::onAddFilesRequest()
 {
     QFileDialog dialog(this, "Select one or more files to load", m_currentWorkdir);
     dialog.setFileMode(QFileDialog::ExistingFiles);
-    dialog.setNameFilter("Text (*.txt *.csv);; Other (*.*)");
+    dialog.setNameFilter("Text (*.txt *.csv *.dat);; Other (*.*)");
     dialog.setOption(QFileDialog::DontUseNativeDialog);
     QStringList file_names = dialog.exec() ? dialog.selectedFiles() : QStringList();
 
