@@ -59,13 +59,13 @@ jobs:
         cd ${{github.workspace}}
         mkdir deps
         Get-Date -Format G
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=libboost1.73.win64.zip -O ${{runner.temp}}\libboost.zip
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=libcerf1.14.win64.zip -O ${{runner.temp}}\libcerf.zip
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=libfftw3.win64.zip -O ${{runner.temp}}\libfftw.zip
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=libgsl-static.win64.zip -O ${{runner.temp}}\libgsl.zip
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=libtiff.win64.zip -O ${{runner.temp}}\libtiff.zip
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=libyaml.win64.zip -O ${{runner.temp}}\libyaml.zip
-        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F&files=eigen3.3.7.zip -O ${{runner.temp}}\eigen.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=libboost1.73.win64.zip -O ${{runner.temp}}\libboost.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=libcerf1.14.win64.zip -O ${{runner.temp}}\libcerf.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=libfftw3.win64.zip -O ${{runner.temp}}\libfftw.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=libgsl-static.win64.zip -O ${{runner.temp}}\libgsl.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=libtiff.win64.zip -O ${{runner.temp}}\libtiff.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=libyaml.win64.zip -O ${{runner.temp}}\libyaml.zip
+        wget https://iffcloud.fz-juelich.de/s/xn8MEzcDmP6BEfy/download?path=%2F%26files=eigen3.3.7.zip -O ${{runner.temp}}\eigen.zip
         Get-Date -Format G
         7z x ${{runner.temp}}\libboost.zip -odeps
         7z x ${{runner.temp}}\libcerf.zip -odeps
