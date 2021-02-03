@@ -258,3 +258,14 @@ void SpecularSimulation::setRawResults(const std::vector<double>& raw_data)
         m_sim_elements[i].setIntensity(raw_data[i]);
     transferResultsToIntensityMap();
 }
+
+void SpecularSimulation::setAnalyzerProperties(const kvector_t direction, double efficiency,
+                           double total_transmission)
+{
+    if(!m_scan)
+        throw std::runtime_error("Scan has not been specified");
+
+
+    ISimulation::setAnalyzerProperties(direction, efficiency, total_transmission);
+}
+

@@ -63,6 +63,9 @@ public:
     const ISpecularScan* dataHandler() const { return m_scan.get(); }
 #endif // USER_API
 
+    void setAnalyzerProperties(const kvector_t direction, double efficiency,
+                               double total_transmission) override;
+
 private:
     SpecularSimulation(const SpecularSimulation& other); // used by clone()
 
