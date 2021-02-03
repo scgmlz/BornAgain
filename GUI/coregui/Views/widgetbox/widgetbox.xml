@@ -275,48 +275,48 @@
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple1Box" icon="images/ff_Ripple1_64x64.png">
-            <widget class="FormFactorRipple1Box">
+        <categoryentry name="CosineRippleBox" icon="images/ff_Ripple1_64x64.png">
+            <widget class="FormFactorCosineRippleBox">
                 <property name="objectName">
                     <string notr="true">somestring</string>
                 </property>
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple1Gauss" icon="images/ff_Ripple1_64x64.png">
-            <widget class="FormFactorRipple1Gauss">
+        <categoryentry name="CosineRippleGauss" icon="images/ff_Ripple1_64x64.png">
+            <widget class="FormFactorCosineRippleGauss">
                 <property name="objectName">
                     <string notr="true">somestring</string>
                 </property>
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple1Lorentz" icon="images/ff_Ripple1_64x64.png">
-            <widget class="FormFactorRipple1Lorentz">
+        <categoryentry name="CosineRippleLorentz" icon="images/ff_Ripple1_64x64.png">
+            <widget class="FormFactorCosineRippleLorentz">
                 <property name="objectName">
                     <string notr="true">somestring</string>
                 </property>
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple2Box" icon="images/ff_Ripple2_64x64.png">
-            <widget class="FormFactorRipple2Box">
+        <categoryentry name="SawtoothRippleBox" icon="images/ff_Ripple2_64x64.png">
+            <widget class="FormFactorSawtoothRippleBox">
                 <property name="objectName">
                     <string notr="true">somestring</string>
                 </property>
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple2Gauss" icon="images/ff_Ripple2_64x64.png">
-            <widget class="FormFactorRipple2Gauss">
+        <categoryentry name="SawtoothRippleGauss" icon="images/ff_Ripple2_64x64.png">
+            <widget class="FormFactorSawtoothRippleGauss">
                 <property name="objectName">
                     <string notr="true">somestring</string>
                 </property>
             </widget>
         </categoryentry>
 
-        <categoryentry name="Ripple2Lorentz" icon="images/ff_Ripple2_64x64.png">
-            <widget class="FormFactorRipple2Lorentz">
+        <categoryentry name="SawtoothRippleLorentz" icon="images/ff_Ripple2_64x64.png">
+            <widget class="FormFactorSawtoothRippleLorentz">
                 <property name="objectName">
                     <string notr="true">somestring</string>
                 </property>
