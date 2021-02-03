@@ -109,6 +109,9 @@ SimulationResult SpecularSimulation::result() const
 
 void SpecularSimulation::setScan(const ISpecularScan& scan)
 {
+    if(m_scan)
+        throw std::runtime_error("Scan cannot be set twice");
+
     // TODO: move inside AngularSpecScan when pointwise resolution is implemented
     if (scan.coordinateAxis()->lowerBound() < 0.0)
         throw std::runtime_error(
