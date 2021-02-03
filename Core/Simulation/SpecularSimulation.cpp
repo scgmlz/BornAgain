@@ -110,7 +110,7 @@ SimulationResult SpecularSimulation::result() const
 void SpecularSimulation::setScan(const ISpecularScan& scan)
 {
     if(m_scan)
-        throw std::runtime_error("Scan cannot be set twice");
+        throw std::runtime_error("Error in SpecularSimulation: Scan cannot be set twice");
 
     // TODO: move inside AngularSpecScan when pointwise resolution is implemented
     if (scan.coordinateAxis()->lowerBound() < 0.0)
@@ -266,8 +266,8 @@ void SpecularSimulation::setAnalyzerProperties(const kvector_t direction, double
                            double total_transmission)
 {
     if(!m_scan)
-        throw std::runtime_error("Scan has not been specified");
-
+        throw std::runtime_error("Error in SpecularSimulation: Scan needs to be specified "
+                                 "before setting analyzer properties");
 
     ISimulation::setAnalyzerProperties(direction, efficiency, total_transmission);
 }
