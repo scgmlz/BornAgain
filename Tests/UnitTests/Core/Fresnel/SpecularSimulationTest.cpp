@@ -100,31 +100,35 @@ TEST_F(SpecularSimulationTest, SetAngularScan)
     sim.beam().setIntensity(2.0);
     EXPECT_EQ(2.0, beam.intensity());
 
+    SpecularSimulation sim2;
     AngularSpecScan scan2(1.0, 10, 1.0 * Units::deg, 10.0 * Units::deg);
-    sim.setScan(scan2);
-    EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
-    EXPECT_EQ(10.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    sim2.setScan(scan2);
+    EXPECT_EQ(10u, sim2.coordinateAxis()->size());
+    EXPECT_EQ(1.0 * Units::deg, sim2.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0 * Units::deg, sim2.coordinateAxis()->upperBound());
     EXPECT_EQ(2.0, beam.intensity());
     EXPECT_EQ(1.0, beam.wavelength());
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
-    checkBeamState(sim);
+    checkBeamState(sim2);
 
+    SpecularSimulation sim3;
     AngularSpecScan scan3(1.0, 10, -1.0 * Units::deg, 2.0 * Units::deg);
-    EXPECT_THROW(sim.setScan(scan3), std::runtime_error);
+    EXPECT_THROW(sim3.setScan(scan3), std::runtime_error);
 
-    EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
-    EXPECT_EQ(10.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    checkBeamState(sim3);
+
+    EXPECT_THROW(sim2.setScan(scan2), std::runtime_error);
+    EXPECT_EQ(10u, sim2.coordinateAxis()->size());
+    EXPECT_EQ(1.0 * Units::deg, sim2.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0 * Units::deg, sim2.coordinateAxis()->upperBound());
     EXPECT_EQ(2.0, beam.intensity());
     EXPECT_EQ(1.0, beam.wavelength());
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
-    checkBeamState(sim);
 
-    sim.setInstrument(Instrument());
-    checkBeamState(sim);
+    sim3.setInstrument(Instrument());
+    checkBeamState(sim3);
 }
 
 TEST_F(SpecularSimulationTest, SetQScan)
@@ -149,16 +153,17 @@ TEST_F(SpecularSimulationTest, SetQScan)
     sim.beam().setIntensity(2.0);
     EXPECT_EQ(2.0, beam.intensity());
 
+    SpecularSimulation sim2;
     QSpecScan scan2(10, 1.0, 10.0);
-    sim.setScan(scan2);
-    EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0, sim.coordinateAxis()->lowerBound());
-    EXPECT_EQ(10.0, sim.coordinateAxis()->upperBound());
+    sim2.setScan(scan2);
+    EXPECT_EQ(10u, sim2.coordinateAxis()->size());
+    EXPECT_EQ(1.0, sim2.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0, sim2.coordinateAxis()->upperBound());
     EXPECT_EQ(2.0, beam.intensity());
     EXPECT_EQ(1.0, beam.wavelength());
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
-    checkBeamState(sim);
+    checkBeamState(sim2);
 }
 
 TEST_F(SpecularSimulationTest, ConstructSimulation)
