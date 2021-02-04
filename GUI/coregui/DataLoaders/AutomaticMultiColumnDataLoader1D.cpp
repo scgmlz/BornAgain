@@ -125,12 +125,27 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     // Assign Q vs R, dR, dQ:
     QStringList entries;
 
-    entries << "Q"
-            << "R";
-    if (ncols > 2)
-        entries << "dR";
-    if (ncols > 3)
-        entries << "dQ";
+    QMap<int, QString> typeStr;
+    typeStr[0] = "Q";
+    typeStr[1] = "R";
+    typeStr[2] = "dR";
+    typeStr[3] = "dQ";
+    typeStr[4] = "ignored";
+
+    for (int col = 0; col < 4; col++) {
+        if (col < ncols) {
+            if (m_columnDefinitions.contains(col))
+                entries << typeStr[m_columnDefinitions[col].dataType];
+            else
+                entries << typeStr[4];
+        }
+    }
+    //     entries << "Q"
+    //             << "R";
+    //     if (ncols > 2)
+    //         entries << "dR";
+    //     if (ncols > 3)
+    //         entries << "dQ";
 
     for (size_t row = 0; row < nrows; row++) {
         if (vecVec[row].size() != ncols)
@@ -220,7 +235,7 @@ void AutomaticMultiColumnDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
 
     QObject::connect(m_propertiesWidget,
                      &AutomaticMultiColumnDataLoader1DProperties::propertiesChanged, [this]() {
-                         updatePropertiesFromUi();
+                         applyProperties();
                          emit propertiesChanged();
                      });
 }
@@ -287,7 +302,7 @@ void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
     }
 }
 
-void AutomaticMultiColumnDataLoader1D::updatePropertiesFromUi()
+void AutomaticMultiColumnDataLoader1D::applyProperties()
 {
 
     if (!m_propertiesWidget)

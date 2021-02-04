@@ -31,12 +31,11 @@ public:
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
     virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
     virtual void initWithDefaultProperties() override;
+    virtual void applyProperties() override;
     virtual QByteArray serialize() const override;
     virtual void deserialize(const QByteArray& data) override;
 
 private:
-    void updatePropertiesFromUi();
-
     struct ColumnDefinition {
         int dataType; // #TODO: enum or ... (Q, R, dR, ...)
         QString unit;

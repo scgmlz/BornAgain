@@ -22,6 +22,8 @@ QString AbstractDataLoader::info() const
 
 void AbstractDataLoader::fillPropertiesGroupBox(QGroupBox* parent) {}
 
+void AbstractDataLoader::applyProperties() {}
+
 void AbstractDataLoader::initWithDefaultProperties() {}
 
 QByteArray AbstractDataLoader::serialize() const
