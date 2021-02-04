@@ -14,7 +14,9 @@
 
 #include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
 #include "Device/InputOutput/DataFormatUtils.h"
+#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1DProperties.h"
 #include "qcustomplot.h"
+#include "ui_AutomaticMultiColumnDataLoader1DProperties.h"
 #include <QFile>
 #include <QString>
 #include <QTextStream>
@@ -52,9 +54,20 @@ QString table(int nColumns, const QStringList& entries, const QString& attribute
 }
 } // namespace
 
+AutomaticMultiColumnDataLoader1D::AutomaticMultiColumnDataLoader1D() : m_propertiesWidget(nullptr)
+{
+    m_separator = ";";
+
+    for (int col = 0; col < 4; col++) {
+        m_columnDefinitions[col].dataType = 0;
+        m_columnDefinitions[col].unit = "";
+        m_columnDefinitions[col].factor = 1.0;
+    }
+}
+
 QString AutomaticMultiColumnDataLoader1D::name() const
 {
-    return "Automatic 1D import (multiple rows)";
+    return "Reflectometry file (multiple rows)";
 }
 
 QString AutomaticMultiColumnDataLoader1D::info() const
@@ -172,5 +185,134 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     graph->addData(qVec, rVec);
     plotWidget->rescaleAxes();
 
-    return "<p>" + bold("Information: ") + info() + "</p><p>" + s + "</p>";
+    return "<p>" + bold("<h>Information: </h>") + info() + "</p><p>" + s + "</p>";
+}
+
+void AutomaticMultiColumnDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
+{
+    if (m_propertiesWidget == nullptr)
+        m_propertiesWidget = new AutomaticMultiColumnDataLoader1DProperties;
+
+    QHBoxLayout* l = new QHBoxLayout(parent);
+    parent->setLayout(l);
+    l->addWidget(m_propertiesWidget);
+
+    if (m_separator == " ")
+        m_propertiesWidget->m_ui->separatorCombo->setCurrentText("<SPACE>");
+    else if (m_separator == "\t")
+        m_propertiesWidget->m_ui->separatorCombo->setCurrentText("<TAB>");
+    else
+        m_propertiesWidget->m_ui->separatorCombo->setCurrentText(m_separator);
+
+    m_propertiesWidget->m_ui->headerPrefixEdit->setText(m_headerPrefix);
+    m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_linesToSkip);
+
+    for (int column = 0; column < 4; column++) {
+        if (m_columnDefinitions.contains(column)) {
+            const auto d = m_columnDefinitions[column];
+            m_propertiesWidget->setType(column, d.dataType);
+            m_propertiesWidget->m_unitCombos[column]->setCurrentText(d.unit);
+            m_propertiesWidget->m_factors[column]->setValue(d.factor);
+        } else {
+            m_propertiesWidget->setType(column, 4);
+        }
+    }
+
+    QObject::connect(m_propertiesWidget,
+                     &AutomaticMultiColumnDataLoader1DProperties::propertiesChanged, [this]() {
+                         updatePropertiesFromUi();
+                         emit propertiesChanged();
+                     });
+}
+
+void AutomaticMultiColumnDataLoader1D::initWithDefaultProperties()
+{
+
+    m_separator = ";";
+    m_headerPrefix = "";
+    m_linesToSkip = "";
+
+    m_columnDefinitions[0].dataType = 0;
+    m_columnDefinitions[0].unit = "";
+    m_columnDefinitions[0].factor = 1.0;
+
+    m_columnDefinitions[1].dataType = 1;
+    m_columnDefinitions[1].unit = "";
+    m_columnDefinitions[1].factor = 1.0;
+
+    m_columnDefinitions[2].dataType = 2;
+    m_columnDefinitions[2].unit = "";
+    m_columnDefinitions[2].factor = 1.0;
+
+    m_columnDefinitions[3].dataType = 3;
+    m_columnDefinitions[3].unit = "";
+    m_columnDefinitions[3].factor = 1.0;
+}
+
+QByteArray AutomaticMultiColumnDataLoader1D::serialize() const
+{
+    QByteArray a;
+    QDataStream s(&a, QIODevice::WriteOnly);
+    s << m_separator;
+    s << m_headerPrefix;
+    s << m_linesToSkip;
+
+    s << (quint8)m_columnDefinitions.count();
+    for (quint8 column : m_columnDefinitions.keys()) {
+        s << column;
+        s << m_columnDefinitions[column].dataType;
+        s << m_columnDefinitions[column].unit;
+        s << m_columnDefinitions[column].factor;
+    }
+
+    return a;
+}
+
+void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
+{
+    QDataStream s(data);
+    s >> m_separator;
+    s >> m_headerPrefix;
+    s >> m_linesToSkip;
+
+    m_columnDefinitions.clear();
+    quint8 nColumns;
+    s >> nColumns;
+    for (int i = 0; i < nColumns; i++) {
+        quint8 column;
+        s >> column;
+        s >> m_columnDefinitions[column].dataType;
+        s >> m_columnDefinitions[column].unit;
+        s >> m_columnDefinitions[column].factor;
+    }
+}
+
+void AutomaticMultiColumnDataLoader1D::updatePropertiesFromUi()
+{
+
+    if (!m_propertiesWidget)
+        return;
+
+    auto ui = m_propertiesWidget->m_ui;
+
+    m_separator = ui->separatorCombo->currentText();
+    if (m_separator == "<TAB>")
+        m_separator = "\t";
+    if (m_separator == "<SPACE>")
+        m_separator = " ";
+
+    m_headerPrefix = ui->headerPrefixEdit->text();
+    m_linesToSkip = ui->linesToSkipEdit->text();
+
+    m_columnDefinitions.clear();
+
+    for (int col = 0; col < 4; col++) {
+        const bool isIgnored = (m_propertiesWidget->m_typeCombos[col]->currentIndex() == 4);
+        if (!isIgnored) {
+            m_columnDefinitions[col].dataType =
+                m_propertiesWidget->m_typeCombos[col]->currentIndex();
+            m_columnDefinitions[col].unit = m_propertiesWidget->unit(col);
+            m_columnDefinitions[col].factor = m_propertiesWidget->factor(col);
+        }
+    }
 }

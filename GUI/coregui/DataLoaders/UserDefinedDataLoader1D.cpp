@@ -15,8 +15,9 @@
 #include "GUI/coregui/DataLoaders/UserDefinedDataLoader1D.h"
 
 UserDefinedDataLoader1D::UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLoader,
-                                                 const QString& name)
-    : m_wrappedLoader(wrappedLoader), m_name(name)
+                                                 const QString& name,
+                                                 const QByteArray& defaultProperties)
+    : m_wrappedLoader(wrappedLoader), m_name(name), m_defaultProperties(defaultProperties)
 {
 }
 
@@ -40,6 +41,11 @@ void UserDefinedDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
     m_wrappedLoader->fillPropertiesGroupBox(parent);
 }
 
+void UserDefinedDataLoader1D::initWithDefaultProperties()
+{
+    deserialize(m_defaultProperties);
+}
+
 QString UserDefinedDataLoader1D::persistentClassName() const
 {
     return m_wrappedLoader->persistentClassName();
@@ -59,4 +65,3 @@ QString UserDefinedDataLoader1D::preview(const QString& filepath, QCustomPlot* p
 {
     return m_wrappedLoader->preview(filepath, plotWidget);
 }
-

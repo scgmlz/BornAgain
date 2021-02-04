@@ -37,6 +37,8 @@ public:
     //! properties)
     virtual void fillPropertiesGroupBox(QGroupBox* parent);
 
+    virtual void initWithDefaultProperties();
+
     virtual QString persistentClassName() const = 0;
 
     //! Returns every internal setting so it can be restored completely
