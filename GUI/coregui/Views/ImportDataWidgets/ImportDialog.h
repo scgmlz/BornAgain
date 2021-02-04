@@ -19,6 +19,8 @@
 #include <QWidget>
 
 class QStringListModel;
+class AbstractDataLoader;
+class QCustomPlot;
 
 namespace Ui {
 class ImportDialog;
@@ -43,6 +45,15 @@ private:
     void addFileNamesToModel(const QStringList& file_names);
     void makeLastSelected();
     void onRemoveFileRequest();
+
+    void updatePropertiesEdits();
+    AbstractDataLoader* selectedLoader();
+    void onFormatSelectionChanged(int index);
+    void updatePreview();
+    QString currentFileName() const;
+
+    void onCreateNewFormatButton();
+    void fillLoaderCombo();
 
 private:
     Ui::ImportDialog* m_ui = nullptr;

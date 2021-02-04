@@ -13,12 +13,15 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDialog.h"
+#include "GUI/coregui/DataLoaders/AbstractDataLoader.h"
+#include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/mainwindow/AppSvc.h"
 #include "GUI/coregui/mainwindow/projectmanager.h"
 #include "ui_ImportDialog.h"
 #include <QAction>
 #include <QFileDialog>
 #include <QStringListModel>
+#include <QTextStream>
 #include <QTimer>
 
 ImportDialog::ImportDialog(QWidget* parent /*= 0*/)
@@ -28,18 +31,33 @@ ImportDialog::ImportDialog(QWidget* parent /*= 0*/)
 
     m_ui->filesListView->setModel(m_listModel);
 
+    if (DataLoaders1D::instance().loaders().isEmpty())
+        DataLoaders1D::instance().initBuiltInLoaders();
+
+    fillLoaderCombo();
+
+    updatePropertiesEdits();
+
     QAction* add = new QAction(this);
     add->setText("Add files...");
     connect(add, &QAction::triggered, this, &ImportDialog::openFileSelectionDialog);
-    m_ui->addToolButton->setDefaultAction(add);
+    //    m_ui->addToolButton->setDefaultAction(add);
 
     QAction* remove = new QAction(this);
     remove->setText("Remove files");
     connect(remove, &QAction::triggered, this, &ImportDialog::onRemoveFileRequest);
-    m_ui->removeToolButton->setDefaultAction(remove);
+    //    m_ui->removeToolButton->setDefaultAction(remove);
 
     connect(m_ui->okButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(m_ui->cancelButton, &QPushButton::clicked, this, &QDialog::reject);
+    connect(m_ui->formatSelectionComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &ImportDialog::onFormatSelectionChanged);
+
+    connect(m_ui->filesListView->selectionModel(), &QItemSelectionModel::selectionChanged, this,
+            &ImportDialog::updatePreview);
+
+    connect(m_ui->createNewFormatButton, &QPushButton::clicked, this,
+            &ImportDialog::onCreateNewFormatButton);
 }
 
 QStringList ImportDialog::fileNames() const
@@ -52,7 +70,7 @@ void ImportDialog::openFileSelectionDialog()
     QFileDialog dialog(this, "Select one or more files to load",
                        AppSvc::projectManager()->userImportDir());
     dialog.setFileMode(QFileDialog::ExistingFiles);
-    dialog.setNameFilter("Text (*.txt *.csv);; Other (*.*)");
+    dialog.setNameFilter("Text (*.txt *.csv *.dat);; Other (*.*)");
 
     QStringList filenames = dialog.exec() ? dialog.selectedFiles() : QStringList();
 
@@ -63,6 +81,7 @@ void ImportDialog::openFileSelectionDialog()
 
     filenames = validateForBinaryFiles(filenames);
     addFileNamesToModel(filenames);
+    updatePreview();
 }
 
 void ImportDialog::showEvent(QShowEvent* e)
@@ -114,6 +133,7 @@ void ImportDialog::addFileNamesToModel(const QStringList& file_names)
     emit fileNamesChanged();
 
     makeLastSelected();
+    updatePreview();
 }
 
 void ImportDialog::makeLastSelected()
@@ -138,4 +158,91 @@ void ImportDialog::onRemoveFileRequest()
     emit fileNamesChanged();
 
     makeLastSelected();
+}
+
+void ImportDialog::updatePropertiesEdits()
+{
+    for (auto child : m_ui->propertiesGroupBox->children()) {
+        delete child;
+    }
+
+    if (m_ui->propertiesGroupBox->layout())
+        delete m_ui->propertiesGroupBox->layout();
+
+    if (selectedLoader()) {
+        selectedLoader()->fillPropertiesGroupBox(m_ui->propertiesGroupBox);
+    }
+
+    const bool hasChildren = !m_ui->propertiesGroupBox->children().empty();
+
+    m_ui->propertiesGroupBox->setVisible(hasChildren);
+}
+
+AbstractDataLoader* ImportDialog::selectedLoader()
+{
+    const QString name = m_ui->formatSelectionComboBox->currentText();
+
+    for (auto loader : DataLoaders1D::instance().loaders())
+        if (name == loader->name())
+            return loader;
+
+    return nullptr;
+}
+
+void ImportDialog::onFormatSelectionChanged(int /*index*/)
+{
+    // #TODO: disconnect() old loader?
+    updatePropertiesEdits();
+    updatePreview();
+    connect(selectedLoader(), &AbstractDataLoader::propertiesChanged, this,
+            &ImportDialog::updatePreview);
+}
+
+void ImportDialog::updatePreview()
+{
+    m_ui->infoBrowser->clear();
+    m_ui->fileContent->clear();
+    m_ui->plotWidget->clearGraphs();
+
+    if (selectedLoader() && !currentFileName().isEmpty()) {
+        m_ui->infoBrowser->setHtml(selectedLoader()->preview(currentFileName(), m_ui->plotWidget));
+
+        QFile file(currentFileName());
+        if (file.open(QFile::ReadOnly))
+            m_ui->fileContent->setText(QTextStream(&file).readAll());
+    }
+
+    m_ui->plotWidget->replot();
+}
+
+QString ImportDialog::currentFileName() const
+{
+    const auto currentIndex = m_ui->filesListView->currentIndex();
+    return currentIndex.isValid() ? m_listModel->data(currentIndex).toString() : "";
+}
+
+void ImportDialog::onCreateNewFormatButton()
+{
+    bool ok;
+    QString name = QInputDialog::getText(
+        this, "New format", "Please enter a name for the new format", QLineEdit::Normal, "", &ok);
+    if (!ok || name.isEmpty())
+        return;
+
+    DataLoaders1D::instance().cloneAsUserDefinedLoader(selectedLoader(), name);
+
+    fillLoaderCombo();
+    m_ui->formatSelectionComboBox->setCurrentText(name);
+}
+
+void ImportDialog::fillLoaderCombo()
+{
+    QSignalBlocker b(m_ui->formatSelectionComboBox);
+    m_ui->formatSelectionComboBox->clear();
+    for (auto loader : DataLoaders1D::instance().recentlyUsedLoaders()) {
+        m_ui->formatSelectionComboBox->addItem(loader->name());
+    }
+    for (auto loader : DataLoaders1D::instance().loaders()) {
+        m_ui->formatSelectionComboBox->addItem(loader->name());
+    }
 }
