@@ -8,6 +8,7 @@ set(include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow
     ${CMAKE_CURRENT_SOURCE_DIR}/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/Models
+    ${CMAKE_CURRENT_SOURCE_DIR}/DataLoaders
     ${CMAKE_CURRENT_SOURCE_DIR}/Views
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/SampleDesigner
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/JobWidgets
