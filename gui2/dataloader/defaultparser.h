@@ -28,6 +28,7 @@ namespace gui2 {
 //! + Skips lines matching given line number pattern.
 //! + Parse data in columns of basing on given separator value.
 
+// #import Here is a parser implementation (the only present parser so far)
 class DAREFLCORE_EXPORT DefaultParser : public ParserInterface {
 public:
     DefaultParser(const ParserOptions& options);

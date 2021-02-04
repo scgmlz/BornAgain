@@ -126,6 +126,8 @@ void DataFormatUtils::fillOutputData(OutputData<double>* data, std::istream& inp
 
 //! Parse double values from string to vector of double
 
+// #migration +++ this works only if separator is space or tab; it does not work e.g. with comma or
+// semicolon
 std::vector<double> DataFormatUtils::parse_doubles(const std::string& str)
 {
     std::vector<double> result;
@@ -144,6 +146,8 @@ std::vector<double> DataFormatUtils::parse_doubles(const std::string& str)
     return result;
 }
 
+// #migration +++ this works only if separator is space or tab; it does not work e.g. with comma or
+// semicolon
 void DataFormatUtils::readLineOfDoubles(std::vector<double>& buffer, std::istringstream& iss)
 {
     iss.imbue(std::locale::classic());
