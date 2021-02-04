@@ -7,7 +7,7 @@
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2021
+//! @copyright Forschungszentrum JÃ¼lich GmbH 2021
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
 //  ************************************************************************************************
@@ -59,3 +59,4 @@ QString UserDefinedDataLoader1D::preview(const QString& filepath, QCustomPlot* p
 {
     return m_wrappedLoader->preview(filepath, plotWidget);
 }
+
