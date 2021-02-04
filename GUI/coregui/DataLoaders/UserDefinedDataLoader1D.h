@@ -33,7 +33,7 @@ public:
 
     virtual QByteArray serialize() const override;
 
-    virtual void deserialize(QByteArray& data) override;
+    virtual void deserialize(const QByteArray& data) override;
 
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
 

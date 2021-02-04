@@ -27,4 +27,4 @@ QByteArray AbstractDataLoader::serialize() const
     return QByteArray();
 }
 
-void AbstractDataLoader::deserialize(QByteArray& data) {}
+void AbstractDataLoader::deserialize(const QByteArray& data) {}

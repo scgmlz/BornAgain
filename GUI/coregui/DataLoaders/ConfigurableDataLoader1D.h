@@ -29,7 +29,7 @@ public:
     virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
 
     virtual QByteArray serialize() const override;
-    virtual void deserialize(QByteArray& data) override;
+    virtual void deserialize(const QByteArray& data) override;
 
     // #TODO: Rename members
 private:

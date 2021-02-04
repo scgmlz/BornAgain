@@ -50,7 +50,7 @@ QByteArray UserDefinedDataLoader1D::serialize() const
     return m_wrappedLoader->serialize();
 }
 
-void UserDefinedDataLoader1D::deserialize(QByteArray& data)
+void UserDefinedDataLoader1D::deserialize(const QByteArray& data)
 {
     m_wrappedLoader->deserialize(data);
 }

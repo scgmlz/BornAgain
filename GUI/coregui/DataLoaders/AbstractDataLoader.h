@@ -43,7 +43,7 @@ public:
     virtual QByteArray serialize() const;
 
     //! #TODO: how to deliver errors? VersionException...?
-    virtual void deserialize(QByteArray& data);
+    virtual void deserialize(const QByteArray& data);
 
     //! Returns a Qt rich text formatted preview
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const = 0;

@@ -70,7 +70,7 @@ QByteArray ConfigurableDataLoader1D::serialize() const
     return a;
 }
 
-void ConfigurableDataLoader1D::deserialize(QByteArray& data)
+void ConfigurableDataLoader1D::deserialize(const QByteArray& data)
 {
     QDataStream s(data);
     s >> m_header_prefix;
