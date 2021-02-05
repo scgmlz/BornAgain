@@ -53,8 +53,7 @@ QString table(int nColumns, const QStringList& entries, const QString& attribute
     return result;
 }
 
-QVector<QPair<int, int>>
-expandLineNumberPattern(const QString& pattern, bool* ok = nullptr)
+QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern, bool* ok = nullptr)
 {
     QVector<QPair<int, int>> result;
 
@@ -135,6 +134,15 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
         return false;
     };
 
+    // calc map with factors
+    // #TODO: wrong result when more than one dataType points to same column with different factors
+    QMap<int, double> factorsOfColumns;
+    for (auto dataType : m_columnDefinitions.keys()) {
+        const auto& colDef = m_columnDefinitions[dataType];
+        if (colDef.enabled)
+            factorsOfColumns[colDef.column] = colDef.factor;
+    }
+
     QVector<QVector<double>> entriesAsDouble;
     QVector<QStringList> entriesAsString;
     QTextStream in(&file);
@@ -147,7 +155,7 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
         if (lineIsHeader(line) || lineShouldBeSkipped(lineNr) || line.isEmpty())
             continue;
 
-        QStringList lineEntries = line.split(m_separator.trimmed()); // #TODO: optimize
+        QStringList lineEntries = line.split(m_separator);
 
         if (lastColumnCount == -1)
             lastColumnCount = lineEntries.count();
@@ -157,20 +165,22 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
                 .arg(lineNr);
 
         QVector<double> rowEntriesAsDouble;
+        QStringList rowEntriesAsString; // already with factors
 
-        for (auto entry : lineEntries) {
+        for (int col = 0; col < lineEntries.count(); col++) {
             bool ok = false;
-            double val = entry.toDouble(&ok);
+            double val = lineEntries[col].toDouble(&ok);
             if (!ok)
                 val = NAN; // #TODO: review
-
-            // #TODO: factor
+            else
+                val *= factorsOfColumns.value(col, 1.0);
 
             rowEntriesAsDouble << val;
+            rowEntriesAsString << QString::number(val);
         }
 
         entriesAsDouble << rowEntriesAsDouble;
-        entriesAsString << lineEntries;
+        entriesAsString << rowEntriesAsString;
     }
 
     // validate - There is at least one row and at least two columns
@@ -194,7 +204,8 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     for (int col = 0; col < ncols; col++) {
         QString headerText = typeStr[4];
         for (auto dataType : m_columnDefinitions.keys()) {
-            if (m_columnDefinitions[dataType].column == col && m_columnDefinitions[dataType].enabled) {
+            if (m_columnDefinitions[dataType].column == col
+                && m_columnDefinitions[dataType].enabled) {
                 headerText = typeStr[(int)dataType];
                 break;
             }
@@ -317,7 +328,6 @@ void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
     }
 }
 
-
 void AutomaticMultiColumnDataLoader1D::applyProperties()
 {
     if (!m_propertiesWidget)
@@ -338,7 +348,7 @@ void AutomaticMultiColumnDataLoader1D::applyProperties()
         auto& colDef = m_columnDefinitions[dataType];
 
         colDef.enabled = m_propertiesWidget->enablingCheckBox((int)dataType)->isChecked();
-        colDef.column = m_propertiesWidget->columnSpinBox((int)dataType)->value()-1;
+        colDef.column = m_propertiesWidget->columnSpinBox((int)dataType)->value() - 1;
         colDef.unit = m_propertiesWidget->unit((int)dataType);
         colDef.factor = m_propertiesWidget->factor((int)dataType);
     }

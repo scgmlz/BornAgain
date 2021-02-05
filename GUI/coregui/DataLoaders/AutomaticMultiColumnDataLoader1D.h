@@ -35,7 +35,6 @@ public:
     virtual void deserialize(const QByteArray& data) override;
 
 private:
-
     struct ColumnDefinition {
         bool enabled;
         int column;
@@ -43,9 +42,7 @@ private:
         double factor;
     };
 
-    enum class DataType {
-        Q, R, dR, dQ
-    };
+    enum class DataType { Q, R, dR, dQ };
 
     QString m_separator;    //!< column separator
     QString m_headerPrefix; //!< prefix denoting header line
