@@ -21,11 +21,6 @@ UserDefinedDataLoader1D::UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLo
 {
 }
 
-QVector<QVector<QString>> UserDefinedDataLoader1D::parsedData() const
-{
-    return m_wrappedLoader->parsedData();
-}
-
 QString UserDefinedDataLoader1D::name() const
 {
     return m_name;

@@ -24,7 +24,6 @@ public:
     virtual QString name() const override;
     virtual QString info() const override;
     virtual QString persistentClassName() const override;
-    virtual QVector<QVector<QString>> parsedData() const override;
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
 
 private:

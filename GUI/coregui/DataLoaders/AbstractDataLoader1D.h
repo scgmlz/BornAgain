@@ -19,8 +19,6 @@
 #include <QVector>
 
 class AbstractDataLoader1D : public AbstractDataLoader {
-public:
-    virtual QVector<QVector<QString>> parsedData() const = 0;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_DATALOADERS_ABSTRACTDATALOADER1D_H

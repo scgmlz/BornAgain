@@ -52,17 +52,43 @@ QString table(int nColumns, const QStringList& entries, const QString& attribute
 
     return result;
 }
+
+QVector<QPair<int, int>>
+expandLineNumberPattern(const QString& pattern, bool* ok = nullptr)
+{
+    QVector<QPair<int, int>> result;
+
+    // splitting "1, 2-3" first on comma-separated tokens
+    for (const auto& token : pattern.split(",")) {
+        auto parts = token.split("-");
+        // splitting on dash-separated tokens
+        if (!parts.empty()) {
+            // if no "-" is present, make from "1" a pair {1, 1}
+            // if "-" is present, make from "1-2" a pair {1,2}
+            bool ok2 = true;
+            const auto conv0 = parts[0].toInt(&ok2);
+            if (ok2) {
+                const auto conv1 = parts.size() > 1 ? parts[1].toInt(&ok2) : conv0;
+                if (ok2) {
+                    result.push_back({conv0, conv1});
+                } else {
+                    if (ok != nullptr) {
+                        *ok = false;
+                    }
+                    return {};
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
 } // namespace
 
 AutomaticMultiColumnDataLoader1D::AutomaticMultiColumnDataLoader1D() : m_propertiesWidget(nullptr)
 {
-    m_separator = ";";
-
-    for (int col = 0; col < 4; col++) {
-        m_columnDefinitions[col].dataType = 0;
-        m_columnDefinitions[col].unit = "";
-        m_columnDefinitions[col].factor = 1.0;
-    }
+    initWithDefaultProperties();
 }
 
 QString AutomaticMultiColumnDataLoader1D::name() const
@@ -80,21 +106,9 @@ QString AutomaticMultiColumnDataLoader1D::persistentClassName() const
     return "AutomaticMultiColumnDataLoader1D";
 }
 
-QVector<QVector<QString>> AutomaticMultiColumnDataLoader1D::parsedData() const
-{
-    return QVector<QVector<QString>>();
-}
-
 QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
                                                   QCustomPlot* plotWidget) const
 {
-    std::string line;
-    std::vector<std::vector<double>> vecVec;
-    std::map<double, double> QvsR;
-    std::map<double, double> QvsDR;
-    std::map<double, double> QvsDQ;
-
-    // Read numbers from file:
     QFile file(filepath);
     if (!file.open(QFile::ReadOnly)) {
         return "File '" + filepath + "' could not be opened";
@@ -150,6 +164,8 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
             if (!ok)
                 val = NAN; // #TODO: review
 
+            // #TODO: factor
+
             rowEntriesAsDouble << val;
         }
 
@@ -176,10 +192,15 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     typeStr[4] = "ignored";
 
     for (int col = 0; col < ncols; col++) {
-        if (m_columnDefinitions.contains(col))
-            tableEntries << typeStr[m_columnDefinitions[col].dataType];
-        else
-            tableEntries << typeStr[4];
+        QString headerText = typeStr[4];
+        for (auto dataType : m_columnDefinitions.keys()) {
+            if (m_columnDefinitions[dataType].column == col && m_columnDefinitions[dataType].enabled) {
+                headerText = typeStr[(int)dataType];
+                break;
+            }
+        }
+
+        tableEntries << headerText;
     }
 
     for (auto line : entriesAsString)
@@ -190,8 +211,8 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     s += table((int)ncols, tableEntries, "border=\"1\" cellpadding=\"10\" cellspacing=\"0\"", true);
 
     // -- create plot
-    int qCol = 0; // #TODO: correct column!
-    int rCol = 1;
+    int qCol = m_columnDefinitions[DataType::Q].column;
+    int rCol = m_columnDefinitions[DataType::R].column;
 
     QVector<double> qVec;
     QVector<double> rVec;
@@ -227,15 +248,11 @@ void AutomaticMultiColumnDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
     m_propertiesWidget->m_ui->headerPrefixEdit->setText(m_headerPrefix);
     m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_linesToSkip);
 
-    for (int column = 0; column < 4; column++) {
-        if (m_columnDefinitions.contains(column)) {
-            const auto d = m_columnDefinitions[column];
-            m_propertiesWidget->setType(column, d.dataType);
-            m_propertiesWidget->m_unitCombos[column]->setCurrentText(d.unit);
-            m_propertiesWidget->m_factors[column]->setValue(d.factor);
-        } else {
-            m_propertiesWidget->setType(column, 4);
-        }
+    for (auto dataType : {DataType::Q, DataType::R, DataType::dR, DataType::dQ}) {
+        m_propertiesWidget->setDataType((int)dataType, m_columnDefinitions[dataType].enabled,
+                                        m_columnDefinitions[dataType].column,
+                                        m_columnDefinitions[dataType].unit,
+                                        m_columnDefinitions[dataType].factor);
     }
 
     QObject::connect(m_propertiesWidget,
@@ -247,26 +264,16 @@ void AutomaticMultiColumnDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
 
 void AutomaticMultiColumnDataLoader1D::initWithDefaultProperties()
 {
-
     m_separator = ";";
     m_headerPrefix = "";
     m_linesToSkip = "";
 
-    m_columnDefinitions[0].dataType = 0;
-    m_columnDefinitions[0].unit = "";
-    m_columnDefinitions[0].factor = 1.0;
-
-    m_columnDefinitions[1].dataType = 1;
-    m_columnDefinitions[1].unit = "";
-    m_columnDefinitions[1].factor = 1.0;
-
-    m_columnDefinitions[2].dataType = 2;
-    m_columnDefinitions[2].unit = "";
-    m_columnDefinitions[2].factor = 1.0;
-
-    m_columnDefinitions[3].dataType = 3;
-    m_columnDefinitions[3].unit = "";
-    m_columnDefinitions[3].factor = 1.0;
+    for (auto dataType : {DataType::Q, DataType::R, DataType::dR, DataType::dQ}) {
+        m_columnDefinitions[dataType].enabled = true;
+        m_columnDefinitions[dataType].column = (int)dataType;
+        m_columnDefinitions[dataType].unit = "";
+        m_columnDefinitions[dataType].factor = 1.0;
+    }
 }
 
 QByteArray AutomaticMultiColumnDataLoader1D::serialize() const
@@ -278,11 +285,12 @@ QByteArray AutomaticMultiColumnDataLoader1D::serialize() const
     s << m_linesToSkip;
 
     s << (quint8)m_columnDefinitions.count();
-    for (quint8 column : m_columnDefinitions.keys()) {
-        s << column;
-        s << m_columnDefinitions[column].dataType;
-        s << m_columnDefinitions[column].unit;
-        s << m_columnDefinitions[column].factor;
+    for (auto dataType : m_columnDefinitions.keys()) {
+        s << (quint8)dataType;
+        s << m_columnDefinitions[dataType].enabled;
+        s << m_columnDefinitions[dataType].column;
+        s << m_columnDefinitions[dataType].unit;
+        s << m_columnDefinitions[dataType].factor;
     }
 
     return a;
@@ -296,51 +304,22 @@ void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
     s >> m_linesToSkip;
 
     m_columnDefinitions.clear();
-    quint8 nColumns;
-    s >> nColumns;
-    for (int i = 0; i < nColumns; i++) {
-        quint8 column;
-        s >> column;
-        s >> m_columnDefinitions[column].dataType;
-        s >> m_columnDefinitions[column].unit;
-        s >> m_columnDefinitions[column].factor;
+    quint8 nDefs;
+    s >> nDefs;
+    for (int i = 0; i < nDefs; i++) {
+        quint8 dataType;
+        s >> dataType;
+        auto& colDef = m_columnDefinitions[(DataType)dataType];
+        s >> colDef.enabled;
+        s >> colDef.column;
+        s >> colDef.unit;
+        s >> colDef.factor;
     }
 }
 
-QVector<QPair<int, int>>
-AutomaticMultiColumnDataLoader1D::expandLineNumberPattern(const QString& pattern, bool* ok) const
-{
-    QVector<QPair<int, int>> result;
-
-    // splitting "1, 2-3" first on comma-separated tokens
-    for (const auto& token : pattern.split(",")) {
-        auto parts = token.split("-");
-        // splitting on dash-separated tokens
-        if (!parts.empty()) {
-            // if no "-" is present, make from "1" a pair {1, 1}
-            // if "-" is present, make from "1-2" a pair {1,2}
-            bool ok2 = true;
-            const auto conv0 = parts[0].toInt(&ok2);
-            if (ok2) {
-                const auto conv1 = parts.size() > 1 ? parts[1].toInt(&ok2) : conv0;
-                if (ok2) {
-                    result.push_back({conv0, conv1});
-                } else {
-                    if (ok != nullptr) {
-                        *ok = false;
-                    }
-                    return {};
-                }
-            }
-        }
-    }
-
-    return result;
-}
 
 void AutomaticMultiColumnDataLoader1D::applyProperties()
 {
-
     if (!m_propertiesWidget)
         return;
 
@@ -355,15 +334,12 @@ void AutomaticMultiColumnDataLoader1D::applyProperties()
     m_headerPrefix = ui->headerPrefixEdit->text();
     m_linesToSkip = ui->linesToSkipEdit->text();
 
-    m_columnDefinitions.clear();
+    for (auto dataType : m_columnDefinitions.keys()) {
+        auto& colDef = m_columnDefinitions[dataType];
 
-    for (int col = 0; col < 4; col++) {
-        const bool isIgnored = (m_propertiesWidget->m_typeCombos[col]->currentIndex() == 4);
-        if (!isIgnored) {
-            m_columnDefinitions[col].dataType =
-                m_propertiesWidget->m_typeCombos[col]->currentIndex();
-            m_columnDefinitions[col].unit = m_propertiesWidget->unit(col);
-            m_columnDefinitions[col].factor = m_propertiesWidget->factor(col);
-        }
+        colDef.enabled = m_propertiesWidget->enablingCheckBox((int)dataType)->isChecked();
+        colDef.column = m_propertiesWidget->columnSpinBox((int)dataType)->value()-1;
+        colDef.unit = m_propertiesWidget->unit((int)dataType);
+        colDef.factor = m_propertiesWidget->factor((int)dataType);
     }
 }

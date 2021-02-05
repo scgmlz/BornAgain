@@ -22,8 +22,6 @@ public:
     UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLoader, const QString& name,
                             const QByteArray& defaultProperties);
 
-    virtual QVector<QVector<QString>> parsedData() const override;
-
     virtual QString name() const override;
 
     virtual QString info() const override;
