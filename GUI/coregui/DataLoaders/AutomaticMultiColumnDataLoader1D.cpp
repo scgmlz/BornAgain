@@ -72,8 +72,7 @@ QString AutomaticMultiColumnDataLoader1D::name() const
 
 QString AutomaticMultiColumnDataLoader1D::info() const
 {
-    return "Supports up to 4 columns (Q versus R, dR, dQ). Separator only space or tab. Column "
-           "order is fixed (Q, R, dR, dQ)";
+    return "Supports up to 4 columns (Q, R, dR, dQ). Columns can be configured.";
 }
 
 QString AutomaticMultiColumnDataLoader1D::persistentClassName() const
@@ -101,29 +100,73 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
         return "File '" + filepath + "' could not be opened";
     }
 
+    const QStringList headerPrefixes =
+        (m_headerPrefix.trimmed().isEmpty()) ? QStringList() : m_headerPrefix.split(",");
+
+    const auto lineIsHeader = [headerPrefixes](const QString& line) {
+        for (auto prefix : headerPrefixes) {
+            if (line.startsWith(prefix.trimmed()))
+                return true;
+        }
+
+        return false;
+    };
+
+    const auto skippedLines = expandLineNumberPattern(m_linesToSkip);
+    const auto lineShouldBeSkipped = [skippedLines](int lineNr) {
+        for (auto pair : skippedLines) {
+            if (lineNr >= pair.first && lineNr <= pair.second)
+                return true;
+        }
+        return false;
+    };
+
+    QVector<QVector<double>> entriesAsDouble;
+    QVector<QStringList> entriesAsString;
     QTextStream in(&file);
+    int lineNr = 0;
+    int lastColumnCount = -1;
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
-        try {
-            // #migration +++ this works only if separator is space or tab; it does not
-            // work e.g. with comma or semicolon
-            std::vector<double> rowVec = DataFormatUtils::parse_doubles(line.toStdString());
-            vecVec.push_back(rowVec);
-        } catch (...) { // #migration +++ This eats useful errors away...
+        lineNr++;
+
+        if (lineIsHeader(line) || lineShouldBeSkipped(lineNr) || line.isEmpty())
             continue;
+
+        QStringList lineEntries = line.split(m_separator.trimmed()); // #TODO: optimize
+
+        if (lastColumnCount == -1)
+            lastColumnCount = lineEntries.count();
+        else if (lastColumnCount != lineEntries.count())
+            return QString(
+                       "Error: number of columns is not constant over all lines (found in line %1)")
+                .arg(lineNr);
+
+        QVector<double> rowEntriesAsDouble;
+
+        for (auto entry : lineEntries) {
+            bool ok = false;
+            double val = entry.toDouble(&ok);
+            if (!ok)
+                val = NAN; // #TODO: review
+
+            rowEntriesAsDouble << val;
         }
+
+        entriesAsDouble << rowEntriesAsDouble;
+        entriesAsString << lineEntries;
     }
 
     // validate - There is at least one row and at least two columns
-    size_t nrows = vecVec.size();
+    size_t nrows = entriesAsDouble.size();
     if (nrows < 1)
         return "Error: no numerical values found";
-    size_t ncols = vecVec[0].size();
+    size_t ncols = entriesAsDouble[0].size();
     if (ncols < 2)
         return "Error: Minimum 2 columns required";
 
     // Assign Q vs R, dR, dQ:
-    QStringList entries;
+    QStringList tableEntries;
 
     QMap<int, QString> typeStr;
     typeStr[0] = "Q";
@@ -132,68 +175,30 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     typeStr[3] = "dQ";
     typeStr[4] = "ignored";
 
-    for (int col = 0; col < 4; col++) {
-        if (col < ncols) {
-            if (m_columnDefinitions.contains(col))
-                entries << typeStr[m_columnDefinitions[col].dataType];
-            else
-                entries << typeStr[4];
-        }
-    }
-    //     entries << "Q"
-    //             << "R";
-    //     if (ncols > 2)
-    //         entries << "dR";
-    //     if (ncols > 3)
-    //         entries << "dQ";
-
-    for (size_t row = 0; row < nrows; row++) {
-        if (vecVec[row].size() != ncols)
-            return "Error: The number of columns varies among the rows";
-
-        entries << QString::number(vecVec[row][0]);
-        double Q = vecVec[row][0];
-        switch (ncols) {
-        case 1:
-            break;
-        case 2:
-            entries << QString::number(vecVec[row][1]);
-            QvsR[Q] = vecVec[row][1];
-            QvsDR[Q] = 0;
-            QvsDQ[Q] = 0;
-            break;
-        case 3:
-            entries << QString::number(vecVec[row][1]);
-            entries << QString::number(vecVec[row][2]);
-            QvsR[Q] = vecVec[row][1];
-            QvsDR[Q] = vecVec[row][2];
-            QvsDQ[Q] = 0;
-            break;
-        case 4:
-            entries << QString::number(vecVec[row][1]);
-            entries << QString::number(vecVec[row][2]);
-            entries << QString::number(vecVec[row][3]);
-            QvsR[Q] = vecVec[row][1];
-            QvsDR[Q] = vecVec[row][2];
-            QvsDQ[Q] = vecVec[row][3];
-            break;
-        }
+    for (int col = 0; col < ncols; col++) {
+        if (m_columnDefinitions.contains(col))
+            tableEntries << typeStr[m_columnDefinitions[col].dataType];
+        else
+            tableEntries << typeStr[4];
     }
 
-    if (entries.size() == ncols) // only header entries
-        return "No data found";
+    for (auto line : entriesAsString)
+        tableEntries << line;
 
     QString s = bold("Data table:");
 
-    s += table((int)ncols, entries, "border=\"1\" cellpadding=\"10\" cellspacing=\"0\"", true);
+    s += table((int)ncols, tableEntries, "border=\"1\" cellpadding=\"10\" cellspacing=\"0\"", true);
+
+    // -- create plot
+    int qCol = 0; // #TODO: correct column!
+    int rCol = 1;
 
     QVector<double> qVec;
     QVector<double> rVec;
-    for (auto it = QvsR.begin(); it != QvsR.end(); ++it) {
-        if (it->second <= 0)
-            continue;
-        qVec.push_back(it->first);
-        rVec.push_back(it->second);
+
+    for (const auto lineAsDoubles : entriesAsDouble) {
+        qVec << lineAsDoubles[qCol];
+        rVec << lineAsDoubles[rCol];
     }
 
     auto graph = plotWidget->addGraph();
@@ -300,6 +305,37 @@ void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
         s >> m_columnDefinitions[column].unit;
         s >> m_columnDefinitions[column].factor;
     }
+}
+
+QVector<QPair<int, int>>
+AutomaticMultiColumnDataLoader1D::expandLineNumberPattern(const QString& pattern, bool* ok) const
+{
+    QVector<QPair<int, int>> result;
+
+    // splitting "1, 2-3" first on comma-separated tokens
+    for (const auto& token : pattern.split(",")) {
+        auto parts = token.split("-");
+        // splitting on dash-separated tokens
+        if (!parts.empty()) {
+            // if no "-" is present, make from "1" a pair {1, 1}
+            // if "-" is present, make from "1-2" a pair {1,2}
+            bool ok2 = true;
+            const auto conv0 = parts[0].toInt(&ok2);
+            if (ok2) {
+                const auto conv1 = parts.size() > 1 ? parts[1].toInt(&ok2) : conv0;
+                if (ok2) {
+                    result.push_back({conv0, conv1});
+                } else {
+                    if (ok != nullptr) {
+                        *ok = false;
+                    }
+                    return {};
+                }
+            }
+        }
+    }
+
+    return result;
 }
 
 void AutomaticMultiColumnDataLoader1D::applyProperties()

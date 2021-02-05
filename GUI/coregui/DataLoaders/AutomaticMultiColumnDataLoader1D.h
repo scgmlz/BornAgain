@@ -36,6 +36,10 @@ public:
     virtual void deserialize(const QByteArray& data) override;
 
 private:
+    QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern,
+                                                     bool* ok = nullptr) const;
+
+private:
     struct ColumnDefinition {
         int dataType; // #TODO: enum or ... (Q, R, dR, ...)
         QString unit;
