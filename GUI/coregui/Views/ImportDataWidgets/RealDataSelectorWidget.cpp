@@ -17,8 +17,7 @@
 #include "GUI/coregui/Views/CommonWidgets/ItemSelectorWidget.h"
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataPropertiesWidget.h"
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
-#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorHBar.h"
-#include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorToolBar.h"
+#include "GUI/coregui/mainwindow/StyledToolBar.h"
 #include <QItemSelectionModel>
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -26,14 +25,20 @@
 RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     : QWidget(parent)
     , m_selectorActions(new RealDataSelectorActions(this))
-    , m_toolBar(new RealDataSelectorToolBar(m_selectorActions, this))
-    , m_hamBar(new RealDataSelectorHBar(m_selectorActions, this))
     , m_selectorWidget(new ItemSelectorWidget)
     , m_propertiesWidget(new RealDataPropertiesWidget)
 {
     setMinimumSize(128, 600);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setWindowTitle("RealDataSelectorWidget");
+
+    QToolBar* toolBar = new StyledToolBar(this);
+    toolBar->setMinimumSize(toolBar->minimumHeight(), toolBar->minimumHeight());
+    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolBar->addAction(m_selectorActions->m_import2dDataAction);
+    toolBar->addAction(m_selectorActions->m_import1dDataAction);
+    toolBar->addAction(m_selectorActions->m_removeDataAction);
+    toolBar->addAction(m_selectorActions->m_rotateDataAction);
 
     auto splitter = new QSplitter;
     splitter->setOrientation(Qt::Vertical);
@@ -45,8 +50,7 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->addWidget(m_toolBar);
-    mainLayout->addWidget(m_hamBar);
+    mainLayout->addWidget(toolBar);
     mainLayout->addWidget(splitter);
     setLayout(mainLayout);
 

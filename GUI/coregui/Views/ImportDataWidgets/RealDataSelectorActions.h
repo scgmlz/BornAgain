@@ -44,10 +44,13 @@ private:
     void updateSelection();
     void importDataLoop(int ndim);
 
+public:
     QAction* m_import2dDataAction;
     QAction* m_import1dDataAction;
     QAction* m_removeDataAction;
     QAction* m_rotateDataAction;
+
+private:
     RealDataModel* m_realDataModel;
     QItemSelectionModel* m_selectionModel;
 };

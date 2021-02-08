@@ -19,13 +19,10 @@
 
 class RealDataPropertiesWidget;
 class ItemSelectorWidget;
-class RealDataPropertiesWidget;
 class InstrumentModel;
 class RealDataModel;
 class SessionItem;
 class RealDataSelectorActions;
-class RealDataSelectorToolBar;
-class RealDataSelectorHBar;
 
 //! The RealDataSelectorWidget represents left panel of ImportDataView. Contains a widget to
 //! select data set (ItemSelectorWidget) and properties of currently selected data
@@ -50,8 +47,6 @@ public slots:
 
 private:
     RealDataSelectorActions* m_selectorActions;
-    RealDataSelectorToolBar* m_toolBar;
-    RealDataSelectorHBar* m_hamBar;
     ItemSelectorWidget* m_selectorWidget;
     RealDataPropertiesWidget* m_propertiesWidget;
 };
