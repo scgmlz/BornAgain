@@ -71,8 +71,11 @@ void AutomaticMultiColumnDataLoader1DProperties::updateEnabling(int dataType, bo
         auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
         if (layoutItem) {
             QWidget* w = layoutItem->widget();
-            if (w)
-                w->setVisible(enabled);
+            if (w) {
+                const bool belongsToUnusedCombo = (dataType != 0) && (col >= 5);    // no unit except for Q
+                w->setVisible(enabled && !belongsToUnusedCombo);
+            }
+                
         }
     }
 }
@@ -94,7 +97,7 @@ QCheckBox* AutomaticMultiColumnDataLoader1DProperties::enablingCheckBox(int data
 QComboBox* AutomaticMultiColumnDataLoader1DProperties::unitCombo(int dataType) const
 {
     const int lineInLayout = dataType;
-    return dynamic_cast<QComboBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 4)->widget());
+    return dynamic_cast<QComboBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 6)->widget());
 }
 
 QSpinBox* AutomaticMultiColumnDataLoader1DProperties::columnSpinBox(int dataType) const
@@ -107,5 +110,5 @@ QDoubleSpinBox* AutomaticMultiColumnDataLoader1DProperties::factorSpinBox(int da
 {
     const int lineInLayout = dataType;
     return dynamic_cast<QDoubleSpinBox*>(
-        m_ui->gridLayout->itemAtPosition(lineInLayout, 6)->widget());
+        m_ui->gridLayout->itemAtPosition(lineInLayout, 4)->widget());
 }

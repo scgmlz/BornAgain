@@ -224,18 +224,35 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     // -- create plot
     int qCol = m_columnDefinitions[DataType::Q].column;
     int rCol = m_columnDefinitions[DataType::R].column;
+    int dRCol = m_columnDefinitions[DataType::dR].column;
 
     QVector<double> qVec;
     QVector<double> rVec;
+    QVector<double> drVec;
+
+    const bool addDR = m_columnDefinitions[DataType::dR].enabled && (ncols > dRCol);
 
     for (const auto lineAsDoubles : entriesAsDouble) {
         qVec << lineAsDoubles[qCol];
         rVec << lineAsDoubles[rCol];
+        if (addDR)
+            drVec << lineAsDoubles[dRCol];
     }
 
     auto graph = plotWidget->addGraph();
     graph->addData(qVec, rVec);
+
+    if (!drVec.empty()) {
+        auto errorBars = new QCPErrorBars(plotWidget->xAxis, plotWidget->yAxis);
+
+        errorBars->setData(drVec);
+        errorBars->setDataPlottable(graph);
+    }
+
     plotWidget->rescaleAxes();
+    plotWidget->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+    plotWidget->xAxis->setLabel("Q [" + m_columnDefinitions[DataType::Q].unit + "]");
+    plotWidget->yAxis->setLabel("R");
 
     return "<p>" + bold("<h>Information: </h>") + info() + "</p><p>" + s + "</p>";
 }
@@ -285,6 +302,8 @@ void AutomaticMultiColumnDataLoader1D::initWithDefaultProperties()
         m_columnDefinitions[dataType].unit = "";
         m_columnDefinitions[dataType].factor = 1.0;
     }
+
+    m_columnDefinitions[DataType::Q].unit = "1/nm";
 }
 
 QByteArray AutomaticMultiColumnDataLoader1D::serialize() const
