@@ -72,10 +72,10 @@ void AutomaticMultiColumnDataLoader1DProperties::updateEnabling(int dataType, bo
         if (layoutItem) {
             QWidget* w = layoutItem->widget();
             if (w) {
-                const bool belongsToUnusedCombo = (dataType != 0) && (col >= 5);    // no unit except for Q
+                const bool belongsToUnusedCombo =
+                    (dataType != 0) && (col >= 5); // no unit except for Q
                 w->setVisible(enabled && !belongsToUnusedCombo);
             }
-                
         }
     }
 }
