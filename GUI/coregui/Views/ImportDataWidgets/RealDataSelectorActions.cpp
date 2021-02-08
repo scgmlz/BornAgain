@@ -222,33 +222,6 @@ void RealDataSelectorActions::onRotateDataRequest()
     QApplication::restoreOverrideCursor();
 }
 
-void RealDataSelectorActions::onContextMenuRequest(const QPoint& point,
-                                                   const QModelIndex& indexAtPoint)
-{
-    QMenu menu;
-    menu.setToolTipsVisible(true);
-
-    setAllActionsEnabled(indexAtPoint.isValid());
-
-    m_import2dDataAction->setEnabled(true);
-    m_import1dDataAction->setEnabled(true);
-
-    menu.addAction(m_removeDataAction);
-    menu.addAction(m_rotateDataAction);
-    menu.addSeparator();
-    menu.addAction(m_import2dDataAction);
-    menu.addAction(m_import1dDataAction);
-    menu.exec(point);
-}
-
-void RealDataSelectorActions::setAllActionsEnabled(bool value)
-{
-    m_import2dDataAction->setEnabled(value);
-    m_import1dDataAction->setEnabled(value);
-    m_rotateDataAction->setEnabled(value);
-    m_removeDataAction->setEnabled(value);
-}
-
 void RealDataSelectorActions::updateSelection()
 {
     if (!m_selectionModel->hasSelection()) {

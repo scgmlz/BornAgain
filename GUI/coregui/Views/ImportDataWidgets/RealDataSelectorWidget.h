@@ -44,11 +44,14 @@ signals:
 
 public slots:
     void onSelectionChanged(SessionItem* item);
+    void onContextMenuRequest(const QPoint& point, const QModelIndex& indexAtPoint);
+    void onRenameDataRequest();
 
 private:
     RealDataSelectorActions* m_selectorActions;
     ItemSelectorWidget* m_selectorWidget;
     RealDataPropertiesWidget* m_propertiesWidget;
+    QAction* m_renameDataAction;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H

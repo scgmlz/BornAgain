@@ -52,9 +52,6 @@ private:
     void setPropertiesEnabled(bool enabled);
 
     LinkInstrumentManager* m_linkManager;
-    QDataWidgetMapper* m_dataNameMapper;
-    QLabel* m_dataNameLabel;
-    QLineEdit* m_dataNameEdit;
     QLabel* m_instrumentLabel;
     QComboBox* m_instrumentCombo;
     QString m_current_id;

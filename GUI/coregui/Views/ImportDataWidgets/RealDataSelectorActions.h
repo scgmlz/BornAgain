@@ -37,10 +37,8 @@ public slots:
     void onImport2dDataAction();
     void onRemoveDataAction();
     void onRotateDataRequest();
-    void onContextMenuRequest(const QPoint& point, const QModelIndex& indexAtPoint);
 
 private:
-    void setAllActionsEnabled(bool value);
     void updateSelection();
     void importDataLoop(int ndim);
 

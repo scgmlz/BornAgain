@@ -19,6 +19,9 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "GUI/coregui/mainwindow/StyledToolBar.h"
 #include <QItemSelectionModel>
+#include <QLineEdit>
+#include <QListView>
+#include <QMenu>
 #include <QSplitter>
 #include <QVBoxLayout>
 
@@ -27,10 +30,18 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     , m_selectorActions(new RealDataSelectorActions(this))
     , m_selectorWidget(new ItemSelectorWidget)
     , m_propertiesWidget(new RealDataPropertiesWidget)
+    , m_renameDataAction(new QAction(this))
 {
     setMinimumSize(128, 600);
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setWindowTitle("RealDataSelectorWidget");
+
+    m_renameDataAction->setText("Rename this data");
+    m_renameDataAction->setIcon(QIcon()); // #TODO: Icon needed?
+    m_renameDataAction->setIconText("Rename");
+    m_renameDataAction->setToolTip("Rename data");
+    connect(m_renameDataAction, &QAction::triggered, this,
+            &RealDataSelectorWidget::onRenameDataRequest);
 
     QToolBar* toolBar = new StyledToolBar(this);
     toolBar->setMinimumSize(toolBar->minimumHeight(), toolBar->minimumHeight());
@@ -54,8 +65,8 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     mainLayout->addWidget(splitter);
     setLayout(mainLayout);
 
-    connect(m_selectorWidget, &ItemSelectorWidget::contextMenuRequest, m_selectorActions,
-            &RealDataSelectorActions::onContextMenuRequest);
+    connect(m_selectorWidget, &ItemSelectorWidget::contextMenuRequest, this,
+            &RealDataSelectorWidget::onContextMenuRequest);
 
     connect(m_selectorWidget, &ItemSelectorWidget::selectionChanged, this,
             &RealDataSelectorWidget::onSelectionChanged);
@@ -85,4 +96,42 @@ void RealDataSelectorWidget::onSelectionChanged(SessionItem* item)
 {
     m_propertiesWidget->setItem(item);
     emit selectionChanged(item);
+}
+
+void RealDataSelectorWidget::onContextMenuRequest(const QPoint& point,
+                                                  const QModelIndex& indexAtPoint)
+{
+
+    const auto setAllActionsEnabled = [this](bool value) {
+        m_selectorActions->m_import2dDataAction->setEnabled(value);
+        m_selectorActions->m_import1dDataAction->setEnabled(value);
+        m_selectorActions->m_rotateDataAction->setEnabled(value);
+        m_selectorActions->m_removeDataAction->setEnabled(value);
+        m_renameDataAction->setEnabled(value);
+    };
+
+    QMenu menu;
+    menu.setToolTipsVisible(true);
+
+    setAllActionsEnabled(indexAtPoint.isValid());
+
+    m_selectorActions->m_import2dDataAction->setEnabled(true);
+    m_selectorActions->m_import1dDataAction->setEnabled(true);
+
+    menu.addAction(m_renameDataAction);
+    menu.addAction(m_selectorActions->m_removeDataAction);
+    menu.addAction(m_selectorActions->m_rotateDataAction);
+    menu.addSeparator();
+    menu.addAction(m_selectorActions->m_import2dDataAction);
+    menu.addAction(m_selectorActions->m_import1dDataAction);
+    menu.exec(point);
+}
+
+void RealDataSelectorWidget::onRenameDataRequest()
+{
+    QModelIndex currentIndex = m_selectorWidget->selectionModel()->currentIndex();
+    if (!currentIndex.isValid())
+        return;
+
+    m_selectorWidget->listView()->edit(currentIndex);
 }
