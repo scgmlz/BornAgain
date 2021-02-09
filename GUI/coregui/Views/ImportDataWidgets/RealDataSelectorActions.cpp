@@ -202,6 +202,9 @@ void RealDataSelectorActions::onRotateDataRequest()
     RealDataItem* dataItem =
         dynamic_cast<RealDataItem*>(m_realDataModel->itemForIndex(currentIndex));
     ASSERT(dataItem);
+    if (!dataItem->isIntensityData())   // should never happen because of action disabling => no dialog necessary
+        return;
+
     auto intensityItem = dataItem->intensityDataItem();
     ASSERT(intensityItem);
 
