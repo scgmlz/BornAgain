@@ -36,15 +36,15 @@ QList<QAction*> RealDataPresenter::actionList()
 
 QStringList RealDataPresenter::activePresentationList(SessionItem* item)
 {
-    ASSERT(item && dynamic_cast<RealDataItem*>(item));
-    const auto& underlying_data_model = dynamic_cast<RealDataItem*>(item)->underlyingDataModel();
+    const auto realDataItem = dynamic_cast<RealDataItem*>(item);
+    ASSERT(realDataItem);
 
     QStringList result;
-    if (underlying_data_model == "IntensityData")
+    if (realDataItem->isIntensityData())
         result << "Color Map"
                << "Projections"
                << "Mask Editor";
-    else if (underlying_data_model == "SpecularData")
+    else if (realDataItem->isSpecularData())
         result << "Reflectometry";
     else
         throw GUIHelpers::Error(

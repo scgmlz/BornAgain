@@ -89,24 +89,28 @@ RealDataSelectorActions::RealDataSelectorActions(QObject* parent)
 {
     m_import2dDataAction = new QAction("Import 2D data", parent);
     m_import2dDataAction->setIcon(QIcon(":/images/import.svg"));
+    m_import2dDataAction->setIconText("2D");
     m_import2dDataAction->setToolTip("Import 2D data");
     connect(m_import2dDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onImport2dDataAction);
 
     m_import1dDataAction = new QAction("Import 1D data", parent);
     m_import1dDataAction->setIcon(QIcon(":/images/import.svg"));
+    m_import1dDataAction->setIconText("1D");
     m_import1dDataAction->setToolTip("Import 1D data");
     connect(m_import1dDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onImport1dDataAction);
 
-    m_removeDataAction = new QAction("Remove this data", parent);
+    m_removeDataAction = new QAction("Remove", parent);
     m_removeDataAction->setIcon(QIcon(":/images/delete.svg"));
+    m_removeDataAction->setIconText("Remove");
     m_removeDataAction->setToolTip("Remove selected data");
     connect(m_removeDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onRemoveDataAction);
 
-    m_rotateDataAction->setText("Rotate this data");
+    m_rotateDataAction->setText("Rotate");
     m_rotateDataAction->setIcon(QIcon(":/images/rotate-left.svg"));
+    m_rotateDataAction->setIconText("Rotate");
     m_rotateDataAction->setToolTip("Rotate intensity data by 90 deg counterclockwise");
     connect(m_rotateDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onRotateDataRequest);
@@ -198,6 +202,10 @@ void RealDataSelectorActions::onRotateDataRequest()
     RealDataItem* dataItem =
         dynamic_cast<RealDataItem*>(m_realDataModel->itemForIndex(currentIndex));
     ASSERT(dataItem);
+    if (!dataItem->isIntensityData()) // should never happen because of action disabling => no
+                                      // dialog necessary
+        return;
+
     auto intensityItem = dataItem->intensityDataItem();
     ASSERT(intensityItem);
 
@@ -216,33 +224,6 @@ void RealDataSelectorActions::onRotateDataRequest()
 
     m_selectionModel->select(currentIndex, QItemSelectionModel::Select);
     QApplication::restoreOverrideCursor();
-}
-
-void RealDataSelectorActions::onContextMenuRequest(const QPoint& point,
-                                                   const QModelIndex& indexAtPoint)
-{
-    QMenu menu;
-    menu.setToolTipsVisible(true);
-
-    setAllActionsEnabled(indexAtPoint.isValid());
-
-    m_import2dDataAction->setEnabled(true);
-    m_import1dDataAction->setEnabled(true);
-
-    menu.addAction(m_removeDataAction);
-    menu.addAction(m_rotateDataAction);
-    menu.addSeparator();
-    menu.addAction(m_import2dDataAction);
-    menu.addAction(m_import1dDataAction);
-    menu.exec(point);
-}
-
-void RealDataSelectorActions::setAllActionsEnabled(bool value)
-{
-    m_import2dDataAction->setEnabled(value);
-    m_import1dDataAction->setEnabled(value);
-    m_rotateDataAction->setEnabled(value);
-    m_removeDataAction->setEnabled(value);
 }
 
 void RealDataSelectorActions::updateSelection()

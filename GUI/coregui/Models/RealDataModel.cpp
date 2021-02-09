@@ -21,13 +21,6 @@ RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDat
     setObjectName(SessionXML::RealDataModelTag);
 }
 
-// Qt::ItemFlags RealDataModel::flags(const QModelIndex &index) const
-//{
-//    Qt::ItemFlags result_flags =  SessionModel::flags(index);
-//    result_flags |= Qt::ItemIsEditable;
-//    return result_flags;
-//}
-
 QVector<SessionItem*> RealDataModel::nonXMLData() const
 {
     QVector<SessionItem*> result;
@@ -40,4 +33,25 @@ QVector<SessionItem*> RealDataModel::nonXMLData() const
     }
 
     return result;
+}
+
+Qt::ItemFlags RealDataModel::flags(const QModelIndex& index) const
+{
+    return SessionModel::flags(index) | Qt::ItemIsEditable;
+}
+
+bool RealDataModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if (!index.isValid())
+        return false;
+
+    if (role == Qt::EditRole) {
+        SessionItem* item = itemForIndex(index);
+        if (item) {
+            item->setItemName(value.toString());
+            return true;
+        }
+    }
+
+    return SessionModel::setData(index, value, role);
 }

@@ -19,13 +19,11 @@
 
 class RealDataPropertiesWidget;
 class ItemSelectorWidget;
-class RealDataPropertiesWidget;
 class InstrumentModel;
 class RealDataModel;
 class SessionItem;
 class RealDataSelectorActions;
-class RealDataSelectorToolBar;
-class RealDataSelectorHBar;
+class RealDataItem;
 
 //! The RealDataSelectorWidget represents left panel of ImportDataView. Contains a widget to
 //! select data set (ItemSelectorWidget) and properties of currently selected data
@@ -47,13 +45,20 @@ signals:
 
 public slots:
     void onSelectionChanged(SessionItem* item);
+    void onContextMenuRequest(const QPoint& point, const QModelIndex& indexAtPoint);
+    void onRenameDataRequest();
+    void updateActionEnabling();
+    void updateActionEnabling(const RealDataItem* item);
+
+private:
+    RealDataItem* toRealDataItem(const QModelIndex& index) const;
 
 private:
     RealDataSelectorActions* m_selectorActions;
-    RealDataSelectorToolBar* m_toolBar;
-    RealDataSelectorHBar* m_hamBar;
     ItemSelectorWidget* m_selectorWidget;
     RealDataPropertiesWidget* m_propertiesWidget;
+    QAction* m_renameDataAction;
+    RealDataModel* m_realDataModel;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_REALDATASELECTORWIDGET_H

@@ -22,17 +22,9 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 
-namespace {
-const QString instrumentNameTooltip = "Name of real data";
-const QString selectorTooltip = "Select instrument to link with real data";
-} // namespace
-
 RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
     : QWidget(parent)
     , m_linkManager(new LinkInstrumentManager(this))
-    , m_dataNameMapper(new QDataWidgetMapper(this))
-    , m_dataNameLabel(new QLabel("Dataset"))
-    , m_dataNameEdit(new QLineEdit)
     , m_instrumentLabel(new QLabel("Linked instrument"))
     , m_instrumentCombo(new QComboBox)
     , m_currentDataItem(0)
@@ -44,14 +36,8 @@ RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
     mainLayout->setMargin(5);
     mainLayout->setSpacing(2);
 
-    m_dataNameLabel->setToolTip(instrumentNameTooltip);
-    m_dataNameEdit->setToolTip(instrumentNameTooltip);
-    m_instrumentLabel->setToolTip(selectorTooltip);
-    m_instrumentCombo->setToolTip(selectorTooltip);
+    m_instrumentCombo->setToolTip("Select instrument to link with real data");
 
-    mainLayout->addWidget(m_dataNameLabel);
-    mainLayout->addWidget(m_dataNameEdit);
-    mainLayout->addSpacing(5);
     mainLayout->addWidget(m_instrumentLabel);
     mainLayout->addWidget(m_instrumentCombo);
 
@@ -77,8 +63,6 @@ void RealDataPropertiesWidget::setModels(InstrumentModel* instrumentModel,
 
 void RealDataPropertiesWidget::setItem(SessionItem* item)
 {
-    m_dataNameMapper->clearMapping();
-
     if (item == m_currentDataItem)
         return;
 
@@ -99,13 +83,6 @@ void RealDataPropertiesWidget::setItem(SessionItem* item)
 
     m_currentDataItem->mapper()->setOnItemDestroy([this](SessionItem*) { m_currentDataItem = 0; },
                                                   this);
-
-    // Initialize QLineEdit to edit itemName directly in the model
-    m_dataNameMapper->setModel(item->model());
-    m_dataNameMapper->setRootIndex(item->index());
-    m_dataNameMapper->setCurrentModelIndex(item->getItem(SessionItem::P_NAME)->index());
-    m_dataNameMapper->addMapping(m_dataNameEdit, 1);
-    m_dataNameMapper->toFirst();
 
     // Set combo selector to show linked instrument
     setComboToIdentifier(item->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString());
@@ -195,12 +172,8 @@ void RealDataPropertiesWidget::setComboConnected(bool isConnected)
 
 void RealDataPropertiesWidget::setPropertiesEnabled(bool enabled)
 {
-    m_dataNameLabel->setEnabled(enabled);
-    m_dataNameEdit->setEnabled(enabled);
     m_instrumentLabel->setEnabled(enabled);
     m_instrumentCombo->setEnabled(enabled);
-    if (enabled == false) {
-        m_dataNameEdit->clear();
+    if (!enabled)
         m_instrumentCombo->setCurrentIndex(0);
-    }
 }
