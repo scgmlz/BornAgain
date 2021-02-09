@@ -69,13 +69,22 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
 
 IntensityDataItem* RealDataItem::intensityDataItem()
 {
-    return const_cast<IntensityDataItem*>(
-        static_cast<const RealDataItem*>(this)->intensityDataItem());
+    return dynamic_cast<IntensityDataItem*>(dataItem());
 }
 
 const IntensityDataItem* RealDataItem::intensityDataItem() const
 {
     return dynamic_cast<const IntensityDataItem*>(dataItem());
+}
+
+SpecularDataItem* RealDataItem::specularDataItem()
+{
+    return dynamic_cast<SpecularDataItem*>(dataItem());
+}
+
+const SpecularDataItem* RealDataItem::specularDataItem() const
+{
+    return dynamic_cast<const SpecularDataItem*>(dataItem());
 }
 
 DataItem* RealDataItem::dataItem()
@@ -105,9 +114,8 @@ void RealDataItem::setOutputData(OutputData<double>* data)
     ASSERT(data && "Assertion failed in RealDataItem::setOutputData: passed data is nullptr");
     ASSERT(data->rank() < 3 && data->rank() > 0);
 
-    const QString& target_model_type = data->rank() == 2   ? "IntensityData"
-                                       : data->rank() == 1 ? "SpecularData"
-                                                           : "";
+    const QString& target_model_type =
+        data->rank() == 2 ? "IntensityData" : data->rank() == 1 ? "SpecularData" : "";
     auto data_item = getItem(T_INTENSITY_DATA);
     if (data_item && data_item->modelType() != target_model_type)
         throw GUIHelpers::Error("Error in RealDataItem::setOutputData: trying to set data "
@@ -171,9 +179,14 @@ std::vector<int> RealDataItem::shape() const
     return data_item->shape();
 }
 
-QString RealDataItem::underlyingDataModel()
+bool RealDataItem::isIntensityData() const
 {
-    return dataItem()->modelType();
+    return intensityDataItem() != nullptr;
+}
+
+bool RealDataItem::isSpecularData() const
+{
+    return specularDataItem() != nullptr;
 }
 
 MaskContainerItem* RealDataItem::maskContainerItem()

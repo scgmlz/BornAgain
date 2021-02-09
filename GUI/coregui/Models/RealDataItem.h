@@ -20,6 +20,7 @@
 class DataItem;
 class InstrumentItem;
 class IntensityDataItem;
+class SpecularDataItem;
 class MaskContainerItem;
 template <class T> class OutputData;
 class ImportDataInfo;
@@ -39,6 +40,9 @@ public:
     IntensityDataItem* intensityDataItem();
     const IntensityDataItem* intensityDataItem() const;
 
+    SpecularDataItem* specularDataItem();
+    const SpecularDataItem* specularDataItem() const;
+
     DataItem* dataItem();
     const DataItem* dataItem() const;
 
@@ -51,11 +55,11 @@ public:
 
     void linkToInstrument(const InstrumentItem* instrument, bool make_update = true);
 
-    //! Returns the shape of undelying data item
+    //! Returns the shape of underlying data item
     std::vector<int> shape() const;
 
-    //! Returns the model type of the underlying data item
-    QString underlyingDataModel();
+    bool isIntensityData() const;
+    bool isSpecularData() const;
 
     //! Returns mask container item
     MaskContainerItem* maskContainerItem();
