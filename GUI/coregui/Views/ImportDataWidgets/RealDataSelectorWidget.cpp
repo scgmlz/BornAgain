@@ -18,6 +18,7 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataPropertiesWidget.h"
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "GUI/coregui/mainwindow/StyledToolBar.h"
+#include "Models/RealDataItem.h"
 #include <QItemSelectionModel>
 #include <QLineEdit>
 #include <QListView>
@@ -36,7 +37,7 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setWindowTitle("RealDataSelectorWidget");
 
-    m_renameDataAction->setText("Rename this data");
+    m_renameDataAction->setText("Rename");
     m_renameDataAction->setIcon(QIcon()); // #TODO: Icon needed?
     m_renameDataAction->setIconText("Rename");
     m_renameDataAction->setToolTip("Rename data");
@@ -85,6 +86,7 @@ QSize RealDataSelectorWidget::minimumSizeHint() const
 void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
                                        RealDataModel* realDataModel)
 {
+    m_realDataModel = realDataModel;
     m_selectorWidget->setModel(realDataModel);
     m_propertiesWidget->setModels(instrumentModel, realDataModel);
 
@@ -94,6 +96,7 @@ void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
 
 void RealDataSelectorWidget::onSelectionChanged(SessionItem* item)
 {
+    updateActionEnabling();
     m_propertiesWidget->setItem(item);
     emit selectionChanged(item);
 }
@@ -101,27 +104,20 @@ void RealDataSelectorWidget::onSelectionChanged(SessionItem* item)
 void RealDataSelectorWidget::onContextMenuRequest(const QPoint& point,
                                                   const QModelIndex& indexAtPoint)
 {
-
-    const auto setAllActionsEnabled = [this](bool value) {
-        m_selectorActions->m_import2dDataAction->setEnabled(value);
-        m_selectorActions->m_import1dDataAction->setEnabled(value);
-        m_selectorActions->m_rotateDataAction->setEnabled(value);
-        m_selectorActions->m_removeDataAction->setEnabled(value);
-        m_renameDataAction->setEnabled(value);
-    };
+    auto realDataItemAtPoint = toRealDataItem(indexAtPoint);
+    updateActionEnabling(realDataItemAtPoint);
 
     QMenu menu;
     menu.setToolTipsVisible(true);
 
-    setAllActionsEnabled(indexAtPoint.isValid());
+    if (realDataItemAtPoint != nullptr) {
+        menu.addAction(m_renameDataAction);
+        menu.addAction(m_selectorActions->m_removeDataAction);
+        if (realDataItemAtPoint->isIntensityData())
+            menu.addAction(m_selectorActions->m_rotateDataAction);
+        menu.addSeparator();
+    }
 
-    m_selectorActions->m_import2dDataAction->setEnabled(true);
-    m_selectorActions->m_import1dDataAction->setEnabled(true);
-
-    menu.addAction(m_renameDataAction);
-    menu.addAction(m_selectorActions->m_removeDataAction);
-    menu.addAction(m_selectorActions->m_rotateDataAction);
-    menu.addSeparator();
     menu.addAction(m_selectorActions->m_import2dDataAction);
     menu.addAction(m_selectorActions->m_import1dDataAction);
     menu.exec(point);
@@ -134,4 +130,28 @@ void RealDataSelectorWidget::onRenameDataRequest()
         return;
 
     m_selectorWidget->listView()->edit(currentIndex);
+}
+
+void RealDataSelectorWidget::updateActionEnabling()
+{
+    updateActionEnabling(toRealDataItem(m_selectorWidget->selectionModel()->currentIndex()));
+}
+
+void RealDataSelectorWidget::updateActionEnabling(const RealDataItem* item)
+{
+    m_selectorActions->m_import2dDataAction->setEnabled(true);
+    m_selectorActions->m_import1dDataAction->setEnabled(true);
+
+    m_selectorActions->m_rotateDataAction->setEnabled(item != nullptr ? item->isIntensityData()
+                                                                      : false);
+    m_selectorActions->m_removeDataAction->setEnabled(item != nullptr);
+    m_renameDataAction->setEnabled(item != nullptr);
+}
+
+RealDataItem* RealDataSelectorWidget::toRealDataItem(const QModelIndex& index) const
+{
+    if (index.isValid())
+        return dynamic_cast<RealDataItem*>(m_realDataModel->itemForIndex(index));
+
+    return nullptr;
 }

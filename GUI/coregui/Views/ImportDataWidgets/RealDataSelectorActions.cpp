@@ -101,14 +101,14 @@ RealDataSelectorActions::RealDataSelectorActions(QObject* parent)
     connect(m_import1dDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onImport1dDataAction);
 
-    m_removeDataAction = new QAction("Remove this data", parent);
+    m_removeDataAction = new QAction("Remove", parent);
     m_removeDataAction->setIcon(QIcon(":/images/delete.svg"));
     m_removeDataAction->setIconText("Remove");
     m_removeDataAction->setToolTip("Remove selected data");
     connect(m_removeDataAction, &QAction::triggered, this,
             &RealDataSelectorActions::onRemoveDataAction);
 
-    m_rotateDataAction->setText("Rotate this data");
+    m_rotateDataAction->setText("Rotate");
     m_rotateDataAction->setIcon(QIcon(":/images/rotate-left.svg"));
     m_rotateDataAction->setIconText("Rotate");
     m_rotateDataAction->setToolTip("Rotate intensity data by 90 deg counterclockwise");
