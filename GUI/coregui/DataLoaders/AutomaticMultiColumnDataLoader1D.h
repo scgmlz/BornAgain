@@ -33,6 +33,7 @@ public:
     virtual void applyProperties() override;
     virtual QByteArray serialize() const override;
     virtual void deserialize(const QByteArray& data) override;
+    virtual AbstractDataLoader* clone() const override;
 
 private:
     struct ColumnDefinition {
@@ -42,7 +43,7 @@ private:
         double factor;
     };
 
-    enum class DataType { Q, R, dR, dQ };
+    enum class DataType { Q, R, dR };
 
     QString m_separator;    //!< column separator
     QString m_headerPrefix; //!< prefix denoting header line

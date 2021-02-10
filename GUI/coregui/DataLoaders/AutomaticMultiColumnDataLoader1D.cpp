@@ -97,7 +97,7 @@ QString AutomaticMultiColumnDataLoader1D::name() const
 
 QString AutomaticMultiColumnDataLoader1D::info() const
 {
-    return "Supports up to 4 columns (Q, R, dR, dQ). Columns can be configured.";
+    return "Supports up to 3 columns (Q, R, dR). Columns can be configured.";
 }
 
 QString AutomaticMultiColumnDataLoader1D::persistentClassName() const
@@ -198,11 +198,10 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     typeStr[0] = "Q";
     typeStr[1] = "R";
     typeStr[2] = "dR";
-    typeStr[3] = "dQ";
-    typeStr[4] = "ignored";
+    typeStr[3] = "ignored";
 
     for (int col = 0; col < ncols; col++) {
-        QString headerText = typeStr[4];
+        QString headerText = typeStr[3];
         for (auto dataType : m_columnDefinitions.keys()) {
             if (m_columnDefinitions[dataType].column == col
                 && m_columnDefinitions[dataType].enabled) {
@@ -276,7 +275,7 @@ void AutomaticMultiColumnDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
     m_propertiesWidget->m_ui->headerPrefixEdit->setText(m_headerPrefix);
     m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_linesToSkip);
 
-    for (auto dataType : {DataType::Q, DataType::R, DataType::dR, DataType::dQ}) {
+    for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
         m_propertiesWidget->setDataType((int)dataType, m_columnDefinitions[dataType].enabled,
                                         m_columnDefinitions[dataType].column,
                                         m_columnDefinitions[dataType].unit,
@@ -296,7 +295,7 @@ void AutomaticMultiColumnDataLoader1D::initWithDefaultProperties()
     m_headerPrefix = "";
     m_linesToSkip = "";
 
-    for (auto dataType : {DataType::Q, DataType::R, DataType::dR, DataType::dQ}) {
+    for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
         m_columnDefinitions[dataType].enabled = true;
         m_columnDefinitions[dataType].column = (int)dataType;
         m_columnDefinitions[dataType].unit = "";
@@ -345,6 +344,13 @@ void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
         s >> colDef.unit;
         s >> colDef.factor;
     }
+}
+
+AbstractDataLoader* AutomaticMultiColumnDataLoader1D::clone() const
+{
+    auto loader = new AutomaticMultiColumnDataLoader1D();
+    loader->deserialize(serialize());
+    return loader;
 }
 
 void AutomaticMultiColumnDataLoader1D::applyProperties()

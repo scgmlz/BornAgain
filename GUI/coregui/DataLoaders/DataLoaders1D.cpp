@@ -41,7 +41,6 @@ void DataLoaders1D::initBuiltInLoaders()
 {
     m_builtInLoaders << new AutomaticDataLoader1D();
     m_builtInLoaders << new AutomaticMultiColumnDataLoader1D();
-    m_builtInLoaders << new ConfigurableDataLoader1D();
 }
 
 QVector<AbstractDataLoader*> DataLoaders1D::loaders() const
@@ -57,7 +56,7 @@ QVector<AbstractDataLoader*> DataLoaders1D::recentlyUsedLoaders() const
 void DataLoaders1D::cloneAsUserDefinedLoader(AbstractDataLoader* loader, const QString& name)
 {
     loader->applyProperties();
-    auto clonedLoader = createFromPersistentName(loader->persistentClassName());
+    auto clonedLoader = dynamic_cast<AbstractDataLoader1D*>(loader->clone());
     const auto defaultProperties = loader->serialize();
 
     m_userDefinedLoaders << new UserDefinedDataLoader1D(clonedLoader, name, defaultProperties);
@@ -70,9 +69,6 @@ AbstractDataLoader1D* DataLoaders1D::createFromPersistentName(const QString& per
 
     if (persistentClassName == AutomaticMultiColumnDataLoader1D().persistentClassName())
         return new AutomaticMultiColumnDataLoader1D();
-
-    if (persistentClassName == ConfigurableDataLoader1D().persistentClassName())
-        return new ConfigurableDataLoader1D();
 
     return nullptr;
 }

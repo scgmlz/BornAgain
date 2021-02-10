@@ -154,6 +154,13 @@ QString AutomaticDataLoader1D::preview(const QString& filepath, QCustomPlot* plo
     return outputDataToTable(oData);
 }
 
+AbstractDataLoader* AutomaticDataLoader1D::clone() const
+{
+    auto loader = new AutomaticDataLoader1D();
+    loader->deserialize(serialize());
+    return loader;
+}
+
 QString AutomaticDataLoader1D::outputDataToTable(const OutputData<double>& outputData) const
 {
     auto size = outputData.axis(0).size();

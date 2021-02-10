@@ -27,7 +27,7 @@ AutomaticMultiColumnDataLoader1DProperties::AutomaticMultiColumnDataLoader1DProp
     connect(m_ui->separatorCombo, &QComboBox::currentTextChanged,
             [=]() { emit propertiesChanged(); });
 
-    for (int dataType = 0; dataType < 4; dataType++) {
+    for (int dataType = 0; dataType < 3; dataType++) {
 
         connect(enablingCheckBox(dataType), &QCheckBox::stateChanged,
                 [=](int state) { onEnablingChanged(dataType); });
