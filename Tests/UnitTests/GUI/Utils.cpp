@@ -52,7 +52,7 @@ RealDataItem* GuiUnittestUtils::createRealData(const QString& name, SessionModel
 {
     auto result = model.insertItem<RealDataItem>();
     result->setOutputData(createData(value, n_dim).release());
-    result->setItemValue(SessionItem::P_NAME, name);
+    result->setName(name);
     return result;
 }
 

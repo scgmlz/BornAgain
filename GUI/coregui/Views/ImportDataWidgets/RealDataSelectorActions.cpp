@@ -159,7 +159,7 @@ void RealDataSelectorActions::importDataLoop(int ndim)
             std::unique_ptr<OutputData<double>> data = ImportDataUtils::Import2dData(fileName);
             if (data) {
                 auto realDataItem = m_realDataModel->insertItem<RealDataItem>();
-                realDataItem->setItemName(baseNameOfLoadedFile);
+                realDataItem->setName(baseNameOfLoadedFile);
                 realDataItem->setOutputData(data.release());
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
@@ -168,7 +168,7 @@ void RealDataSelectorActions::importDataLoop(int ndim)
             auto data = ImportDataUtils::Import1dData(fileName);
             if (data) {
                 auto realDataItem = m_realDataModel->insertItem<RealDataItem>();
-                realDataItem->setItemName(baseNameOfLoadedFile);
+                realDataItem->setName(baseNameOfLoadedFile);
                 realDataItem->setImportData(std::move(data));
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);

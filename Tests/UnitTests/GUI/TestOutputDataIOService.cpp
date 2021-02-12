@@ -228,7 +228,7 @@ TEST_F(TestOutputDataIOService, test_OutputDataIOService)
     EXPECT_TRUE(GuiUnittestUtils::isTheSame(*dataOnDisk2, *realData2->dataItem()->getOutputData()));
 
     // Renaming RealData and check that file on disk changed the name
-    realData2->setItemName("data2new");
+    realData2->setName("data2new");
     service.save(projectDir);
     QTest::qSleep(10);
 
@@ -256,7 +256,7 @@ TEST_F(TestOutputDataIOService, test_RealDataItemWithNativeData)
     realData->setImportData(std::move(import_data));
 
     EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 2);
-    realData->setItemValue(RealDataItem::P_NAME, "RealData");
+    realData->setName("RealData");
 
     // adding JobItem
     auto jobItem = models.jobModel()->insertItem<JobItem>();

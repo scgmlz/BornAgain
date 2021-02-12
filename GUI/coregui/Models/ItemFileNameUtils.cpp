@@ -52,12 +52,12 @@ QString ItemFileNameUtils::jobNativeDataFileName(const JobItem& jobItem)
 
 QString ItemFileNameUtils::realDataFileName(const RealDataItem& realDataItem)
 {
-    return intensityDataFileName(realDataItem.itemName(), realdata_file_prefix);
+    return intensityDataFileName(realDataItem.name(), realdata_file_prefix);
 }
 
 QString ItemFileNameUtils::nativeDataFileName(const RealDataItem& realDataItem)
 {
-    return intensityDataFileName(realDataItem.itemName(), nativedata_file_prefix);
+    return intensityDataFileName(realDataItem.name(), nativedata_file_prefix);
 }
 
 QString ItemFileNameUtils::instrumentDataFileName(const InstrumentItem& instrumentItem)

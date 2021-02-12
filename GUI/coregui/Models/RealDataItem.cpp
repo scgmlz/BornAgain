@@ -67,6 +67,16 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
     });
 }
 
+QString RealDataItem::name() const
+{
+    return itemName();
+}
+
+void RealDataItem::setName(const QString& name)
+{
+    setItemName(name);
+}
+
 IntensityDataItem* RealDataItem::intensityDataItem()
 {
     return dynamic_cast<IntensityDataItem*>(dataItem());

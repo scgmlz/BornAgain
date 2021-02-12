@@ -65,7 +65,7 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     QVERIFY(manager.canLinkDataToInstrument(realData, identifier));
 
     // making link
-    realData->setItemValue(RealDataItem::P_INSTRUMENT_ID, identifier);
+    realData->setInstrumentId(identifier);
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector type and checking that link remain

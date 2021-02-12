@@ -43,6 +43,10 @@ private:
 public:
     RealDataItem();
 
+    //! The name which is presented to the user
+    QString name() const;
+    void setName(const QString& name);
+
     IntensityDataItem* intensityDataItem();
     const IntensityDataItem* intensityDataItem() const;
 
