@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit reflection and scattering
 //
-//! @file      GUI/coregui/DataLoaders/ConfigurableDataLoader1D.h
-//! @brief     Defines class ConfigurableDataLoader1D
+//! @file      M:/BornAgain/GUI/coregui/DataLoaders/FormulaBasedDataLoader1D.h
+//! @brief     Defines class FormulaBasedDataLoader1D
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,29 +12,25 @@
 //
 //  ************************************************************************************************
 
-#ifndef BORNAGAIN_GUI_COREGUI_DATALOADERS_CONFIGURABLEDATALOADER1D_H
-#define BORNAGAIN_GUI_COREGUI_DATALOADERS_CONFIGURABLEDATALOADER1D_H
+#ifndef BORNAGAIN_GUI_COREGUI_DATALOADERS_FORMULABASEDDATALOADER1D_H
+#define BORNAGAIN_GUI_COREGUI_DATALOADERS_FORMULABASEDDATALOADER1D_H
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 
-//! Implements the new UI2 free configurable importer
-class ConfigurableDataLoader1D : public AbstractDataLoader1D {
+class FormulaBasedDataLoader1D : public AbstractDataLoader1D {
 public:
     virtual QString name() const override;
-    virtual QString info() const override;
     virtual QString persistentClassName() const override;
-
-    QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
+    virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
     virtual void populatePropertiesWidget(QWidget* parent) override;
-
+    virtual void initWithDefaultProperties() override;
+    virtual void applyProperties() override;
     virtual QByteArray serialize() const override;
     virtual void deserialize(const QByteArray& data) override;
+    virtual AbstractDataLoader* clone() const override;
 
-    // #TODO: Rename members
 private:
-    QString m_header_prefix = ""; //!< prefix denoting header line
-    QString m_separator = "";     //!< column separator
-    QString m_skip_index_pattern; //!< pattern denoting line to skip (i.e. '1,10-12,42')
+    QPointer<QWidget> m_propertiesWidget;
 };
 
-#endif // BORNAGAIN_GUI_COREGUI_DATALOADERS_CONFIGURABLEDATALOADER1D_H
+#endif // BORNAGAIN_GUI_COREGUI_DATALOADERS_FORMULABASEDDATALOADER1D_H

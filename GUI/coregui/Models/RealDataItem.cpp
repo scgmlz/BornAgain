@@ -196,6 +196,16 @@ MaskContainerItem* RealDataItem::maskContainerItem()
     return nullptr;
 }
 
+QByteArray RealDataItem::importSettings() const
+{
+    return m_deserializationSettings;
+}
+
+void RealDataItem::setImportSettings(const QByteArray& a)
+{
+    m_deserializationSettings = a;
+}
+
 //! Updates the name of file to store intensity data.
 
 void RealDataItem::updateNonXMLDataFileNames()

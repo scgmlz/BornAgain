@@ -92,12 +92,12 @@ AutomaticMultiColumnDataLoader1D::AutomaticMultiColumnDataLoader1D() : m_propert
 
 QString AutomaticMultiColumnDataLoader1D::name() const
 {
-    return "Reflectometry file (multiple rows)";
+    return "CSV file (Reflectometry - Q/R/E)";
 }
 
 QString AutomaticMultiColumnDataLoader1D::info() const
 {
-    return "Supports up to 3 columns (Q, R, dR). Columns can be configured.";
+    return "Supports up to 3 columns (Q, R, E). Columns can be configured.";
 }
 
 QString AutomaticMultiColumnDataLoader1D::persistentClassName() const
@@ -197,7 +197,7 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     QMap<int, QString> typeStr;
     typeStr[0] = "Q";
     typeStr[1] = "R";
-    typeStr[2] = "dR";
+    typeStr[2] = "E";
     typeStr[3] = "ignored";
 
     for (int col = 0; col < ncols; col++) {
@@ -256,12 +256,13 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     return "<p>" + bold("<h>Information: </h>") + info() + "</p><p>" + s + "</p>";
 }
 
-void AutomaticMultiColumnDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
+void AutomaticMultiColumnDataLoader1D::populatePropertiesWidget(QWidget* parent)
 {
     if (m_propertiesWidget == nullptr)
         m_propertiesWidget = new AutomaticMultiColumnDataLoader1DProperties;
 
     QHBoxLayout* l = new QHBoxLayout(parent);
+    l->setContentsMargins(0, 0, 0, 0);
     parent->setLayout(l);
     l->addWidget(m_propertiesWidget);
 

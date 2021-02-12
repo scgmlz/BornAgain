@@ -64,11 +64,16 @@ public:
     //! Returns mask container item
     MaskContainerItem* maskContainerItem();
 
+    //! Settings for importing data from a file
+    QByteArray importSettings() const;
+    void setImportSettings(const QByteArray& a);
+
 private:
     void initDataItem(size_t data_rank, const QString& tag);
     void updateNonXMLDataFileNames();
     void updateToInstrument();
     const InstrumentItem* m_linkedInstrument;
+    QByteArray m_deserializationSettings;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H

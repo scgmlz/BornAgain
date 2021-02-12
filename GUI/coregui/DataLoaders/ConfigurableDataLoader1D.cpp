@@ -38,7 +38,7 @@ QString ConfigurableDataLoader1D::preview(const QString& filepath, QCustomPlot* 
     return "TODO: implement ConfigurableDataLoader1D::preview";
 }
 
-void ConfigurableDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
+void ConfigurableDataLoader1D::populatePropertiesWidget(QWidget* parent)
 {
     Ui::ConfigurableDataLoaderProperties ui;
     QWidget* w = new QWidget;

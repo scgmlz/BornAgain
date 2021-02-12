@@ -33,9 +33,9 @@ public:
     //! Info about what this loader does. Is shown on the import dialog pane
     virtual QString info() const;
 
-    //! Fills the groupbox on the import dialog pane. Base class does nothing (=> no editable
+    //! Fills the widget on the import dialog pane. This base class does nothing (=> no editable
     //! properties)
-    virtual void fillPropertiesGroupBox(QGroupBox* parent);
+    virtual void populatePropertiesWidget(QWidget* parent);
 
     //! Read all values from the properties UI into the internal variables
     virtual void applyProperties();

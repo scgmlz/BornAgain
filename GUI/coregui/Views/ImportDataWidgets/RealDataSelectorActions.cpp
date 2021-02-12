@@ -14,6 +14,8 @@
 
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "Device/Data/DataUtils.h"
+#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
@@ -135,7 +137,13 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         filter_string_ba = "Intensity File (*.int *.gz *.tif *.tiff *.txt *.csv);;"
                            "Other (*.*)";
     } else {
-        filter_string_ba = "";
+
+        for (auto loader : DataLoaders1D::instance().loaders()) {
+            if (!filter_string_ba.isEmpty())
+                filter_string_ba += ";;";
+            filter_string_ba += loader->name() + "(*.txt *.csv *.dat)";
+        }
+        filter_string_ba += ";; Other (*.*)";
     }
     QString dirname = AppSvc::projectManager()->userImportDir();
     QStringList fileNames =
@@ -167,6 +175,16 @@ void RealDataSelectorActions::importDataLoop(int ndim)
                 auto realDataItem = m_realDataModel->insertItem<RealDataItem>();
                 realDataItem->setItemName(baseNameOfLoadedFile);
                 realDataItem->setImportData(std::move(data));
+                // #TODO move to better place - only for testing purposes!
+                QByteArray a;
+                QDataStream s(&a, QIODevice::WriteOnly);
+                s << fileName;
+                auto loader = new AutomaticMultiColumnDataLoader1D();
+                loader->initWithDefaultProperties();
+                s << loader->persistentClassName();
+                s << loader->serialize();
+                realDataItem->setImportSettings(a);
+
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
             }

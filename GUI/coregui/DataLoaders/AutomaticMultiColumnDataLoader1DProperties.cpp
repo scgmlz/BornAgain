@@ -83,6 +83,12 @@ void AutomaticMultiColumnDataLoader1DProperties::updateEnabling(int dataType, bo
 void AutomaticMultiColumnDataLoader1DProperties::onEnablingChanged(int dataType)
 {
     const bool isEnabled = enablingCheckBox(dataType)->isChecked();
+    if (dataType <= 1 && !isEnabled) { // no uncheck of Q/R
+
+        QTimer::singleShot(0, [=]() { enablingCheckBox(dataType)->setChecked(true); });
+        return;
+    }
+
     updateEnabling(dataType, isEnabled);
 
     emit propertiesChanged();

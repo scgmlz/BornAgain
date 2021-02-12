@@ -20,7 +20,7 @@ QString AbstractDataLoader::info() const
     return QString();
 }
 
-void AbstractDataLoader::fillPropertiesGroupBox(QGroupBox* parent) {}
+void AbstractDataLoader::populatePropertiesWidget(QWidget* parent) {}
 
 void AbstractDataLoader::applyProperties() {}
 

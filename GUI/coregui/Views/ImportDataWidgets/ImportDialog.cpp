@@ -170,7 +170,7 @@ void ImportDialog::updatePropertiesEdits()
         delete m_ui->propertiesGroupBox->layout();
 
     if (selectedLoader()) {
-        selectedLoader()->fillPropertiesGroupBox(m_ui->propertiesGroupBox);
+        selectedLoader()->populatePropertiesWidget(m_ui->propertiesGroupBox);
     }
 
     const bool hasChildren = !m_ui->propertiesGroupBox->children().empty();

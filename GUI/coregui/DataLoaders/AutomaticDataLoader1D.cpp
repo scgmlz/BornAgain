@@ -57,7 +57,7 @@ QString table(int nColumns, const QStringList& entries, const QString& attribute
 
 QString AutomaticDataLoader1D::name() const
 {
-    return "Automatic 1D import (legacy BornAgain 1.18.0)";
+    return "Automatic 1D import (BornAgain 1.18.0)";
 }
 
 QString AutomaticDataLoader1D::info() const
