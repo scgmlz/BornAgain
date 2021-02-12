@@ -183,7 +183,7 @@ void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int,
 
 void LinkInstrumentManager::updateLinks()
 {
-    for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
+    for (auto realDataItem : m_realDataModel->realDataItems()) {
         const QString identifier = realDataItem->instrumentId();
         auto instrumentItem = instrument(identifier);
 
@@ -232,7 +232,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 
 void LinkInstrumentManager::updateRealDataMap()
 {
-    for (auto dataItem : m_realDataModel->topItems<RealDataItem>()) {
+    for (auto dataItem : m_realDataModel->realDataItems()) {
         dataItem->mapper()->unsubscribe(this);
 
         dataItem->mapper()->setOnPropertyChange(
@@ -258,7 +258,7 @@ void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInst
 QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrumentItem)
 {
     QList<RealDataItem*> result;
-    for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
+    for (auto realDataItem : m_realDataModel->realDataItems()) {
         const QString linkedIdentifier = realDataItem->instrumentId();
         const QString instrumentIdentifier = instrumentItem->id();
 

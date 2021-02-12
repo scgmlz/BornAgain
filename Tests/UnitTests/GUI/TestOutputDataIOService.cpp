@@ -42,7 +42,7 @@ TEST_F(TestOutputDataIOService, test_nonXMLData)
     EXPECT_EQ(dataItems.size(), 0);
 
     // adding RealDataItem
-    auto realData = models.realDataModel()->insertItem<RealDataItem>();
+    auto realData = models.realDataModel()->insertRealDataItem();
     EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 0);
     realData->setOutputData(GuiUnittestUtils::createData().release());
     EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 1);
@@ -249,7 +249,7 @@ TEST_F(TestOutputDataIOService, test_RealDataItemWithNativeData)
     EXPECT_EQ(dataItems.size(), 0);
 
     // adding RealDataItem
-    auto realData = models.realDataModel()->insertItem<RealDataItem>();
+    auto realData = models.realDataModel()->insertRealDataItem();
     EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 0);
 
     ImportDataInfo import_data(std::unique_ptr<OutputData<double>>(m_data.clone()), "nbins");

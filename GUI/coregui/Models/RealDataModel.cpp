@@ -55,3 +55,13 @@ bool RealDataModel::setData(const QModelIndex& index, const QVariant& value, int
 
     return SessionModel::setData(index, value, role);
 }
+
+RealDataItem* RealDataModel::insertRealDataItem()
+{
+    return insertItem<RealDataItem>();
+}
+
+QVector<RealDataItem*> RealDataModel::realDataItems() const
+{
+    return topItems<RealDataItem>();
+}
