@@ -64,7 +64,8 @@ template <class T> SafePointerVector<T>::SafePointerVector(const SafePointerVect
 }
 
 template <class T>
-SafePointerVector<T>::SafePointerVector(SafePointerVector<T>&& other) : m_pointers{other.m_pointers}
+SafePointerVector<T>::SafePointerVector(SafePointerVector<T>&& other)
+    : m_pointers(std::move(other.m_pointers))
 {
 }
 
