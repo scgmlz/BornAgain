@@ -32,7 +32,11 @@ public:
     static const QString P_BEAM;
     static const QString P_BACKGROUND;
 
+public:
     QStringList translateList(const QStringList& list) const override;
+
+    QString id() const;
+    void setId(const QString& id);
 
     virtual BeamItem* beamItem() const;
     BackgroundItem* backgroundItem() const;

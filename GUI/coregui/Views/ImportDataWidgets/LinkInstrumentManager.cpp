@@ -124,14 +124,13 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
     return true;
 }
 
-//! Calls rebuild of instrument map if the name or identifier of the instrument have changed.
+//! Calls rebuild of instrument map if anything regarding an instrument changed.
 
 void LinkInstrumentManager::setOnInstrumentPropertyChange(SessionItem* instrument,
                                                           const QString& property)
 {
     Q_UNUSED(instrument);
-    if (property == SessionItem::P_NAME || property == InstrumentItem::P_IDENTIFIER)
-        updateInstrumentMap();
+    updateInstrumentMap();
 }
 
 //! Link or re-link RealDataItem to the instrument on identifier change.
@@ -204,7 +203,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 {
     m_instrumentVec.clear();
     m_instrumentVec.append(InstrumentInfo()); // undefined instrument
-    for (auto instrumentItem : m_instrumentModel->topItems<InstrumentItem>()) {
+    for (auto instrumentItem : m_instrumentModel->instrumentItems()) {
         instrumentItem->mapper()->unsubscribe(this);
 
         instrumentItem->mapper()->setOnPropertyChange(
@@ -221,7 +220,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 
         InstrumentInfo info;
         info.m_name = instrumentItem->itemName();
-        info.m_identifier = instrumentItem->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
+        info.m_identifier = instrumentItem->id();
         info.m_instrument = instrumentItem;
         m_instrumentVec.append(info);
     }
@@ -261,8 +260,7 @@ QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrume
     QList<RealDataItem*> result;
     for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
         const QString linkedIdentifier = realDataItem->instrumentId();
-        const QString instrumentIdentifier =
-            instrumentItem->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
+        const QString instrumentIdentifier = instrumentItem->id();
 
         if (linkedIdentifier == instrumentIdentifier)
             result.append(realDataItem);

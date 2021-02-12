@@ -55,6 +55,16 @@ QStringList InstrumentItem::translateList(const QStringList& list) const
     return result;
 }
 
+QString InstrumentItem::id() const
+{
+    return getItemValue(P_IDENTIFIER).toString();
+}
+
+void InstrumentItem::setId(const QString& id)
+{
+    setItemValue(P_IDENTIFIER, id);
+}
+
 BeamItem* InstrumentItem::beamItem() const
 {
     return item<BeamItem>(P_BEAM);

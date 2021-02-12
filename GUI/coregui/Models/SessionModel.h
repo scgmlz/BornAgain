@@ -92,6 +92,7 @@ public:
 
     virtual SessionModel* createCopy(SessionItem* parent = 0);
 
+    //! Returns first item in list of topItems
     template <typename T = SessionItem> T* topItem() const;
     template <typename T = SessionItem> QVector<T*> topItems() const;
 

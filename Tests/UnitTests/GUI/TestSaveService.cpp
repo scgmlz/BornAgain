@@ -19,8 +19,8 @@ protected:
     // helper method to modify something in a model
     void modify_models(ApplicationModels* models)
     {
-        auto instrument = models->instrumentModel()->instrumentItem();
-        instrument->setItemValue(InstrumentItem::P_IDENTIFIER, GUIHelpers::createUuid());
+        auto instrument = models->instrumentModel()->instrumentItems().front();
+        instrument->setId(GUIHelpers::createUuid());
     }
     const int m_save_wait = 10000;
 };
@@ -176,7 +176,7 @@ TEST_F(TestSaveService, test_saveServiceWithData)
     ASSERT(realData);
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
-                                           models.instrumentModel()->instrumentItem());
+                                           models.instrumentModel()->instrumentItems().front());
     intensityItem->setItemValue(DataItem::P_FILE_NAME, "realdata.int.gz");
 
     std::unique_ptr<ProjectDocument> document(new ProjectDocument);
@@ -210,7 +210,7 @@ TEST_F(TestSaveService, test_autosaveEnabled)
     RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", *models.realDataModel());
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
-                                           models.instrumentModel()->instrumentItem());
+                                           models.instrumentModel()->instrumentItems().front());
     intensityItem->setItemValue(DataItem::P_FILE_NAME, "realdata.int.gz");
 
     std::unique_ptr<ProjectDocument> document(new ProjectDocument(projectFileName));

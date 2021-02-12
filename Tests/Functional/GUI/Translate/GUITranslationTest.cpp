@@ -150,7 +150,7 @@ void GUITranslationTest::processParameterTree()
     GUIObjectBuilder::populateDocumentModel(m_models->documentModel(), *m_simulation);
 
     JobItem* jobItem = m_models->jobModel()->addJob(
-        m_models->sampleModel()->multiLayerItem(), m_models->instrumentModel()->instrumentItem(),
+        m_models->sampleModel()->multiLayerItem(), m_models->instrumentModel()->instrumentItems().front(),
         nullptr, m_models->documentModel()->simulationOptionsItem());
 
     SessionItem* container = jobItem->parameterContainerItem();
