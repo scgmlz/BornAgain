@@ -78,5 +78,5 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     x_axis->setItemValue(BasicAxisItem::P_NBINS, 10);
 
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>());
-    EXPECT_EQ(realData->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString(), QString());
+    EXPECT_EQ(realData->instrumentId(), QString());
 }

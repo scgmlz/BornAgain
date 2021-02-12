@@ -45,7 +45,11 @@ bool openRotateWarningDialog(QWidget* parent)
 
 bool rotationAffectsSetup(IntensityDataItem& intensityItem)
 {
-    if (intensityItem.parent()->getItemValue(RealDataItem::P_INSTRUMENT_ID).toBool())
+    const RealDataItem* parentRealDataItem = dynamic_cast<RealDataItem*>(intensityItem.parent());
+    const bool hasLinkToInstrument =
+        parentRealDataItem != nullptr && !parentRealDataItem->instrumentId().isEmpty();
+
+    if (hasLinkToInstrument)
         return true;
 
     if (intensityItem.maskContainerItem() && intensityItem.maskContainerItem()->hasChildren())
@@ -62,10 +66,9 @@ bool rotationAffectsSetup(IntensityDataItem& intensityItem)
 
 void resetSetup(IntensityDataItem& intensityItem)
 {
-
-    auto data_parent = intensityItem.parent();
-    if (data_parent->getItemValue(RealDataItem::P_INSTRUMENT_ID).toBool())
-        data_parent->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
+    RealDataItem* parentRealDataItem = dynamic_cast<RealDataItem*>(intensityItem.parent());
+    if (parentRealDataItem)
+        parentRealDataItem->clearInstrumentId();
 
     if (auto maskContainer = intensityItem.maskContainerItem())
         maskContainer->model()->removeRows(0, maskContainer->numberOfChildren(),

@@ -44,7 +44,10 @@ RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
     mainLayout->addStretch();
     setLayout(mainLayout);
 
-    setComboConnected(true);
+    connect(m_instrumentCombo,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
+            &RealDataPropertiesWidget::onInstrumentComboIndexChanged);
+
     connect(m_linkManager, &LinkInstrumentManager::instrumentMapUpdated, this,
             &RealDataPropertiesWidget::onInstrumentMapUpdate);
 
@@ -85,7 +88,7 @@ void RealDataPropertiesWidget::setItem(SessionItem* item)
                                                   this);
 
     // Set combo selector to show linked instrument
-    setComboToIdentifier(item->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString());
+    setComboToIdentifier(m_currentDataItem->instrumentId());
 }
 
 //! Processes user interaction with instrument selector combo. If there is realDataItem,
@@ -98,17 +101,15 @@ void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
     if (!m_currentDataItem)
         return;
 
-    QString dataLink = m_currentDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
+    QString dataLink = m_currentDataItem->instrumentId();
     if (m_current_id == dataLink)
         return;
 
-    if (m_linkManager->canLinkDataToInstrument(m_currentDataItem, m_current_id)) {
-        m_currentDataItem->setItemValue(RealDataItem::P_INSTRUMENT_ID, m_current_id);
-
-    } else {
+    if (m_linkManager->canLinkDataToInstrument(m_currentDataItem, m_current_id))
+        m_currentDataItem->setInstrumentId(m_current_id);
+    else
         // LinkManager doesn't allow to link data to instrument.
         setComboToIdentifier(dataLink); // Returning Combo selector to previous state
-    }
 }
 
 //! Updates instrument selector for new instruments and their names.
@@ -116,7 +117,8 @@ void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
 
 void RealDataPropertiesWidget::onInstrumentMapUpdate()
 {
-    setComboConnected(false);
+    QSignalBlocker b(m_instrumentCombo);
+
     m_instrumentCombo->clear();
     m_instrumentCombo->addItems(m_linkManager->instrumentNames());
     int index = m_linkManager->instrumentComboIndex(m_current_id);
@@ -127,44 +129,26 @@ void RealDataPropertiesWidget::onInstrumentMapUpdate()
         m_current_id = "";
         m_instrumentCombo->setCurrentIndex(0);
     }
-    setComboConnected(true);
 }
 
 //! Updates instrument combo on link change of current RealDataItem.
 
 void RealDataPropertiesWidget::onRealDataPropertyChanged(const QString& name)
 {
-    if (name == RealDataItem::P_INSTRUMENT_ID) {
-        setComboToIdentifier(
-            m_currentDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString());
-    }
+    if (name == RealDataItem::P_INSTRUMENT_ID)
+        setComboToIdentifier(m_currentDataItem->instrumentId());
 }
 
 //! Sets instrument combo selector to the state corresponding to given instrument identifier.
 
 void RealDataPropertiesWidget::setComboToIdentifier(const QString& identifier)
 {
-    setComboConnected(false);
+    QSignalBlocker b(m_instrumentCombo);
+
     m_current_id = identifier;
-    int index = m_linkManager->instrumentComboIndex(identifier);
+    const int index = m_linkManager->instrumentComboIndex(identifier);
     ASSERT(index >= 0);
     m_instrumentCombo->setCurrentIndex(index);
-    setComboConnected(true);
-}
-
-//! Sets connected/disconnected for instrument combo selector.
-
-void RealDataPropertiesWidget::setComboConnected(bool isConnected)
-{
-    if (isConnected) {
-        connect(m_instrumentCombo,
-                static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
-                &RealDataPropertiesWidget::onInstrumentComboIndexChanged);
-    } else {
-        disconnect(m_instrumentCombo,
-                   static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
-                   &RealDataPropertiesWidget::onInstrumentComboIndexChanged);
-    }
 }
 
 //! Sets all widget's children enabled/disabled. When no RealDataItem selected all

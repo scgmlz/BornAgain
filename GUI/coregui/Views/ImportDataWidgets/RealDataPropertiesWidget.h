@@ -48,7 +48,6 @@ public slots:
 
 private:
     void setComboToIdentifier(const QString& identifier);
-    void setComboConnected(bool isConnected);
     void setPropertiesEnabled(bool enabled);
 
     LinkInstrumentManager* m_linkManager;

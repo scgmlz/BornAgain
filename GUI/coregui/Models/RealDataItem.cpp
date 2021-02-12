@@ -107,6 +107,11 @@ const DataItem* RealDataItem::nativeData() const
     return dynamic_cast<const DataItem*>(getItem(T_NATIVE_DATA));
 }
 
+QString RealDataItem::nativeDataUnits() const
+{
+    return getItemValue(P_NATIVE_DATA_UNITS).toString();
+}
+
 //! Sets OutputData to underlying item. Creates it, if not exists.
 
 void RealDataItem::setOutputData(OutputData<double>* data)
@@ -167,6 +172,21 @@ void RealDataItem::linkToInstrument(const InstrumentItem* instrument, bool make_
     m_linkedInstrument = instrument;
     if (make_update)
         updateToInstrument();
+}
+
+QString RealDataItem::instrumentId() const
+{
+    return getItemValue(P_INSTRUMENT_ID).toString();
+}
+
+void RealDataItem::setInstrumentId(const QString& id)
+{
+    setItemValue(P_INSTRUMENT_ID, id);
+}
+
+void RealDataItem::clearInstrumentId()
+{
+    setItemValue(P_INSTRUMENT_ID, QString());
 }
 
 std::vector<int> RealDataItem::shape() const

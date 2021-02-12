@@ -141,7 +141,7 @@ void LinkInstrumentManager::setOnRealDataPropertyChange(SessionItem* dataItem,
 {
     if (property == RealDataItem::P_INSTRUMENT_ID) {
         RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(dataItem);
-        QString identifier = dataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
+        const QString identifier = realDataItem->instrumentId();
         realDataItem->linkToInstrument(instrument(identifier));
     }
 }
@@ -185,12 +185,12 @@ void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int,
 void LinkInstrumentManager::updateLinks()
 {
     for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
-        QString identifier = realDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
+        const QString identifier = realDataItem->instrumentId();
         auto instrumentItem = instrument(identifier);
 
         if (!instrumentItem) {
             // if no instrument with P_INSTRUMENT_ID exists, break the link
-            realDataItem->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
+            realDataItem->clearInstrumentId();
         } else {
             // refresh the link to update axes
             realDataItem->linkToInstrument(instrumentItem);
@@ -249,7 +249,7 @@ void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInst
 {
     for (auto realDataItem : linkedItems(changedInstrument))
         if (!changedInstrument->alignedWith(realDataItem))
-            realDataItem->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
+            realDataItem->clearInstrumentId();
         else
             realDataItem->linkToInstrument(changedInstrument);
 }
@@ -260,9 +260,8 @@ QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrume
 {
     QList<RealDataItem*> result;
     for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
-        QString linkedIdentifier =
-            realDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
-        QString instrumentIdentifier =
+        const QString linkedIdentifier = realDataItem->instrumentId();
+        const QString instrumentIdentifier =
             instrumentItem->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
 
         if (linkedIdentifier == instrumentIdentifier)
