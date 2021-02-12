@@ -43,10 +43,6 @@ public:
 
     void resetModels();
 
-    void createTestSample();
-    void createTestJob();
-    void createTestRealData();
-
     void writeTo(class QXmlStreamWriter* writer);
     void readFrom(class QXmlStreamReader* reader, MessageService* messageService);
 
@@ -58,15 +54,6 @@ signals:
     void modelChanged();
 
 private:
-    void createModels();
-    void createDocumentModel();
-    void createMaterialModel();
-    void createInstrumentModel();
-    void createSampleModel();
-    void createRealDataModel();
-    void createJobModel();
-
-    void disconnectModel(SessionModel* model);
     void connectModel(SessionModel* model);
 
     DocumentModel* m_documentModel;

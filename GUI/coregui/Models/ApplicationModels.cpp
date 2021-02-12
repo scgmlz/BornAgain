@@ -45,9 +45,24 @@ ApplicationModels::ApplicationModels(QObject* parent)
     , m_jobModel(nullptr)
     , m_materialPropertyController(new MaterialPropertyController(this))
 {
-    createModels();
-    // createTestSample();
-    // createTestJob();
+    //! creates and initializes models, order is important
+    m_documentModel = new DocumentModel(this);
+    m_materialModel = new MaterialModel(this);
+    m_sampleModel = new SampleModel(this);
+    m_instrumentModel = new InstrumentModel(this);
+    m_realDataModel = new RealDataModel(this);
+    m_jobModel = new JobModel(this);
+
+    connectModel(m_documentModel);
+    connectModel(m_materialModel);
+    connectModel(m_sampleModel);
+    connectModel(m_instrumentModel);
+    connectModel(m_realDataModel);
+    connectModel(m_jobModel);
+
+    resetModels();
+
+    m_materialPropertyController->setModels(materialModel(), sampleModel());
 }
 
 ApplicationModels::~ApplicationModels() = default;
@@ -105,96 +120,6 @@ void ApplicationModels::resetModels()
     instrument->setItemName("GISAS");
 }
 
-//! creates and initializes models, order is important
-void ApplicationModels::createModels()
-{
-    createDocumentModel();
-    createMaterialModel();
-    createSampleModel();
-    createInstrumentModel();
-    createRealDataModel();
-    createJobModel();
-    resetModels();
-
-    m_materialPropertyController->setModels(materialModel(), sampleModel());
-}
-
-void ApplicationModels::createDocumentModel()
-{
-    delete m_documentModel;
-    m_documentModel = new DocumentModel(this);
-    connectModel(m_documentModel);
-}
-
-void ApplicationModels::createMaterialModel()
-{
-    delete m_materialModel;
-    m_materialModel = new MaterialModel(this);
-    connectModel(m_materialModel);
-}
-
-void ApplicationModels::createSampleModel()
-{
-    ASSERT(m_materialModel);
-    delete m_sampleModel;
-    m_sampleModel = new SampleModel(this);
-    connectModel(m_sampleModel);
-}
-
-void ApplicationModels::createInstrumentModel()
-{
-    delete m_instrumentModel;
-    m_instrumentModel = new InstrumentModel(this);
-    connectModel(m_instrumentModel);
-}
-
-void ApplicationModels::createRealDataModel()
-{
-    delete m_realDataModel;
-    m_realDataModel = new RealDataModel(this);
-    connectModel(m_realDataModel);
-}
-
-void ApplicationModels::createJobModel()
-{
-    delete m_jobModel;
-    m_jobModel = new JobModel(this);
-    connectModel(m_jobModel);
-}
-
-void ApplicationModels::createTestSample()
-{
-    SampleBuilderFactory factory;
-    const std::unique_ptr<MultiLayer> P_sample(
-        factory.createSampleByName("CylindersAndPrismsBuilder"));
-
-    GUIObjectBuilder::populateSampleModel(m_sampleModel, m_materialModel, *P_sample);
-
-    // to populate InstrumentView with predefined instrument
-    const std::unique_ptr<OffSpecularSimulation> simulation(StandardSimulations::MiniOffSpecular());
-    GUIObjectBuilder::populateInstrumentModel(m_instrumentModel, *simulation);
-}
-
-void ApplicationModels::createTestJob()
-{
-    SimulationOptionsItem* optionsItem = m_documentModel->simulationOptionsItem();
-
-    JobItem* jobItem = m_jobModel->addJob(m_sampleModel->multiLayerItem(),
-                                          m_instrumentModel->instrumentItem(), 0, optionsItem);
-    m_jobModel->runJob(jobItem->index());
-}
-
-void ApplicationModels::createTestRealData()
-{
-    auto realDataItem = m_realDataModel->insertItem<RealDataItem>();
-    realDataItem->setItemName("realdata");
-
-    std::unique_ptr<OutputData<double>> data(
-        IntensityDataIOFactory::readOutputData("/home/pospelov/untitled2.int"));
-
-    realDataItem->setOutputData(ImportDataUtils::CreateSimplifiedOutputData(*data.get()).release());
-}
-
 //! Writes all model in file one by one
 
 void ApplicationModels::writeTo(QXmlStreamWriter* writer)
@@ -234,15 +159,6 @@ QVector<SessionItem*> ApplicationModels::nonXMLData() const
     ASSERT(m_realDataModel && m_jobModel && m_instrumentModel);
     return QVector<SessionItem*>() << m_realDataModel->nonXMLData() << m_jobModel->nonXMLData()
                                    << m_instrumentModel->nonXMLData();
-}
-
-void ApplicationModels::disconnectModel(SessionModel* model)
-{
-    if (model) {
-        disconnect(model, &SessionModel::dataChanged, this, &ApplicationModels::modelChanged);
-        disconnect(model, &SessionModel::rowsRemoved, this, &ApplicationModels::modelChanged);
-        disconnect(model, &SessionModel::rowsInserted, this, &ApplicationModels::modelChanged);
-    }
 }
 
 void ApplicationModels::connectModel(SessionModel* model)
