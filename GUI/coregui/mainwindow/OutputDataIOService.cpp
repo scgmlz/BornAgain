@@ -106,7 +106,7 @@ QVector<SaveLoadInterface*> OutputDataIOService::nonXMLItems() const
     if (!m_applicationModels)
         return result;
 
-    for (auto item : m_applicationModels->nonXMLData())
+    for (auto item : m_applicationModels->nonXMLItems())
         if (auto non_xml_item = dynamic_cast<SaveLoadInterface*>(item))
             result.push_back(non_xml_item);
 

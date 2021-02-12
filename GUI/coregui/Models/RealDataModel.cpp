@@ -21,7 +21,7 @@ RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDat
     setObjectName(SessionXML::RealDataModelTag);
 }
 
-QVector<SessionItem*> RealDataModel::nonXMLData() const
+QVector<SessionItem*> RealDataModel::nonXMLItems() const
 {
     QVector<SessionItem*> result;
 

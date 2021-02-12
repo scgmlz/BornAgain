@@ -71,30 +71,30 @@ TEST_F(TestSavingSpecularData, test_SpecularInsturment)
     ApplicationModels models;
 
     // initial state
-    auto dataItems = models.nonXMLData();
+    auto dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 0);
 
     // adding instrument
     auto instrument = createSpecularInstrument(models);
 
     // instrument contains hidden pointwise axis item
-    EXPECT_EQ(models.instrumentModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.instrumentModel()->nonXMLItems().size(), 1);
 
     // explicitly switching to pointwise axis item
     auto axis_group = getAxisGroup(instrument);
     axis_group->setCurrentType("PointwiseAxis");
-    EXPECT_EQ(models.instrumentModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.instrumentModel()->nonXMLItems().size(), 1);
 
     // hiding pointwise axis item back
     axis_group->setCurrentType("BasicAxis");
-    EXPECT_EQ(models.instrumentModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.instrumentModel()->nonXMLItems().size(), 1);
 
     // checking data items of OutputDataIOService
     OutputDataIOService service(&models);
     EXPECT_EQ(service.nonXMLItems().size(), 1);
 
     // checking data items of ApplicationModels
-    dataItems = models.nonXMLData();
+    dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 1);
 }
 
@@ -106,31 +106,31 @@ TEST_F(TestSavingSpecularData, test_InstrumentInJobItem)
     auto jobItem = models.jobModel()->insertItem<JobItem>();
     auto dataItem =
         models.jobModel()->insertItem<IntensityDataItem>(jobItem, -1, JobItem::T_OUTPUT);
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 1);
 
     // adding instrument
     auto instrument = models.jobModel()->insertItem<SpecularInstrumentItem>(jobItem, -1,
                                                                             JobItem::T_INSTRUMENT);
     // instrument contains hidden pointwise axis item
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 2);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 2);
 
     // explicitly switching to pointwise axis item
     auto axis_group = getAxisGroup(instrument);
     axis_group->setCurrentType("PointwiseAxis");
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 2);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 2);
 
     OutputDataIOService service(&models);
     EXPECT_EQ(service.nonXMLItems().size(), 2);
 
-    auto dataItems = models.nonXMLData();
+    auto dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 2);
     EXPECT_EQ(dataItems.indexOf(dataItem), 0);
 
     // hiding pointwise axis, should be saved anyway
     axis_group->setCurrentType("BasicAxis");
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 2);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 2);
     EXPECT_EQ(service.nonXMLItems().size(), 2);
-    dataItems = models.nonXMLData();
+    dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 2);
     EXPECT_EQ(dataItems.indexOf(dataItem), 0);
 }

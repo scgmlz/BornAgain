@@ -127,7 +127,7 @@ void JobModel::clear()
     SessionModel::clear();
 }
 
-QVector<SessionItem*> JobModel::nonXMLData() const
+QVector<SessionItem*> JobModel::nonXMLItems() const
 {
     QVector<SessionItem*> result;
 

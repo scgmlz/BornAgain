@@ -154,11 +154,11 @@ QList<SessionModel*> ApplicationModels::modelList()
     return result;
 }
 
-QVector<SessionItem*> ApplicationModels::nonXMLData() const
+QVector<SessionItem*> ApplicationModels::nonXMLItems() const
 {
     ASSERT(m_realDataModel && m_jobModel && m_instrumentModel);
-    return QVector<SessionItem*>() << m_realDataModel->nonXMLData() << m_jobModel->nonXMLData()
-                                   << m_instrumentModel->nonXMLData();
+    return QVector<SessionItem*>() << m_realDataModel->nonXMLItems() << m_jobModel->nonXMLItems()
+                                   << m_instrumentModel->nonXMLItems();
 }
 
 void ApplicationModels::connectModel(SessionModel* model)

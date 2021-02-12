@@ -48,7 +48,8 @@ public:
 
     QList<SessionModel*> modelList();
 
-    QVector<SessionItem*> nonXMLData() const;
+    //! Returns all non-XML items
+    QVector<SessionItem*> nonXMLItems() const;
 
 signals:
     void modelChanged();

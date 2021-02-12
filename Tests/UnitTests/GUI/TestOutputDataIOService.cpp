@@ -38,35 +38,35 @@ TEST_F(TestOutputDataIOService, test_nonXMLData)
     ApplicationModels models;
 
     // initial state
-    auto dataItems = models.nonXMLData();
+    auto dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 0);
 
     // adding RealDataItem
     auto realData = models.realDataModel()->insertItem<RealDataItem>();
-    EXPECT_EQ(models.realDataModel()->nonXMLData().size(), 0);
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 0);
     realData->setOutputData(GuiUnittestUtils::createData().release());
-    EXPECT_EQ(models.realDataModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 1);
 
     // adding JobItem
     auto jobItem = models.jobModel()->insertItem<JobItem>();
     auto dataItem =
         models.jobModel()->insertItem<IntensityDataItem>(jobItem, -1, JobItem::T_OUTPUT);
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 1);
 
     // adding RealDataItem to jobItem
     RealDataItem* realData2 =
         models.jobModel()->insertItem<RealDataItem>(jobItem, -1, JobItem::T_REALDATA);
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 1);
     realData2->setOutputData(
         GuiUnittestUtils::createData(0.0, GuiUnittestUtils::DIM::D1).release());
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 2);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 2);
 
     // checking data items of OutputDataIOService
     OutputDataIOService service(&models);
     EXPECT_EQ(service.nonXMLItems().size(), 3);
 
     // checking data items of ApplicationModels
-    dataItems = models.nonXMLData();
+    dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 3);
     EXPECT_EQ(dataItems.indexOf(realData->dataItem()), 0);
     EXPECT_EQ(dataItems.indexOf(dataItem), 1);
@@ -74,13 +74,13 @@ TEST_F(TestOutputDataIOService, test_nonXMLData)
 
     // Replacing the data inside RealDataItem with the data of the same dimensions
     realData->setOutputData(GuiUnittestUtils::createData(2.0).release());
-    EXPECT_EQ(models.realDataModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 1);
 
     // Replacing the data inside RealDataItem with the data of different dimensions
     auto data = GuiUnittestUtils::createData(3.0, GuiUnittestUtils::DIM::D1);
     EXPECT_THROW(dynamic_cast<RealDataItem*>(realData)->setOutputData(data.get()),
                  GUIHelpers::Error);
-    EXPECT_EQ(models.realDataModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 1);
 }
 
 //! Tests OutputDataSaveInfo class intended for storing info about the last save.
@@ -245,28 +245,28 @@ TEST_F(TestOutputDataIOService, test_RealDataItemWithNativeData)
     ApplicationModels models;
 
     // initial state
-    auto dataItems = models.nonXMLData();
+    auto dataItems = models.nonXMLItems();
     EXPECT_EQ(dataItems.size(), 0);
 
     // adding RealDataItem
     auto realData = models.realDataModel()->insertItem<RealDataItem>();
-    EXPECT_EQ(models.realDataModel()->nonXMLData().size(), 0);
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 0);
 
     ImportDataInfo import_data(std::unique_ptr<OutputData<double>>(m_data.clone()), "nbins");
     realData->setImportData(std::move(import_data));
 
-    EXPECT_EQ(models.realDataModel()->nonXMLData().size(), 2);
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 2);
     realData->setItemValue(RealDataItem::P_NAME, "RealData");
 
     // adding JobItem
     auto jobItem = models.jobModel()->insertItem<JobItem>();
     jobItem->setIdentifier(GUIHelpers::createUuid());
     models.jobModel()->insertItem<IntensityDataItem>(jobItem, -1, JobItem::T_OUTPUT);
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 1);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 1);
 
     // copying RealDataItem to JobItem
     JobModelFunctions::copyRealDataItem(jobItem, realData);
-    EXPECT_EQ(models.jobModel()->nonXMLData().size(), 3);
+    EXPECT_EQ(models.jobModel()->nonXMLItems().size(), 3);
 
     // checking data items of OutputDataIOService
     OutputDataIOService service(&models);

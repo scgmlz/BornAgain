@@ -98,7 +98,7 @@ public:
     virtual void initFrom(SessionModel* model, SessionItem* parent);
     SessionItem* rootItem() const;
 
-    virtual QVector<SessionItem*> nonXMLData() const;
+    virtual QVector<SessionItem*> nonXMLItems() const;
 
 signals:
     void modelLoaded();

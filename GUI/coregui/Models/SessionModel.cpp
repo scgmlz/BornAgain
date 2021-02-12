@@ -456,7 +456,7 @@ SessionItem* SessionModel::rootItem() const
     return m_root_item;
 }
 
-QVector<SessionItem*> SessionModel::nonXMLData() const
+QVector<SessionItem*> SessionModel::nonXMLItems() const
 {
     return QVector<SessionItem*>();
 }

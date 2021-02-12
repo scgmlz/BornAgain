@@ -27,7 +27,7 @@ public:
     ~InstrumentModel() override;
 
     InstrumentModel* createCopy(SessionItem* parent = nullptr) override;
-    QVector<SessionItem*> nonXMLData() const override;
+    QVector<SessionItem*> nonXMLItems() const override;
 
     InstrumentItem* instrumentItem();
 };

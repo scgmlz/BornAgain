@@ -31,7 +31,7 @@ InstrumentModel* InstrumentModel::createCopy(SessionItem* parent)
     return result;
 }
 
-QVector<SessionItem*> InstrumentModel::nonXMLData() const
+QVector<SessionItem*> InstrumentModel::nonXMLItems() const
 {
     QVector<SessionItem*> result;
 
