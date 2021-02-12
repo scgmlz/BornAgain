@@ -108,7 +108,8 @@ void GUIPerformanceTest::test_gui_to_domain()
     }
 
     auto sim = DomainSimulationBuilder::createSimulation(
-        m_models->sampleModel()->multiLayerItem(), m_models->instrumentModel()->instrumentItems().front());
+        m_models->sampleModel()->multiLayerItem(),
+        m_models->instrumentModel()->instrumentItems().front());
 }
 
 void GUIPerformanceTest::test_real_time()
@@ -133,9 +134,9 @@ void GUIPerformanceTest::test_real_time()
         instrument2DItem->detectorItem()->setXSize(50);
         instrument2DItem->detectorItem()->setYSize(50);
 
-        jobItem = m_models->jobModel()->addJob(m_models->sampleModel()->multiLayerItem(),
-            m_models->instrumentModel()->instrumentItems().front(), 0,
-                                               optionsItem);
+        jobItem = m_models->jobModel()->addJob(
+            m_models->sampleModel()->multiLayerItem(),
+            m_models->instrumentModel()->instrumentItems().front(), 0, optionsItem);
     }
 
     SessionItem* container = jobItem->parameterContainerItem();

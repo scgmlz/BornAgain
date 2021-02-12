@@ -13,6 +13,8 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Views/InstrumentWidgets/InstrumentPresenter.h"
+#include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/SessionItem.h"
 #include "GUI/coregui/Views/InstrumentWidgets/DepthProbeInstrumentEditor.h"
 #include "GUI/coregui/Views/InstrumentWidgets/GISASInstrumentEditor.h"
@@ -41,18 +43,21 @@ QString InstrumentPresenter::itemPresentation() const
     if (!currentItem())
         return {};
 
-    if (currentItem()->modelType() == "GISASInstrument")
+    if (currentItem()->is<GISASInstrumentItem>())
         return GISASPresentation;
-    else if (currentItem()->modelType() == "OffSpecularInstrument")
+
+    if (currentItem()->is<OffSpecularInstrumentItem>())
         return OffSpecularPresentation;
-    else if (currentItem()->modelType() == "SpecularInstrument")
+
+    if (currentItem()->is<SpecularInstrumentItem>())
         return SpecularPresentation;
-    else if (currentItem()->modelType() == "DepthProbeInstrument")
+
+    if (currentItem()->is<DepthProbeInstrumentItem>())
         return DepthProbePresentation;
-    else
-        throw GUIHelpers::Error("InstrumentPresenter::itemPresentation() -> Error. Wrong item "
-                                "type '"
-                                + currentItem()->modelType() + "'");
+
+    throw GUIHelpers::Error("InstrumentPresenter::itemPresentation() -> Error. Wrong item "
+                            "type '"
+                            + currentItem()->modelType() + "'");
 }
 
 QStringList InstrumentPresenter::activePresentationList(SessionItem* item)

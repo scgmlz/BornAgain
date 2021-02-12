@@ -67,6 +67,11 @@ void DepthProbeInstrumentItem::updateToRealData(const RealDataItem*)
     throw std::runtime_error("DepthProbeInstrumentItem::updateToRealData()");
 }
 
+QString DepthProbeInstrumentItem::defaultName() const
+{
+    return "DepthProbe";
+}
+
 std::unique_ptr<DepthProbeSimulation> DepthProbeInstrumentItem::createSimulation() const
 {
     std::unique_ptr<DepthProbeSimulation> simulation = std::make_unique<DepthProbeSimulation>();

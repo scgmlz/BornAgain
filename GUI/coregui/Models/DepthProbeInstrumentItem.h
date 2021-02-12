@@ -33,6 +33,7 @@ public:
     std::unique_ptr<Instrument> createInstrument() const override;
     std::vector<int> shape() const override;
     void updateToRealData(const RealDataItem* item) override;
+    virtual QString defaultName() const override;
 
     // FIXME switch to base ISimulation class after InstrumentItem refactoring and
     // after ISimulation gets createUnitConverter method

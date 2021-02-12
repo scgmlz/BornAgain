@@ -47,7 +47,7 @@ QVector<SessionItem*> InstrumentModel::nonXMLItems() const
     return result;
 }
 
-QVector<InstrumentItem*> InstrumentModel::instrumentItems() 
+QVector<InstrumentItem*> InstrumentModel::instrumentItems()
 {
     return topItems<InstrumentItem>();
 }

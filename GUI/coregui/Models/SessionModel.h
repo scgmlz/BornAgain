@@ -57,8 +57,8 @@ public:
                                QString tag = "");
 
     // #migration Method is deprecated, index usage is discouraged.
-    SessionItem* insertNewItem(QString model_type, const QModelIndex& parent_item,
-                                  int row = -1, QString tag = "");
+    SessionItem* insertNewItem(QString model_type, const QModelIndex& parent_item, int row = -1,
+                               QString tag = "");
 
     template <typename T>
     T* insertItem(SessionItem* parent = nullptr, int row = -1, QString tag = "");

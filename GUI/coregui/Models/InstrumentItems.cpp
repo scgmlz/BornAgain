@@ -183,6 +183,11 @@ std::unique_ptr<IUnitConverter> SpecularInstrumentItem::createUnitConverter() co
             instrument->beam(), *axis_item->createAxis(1.0), Axes::Units::DEGREES);
 }
 
+QString SpecularInstrumentItem::defaultName() const
+{
+    return "Specular";
+}
+
 const QString Instrument2DItem::P_DETECTOR = "Detector";
 
 Instrument2DItem::Instrument2DItem(const QString& modelType) : InstrumentItem(modelType)
@@ -252,6 +257,11 @@ void GISASInstrumentItem::updateToRealData(const RealDataItem* item)
     detectorItem()->setYSize(data_shape[1]);
 }
 
+QString GISASInstrumentItem::defaultName() const
+{
+    return "GISAS";
+}
+
 const QString OffSpecularInstrumentItem::P_ALPHA_AXIS = "Alpha axis";
 
 OffSpecularInstrumentItem::OffSpecularInstrumentItem() : Instrument2DItem("OffSpecularInstrument")
@@ -285,6 +295,11 @@ void OffSpecularInstrumentItem::updateToRealData(const RealDataItem* dataItem)
 
     item<BasicAxisItem>(P_ALPHA_AXIS)->setBinCount(data_shape[0]);
     detectorItem()->setYSize(data_shape[1]);
+}
+
+QString OffSpecularInstrumentItem::defaultName() const
+{
+    return "OffSpecular";
 }
 
 namespace {

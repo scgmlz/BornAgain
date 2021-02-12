@@ -18,6 +18,8 @@
 #include "GUI/coregui/Views/CommonWidgets/ItemComboWidget.h"
 #include "GUI/coregui/Views/JobWidgets/JobViewFlags.h"
 
+class InstrumentItem;
+
 //! Presents results of job (JobItem) using stack of different widgets and combo box in the
 //! right top corner of JobView, to switch between widgets.
 
@@ -34,6 +36,11 @@ protected:
     QString itemPresentation() const override;
     QStringList activePresentationList(SessionItem* item) override;
     QStringList presentationList(SessionItem* item) override;
+
+private:
+    QString defaultPresentationOfInstrument(InstrumentItem* instrumentItem);
+    QStringList defaultActivePresentationsOfInstrument(InstrumentItem* instrumentItem);
+    QString fitPresentationOfInstrument(InstrumentItem* instrumentItem);
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_JOBWIDGETS_JOBRESULTSPRESENTER_H
