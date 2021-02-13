@@ -29,7 +29,9 @@ public:
     InstrumentModel* createCopy(SessionItem* parent = nullptr) override;
     QVector<SessionItem*> nonXMLItems() const override;
 
-    QVector<InstrumentItem*> instrumentItems();
+    QVector<InstrumentItem*> instrumentItems() const;
+
+    InstrumentItem* findInstrumentById(const QString& instrumentId) const;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H

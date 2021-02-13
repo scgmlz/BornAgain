@@ -47,7 +47,16 @@ QVector<SessionItem*> InstrumentModel::nonXMLItems() const
     return result;
 }
 
-QVector<InstrumentItem*> InstrumentModel::instrumentItems()
+QVector<InstrumentItem*> InstrumentModel::instrumentItems() const
 {
     return topItems<InstrumentItem>();
+}
+
+InstrumentItem* InstrumentModel::findInstrumentById(const QString& instrumentId) const
+{
+    for (auto instrument : instrumentItems())
+        if (instrument->id() == instrumentId)
+            return instrument;
+
+    return nullptr;
 }
