@@ -43,14 +43,15 @@ public:
 
 public slots:
     void onInstrumentComboIndexChanged(int index);
-    void onInstrumentMapUpdate();
+    void updateInstrumentCombo();
     void onRealDataPropertyChanged(const QString& name);
 
 private:
-    void setComboToIdentifier(const QString& identifier);
+    void setComboToIdentifier(const QString& instrumentId);
     void setPropertiesEnabled(bool enabled);
 
     LinkInstrumentManager* m_linkManager;
+    InstrumentModel* m_instrumentModel;
     QLabel* m_instrumentLabel;
     QComboBox* m_instrumentCombo;
     RealDataItem* m_currentDataItem;

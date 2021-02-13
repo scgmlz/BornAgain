@@ -25,15 +25,8 @@
 #include <QPushButton>
 
 namespace {
-const QString undefinedInstrumentName = "Undefined";
-
 bool QuestionOnInstrumentReshaping(const QString& message);
 } // namespace
-
-LinkInstrumentManager::InstrumentInfo::InstrumentInfo()
-    : m_name(undefinedInstrumentName), m_instrument(nullptr)
-{
-}
 
 LinkInstrumentManager::LinkInstrumentManager(QObject* parent)
     : QObject(parent), m_instrumentModel(nullptr), m_realDataModel(nullptr)
@@ -52,58 +45,19 @@ void LinkInstrumentManager::setModels(InstrumentModel* instrumentModel,
     updateLinks();
 }
 
-//! Returns InstrumentItem for given identifier.
-
-InstrumentItem* LinkInstrumentManager::instrument(const QString& identifier)
-{
-    for (int i = 0; i < m_instrumentVec.size(); ++i)
-        if (m_instrumentVec[i].m_identifier == identifier)
-            return m_instrumentVec[i].m_instrument;
-
-    return nullptr;
-}
-
-//! Returns list of instrument names including artificial name "Undefined".
-
-QStringList LinkInstrumentManager::instrumentNames() const
-{
-    QStringList result;
-    for (int i = 0; i < m_instrumentVec.size(); ++i)
-        result.append(m_instrumentVec[i].m_name);
-    return result;
-}
-
-//! Returns combo index for instrument selector from given identifier.
-
-int LinkInstrumentManager::instrumentComboIndex(const QString& identifier)
-{
-    for (int i = 0; i < m_instrumentVec.size(); ++i)
-        if (m_instrumentVec[i].m_identifier == identifier)
-            return i;
-
-    return -1; // no such identifier exists
-}
-
-//! Returns instrument identifier from given index in combo instrument selector.
-
-QString LinkInstrumentManager::instrumentIdentifier(int comboIndex)
-{
-    ASSERT(comboIndex >= 0 && comboIndex < m_instrumentVec.size());
-    return m_instrumentVec[comboIndex].m_identifier;
-}
-
 //! Returns true if RealDataItem can be linked to the instrument (same number of bins).
 //! Also offers dialog to adjust instrument to match shape of real data.
 
 bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realDataItem,
                                                     const QString& identifier)
 {
-    auto instrumentItem = instrument(identifier);
+    auto instrumentItem = m_instrumentModel->findInstrumentById(identifier);
 
     // linking to null instrument is possible, it means unlinking from currently linked
     if (!instrumentItem)
         return true;
 
+    // #TODO: Fix modality!
     if (!ImportDataUtils::Compatible(*instrumentItem, *realDataItem)) {
         QMessageBox::warning(nullptr, "Can't link to instrument",
                              "Can't link, data is incompatible with the instrument.");
@@ -141,7 +95,7 @@ void LinkInstrumentManager::setOnRealDataPropertyChange(SessionItem* dataItem,
     if (property == RealDataItem::P_INSTRUMENT_ID) {
         RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(dataItem);
         const QString identifier = realDataItem->instrumentId();
-        realDataItem->linkToInstrument(instrument(identifier));
+        realDataItem->linkToInstrument(m_instrumentModel->findInstrumentById(identifier));
     }
 }
 
@@ -185,7 +139,7 @@ void LinkInstrumentManager::updateLinks()
 {
     for (auto realDataItem : m_realDataModel->realDataItems()) {
         const QString identifier = realDataItem->instrumentId();
-        auto instrumentItem = instrument(identifier);
+        auto instrumentItem = m_instrumentModel->findInstrumentById(identifier);
 
         if (!instrumentItem) {
             // if no instrument with P_INSTRUMENT_ID exists, break the link
@@ -201,8 +155,6 @@ void LinkInstrumentManager::updateLinks()
 
 void LinkInstrumentManager::updateInstrumentMap()
 {
-    m_instrumentVec.clear();
-    m_instrumentVec.append(InstrumentInfo()); // undefined instrument
     for (auto instrumentItem : m_instrumentModel->instrumentItems()) {
         instrumentItem->mapper()->unsubscribe(this);
 
@@ -217,12 +169,6 @@ void LinkInstrumentManager::updateInstrumentMap()
                 onInstrumentChildChange(instrumentItem, child);
             },
             this);
-
-        InstrumentInfo info;
-        info.m_name = instrumentItem->itemName();
-        info.m_identifier = instrumentItem->id();
-        info.m_instrument = instrumentItem;
-        m_instrumentVec.append(info);
     }
 
     emit instrumentMapUpdated();

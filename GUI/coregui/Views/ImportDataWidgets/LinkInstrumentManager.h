@@ -35,24 +35,11 @@ class LinkInstrumentManager : public QObject {
     Q_OBJECT
 
 public:
-    class InstrumentInfo {
-    public:
-        InstrumentInfo();
-        QString m_identifier;
-        QString m_name;
-        InstrumentItem* m_instrument;
-    };
-
     explicit LinkInstrumentManager(QObject* parent = nullptr);
 
     void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
 
-    InstrumentItem* instrument(const QString& identifier);
-    QStringList instrumentNames() const;
-    int instrumentComboIndex(const QString& identifier);
-    QString instrumentIdentifier(int comboIndex);
     bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier);
-
     QList<RealDataItem*> linkedItems(InstrumentItem* instrumentItem);
 
 signals:
@@ -76,7 +63,6 @@ private:
 
     InstrumentModel* m_instrumentModel;
     RealDataModel* m_realDataModel;
-    QVector<InstrumentInfo> m_instrumentVec;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H

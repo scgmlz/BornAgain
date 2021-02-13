@@ -25,7 +25,6 @@ TEST_F(TestLinkInstrument, test_linkInstrumentManager)
     manager.setModels(&instrumentModel, &realDataModel);
 
     // initial state of LinkInstrumentManager
-    EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined");
     QSignalSpy spy(&manager, SIGNAL(instrumentMapUpdated()));
 
     // populating instrument model
@@ -34,17 +33,10 @@ TEST_F(TestLinkInstrument, test_linkInstrumentManager)
 
     // checking that LinkInstrumentManager was notified about new instrument
     EXPECT_EQ(spy.count(), 1);
-    EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined" << instrument->itemName());
-
-    EXPECT_EQ(manager.instrument(identifier), instrument);
-    EXPECT_EQ(manager.instrumentComboIndex(identifier), 1);
 
     // removing instrument
     instrumentModel.removeRow(0);
     EXPECT_EQ(spy.count(), 2);
-    EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined");
-    QVERIFY(manager.instrument(identifier) == nullptr);
-    EXPECT_EQ(manager.instrumentComboIndex(identifier), -1);
 }
 
 TEST_F(TestLinkInstrument, test_canLinkToInstrument)
