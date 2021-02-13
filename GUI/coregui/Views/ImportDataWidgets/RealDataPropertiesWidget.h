@@ -53,7 +53,6 @@ private:
     LinkInstrumentManager* m_linkManager;
     QLabel* m_instrumentLabel;
     QComboBox* m_instrumentCombo;
-    QString m_current_id;
     RealDataItem* m_currentDataItem;
 };
 

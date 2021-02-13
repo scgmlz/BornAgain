@@ -27,7 +27,7 @@ RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
     , m_linkManager(new LinkInstrumentManager(this))
     , m_instrumentLabel(new QLabel("Linked instrument"))
     , m_instrumentCombo(new QComboBox)
-    , m_currentDataItem(0)
+    , m_currentDataItem(nullptr)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     setWindowTitle("RealDataPropertiesWidget");
@@ -74,18 +74,16 @@ void RealDataPropertiesWidget::setItem(SessionItem* item)
 
     m_currentDataItem = dynamic_cast<RealDataItem*>(item);
 
-    if (!m_currentDataItem) {
-        setPropertiesEnabled(false);
-        return;
-    }
+    setPropertiesEnabled(m_currentDataItem != nullptr);
 
-    setPropertiesEnabled(true);
+    if (!m_currentDataItem)
+        return;
 
     m_currentDataItem->mapper()->setOnPropertyChange(
         [this](const QString& name) { onRealDataPropertyChanged(name); }, this);
 
-    m_currentDataItem->mapper()->setOnItemDestroy([this](SessionItem*) { m_currentDataItem = 0; },
-                                                  this);
+    m_currentDataItem->mapper()->setOnItemDestroy(
+        [this](SessionItem*) { m_currentDataItem = nullptr; }, this);
 
     // Set combo selector to show linked instrument
     setComboToIdentifier(m_currentDataItem->instrumentId());
@@ -96,20 +94,19 @@ void RealDataPropertiesWidget::setItem(SessionItem* item)
 
 void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
 {
-    m_current_id = m_linkManager->instrumentIdentifier(index);
-
     if (!m_currentDataItem)
         return;
 
-    QString dataLink = m_currentDataItem->instrumentId();
-    if (m_current_id == dataLink)
+    const QString newSelectedInstrumentId = m_linkManager->instrumentIdentifier(index);
+
+    if (newSelectedInstrumentId == m_currentDataItem->instrumentId())
         return;
 
-    if (m_linkManager->canLinkDataToInstrument(m_currentDataItem, m_current_id))
-        m_currentDataItem->setInstrumentId(m_current_id);
+    if (m_linkManager->canLinkDataToInstrument(m_currentDataItem, newSelectedInstrumentId))
+        m_currentDataItem->setInstrumentId(newSelectedInstrumentId);
     else
-        // LinkManager doesn't allow to link data to instrument.
-        setComboToIdentifier(dataLink); // Returning Combo selector to previous state
+        // Linking was impossible or denied. Set combo to previous state
+        setComboToIdentifier(m_currentDataItem->instrumentId());
 }
 
 //! Updates instrument selector for new instruments and their names.
@@ -117,18 +114,18 @@ void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
 
 void RealDataPropertiesWidget::onInstrumentMapUpdate()
 {
+    QString currentId = m_currentDataItem != nullptr ? m_currentDataItem->instrumentId() : "";
+
     QSignalBlocker b(m_instrumentCombo);
 
     m_instrumentCombo->clear();
     m_instrumentCombo->addItems(m_linkManager->instrumentNames());
-    int index = m_linkManager->instrumentComboIndex(m_current_id);
-    if (index >= 0) {
+    const int index = m_linkManager->instrumentComboIndex(currentId);
+    if (index >= 0)
         m_instrumentCombo->setCurrentIndex(index);
-    } else {
-        // instrument corresponding to m_current_id was deleted
-        m_current_id = "";
+    else
+        // instrument selected in data item was deleted
         m_instrumentCombo->setCurrentIndex(0);
-    }
 }
 
 //! Updates instrument combo on link change of current RealDataItem.
@@ -145,7 +142,6 @@ void RealDataPropertiesWidget::setComboToIdentifier(const QString& identifier)
 {
     QSignalBlocker b(m_instrumentCombo);
 
-    m_current_id = identifier;
     const int index = m_linkManager->instrumentComboIndex(identifier);
     ASSERT(index >= 0);
     m_instrumentCombo->setCurrentIndex(index);
