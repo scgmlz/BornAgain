@@ -19,6 +19,8 @@
 #include "Device/InputOutput/DataFormatUtils.h"
 #include <map>
 
+// #migration +++ this works only if separator is space or tab; it does not
+// work e.g. with comma or semicolon
 OutputData<double>* OutputDataReadReflectometry::readOutputData(std::istream& fin)
 {
     OutputData<double>* oData = new OutputData<double>();
@@ -32,9 +34,11 @@ OutputData<double>* OutputDataReadReflectometry::readOutputData(std::istream& fi
     while (std::getline(fin, line)) {
         line = StringUtils::trim(line);
         try {
+            // #migration +++ this works only if separator is space or tab; it does not
+            // work e.g. with comma or semicolon
             std::vector<double> rowVec = DataFormatUtils::parse_doubles(line);
             vecVec.push_back(rowVec);
-        } catch (...) {
+        } catch (...) { // #migration +++ This eats useful errors away...
             continue;
         }
     }

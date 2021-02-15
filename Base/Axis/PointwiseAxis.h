@@ -64,7 +64,8 @@ public:
     double upperBound() const override;
 
     //! Returns the coordinate corresponding to the
-    //! given index.
+    //! given index. For this type of axis ("pointwise")
+    //! this equals returning an explicitly defined coordinate.
     double binCenter(size_t index) const override;
 
     //! find index of the coordinate closest to the given value

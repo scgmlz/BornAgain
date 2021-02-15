@@ -31,11 +31,15 @@ public:
     ImportDataInfo(std::unique_ptr<OutputData<double>> data, const QString& units);
     ~ImportDataInfo();
 
+    //! True if the contained data is not nullptr (no info about empty data)
     operator bool() const;
 
     std::unique_ptr<OutputData<double>> intensityData() const&;
     std::unique_ptr<OutputData<double>> intensityData() &&;
+
+    //! Returns number of dimensions.
     size_t dataRank() const;
+
     QString unitsLabel() const;
     QString axisLabel(size_t axis_index) const;
 

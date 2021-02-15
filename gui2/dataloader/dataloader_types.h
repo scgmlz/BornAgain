@@ -24,7 +24,7 @@ namespace gui2 {
 
 //! Parser options to process multi column ASCII files.
 
-struct DAREFLCORE_EXPORT ParserOptions {
+struct DAREFLCORE_EXPORT ParserOptions {    // #import Here the options for the default parser are defined
     std::string m_header_prefix = "#"; //!< prefix denoting header line
     std::string m_separator = " ";     //!< column separator
     std::string m_skip_index_pattern;  //!< pattern denoting line to skip (i.e. '1,10-12,42')

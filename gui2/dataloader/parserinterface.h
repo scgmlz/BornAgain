@@ -23,7 +23,7 @@ namespace gui2 {
 
 //! Interface for all classes capable of parsing ASCII data into multicolumn presentation.
 
-class DAREFLCORE_EXPORT ParserInterface {
+class DAREFLCORE_EXPORT ParserInterface {       // #import Here is where the data gets parsed
 public:
     virtual ~ParserInterface() = default;
 
