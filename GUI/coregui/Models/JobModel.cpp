@@ -86,7 +86,7 @@ JobItem* JobModel::addJob(const MultiLayerItem* multiLayerItem,
     JobModelFunctions::setupJobItemInstrument(jobItem, instrumentItem);
 
     // TODO: remove when specular instrument is ready for magnetization
-    if (instrumentItem->modelType() == "SpecularInstrument")
+    if (instrumentItem->is<SpecularInstrumentItem>())
         JobModelFunctions::muteMagnetizationData(jobItem);
     copyItem(optionItem, jobItem, JobItem::T_SIMULATION_OPTIONS);
 
@@ -127,7 +127,7 @@ void JobModel::clear()
     SessionModel::clear();
 }
 
-QVector<SessionItem*> JobModel::nonXMLData() const
+QVector<SessionItem*> JobModel::nonXMLItems() const
 {
     QVector<SessionItem*> result;
 

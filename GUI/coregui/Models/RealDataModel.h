@@ -17,6 +17,8 @@
 
 #include "GUI/coregui/Models/SessionModel.h"
 
+class RealDataItem;
+
 //! The RealDataModel class is a model to store all imported RealDataItem's.
 
 class RealDataModel : public SessionModel {
@@ -25,9 +27,12 @@ class RealDataModel : public SessionModel {
 public:
     explicit RealDataModel(QObject* parent = 0);
 
-    virtual QVector<SessionItem*> nonXMLData() const override;
+    virtual QVector<SessionItem*> nonXMLItems() const override;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const override;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+
+    RealDataItem* insertRealDataItem();
+    QVector<RealDataItem*> realDataItems() const;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAMODEL_H

@@ -127,7 +127,7 @@ bool PointwiseAxisItem::checkValidity() const
 void PointwiseAxisItem::findInstrument()
 {
     SessionItem* parent_item = parent();
-    while (parent_item && parent_item->modelType() != "SpecularInstrument")
+    while (parent_item && !parent_item->is<SpecularInstrumentItem>())
         parent_item = parent_item->parent();
     m_instrument = static_cast<SpecularInstrumentItem*>(parent_item);
 }

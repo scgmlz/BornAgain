@@ -52,18 +52,17 @@ QString ItemFileNameUtils::jobNativeDataFileName(const JobItem& jobItem)
 
 QString ItemFileNameUtils::realDataFileName(const RealDataItem& realDataItem)
 {
-    return intensityDataFileName(realDataItem.itemName(), realdata_file_prefix);
+    return intensityDataFileName(realDataItem.name(), realdata_file_prefix);
 }
 
 QString ItemFileNameUtils::nativeDataFileName(const RealDataItem& realDataItem)
 {
-    return intensityDataFileName(realDataItem.itemName(), nativedata_file_prefix);
+    return intensityDataFileName(realDataItem.name(), nativedata_file_prefix);
 }
 
 QString ItemFileNameUtils::instrumentDataFileName(const InstrumentItem& instrumentItem)
 {
-    auto instrument_id = instrumentItem.getItemValue(InstrumentItem::P_IDENTIFIER).toString();
-    return intensityDataFileName(instrument_id, instrument_file_prefix);
+    return intensityDataFileName(instrumentItem.id(), instrument_file_prefix);
 }
 
 //! Returns list of fileName filters related to nonXML data stored by JobModel and RealDataModel.

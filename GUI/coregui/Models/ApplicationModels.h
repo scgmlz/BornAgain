@@ -43,30 +43,18 @@ public:
 
     void resetModels();
 
-    void createTestSample();
-    void createTestJob();
-    void createTestRealData();
-
     void writeTo(class QXmlStreamWriter* writer);
     void readFrom(class QXmlStreamReader* reader, MessageService* messageService);
 
     QList<SessionModel*> modelList();
 
-    QVector<SessionItem*> nonXMLData() const;
+    //! Returns all non-XML items
+    QVector<SessionItem*> nonXMLItems() const;
 
 signals:
     void modelChanged();
 
 private:
-    void createModels();
-    void createDocumentModel();
-    void createMaterialModel();
-    void createInstrumentModel();
-    void createSampleModel();
-    void createRealDataModel();
-    void createJobModel();
-
-    void disconnectModel(SessionModel* model);
     void connectModel(SessionModel* model);
 
     DocumentModel* m_documentModel;

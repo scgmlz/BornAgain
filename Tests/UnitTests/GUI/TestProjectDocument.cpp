@@ -18,8 +18,8 @@ protected:
     //! helper method to modify something in a model
     void modify_models(ApplicationModels* models)
     {
-        auto instrument = models->instrumentModel()->instrumentItem();
-        instrument->setItemValue(InstrumentItem::P_IDENTIFIER, GUIHelpers::createUuid());
+        auto instrument = models->instrumentModel()->instrumentItems().front();
+        instrument->setId(GUIHelpers::createUuid());
     }
 };
 
@@ -105,7 +105,7 @@ TEST_F(TestProjectDocument, test_projectDocumentWithData)
     ASSERT(realData);
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
-                                           models.instrumentModel()->instrumentItem());
+                                           models.instrumentModel()->instrumentItems().front());
     intensityItem->setItemValue(DataItem::P_FILE_NAME, "realdata.int.gz");
 
     ProjectDocument document;

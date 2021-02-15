@@ -43,7 +43,7 @@ public:
 
     void clear() override;
 
-    QVector<SessionItem*> nonXMLData() const override;
+    QVector<SessionItem*> nonXMLItems() const override;
 
     void link_instruments();
 

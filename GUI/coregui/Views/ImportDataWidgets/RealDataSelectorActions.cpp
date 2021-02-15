@@ -45,7 +45,11 @@ bool openRotateWarningDialog(QWidget* parent)
 
 bool rotationAffectsSetup(IntensityDataItem& intensityItem)
 {
-    if (intensityItem.parent()->getItemValue(RealDataItem::P_INSTRUMENT_ID).toBool())
+    const RealDataItem* parentRealDataItem = dynamic_cast<RealDataItem*>(intensityItem.parent());
+    const bool hasLinkToInstrument =
+        parentRealDataItem != nullptr && !parentRealDataItem->instrumentId().isEmpty();
+
+    if (hasLinkToInstrument)
         return true;
 
     if (intensityItem.maskContainerItem() && intensityItem.maskContainerItem()->hasChildren())
@@ -62,10 +66,9 @@ bool rotationAffectsSetup(IntensityDataItem& intensityItem)
 
 void resetSetup(IntensityDataItem& intensityItem)
 {
-
-    auto data_parent = intensityItem.parent();
-    if (data_parent->getItemValue(RealDataItem::P_INSTRUMENT_ID).toBool())
-        data_parent->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
+    RealDataItem* parentRealDataItem = dynamic_cast<RealDataItem*>(intensityItem.parent());
+    if (parentRealDataItem)
+        parentRealDataItem->clearInstrumentId();
 
     if (auto maskContainer = intensityItem.maskContainerItem())
         maskContainer->model()->removeRows(0, maskContainer->numberOfChildren(),
@@ -155,8 +158,8 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         if (ndim == 2) {
             std::unique_ptr<OutputData<double>> data = ImportDataUtils::Import2dData(fileName);
             if (data) {
-                auto realDataItem = m_realDataModel->insertItem<RealDataItem>();
-                realDataItem->setItemName(baseNameOfLoadedFile);
+                auto realDataItem = m_realDataModel->insertRealDataItem();
+                realDataItem->setName(baseNameOfLoadedFile);
                 realDataItem->setOutputData(data.release());
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
@@ -164,8 +167,8 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         } else if (ndim == 1) {
             auto data = ImportDataUtils::Import1dData(fileName);
             if (data) {
-                auto realDataItem = m_realDataModel->insertItem<RealDataItem>();
-                realDataItem->setItemName(baseNameOfLoadedFile);
+                auto realDataItem = m_realDataModel->insertRealDataItem();
+                realDataItem->setName(baseNameOfLoadedFile);
                 realDataItem->setImportData(std::move(data));
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);

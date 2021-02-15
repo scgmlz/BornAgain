@@ -55,6 +55,16 @@ QStringList InstrumentItem::translateList(const QStringList& list) const
     return result;
 }
 
+QString InstrumentItem::id() const
+{
+    return getItemValue(P_IDENTIFIER).toString();
+}
+
+void InstrumentItem::setId(const QString& id)
+{
+    setItemValue(P_IDENTIFIER, id);
+}
+
 BeamItem* InstrumentItem::beamItem() const
 {
     return item<BeamItem>(P_BEAM);
@@ -131,14 +141,13 @@ void SpecularInstrumentItem::updateToRealData(const RealDataItem* item)
         throw GUIHelpers::Error("Error in SpecularInstrumentItem::updateToRealData: The type "
                                 "of instrument is incompatible with passed data shape.");
 
-    QString units = item->getItemValue(RealDataItem::P_NATIVE_DATA_UNITS).toString();
     const auto& data = item->nativeData()->getOutputData()->axis(0);
-    beamItem()->updateToData(data, units);
+    beamItem()->updateToData(data, item->nativeDataUnits());
 }
 
 bool SpecularInstrumentItem::alignedWith(const RealDataItem* item) const
 {
-    const QString native_units = item->getItemValue(RealDataItem::P_NATIVE_DATA_UNITS).toString();
+    const QString native_units = item->nativeDataUnits();
     if (native_units == "nbins") {
         return beamItem()->currentInclinationAxisItem()->modelType() == "BasicAxis"
                && shape() == item->shape();
@@ -172,6 +181,11 @@ std::unique_ptr<IUnitConverter> SpecularInstrumentItem::createUnitConverter() co
     } else
         return std::make_unique<UnitConverterConvSpec>(
             instrument->beam(), *axis_item->createAxis(1.0), Axes::Units::DEGREES);
+}
+
+QString SpecularInstrumentItem::defaultName() const
+{
+    return "Specular";
 }
 
 const QString Instrument2DItem::P_DETECTOR = "Detector";
@@ -243,6 +257,11 @@ void GISASInstrumentItem::updateToRealData(const RealDataItem* item)
     detectorItem()->setYSize(data_shape[1]);
 }
 
+QString GISASInstrumentItem::defaultName() const
+{
+    return "GISAS";
+}
+
 const QString OffSpecularInstrumentItem::P_ALPHA_AXIS = "Alpha axis";
 
 OffSpecularInstrumentItem::OffSpecularInstrumentItem() : Instrument2DItem("OffSpecularInstrument")
@@ -276,6 +295,11 @@ void OffSpecularInstrumentItem::updateToRealData(const RealDataItem* dataItem)
 
     item<BasicAxisItem>(P_ALPHA_AXIS)->setBinCount(data_shape[0]);
     detectorItem()->setYSize(data_shape[1]);
+}
+
+QString OffSpecularInstrumentItem::defaultName() const
+{
+    return "OffSpecular";
 }
 
 namespace {

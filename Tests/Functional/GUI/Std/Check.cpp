@@ -39,7 +39,7 @@ std::unique_ptr<OutputData<double>> domainData(const std::string& /*test_name*/,
     GUIObjectBuilder::populateDocumentModel(&documentModel, direct_simulation);
 
     std::unique_ptr<ISimulation> domain_simulation = DomainSimulationBuilder::createSimulation(
-        sampleModel.multiLayerItem(), instrumentModel.instrumentItem(),
+        sampleModel.multiLayerItem(), instrumentModel.instrumentItems().front(),
         documentModel.simulationOptionsItem());
 
     domain_simulation->runSimulation();

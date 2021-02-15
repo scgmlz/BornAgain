@@ -21,7 +21,7 @@ RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDat
     setObjectName(SessionXML::RealDataModelTag);
 }
 
-QVector<SessionItem*> RealDataModel::nonXMLData() const
+QVector<SessionItem*> RealDataModel::nonXMLItems() const
 {
     QVector<SessionItem*> result;
 
@@ -54,4 +54,14 @@ bool RealDataModel::setData(const QModelIndex& index, const QVariant& value, int
     }
 
     return SessionModel::setData(index, value, role);
+}
+
+RealDataItem* RealDataModel::insertRealDataItem()
+{
+    return insertItem<RealDataItem>();
+}
+
+QVector<RealDataItem*> RealDataModel::realDataItems() const
+{
+    return topItems<RealDataItem>();
 }

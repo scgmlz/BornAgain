@@ -110,12 +110,12 @@ const InstrumentItem* SimulationDataSelectorWidget::selectedInstrumentItem() con
 
 const RealDataItem* SimulationDataSelectorWidget::selectedRealDataItem() const
 {
-    auto items = m_applicationModels->realDataModel()->topItems();
+    auto items = m_applicationModels->realDataModel()->realDataItems();
     if (items.isEmpty())
         return nullptr;
-    if (selectedRealDataIndex() >= 0 && selectedRealDataIndex() < items.size()) {
-        return dynamic_cast<const RealDataItem*>(items.at(selectedRealDataIndex()));
-    }
+    if (selectedRealDataIndex() >= 0 && selectedRealDataIndex() < items.size())
+        return items.at(selectedRealDataIndex());
+
     return nullptr;
 }
 

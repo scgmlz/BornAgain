@@ -70,38 +70,6 @@ QMenu* InstrumentViewActions::instrumentMenu()
     return m_addInstrumentMenu;
 }
 
-//! Adds instrument of certain type. Type of instrument is extracted from sender internal data.
-
-void InstrumentViewActions::onAddInstrument()
-{
-    auto action = qobject_cast<QAction*>(sender());
-    ASSERT(action && action->data().canConvert(QVariant::String));
-
-    QString instrumentType = action->data().toString();
-
-    if (instrumentType == "GISASInstrument") {
-        auto instrument = m_model->insertItem<GISASInstrumentItem>();
-        instrument->setItemName(suggestInstrumentName("GISAS"));
-    } else if (instrumentType == "OffSpecularInstrument") {
-        auto instrument = m_model->insertItem<OffSpecularInstrumentItem>();
-        instrument->setItemName(suggestInstrumentName("OffSpecular"));
-    } else if (instrumentType == "SpecularInstrument") {
-        auto instrument = m_model->insertItem<SpecularInstrumentItem>();
-        instrument->setItemName(suggestInstrumentName("Specular"));
-    } else if (instrumentType == "DepthProbeInstrument") {
-        auto instrument = m_model->insertItem<DepthProbeInstrumentItem>();
-        instrument->setItemName(suggestInstrumentName("DepthProbe"));
-    } else {
-        qInfo() << "InstrumentViewActions::onAddInstrument() -> Not supported instrument type"
-                << instrumentType;
-    }
-
-    updateSelection();
-
-    // Setting default action to the just triggered action
-    m_addInstrumentMenu->setDefaultAction(action);
-}
-
 //! Removes currently selected instrument.
 
 void InstrumentViewActions::onRemoveInstrument()
@@ -220,24 +188,32 @@ void InstrumentViewActions::initAddInstrumentMenu()
     m_addInstrumentMenu = new QMenu("Add new instrument");
     m_addInstrumentMenu->setToolTipsVisible(true);
 
-    auto action = m_addInstrumentMenu->addAction("GISAS");
-    action->setData(QVariant::fromValue(QString{"GISASInstrument"}));
-    action->setToolTip("Add GISAS instrument with default settings");
-    connect(action, &QAction::triggered, this, &InstrumentViewActions::onAddInstrument);
-    m_addInstrumentMenu->setDefaultAction(action);
+    const auto addAction = [this](const QString& menuEntry, const QString& tooltip,
+                                  std::function<InstrumentItem*()> insertInstrument) {
+        auto action = m_addInstrumentMenu->addAction(menuEntry);
+        action->setToolTip(tooltip);
 
-    action = m_addInstrumentMenu->addAction("OffSpecular");
-    action->setData(QVariant::fromValue(QString{"OffSpecularInstrument"}));
-    action->setToolTip("Add OffSpecular instrument with default settings");
-    connect(action, &QAction::triggered, this, &InstrumentViewActions::onAddInstrument);
+        connect(action, &QAction::triggered, [=]() {
+            InstrumentItem* instrument = insertInstrument();
+            instrument->setItemName(suggestInstrumentName(instrument->defaultName()));
+            updateSelection();
 
-    action = m_addInstrumentMenu->addAction("Specular");
-    action->setData(QVariant::fromValue(QString{"SpecularInstrument"}));
-    action->setToolTip("Add Specular instrument with default settings");
-    connect(action, &QAction::triggered, this, &InstrumentViewActions::onAddInstrument);
+            // set default action to the just triggered action
+            m_addInstrumentMenu->setDefaultAction(action);
+        });
+    };
 
-    action = m_addInstrumentMenu->addAction("DepthProbe");
-    action->setData(QVariant::fromValue(QString{"DepthProbeInstrument"}));
-    action->setToolTip("Add DepthProbe instrument with default settings");
-    connect(action, &QAction::triggered, this, &InstrumentViewActions::onAddInstrument);
+    addAction("GISAS", "Add GISAS instrument with default settings",
+              [this]() { return m_model->insertItem<GISASInstrumentItem>(); });
+
+    addAction("OffSpecular", "Add OffSpecular instrument with default settings",
+              [this]() { return m_model->insertItem<OffSpecularInstrumentItem>(); });
+
+    addAction("Specular", "Add Specular instrument with default settings",
+              [this]() { return m_model->insertItem<SpecularInstrumentItem>(); });
+
+    addAction("DepthProbe", "Add DepthProbe instrument with default settings",
+              [this]() { return m_model->insertItem<DepthProbeInstrumentItem>(); });
+
+    m_addInstrumentMenu->setDefaultAction(m_addInstrumentMenu->actions().front());
 }

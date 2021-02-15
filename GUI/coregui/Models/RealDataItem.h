@@ -28,14 +28,24 @@ class ImportDataInfo;
 //! The RealDataItem class represents intensity data imported from file and intended for fitting.
 
 class BA_CORE_API_ RealDataItem : public SessionItem {
+
+    friend class TestView;
+
 public:
-    static const QString T_INTENSITY_DATA;
     static const QString P_INSTRUMENT_ID;
+
+private:
+    static const QString T_INTENSITY_DATA;
     static const QString P_INSTRUMENT_NAME;
     static const QString T_NATIVE_DATA;
     static const QString P_NATIVE_DATA_UNITS;
 
+public:
     RealDataItem();
+
+    //! The name which is presented to the user
+    QString name() const;
+    void setName(const QString& name);
 
     IntensityDataItem* intensityDataItem();
     const IntensityDataItem* intensityDataItem() const;
@@ -48,12 +58,17 @@ public:
 
     DataItem* nativeData();
     const DataItem* nativeData() const;
+    QString nativeDataUnits() const;
 
     void setOutputData(OutputData<double>* data);
     void setImportData(ImportDataInfo data);
     bool holdsDimensionalData() const;
 
     void linkToInstrument(const InstrumentItem* instrument, bool make_update = true);
+
+    QString instrumentId() const;
+    void setInstrumentId(const QString& id);
+    void clearInstrumentId();
 
     //! Returns the shape of underlying data item
     std::vector<int> shape() const;

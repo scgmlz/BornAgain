@@ -32,7 +32,11 @@ public:
     static const QString P_BEAM;
     static const QString P_BACKGROUND;
 
+public:
     QStringList translateList(const QStringList& list) const override;
+
+    QString id() const;
+    void setId(const QString& id);
 
     virtual BeamItem* beamItem() const;
     BackgroundItem* backgroundItem() const;
@@ -44,6 +48,9 @@ public:
     virtual void importMasks(const MaskContainerItem*) {}
     virtual void updateToRealData(const RealDataItem* item) = 0;
     virtual bool alignedWith(const RealDataItem* item) const;
+
+    //! The default user visible name when creating an instrument
+    virtual QString defaultName() const = 0;
 
 protected:
     explicit InstrumentItem(const QString& modelType);
@@ -62,6 +69,7 @@ public:
     std::vector<int> shape() const override;
     void updateToRealData(const RealDataItem* item) override;
     bool alignedWith(const RealDataItem* item) const override;
+    virtual QString defaultName() const override;
 
     std::unique_ptr<IUnitConverter> createUnitConverter() const;
 };
@@ -91,6 +99,7 @@ public:
     GISASInstrumentItem();
     std::vector<int> shape() const override;
     void updateToRealData(const RealDataItem* item) override;
+    virtual QString defaultName() const override;
 };
 
 class BA_CORE_API_ OffSpecularInstrumentItem : public Instrument2DItem {
@@ -100,6 +109,7 @@ public:
     OffSpecularInstrumentItem();
     std::vector<int> shape() const override;
     void updateToRealData(const RealDataItem* item) override;
+    virtual QString defaultName() const override;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTITEMS_H

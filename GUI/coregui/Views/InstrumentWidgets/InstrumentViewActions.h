@@ -39,7 +39,6 @@ public:
     QMenu* instrumentMenu();
 
 public slots:
-    void onAddInstrument();
     void onRemoveInstrument();
     void onCloneInstrument();
     void onContextMenuRequest(const QPoint& point, const QModelIndex& indexAtPoint);

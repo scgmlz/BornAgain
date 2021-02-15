@@ -13,6 +13,8 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Models/SessionDecorationModel.h"
+#include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/MaterialItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include <QColor>
@@ -55,33 +57,28 @@ QIcon materialIcon(const QColor& color)
     return result;
 }
 
-QVariant itemIcon(const SessionItem* item)
+QIcon itemIcon(const SessionItem* item)
 {
-    QVariant result;
+    if (item->is<GISASInstrumentItem>())
+        return iconCatalog().gisasIcon;
 
-    auto modelType = item->modelType();
+    if (item->is<OffSpecularInstrumentItem>())
+        return iconCatalog().offspecIcon;
 
-    auto& icons = iconCatalog();
+    if (item->is<SpecularInstrumentItem>())
+        return iconCatalog().specularIcon;
 
-    if (modelType == "GISASInstrument") {
-        return QVariant(icons.gisasIcon);
+    if (item->is<DepthProbeInstrumentItem>())
+        return iconCatalog().depthIcon;
 
-    } else if (modelType == "OffSpecularInstrument") {
-        return QVariant(icons.offspecIcon);
-
-    } else if (modelType == "SpecularInstrument") {
-        return QVariant(icons.specularIcon);
-
-    } else if (modelType == "DepthProbeInstrument") {
-        return QVariant(icons.depthIcon);
-
-    } else if (modelType == "Material") {
+    if (item->modelType() == "Material") {
         auto materialItem = dynamic_cast<const MaterialItem*>(item);
-        return QVariant(materialIcon(materialItem->color()));
+        return materialIcon(materialItem->color());
     }
 
-    return result;
+    return QIcon();
 }
+
 } // namespace
 
 SessionDecorationModel::SessionDecorationModel(QObject* parent, SessionModel* model)
@@ -116,7 +113,7 @@ QVariant SessionDecorationModel::data(const QModelIndex& index, int role) const
 QVariant SessionDecorationModel::createIcon(const QModelIndex& index) const
 {
     if (SessionItem* item = m_model->itemForIndex(index))
-        return itemIcon(item);
+        return QVariant(itemIcon(item));
 
     return QVariant();
 }

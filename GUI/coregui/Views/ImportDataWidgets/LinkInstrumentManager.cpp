@@ -124,14 +124,13 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
     return true;
 }
 
-//! Calls rebuild of instrument map if the name or identifier of the instrument have changed.
+//! Calls rebuild of instrument map if anything regarding an instrument changed.
 
 void LinkInstrumentManager::setOnInstrumentPropertyChange(SessionItem* instrument,
                                                           const QString& property)
 {
     Q_UNUSED(instrument);
-    if (property == SessionItem::P_NAME || property == InstrumentItem::P_IDENTIFIER)
-        updateInstrumentMap();
+    updateInstrumentMap();
 }
 
 //! Link or re-link RealDataItem to the instrument on identifier change.
@@ -141,7 +140,7 @@ void LinkInstrumentManager::setOnRealDataPropertyChange(SessionItem* dataItem,
 {
     if (property == RealDataItem::P_INSTRUMENT_ID) {
         RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(dataItem);
-        QString identifier = dataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
+        const QString identifier = realDataItem->instrumentId();
         realDataItem->linkToInstrument(instrument(identifier));
     }
 }
@@ -184,13 +183,13 @@ void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int,
 
 void LinkInstrumentManager::updateLinks()
 {
-    for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
-        QString identifier = realDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
+    for (auto realDataItem : m_realDataModel->realDataItems()) {
+        const QString identifier = realDataItem->instrumentId();
         auto instrumentItem = instrument(identifier);
 
         if (!instrumentItem) {
             // if no instrument with P_INSTRUMENT_ID exists, break the link
-            realDataItem->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
+            realDataItem->clearInstrumentId();
         } else {
             // refresh the link to update axes
             realDataItem->linkToInstrument(instrumentItem);
@@ -204,7 +203,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 {
     m_instrumentVec.clear();
     m_instrumentVec.append(InstrumentInfo()); // undefined instrument
-    for (auto instrumentItem : m_instrumentModel->topItems<InstrumentItem>()) {
+    for (auto instrumentItem : m_instrumentModel->instrumentItems()) {
         instrumentItem->mapper()->unsubscribe(this);
 
         instrumentItem->mapper()->setOnPropertyChange(
@@ -221,7 +220,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 
         InstrumentInfo info;
         info.m_name = instrumentItem->itemName();
-        info.m_identifier = instrumentItem->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
+        info.m_identifier = instrumentItem->id();
         info.m_instrument = instrumentItem;
         m_instrumentVec.append(info);
     }
@@ -233,7 +232,7 @@ void LinkInstrumentManager::updateInstrumentMap()
 
 void LinkInstrumentManager::updateRealDataMap()
 {
-    for (auto dataItem : m_realDataModel->topItems<RealDataItem>()) {
+    for (auto dataItem : m_realDataModel->realDataItems()) {
         dataItem->mapper()->unsubscribe(this);
 
         dataItem->mapper()->setOnPropertyChange(
@@ -249,7 +248,7 @@ void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInst
 {
     for (auto realDataItem : linkedItems(changedInstrument))
         if (!changedInstrument->alignedWith(realDataItem))
-            realDataItem->setItemValue(RealDataItem::P_INSTRUMENT_ID, QString());
+            realDataItem->clearInstrumentId();
         else
             realDataItem->linkToInstrument(changedInstrument);
 }
@@ -259,11 +258,9 @@ void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInst
 QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrumentItem)
 {
     QList<RealDataItem*> result;
-    for (auto realDataItem : m_realDataModel->topItems<RealDataItem>()) {
-        QString linkedIdentifier =
-            realDataItem->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString();
-        QString instrumentIdentifier =
-            instrumentItem->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
+    for (auto realDataItem : m_realDataModel->realDataItems()) {
+        const QString linkedIdentifier = realDataItem->instrumentId();
+        const QString instrumentIdentifier = instrumentItem->id();
 
         if (linkedIdentifier == instrumentIdentifier)
             result.append(realDataItem);

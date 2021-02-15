@@ -38,6 +38,7 @@ public:
     virtual ~SessionItem();
     SessionModel* model() const;
     SessionItem* parent() const;
+    template <typename T> bool is() const;
 
     // these functions work without tags and operate on all children
     QModelIndex index() const;
@@ -164,6 +165,11 @@ template <typename T> T& SessionItem::groupItem(const QString& groupName) const
     T* t = dynamic_cast<T*>(getGroupItem(groupName));
     ASSERT(t);
     return *t;
+}
+
+template <typename T> bool SessionItem::is() const
+{
+    return dynamic_cast<const T*>(this) != nullptr;
 }
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_SESSIONITEM_H

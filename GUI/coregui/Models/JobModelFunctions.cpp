@@ -17,6 +17,7 @@
 #include "Device/Instrument/Instrument.h"
 #include "GUI/coregui/Models/Data1DViewItem.h"
 #include "GUI/coregui/Models/DataPropertyContainer.h"
+#include "GUI/coregui/Models/DepthProbeInstrumentItem.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/DomainObjectBuilder.h"
 #include "GUI/coregui/Models/FitParameterItems.h"
@@ -63,15 +64,14 @@ PointwiseAxisItem* getPointwiseAxisItem(const SpecularInstrumentItem* instrument
 void JobModelFunctions::initDataView(JobItem* job_item)
 {
     ASSERT(job_item && job_item->isValidForFitting());
-    ASSERT(job_item->instrumentItem()
-           && job_item->instrumentItem()->modelType() == "SpecularInstrument");
+    ASSERT(job_item->instrumentItem() && job_item->instrumentItem()->is<SpecularInstrumentItem>());
     ASSERT(!job_item->getItem(JobItem::T_DATAVIEW));
 
     SessionModel* model = job_item->model();
     auto view_item = model->insertItem<Data1DViewItem>(job_item, -1, JobItem::T_DATAVIEW);
 
-    auto property_container = model->insertItem<DataPropertyContainer>(
-        view_item, -1, Data1DViewItem::T_DATA_PROPERTIES);
+    auto property_container =
+        model->insertItem<DataPropertyContainer>(view_item, -1, Data1DViewItem::T_DATA_PROPERTIES);
 
     property_container->addItem(job_item->realDataItem()->dataItem());
     property_container->addItem(job_item->dataItem());
@@ -140,20 +140,20 @@ void JobModelFunctions::setupJobItemInstrument(JobItem* jobItem, const Instrumen
 
 void JobModelFunctions::setupJobItemOutput(JobItem* jobItem)
 {
-    auto model = jobItem->model();
+    const bool isSpecularInstrument = jobItem->instrumentItem()->is<SpecularInstrumentItem>();
+    const bool isIntensityInstrument = jobItem->instrumentItem()->is<GISASInstrumentItem>()
+                                       || jobItem->instrumentItem()->is<OffSpecularInstrumentItem>()
+                                       || jobItem->instrumentItem()->is<DepthProbeInstrumentItem>();
 
-    auto instrumentType = jobItem->instrumentItem()->modelType();
-    if (instrumentType == "SpecularInstrument") {
-        model->insertItem<SpecularDataItem>(jobItem, -1, JobItem::T_OUTPUT);
+    ASSERT(isSpecularInstrument || isIntensityInstrument);
 
-    } else if (instrumentType == "GISASInstrument" || instrumentType == "OffSpecularInstrument"
-               || instrumentType == "DepthProbeInstrument") {
-        model->insertItem<IntensityDataItem>(jobItem, -1, JobItem::T_OUTPUT);
-
-    } else {
+    if (isSpecularInstrument)
+        jobItem->model()->insertItem<SpecularDataItem>(jobItem, -1, JobItem::T_OUTPUT);
+    else if (isIntensityInstrument)
+        jobItem->model()->insertItem<IntensityDataItem>(jobItem, -1, JobItem::T_OUTPUT);
+    else
         throw GUIHelpers::Error("JobModelFunctions::setupJobItemOutput() -> Error. "
                                 "Unsupported instrument type");
-    }
 }
 
 //! Setups JobItem for fit.
@@ -169,9 +169,9 @@ void JobModelFunctions::setupJobItemForFit(JobItem* jobItem, const RealDataItem*
     copyMasksToInstrument(jobItem);
 
     // TODO: remove if when other simulation types are ready for roi & masks
-    if (jobItem->instrumentItem()->modelType() == "GISASInstrument")
+    if (jobItem->instrumentItem()->is<GISASInstrumentItem>())
         cropRealData(jobItem);
-    if (jobItem->instrumentItem()->modelType() == "SpecularInstrument")
+    if (jobItem->instrumentItem()->is<SpecularInstrumentItem>())
         initDataView(jobItem);
 
     createFitContainers(jobItem);

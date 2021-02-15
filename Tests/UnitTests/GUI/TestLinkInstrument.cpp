@@ -30,7 +30,7 @@ TEST_F(TestLinkInstrument, test_linkInstrumentManager)
 
     // populating instrument model
     auto instrument = instrumentModel.insertItem<GISASInstrumentItem>();
-    QString identifier = instrument->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
+    const QString identifier = instrument->id();
 
     // checking that LinkInstrumentManager was notified about new instrument
     EXPECT_EQ(spy.count(), 1);
@@ -56,7 +56,7 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
 
     // populating instrument model
     auto instrument = instrumentModel.insertItem<GISASInstrumentItem>();
-    QString identifier = instrument->getItemValue(InstrumentItem::P_IDENTIFIER).toString();
+    const QString identifier = instrument->id();
 
     // populating real data model, setting intensity data
     RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", realDataModel);
@@ -65,7 +65,7 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     QVERIFY(manager.canLinkDataToInstrument(realData, identifier));
 
     // making link
-    realData->setItemValue(RealDataItem::P_INSTRUMENT_ID, identifier);
+    realData->setInstrumentId(identifier);
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector type and checking that link remain
@@ -78,5 +78,5 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     x_axis->setItemValue(BasicAxisItem::P_NBINS, 10);
 
     EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>());
-    EXPECT_EQ(realData->getItemValue(RealDataItem::P_INSTRUMENT_ID).toString(), QString());
+    EXPECT_EQ(realData->instrumentId(), QString());
 }
