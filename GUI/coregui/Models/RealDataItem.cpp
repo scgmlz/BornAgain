@@ -39,7 +39,7 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
     setDefaultTag(T_INTENSITY_DATA);
 
     addProperty(P_INSTRUMENT_ID, QString());
-    addProperty(P_INSTRUMENT_NAME, QString());
+    addProperty(P_INSTRUMENT_NAME, QString());  // #migration This is never used - return after checking whether this breaks loading old files
 
     registerTag(T_NATIVE_DATA, 1, 1,
                 QStringList() << "IntensityData"
@@ -122,37 +122,41 @@ QString RealDataItem::nativeDataUnits() const
     return getItemValue(P_NATIVE_DATA_UNITS).toString();
 }
 
-//! Sets OutputData to underlying item. Creates it, if not exists.
+//! Sets OutputData to underlying item. Creates it if not existing.
 
 void RealDataItem::setOutputData(OutputData<double>* data)
 {
     ASSERT(data && "Assertion failed in RealDataItem::setOutputData: passed data is nullptr");
-    ASSERT(data->rank() < 3 && data->rank() > 0);
 
-    const QString& target_model_type =
-        data->rank() == 2 ? "IntensityData" : data->rank() == 1 ? "SpecularData" : "";
-    auto data_item = getItem(T_INTENSITY_DATA);
-    if (data_item && data_item->modelType() != target_model_type)
-        throw GUIHelpers::Error("Error in RealDataItem::setOutputData: trying to set data "
-                                "incompatible with underlying data item");
-    if (!data_item) {
-        model()->insertNewItem(target_model_type, this, 0, T_INTENSITY_DATA);
-        ASSERT(getItem(T_INTENSITY_DATA)
-               && "Assertion failed in RealDataItem::setOutputData: inserting data item failed.");
-    }
+    initDataItem(data->rank(), T_INTENSITY_DATA);
+
     dataItem()->setOutputData(data);
 }
 
-void RealDataItem::initDataItem(size_t data_rank, const QString& tag)
+//! Creates data item if not existing so far. Checks for rank compatibility if already existing. No
+//! further initialization like clearing the data etc.
+
+void RealDataItem::initDataItem(size_t rank, const QString& tag)
 {
-    ASSERT(data_rank <= 2 && data_rank > 0);
-    const QString& target_model_type = data_rank == 2 ? "IntensityData" : "SpecularData";
+    ASSERT(rank <= 2 && rank > 0);
+
     auto data_item = getItem(tag);
-    if (data_item && data_item->modelType() != target_model_type)
-        throw GUIHelpers::Error("Error in RealDataItem::initDataItem: trying to set data "
-                                "incompatible with underlying data item");
-    if (!data_item)
-        model()->insertNewItem(target_model_type, this, 0, tag);
+    if (data_item != nullptr) {
+        const bool rankMismatch = (rank == 1 && !data_item->is<SpecularDataItem>())
+                                  || (rank == 2 && !data_item->is<IntensityDataItem>());
+
+        if (rankMismatch)
+            throw GUIHelpers::Error("Error in RealDataItem::initDataItem: trying to set data "
+                                    "incompatible with underlying data item");
+    } else {
+        if (rank == 1)
+            model()->insertItem<SpecularDataItem>(this, 0, tag);
+        else
+            model()->insertItem<IntensityDataItem>(this, 0, tag);
+
+        ASSERT(getItem(tag)
+               && "Assertion failed in RealDataItem::initDataItem: inserting data item failed.");
+    }
 }
 
 void RealDataItem::setImportData(ImportDataInfo data)
@@ -174,7 +178,7 @@ void RealDataItem::setImportData(ImportDataInfo data)
 
 bool RealDataItem::holdsDimensionalData() const
 {
-    return getItemValue(P_NATIVE_DATA_UNITS).toString() != "nbins";
+    return nativeDataUnits() != "nbins";
 }
 
 void RealDataItem::linkToInstrument(const InstrumentItem* instrument, bool make_update)
@@ -251,6 +255,6 @@ void RealDataItem::updateToInstrument()
     auto data_source = native_data_item ? native_data_item : data_item;
 
     std::unique_ptr<OutputData<double>> native_data(data_source->getOutputData()->clone());
-    const QString units_label = getItemValue(P_NATIVE_DATA_UNITS).toString();
+    const QString units_label = nativeDataUnits();
     data_item->reset(ImportDataInfo(std::move(native_data), units_label));
 }

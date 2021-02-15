@@ -69,7 +69,7 @@ void RealDataPropertiesWidget::setModels(InstrumentModel* instrumentModel,
 
 //! Set current RealDataItem to display in instrument selector.
 
-void RealDataPropertiesWidget::setItem(SessionItem* item)
+void RealDataPropertiesWidget::setItem(RealDataItem* item)
 {
     if (item == m_currentDataItem)
         return;
@@ -77,7 +77,7 @@ void RealDataPropertiesWidget::setItem(SessionItem* item)
     if (m_currentDataItem)
         m_currentDataItem->mapper()->unsubscribe(this);
 
-    m_currentDataItem = dynamic_cast<RealDataItem*>(item);
+    m_currentDataItem = item;
 
     setPropertiesEnabled(m_currentDataItem != nullptr);
 
@@ -142,6 +142,8 @@ void RealDataPropertiesWidget::updateInstrumentCombo()
 
 void RealDataPropertiesWidget::onRealDataPropertyChanged(const QString& name)
 {
+    // #migration This can be called when combo on this page was changed, but also when the linking
+    // is undone because of instrument deletion or similar
     if (name == RealDataItem::P_INSTRUMENT_ID)
         setComboToIdentifier(m_currentDataItem->instrumentId());
 }

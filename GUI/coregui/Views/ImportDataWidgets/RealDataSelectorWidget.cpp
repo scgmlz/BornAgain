@@ -97,7 +97,7 @@ void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
 void RealDataSelectorWidget::onSelectionChanged(SessionItem* item)
 {
     updateActionEnabling();
-    m_propertiesWidget->setItem(item);
+    m_propertiesWidget->setItem(dynamic_cast<RealDataItem*>(item));
     emit selectionChanged(item);
 }
 

@@ -39,7 +39,7 @@ public:
     QSize minimumSizeHint() const { return QSize(64, 128); }
 
     void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
-    void setItem(SessionItem* item);
+    void setItem(RealDataItem* item);
 
 public slots:
     void onInstrumentComboIndexChanged(int index);
