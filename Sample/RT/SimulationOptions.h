@@ -62,10 +62,15 @@ public:
 
     bool useAvgMaterials() const { return m_use_avg_materials; }
 
+    void setIsPolarized(bool is_polarized) { m_is_polarized = is_polarized; }
+
+    bool isPolarized() const { return m_is_polarized; }
+
 private:
     bool m_mc_integration;
     bool m_include_specular;
     bool m_use_avg_materials;
+    bool m_is_polarized;
     size_t m_mc_points;
     ThreadInfo m_thread_info;
 };

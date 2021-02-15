@@ -31,7 +31,8 @@ SpecularComputation::SpecularComputation(const MultiLayer& multilayer,
     : IComputation(multilayer, options, progress), m_begin_it(begin_it), m_end_it(end_it)
 {
     if (m_processed_sample->containsMagneticMaterial()
-        || m_processed_sample->externalField() != kvector_t{})
+        || m_processed_sample->externalField() != kvector_t{}
+        || options.isPolarized())
         m_computation_term.reset(
             new SpecularMatrixTerm(SpecularStrategyBuilder::build(multilayer, true)));
     else

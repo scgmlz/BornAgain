@@ -17,7 +17,11 @@
 #include <thread>
 
 SimulationOptions::SimulationOptions()
-    : m_mc_integration(false), m_include_specular(false), m_use_avg_materials(false), m_mc_points(1)
+    : m_mc_integration(false)
+    , m_include_specular(false)
+    , m_use_avg_materials(false)
+    , m_is_polarized(false)
+    , m_mc_points(1)
 {
     m_thread_info.n_threads = getHardwareConcurrency();
 }

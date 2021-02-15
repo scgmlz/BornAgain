@@ -186,6 +186,7 @@ void ISimulation::setAnalyzerProperties(const kvector_t direction, double effici
                                         double total_transmission)
 {
     detector().setAnalyzerProperties(direction, efficiency, total_transmission);
+    m_options.setIsPolarized(true);
 }
 
 void ISimulation::prepareSimulation()
