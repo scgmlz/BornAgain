@@ -406,11 +406,11 @@ SessionItem* SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, 
     return item;
 }
 
-//! Copy given item to the new_parent at given row. Item indended for copying can belong to
-//! another model and it will remains intact. Returns pointer to the new child.
+//! Copy given item to the new_parent at given row. Item intended for copying can belong to
+//! another model and it will remain intact. Returns pointer to the new child.
 
-SessionItem* SessionModel::copyItem(const SessionItem* item_to_copy, SessionItem* new_parent,
-                                    const QString& tag)
+SessionItem* SessionModel::copy(const SessionItem* item_to_copy, SessionItem* new_parent,
+                                const QString& tag)
 {
     if (!new_parent)
         new_parent = m_root_item;
