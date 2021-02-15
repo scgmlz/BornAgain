@@ -106,7 +106,7 @@ TEST_F(TestProjectDocument, test_projectDocumentWithData)
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
                                            models.instrumentModel()->instrumentItems().front());
-    intensityItem->setItemValue(DataItem::P_FILE_NAME, "realdata.int.gz");
+    intensityItem->setFileName("realdata.int.gz");
 
     ProjectDocument document;
     document.setApplicationModels(&models);

@@ -39,7 +39,8 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
     setDefaultTag(T_INTENSITY_DATA);
 
     addProperty(P_INSTRUMENT_ID, QString());
-    addProperty(P_INSTRUMENT_NAME, QString());  // #migration This is never used - return after checking whether this breaks loading old files
+    addProperty(P_INSTRUMENT_NAME, QString()); // #migration This is never used - return after
+                                               // checking whether this breaks loading old files
 
     registerTag(T_NATIVE_DATA, 1, 1,
                 QStringList() << "IntensityData"
@@ -238,9 +239,9 @@ MaskContainerItem* RealDataItem::maskContainerItem()
 void RealDataItem::updateNonXMLDataFileNames()
 {
     if (DataItem* item = dataItem())
-        item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::realDataFileName(*this));
+        item->setFileName(ItemFileNameUtils::realDataFileName(*this));
     if (DataItem* item = nativeData())
-        item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::nativeDataFileName(*this));
+        item->setFileName(ItemFileNameUtils::nativeDataFileName(*this));
 }
 
 void RealDataItem::updateToInstrument()

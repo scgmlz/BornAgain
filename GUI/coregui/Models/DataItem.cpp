@@ -39,7 +39,12 @@ void DataItem::setRawDataVector(std::vector<double> data)
 
 QString DataItem::fileName() const
 {
-    return getItemValue(DataItem::P_FILE_NAME).toString();
+    return getItemValue(P_FILE_NAME).toString();
+}
+
+void DataItem::setFileName(const QString& filename)
+{
+    setItemValue(P_FILE_NAME, filename);
 }
 
 QDateTime DataItem::lastModified() const

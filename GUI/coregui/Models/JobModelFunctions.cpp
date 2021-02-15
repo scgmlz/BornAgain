@@ -202,16 +202,14 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
     realDataItemCopy->dataItem()->setOutputData(realDataItem->dataItem()->getOutputData()->clone());
 
     // adapting the name to job name
-    realDataItemCopy->dataItem()->setItemValue(DataItem::P_FILE_NAME,
-                                               ItemFileNameUtils::jobReferenceFileName(*jobItem));
+    realDataItemCopy->dataItem()->setFileName(ItemFileNameUtils::jobReferenceFileName(*jobItem));
 
     if (!realDataItem->nativeData())
         return;
 
     realDataItemCopy->nativeData()->setOutputData(
         realDataItem->nativeData()->getOutputData()->clone());
-    realDataItemCopy->nativeData()->setItemValue(
-        DataItem::P_FILE_NAME, ItemFileNameUtils::jobNativeDataFileName(*jobItem));
+    realDataItemCopy->nativeData()->setFileName(ItemFileNameUtils::jobNativeDataFileName(*jobItem));
 }
 
 const JobItem* JobModelFunctions::findJobItem(const SessionItem* item)

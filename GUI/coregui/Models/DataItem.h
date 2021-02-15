@@ -27,8 +27,10 @@ class InstrumentItem;
 //! Provides common functionality for IntensityDataItem and SpecularDataItem
 
 class BA_CORE_API_ DataItem : public SessionItem, public SaveLoadInterface {
-public:
+private:
     static const QString P_FILE_NAME;
+
+public:
     static const QString P_AXES_UNITS;
 
     OutputData<double>* getOutputData() { return m_data.get(); }
@@ -42,6 +44,7 @@ public:
 
     using SaveLoadInterface::fileName;
     QString fileName() const override;
+    void setFileName(const QString& filename);
     QDateTime lastModified() const override;
     bool containsNonXMLData() const override;
     bool load(const QString& projectDir) override;
