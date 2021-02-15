@@ -25,7 +25,6 @@ class RealDataModel;
 class SessionItem;
 class InstrumentItem;
 class RealDataItem;
-class SessionModel;
 
 //! The LinkInstrumentManager class provides communication between InstrumentModel and
 //! RealDataModel. Particularly, it notifies RealDataItem about changes in linked instruments
@@ -43,6 +42,8 @@ public:
     QList<RealDataItem*> linkedItems(InstrumentItem* instrumentItem);
 
 signals:
+    //! Will be emitted in case of instrument added, instrument removed, instrument properties
+    //! changed
     void instrumentMapUpdated();
 
 private slots:

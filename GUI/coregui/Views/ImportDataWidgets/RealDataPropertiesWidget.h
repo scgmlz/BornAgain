@@ -17,13 +17,7 @@
 
 #include <QWidget>
 
-class LinkInstrumentManager;
-class SessionItem;
-class InstrumentModel;
-class RealDataModel;
 class RealDataItem;
-class QDataWidgetMapper;
-class QLineEdit;
 class QComboBox;
 class QLabel;
 
@@ -38,21 +32,17 @@ public:
     QSize sizeHint() const { return QSize(64, 135); }
     QSize minimumSizeHint() const { return QSize(64, 128); }
 
-    void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
     void setItem(RealDataItem* item);
 
 public slots:
     void onInstrumentComboIndexChanged(int index);
-    void updateInstrumentCombo();
+    void updateInstrumentComboEntries();
     void onRealDataPropertyChanged(const QString& name);
 
 private:
     void setComboToIdentifier(const QString& instrumentId);
     void setPropertiesEnabled(bool enabled);
 
-    LinkInstrumentManager* m_linkManager;
-    InstrumentModel* m_instrumentModel;
-    QLabel* m_instrumentLabel;
     QComboBox* m_instrumentCombo;
     RealDataItem* m_currentDataItem;
 };

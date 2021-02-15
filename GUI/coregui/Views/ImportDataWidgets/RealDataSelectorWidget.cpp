@@ -88,7 +88,6 @@ void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
 {
     m_realDataModel = realDataModel;
     m_selectorWidget->setModel(realDataModel);
-    m_propertiesWidget->setModels(instrumentModel, realDataModel);
 
     m_selectorActions->setRealDataModel(realDataModel);
     m_selectorActions->setSelectionModel(m_selectorWidget->selectionModel());

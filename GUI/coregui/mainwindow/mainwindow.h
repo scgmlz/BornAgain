@@ -42,6 +42,7 @@ class QStackedLayout;
 class QStatusBar;
 class QToolButton;
 class QVBoxLayout;
+class LinkInstrumentManager;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -61,6 +62,7 @@ public:
     RealDataModel* realDataModel();
     JobModel* jobModel();
     ApplicationModels* models();
+    LinkInstrumentManager* linkInstrumentManager();
 
     QProgressBar* progressBar();
     QStatusBar* statusBar();
@@ -105,6 +107,7 @@ private:
     QStatusBar* m_statusBar;
 
     ApplicationModels* m_applicationModels;
+    LinkInstrumentManager* m_linkManager;
     ProjectManager* m_projectManager;
     ActionManager* m_actionManager;
     ToolTipDataBase* m_toolTipDataBase;

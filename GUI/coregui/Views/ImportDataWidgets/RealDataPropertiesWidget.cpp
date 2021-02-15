@@ -7,7 +7,7 @@
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
+//! @copyright Forschungszentrum Jülich GmbH 2021
 //! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
 //
 //  ************************************************************************************************
@@ -18,19 +18,13 @@
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QComboBox>
-#include <QDataWidgetMapper>
 #include <QLabel>
-#include <QLineEdit>
 #include <QVBoxLayout>
 
 RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
-    : QWidget(parent)
-    , m_linkManager(new LinkInstrumentManager(this))
-    , m_instrumentModel(nullptr)
-    , m_instrumentLabel(new QLabel("Linked instrument"))
-    , m_instrumentCombo(new QComboBox)
-    , m_currentDataItem(nullptr)
+    : QWidget(parent), m_instrumentCombo(new QComboBox), m_currentDataItem(nullptr)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     setWindowTitle("RealDataPropertiesWidget");
@@ -41,7 +35,7 @@ RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
 
     m_instrumentCombo->setToolTip("Select instrument to link with real data");
 
-    mainLayout->addWidget(m_instrumentLabel);
+    mainLayout->addWidget(new QLabel("Linked instrument"));
     mainLayout->addWidget(m_instrumentCombo);
 
     mainLayout->addStretch();
@@ -51,20 +45,12 @@ RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
             static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
             &RealDataPropertiesWidget::onInstrumentComboIndexChanged);
 
-    connect(m_linkManager, &LinkInstrumentManager::instrumentMapUpdated, this,
-            &RealDataPropertiesWidget::updateInstrumentCombo);
+    connect(MainWindow::instance()->linkInstrumentManager(),
+            &LinkInstrumentManager::instrumentMapUpdated, this,
+            &RealDataPropertiesWidget::updateInstrumentComboEntries);
 
+    updateInstrumentComboEntries();
     setPropertiesEnabled(false);
-}
-
-//! Sets models to underlying link manager.
-
-void RealDataPropertiesWidget::setModels(InstrumentModel* instrumentModel,
-                                         RealDataModel* realDataModel)
-{
-    m_instrumentModel = instrumentModel;
-    m_linkManager->setModels(instrumentModel, realDataModel);
-    updateInstrumentCombo();
 }
 
 //! Set current RealDataItem to display in instrument selector.
@@ -107,7 +93,8 @@ void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
     if (newSelectedInstrumentId == m_currentDataItem->instrumentId())
         return;
 
-    if (m_linkManager->canLinkDataToInstrument(m_currentDataItem, newSelectedInstrumentId))
+    if (MainWindow::instance()->linkInstrumentManager()->canLinkDataToInstrument(
+            m_currentDataItem, newSelectedInstrumentId))
         m_currentDataItem->setInstrumentId(newSelectedInstrumentId);
     else
         // Linking was impossible or denied. Set combo to previous state
@@ -117,7 +104,7 @@ void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
 //! Updates instrument selector for new instruments and their names.
 //! Current selection will be preserved.
 
-void RealDataPropertiesWidget::updateInstrumentCombo()
+void RealDataPropertiesWidget::updateInstrumentComboEntries()
 {
     QString currentId = m_currentDataItem != nullptr ? m_currentDataItem->instrumentId() : "";
 
@@ -127,7 +114,7 @@ void RealDataPropertiesWidget::updateInstrumentCombo()
 
     // fill the combo. Userdata contains instrument's uid
     m_instrumentCombo->addItem("Undefined", ""); // undefined instrument
-    for (auto instrumentItem : m_instrumentModel->instrumentItems())
+    for (auto instrumentItem : MainWindow::instance()->instrumentModel()->instrumentItems())
         m_instrumentCombo->addItem(instrumentItem->itemName(), instrumentItem->id());
 
     const int index = m_instrumentCombo->findData(currentId);
@@ -138,13 +125,21 @@ void RealDataPropertiesWidget::updateInstrumentCombo()
         m_instrumentCombo->setCurrentIndex(0);
 }
 
-//! Updates instrument combo on link change of current RealDataItem.
+//! Updates instrument combo if instrument link of current RealDataItem changed.
 
 void RealDataPropertiesWidget::onRealDataPropertyChanged(const QString& name)
 {
-    // #migration This can be called when combo on this page was changed, but also when the linking
+    // This can be called when combo on this page was changed, but also when the linking
     // is undone because of instrument deletion or similar
-    if (name == RealDataItem::P_INSTRUMENT_ID)
+    if (!m_currentDataItem)
+        return;
+
+    // The notification comes for different reasons, therefore a check for "link changed" is done
+    // first
+    const bool linkChanged =
+        m_instrumentCombo->currentData().toString() != m_currentDataItem->instrumentId();
+
+    if (linkChanged)
         setComboToIdentifier(m_currentDataItem->instrumentId());
 }
 
@@ -159,13 +154,11 @@ void RealDataPropertiesWidget::setComboToIdentifier(const QString& instrumentId)
     m_instrumentCombo->setCurrentIndex(index);
 }
 
-//! Sets all widget's children enabled/disabled. When no RealDataItem selected all
-//! will appear in gray.
+//! Sets all widget's children enabled/disabled.
 
 void RealDataPropertiesWidget::setPropertiesEnabled(bool enabled)
 {
-    m_instrumentLabel->setEnabled(enabled);
-    m_instrumentCombo->setEnabled(enabled);
+    setEnabled(enabled);
     if (!enabled)
         m_instrumentCombo->setCurrentIndex(0);
 }

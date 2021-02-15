@@ -16,6 +16,7 @@
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/Views/ImportDataView.h"
+#include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h" // #migration move to better folder
 #include "GUI/coregui/Views/InstrumentView.h"
 #include "GUI/coregui/Views/JobView.h"
 #include "GUI/coregui/Views/SampleView.h"
@@ -52,6 +53,7 @@ MainWindow::MainWindow()
     , m_viewSelectionButtonsLayout(new QVBoxLayout)
     , m_statusBar(new QStatusBar)
     , m_applicationModels(new ApplicationModels(this))
+    , m_linkManager(new LinkInstrumentManager(this))
     , m_projectManager(new ProjectManager(this))
     , m_actionManager(new ActionManager(this))
     , m_toolTipDataBase(new ToolTipDataBase(this))
@@ -66,6 +68,8 @@ MainWindow::MainWindow()
 {
 
     s_instance = this;
+
+    m_linkManager->setModels(instrumentModel(), realDataModel());
 
     QWidget* centralWidget = new QWidget(this);
     QHBoxLayout* mainLayout = new QHBoxLayout(centralWidget);
@@ -155,6 +159,11 @@ JobModel* MainWindow::jobModel()
 ApplicationModels* MainWindow::models()
 {
     return m_applicationModels;
+}
+
+LinkInstrumentManager* MainWindow::linkInstrumentManager()
+{
+    return m_linkManager;
 }
 
 QProgressBar* MainWindow::progressBar()
