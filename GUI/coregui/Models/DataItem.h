@@ -57,7 +57,7 @@ public:
     virtual void updateAxesUnits(const InstrumentItem* instrument) = 0;
     virtual std::vector<int> shape() const = 0;
 
-    //! Returns data to the state defined by user (imported)
+    //! Resets data to the state defined by user (imported)
     //! data.
     virtual void reset(ImportDataInfo data) = 0;
 

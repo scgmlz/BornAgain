@@ -122,17 +122,6 @@ QString RealDataItem::nativeDataUnits() const
     return getItemValue(P_NATIVE_DATA_UNITS).toString();
 }
 
-//! Sets OutputData to underlying item. Creates it if not existing.
-
-void RealDataItem::setOutputData(OutputData<double>* data)
-{
-    ASSERT(data && "Assertion failed in RealDataItem::setOutputData: passed data is nullptr");
-
-    initDataItem(data->rank(), T_INTENSITY_DATA);
-
-    dataItem()->setOutputData(data);
-}
-
 //! Creates data item if not existing so far. Checks for rank compatibility if already existing. No
 //! further initialization like clearing the data etc.
 
@@ -158,6 +147,20 @@ void RealDataItem::initDataItem(size_t rank, const QString& tag)
                && "Assertion failed in RealDataItem::initDataItem: inserting data item failed.");
     }
 }
+
+//! Sets OutputData to underlying item. Creates it if not existing.
+
+void RealDataItem::setOutputData(OutputData<double>* data)
+{
+    ASSERT(data && "Assertion failed in RealDataItem::setOutputData: passed data is nullptr");
+
+    initDataItem(data->rank(), T_INTENSITY_DATA);
+
+    dataItem()->setOutputData(data);
+}
+
+//! Sets imported data to underlying item. Creates it if not existing.
+//! This is used for 1-D import (2-D only using setOutputData)
 
 void RealDataItem::setImportData(ImportDataInfo data)
 {
