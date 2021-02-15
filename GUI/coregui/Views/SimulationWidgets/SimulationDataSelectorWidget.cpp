@@ -105,8 +105,8 @@ const InstrumentItem* SimulationDataSelectorWidget::selectedInstrumentItem() con
     return items.isEmpty() ? nullptr : items.at(selectedInstrumentIndex());
 }
 
-//! Returns selected InstrumentItem taking into account that there might be several
-//! instruments with same name.
+//! Returns selected real data item taking into account that there might be several
+//! items with same name.
 
 const RealDataItem* SimulationDataSelectorWidget::selectedRealDataItem() const
 {
