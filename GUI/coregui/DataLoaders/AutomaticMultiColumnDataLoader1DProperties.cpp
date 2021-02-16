@@ -14,6 +14,7 @@
 
 #include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1DProperties.h"
 #include "ui_AutomaticMultiColumnDataLoader1DProperties.h"
+#include <QCheckBox>
 #include <QtGui>
 
 AutomaticMultiColumnDataLoader1DProperties::AutomaticMultiColumnDataLoader1DProperties()
@@ -21,71 +22,93 @@ AutomaticMultiColumnDataLoader1DProperties::AutomaticMultiColumnDataLoader1DProp
     m_ui = new Ui::AutomaticMultiColumnDataLoader1DProperties;
     m_ui->setupUi(this);
 
-    m_typeCombos[0] = m_ui->typeCombo1;
-    m_typeCombos[1] = m_ui->typeCombo2;
-    m_typeCombos[2] = m_ui->typeCombo3;
-    m_typeCombos[3] = m_ui->typeCombo4;
+    connect(m_ui->headerPrefixEdit, &QLineEdit::textChanged, [=]() { emit propertiesChanged(); });
+    connect(m_ui->linesToSkipEdit, &QLineEdit::textChanged, [=]() { emit propertiesChanged(); });
+    connect(m_ui->separatorCombo, &QComboBox::currentTextChanged,
+            [=]() { emit propertiesChanged(); });
 
-    m_unitCombos[0] = m_ui->unitCombo1;
-    m_unitCombos[1] = m_ui->unitCombo2;
-    m_unitCombos[2] = m_ui->unitCombo3;
-    m_unitCombos[3] = m_ui->unitCombo4;
+    for (int dataType = 0; dataType < 3; dataType++) {
 
-    m_factors[0] = m_ui->factorSpinBox1;
-    m_factors[1] = m_ui->factorSpinBox2;
-    m_factors[2] = m_ui->factorSpinBox3;
-    m_factors[3] = m_ui->factorSpinBox4;
+        connect(enablingCheckBox(dataType), &QCheckBox::stateChanged,
+                [=](int state) { onEnablingChanged(dataType); });
 
-    m_widgetsOfColumns[0] << m_ui->unitLabel1 << m_ui->unitCombo1 << m_ui->factorLabel1
-                          << m_ui->factorSpinBox1;
-    m_widgetsOfColumns[1] << m_ui->unitLabel2 << m_ui->unitCombo2 << m_ui->factorLabel2
-                          << m_ui->factorSpinBox2;
-    m_widgetsOfColumns[2] << m_ui->unitLabel3 << m_ui->unitCombo3 << m_ui->factorLabel3
-                          << m_ui->factorSpinBox3;
-    m_widgetsOfColumns[3] << m_ui->unitLabel4 << m_ui->unitCombo4 << m_ui->factorLabel4
-                          << m_ui->factorSpinBox4;
-
-    for (int col = 0; col < 4; col++) {
-
-        connect(m_typeCombos[col], QOverload<int>::of(&QComboBox::currentIndexChanged),
-                [=]() { onTypeComboChanged(col); });
-
-        connect(m_unitCombos[col], QOverload<int>::of(&QComboBox::currentIndexChanged),
+        connect(unitCombo(dataType), QOverload<int>::of(&QComboBox::currentIndexChanged),
                 [=]() { emit propertiesChanged(); });
 
-        connect(m_factors[col], QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+        connect(columnSpinBox(dataType), QOverload<int>::of(&QSpinBox::valueChanged),
+                [=]() { emit propertiesChanged(); });
+
+        connect(factorSpinBox(dataType), QOverload<double>::of(&QDoubleSpinBox::valueChanged),
                 [=]() { emit propertiesChanged(); });
     }
 }
 
-QString AutomaticMultiColumnDataLoader1DProperties::unit(int col) const
+QString AutomaticMultiColumnDataLoader1DProperties::unit(int dataType) const
 {
-    return m_unitCombos[col]->currentText();
+    return unitCombo(dataType)->currentText();
 }
 
-double AutomaticMultiColumnDataLoader1DProperties::factor(int col) const
+double AutomaticMultiColumnDataLoader1DProperties::factor(int dataType) const
 {
-    return m_factors[col]->value();
+    return factorSpinBox(dataType)->value();
 }
 
-void AutomaticMultiColumnDataLoader1DProperties::setType(int col, int type)
+void AutomaticMultiColumnDataLoader1DProperties::setDataType(int dataType, bool enabled, int column,
+                                                             const QString& unit, double factor)
 {
-    m_typeCombos[col]->setCurrentIndex(type);
+    enablingCheckBox(dataType)->setChecked(enabled);
+    updateEnabling(dataType, enabled);
 
-    const bool isIgnored = m_typeCombos[col]->currentIndex() == 4;
-
-    for (auto w : m_widgetsOfColumns[col])
-        w->setVisible(!isIgnored);
+    columnSpinBox(dataType)->setValue(column + 1); // # view is 1-based
+    unitCombo(dataType)->setCurrentText(unit);
+    factorSpinBox(dataType)->setValue(factor);
 }
 
-void AutomaticMultiColumnDataLoader1DProperties::onTypeComboChanged(int column)
+void AutomaticMultiColumnDataLoader1DProperties::updateEnabling(int dataType, bool enabled)
 {
-    const bool isIgnored = m_typeCombos[column]->currentIndex() == 4;
+    const int lineInLayout = dataType;
+    for (int col = 1; col < m_ui->gridLayout->columnCount(); col++) {
+        auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
+        if (layoutItem) {
+            QWidget* w = layoutItem->widget();
+            if (w) {
+                const bool belongsToUnusedCombo =
+                    (dataType != 0) && (col >= 5); // no unit except for Q
+                w->setVisible(enabled && !belongsToUnusedCombo);
+            }
+        }
+    }
+}
 
-    for (auto w : m_widgetsOfColumns[column])
-        w->setVisible(!isIgnored);
-
-    // #TODO: update available units
+void AutomaticMultiColumnDataLoader1DProperties::onEnablingChanged(int dataType)
+{
+    const bool isEnabled = enablingCheckBox(dataType)->isChecked();
+    updateEnabling(dataType, isEnabled);
 
     emit propertiesChanged();
+}
+
+QCheckBox* AutomaticMultiColumnDataLoader1DProperties::enablingCheckBox(int dataType) const
+{
+    const int lineInLayout = dataType;
+    return dynamic_cast<QCheckBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 0)->widget());
+}
+
+QComboBox* AutomaticMultiColumnDataLoader1DProperties::unitCombo(int dataType) const
+{
+    const int lineInLayout = dataType;
+    return dynamic_cast<QComboBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 6)->widget());
+}
+
+QSpinBox* AutomaticMultiColumnDataLoader1DProperties::columnSpinBox(int dataType) const
+{
+    const int lineInLayout = dataType;
+    return dynamic_cast<QSpinBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 2)->widget());
+}
+
+QDoubleSpinBox* AutomaticMultiColumnDataLoader1DProperties::factorSpinBox(int dataType) const
+{
+    const int lineInLayout = dataType;
+    return dynamic_cast<QDoubleSpinBox*>(
+        m_ui->gridLayout->itemAtPosition(lineInLayout, 4)->widget());
 }

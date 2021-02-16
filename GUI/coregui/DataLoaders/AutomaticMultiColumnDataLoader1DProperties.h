@@ -19,6 +19,8 @@
 
 class QComboBox;
 class QDoubleSpinBox;
+class QSpinBox;
+class QCheckBox;
 
 namespace Ui {
 class AutomaticMultiColumnDataLoader1DProperties;
@@ -31,20 +33,22 @@ public:
 
     Ui::AutomaticMultiColumnDataLoader1DProperties* m_ui;
 
-    QComboBox* m_typeCombos[4];
-    QComboBox* m_unitCombos[4];
-    QDoubleSpinBox* m_factors[4];
-    QList<QWidget*> m_widgetsOfColumns[4];
+    QString unit(int dataType) const;
+    double factor(int dataType) const;
 
-    QString unit(int col) const;
-    double factor(int col) const;
-    void setType(int col, int type);
+    void setDataType(int dataType, bool enabled, int column, const QString& unit, double factor);
+
+    QCheckBox* enablingCheckBox(int dataType) const;
+    QComboBox* unitCombo(int dataType) const;
+    QSpinBox* columnSpinBox(int dataType) const;
+    QDoubleSpinBox* factorSpinBox(int dataType) const;
 
 signals:
     void propertiesChanged();
 
 private:
-    void onTypeComboChanged(int column);
+    void updateEnabling(int dataType, bool enabled);
+    void onEnablingChanged(int dataType);
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1DPROPERTIES_H

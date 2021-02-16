@@ -44,11 +44,15 @@ public:
 
     virtual QString persistentClassName() const = 0;
 
+    virtual AbstractDataLoader* clone() const = 0;
+
     //! Returns every internal setting so it can be restored completely
     virtual QByteArray serialize() const;
 
     //! #TODO: how to deliver errors? VersionException...?
     virtual void deserialize(const QByteArray& data);
+
+    virtual QByteArray defaultProperties() const;
 
     //! Returns a Qt rich text formatted preview
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const = 0;

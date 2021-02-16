@@ -32,3 +32,10 @@ QByteArray AbstractDataLoader::serialize() const
 }
 
 void AbstractDataLoader::deserialize(const QByteArray& data) {}
+
+QByteArray AbstractDataLoader::defaultProperties() const
+{
+    std::unique_ptr<AbstractDataLoader> cloned(clone());
+    cloned->initWithDefaultProperties();
+    return cloned->serialize();
+}

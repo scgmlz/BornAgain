@@ -27,29 +27,30 @@ public:
     virtual QString name() const override;
     virtual QString info() const override;
     virtual QString persistentClassName() const override;
-    virtual QVector<QVector<QString>> parsedData() const override;
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
     virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
     virtual void initWithDefaultProperties() override;
     virtual void applyProperties() override;
     virtual QByteArray serialize() const override;
     virtual void deserialize(const QByteArray& data) override;
-
-private:
-    QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern,
-                                                     bool* ok = nullptr) const;
+    virtual AbstractDataLoader* clone() const override;
 
 private:
     struct ColumnDefinition {
-        int dataType; // #TODO: enum or ... (Q, R, dR, ...)
+        bool enabled;
+        int column;
         QString unit;
         double factor;
     };
+
+    enum class DataType { Q, R, dR };
+
     QString m_separator;    //!< column separator
     QString m_headerPrefix; //!< prefix denoting header line
     QString m_linesToSkip;  //!< pattern denoting line to skip (i.e. '1,10-12,42')
-    QMap<int, ColumnDefinition> m_columnDefinitions;
     QPointer<AutomaticMultiColumnDataLoader1DProperties> m_propertiesWidget;
+
+    QMap<DataType, ColumnDefinition> m_columnDefinitions;
 };
 
 #endif // _GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H_

@@ -19,11 +19,8 @@ UserDefinedDataLoader1D::UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLo
                                                  const QByteArray& defaultProperties)
     : m_wrappedLoader(wrappedLoader), m_name(name), m_defaultProperties(defaultProperties)
 {
-}
-
-QVector<QVector<QString>> UserDefinedDataLoader1D::parsedData() const
-{
-    return m_wrappedLoader->parsedData();
+    connect(m_wrappedLoader, &AbstractDataLoader1D::propertiesChanged, this,
+            &AbstractDataLoader1D::propertiesChanged);
 }
 
 QString UserDefinedDataLoader1D::name() const
@@ -64,4 +61,11 @@ void UserDefinedDataLoader1D::deserialize(const QByteArray& data)
 QString UserDefinedDataLoader1D::preview(const QString& filepath, QCustomPlot* plotWidget) const
 {
     return m_wrappedLoader->preview(filepath, plotWidget);
+}
+
+AbstractDataLoader* UserDefinedDataLoader1D::clone() const
+{
+    auto cloned = dynamic_cast<AbstractDataLoader1D*>(m_wrappedLoader->clone());
+    auto loader = new UserDefinedDataLoader1D(cloned, m_name, m_defaultProperties);
+    return loader;
 }

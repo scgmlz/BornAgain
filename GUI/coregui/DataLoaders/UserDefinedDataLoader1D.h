@@ -22,22 +22,15 @@ public:
     UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLoader, const QString& name,
                             const QByteArray& defaultProperties);
 
-    virtual QVector<QVector<QString>> parsedData() const override;
-
     virtual QString name() const override;
-
     virtual QString info() const override;
-
     virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
     virtual void initWithDefaultProperties() override;
-
     virtual QString persistentClassName() const override;
-
     virtual QByteArray serialize() const override;
-
     virtual void deserialize(const QByteArray& data) override;
-
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
+    virtual AbstractDataLoader* clone() const override;
 
 private:
     QString m_name;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>289</height>
+    <width>484</width>
+    <height>259</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -130,36 +130,73 @@
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <item row="1" column="1">
-         <widget class="QComboBox" name="typeCombo2">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>from column</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="6">
+         <widget class="QComboBox" name="unitCombo4">
           <item>
            <property name="text">
-            <string>Q</string>
+            <string>1/nm</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>R</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dR</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dQ</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>&lt;ignored&gt;</string>
+            <string>1/Å</string>
            </property>
           </item>
          </widget>
         </item>
         <item row="1" column="3">
-         <widget class="QComboBox" name="unitCombo2">
+         <widget class="QLabel" name="factorLabel4_7">
+          <property name="text">
+           <string>Multiplied by:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QSpinBox" name="spinBox_3">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QLabel" name="unitLabel4_5">
+          <property name="text">
+           <string> with unit</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QLabel" name="factorLabel4_8">
+          <property name="text">
+           <string>Multiplied by:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="qCheckBox_2">
+          <property name="text">
+           <string>Read R</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QDoubleSpinBox" name="factorSpinBox4_2">
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="6">
+         <widget class="QComboBox" name="unitCombo4_4">
           <item>
            <property name="text">
             <string>-</string>
@@ -177,122 +214,22 @@
           </item>
          </widget>
         </item>
-        <item row="0" column="5">
-         <widget class="QDoubleSpinBox" name="factorSpinBox1">
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="typeCombo1">
-          <item>
-           <property name="text">
-            <string>Q</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>R</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dR</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dQ</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>&lt;ignored&gt;</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Column 1:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QComboBox" name="typeCombo4">
-          <item>
-           <property name="text">
-            <string>Q</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>R</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dR</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dQ</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>&lt;ignored&gt;</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLabel" name="unitLabel3">
-          <property name="text">
-           <string> with unit</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="4">
-         <widget class="QLabel" name="factorLabel4">
-          <property name="text">
-           <string>Multiplied by:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Column 4:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5">
-         <widget class="QDoubleSpinBox" name="factorSpinBox3">
-          <property name="value">
-           <double>1.000000000000000</double>
+           <string>from column</string>
           </property>
          </widget>
         </item>
         <item row="2" column="4">
-         <widget class="QLabel" name="factorLabel3">
-          <property name="text">
-           <string>Multiplied by:</string>
+         <widget class="QDoubleSpinBox" name="factorSpinBox4_6">
+          <property name="value">
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
-        <item row="1" column="4">
-         <widget class="QLabel" name="factorLabel2">
-          <property name="text">
-           <string>Multiplied by:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3">
-         <widget class="QComboBox" name="unitCombo4">
+        <item row="1" column="6">
+         <widget class="QComboBox" name="unitCombo4_3">
           <item>
            <property name="text">
             <string>-</string>
@@ -310,91 +247,80 @@
           </item>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Column 2:</string>
+        <item row="1" column="2">
+         <widget class="QSpinBox" name="spinBox_2">
+          <property name="minimum">
+           <number>1</number>
           </property>
          </widget>
         </item>
-        <item row="0" column="3">
-         <widget class="QComboBox" name="unitCombo1">
-          <item>
-           <property name="text">
-            <string>-</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>nm</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Angstrom</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLabel" name="unitLabel4">
+        <item row="2" column="5">
+         <widget class="QLabel" name="unitLabel4_6">
           <property name="text">
            <string> with unit</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="typeCombo3">
-          <item>
-           <property name="text">
-            <string>Q</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>R</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dR</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>dQ</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>&lt;ignored&gt;</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="factorLabel1">
+        <item row="0" column="5">
+         <widget class="QLabel" name="unitLabel4_2">
           <property name="text">
-           <string>Multiplied by:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Column 3:</string>
+           <string> with unit</string>
           </property>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QLabel" name="unitLabel1">
-          <property name="text">
-           <string> with unit</string>
+         <widget class="QSpinBox" name="spinBox">
+          <property name="minimum">
+           <number>1</number>
           </property>
          </widget>
         </item>
-        <item row="0" column="6">
-         <spacer name="horizontalSpacer">
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="qCheckBox_3">
+          <property name="text">
+           <string>Read error</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>from column</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="factorLabel4_2">
+          <property name="text">
+           <string>Multiplied by:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="qCheckBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Read Q</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QDoubleSpinBox" name="factorSpinBox4_5">
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="9">
+         <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -405,46 +331,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="unitLabel2">
-          <property name="text">
-           <string> with unit</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QComboBox" name="unitCombo3">
-          <item>
-           <property name="text">
-            <string>-</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>nm</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Angstrom</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="5">
-         <widget class="QDoubleSpinBox" name="factorSpinBox2">
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="5">
-         <widget class="QDoubleSpinBox" name="factorSpinBox4">
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
         </item>
        </layout>
       </item>

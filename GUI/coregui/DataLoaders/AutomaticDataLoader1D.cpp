@@ -71,16 +71,6 @@ QString AutomaticDataLoader1D::persistentClassName() const
     return "AutomaticDataLoader1D";
 }
 
-QVector<QVector<QString>> AutomaticDataLoader1D::parsedData() const
-{
-
-    return QVector<QVector<QString>>();
-    //     ImportDataUtils::Import1dData(QString & fileName)
-    //
-    //
-    // OutputDataReadReflectometry::readOutputData
-}
-
 QString AutomaticDataLoader1D::preview(const QString& filepath, QCustomPlot* plotWidget) const
 {
     std::string line;
@@ -162,6 +152,13 @@ QString AutomaticDataLoader1D::preview(const QString& filepath, QCustomPlot* plo
     graph->addData(qVec, rVec);
     plotWidget->rescaleAxes();
     return outputDataToTable(oData);
+}
+
+AbstractDataLoader* AutomaticDataLoader1D::clone() const
+{
+    auto loader = new AutomaticDataLoader1D();
+    loader->deserialize(serialize());
+    return loader;
 }
 
 QString AutomaticDataLoader1D::outputDataToTable(const OutputData<double>& outputData) const

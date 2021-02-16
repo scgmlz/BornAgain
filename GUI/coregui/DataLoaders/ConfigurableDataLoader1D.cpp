@@ -33,11 +33,6 @@ QString ConfigurableDataLoader1D::persistentClassName() const
     return "ConfigurableDataLoader1D";
 }
 
-QVector<QVector<QString>> ConfigurableDataLoader1D::parsedData() const
-{
-    return QVector<QVector<QString>>();
-}
-
 QString ConfigurableDataLoader1D::preview(const QString& filepath, QCustomPlot* plotWidget) const
 {
     return "TODO: implement ConfigurableDataLoader1D::preview";
