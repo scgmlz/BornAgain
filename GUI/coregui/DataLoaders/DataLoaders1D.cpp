@@ -14,7 +14,7 @@
 
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/DataLoaders/AutomaticDataLoader1D.h"
-#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/DataLoaders/UserDefinedDataLoader1D.h"
 
 DataLoaders1D* DataLoaders1D::m_instance = nullptr;
@@ -40,7 +40,7 @@ DataLoaders1D& DataLoaders1D::instance()
 void DataLoaders1D::initBuiltInLoaders()
 {
     m_builtInLoaders << new AutomaticDataLoader1D();
-    m_builtInLoaders << new AutomaticMultiColumnDataLoader1D();
+    m_builtInLoaders << new QREDataLoader();
 }
 
 QVector<AbstractDataLoader*> DataLoaders1D::loaders() const
@@ -69,8 +69,8 @@ AbstractDataLoader1D* DataLoaders1D::createFromPersistentName(const QString& per
     if (persistentClassName == AutomaticDataLoader1D().persistentClassName())
         return new AutomaticDataLoader1D();
 
-    if (persistentClassName == AutomaticMultiColumnDataLoader1D().persistentClassName())
-        return new AutomaticMultiColumnDataLoader1D();
+    if (persistentClassName == QREDataLoader().persistentClassName())
+        return new QREDataLoader();
 
     return nullptr;
 }

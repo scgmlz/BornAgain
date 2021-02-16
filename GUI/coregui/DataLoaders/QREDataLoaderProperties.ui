@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AutomaticMultiColumnDataLoader1DProperties</class>
- <widget class="QWidget" name="AutomaticMultiColumnDataLoader1DProperties">
+ <class>QREDataLoaderProperties</class>
+ <widget class="QWidget" name="QREDataLoaderProperties">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
+    <width>486</width>
     <height>241</height>
    </rect>
   </property>
@@ -37,6 +37,9 @@
       </property>
       <item row="0" column="1">
        <widget class="QLineEdit" name="headerPrefixEdit">
+        <property name="toolTip">
+         <string>Example: #,//</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -47,8 +50,11 @@
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="linesToSkipEdit">
+        <property name="toolTip">
+         <string>Example: 1-5, 12</string>
+        </property>
         <property name="placeholderText">
-         <string>Example: 1-5, 42</string>
+         <string>Example: 1-5, 12</string>
         </property>
        </widget>
       </item>
@@ -87,7 +93,7 @@
         <item>
          <widget class="QComboBox" name="separatorCombo">
           <property name="editable">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <item>
            <property name="text">
@@ -186,17 +192,10 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="5">
-         <widget class="QLabel" name="unitLabel4_5">
-          <property name="text">
-           <string> with unit</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="5">
          <widget class="QLabel" name="unitLabel4_2">
           <property name="text">
-           <string> with unit</string>
+           <string>given values are in</string>
           </property>
          </widget>
         </item>
@@ -204,13 +203,6 @@
          <widget class="QLabel" name="factorLabel4_8">
           <property name="text">
            <string>multiplied by</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5">
-         <widget class="QLabel" name="unitLabel4_6">
-          <property name="text">
-           <string> with unit</string>
           </property>
          </widget>
         </item>
@@ -235,25 +227,6 @@
           </item>
          </widget>
         </item>
-        <item row="2" column="6">
-         <widget class="QComboBox" name="unitCombo4_4">
-          <item>
-           <property name="text">
-            <string>-</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>nm</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Angstrom</string>
-           </property>
-          </item>
-         </widget>
-        </item>
         <item row="1" column="3">
          <widget class="QLabel" name="factorLabel4_7">
           <property name="text">
@@ -274,16 +247,6 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="qCheckBox_2">
-          <property name="text">
-           <string>Read R</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="3">
          <widget class="QLabel" name="factorLabel4_2">
           <property name="text">
@@ -296,25 +259,6 @@
           <property name="value">
            <double>1.000000000000000</double>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="6">
-         <widget class="QComboBox" name="unitCombo4_3">
-          <item>
-           <property name="text">
-            <string>-</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>nm</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Angstrom</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item row="2" column="2">
@@ -332,18 +276,16 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QCheckBox" name="qCheckBox">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
+         <widget class="QLabel" name="label">
           <property name="text">
            <string>Read Q</string>
           </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Read R</string>
           </property>
          </widget>
         </item>

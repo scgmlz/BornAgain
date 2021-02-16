@@ -14,7 +14,7 @@
 
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "Device/Data/DataUtils.h"
-#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
@@ -182,7 +182,7 @@ void RealDataSelectorActions::importDataLoop(int ndim)
                 QByteArray a;
                 QDataStream s(&a, QIODevice::WriteOnly);
                 s << fileName;
-                auto loader = new AutomaticMultiColumnDataLoader1D();
+                auto loader = new QREDataLoader();
                 loader->initWithDefaultProperties();
                 s << loader->persistentClassName();
                 s << loader->serialize();

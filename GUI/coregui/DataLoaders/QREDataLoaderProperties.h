@@ -23,15 +23,15 @@ class QSpinBox;
 class QCheckBox;
 
 namespace Ui {
-class AutomaticMultiColumnDataLoader1DProperties;
+class QREDataLoaderProperties;
 }
 
-class AutomaticMultiColumnDataLoader1DProperties : public QWidget {
+class QREDataLoaderProperties : public QWidget {
     Q_OBJECT
 public:
-    AutomaticMultiColumnDataLoader1DProperties();
+    QREDataLoaderProperties();
 
-    Ui::AutomaticMultiColumnDataLoader1DProperties* m_ui;
+    Ui::QREDataLoaderProperties* m_ui;
 
     QString unit(int dataType) const;
     double factor(int dataType) const;

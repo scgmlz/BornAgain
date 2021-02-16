@@ -12,14 +12,14 @@
 //
 //  ************************************************************************************************
 
-#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1DProperties.h"
-#include "ui_AutomaticMultiColumnDataLoader1DProperties.h"
+#include "GUI/coregui/DataLoaders/QREDataLoaderProperties.h"
+#include "ui_QREDataLoaderProperties.h"
 #include <QCheckBox>
 #include <QtGui>
 
-AutomaticMultiColumnDataLoader1DProperties::AutomaticMultiColumnDataLoader1DProperties()
+QREDataLoaderProperties::QREDataLoaderProperties()
 {
-    m_ui = new Ui::AutomaticMultiColumnDataLoader1DProperties;
+    m_ui = new Ui::QREDataLoaderProperties;
     m_ui->setupUi(this);
 
     connect(m_ui->headerPrefixEdit, &QLineEdit::textChanged, [=]() { emit propertiesChanged(); });
@@ -43,18 +43,18 @@ AutomaticMultiColumnDataLoader1DProperties::AutomaticMultiColumnDataLoader1DProp
     }
 }
 
-QString AutomaticMultiColumnDataLoader1DProperties::unit(int dataType) const
+QString QREDataLoaderProperties::unit(int dataType) const
 {
     return unitCombo(dataType)->currentText();
 }
 
-double AutomaticMultiColumnDataLoader1DProperties::factor(int dataType) const
+double QREDataLoaderProperties::factor(int dataType) const
 {
     return factorSpinBox(dataType)->value();
 }
 
-void AutomaticMultiColumnDataLoader1DProperties::setDataType(int dataType, bool enabled, int column,
-                                                             const QString& unit, double factor)
+void QREDataLoaderProperties::setDataType(int dataType, bool enabled, int column,
+                                          const QString& unit, double factor)
 {
     enablingCheckBox(dataType)->setChecked(enabled);
     updateEnabling(dataType, enabled);
@@ -64,7 +64,7 @@ void AutomaticMultiColumnDataLoader1DProperties::setDataType(int dataType, bool 
     factorSpinBox(dataType)->setValue(factor);
 }
 
-void AutomaticMultiColumnDataLoader1DProperties::updateEnabling(int dataType, bool enabled)
+void QREDataLoaderProperties::updateEnabling(int dataType, bool enabled)
 {
     const int lineInLayout = dataType;
     for (int col = 1; col < m_ui->gridLayout->columnCount(); col++) {
@@ -80,7 +80,7 @@ void AutomaticMultiColumnDataLoader1DProperties::updateEnabling(int dataType, bo
     }
 }
 
-void AutomaticMultiColumnDataLoader1DProperties::onEnablingChanged(int dataType)
+void QREDataLoaderProperties::onEnablingChanged(int dataType)
 {
     const bool isEnabled = enablingCheckBox(dataType)->isChecked();
     if (dataType <= 1 && !isEnabled) { // no uncheck of Q/R
@@ -94,25 +94,25 @@ void AutomaticMultiColumnDataLoader1DProperties::onEnablingChanged(int dataType)
     emit propertiesChanged();
 }
 
-QCheckBox* AutomaticMultiColumnDataLoader1DProperties::enablingCheckBox(int dataType) const
+QCheckBox* QREDataLoaderProperties::enablingCheckBox(int dataType) const
 {
     const int lineInLayout = dataType;
     return dynamic_cast<QCheckBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 0)->widget());
 }
 
-QComboBox* AutomaticMultiColumnDataLoader1DProperties::unitCombo(int dataType) const
+QComboBox* QREDataLoaderProperties::unitCombo(int dataType) const
 {
     const int lineInLayout = dataType;
     return dynamic_cast<QComboBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 6)->widget());
 }
 
-QSpinBox* AutomaticMultiColumnDataLoader1DProperties::columnSpinBox(int dataType) const
+QSpinBox* QREDataLoaderProperties::columnSpinBox(int dataType) const
 {
     const int lineInLayout = dataType;
     return dynamic_cast<QSpinBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 2)->widget());
 }
 
-QDoubleSpinBox* AutomaticMultiColumnDataLoader1DProperties::factorSpinBox(int dataType) const
+QDoubleSpinBox* QREDataLoaderProperties::factorSpinBox(int dataType) const
 {
     const int lineInLayout = dataType;
     return dynamic_cast<QDoubleSpinBox*>(

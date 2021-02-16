@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit reflection and scattering
 //
-//! @file      GUI/coregui/DataLoaders/AutomaticMultiRowDataLoader1D.h
-//! @brief     Defines class AutomaticMultiRowDataLoader1D
+//! @file      GUI/coregui/DataLoaders/QREDataLoader.h
+//! @brief     Defines class QREDataLoader
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,18 +12,18 @@
 //
 //  ************************************************************************************************
 
-#ifndef GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H
-#define GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H
+#ifndef GUI_COREGUI_DATALOADERS_QREDATALOADER_H
+#define GUI_COREGUI_DATALOADERS_QREDATALOADER_H
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 #include <QVector>
 
 class QString;
-class AutomaticMultiColumnDataLoader1DProperties;
+class QREDataLoaderProperties;
 
-class AutomaticMultiColumnDataLoader1D : public AbstractDataLoader1D {
+class QREDataLoader : public AbstractDataLoader1D {
 public:
-    AutomaticMultiColumnDataLoader1D();
+    QREDataLoader();
     virtual QString name() const override;
     virtual QString info() const override;
     virtual QString persistentClassName() const override;
@@ -48,9 +48,9 @@ public: // #TODO make private - only for presentation reasons
     QString m_separator;    //!< column separator
     QString m_headerPrefix; //!< prefix denoting header line
     QString m_linesToSkip;  //!< pattern denoting line to skip (i.e. '1,10-12,42')
-    QPointer<AutomaticMultiColumnDataLoader1DProperties> m_propertiesWidget;
+    QPointer<QREDataLoaderProperties> m_propertiesWidget;
 
     QMap<DataType, ColumnDefinition> m_columnDefinitions;
 };
 
-#endif // _GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H_
+#endif // GUI_COREGUI_DATALOADERS_QREDATALOADER_H

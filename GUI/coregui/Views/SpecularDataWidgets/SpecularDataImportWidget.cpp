@@ -13,7 +13,7 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataImportWidget.h"
-#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/DataLoaders/AbstractDataLoader.h"
 #include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
@@ -249,18 +249,18 @@ void SpecularDataImportWidget::fillPreviewOnlyForPresentation()
         double f1 = 1;
         double f2 = 1;
         double f3 = 1;
-        auto loader = dynamic_cast<AutomaticMultiColumnDataLoader1D*>(m_loader.get());
+        auto loader = dynamic_cast<QREDataLoader*>(m_loader.get());
         QString qUnit = "";
 
         if (loader != nullptr) {
             showErrorColumn =
-                loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::dR].enabled;
-            f1 = loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::Q].factor;
-            f2 = loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::R].factor;
-            f3 = loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::dR].factor;
+                loader->m_columnDefinitions[QREDataLoader::DataType::dR].enabled;
+            f1 = loader->m_columnDefinitions[QREDataLoader::DataType::Q].factor;
+            f2 = loader->m_columnDefinitions[QREDataLoader::DataType::R].factor;
+            f3 = loader->m_columnDefinitions[QREDataLoader::DataType::dR].factor;
             qUnit =
                 " ["
-                + loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::Q].unit
+                + loader->m_columnDefinitions[QREDataLoader::DataType::Q].unit
                 + "]";
         }
 
@@ -365,21 +365,21 @@ void SpecularDataImportWidget::fillPreviewOnlyForPresentation()
             if (loader) {
                 for (auto rowContent : values) {
                     double Q = rowContent
-                        [loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::Q]
+                        [loader->m_columnDefinitions[QREDataLoader::DataType::Q]
                              .column];
-                    Q *= loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::Q]
+                    Q *= loader->m_columnDefinitions[QREDataLoader::DataType::Q]
                              .factor;
 
                     double R = rowContent
-                        [loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::R]
+                        [loader->m_columnDefinitions[QREDataLoader::DataType::R]
                              .column];
-                    R *= loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::R]
+                    R *= loader->m_columnDefinitions[QREDataLoader::DataType::R]
                              .factor;
 
                     double E = rowContent
-                        [loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::dR]
+                        [loader->m_columnDefinitions[QREDataLoader::DataType::dR]
                              .column];
-                    E *= loader->m_columnDefinitions[AutomaticMultiColumnDataLoader1D::DataType::dR]
+                    E *= loader->m_columnDefinitions[QREDataLoader::DataType::dR]
                              .factor;
 
                     cell(dataRow, dataCol, Q);

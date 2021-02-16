@@ -2,8 +2,8 @@
 //
 //  BornAgain: simulate and fit reflection and scattering
 //
-//! @file      GUI/coregui/DataLoaders/AutomaticMultiRowDataLoader1D.cpp
-//! @brief     Implements class AutomaticMultiRowDataLoader1D
+//! @file      GUI/coregui/DataLoaders/QREDataLoader.cpp
+//! @brief     Implements class QREDataLoader
 //!
 //! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
@@ -12,11 +12,11 @@
 //
 //  ************************************************************************************************
 
-#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "Device/InputOutput/DataFormatUtils.h"
-#include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1DProperties.h"
+#include "GUI/coregui/DataLoaders/QREDataLoaderProperties.h"
 #include "qcustomplot.h"
-#include "ui_AutomaticMultiColumnDataLoader1DProperties.h"
+#include "ui_QREDataLoaderProperties.h"
 #include <QFile>
 #include <QString>
 #include <QTextStream>
@@ -85,28 +85,27 @@ QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern, bool* o
 
 } // namespace
 
-AutomaticMultiColumnDataLoader1D::AutomaticMultiColumnDataLoader1D() : m_propertiesWidget(nullptr)
+QREDataLoader::QREDataLoader() : m_propertiesWidget(nullptr)
 {
     initWithDefaultProperties();
 }
 
-QString AutomaticMultiColumnDataLoader1D::name() const
+QString QREDataLoader::name() const
 {
     return "CSV file (Reflectometry - Q/R/E)";
 }
 
-QString AutomaticMultiColumnDataLoader1D::info() const
+QString QREDataLoader::info() const
 {
     return "Supports up to 3 columns (Q, R, E). Columns can be configured.";
 }
 
-QString AutomaticMultiColumnDataLoader1D::persistentClassName() const
+QString QREDataLoader::persistentClassName() const
 {
-    return "AutomaticMultiColumnDataLoader1D";
+    return "QREDataLoader";
 }
 
-QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
-                                                  QCustomPlot* plotWidget) const
+QString QREDataLoader::preview(const QString& filepath, QCustomPlot* plotWidget) const
 {
     QFile file(filepath);
     if (!file.open(QFile::ReadOnly)) {
@@ -256,10 +255,10 @@ QString AutomaticMultiColumnDataLoader1D::preview(const QString& filepath,
     return "<p>" + bold("<h>Information: </h>") + info() + "</p><p>" + s + "</p>";
 }
 
-void AutomaticMultiColumnDataLoader1D::populatePropertiesWidget(QWidget* parent)
+void QREDataLoader::populatePropertiesWidget(QWidget* parent)
 {
     if (m_propertiesWidget == nullptr)
-        m_propertiesWidget = new AutomaticMultiColumnDataLoader1DProperties;
+        m_propertiesWidget = new QREDataLoaderProperties;
 
     QHBoxLayout* l = new QHBoxLayout(parent);
     l->setContentsMargins(0, 0, 0, 0);
@@ -283,14 +282,13 @@ void AutomaticMultiColumnDataLoader1D::populatePropertiesWidget(QWidget* parent)
                                         m_columnDefinitions[dataType].factor);
     }
 
-    QObject::connect(m_propertiesWidget,
-                     &AutomaticMultiColumnDataLoader1DProperties::propertiesChanged, [this]() {
-                         applyProperties();
-                         emit propertiesChanged();
-                     });
+    QObject::connect(m_propertiesWidget, &QREDataLoaderProperties::propertiesChanged, [this]() {
+        applyProperties();
+        emit propertiesChanged();
+    });
 }
 
-void AutomaticMultiColumnDataLoader1D::initWithDefaultProperties()
+void QREDataLoader::initWithDefaultProperties()
 {
     m_separator = ";";
     m_headerPrefix = "";
@@ -306,7 +304,7 @@ void AutomaticMultiColumnDataLoader1D::initWithDefaultProperties()
     m_columnDefinitions[DataType::Q].unit = "1/nm";
 }
 
-QByteArray AutomaticMultiColumnDataLoader1D::serialize() const
+QByteArray QREDataLoader::serialize() const
 {
     QByteArray a;
     QDataStream s(&a, QIODevice::WriteOnly);
@@ -326,7 +324,7 @@ QByteArray AutomaticMultiColumnDataLoader1D::serialize() const
     return a;
 }
 
-void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
+void QREDataLoader::deserialize(const QByteArray& data)
 {
     QDataStream s(data);
     s >> m_separator;
@@ -347,14 +345,14 @@ void AutomaticMultiColumnDataLoader1D::deserialize(const QByteArray& data)
     }
 }
 
-AbstractDataLoader* AutomaticMultiColumnDataLoader1D::clone() const
+AbstractDataLoader* QREDataLoader::clone() const
 {
-    auto loader = new AutomaticMultiColumnDataLoader1D();
+    auto loader = new QREDataLoader();
     loader->deserialize(serialize());
     return loader;
 }
 
-void AutomaticMultiColumnDataLoader1D::applyProperties()
+void QREDataLoader::applyProperties()
 {
     if (!m_propertiesWidget)
         return;
