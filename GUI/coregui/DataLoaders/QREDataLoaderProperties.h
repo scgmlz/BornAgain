@@ -21,6 +21,7 @@ class QComboBox;
 class QDoubleSpinBox;
 class QSpinBox;
 class QCheckBox;
+class QLabel;
 
 namespace Ui {
 class QREDataLoaderProperties;
@@ -33,13 +34,10 @@ public:
 
     Ui::QREDataLoaderProperties* m_ui;
 
-    QString unit(int dataType) const;
+    void allowFactors(bool b);
+
     double factor(int dataType) const;
 
-    void setDataType(int dataType, bool enabled, int column, const QString& unit, double factor);
-
-    QCheckBox* enablingCheckBox(int dataType) const;
-    QComboBox* unitCombo(int dataType) const;
     QSpinBox* columnSpinBox(int dataType) const;
     QDoubleSpinBox* factorSpinBox(int dataType) const;
 
@@ -48,7 +46,16 @@ signals:
 
 private:
     void updateEnabling(int dataType, bool enabled);
-    void onEnablingChanged(int dataType);
+    void updateErrorEnabling(bool enabled);
+    void onErrorEnablingChanged();
+    QLabel* factorLabel(int dataType) const;
+
+    // factors shall not be supported. However, since the requirements have been there,
+    // they are only deactivated. Call allowFactors(true) to enable them.
+    bool m_allowFactors;
+
+    static const int factorLabelColumn = 3;
+    static const int factorColumn = factorLabelColumn + 1;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1DPROPERTIES_H

@@ -17,23 +17,25 @@
 #include <QCheckBox>
 #include <QtGui>
 
-QREDataLoaderProperties::QREDataLoaderProperties()
+QREDataLoaderProperties::QREDataLoaderProperties() : m_allowFactors(false)
 {
     m_ui = new Ui::QREDataLoaderProperties;
     m_ui->setupUi(this);
+
+    allowFactors(false);
 
     connect(m_ui->headerPrefixEdit, &QLineEdit::textChanged, [=]() { emit propertiesChanged(); });
     connect(m_ui->linesToSkipEdit, &QLineEdit::textChanged, [=]() { emit propertiesChanged(); });
     connect(m_ui->separatorCombo, &QComboBox::currentTextChanged,
             [=]() { emit propertiesChanged(); });
 
+    connect(m_ui->enableErrorCheckBox, &QCheckBox::stateChanged, this,
+            &QREDataLoaderProperties::onErrorEnablingChanged);
+
+    connect(m_ui->qUnitCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            [=]() { emit propertiesChanged(); });
+
     for (int dataType = 0; dataType < 3; dataType++) {
-
-        connect(enablingCheckBox(dataType), &QCheckBox::stateChanged,
-                [=](int state) { onEnablingChanged(dataType); });
-
-        connect(unitCombo(dataType), QOverload<int>::of(&QComboBox::currentIndexChanged),
-                [=]() { emit propertiesChanged(); });
 
         connect(columnSpinBox(dataType), QOverload<int>::of(&QSpinBox::valueChanged),
                 [=]() { emit propertiesChanged(); });
@@ -43,25 +45,21 @@ QREDataLoaderProperties::QREDataLoaderProperties()
     }
 }
 
-QString QREDataLoaderProperties::unit(int dataType) const
+void QREDataLoaderProperties::allowFactors(bool b)
 {
-    return unitCombo(dataType)->currentText();
+    m_allowFactors = b;
+    for (int dataType = 0; dataType < 3; dataType++) {
+        factorLabel(dataType)->setVisible(b);
+        factorSpinBox(dataType)->setVisible(b);
+    }
+
+    updateErrorEnabling(m_ui->enableErrorCheckBox->isChecked());
 }
 
 double QREDataLoaderProperties::factor(int dataType) const
 {
-    return factorSpinBox(dataType)->value();
-}
-
-void QREDataLoaderProperties::setDataType(int dataType, bool enabled, int column,
-                                          const QString& unit, double factor)
-{
-    enablingCheckBox(dataType)->setChecked(enabled);
-    updateEnabling(dataType, enabled);
-
-    columnSpinBox(dataType)->setValue(column + 1); // # view is 1-based
-    unitCombo(dataType)->setCurrentText(unit);
-    factorSpinBox(dataType)->setValue(factor);
+    auto spinBox = factorSpinBox(dataType);
+    return spinBox->isVisible() ? spinBox->value() : 1.0;
 }
 
 void QREDataLoaderProperties::updateEnabling(int dataType, bool enabled)
@@ -80,30 +78,29 @@ void QREDataLoaderProperties::updateEnabling(int dataType, bool enabled)
     }
 }
 
-void QREDataLoaderProperties::onEnablingChanged(int dataType)
+void QREDataLoaderProperties::updateErrorEnabling(bool enabled)
 {
-    const bool isEnabled = enablingCheckBox(dataType)->isChecked();
-    if (dataType <= 1 && !isEnabled) { // no uncheck of Q/R
+    const int lineInLayout = 2;
 
-        QTimer::singleShot(0, [=]() { enablingCheckBox(dataType)->setChecked(true); });
-        return;
+    for (int col = 1; col < m_ui->gridLayout->columnCount(); col++) {
+        auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
+        if (layoutItem) {
+            QWidget* w = layoutItem->widget();
+            if (w) {
+                const bool belongsToFactor = col == factorColumn || col == factorLabelColumn;
+                w->setVisible(enabled && (!belongsToFactor || m_allowFactors));
+            }
+        }
     }
+}
 
-    updateEnabling(dataType, isEnabled);
+void QREDataLoaderProperties::onErrorEnablingChanged()
+{
+    const bool isEnabled = m_ui->enableErrorCheckBox->isChecked();
+
+    updateErrorEnabling(isEnabled);
 
     emit propertiesChanged();
-}
-
-QCheckBox* QREDataLoaderProperties::enablingCheckBox(int dataType) const
-{
-    const int lineInLayout = dataType;
-    return dynamic_cast<QCheckBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 0)->widget());
-}
-
-QComboBox* QREDataLoaderProperties::unitCombo(int dataType) const
-{
-    const int lineInLayout = dataType;
-    return dynamic_cast<QComboBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 6)->widget());
 }
 
 QSpinBox* QREDataLoaderProperties::columnSpinBox(int dataType) const
@@ -116,5 +113,12 @@ QDoubleSpinBox* QREDataLoaderProperties::factorSpinBox(int dataType) const
 {
     const int lineInLayout = dataType;
     return dynamic_cast<QDoubleSpinBox*>(
-        m_ui->gridLayout->itemAtPosition(lineInLayout, 4)->widget());
+        m_ui->gridLayout->itemAtPosition(lineInLayout, factorColumn)->widget());
+}
+
+QLabel* QREDataLoaderProperties::factorLabel(int dataType) const
+{
+    const int lineInLayout = dataType;
+    return dynamic_cast<QLabel*>(
+        m_ui->gridLayout->itemAtPosition(lineInLayout, factorLabelColumn)->widget());
 }

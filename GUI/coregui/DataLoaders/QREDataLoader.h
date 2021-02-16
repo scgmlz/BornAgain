@@ -35,11 +35,18 @@ public:
     virtual void deserialize(const QByteArray& data) override;
     virtual AbstractDataLoader* clone() const override;
 
-public: // #TODO make private - only for presentation reasons
+private:
+    enum class UnitInFile {
+        none,
+        perNanoMeter,
+        perAngstrom,
+        other
+    };
+
     struct ColumnDefinition {
         bool enabled;
         int column;
-        QString unit;
+        UnitInFile unit;
         double factor;
     };
 

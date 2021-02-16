@@ -151,7 +151,7 @@
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="0">
-         <widget class="QCheckBox" name="qCheckBox_3">
+         <widget class="QCheckBox" name="enableErrorCheckBox">
           <property name="text">
            <string>Read error</string>
           </property>
@@ -214,7 +214,7 @@
          </widget>
         </item>
         <item row="0" column="6">
-         <widget class="QComboBox" name="unitCombo4">
+         <widget class="QComboBox" name="qUnitCombo">
           <item>
            <property name="text">
             <string>1/nm</string>

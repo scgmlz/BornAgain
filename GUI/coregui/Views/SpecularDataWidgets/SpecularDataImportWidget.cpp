@@ -244,6 +244,7 @@ void SpecularDataImportWidget::applyProperties()
 
 void SpecularDataImportWidget::fillPreviewOnlyForPresentation()
 {
+    /*
     try {
         bool showErrorColumn = false;
         double f1 = 1;
@@ -395,4 +396,5 @@ void SpecularDataImportWidget::fillPreviewOnlyForPresentation()
         t->resizeColumnsToContents();
     } catch (...) {
     }
+    */
 }

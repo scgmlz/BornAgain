@@ -107,6 +107,7 @@ QString QREDataLoader::persistentClassName() const
 
 QString QREDataLoader::preview(const QString& filepath, QCustomPlot* plotWidget) const
 {
+    /*
     QFile file(filepath);
     if (!file.open(QFile::ReadOnly)) {
         return "File '" + filepath + "' could not be opened";
@@ -253,6 +254,8 @@ QString QREDataLoader::preview(const QString& filepath, QCustomPlot* plotWidget)
     plotWidget->yAxis->setLabel("R");
 
     return "<p>" + bold("<h>Information: </h>") + info() + "</p><p>" + s + "</p>";
+    */
+    return "not implemented";
 }
 
 void QREDataLoader::populatePropertiesWidget(QWidget* parent)
@@ -276,11 +279,20 @@ void QREDataLoader::populatePropertiesWidget(QWidget* parent)
     m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_linesToSkip);
 
     for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
-        m_propertiesWidget->setDataType((int)dataType, m_columnDefinitions[dataType].enabled,
-                                        m_columnDefinitions[dataType].column,
-                                        m_columnDefinitions[dataType].unit,
-                                        m_columnDefinitions[dataType].factor);
+        m_propertiesWidget->columnSpinBox((int)dataType)
+            ->setValue(m_columnDefinitions[dataType].column + 1); // view is 1-based
+
+        m_propertiesWidget->factorSpinBox((int)dataType)
+            ->setValue(m_columnDefinitions[dataType].factor);
     }
+
+    m_propertiesWidget->m_ui->enableErrorCheckBox->setChecked(
+        m_columnDefinitions[DataType::dR].enabled);
+
+    if (m_columnDefinitions[DataType::Q].unit == UnitInFile::perAngstrom)
+        m_propertiesWidget->m_ui->qUnitCombo->setCurrentIndex(1);
+    else
+        m_propertiesWidget->m_ui->qUnitCombo->setCurrentIndex(0); // 1/nm
 
     QObject::connect(m_propertiesWidget, &QREDataLoaderProperties::propertiesChanged, [this]() {
         applyProperties();
@@ -291,17 +303,17 @@ void QREDataLoader::populatePropertiesWidget(QWidget* parent)
 void QREDataLoader::initWithDefaultProperties()
 {
     m_separator = ";";
-    m_headerPrefix = "";
+    m_headerPrefix = "#,//";
     m_linesToSkip = "";
 
     for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
         m_columnDefinitions[dataType].enabled = true;
         m_columnDefinitions[dataType].column = (int)dataType;
-        m_columnDefinitions[dataType].unit = "";
+        m_columnDefinitions[dataType].unit = UnitInFile::none;
         m_columnDefinitions[dataType].factor = 1.0;
     }
 
-    m_columnDefinitions[DataType::Q].unit = "1/nm";
+    m_columnDefinitions[DataType::Q].unit = UnitInFile::perNanoMeter;
 }
 
 QByteArray QREDataLoader::serialize() const
@@ -317,7 +329,7 @@ QByteArray QREDataLoader::serialize() const
         s << (quint8)dataType;
         s << m_columnDefinitions[dataType].enabled;
         s << m_columnDefinitions[dataType].column;
-        s << m_columnDefinitions[dataType].unit;
+        s << (quint8)m_columnDefinitions[dataType].unit;
         s << m_columnDefinitions[dataType].factor;
     }
 
@@ -340,7 +352,9 @@ void QREDataLoader::deserialize(const QByteArray& data)
         auto& colDef = m_columnDefinitions[(DataType)dataType];
         s >> colDef.enabled;
         s >> colDef.column;
-        s >> colDef.unit;
+        quint8 unit;
+        s >> unit;
+        colDef.unit = UnitInFile(unit);
         s >> colDef.factor;
     }
 }
@@ -371,9 +385,14 @@ void QREDataLoader::applyProperties()
     for (auto dataType : m_columnDefinitions.keys()) {
         auto& colDef = m_columnDefinitions[dataType];
 
-        colDef.enabled = m_propertiesWidget->enablingCheckBox((int)dataType)->isChecked();
         colDef.column = m_propertiesWidget->columnSpinBox((int)dataType)->value() - 1;
-        colDef.unit = m_propertiesWidget->unit((int)dataType);
         colDef.factor = m_propertiesWidget->factor((int)dataType);
     }
+
+    m_columnDefinitions[DataType::Q].unit =
+        m_propertiesWidget->m_ui->qUnitCombo->currentIndex() == 0 ? UnitInFile::perNanoMeter
+                                                                  : UnitInFile::perAngstrom;
+
+    m_columnDefinitions[DataType::dR].enabled =
+        m_propertiesWidget->m_ui->enableErrorCheckBox->isChecked();
 }
