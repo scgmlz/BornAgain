@@ -12,8 +12,8 @@
 //
 //  ************************************************************************************************
 
-#ifndef _GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H_
-#define _GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H_
+#ifndef GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H
+#define GUI_COREGUI_DATALOADERS_AUTOMATICMULTICOLUMNDATALOADER1D_H
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 #include <QVector>
@@ -28,14 +28,14 @@ public:
     virtual QString info() const override;
     virtual QString persistentClassName() const override;
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
-    virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
+    virtual void populatePropertiesWidget(QWidget* parent) override;
     virtual void initWithDefaultProperties() override;
     virtual void applyProperties() override;
     virtual QByteArray serialize() const override;
     virtual void deserialize(const QByteArray& data) override;
     virtual AbstractDataLoader* clone() const override;
 
-private:
+public: // #TODO make private - only for presentation reasons
     struct ColumnDefinition {
         bool enabled;
         int column;

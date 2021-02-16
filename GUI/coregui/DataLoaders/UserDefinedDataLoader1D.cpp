@@ -33,9 +33,9 @@ QString UserDefinedDataLoader1D::info() const
     return m_wrappedLoader->info();
 }
 
-void UserDefinedDataLoader1D::fillPropertiesGroupBox(QGroupBox* parent)
+void UserDefinedDataLoader1D::populatePropertiesWidget(QWidget* parent)
 {
-    m_wrappedLoader->fillPropertiesGroupBox(parent);
+    m_wrappedLoader->populatePropertiesWidget(parent);
 }
 
 void UserDefinedDataLoader1D::initWithDefaultProperties()

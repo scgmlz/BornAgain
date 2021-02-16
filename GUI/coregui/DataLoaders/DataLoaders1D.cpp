@@ -15,7 +15,6 @@
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/DataLoaders/AutomaticDataLoader1D.h"
 #include "GUI/coregui/DataLoaders/AutomaticMultiColumnDataLoader1D.h"
-#include "GUI/coregui/DataLoaders/ConfigurableDataLoader1D.h"
 #include "GUI/coregui/DataLoaders/UserDefinedDataLoader1D.h"
 
 DataLoaders1D* DataLoaders1D::m_instance = nullptr;
@@ -30,6 +29,7 @@ DataLoaders1D::DataLoaders1D()
 DataLoaders1D::~DataLoaders1D()
 {
     qDeleteAll(m_builtInLoaders);
+    qDeleteAll(m_userDefinedLoaders);
 }
 
 DataLoaders1D& DataLoaders1D::instance()
@@ -45,6 +45,8 @@ void DataLoaders1D::initBuiltInLoaders()
 
 QVector<AbstractDataLoader*> DataLoaders1D::loaders() const
 {
+    if (m_builtInLoaders.isEmpty())
+        const_cast<DataLoaders1D*>(this)->initBuiltInLoaders();
     return m_builtInLoaders + m_userDefinedLoaders;
 }
 

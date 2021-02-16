@@ -24,7 +24,7 @@ public:
 
     virtual QString name() const override;
     virtual QString info() const override;
-    virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
+    virtual void populatePropertiesWidget(QWidget* parent) override;
     virtual void initWithDefaultProperties() override;
     virtual QString persistentClassName() const override;
     virtual QByteArray serialize() const override;

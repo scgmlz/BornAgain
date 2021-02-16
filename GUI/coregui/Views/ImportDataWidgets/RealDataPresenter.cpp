@@ -17,6 +17,7 @@
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataMaskWidget.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataProjectionsWidget.h"
 #include "GUI/coregui/Views/IntensityDataWidgets/IntensityDataWidget.h"
+#include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataImportWidget.h"
 #include "GUI/coregui/Views/SpecularDataWidgets/SpecularDataWidget.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include <QAction>
@@ -26,7 +27,8 @@ RealDataPresenter::RealDataPresenter(QWidget* parent) : ItemComboWidget(parent)
     registerWidget("Color Map", create_new<IntensityDataWidget>);
     registerWidget("Projections", create_new<IntensityDataProjectionsWidget>);
     registerWidget("Mask Editor", create_new<RealDataMaskWidget>);
-    registerWidget("Reflectometry", create_new<SpecularDataWidget>);
+    registerWidget("Reflectometry (Graph only)", create_new<SpecularDataWidget>);
+    registerWidget("Reflectometry (Configuration)", create_new<SpecularDataImportWidget>);
 }
 
 QList<QAction*> RealDataPresenter::actionList()
@@ -45,7 +47,8 @@ QStringList RealDataPresenter::activePresentationList(SessionItem* item)
                << "Projections"
                << "Mask Editor";
     else if (realDataItem->isSpecularData())
-        result << "Reflectometry";
+        result << "Reflectometry (Configuration)"
+               << "Reflectometry (Graph only)";
     else
         throw GUIHelpers::Error(
             "Error in RealDataPresenter::activePresentationList: unsupported data type");
