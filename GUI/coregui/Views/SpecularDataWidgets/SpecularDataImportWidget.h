@@ -15,13 +15,13 @@
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATAIMPORTWIDGET_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATAIMPORTWIDGET_H
 
+#include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 #include "GUI/coregui/Views/CommonWidgets/SessionItemWidget.h"
 #include <memory>
 
 class SpecularDataItem;
 class AbstractDataLoader;
 class RealDataItem;
-class AbstractDataLoader1D;
 
 namespace Ui {
 class SpecularDataImportWidget;
