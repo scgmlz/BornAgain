@@ -37,6 +37,11 @@ public:
     //! properties)
     virtual void fillPropertiesGroupBox(QGroupBox* parent);
 
+    //! Read all values from the properties UI into the internal variables
+    virtual void applyProperties();
+
+    virtual void initWithDefaultProperties();
+
     virtual QString persistentClassName() const = 0;
 
     //! Returns every internal setting so it can be restored completely

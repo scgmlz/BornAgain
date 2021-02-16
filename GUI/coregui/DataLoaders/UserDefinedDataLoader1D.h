@@ -12,14 +12,15 @@
 //
 //  ************************************************************************************************
 
-#ifndef _GUI_COREGUI_DATALOADERS_USERDEFINEDDATALOADER1D_H_H_
-#define _GUI_COREGUI_DATALOADERS_USERDEFINEDDATALOADER1D_H_H_
+#ifndef GUI_COREGUI_DATALOADERS_USERDEFINEDDATALOADER1D_H
+#define GUI_COREGUI_DATALOADERS_USERDEFINEDDATALOADER1D_H
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 
 class UserDefinedDataLoader1D : public AbstractDataLoader1D {
 public:
-    UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLoader, const QString& name);
+    UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLoader, const QString& name,
+                            const QByteArray& defaultProperties);
 
     virtual QVector<QVector<QString>> parsedData() const override;
 
@@ -28,6 +29,7 @@ public:
     virtual QString info() const override;
 
     virtual void fillPropertiesGroupBox(QGroupBox* parent) override;
+    virtual void initWithDefaultProperties() override;
 
     virtual QString persistentClassName() const override;
 
@@ -40,6 +42,7 @@ public:
 private:
     QString m_name;
     AbstractDataLoader1D* m_wrappedLoader;
+    QByteArray m_defaultProperties;
 };
 
-#endif // _GUI_COREGUI_DATALOADERS_USERDEFINEDDATALOADER1D_H_H_
+#endif // GUI_COREGUI_DATALOADERS_USERDEFINEDDATALOADER1D_H

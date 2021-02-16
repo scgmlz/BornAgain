@@ -56,10 +56,11 @@ QVector<AbstractDataLoader*> DataLoaders1D::recentlyUsedLoaders() const
 
 void DataLoaders1D::cloneAsUserDefinedLoader(AbstractDataLoader* loader, const QString& name)
 {
+    loader->applyProperties();
     auto clonedLoader = createFromPersistentName(loader->persistentClassName());
-    clonedLoader->deserialize(loader->serialize());
+    const auto defaultProperties = loader->serialize();
 
-    m_userDefinedLoaders << new UserDefinedDataLoader1D(clonedLoader, name);
+    m_userDefinedLoaders << new UserDefinedDataLoader1D(clonedLoader, name, defaultProperties);
 }
 
 AbstractDataLoader1D* DataLoaders1D::createFromPersistentName(const QString& persistentClassName)
