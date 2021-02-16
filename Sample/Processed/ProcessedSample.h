@@ -63,7 +63,7 @@ public:
 
 private:
     void initSlices(const MultiLayer& sample, const SimulationOptions& options);
-    void initLayouts(const MultiLayer& sample);
+    void initLayouts(const MultiLayer& sample, const SimulationOptions& options);
     void addSlice(double thickness, const Material& material,
                   const LayerRoughness* p_roughness = nullptr);
     void addNSlices(size_t n, double thickness, const Material& material,

@@ -118,7 +118,7 @@ ProcessedSample::ProcessedSample(const MultiLayer& sample, const SimulationOptio
     initSlices(sample, options);
     m_fresnel_map = createFresnelMap(sample, m_slices, options);
     initBFields();
-    initLayouts(sample);
+    initLayouts(sample, options);
     initFresnelMap(options);
 }
 
@@ -274,10 +274,10 @@ void ProcessedSample::initSlices(const MultiLayer& sample, const SimulationOptio
     }
 }
 
-void ProcessedSample::initLayouts(const MultiLayer& sample)
+void ProcessedSample::initLayouts(const MultiLayer& sample, const SimulationOptions& options)
 {
     double z_ref = -m_top_z;
-    m_polarized = sample.isMagnetic();
+    m_polarized = sample.isMagnetic() || options.isPolarized();
     for (size_t i = 0; i < sample.numberOfLayers(); ++i) {
         if (i > 1)
             z_ref -= sample.layer(i - 1)->thickness();
