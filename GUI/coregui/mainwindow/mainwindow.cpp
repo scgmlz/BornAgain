@@ -16,7 +16,7 @@
 #include "GUI/coregui/Models/ApplicationModels.h"
 #include "GUI/coregui/Models/JobModel.h"
 #include "GUI/coregui/Views/ImportDataView.h"
-#include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h" // #migration move to better folder
+#include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
 #include "GUI/coregui/Views/InstrumentView.h"
 #include "GUI/coregui/Views/JobView.h"
 #include "GUI/coregui/Views/SampleView.h"
