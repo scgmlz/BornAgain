@@ -61,6 +61,20 @@ RealDataItem* RealDataModel::insertRealDataItem()
     return insertItem<RealDataItem>();
 }
 
+RealDataItem* RealDataModel::insertSpecularDataItem()
+{
+    auto r = insertRealDataItem();
+    r->initAsSpecularItem();
+    return r;
+}
+
+RealDataItem* RealDataModel::insertIntensityDataItem()
+{
+    auto r = insertRealDataItem();
+    r->initAsIntensityItem();
+    return r;
+}
+
 QVector<RealDataItem*> RealDataModel::realDataItems() const
 {
     return topItems<RealDataItem>();

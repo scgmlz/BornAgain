@@ -43,6 +43,9 @@ private:
 public:
     RealDataItem();
 
+    void initAsSpecularItem();
+    void initAsIntensityItem();
+
     //! The name which is presented to the user
     QString name() const;
     void setName(const QString& name);
@@ -58,7 +61,9 @@ public:
 
     DataItem* nativeData();
     const DataItem* nativeData() const;
+    void initNativeData();
     QString nativeDataUnits() const;
+    void setNativeDataUnits(const QString& units);
 
     void setOutputData(OutputData<double>* data);
     void setImportData(ImportDataInfo data);
@@ -83,12 +88,17 @@ public:
     QByteArray importSettings() const;
     void setImportSettings(const QByteArray& a);
 
+    //! The name from where the native data was originally imported
+    void setNativeFileName(const QString& filename);
+    QString nativeFileName() const;
+
 private:
     void initDataItem(size_t data_rank, const QString& tag);
     void updateNonXMLDataFileNames();
     void updateToInstrument();
     const InstrumentItem* m_linkedInstrument;
     QByteArray m_importSettings;
+    QString m_nativeFileName;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H

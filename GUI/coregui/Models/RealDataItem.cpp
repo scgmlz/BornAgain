@@ -118,9 +118,20 @@ const DataItem* RealDataItem::nativeData() const
     return dynamic_cast<const DataItem*>(getItem(T_NATIVE_DATA));
 }
 
+void RealDataItem::initNativeData()
+{
+    const size_t rank = isSpecularData() ? 1 : 2;
+    initDataItem(rank, T_NATIVE_DATA);
+}
+
 QString RealDataItem::nativeDataUnits() const
 {
     return getItemValue(P_NATIVE_DATA_UNITS).toString();
+}
+
+void RealDataItem::setNativeDataUnits(const QString& units)
+{
+    getItem(P_NATIVE_DATA_UNITS)->setValue(units);
 }
 
 //! Creates data item if not existing so far. Checks for rank compatibility if already existing. No
@@ -161,7 +172,8 @@ void RealDataItem::setOutputData(OutputData<double>* data)
 }
 
 //! Sets imported data to underlying item. Creates it if not existing.
-//! This is used for 1-D import (2-D only using setOutputData)
+//! This is used for 1-D import (2-D only using setOutputData). BUT: This last
+//! statement seems wrong - in the unit tests it is used for 2D import
 
 void RealDataItem::setImportData(ImportDataInfo data)
 {
@@ -178,6 +190,18 @@ void RealDataItem::setImportData(ImportDataInfo data)
     dataItem()->reset(std::move(data));
     getItem(P_NATIVE_DATA_UNITS)->setValue(units_name);
     item<DataItem>(T_NATIVE_DATA)->setOutputData(output_data.release());
+}
+
+void RealDataItem::initAsSpecularItem()
+{
+    const size_t rank = 1;
+    initDataItem(rank, T_INTENSITY_DATA);
+}
+
+void RealDataItem::initAsIntensityItem()
+{
+    const size_t rank = 2;
+    initDataItem(rank, T_INTENSITY_DATA);
 }
 
 bool RealDataItem::holdsDimensionalData() const
@@ -242,6 +266,16 @@ QByteArray RealDataItem::importSettings() const
 void RealDataItem::setImportSettings(const QByteArray& a)
 {
     m_importSettings = a;
+}
+
+void RealDataItem::setNativeFileName(const QString& filename)
+{
+    m_nativeFileName = filename;
+}
+
+QString RealDataItem::nativeFileName() const
+{
+    return m_nativeFileName;
 }
 
 //! Updates the name of file to store intensity data.

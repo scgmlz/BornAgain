@@ -32,6 +32,8 @@ public:
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role) override;
 
     RealDataItem* insertRealDataItem();
+    RealDataItem* insertSpecularDataItem();
+    RealDataItem* insertIntensityDataItem();
     QVector<RealDataItem*> realDataItems() const;
 };
 
