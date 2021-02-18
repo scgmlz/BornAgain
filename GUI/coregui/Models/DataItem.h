@@ -35,6 +35,8 @@ public:
 
     OutputData<double>* getOutputData() { return m_data.get(); }
     const OutputData<double>* getOutputData() const { return m_data.get(); }
+
+    //! The given pointer becomes owned by this class!!
     virtual void setOutputData(OutputData<double>* data) = 0;
 
     //! Sets the raw data vector from external source
