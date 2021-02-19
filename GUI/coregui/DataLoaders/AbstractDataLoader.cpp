@@ -39,3 +39,8 @@ QByteArray AbstractDataLoader::defaultProperties() const
     cloned->initWithDefaultProperties();
     return cloned->serialize();
 }
+
+bool AbstractDataLoader::fillImportDetailsTable(QTableWidget*, bool, bool, bool) const
+{
+    return false;
+}

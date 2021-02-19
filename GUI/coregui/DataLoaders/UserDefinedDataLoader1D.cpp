@@ -69,3 +69,9 @@ AbstractDataLoader* UserDefinedDataLoader1D::clone() const
     auto loader = new UserDefinedDataLoader1D(cloned, m_name, m_defaultProperties);
     return loader;
 }
+
+void UserDefinedDataLoader1D::importFile(const QString& filename, RealDataItem* item,
+                                         QStringList* errors, QStringList* warnings) const
+{
+    m_wrappedLoader->importFile(filename, item, errors, warnings);
+}

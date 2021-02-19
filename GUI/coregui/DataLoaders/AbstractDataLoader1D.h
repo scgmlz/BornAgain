@@ -16,7 +16,6 @@
 #define BORNAGAIN_GUI_COREGUI_DATALOADERS_ABSTRACTDATALOADER1D_H
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader.h"
-#include <QVector>
 
 class AbstractDataLoader1D : public AbstractDataLoader {
 };

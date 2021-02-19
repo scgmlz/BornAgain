@@ -45,7 +45,6 @@ signals:
     void propertiesChanged();
 
 private:
-    void updateEnabling(int dataType, bool enabled);
     void updateErrorEnabling(bool enabled);
     void onErrorEnablingChanged();
     QLabel* factorLabel(int dataType) const;
@@ -54,7 +53,8 @@ private:
     // they are only deactivated. Call allowFactors(true) to enable them.
     bool m_allowFactors;
 
-    static const int factorLabelColumn = 3;
+    static const int columnColumn = 3;
+    static const int factorLabelColumn = 4;
     static const int factorColumn = factorLabelColumn + 1;
 };
 

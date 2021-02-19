@@ -19,6 +19,8 @@ class QString;
 class QByteArray;
 class QGroupBox;
 class QCustomPlot;
+class QTableWidget;
+class RealDataItem;
 
 #include <QtCore>
 
@@ -49,7 +51,7 @@ public:
     //! Returns every internal setting so it can be restored completely
     virtual QByteArray serialize() const;
 
-    //! #TODO: how to deliver errors? VersionException...?
+    //! #baTODO: how to deliver errors? VersionException...?
     virtual void deserialize(const QByteArray& data);
 
     virtual QByteArray defaultProperties() const;
@@ -57,6 +59,14 @@ public:
     //! Returns a Qt rich text formatted preview
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const = 0;
 
+    virtual void importFile(const QString& filename, RealDataItem* item, QStringList* errors,
+                            QStringList* warnings) const = 0;
+
+    //! Fill the import details table with information from the last call to importFile
+    //! return false if not supported.
+    //! This base implementation returns false.
+    virtual bool fillImportDetailsTable(QTableWidget* table, bool fileContent, bool rawContent,
+                                        bool processedContent) const;
 signals:
     void propertiesChanged();
 };

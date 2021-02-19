@@ -31,6 +31,8 @@ public:
     virtual void deserialize(const QByteArray& data) override;
     virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
     virtual AbstractDataLoader* clone() const override;
+    virtual void importFile(const QString& filename, RealDataItem* item, QStringList* errors,
+                            QStringList* warnings) const override;
 
 private:
     QString m_name;

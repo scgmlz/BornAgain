@@ -34,14 +34,16 @@ public:
     virtual QByteArray serialize() const override;
     virtual void deserialize(const QByteArray& data) override;
     virtual AbstractDataLoader* clone() const override;
+    virtual void importFile(const QString& filename, RealDataItem* item, QStringList* errors,
+                            QStringList* warnings) const override;
+    virtual bool fillImportDetailsTable(QTableWidget* table, bool fileContent, bool rawContent,
+                                        bool processedContent) const override;
 
 private:
-    enum class UnitInFile {
-        none,
-        perNanoMeter,
-        perAngstrom,
-        other
-    };
+    bool parseFile(const QString& filename, QStringList* errors, QStringList* warnings) const;
+
+private:
+    enum class UnitInFile { none, perNanoMeter, perAngstrom, other };
 
     struct ColumnDefinition {
         bool enabled;
@@ -58,6 +60,17 @@ private:
     QPointer<QREDataLoaderProperties> m_propertiesWidget;
 
     QMap<DataType, ColumnDefinition> m_columnDefinitions;
+
+    struct ParsingResult {
+        void clear();
+        QVector<QPair<bool, QString>> lines; // bool describes whether line is skipped
+        QVector<QPair<int, QVector<double>>> originalEntriesAsDouble;
+        QVector<QPair<int, double>> qValues;
+        QVector<QPair<int, double>> rValues;
+        QVector<QPair<int, double>> eValues;
+        int columnCount;
+    };
+    mutable ParsingResult m_parsingResult;
 };
 
 #endif // GUI_COREGUI_DATALOADERS_QREDATALOADER_H

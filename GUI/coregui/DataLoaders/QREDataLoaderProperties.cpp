@@ -62,27 +62,11 @@ double QREDataLoaderProperties::factor(int dataType) const
     return spinBox->isVisible() ? spinBox->value() : 1.0;
 }
 
-void QREDataLoaderProperties::updateEnabling(int dataType, bool enabled)
-{
-    const int lineInLayout = dataType;
-    for (int col = 1; col < m_ui->gridLayout->columnCount(); col++) {
-        auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
-        if (layoutItem) {
-            QWidget* w = layoutItem->widget();
-            if (w) {
-                const bool belongsToUnusedCombo =
-                    (dataType != 0) && (col >= 5); // no unit except for Q
-                w->setVisible(enabled && !belongsToUnusedCombo);
-            }
-        }
-    }
-}
-
 void QREDataLoaderProperties::updateErrorEnabling(bool enabled)
 {
     const int lineInLayout = 2;
 
-    for (int col = 1; col < m_ui->gridLayout->columnCount(); col++) {
+    for (int col = 2; col < m_ui->gridLayout->columnCount(); col++) {
         auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
         if (layoutItem) {
             QWidget* w = layoutItem->widget();
@@ -106,7 +90,8 @@ void QREDataLoaderProperties::onErrorEnablingChanged()
 QSpinBox* QREDataLoaderProperties::columnSpinBox(int dataType) const
 {
     const int lineInLayout = dataType;
-    return dynamic_cast<QSpinBox*>(m_ui->gridLayout->itemAtPosition(lineInLayout, 2)->widget());
+    return dynamic_cast<QSpinBox*>(
+        m_ui->gridLayout->itemAtPosition(lineInLayout, columnColumn)->widget());
 }
 
 QDoubleSpinBox* QREDataLoaderProperties::factorSpinBox(int dataType) const

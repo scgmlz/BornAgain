@@ -15,6 +15,7 @@
 #include "GUI/coregui/DataLoaders/AutomaticDataLoader1D.h"
 #include "Base/Axis/PointwiseAxis.h"
 #include "Device/Data/OutputData.h"
+#include "Device/Histo/IntensityDataIOFactory.h"
 #include "Device/InputOutput/DataFormatUtils.h"
 #include "qcustomplot.h"
 #include <QFile>
@@ -159,6 +160,16 @@ AbstractDataLoader* AutomaticDataLoader1D::clone() const
     auto loader = new AutomaticDataLoader1D();
     loader->deserialize(serialize());
     return loader;
+}
+
+void AutomaticDataLoader1D::importFile(const QString& filename, RealDataItem* item,
+                                       QStringList* errors, QStringList* warnings) const
+{
+    // #baimport implement legacy loader
+    /*
+        auto data = IntensityDataIOFactory::readReflectometryData(filename.toStdString());
+        return OutputData<double>(std::move(*data));
+    */
 }
 
 QString AutomaticDataLoader1D::outputDataToTable(const OutputData<double>& outputData) const

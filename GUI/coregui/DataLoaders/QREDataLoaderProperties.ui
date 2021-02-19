@@ -150,70 +150,62 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="2" column="0">
-         <widget class="QCheckBox" name="enableErrorCheckBox">
-          <property name="text">
-           <string>Read error</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QDoubleSpinBox" name="factorSpinBox4_5">
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>from column</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QSpinBox" name="spinBox_2">
-          <property name="minimum">
-           <number>1</number>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
+        <item row="0" column="3">
          <widget class="QSpinBox" name="spinBox">
           <property name="minimum">
            <number>1</number>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="label_10">
+        <item row="2" column="3">
+         <widget class="QSpinBox" name="spinBox_3">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="10">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Read Q</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_5">
           <property name="text">
            <string>from column</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="5">
-         <widget class="QLabel" name="unitLabel4_2">
-          <property name="text">
-           <string>given values are in</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
+        <item row="2" column="4">
          <widget class="QLabel" name="factorLabel4_8">
           <property name="text">
            <string>multiplied by</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>from column</string>
+        <item row="0" column="5">
+         <widget class="QDoubleSpinBox" name="factorSpinBox4_2">
+          <property name="value">
+           <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
-        <item row="0" column="6">
+        <item row="0" column="7">
          <widget class="QComboBox" name="qUnitCombo">
           <item>
            <property name="text">
@@ -227,65 +219,106 @@
           </item>
          </widget>
         </item>
-        <item row="1" column="3">
-         <widget class="QLabel" name="factorLabel4_7">
-          <property name="text">
-           <string>multiplied by</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="9">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="factorLabel4_2">
-          <property name="text">
-           <string>multiplied by</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QDoubleSpinBox" name="factorSpinBox4_2">
+        <item row="1" column="5">
+         <widget class="QDoubleSpinBox" name="factorSpinBox4_5">
           <property name="value">
            <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QSpinBox" name="spinBox_3">
-          <property name="minimum">
-           <number>1</number>
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>from column</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="4">
+        <item row="1" column="4">
+         <widget class="QLabel" name="factorLabel4_7">
+          <property name="text">
+           <string>multiplied by</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
          <widget class="QDoubleSpinBox" name="factorSpinBox4_6">
           <property name="value">
            <double>1.000000000000000</double>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
+        <item row="1" column="3">
+         <widget class="QSpinBox" name="spinBox_2">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="6">
+         <widget class="QLabel" name="unitLabel4_2">
           <property name="text">
-           <string>Read Q</string>
+           <string>given values are in</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Read R</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="factorLabel4_2">
+          <property name="text">
+           <string>multiplied by</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>from column</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="checkBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_7">
+         <widget class="QCheckBox" name="checkBox_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
-           <string>Read R</string>
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="enableErrorCheckBox">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Read error</string>
           </property>
          </widget>
         </item>
