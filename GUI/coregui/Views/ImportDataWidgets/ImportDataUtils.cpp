@@ -15,8 +15,8 @@
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
 #include "Base/Axis/IAxis.h"
 #include "Base/Axis/PointwiseAxis.h"
-#include "DataLoaders/AbstractDataLoader1D.h"
 #include "Device/Histo/IntensityDataIOFactory.h"
+#include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
@@ -101,7 +101,7 @@ void ImportDataUtils::Import1dData(RealDataItem* realDataItem)
         } catch (...) {
             // #baimport clean this spot
             // return getFromImportAssistant(fileName);
-            // do nothing, continue with data loader
+            // do nothing, continue with data loader?
         }
     } else {
 

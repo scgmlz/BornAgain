@@ -20,7 +20,7 @@ QString AbstractDataLoader::info() const
     return QString();
 }
 
-void AbstractDataLoader::populatePropertiesWidget(QWidget* parent) {}
+void AbstractDataLoader::populatePropertiesWidget(QWidget*) {}
 
 void AbstractDataLoader::applyProperties() {}
 
@@ -31,7 +31,7 @@ QByteArray AbstractDataLoader::serialize() const
     return QByteArray();
 }
 
-void AbstractDataLoader::deserialize(const QByteArray& data) {}
+void AbstractDataLoader::deserialize(const QByteArray&) {}
 
 QByteArray AbstractDataLoader::defaultProperties() const
 {

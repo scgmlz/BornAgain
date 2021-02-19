@@ -13,18 +13,18 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/DataLoaders/QREDataLoader.h"
-#include "../Axis/PointwiseAxis.h"
+#include "Base/Axis/PointwiseAxis.h"
 #include "Device/Histo/IntensityDataIOFactory.h"
 #include "Device/InputOutput/DataFormatUtils.h"
 #include "Device/Unit/AxisNames.h"
 #include "GUI/coregui/DataLoaders/QREDataLoaderProperties.h"
-#include "Models/DataItem.h"
-#include "Models/JobItemUtils.h"
-#include "Models/RealDataItem.h"
-#include "Models/SpecularDataItem.h"
+#include "GUI/coregui/Models/DataItem.h"
+#include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/Models/SpecularDataItem.h"
+#include "GUI/coregui/utils/ImportDataInfo.h"
 #include "qcustomplot.h"
 #include "ui_QREDataLoaderProperties.h"
-#include "utils/ImportDataInfo.h"
 #include <QFile>
 #include <QString>
 #include <QTextStream>
