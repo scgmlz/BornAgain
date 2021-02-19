@@ -57,7 +57,6 @@ private:
 
     Ui::SpecularDataImportWidget* m_ui;
     std::unique_ptr<AbstractDataLoader1D> m_loader;
-    void fillPreviewOnlyForPresentation();
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATAIMPORTWIDGET_H

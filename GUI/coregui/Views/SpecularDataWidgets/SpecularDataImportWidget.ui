@@ -19,6 +19,9 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
      <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
@@ -230,7 +233,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QCheckBox" name="originalRowCheckBox">
           <property name="text">
-           <string>Original content</string>
+           <string>Show file content</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -240,7 +243,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QCheckBox" name="rawDataCheckBox">
           <property name="text">
-           <string>Raw data</string>
+           <string>Show raw data</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -250,7 +253,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QCheckBox" name="calculatedDataCheckBox">
           <property name="text">
-           <string>Calculated data</string>
+           <string>Show resulting data</string>
           </property>
           <property name="checked">
            <bool>true</bool>

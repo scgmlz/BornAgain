@@ -57,7 +57,7 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
     if (!instrumentItem)
         return true;
 
-    // #TODO: Fix modality!
+    // #baTODO: Fix modality!
     if (!ImportDataUtils::Compatible(*instrumentItem, *realDataItem)) {
         QMessageBox::warning(nullptr, "Can't link to instrument",
                              "Can't link, data is incompatible with the instrument.");

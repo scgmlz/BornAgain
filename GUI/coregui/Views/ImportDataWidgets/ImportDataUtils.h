@@ -29,7 +29,7 @@ class GISASInstrumentItem;
 
 namespace ImportDataUtils {
 std::unique_ptr<OutputData<double>> Import2dData(QString& baseNameOfLoadedFile);
-ImportDataInfo Import1dData(QString& baseNameOfLoadedFile);
+void Import1dData(RealDataItem* realDataItem);
 std::unique_ptr<OutputData<double>> ImportKnownData(QString& baseNameOfLoadedFile);
 std::unique_ptr<OutputData<double>> ImportReflectometryData(QString& baseNameOfLoadedFile);
 ImportDataInfo getFromImportAssistant(QString& fileName);

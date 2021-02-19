@@ -38,7 +38,7 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     setWindowTitle("RealDataSelectorWidget");
 
     m_renameDataAction->setText("Rename");
-    m_renameDataAction->setIcon(QIcon()); // #TODO: Icon needed?
+    m_renameDataAction->setIcon(QIcon()); // #baTODO: Icon needed?
     m_renameDataAction->setIconText("Rename");
     m_renameDataAction->setToolTip("Rename data");
     connect(m_renameDataAction, &QAction::triggered, this,

@@ -28,6 +28,7 @@ public:
     ImportDataInfo();
     ImportDataInfo(ImportDataInfo&& other);
     ImportDataInfo(std::unique_ptr<OutputData<double>> data, Axes::Units units);
+    ImportDataInfo(OutputData<double>&& data, Axes::Units units);
     ImportDataInfo(std::unique_ptr<OutputData<double>> data, const QString& units);
     ~ImportDataInfo();
 
@@ -45,6 +46,8 @@ public:
 
 private:
     void checkValidity();
+
+private:
     std::unique_ptr<OutputData<double>> m_data;
     Axes::Units m_units;
 };

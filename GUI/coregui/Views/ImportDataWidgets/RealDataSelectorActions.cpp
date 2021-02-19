@@ -14,8 +14,8 @@
 
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "Device/Data/DataUtils.h"
-#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
+#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
@@ -166,31 +166,33 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         if (ndim == 2) {
             std::unique_ptr<OutputData<double>> data = ImportDataUtils::Import2dData(fileName);
             if (data) {
-                auto realDataItem = m_realDataModel->insertRealDataItem();
+                auto realDataItem = m_realDataModel->insertIntensityDataItem();
                 realDataItem->setName(baseNameOfLoadedFile);
                 realDataItem->setOutputData(data.release());
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
             }
         } else if (ndim == 1) {
-            auto data = ImportDataUtils::Import1dData(fileName);
-            if (data) {
-                auto realDataItem = m_realDataModel->insertRealDataItem();
-                realDataItem->setName(baseNameOfLoadedFile);
-                realDataItem->setImportData(std::move(data));
-                // #TODO move to better place - only for testing purposes!
-                QByteArray a;
-                QDataStream s(&a, QIODevice::WriteOnly);
-                s << fileName;
-                auto loader = new QREDataLoader();
-                loader->initWithDefaultProperties();
-                s << loader->persistentClassName();
-                s << loader->serialize();
-                realDataItem->setImportSettings(a);
+            // realDataItems are generated immediately and then the data is directly imported
+            // by the current dataloader of the readDataItem.
+            auto realDataItem = m_realDataModel->insertSpecularDataItem();
+            realDataItem->setName(baseNameOfLoadedFile);
+            realDataItem->setNativeFileName(fileName);
 
-                m_selectionModel->clearSelection();
-                m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
-            }
+            // #baimport move to better place - only for testing purposes!
+            // #baimport use loader which was selected in the import dialog
+            QByteArray a;
+            QDataStream s(&a, QIODevice::WriteOnly);
+            auto loader = new QREDataLoader();
+            loader->initWithDefaultProperties();
+            s << loader->persistentClassName();
+            s << loader->serialize();
+            realDataItem->setImportSettings(a);
+
+            ImportDataUtils::Import1dData(realDataItem);
+
+            m_selectionModel->clearSelection();
+            m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
         }
     }
 }

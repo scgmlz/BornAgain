@@ -13,8 +13,11 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
+#include "Base/Axis/IAxis.h"
 #include "Base/Axis/PointwiseAxis.h"
+#include "DataLoaders/AbstractDataLoader1D.h"
 #include "Device/Histo/IntensityDataIOFactory.h"
+#include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/Models/AxesItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -82,30 +85,43 @@ std::unique_ptr<OutputData<double>> ImportDataUtils::Import2dData(QString& fileN
     return ImportKnownData(fileName);
 }
 
-ImportDataInfo ImportDataUtils::Import1dData(QString& fileName)
+void ImportDataUtils::Import1dData(RealDataItem* realDataItem)
 {
+    QString fileName = realDataItem->nativeFileName();
+
     if (DataFormatUtils::isCompressed(fileName.toStdString())
         || DataFormatUtils::isIntFile(fileName.toStdString())
         || DataFormatUtils::isTiffFile(fileName.toStdString())) {
         try {
-            return ImportDataInfo(ImportKnownData(fileName), Axes::Units::QSPACE);
+            ImportDataInfo data(ImportKnownData(fileName), Axes::Units::QSPACE);
+            if (data) {
+                realDataItem->setImportData(std::move(data));
+                return;
+            }
         } catch (...) {
-            return getFromImportAssistant(fileName);
+            // #baimport clean this spot
+            // return getFromImportAssistant(fileName);
+            // do nothing, continue with data loader
         }
     } else {
-        try {
-            return ImportDataInfo(ImportReflectometryData(fileName), Axes::Units::QSPACE);
-        } catch (...) {
-            QString message =
-                QString("There was a problem while trying to import data from "
-                        "file:\n\n'%1'\n--\n%2\n--\n")
-                    .arg(fileName)
-                    .arg(
-                        "Data format not supported. Please check your file in an external editor.");
-            QMessageBox::warning(nullptr, "Unable to read.", message);
 
-            return ImportDataInfo();
-        }
+        // Instantiate loader
+        QByteArray a = realDataItem->importSettings();
+        QDataStream s(a);
+        QString persistentLoaderClassName;
+        QByteArray loaderSettings;
+        s >> persistentLoaderClassName;
+        s >> loaderSettings;
+
+        std::unique_ptr<AbstractDataLoader1D> loader(
+            DataLoaders1D::instance().createFromPersistentName(persistentLoaderClassName));
+        loader->deserialize(loaderSettings);
+
+        QStringList errors;
+        QStringList warnings;
+        loader->importFile(fileName, realDataItem, &errors, &warnings);
+
+        // #baimport show errors/warnings as dialog? Or only on the import pane?
     }
 }
 

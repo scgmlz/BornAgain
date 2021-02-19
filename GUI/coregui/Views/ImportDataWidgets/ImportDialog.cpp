@@ -191,7 +191,7 @@ AbstractDataLoader* ImportDialog::selectedLoader()
 
 void ImportDialog::onFormatSelectionChanged(int /*index*/)
 {
-    // #TODO: disconnect() old loader?
+    // #baTODO: disconnect() old loader?
     selectedLoader()->initWithDefaultProperties();
     updatePropertiesEdits();
     updatePreview();

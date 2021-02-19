@@ -28,7 +28,7 @@ public:
 
     static DataLoaders1D& instance();
 
-    //! #TODO: How to handle errors?!
+    //! #baTODO: How to handle errors?!
     void initFromDatabase(const QString& databaseFilePath);
 
     void initBuiltInLoaders();
