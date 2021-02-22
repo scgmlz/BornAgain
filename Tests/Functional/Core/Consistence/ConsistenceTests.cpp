@@ -16,8 +16,10 @@
 // some other tests, coincide within reasonable numeric error margins.
 
 #include "Core/Simulation/SpecularSimulation.h"
+#include "Core/Simulation/GISASSimulation.h"
 #include "Core/Simulation/StandardSimulations.h"
 #include "Sample/StandardSamples/PlainMultiLayerBySLDBuilder.h"
+#include "Sample/StandardSamples/CylindersAndPrismsBuilder.h"
 #include "Tests/GTestWrapper/google_test.h"
 #include <string>
 
@@ -60,5 +62,16 @@ TEST_F(Consistence, PolarizedScalarSpinFlip)
     simulation->runSimulation();
     auto result = simulation->result().data();
     for( auto r : *result)
+        EXPECT_EQ(r, 0);
+}
+
+TEST_F(Consistence, PolarizedScalarSpinFlipParticles)
+{
+    auto simulation = StandardSimulations::MiniGISASPolarizationPM();
+    auto sample = CylindersAndPrismsBuilder().buildSample();
+    simulation->setSample(*sample);
+    simulation->runSimulation();
+    auto result = simulation->result().data();
+    for( auto r : *result )
         EXPECT_EQ(r, 0);
 }
