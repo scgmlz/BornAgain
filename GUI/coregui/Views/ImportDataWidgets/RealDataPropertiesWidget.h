@@ -37,7 +37,7 @@ public:
 public slots:
     void onInstrumentComboIndexChanged(int index);
     void updateInstrumentComboEntries();
-    void onRealDataPropertyChanged(const QString& name);
+    void onRealDataPropertyChanged();
 
 private:
     void setComboToIdentifier(const QString& instrumentId);

@@ -73,7 +73,7 @@ void RealDataPropertiesWidget::setItem(RealDataItem* item)
         return;
 
     m_currentDataItem->mapper()->setOnPropertyChange(
-        [this](const QString& name) { onRealDataPropertyChanged(name); }, this);
+        [this](const QString& name) { onRealDataPropertyChanged(); }, this);
 
     m_currentDataItem->mapper()->setOnItemDestroy(
         [this](SessionItem*) { m_currentDataItem = nullptr; }, this);
@@ -129,7 +129,7 @@ void RealDataPropertiesWidget::updateInstrumentComboEntries()
 
 //! Updates instrument combo if instrument link of current RealDataItem changed.
 
-void RealDataPropertiesWidget::onRealDataPropertyChanged(const QString& name)
+void RealDataPropertiesWidget::onRealDataPropertyChanged()
 {
     // This can be called when combo on this page was changed, but also when the linking
     // is undone because of instrument deletion or similar
