@@ -157,7 +157,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="linkedInstrumentGroup">
          <property name="title">
           <string>Linked instrument</string>
          </property>

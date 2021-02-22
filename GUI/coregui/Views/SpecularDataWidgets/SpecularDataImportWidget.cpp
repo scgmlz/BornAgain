@@ -37,6 +37,7 @@ SpecularDataImportWidget::SpecularDataImportWidget(QWidget* parent)
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     m_ui->setupUi(this);
+    m_ui->linkedInstrumentGroup->hide();    // #baimport - remove from UI if not used in the future
 
     if (DataLoaders1D::instance().loaders().isEmpty())
         DataLoaders1D::instance().initBuiltInLoaders();
