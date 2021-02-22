@@ -20,6 +20,9 @@ InstrumentModel::InstrumentModel(QObject* parent)
     : SessionModel(SessionXML::InstrumentModelTag, parent)
 {
     setObjectName(SessionXML::InstrumentModelTag);
+
+    connect(this, &InstrumentModel::rowsInserted, this, &InstrumentModel::onInstrumentRowsChange);
+    connect(this, &InstrumentModel::rowsRemoved, this, &InstrumentModel::onInstrumentRowsChange);
 }
 
 InstrumentModel::~InstrumentModel() = default;
@@ -59,4 +62,13 @@ InstrumentItem* InstrumentModel::findInstrumentById(const QString& instrumentId)
             return instrument;
 
     return nullptr;
+}
+
+void InstrumentModel::onInstrumentRowsChange(const QModelIndex& parent, int, int)
+{
+    // valid parent means not an instrument (which is top level item) but something below
+    if (parent.isValid())
+        return;
+
+    emit instrumentAddedOrRemoved();
 }

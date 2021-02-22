@@ -111,12 +111,8 @@ void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument, 
 
 //! Updates map of instruments on insert/remove InstrumentItem event.
 
-void LinkInstrumentManager::onInstrumentRowsChange(const QModelIndex& parent, int, int)
+void LinkInstrumentManager::onInstrumentAddedOrRemoved()
 {
-    // valid parent means not an instrument (which is top level item) but something below
-    if (parent.isValid())
-        return;
-
     updateInstrumentMap();
     updateLinks();
 }
@@ -151,7 +147,7 @@ void LinkInstrumentManager::updateLinks()
     }
 }
 
-//! Builds the map of existing instruments, their names, identifiers and sets up callbacks.
+//! Set up callbacks to all instrument items
 
 void LinkInstrumentManager::updateInstrumentMap()
 {
@@ -218,21 +214,15 @@ QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrume
 
 void LinkInstrumentManager::setInstrumentModel(InstrumentModel* model)
 {
-    if (m_instrumentModel) {
-        disconnect(m_instrumentModel, &InstrumentModel::rowsInserted, this,
-                   &LinkInstrumentManager::onInstrumentRowsChange);
-        disconnect(m_instrumentModel, &InstrumentModel::rowsRemoved, this,
-                   &LinkInstrumentManager::onInstrumentRowsChange);
-    }
+    if (m_instrumentModel)
+        disconnect(m_instrumentModel, &InstrumentModel::instrumentAddedOrRemoved, this,
+                   &LinkInstrumentManager::onInstrumentAddedOrRemoved);
 
     m_instrumentModel = model;
 
-    if (m_instrumentModel) {
-        connect(m_instrumentModel, &InstrumentModel::rowsInserted, this,
-                &LinkInstrumentManager::onInstrumentRowsChange);
-        connect(m_instrumentModel, &InstrumentModel::rowsRemoved, this,
-                &LinkInstrumentManager::onInstrumentRowsChange);
-    }
+    if (m_instrumentModel)
+        connect(m_instrumentModel, &InstrumentModel::instrumentAddedOrRemoved, this,
+                &LinkInstrumentManager::onInstrumentAddedOrRemoved);
 }
 
 //! Sets connections for real data model.

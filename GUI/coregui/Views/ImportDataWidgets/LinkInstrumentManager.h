@@ -52,7 +52,7 @@ private slots:
     void setOnInstrumentPropertyChange(SessionItem* instrument, const QString& property);
     void setOnRealDataPropertyChange(SessionItem* dataItem, const QString& property);
     void onInstrumentChildChange(InstrumentItem* instrument, SessionItem* child);
-    void onInstrumentRowsChange(const QModelIndex& parent, int, int);
+    void onInstrumentAddedOrRemoved();
     void onRealDataRowsChange(const QModelIndex& parent, int, int);
 
     void updateLinks();

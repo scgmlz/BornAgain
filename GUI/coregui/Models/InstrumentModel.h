@@ -32,6 +32,12 @@ public:
     QVector<InstrumentItem*> instrumentItems() const;
 
     InstrumentItem* findInstrumentById(const QString& instrumentId) const;
+
+signals:
+    void instrumentAddedOrRemoved();
+
+private:
+    void onInstrumentRowsChange(const QModelIndex& parent, int, int);
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H
