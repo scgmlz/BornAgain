@@ -50,6 +50,28 @@ QVector<SessionItem*> InstrumentModel::nonXMLItems() const
     return result;
 }
 
+void InstrumentModel::readFrom(QXmlStreamReader* reader, MessageService* messageService /*= 0*/)
+{
+    // do not send added-notifications until completely read - otherwise partially
+    // initialized items will be notified
+    disconnect(this, &SessionModel::rowsInserted, this, &InstrumentModel::onRowsChange);
+
+    SessionModel::readFrom(reader, messageService);
+
+    connect(this, &SessionModel::rowsInserted, this, &InstrumentModel::onRowsChange);
+
+    for (auto instrumentItem : instrumentItems()) {
+        instrumentItem->mapper()->setOnPropertyChange(
+            [this, instrumentItem](const QString& name) {
+                onInstrumentPropertyChange(instrumentItem, name);
+            },
+            this);
+    }
+
+    if (!instrumentItems().isEmpty())
+        emit instrumentAddedOrRemoved();
+}
+
 QVector<InstrumentItem*> InstrumentModel::instrumentItems() const
 {
     return topItems<InstrumentItem>();

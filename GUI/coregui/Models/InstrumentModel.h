@@ -28,6 +28,7 @@ public:
 
     InstrumentModel* createCopy(SessionItem* parent = nullptr) override;
     QVector<SessionItem*> nonXMLItems() const override;
+    virtual void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0) override;
 
     QVector<InstrumentItem*> instrumentItems() const;
 
