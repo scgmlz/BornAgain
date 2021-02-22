@@ -8,13 +8,14 @@ Q_DECLARE_METATYPE(const InstrumentItem*)
 class TestInstrumentModel : public ::testing::Test {
 };
 
-//! Checks that LinkInstrumentManager listens instrument model.
+//! Checks whether instrumentAddedRemoved will be emitted as expected
 
 TEST_F(TestInstrumentModel, test_instrumentAddedRemoved)
 {
     InstrumentModel instrumentModel;
 
     QSignalSpy spy(&instrumentModel, SIGNAL(instrumentAddedOrRemoved()));
+    ASSERT_TRUE(spy.isValid());
 
     // populating instrument model
     auto instrument = instrumentModel.insertItem<GISASInstrumentItem>();

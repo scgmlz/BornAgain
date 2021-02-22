@@ -38,10 +38,26 @@ LinkInstrumentManager::LinkInstrumentManager(QObject* parent)
 void LinkInstrumentManager::setModels(InstrumentModel* instrumentModel,
                                       RealDataModel* realDataModel)
 {
-    setInstrumentModel(instrumentModel);
-    setRealDataModel(realDataModel);
-    updateInstrumentMap();
-    updateRealDataMap();
+    ASSERT(instrumentModel != nullptr);
+    ASSERT(realDataModel != nullptr);
+
+    if (m_instrumentModel)
+        m_instrumentModel->disconnect(this);
+
+    if (m_realDataModel)
+        m_realDataModel->disconnect(this);
+
+    m_instrumentModel = instrumentModel;
+    m_realDataModel = realDataModel;
+
+    connect(m_instrumentModel, &InstrumentModel::instrumentAddedOrRemoved, this,
+            &LinkInstrumentManager::onInstrumentAddedOrRemoved);
+
+    connect(m_realDataModel, &RealDataModel::realDataAddedOrRemoved, this,
+            &LinkInstrumentManager::onRealDataAddedOrRemoved);
+
+    updateInstrumentSubscriptions();
+    updateRealDataSubscriptions();
     updateLinks();
 }
 
@@ -78,15 +94,6 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
     return true;
 }
 
-//! Calls rebuild of instrument map if anything regarding an instrument changed.
-
-void LinkInstrumentManager::setOnInstrumentPropertyChange(SessionItem* instrument,
-                                                          const QString& property)
-{
-    Q_UNUSED(instrument);
-    updateInstrumentMap();
-}
-
 //! Link or re-link RealDataItem to the instrument on identifier change.
 
 void LinkInstrumentManager::setOnRealDataPropertyChange(SessionItem* dataItem,
@@ -113,19 +120,15 @@ void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument, 
 
 void LinkInstrumentManager::onInstrumentAddedOrRemoved()
 {
-    updateInstrumentMap();
+    updateInstrumentSubscriptions();
     updateLinks();
 }
 
 //! Updates map of data on insert/remove RealDataItem event.
 
-void LinkInstrumentManager::onRealDataRowsChange(const QModelIndex& parent, int, int)
+void LinkInstrumentManager::onRealDataAddedOrRemoved()
 {
-    // valid parent means not a data (which is top level item) but something below
-    if (parent.isValid())
-        return;
-
-    updateRealDataMap();
+    updateRealDataSubscriptions();
     updateLinks();
 }
 
@@ -149,16 +152,10 @@ void LinkInstrumentManager::updateLinks()
 
 //! Set up callbacks to all instrument items
 
-void LinkInstrumentManager::updateInstrumentMap()
+void LinkInstrumentManager::updateInstrumentSubscriptions()
 {
     for (auto instrumentItem : m_instrumentModel->instrumentItems()) {
         instrumentItem->mapper()->unsubscribe(this);
-
-        instrumentItem->mapper()->setOnPropertyChange(
-            [this, instrumentItem](const QString& name) {
-                setOnInstrumentPropertyChange(instrumentItem, name);
-            },
-            this);
 
         instrumentItem->mapper()->setOnAnyChildChange(
             [this, instrumentItem](SessionItem* child) {
@@ -166,13 +163,11 @@ void LinkInstrumentManager::updateInstrumentMap()
             },
             this);
     }
-
-    emit instrumentMapUpdated();
 }
 
 //! Sets callbacks for all RealDataItem.
 
-void LinkInstrumentManager::updateRealDataMap()
+void LinkInstrumentManager::updateRealDataSubscriptions()
 {
     for (auto dataItem : m_realDataModel->realDataItems()) {
         dataItem->mapper()->unsubscribe(this);
@@ -214,42 +209,6 @@ QList<RealDataItem*> LinkInstrumentManager::linkedRealDataItems(InstrumentItem* 
             result.append(realDataItem);
     }
     return result;
-}
-
-//! Sets connections for instrument model.
-
-void LinkInstrumentManager::setInstrumentModel(InstrumentModel* model)
-{
-    if (m_instrumentModel)
-        disconnect(m_instrumentModel, &InstrumentModel::instrumentAddedOrRemoved, this,
-                   &LinkInstrumentManager::onInstrumentAddedOrRemoved);
-
-    m_instrumentModel = model;
-
-    if (m_instrumentModel)
-        connect(m_instrumentModel, &InstrumentModel::instrumentAddedOrRemoved, this,
-                &LinkInstrumentManager::onInstrumentAddedOrRemoved);
-}
-
-//! Sets connections for real data model.
-
-void LinkInstrumentManager::setRealDataModel(RealDataModel* model)
-{
-    if (m_realDataModel) {
-        disconnect(m_realDataModel, &RealDataModel::rowsInserted, this,
-                   &LinkInstrumentManager::onRealDataRowsChange);
-        disconnect(m_realDataModel, &RealDataModel::rowsRemoved, this,
-                   &LinkInstrumentManager::onRealDataRowsChange);
-    }
-
-    m_realDataModel = model;
-
-    if (m_realDataModel) {
-        connect(m_realDataModel, &RealDataModel::rowsInserted, this,
-                &LinkInstrumentManager::onRealDataRowsChange);
-        connect(m_realDataModel, &RealDataModel::rowsRemoved, this,
-                &LinkInstrumentManager::onRealDataRowsChange);
-    }
 }
 
 namespace {

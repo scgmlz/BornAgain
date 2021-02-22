@@ -36,6 +36,12 @@ public:
     RealDataItem* insertSpecularDataItem();
     RealDataItem* insertIntensityDataItem();
     QVector<RealDataItem*> realDataItems() const;
+
+signals:
+    void realDataAddedOrRemoved();
+
+private:
+    void onRowsChange(const QModelIndex& parent, int, int);
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAMODEL_H

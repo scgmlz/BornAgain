@@ -19,6 +19,9 @@
 RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDataModelTag, parent)
 {
     setObjectName(SessionXML::RealDataModelTag);
+
+    connect(this, &SessionModel::rowsInserted, this, &RealDataModel::onRowsChange);
+    connect(this, &SessionModel::rowsRemoved, this, &RealDataModel::onRowsChange);
 }
 
 QVector<SessionItem*> RealDataModel::nonXMLItems() const
@@ -86,4 +89,13 @@ RealDataItem* RealDataModel::insertIntensityDataItem()
 QVector<RealDataItem*> RealDataModel::realDataItems() const
 {
     return topItems<RealDataItem>();
+}
+
+void RealDataModel::onRowsChange(const QModelIndex& parent, int, int)
+{
+    // valid parent means not a data (which is top level item) but something below
+    if (parent.isValid())
+        return;
+
+    emit realDataAddedOrRemoved();
 }

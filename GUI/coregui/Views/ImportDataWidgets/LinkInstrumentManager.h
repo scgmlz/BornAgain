@@ -43,27 +43,18 @@ public:
     bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier);
     QList<RealDataItem*> linkedRealDataItems(InstrumentItem* instrumentItem);
 
-signals:
-    //! Will be emitted in case of instrument added, instrument removed, instrument properties
-    //! changed
-    void instrumentMapUpdated();
-
 private slots:
-    void setOnInstrumentPropertyChange(SessionItem* instrument, const QString& property);
     void setOnRealDataPropertyChange(SessionItem* dataItem, const QString& property);
     void onInstrumentChildChange(InstrumentItem* instrument, SessionItem* child);
     void onInstrumentAddedOrRemoved();
-    void onRealDataRowsChange(const QModelIndex& parent, int, int);
+    void onRealDataAddedOrRemoved();
 
     void updateLinks();
-    void updateInstrumentMap();
-    void updateRealDataMap();
+    void updateInstrumentSubscriptions();
+    void updateRealDataSubscriptions();
     void onInstrumentLayoutChange(InstrumentItem* changedInstrument);
 
 private:
-    void setInstrumentModel(InstrumentModel* model);
-    void setRealDataModel(RealDataModel* model);
-
     InstrumentModel* m_instrumentModel;
     RealDataModel* m_realDataModel;
 };

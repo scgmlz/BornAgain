@@ -15,30 +15,6 @@
 class TestLinkInstrument : public ::testing::Test {
 };
 
-//! Checks that LinkInstrumentManager listens instrument model.
-
-TEST_F(TestLinkInstrument, test_linkInstrumentManager)
-{
-    InstrumentModel instrumentModel;
-    RealDataModel realDataModel;
-    LinkInstrumentManager manager;
-    manager.setModels(&instrumentModel, &realDataModel);
-
-    // initial state of LinkInstrumentManager
-    QSignalSpy spy(&manager, SIGNAL(instrumentMapUpdated()));
-
-    // populating instrument model
-    auto instrument = instrumentModel.insertItem<GISASInstrumentItem>();
-    const QString identifier = instrument->id();
-
-    // checking that LinkInstrumentManager was notified about new instrument
-    EXPECT_EQ(spy.count(), 1);
-
-    // removing instrument
-    instrumentModel.removeRow(0);
-    EXPECT_EQ(spy.count(), 2);
-}
-
 TEST_F(TestLinkInstrument, test_canLinkToInstrument)
 {
     InstrumentModel instrumentModel;

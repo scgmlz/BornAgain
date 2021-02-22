@@ -45,9 +45,11 @@ RealDataPropertiesWidget::RealDataPropertiesWidget(QWidget* parent)
             static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
             &RealDataPropertiesWidget::onInstrumentComboIndexChanged);
 
-    connect(MainWindow::instance()->linkInstrumentManager(),
-            &LinkInstrumentManager::instrumentMapUpdated, this,
-            &RealDataPropertiesWidget::updateInstrumentComboEntries);
+    connect(MainWindow::instance()->instrumentModel(), &InstrumentModel::instrumentAddedOrRemoved,
+            this, &RealDataPropertiesWidget::updateInstrumentComboEntries);
+
+    connect(MainWindow::instance()->instrumentModel(), &InstrumentModel::instrumentNameChanged,
+            this, &RealDataPropertiesWidget::updateInstrumentComboEntries);
 
     updateInstrumentComboEntries();
     setPropertiesEnabled(false);
@@ -115,7 +117,7 @@ void RealDataPropertiesWidget::updateInstrumentComboEntries()
     // fill the combo. Userdata contains instrument's uid
     m_instrumentCombo->addItem("Undefined", ""); // undefined instrument
     for (auto instrumentItem : MainWindow::instance()->instrumentModel()->instrumentItems())
-        m_instrumentCombo->addItem(instrumentItem->itemName(), instrumentItem->id());
+        m_instrumentCombo->addItem(instrumentItem->name(), instrumentItem->id());
 
     const int index = m_instrumentCombo->findData(currentId);
     if (index >= 0)

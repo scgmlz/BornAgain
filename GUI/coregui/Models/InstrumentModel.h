@@ -38,7 +38,7 @@ signals:
     void instrumentNameChanged(const InstrumentItem* instrument);
 
 private:
-    void onInstrumentRowsChange(const QModelIndex& parent, int, int);
+    void onRowsChange(const QModelIndex& parent, int, int);
     void onInstrumentPropertyChange(const InstrumentItem* instrument, const QString& propertyName);
 };
 
