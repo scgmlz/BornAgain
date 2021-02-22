@@ -40,6 +40,9 @@ public:
     QString id() const;
     void setId(const QString& id);
 
+    void setName(const QString& instrumentName);
+    QString name() const;
+
     virtual BeamItem* beamItem() const;
     BackgroundItem* backgroundItem() const;
     GroupItem* backgroundGroup();

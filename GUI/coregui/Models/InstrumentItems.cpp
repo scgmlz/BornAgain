@@ -65,6 +65,16 @@ void InstrumentItem::setId(const QString& id)
     setItemValue(P_IDENTIFIER, id);
 }
 
+void InstrumentItem::setName(const QString& instrumentName)
+{
+    setItemName(instrumentName);
+}
+
+QString InstrumentItem::name() const
+{
+    return itemName();
+}
+
 BeamItem* InstrumentItem::beamItem() const
 {
     return item<BeamItem>(P_BEAM);
