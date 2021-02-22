@@ -35,9 +35,11 @@ public:
 
 signals:
     void instrumentAddedOrRemoved();
+    void instrumentNameChanged(const InstrumentItem* instrument);
 
 private:
     void onInstrumentRowsChange(const QModelIndex& parent, int, int);
+    void onInstrumentPropertyChange(const InstrumentItem* instrument, const QString& propertyName);
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H

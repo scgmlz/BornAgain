@@ -70,5 +70,22 @@ void InstrumentModel::onInstrumentRowsChange(const QModelIndex& parent, int, int
     if (parent.isValid())
         return;
 
+    for (auto instrumentItem : instrumentItems()) {
+        instrumentItem->mapper()->unsubscribe(this);
+
+        instrumentItem->mapper()->setOnPropertyChange(
+            [this, instrumentItem](const QString& name) {
+                onInstrumentPropertyChange(instrumentItem, name);
+            },
+            this);
+    }
+
     emit instrumentAddedOrRemoved();
+}
+
+void InstrumentModel::onInstrumentPropertyChange(const InstrumentItem* instrument,
+                                                 const QString& propertyName)
+{
+    if (propertyName == SessionItem::P_NAME)
+        emit instrumentNameChanged(instrument);
 }
