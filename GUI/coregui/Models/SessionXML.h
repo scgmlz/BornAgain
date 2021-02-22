@@ -40,6 +40,7 @@ const QString ItemTag("Item");
 const QString ModelTypeAttribute("ModelType");
 const QString DisplayNameAttribute("DisplayName");
 const QString ParameterTag("Parameter");
+const QString ArbitraryData("ArbitraryData");
 const QString ParameterNameAttribute("ParName");
 const QString ParameterTypeAttribute("ParType");
 const QString ParameterValueAttribute("ParValue");

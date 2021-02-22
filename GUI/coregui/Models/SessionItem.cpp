@@ -568,6 +568,10 @@ void SessionItem::addTranslator(const IPathTranslator& translator)
     m_translators.push_back(translator.clone());
 }
 
+void SessionItem::writeNonSessionItemData(QXmlStreamWriter*) const {}
+
+void SessionItem::readNonSessionItemData(QXmlStreamReader*) {}
+
 void SessionItem::childDeleted(SessionItem* child)
 {
     int index = rowOfChild(child);

@@ -81,8 +81,8 @@ public:
     // Returns root item if index is not valid
     SessionItem* itemForIndex(const QModelIndex& index) const;
 
-    void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0);
-    void writeTo(QXmlStreamWriter* writer, SessionItem* parent = 0);
+    virtual void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0);
+    virtual void writeTo(QXmlStreamWriter* writer, SessionItem* parent = 0);
 
     SessionItem* moveItem(SessionItem* item, SessionItem* new_parent = 0, int row = -1,
                           const QString& tag = "");

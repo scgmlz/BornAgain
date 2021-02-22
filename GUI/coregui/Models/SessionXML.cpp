@@ -63,6 +63,10 @@ void SessionXML::writeItemAndChildItems(QXmlStreamWriter* writer, const SessionI
     for (auto child : item->children())
         writeItemAndChildItems(writer, child);
 
+    writer->writeStartElement(SessionXML::ArbitraryData);
+    item->writeNonSessionItemData(writer);
+    writer->writeEndElement();
+
     if (item->parent())
         writer->writeEndElement(); // ItemTag
 }
@@ -144,6 +148,8 @@ void SessionXML::readItems(QXmlStreamReader* reader, SessionItem* parent, QStrin
                 }
             } else if (reader->name() == SessionXML::ParameterTag) {
                 SessionXML::readProperty(reader, parent, messageService);
+            } else if (reader->name() == SessionXML::ArbitraryData) {
+                parent->readNonSessionItemData(reader);
             }
         } else if (reader->isEndElement()) {
             if (reader->name() == SessionXML::ItemTag && parent)
