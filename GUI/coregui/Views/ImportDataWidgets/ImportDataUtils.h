@@ -37,7 +37,7 @@ ImportDataInfo getFromImportAssistant(QString& fileName);
 //! Creates OutputData with bin-valued axes.
 std::unique_ptr<OutputData<double>> CreateSimplifiedOutputData(const OutputData<double>& data);
 
-//! Returns true if data item is compatible with instrument.
+//! Check whether data item is compatible with instrument (same rank)
 bool Compatible(const InstrumentItem& instrumentItem, const RealDataItem& realDataItem);
 
 //! Composes a message with the shapes of InstrumentItem and RealDataItem.

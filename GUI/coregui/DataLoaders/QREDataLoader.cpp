@@ -568,6 +568,9 @@ bool QREDataLoader::parseFile(const QString& filename, QStringList* errors,
 
         const bool isDuplicateQ = foundQValues.contains(q);
 
+        // #baimport lines could be ignored or loading could be refused. Ignore means more
+        // flexibility, but may hide that the data/file is corrupted in general
+
         // ignore lines when a resulting value would be NAN or in case of duplicate Q values
         // #baimport make this dependent from a UI checkbox?
         if (!containsNaN && !isDuplicateQ) {

@@ -188,17 +188,23 @@ void LinkInstrumentManager::updateRealDataMap()
 
 void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInstrument)
 {
-    for (auto realDataItem : linkedItems(changedInstrument))
+    ASSERT(changedInstrument != nullptr);
+
+    for (auto realDataItem : linkedRealDataItems(changedInstrument))
         if (!changedInstrument->alignedWith(realDataItem))
             realDataItem->clearInstrumentId();
         else
-            realDataItem->linkToInstrument(changedInstrument);
+            realDataItem->linkToInstrument(
+                changedInstrument); // #baimport This is already linked, only the UpdateToInstrument
+                                    // should be called
 }
 
 //! Returns list of RealDataItem's linked to given instrument.
 
-QList<RealDataItem*> LinkInstrumentManager::linkedItems(InstrumentItem* instrumentItem)
+QList<RealDataItem*> LinkInstrumentManager::linkedRealDataItems(InstrumentItem* instrumentItem)
 {
+    ASSERT(instrumentItem != nullptr);
+
     QList<RealDataItem*> result;
     for (auto realDataItem : m_realDataModel->realDataItems()) {
         const QString linkedIdentifier = realDataItem->instrumentId();

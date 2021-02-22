@@ -58,17 +58,17 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
 
     // making link
     realData->setInstrumentId(identifier);
-    EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
+    EXPECT_EQ(manager.linkedRealDataItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector type and checking that link remain
     instrument->setDetectorGroup("RectangularDetector");
-    EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
+    EXPECT_EQ(manager.linkedRealDataItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector binning and checking that link is destroyed
     DetectorItem* detectorItem = instrument->detectorItem();
     auto x_axis = detectorItem->item<BasicAxisItem>(RectangularDetectorItem::P_X_AXIS);
     x_axis->setItemValue(BasicAxisItem::P_NBINS, 10);
 
-    EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>());
+    EXPECT_EQ(manager.linkedRealDataItems(instrument), QList<RealDataItem*>());
     EXPECT_EQ(realData->instrumentId(), QString());
 }

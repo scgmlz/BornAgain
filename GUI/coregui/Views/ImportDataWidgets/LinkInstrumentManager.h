@@ -41,7 +41,7 @@ public:
     void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
 
     bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier);
-    QList<RealDataItem*> linkedItems(InstrumentItem* instrumentItem);
+    QList<RealDataItem*> linkedRealDataItems(InstrumentItem* instrumentItem);
 
 signals:
     //! Will be emitted in case of instrument added, instrument removed, instrument properties
