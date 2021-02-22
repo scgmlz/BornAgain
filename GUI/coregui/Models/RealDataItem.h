@@ -92,6 +92,9 @@ public:
     void setNativeFileName(const QString& filename);
     QString nativeFileName() const;
 
+    virtual void writeNonSessionItemData(QXmlStreamWriter* writer) const override;
+    virtual void readNonSessionItemData(QXmlStreamReader* reader) override;
+
 private:
     void initDataItem(size_t data_rank, const QString& tag);
     void updateNonXMLDataFileNames();

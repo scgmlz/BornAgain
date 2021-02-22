@@ -30,6 +30,7 @@ public:
     virtual QVector<SessionItem*> nonXMLItems() const override;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const override;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+    virtual void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0) override;
 
     RealDataItem* insertRealDataItem();
     RealDataItem* insertSpecularDataItem();

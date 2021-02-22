@@ -56,6 +56,14 @@ bool RealDataModel::setData(const QModelIndex& index, const QVariant& value, int
     return SessionModel::setData(index, value, role);
 }
 
+void RealDataModel::readFrom(QXmlStreamReader* reader, MessageService* messageService /*= 0*/)
+{
+    SessionModel::readFrom(reader, messageService);
+
+    // #baimport If there are realDataItems with no loader => old version. Either create loader, or
+    // refuse loading with "project too old
+}
+
 RealDataItem* RealDataModel::insertRealDataItem()
 {
     return insertItem<RealDataItem>();

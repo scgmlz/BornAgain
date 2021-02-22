@@ -21,12 +21,21 @@
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "GUI/coregui/utils/ImportDataInfo.h"
+#include <QtCore/QXmlStreamReader>
+#include <QtCore/QXmlStreamWriter>
 
 const QString RealDataItem::P_INSTRUMENT_ID = "Instrument Id";
 const QString RealDataItem::P_INSTRUMENT_NAME = "Instrument";
 const QString RealDataItem::T_INTENSITY_DATA = "Intensity data";
 const QString RealDataItem::T_NATIVE_DATA = "Native user data axis";
 const QString RealDataItem::P_NATIVE_DATA_UNITS = "Native user data units";
+
+namespace XMLTags {
+const QString Version("Version");
+const QString NativeFilename("NativeFileName");
+const QString ImportSettings("ImportSettings");
+const QString Value("Value");
+} // namespace XMLTags
 
 RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullptr)
 {
@@ -229,6 +238,7 @@ void RealDataItem::setInstrumentId(const QString& id)
 void RealDataItem::clearInstrumentId()
 {
     setItemValue(P_INSTRUMENT_ID, QString());
+    // #baimport ++ should m_linkedInstrument be set to null?
 }
 
 std::vector<int> RealDataItem::shape() const
@@ -276,6 +286,39 @@ void RealDataItem::setNativeFileName(const QString& filename)
 QString RealDataItem::nativeFileName() const
 {
     return m_nativeFileName;
+}
+
+void RealDataItem::writeNonSessionItemData(QXmlStreamWriter* writer) const
+{
+    writer->writeEmptyElement(XMLTags::Version);
+    writer->writeAttribute(XMLTags::Value, "1");
+
+    writer->writeEmptyElement(XMLTags::NativeFilename);
+    writer->writeAttribute(XMLTags::Value, m_nativeFileName);
+
+    writer->writeEmptyElement(XMLTags::ImportSettings);
+    writer->writeAttribute(XMLTags::Value, m_importSettings.toBase64());
+}
+
+void RealDataItem::readNonSessionItemData(QXmlStreamReader* reader)
+{
+    m_nativeFileName.clear();
+    m_importSettings.clear();
+
+    // #baimport ++ check version
+    // #baimport ++ check compatible versions
+    while (reader->readNextStartElement()) {
+        if (reader->name() == XMLTags::NativeFilename) {
+
+            m_nativeFileName = reader->attributes().value(XMLTags::Value).toString();
+        } else if (reader->name() == XMLTags::ImportSettings) {
+            QStringRef valueAsBase64 = reader->attributes().value(XMLTags::Value);
+            m_importSettings = QByteArray::fromBase64(
+                valueAsBase64.toLatin1()); // #baimport add a unit test for this!
+        }
+
+        reader->skipCurrentElement();
+    }
 }
 
 //! Updates the name of file to store intensity data.
