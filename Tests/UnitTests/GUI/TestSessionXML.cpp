@@ -38,8 +38,8 @@ TEST_F(TestSessionXML, test_sessionItem)
     source.insertItem<PropertyItem>();
 
     expected = "<TestModel Name=\"DefaultName\">"
-               "<Item ModelType=\"Property\" Tag=\"rootTag\" DisplayName=\"Property\"/>"
-               "</TestModel>";
+               "<Item ModelType=\"Property\" Tag=\"rootTag\" DisplayName=\"Property\">"
+               "<ArbitraryData/></Item><ArbitraryData/></TestModel>";
     EXPECT_EQ(itemToXML(source.rootItem()), expected);
 
     SessionModel target("TestModel");
