@@ -65,9 +65,6 @@ public:
 
     void setDetectorResolutionFunction(const IResolutionFunction2D& resolution_function);
 
-    void setAnalyzerProperties(const kvector_t direction, double efficiency,
-                               double total_transmission);
-
     void setSample(const MultiLayer& sample);
     const MultiLayer* sample() const;
 
