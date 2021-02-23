@@ -67,7 +67,9 @@ public:
     void initNativeData();
     QString nativeDataUnits() const;
     void setNativeDataUnits(const QString& units);
-    bool hasNativeData() const;   
+    bool hasNativeData() const;
+    const OutputData<double>* nativeOutputData() const;
+    void setNativeOutputData(OutputData<double>* data);
 
     void setOutputData(OutputData<double>* data);
     void setImportData(ImportDataInfo data);

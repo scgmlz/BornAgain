@@ -207,8 +207,7 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
     if (!realDataItem->nativeData())
         return;
 
-    realDataItemCopy->nativeData()->setOutputData(
-        realDataItem->nativeData()->getOutputData()->clone());
+    realDataItemCopy->setNativeOutputData(realDataItem->nativeOutputData()->clone());
     realDataItemCopy->nativeData()->setFileName(ItemFileNameUtils::jobNativeDataFileName(*jobItem));
 }
 

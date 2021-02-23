@@ -151,7 +151,7 @@ void SpecularInstrumentItem::updateToRealData(const RealDataItem* item)
         throw GUIHelpers::Error("Error in SpecularInstrumentItem::updateToRealData: The type "
                                 "of instrument is incompatible with passed data shape.");
 
-    const auto& data = item->nativeData()->getOutputData()->axis(0);
+    const auto& data = item->nativeOutputData()->axis(0);
     beamItem()->updateToData(data, item->nativeDataUnits());
 }
 
@@ -172,7 +172,7 @@ bool SpecularInstrumentItem::alignedWith(const RealDataItem* item) const
         if (!instrument_axis)
             return false;
 
-        const auto& native_axis = item->nativeData()->getOutputData()->axis(0);
+        const auto& native_axis = item->nativeOutputData()->axis(0);
         return *instrument_axis == native_axis;
         ;
     }

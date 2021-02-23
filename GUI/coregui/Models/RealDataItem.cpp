@@ -150,6 +150,18 @@ bool RealDataItem::hasNativeData() const
     return (nativeData() != nullptr) && (nativeData()->getOutputData() != nullptr);
 }
 
+const OutputData<double>* RealDataItem::nativeOutputData() const
+{
+    return hasNativeData() ? nativeData()->getOutputData() : nullptr;
+}
+
+//! takes ownership of data
+
+void RealDataItem::setNativeOutputData(OutputData<double>* data)
+{
+    nativeData()->setOutputData(data); // takes ownership of odata
+}
+
 //! Creates data item if not existing so far. Checks for rank compatibility if already existing. No
 //! further initialization like clearing the data etc.
 
