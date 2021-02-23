@@ -41,7 +41,8 @@ class SimulationOptions;
 
 class ProcessedSample {
 public:
-    ProcessedSample(const MultiLayer& sample, const SimulationOptions& options);
+    ProcessedSample(const MultiLayer& sample, const SimulationOptions& options,
+                    bool forcePolarized = false);
     ~ProcessedSample();
 
     size_t numberOfSlices() const;

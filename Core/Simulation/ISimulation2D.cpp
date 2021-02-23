@@ -102,8 +102,10 @@ std::unique_ptr<IComputation> ISimulation2D::generateSingleThreadedComputation(s
 {
     ASSERT(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
     const auto& begin = m_sim_elements.begin() + static_cast<long>(start);
+    const auto polarized =
+        this->detector().detectionProperties().analyzerDirection() != kvector_t{};
     return std::make_unique<DWBAComputation>(*sample(), options(), progress(), begin,
-                                             begin + static_cast<long>(n_elements));
+                                             begin + static_cast<long>(n_elements), polarized);
 }
 
 std::vector<SimulationElement> ISimulation2D::generateSimulationElements(const Beam& beam)

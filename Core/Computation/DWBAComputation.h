@@ -36,7 +36,7 @@ class DWBAComputation : public IComputation {
 public:
     DWBAComputation(const MultiLayer& multilayer, const SimulationOptions& options,
                     ProgressHandler& progress, std::vector<SimulationElement>::iterator begin_it,
-                    std::vector<SimulationElement>::iterator end_it);
+                    std::vector<SimulationElement>::iterator end_it, bool forcePolarized=false);
     ~DWBAComputation() override;
 
 private:

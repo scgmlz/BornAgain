@@ -38,7 +38,7 @@ class SpecularComputation : public IComputation {
 public:
     SpecularComputation(const MultiLayer& multilayer, const SimulationOptions& options,
                         ProgressHandler& progress, SpecularElementIter begin_it,
-                        SpecularElementIter end_it);
+                        SpecularElementIter end_it, bool forcePolarized=false);
     ~SpecularComputation() override;
 
 private:
