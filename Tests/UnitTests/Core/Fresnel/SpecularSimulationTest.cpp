@@ -129,6 +129,29 @@ TEST_F(SpecularSimulationTest, SetAngularScan)
 
     sim3.setInstrument(Instrument());
     checkBeamState(sim3);
+
+    SpecularSimulation sim4;
+    AngularSpecScan scan4(1.0, 10, .0 * Units::deg, 2.0 * Units::deg);
+    const auto polarization = kvector_t({0., 0., 1.});
+    const auto analyzer     = kvector_t({0., 0., 1.});
+    sim4.beam().setPolarization(polarization);
+    sim4.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim4.setScan(scan4);
+//    EXPECT_THROW(sim4.setScan(scan4), std::runtime_error);
+
+    EXPECT_EQ(.0 * Units::deg, sim4.coordinateAxis()->lowerBound());
+    EXPECT_EQ(2.0 * Units::deg, sim4.coordinateAxis()->upperBound());
+    EXPECT_EQ(10u, sim4.coordinateAxis()->size());
+    EXPECT_EQ(1.0, sim4.beam().intensity());
+    EXPECT_EQ(1.0, sim4.beam().wavelength());
+    EXPECT_EQ(0.0, sim4.beam().direction().alpha());
+    EXPECT_EQ(0.0, sim4.beam().direction().phi());
+
+    EXPECT_EQ(sim4.beam().getBlochVector(), polarization);
+    EXPECT_EQ(sim4.detector().detectionProperties().analyzerDirection(), analyzer);
+
+    sim3.setInstrument(Instrument());
+    checkBeamState(sim3);
 }
 
 TEST_F(SpecularSimulationTest, SetQScan)
