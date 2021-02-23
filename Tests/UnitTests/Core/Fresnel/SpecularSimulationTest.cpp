@@ -137,7 +137,7 @@ TEST_F(SpecularSimulationTest, SetAngularScan)
     sim4.beam().setPolarization(polarization);
     sim4.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
     sim4.setScan(scan4);
-//    EXPECT_THROW(sim4.setScan(scan4), std::runtime_error);
+    EXPECT_THROW(sim4.setScan(scan4), std::runtime_error);
 
     EXPECT_EQ(.0 * Units::deg, sim4.coordinateAxis()->lowerBound());
     EXPECT_EQ(2.0 * Units::deg, sim4.coordinateAxis()->upperBound());

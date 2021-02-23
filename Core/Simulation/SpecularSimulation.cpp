@@ -61,6 +61,8 @@ std::vector<SpecularSimulationElement> generateSimulationElements(const Instrume
 SpecularSimulation::SpecularSimulation() : ISimulation()
 {
     initialize();
+    SpecularDetector1D detector;
+    instrument().setDetector(detector);
 }
 
 SpecularSimulation::SpecularSimulation(const SpecularSimulation& other)
@@ -109,7 +111,7 @@ SimulationResult SpecularSimulation::result() const
 
 void SpecularSimulation::setScan(const ISpecularScan& scan)
 {
-    if(m_scan)
+    if (m_scan)
         throw std::runtime_error("Error in SpecularSimulation::setScan: Scan cannot be set twice");
 
     // TODO: move inside AngularSpecScan when pointwise resolution is implemented
@@ -119,8 +121,10 @@ void SpecularSimulation::setScan(const ISpecularScan& scan)
 
     m_scan.reset(scan.clone());
 
-    SpecularDetector1D detector(*scan.coordinateAxis());
-    instrument().setDetector(detector);
+    if(instrument().detector().dimension() > 0)
+        throw std::runtime_error("Error in SpecularSimulation::setScan: Axis already set");
+
+    instrument().detector().addAxis(*scan.coordinateAxis());
 
     // TODO: remove when pointwise resolution is implemented
     if (const auto* aScan = dynamic_cast<const AngularSpecScan*>(&scan))
@@ -161,8 +165,10 @@ SpecularSimulation::generateSingleThreadedComputation(size_t start, size_t n_ele
 {
     ASSERT(start < m_sim_elements.size() && start + n_elements <= m_sim_elements.size());
     const auto& begin = m_sim_elements.begin() + static_cast<long>(start);
+    const auto polarized =
+            this->detector().detectionProperties().analyzerDirection() != kvector_t{};
     return std::make_unique<SpecularComputation>(*sample(), options(), progress(), begin,
-                                                 begin + static_cast<long>(n_elements));
+                                                 begin + static_cast<long>(n_elements), polarized);
 }
 
 void SpecularSimulation::checkCache() const

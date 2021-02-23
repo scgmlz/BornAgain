@@ -30,6 +30,7 @@ class SpecularSimulationElement;
 class SpecularDetector1D : public IDetector {
 public:
     SpecularDetector1D(const IAxis& axis);
+    SpecularDetector1D();
     virtual ~SpecularDetector1D();
 
     SpecularDetector1D* clone() const override;
@@ -43,6 +44,9 @@ public:
     const RegionOfInterest* regionOfInterest() const override { return nullptr; }
 
     void resetRegionOfInterest() override {}
+
+    // Set the angular axis. A SpecularDetector1D can only have a single axis
+    void setAxis(const IAxis& axis);
 
     //! Return default axes units
     Axes::Units defaultAxesUnits() const override;
