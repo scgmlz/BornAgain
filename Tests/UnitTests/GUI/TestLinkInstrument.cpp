@@ -30,7 +30,7 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", realDataModel);
     JobItemUtils::createDefaultDetectorMap(realData->dataItem(), instrument);
 
-    QVERIFY(manager.canLinkDataToInstrument(realData, identifier));
+    ASSERT_TRUE(manager.canLinkDataToInstrument(realData, identifier, true));
 
     // making link
     realData->setInstrumentId(identifier);

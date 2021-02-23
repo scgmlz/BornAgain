@@ -16,14 +16,17 @@
 #define BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H
 
 #include "GUI/coregui/Models/SessionItem.h"
+#include <QPointer>
 
 class DataItem;
 class InstrumentItem;
+class InstrumentModel;
 class IntensityDataItem;
 class SpecularDataItem;
 class MaskContainerItem;
 template <class T> class OutputData;
 class ImportDataInfo;
+class RealDataModel;
 
 //! The RealDataItem class represents intensity data imported from file and intended for fitting.
 
@@ -64,16 +67,18 @@ public:
     void initNativeData();
     QString nativeDataUnits() const;
     void setNativeDataUnits(const QString& units);
+    bool hasNativeData() const;   
 
     void setOutputData(OutputData<double>* data);
     void setImportData(ImportDataInfo data);
     bool holdsDimensionalData() const;
 
-    void linkToInstrument(const InstrumentItem* instrument, bool make_update = true);
-
+    void updateToInstrument(const InstrumentItem* instrument);
+    void updateToInstrument(const QString& id);
     QString instrumentId() const;
     void setInstrumentId(const QString& id);
     void clearInstrumentId();
+    InstrumentItem* linkedInstrument() const;
 
     //! Returns the shape of underlying data item
     std::vector<int> shape() const;
@@ -98,8 +103,10 @@ public:
 private:
     void initDataItem(size_t data_rank, const QString& tag);
     void updateNonXMLDataFileNames();
-    void updateToInstrument();
-    const InstrumentItem* m_linkedInstrument;
+
+    RealDataModel* realDataModel() const;
+    InstrumentModel* instrumentModel() const;
+
     QByteArray m_importSettings;
     QString m_nativeFileName;
 };

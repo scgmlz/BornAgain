@@ -14,9 +14,11 @@
 
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/ItemFileNameUtils.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/RealDataModel.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
@@ -37,7 +39,7 @@ const QString ImportSettings("ImportSettings");
 const QString Value("Value");
 } // namespace XMLTags
 
-RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullptr)
+RealDataItem::RealDataItem() : SessionItem("RealData")
 {
     setItemName("undefined");
 
@@ -48,7 +50,7 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
     setDefaultTag(T_INTENSITY_DATA);
 
     addProperty(P_INSTRUMENT_ID, QString());
-    addProperty(P_INSTRUMENT_NAME, QString()); // #migration This is never used - return after
+    addProperty(P_INSTRUMENT_NAME, QString()); // #migration This is never used - remove after
                                                // checking whether this breaks loading old files
 
     registerTag(T_NATIVE_DATA, 1, 1,
@@ -68,11 +70,11 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
 
     mapper()->setOnChildPropertyChange([this](SessionItem* item, const QString& name) {
         auto data_item = dynamic_cast<DataItem*>(item);
-        if (!data_item || !m_linkedInstrument || name != DataItem::P_AXES_UNITS)
+        if (!data_item || !linkedInstrument() || name != DataItem::P_AXES_UNITS)
             return;
 
         mapper()->setActive(false);
-        data_item->updateAxesUnits(m_linkedInstrument);
+        data_item->updateAxesUnits(linkedInstrument());
         mapper()->setActive(true);
     });
 }
@@ -143,6 +145,11 @@ void RealDataItem::setNativeDataUnits(const QString& units)
     getItem(P_NATIVE_DATA_UNITS)->setValue(units);
 }
 
+bool RealDataItem::hasNativeData() const
+{
+    return (nativeData() != nullptr) && (nativeData()->getOutputData() != nullptr);
+}
+
 //! Creates data item if not existing so far. Checks for rank compatibility if already existing. No
 //! further initialization like clearing the data etc.
 
@@ -197,7 +204,7 @@ void RealDataItem::setImportData(ImportDataInfo data)
     auto output_data = data.intensityData();
 
     dataItem()->reset(std::move(data));
-    getItem(P_NATIVE_DATA_UNITS)->setValue(units_name);
+    setNativeDataUnits(units_name);
     item<DataItem>(T_NATIVE_DATA)->setOutputData(output_data.release());
 }
 
@@ -218,13 +225,6 @@ bool RealDataItem::holdsDimensionalData() const
     return nativeDataUnits() != "nbins";
 }
 
-void RealDataItem::linkToInstrument(const InstrumentItem* instrument, bool make_update)
-{
-    m_linkedInstrument = instrument;
-    if (make_update)
-        updateToInstrument();
-}
-
 QString RealDataItem::instrumentId() const
 {
     return getItemValue(P_INSTRUMENT_ID).toString();
@@ -239,6 +239,12 @@ void RealDataItem::clearInstrumentId()
 {
     setItemValue(P_INSTRUMENT_ID, QString());
     // #baimport ++ should m_linkedInstrument be set to null?
+}
+
+InstrumentItem* RealDataItem::linkedInstrument() const
+{
+    return instrumentModel() != nullptr ? instrumentModel()->findInstrumentById(instrumentId())
+                                        : nullptr;
 }
 
 std::vector<int> RealDataItem::shape() const
@@ -331,21 +337,47 @@ void RealDataItem::updateNonXMLDataFileNames()
         item->setFileName(ItemFileNameUtils::nativeDataFileName(*this));
 }
 
-void RealDataItem::updateToInstrument()
+RealDataModel* RealDataItem::realDataModel() const
+{
+    return dynamic_cast<RealDataModel*>(model());
+}
+
+InstrumentModel* RealDataItem::instrumentModel() const
+{
+    return realDataModel() != nullptr ? realDataModel()->instrumentModel() : nullptr;
+}
+
+void RealDataItem::updateToInstrument(const InstrumentItem* instrument)
 {
     DataItem* data_item = dataItem();
     if (!data_item)
         return;
 
-    if (m_linkedInstrument) {
-        JobItemUtils::setIntensityItemAxesUnits(data_item, m_linkedInstrument);
+    if (instrument) {
+        JobItemUtils::setIntensityItemAxesUnits(data_item, instrument);
         return;
     }
 
-    auto native_data_item = nativeData();
-    auto data_source = native_data_item ? native_data_item : data_item;
+    // unlinking => going back to native data
+    if (isSpecularData()) {
+        if (hasNativeData()) {
+            std::unique_ptr<OutputData<double>> native_data(nativeData()->getOutputData()->clone());
+            const QString units_label = nativeDataUnits();
+            data_item->reset(ImportDataInfo(std::move(native_data), units_label));
+        } else {
+            specularDataItem()->setOutputData(nullptr);
+        }
+    } else {
+        auto native_data_item = nativeData();
+        auto data_source = native_data_item ? native_data_item : data_item;
 
-    std::unique_ptr<OutputData<double>> native_data(data_source->getOutputData()->clone());
-    const QString units_label = nativeDataUnits();
-    data_item->reset(ImportDataInfo(std::move(native_data), units_label));
+        std::unique_ptr<OutputData<double>> native_data(data_source->getOutputData()->clone());
+        const QString units_label = nativeDataUnits();
+        data_item->reset(ImportDataInfo(std::move(native_data), units_label));
+    }
+}
+
+void RealDataItem::updateToInstrument(const QString& id)
+{
+    updateToInstrument(instrumentModel()->findInstrumentById(id));
 }

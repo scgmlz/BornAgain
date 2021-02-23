@@ -16,7 +16,8 @@
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/RealDataItem.h"
 
-RealDataModel::RealDataModel(QObject* parent) : SessionModel(SessionXML::RealDataModelTag, parent)
+RealDataModel::RealDataModel(QObject* parent)
+    : SessionModel(SessionXML::RealDataModelTag, parent), m_instrumentModel(nullptr)
 {
     setObjectName(SessionXML::RealDataModelTag);
 
@@ -61,10 +62,19 @@ bool RealDataModel::setData(const QModelIndex& index, const QVariant& value, int
 
 void RealDataModel::readFrom(QXmlStreamReader* reader, MessageService* messageService /*= 0*/)
 {
+    // do not send added-notifications until completely read - otherwise partially
+    // initialized items will be notified
+    disconnect(this, &SessionModel::rowsInserted, this, &RealDataModel::onRowsChange);
+
     SessionModel::readFrom(reader, messageService);
+
+    connect(this, &SessionModel::rowsInserted, this, &RealDataModel::onRowsChange);
 
     // #baimport If there are realDataItems with no loader => old version. Either create loader, or
     // refuse loading with "project too old
+
+    if (!realDataItems().isEmpty())
+        emit realDataAddedOrRemoved();
 }
 
 RealDataItem* RealDataModel::insertRealDataItem()
@@ -89,6 +99,16 @@ RealDataItem* RealDataModel::insertIntensityDataItem()
 QVector<RealDataItem*> RealDataModel::realDataItems() const
 {
     return topItems<RealDataItem>();
+}
+
+InstrumentModel* RealDataModel::instrumentModel() const
+{
+    return m_instrumentModel;
+}
+
+void RealDataModel::setInstrumentModel(InstrumentModel* instrumentModel)
+{
+    m_instrumentModel = instrumentModel;
 }
 
 void RealDataModel::onRowsChange(const QModelIndex& parent, int, int)

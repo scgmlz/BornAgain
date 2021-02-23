@@ -202,6 +202,8 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
     // adapting the name to job name
     realDataItemCopy->dataItem()->setFileName(ItemFileNameUtils::jobReferenceFileName(*jobItem));
 
+    // #baimport ++ copy members of realDataItem
+
     if (!realDataItem->nativeData())
         return;
 
@@ -224,7 +226,8 @@ void processInstrumentLink(JobItem* jobItem)
     if (!realData)
         throw GUIHelpers::Error("JobModelFunctions::processInstrumentLink() -> Error. No data.");
 
-    realData->linkToInstrument(jobItem->instrumentItem());
+    realData->setInstrumentId(jobItem->instrumentItem()->id());
+    realData->updateToInstrument(jobItem->instrumentItem());
 }
 
 void copyMasksToInstrument(JobItem* jobItem)

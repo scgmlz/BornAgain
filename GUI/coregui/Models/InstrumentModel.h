@@ -33,6 +33,7 @@ public:
     QVector<InstrumentItem*> instrumentItems() const;
 
     InstrumentItem* findInstrumentById(const QString& instrumentId) const;
+    bool instrumentExists(const QString& instrumentId) const;
 
 signals:
     void instrumentAddedOrRemoved();

@@ -18,6 +18,7 @@
 #include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/Models/DataItemUtils.h"
+#include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/mainwindow/AppSvc.h"
@@ -37,7 +38,7 @@ SpecularDataImportWidget::SpecularDataImportWidget(QWidget* parent)
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     m_ui->setupUi(this);
-    m_ui->linkedInstrumentGroup->hide();    // #baimport - remove from UI if not used in the future
+    m_ui->linkedInstrumentGroup->hide(); // #baimport - remove from UI if not used in the future
 
     if (DataLoaders1D::instance().loaders().isEmpty())
         DataLoaders1D::instance().initBuiltInLoaders();
@@ -222,6 +223,13 @@ void SpecularDataImportWidget::onPropertiesChanged()
     applyProperties();
     QStringList errors, warnings;
     m_loader->importFile(realDataItem()->nativeFileName(), realDataItem(), &errors, &warnings);
+
+    // If there is a linked instrument, any change in import settings can break the compatibility.
+    // Therefore check the compatibility and break the link if necessary
+    if (realDataItem()->linkedInstrument() != nullptr) {
+        if (!realDataItem()->linkedInstrument()->alignedWith(realDataItem()))
+            realDataItem()->clearInstrumentId();
+    }
 
     updatePreview();
 }

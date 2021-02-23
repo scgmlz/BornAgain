@@ -15,9 +15,11 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_REALDATAMODEL_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_REALDATAMODEL_H
 
-#include "GUI/coregui/Models/SessionModel.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
+#include <QPointer>
 
 class RealDataItem;
+class InstrumentModel;
 
 //! The RealDataModel class is a model to store all imported RealDataItem's.
 
@@ -26,6 +28,7 @@ class RealDataModel : public SessionModel {
 
 public:
     explicit RealDataModel(QObject* parent = 0);
+    void setInstrumentModel(InstrumentModel* instrumentModel);
 
     virtual QVector<SessionItem*> nonXMLItems() const override;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const override;
@@ -37,11 +40,16 @@ public:
     RealDataItem* insertIntensityDataItem();
     QVector<RealDataItem*> realDataItems() const;
 
+    InstrumentModel* instrumentModel() const;
+
 signals:
     void realDataAddedOrRemoved();
 
 private:
     void onRowsChange(const QModelIndex& parent, int, int);
+
+private:
+    QPointer<InstrumentModel> m_instrumentModel;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAMODEL_H

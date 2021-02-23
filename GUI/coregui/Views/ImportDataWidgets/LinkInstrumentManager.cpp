@@ -14,6 +14,7 @@
 
 #include "GUI/coregui/Views/ImportDataWidgets/LinkInstrumentManager.h"
 #include "GUI/coregui/Models/AxesItems.h"
+#include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/DetectorItems.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InstrumentModel.h"
@@ -21,6 +22,7 @@
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/RealDataModel.h"
 #include "GUI/coregui/Views/ImportDataWidgets/ImportDataUtils.h"
+#include "GUI/coregui/mainwindow/mainwindow.h"
 #include <QMessageBox>
 #include <QPushButton>
 
@@ -53,19 +55,15 @@ void LinkInstrumentManager::setModels(InstrumentModel* instrumentModel,
     connect(m_instrumentModel, &InstrumentModel::instrumentAddedOrRemoved, this,
             &LinkInstrumentManager::onInstrumentAddedOrRemoved);
 
-    connect(m_realDataModel, &RealDataModel::realDataAddedOrRemoved, this,
-            &LinkInstrumentManager::onRealDataAddedOrRemoved);
-
     updateInstrumentSubscriptions();
-    updateRealDataSubscriptions();
-    updateLinks();
 }
 
 //! Returns true if RealDataItem can be linked to the instrument (same number of bins).
 //! Also offers dialog to adjust instrument to match shape of real data.
 
 bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realDataItem,
-                                                    const QString& identifier)
+                                                    const QString& identifier,
+                                                    bool quiet /*= false*/)
 {
     auto instrumentItem = m_instrumentModel->findInstrumentById(identifier);
 
@@ -73,10 +71,18 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
     if (!instrumentItem)
         return true;
 
-    // #baTODO: Fix modality!
-    if (!ImportDataUtils::Compatible(*instrumentItem, *realDataItem)) {
-        QMessageBox::warning(nullptr, "Can't link to instrument",
-                             "Can't link, data is incompatible with the instrument.");
+    const bool isCompatible = ImportDataUtils::Compatible(*instrumentItem, *realDataItem);
+    if (!isCompatible) {
+        if (!quiet)
+            QMessageBox::warning(MainWindow::instance(), "Can't link to instrument",
+                                 "Can't link, data is incompatible with the instrument.");
+        return false;
+    }
+
+    if (realDataItem->isSpecularData() && !realDataItem->hasNativeData()) {
+        if (!quiet)
+            QMessageBox::warning(MainWindow::instance(), "Can't link to instrument",
+                                 "Can't link, data is empty.");
         return false;
     }
 
@@ -94,18 +100,6 @@ bool LinkInstrumentManager::canLinkDataToInstrument(const RealDataItem* realData
     return true;
 }
 
-//! Link or re-link RealDataItem to the instrument on identifier change.
-
-void LinkInstrumentManager::setOnRealDataPropertyChange(SessionItem* dataItem,
-                                                        const QString& property)
-{
-    if (property == RealDataItem::P_INSTRUMENT_ID) {
-        RealDataItem* realDataItem = dynamic_cast<RealDataItem*>(dataItem);
-        const QString identifier = realDataItem->instrumentId();
-        realDataItem->linkToInstrument(m_instrumentModel->findInstrumentById(identifier));
-    }
-}
-
 //! Perform actions on instrument children change.
 
 void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument, SessionItem* child)
@@ -113,41 +107,28 @@ void LinkInstrumentManager::onInstrumentChildChange(InstrumentItem* instrument, 
     if (child == nullptr)
         return;
 
-    onInstrumentLayoutChange(instrument);
+    ASSERT(instrument != nullptr);
+
+    // Run through all RealDataItem and refresh linking to match possible change in detector
+    // axes definition.
+    for (auto realDataItem : linkedRealDataItems(instrument))
+        if (!instrument->alignedWith(realDataItem))
+            realDataItem->clearInstrumentId();
+        else
+            realDataItem->updateToInstrument(instrument);
 }
 
 //! Updates map of instruments on insert/remove InstrumentItem event.
 
 void LinkInstrumentManager::onInstrumentAddedOrRemoved()
 {
-    updateInstrumentSubscriptions();
-    updateLinks();
-}
-
-//! Updates map of data on insert/remove RealDataItem event.
-
-void LinkInstrumentManager::onRealDataAddedOrRemoved()
-{
-    updateRealDataSubscriptions();
-    updateLinks();
-}
-
-//! Runs through all RealDataItem and check all links.
-
-void LinkInstrumentManager::updateLinks()
-{
+    // remove links in realDataItems (in case of a linked instrument was removed)
     for (auto realDataItem : m_realDataModel->realDataItems()) {
-        const QString identifier = realDataItem->instrumentId();
-        auto instrumentItem = m_instrumentModel->findInstrumentById(identifier);
-
-        if (!instrumentItem) {
-            // if no instrument with P_INSTRUMENT_ID exists, break the link
+        if (!m_instrumentModel->instrumentExists(realDataItem->instrumentId()))
             realDataItem->clearInstrumentId();
-        } else {
-            // refresh the link to update axes
-            realDataItem->linkToInstrument(instrumentItem);
-        }
     }
+
+    updateInstrumentSubscriptions();
 }
 
 //! Set up callbacks to all instrument items
@@ -163,35 +144,6 @@ void LinkInstrumentManager::updateInstrumentSubscriptions()
             },
             this);
     }
-}
-
-//! Sets callbacks for all RealDataItem.
-
-void LinkInstrumentManager::updateRealDataSubscriptions()
-{
-    for (auto dataItem : m_realDataModel->realDataItems()) {
-        dataItem->mapper()->unsubscribe(this);
-
-        dataItem->mapper()->setOnPropertyChange(
-            [this, dataItem](const QString& name) { setOnRealDataPropertyChange(dataItem, name); },
-            this);
-    }
-}
-
-//! Runs through all RealDataItem and refresh linking to match possible change in detector
-//! axes definition.
-
-void LinkInstrumentManager::onInstrumentLayoutChange(InstrumentItem* changedInstrument)
-{
-    ASSERT(changedInstrument != nullptr);
-
-    for (auto realDataItem : linkedRealDataItems(changedInstrument))
-        if (!changedInstrument->alignedWith(realDataItem))
-            realDataItem->clearInstrumentId();
-        else
-            realDataItem->linkToInstrument(
-                changedInstrument); // #baimport This is already linked, only the UpdateToInstrument
-                                    // should be called
 }
 
 //! Returns list of RealDataItem's linked to given instrument.

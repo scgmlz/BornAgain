@@ -96,9 +96,10 @@ void RealDataPropertiesWidget::onInstrumentComboIndexChanged(int index)
         return;
 
     if (MainWindow::instance()->linkInstrumentManager()->canLinkDataToInstrument(
-            m_currentDataItem, newSelectedInstrumentId))
+            m_currentDataItem, newSelectedInstrumentId)) {
         m_currentDataItem->setInstrumentId(newSelectedInstrumentId);
-    else
+        m_currentDataItem->updateToInstrument(newSelectedInstrumentId);
+    } else
         // Linking was impossible or denied. Set combo to previous state
         setComboToIdentifier(m_currentDataItem->instrumentId());
 }

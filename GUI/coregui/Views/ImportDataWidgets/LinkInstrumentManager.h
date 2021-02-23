@@ -40,19 +40,19 @@ public:
 
     void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
 
-    bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier);
+    //! quiet defines whether a "not possible" message box is shown if link is not possible. Use
+    //! this e.g. for unit tests. The question for adjusting the instrument is not suppressed by
+    //! this flag.
+    bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier,
+                                 bool quiet = false);
+
     QList<RealDataItem*> linkedRealDataItems(InstrumentItem* instrumentItem);
 
 private slots:
-    void setOnRealDataPropertyChange(SessionItem* dataItem, const QString& property);
     void onInstrumentChildChange(InstrumentItem* instrument, SessionItem* child);
     void onInstrumentAddedOrRemoved();
-    void onRealDataAddedOrRemoved();
 
-    void updateLinks();
     void updateInstrumentSubscriptions();
-    void updateRealDataSubscriptions();
-    void onInstrumentLayoutChange(InstrumentItem* changedInstrument);
 
 private:
     InstrumentModel* m_instrumentModel;

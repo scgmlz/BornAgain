@@ -86,6 +86,11 @@ InstrumentItem* InstrumentModel::findInstrumentById(const QString& instrumentId)
     return nullptr;
 }
 
+bool InstrumentModel::instrumentExists(const QString& instrumentId) const
+{
+    return findInstrumentById(instrumentId) != nullptr;
+}
+
 void InstrumentModel::onRowsChange(const QModelIndex& parent, int, int)
 {
     // valid parent means not an instrument (which is top level item) but something below
