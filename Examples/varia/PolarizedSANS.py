@@ -69,7 +69,7 @@ def get_simulation(sample):
     analyzer_dir = kvector_t(0.0, 0.0, -1.0)
     beampol = kvector_t(0.0, 0.0, 1.0)
     simulation.beam().setPolarization(beampol)
-    simulation.setAnalyzerProperties(analyzer_dir, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer_dir, 1.0, 0.5)
     simulation.setSample(sample)
     return simulation
 

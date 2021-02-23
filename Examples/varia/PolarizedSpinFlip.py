@@ -54,7 +54,7 @@ def run_simulation(polarization=ba.kvector_t(0, 1, 0),
 
     # adding polarization and analyzer operator
     simulation.beam().setPolarization(polarization)
-    simulation.setAnalyzerProperties(analyzer, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer, 1.0, 0.5)
 
     simulation.runSimulation()
     return simulation.result()

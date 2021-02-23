@@ -51,7 +51,7 @@ def get_simulation(sample):
     detector = ba.SphericalDetector(200, 6*deg, 0*deg, 3*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     analyzer_direction = kvector_t(0.0, 0.0, -1.0)
-    simulation.setAnalyzerProperties(analyzer_direction, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer_direction, 1.0, 0.5)
     return simulation
 
 

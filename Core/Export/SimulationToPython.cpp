@@ -237,8 +237,8 @@ std::string defineDetectorPolarizationAnalysis(const ISimulation* simulation)
                << pyfmt::printDouble(analyzer_direction.x()) << ", "
                << pyfmt::printDouble(analyzer_direction.y()) << ", "
                << pyfmt::printDouble(analyzer_direction.z()) << ")\n";
-        result << indent() << "simulation.setAnalyzerProperties(" << direction_name << ", "
-               << pyfmt::printDouble(analyzer_efficiency) << ", "
+        result << indent() << "simulation.detector().setAnalyzerProperties(" << direction_name
+               << ", " << pyfmt::printDouble(analyzer_efficiency) << ", "
                << pyfmt::printDouble(analyzer_total_transmission) << ")\n";
     }
     return result.str();
