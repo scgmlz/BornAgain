@@ -30,36 +30,6 @@
 #include <QTextStream>
 
 namespace {
-QString bold(const QString& text)
-{
-    return "<b>" + text + "</b>";
-}
-
-QString table(int nColumns, const QStringList& entries, const QString& attributes /*= ""*/,
-              bool bHasHorizontalHeader /*= false*/)
-{
-    QString result = "<table " + attributes + "><tr>";
-    int col = 0;
-    bool bShowAsHorizontalHeader = bHasHorizontalHeader;
-    for (QStringList::size_type i = 0; i < entries.size(); i++) {
-        if (bShowAsHorizontalHeader) {
-            result += "<th>" + entries[i] + "</th>";
-        } else {
-            result += "<td valign=\"top\">" + entries[i] + "</td>";
-        }
-
-        col++;
-        if ((col == nColumns) && (i < entries.size() - 1)) // start new line?
-        {
-            result += "</tr><tr>";
-            col = 0;
-            bShowAsHorizontalHeader = false;
-        }
-    }
-    result += "</tr></table>";
-
-    return result;
-}
 
 QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern, bool* ok = nullptr)
 {
@@ -377,8 +347,14 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     }
 
     t->setColumnCount(colCount);
+    // #baimport this may be an improvement to hide empty lines, but then also info about omitted
+    // lines is not available. If implementing this, then the filling of the table also has to be
+    // reworked
+    /*
     t->setRowCount(fileContent ? m_importResult.lines.size()
                                : m_importResult.originalEntriesAsDouble.size());
+    */
+    t->setRowCount(m_importResult.lines.size());
 
     const auto cell = [t](int row, int col, double s, const QColor& backColor) {
         auto tableItem = new QTableWidgetItem(QString::number(s));
