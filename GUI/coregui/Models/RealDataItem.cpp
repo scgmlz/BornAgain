@@ -13,6 +13,8 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
 #include "GUI/coregui/Models/InstrumentModel.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
@@ -35,7 +37,8 @@ const QString RealDataItem::P_NATIVE_DATA_UNITS = "Native user data units";
 namespace XMLTags {
 const QString Version("Version");
 const QString NativeFilename("NativeFileName");
-const QString ImportSettings("ImportSettings");
+const QString PersistentLoaderClassName("LoaderClass");
+const QString LoaderData("LoaderData");
 const QString Value("Value");
 } // namespace XMLTags
 
@@ -143,6 +146,14 @@ QString RealDataItem::nativeDataUnits() const
 void RealDataItem::setNativeDataUnits(const QString& units)
 {
     getItem(P_NATIVE_DATA_UNITS)->setValue(units);
+}
+
+void RealDataItem::removeNativeData()
+{
+    ASSERT(isSpecularData()); // not implemented for intensityDataItem
+
+    if (nativeData() != nullptr)
+        nativeData()->setOutputData(nullptr);
 }
 
 bool RealDataItem::hasNativeData() const
@@ -286,16 +297,6 @@ MaskContainerItem* RealDataItem::maskContainerItem()
     return nullptr;
 }
 
-QByteArray RealDataItem::importSettings() const
-{
-    return m_importSettings;
-}
-
-void RealDataItem::setImportSettings(const QByteArray& a)
-{
-    m_importSettings = a;
-}
-
 void RealDataItem::setNativeFileName(const QString& filename)
 {
     m_nativeFileName = filename;
@@ -314,8 +315,14 @@ void RealDataItem::writeNonSessionItemData(QXmlStreamWriter* writer) const
     writer->writeEmptyElement(XMLTags::NativeFilename);
     writer->writeAttribute(XMLTags::Value, m_nativeFileName);
 
-    writer->writeEmptyElement(XMLTags::ImportSettings);
-    writer->writeAttribute(XMLTags::Value, m_importSettings.toBase64());
+    if (m_dataLoader) {
+        writer->writeEmptyElement(XMLTags::PersistentLoaderClassName);
+        writer->writeAttribute(XMLTags::Value, m_dataLoader->persistentClassName());
+
+        // #baimport better: also loader can store in XML syntax
+        writer->writeEmptyElement(XMLTags::LoaderData);
+        writer->writeAttribute(XMLTags::Value, m_dataLoader->serialize().toBase64());
+    }
 }
 
 void RealDataItem::readNonSessionItemData(QXmlStreamReader* reader)
@@ -325,18 +332,40 @@ void RealDataItem::readNonSessionItemData(QXmlStreamReader* reader)
 
     // #baimport ++ check version
     // #baimport ++ check compatible versions
+    m_dataLoader.release();
+    QString persistentLoaderClassName;
+    QByteArray loaderData;
     while (reader->readNextStartElement()) {
         if (reader->name() == XMLTags::NativeFilename) {
-
             m_nativeFileName = reader->attributes().value(XMLTags::Value).toString();
-        } else if (reader->name() == XMLTags::ImportSettings) {
+        } else if (reader->name() == XMLTags::PersistentLoaderClassName) {
+            persistentLoaderClassName = reader->attributes().value(XMLTags::Value).toString();
+        } else if (reader->name() == XMLTags::LoaderData) {
             QStringRef valueAsBase64 = reader->attributes().value(XMLTags::Value);
-            m_importSettings = QByteArray::fromBase64(
+            loaderData = QByteArray::fromBase64(
                 valueAsBase64.toLatin1()); // #baimport add a unit test for this!
         }
 
         reader->skipCurrentElement();
     }
+
+    if (!persistentLoaderClassName.isEmpty()) {
+        m_dataLoader.reset(
+            DataLoaders1D::instance().createFromPersistentName(persistentLoaderClassName));
+        m_dataLoader->deserialize(loaderData);
+        // no m_dataLoader->import() necessary, because the resulting outputData is also loaded
+        // #baimport the only reason for call to import would be to update error states of the file
+    }
+}
+
+void RealDataItem::setDataLoader(AbstractDataLoader* loader)
+{
+    m_dataLoader.reset(loader);
+}
+
+AbstractDataLoader* RealDataItem::dataLoader() const
+{
+    return m_dataLoader.get();
 }
 
 //! Updates the name of file to store intensity data.

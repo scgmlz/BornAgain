@@ -56,7 +56,7 @@ private:
     void applyProperties();
 
     Ui::SpecularDataImportWidget* m_ui;
-    std::unique_ptr<AbstractDataLoader1D> m_loader;
+    AbstractDataLoader1D* m_loader; // only borrowed from realDataItem. Do not delete!
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_SPECULARDATAWIDGETS_SPECULARDATAIMPORTWIDGET_H

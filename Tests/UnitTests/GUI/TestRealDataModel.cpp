@@ -1,3 +1,5 @@
+#include "Base/Axis/PointwiseAxis.h"
+#include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/RealDataItem.h"
 #include "GUI/coregui/Models/RealDataModel.h"
 #include "Tests/GTestWrapper/google_test.h"
@@ -30,4 +32,37 @@ TEST_F(TestRealDataModel, test_realDataAddedRemoved)
 
     model.insertSpecularDataItem();
     EXPECT_EQ(spy.count(), 4);
+}
+
+TEST_F(TestRealDataModel, test_removeNativeData)
+{
+    RealDataModel model;
+
+    auto item = model.insertSpecularDataItem();
+    ASSERT_EQ(item->nativeData(), nullptr);
+
+    item->initNativeData();
+    ASSERT_NE(item->nativeData(), nullptr);
+    ASSERT_FALSE(item->hasNativeData());
+    ASSERT_EQ(item->nativeData()->getOutputData(), nullptr);
+
+    // call remove while no output data set yet
+    item->removeNativeData();
+    ASSERT_NE(item->nativeData(), nullptr);
+    ASSERT_FALSE(item->hasNativeData());
+    ASSERT_EQ(item->nativeData()->getOutputData(), nullptr);
+
+    // add data
+    OutputData<double>* oData = new OutputData<double>();
+    oData->addAxis(PointwiseAxis("qVector", std::vector<double>({1, 2})));
+    oData->setRawDataVector(std::vector<double>({3, 4}));
+    item->nativeData()->setOutputData(oData); // takes ownership of odata
+    ASSERT_TRUE(item->hasNativeData());
+    ASSERT_NE(item->nativeData()->getOutputData(), nullptr);
+
+    // call remove with existing output data
+    item->removeNativeData();
+    ASSERT_NE(item->nativeData(), nullptr);
+    ASSERT_FALSE(item->hasNativeData());
+    ASSERT_EQ(item->nativeData()->getOutputData(), nullptr);
 }

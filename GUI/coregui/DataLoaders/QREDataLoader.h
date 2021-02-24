@@ -40,7 +40,9 @@ public:
                                         bool processedContent) const override;
 
 private:
-    bool parseFile(const QString& filename, QStringList* errors, QStringList* warnings) const;
+    void parseFile(QFile& file) const;
+    void calculateFromParseResult() const;
+    void createOutputDataFromParsingResult(RealDataItem* item) const;
 
 private:
     enum class UnitInFile { none, perNanoMeter, perAngstrom, other };
@@ -50,27 +52,40 @@ private:
         int column;
         UnitInFile unit;
         double factor;
+
+        bool operator==(const ColumnDefinition& other) const;
     };
 
     enum class DataType { Q, R, dR };
 
-    QString m_separator;    //!< column separator
-    QString m_headerPrefix; //!< prefix denoting header line
-    QString m_linesToSkip;  //!< pattern denoting line to skip (i.e. '1,10-12,42')
-    QPointer<QREDataLoaderProperties> m_propertiesWidget;
+    struct ImportSettings {
+        QString m_separator;    //!< column separator
+        QString m_headerPrefix; //!< prefix denoting header line
+        QString m_linesToSkip;  //!< pattern denoting line to skip (i.e. '1,10-12,42')
+        QMap<DataType, ColumnDefinition> m_columnDefinitions;
 
-    QMap<DataType, ColumnDefinition> m_columnDefinitions;
+        bool operator!=(const ImportSettings& other) const;
+        QByteArray toByteArray() const;
+        bool fromByteArray(const QByteArray& data);
+    } m_importSettings;
 
     struct ParsingResult {
         void clear();
+        void clearCalculatedValues();
         QVector<QPair<bool, QString>> lines; // bool describes whether line is skipped
         QVector<QPair<int, QVector<double>>> originalEntriesAsDouble;
         QVector<QPair<int, double>> qValues;
         QVector<QPair<int, double>> rValues;
         QVector<QPair<int, double>> eValues;
-        int columnCount;
+        int columnCount; // #baimport rename to maxColumnCount
+        QByteArray hashOfFile;
+        QStringList errors;
+        QStringList warnings;
+        ImportSettings importSettings;
     };
-    mutable ParsingResult m_parsingResult;
+    mutable ParsingResult m_parsingResult; // #baimport: rename to importResult
+
+    QPointer<QREDataLoaderProperties> m_propertiesWidget;
 };
 
 #endif // GUI_COREGUI_DATALOADERS_QREDATALOADER_H

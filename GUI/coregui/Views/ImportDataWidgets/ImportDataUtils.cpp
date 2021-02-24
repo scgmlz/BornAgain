@@ -104,24 +104,12 @@ void ImportDataUtils::Import1dData(RealDataItem* realDataItem)
             // do nothing, continue with data loader?
         }
     } else {
-
-        // Instantiate loader
-        QByteArray a = realDataItem->importSettings();
-        QDataStream s(a);
-        QString persistentLoaderClassName;
-        QByteArray loaderSettings;
-        s >> persistentLoaderClassName;
-        s >> loaderSettings;
-
-        std::unique_ptr<AbstractDataLoader1D> loader(
-            DataLoaders1D::instance().createFromPersistentName(persistentLoaderClassName));
-        loader->deserialize(loaderSettings);
-
-        QStringList errors;
-        QStringList warnings;
-        loader->importFile(fileName, realDataItem, &errors, &warnings);
-
-        // #baimport show errors/warnings as dialog? Or only on the import pane?
+        if (realDataItem->dataLoader()) {
+            QStringList errors;
+            QStringList warnings;
+            realDataItem->dataLoader()->importFile(fileName, realDataItem, &errors, &warnings);
+            // #baimport show errors/warnings as dialog? Or only on the import pane?
+        }
     }
 }
 

@@ -172,6 +172,9 @@ bool SpecularInstrumentItem::alignedWith(const RealDataItem* item) const
         if (!instrument_axis)
             return false;
 
+        if (!item->hasNativeData())
+            return false;
+
         const auto& native_axis = item->nativeOutputData()->axis(0);
         return *instrument_axis == native_axis;
         ;

@@ -204,7 +204,7 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
 
     // #baimport ++ copy members of realDataItem
 
-    if (!realDataItem->nativeData())
+    if (!realDataItem->hasNativeData())
         return;
 
     realDataItemCopy->setNativeOutputData(realDataItem->nativeOutputData()->clone());

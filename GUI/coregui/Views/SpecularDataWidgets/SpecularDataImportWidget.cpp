@@ -33,7 +33,7 @@
 #include <QTimer>
 
 SpecularDataImportWidget::SpecularDataImportWidget(QWidget* parent)
-    : SessionItemWidget(parent), m_ui(new Ui::SpecularDataImportWidget)
+    : SessionItemWidget(parent), m_ui(new Ui::SpecularDataImportWidget), m_loader(nullptr)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -69,20 +69,7 @@ void SpecularDataImportWidget::setItem(SessionItem* _realDataItem)
     SessionItemWidget::setItem(_realDataItem);
     updatePreview(); // #baimport here? Again at the end...
 
-    QByteArray a = realDataItem()->importSettings();
-    QDataStream s(a);
-    QString persistentLoaderClassName;
-    QByteArray loaderSettings;
-    s >> persistentLoaderClassName;
-    s >> loaderSettings;
-
-    for (auto loader : DataLoaders1D::instance().loaders())
-        if (persistentLoaderClassName == loader->persistentClassName()) {
-            m_ui->formatSelectionComboBox->setCurrentText(loader->name());
-            m_loader.reset(
-                DataLoaders1D::instance().createFromPersistentName(persistentLoaderClassName));
-            m_loader->deserialize(loaderSettings);
-        }
+    m_loader = dynamic_cast<AbstractDataLoader1D*>(realDataItem()->dataLoader());
 
     m_ui->fileNameEdit->setText(QDir::toNativeSeparators(realDataItem()->nativeFileName()));
 
@@ -95,7 +82,7 @@ void SpecularDataImportWidget::setItem(SessionItem* _realDataItem)
     m_loader->importFile(realDataItem()->nativeFileName(), realDataItem(), &errors, &warnings);
 
     updatePreview();
-    connect(m_loader.get(), &AbstractDataLoader::propertiesChanged, this,
+    connect(m_loader, &AbstractDataLoader::propertiesChanged, this,
             &SpecularDataImportWidget::onPropertiesChanged);
 }
 
@@ -170,14 +157,16 @@ AbstractDataLoader* SpecularDataImportWidget::selectedLoader()
 
 void SpecularDataImportWidget::onFormatSelectionChanged()
 {
-    // #baTODO: disconnect() old loader?
-    m_loader.reset(dynamic_cast<AbstractDataLoader1D*>(selectedLoader()->clone()));
+    if (m_loader)
+        m_loader->disconnect(this);
 
+    m_loader = dynamic_cast<AbstractDataLoader1D*>(selectedLoader()->clone());
     m_loader->initWithDefaultProperties();
+    realDataItem()->setDataLoader(m_loader);
     updatePropertiesEdits();
     updatePreview();
     applyProperties();
-    connect(m_loader.get(), &AbstractDataLoader::propertiesChanged, this,
+    connect(m_loader, &AbstractDataLoader::propertiesChanged, this,
             &SpecularDataImportWidget::updatePreview);
 }
 
@@ -210,7 +199,7 @@ void SpecularDataImportWidget::onCreateNewFormatButton()
     if (!ok || name.isEmpty())
         return;
 
-    DataLoaders1D::instance().cloneAsUserDefinedLoader(m_loader.get(), name);
+    DataLoaders1D::instance().cloneAsUserDefinedLoader(m_loader, name);
 
     fillLoaderCombo();
     m_ui->formatSelectionComboBox->setCurrentText(name);
@@ -241,9 +230,5 @@ QString SpecularDataImportWidget::currentFileName() const
 
 void SpecularDataImportWidget::applyProperties()
 {
-    QByteArray a;
-    QDataStream s(&a, QIODevice::WriteOnly);
-    s << m_loader->persistentClassName();
-    s << m_loader->serialize();
-    realDataItem()->setImportSettings(a);
+    // #baimport seems obsolete
 }

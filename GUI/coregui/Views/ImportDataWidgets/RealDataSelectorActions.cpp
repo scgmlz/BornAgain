@@ -174,20 +174,14 @@ void RealDataSelectorActions::importDataLoop(int ndim)
             }
         } else if (ndim == 1) {
             // realDataItems are generated immediately and then the data is directly imported
-            // by the current dataloader of the readDataItem.
+            // by the current dataloader of the realDataItem.
             auto realDataItem = m_realDataModel->insertSpecularDataItem();
             realDataItem->setName(baseNameOfLoadedFile);
             realDataItem->setNativeFileName(fileName);
-
-            // #baimport move to better place - only for testing purposes!
-            // #baimport use loader which was selected in the import dialog
-            QByteArray a;
-            QDataStream s(&a, QIODevice::WriteOnly);
-            auto loader = new QREDataLoader();
+            auto loader =
+                new QREDataLoader(); // #baimport use loader which was selected in the import dialog
             loader->initWithDefaultProperties();
-            s << loader->persistentClassName();
-            s << loader->serialize();
-            realDataItem->setImportSettings(a);
+            realDataItem->setDataLoader(loader);
 
             ImportDataUtils::Import1dData(realDataItem);
 
