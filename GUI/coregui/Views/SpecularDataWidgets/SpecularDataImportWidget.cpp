@@ -43,9 +43,6 @@ SpecularDataImportWidget::SpecularDataImportWidget(QWidget* parent)
     if (DataLoaders1D::instance().loaders().isEmpty())
         DataLoaders1D::instance().initBuiltInLoaders();
 
-    m_ui->tabWidget->removeTab(0);
-    m_ui->tabWidget->removeTab(0);
-
     fillLoaderCombo();
     updatePropertiesEdits();
 
@@ -67,7 +64,6 @@ SpecularDataImportWidget::SpecularDataImportWidget(QWidget* parent)
 void SpecularDataImportWidget::setItem(SessionItem* _realDataItem)
 {
     SessionItemWidget::setItem(_realDataItem);
-    updatePreview(); // #baimport here? Again at the end...
 
     m_loader = dynamic_cast<AbstractDataLoader1D*>(realDataItem()->dataLoader());
 
@@ -172,16 +168,10 @@ void SpecularDataImportWidget::onFormatSelectionChanged()
 
 void SpecularDataImportWidget::updatePreview()
 {
-    m_ui->infoBrowser->clear();
-    m_ui->fileContent->clear();
     m_ui->plotWidget->clearGraphs();
 
-    if (m_loader && !currentFileName().isEmpty()) {
-        m_ui->infoBrowser->setHtml(m_loader->preview(currentFileName(), m_ui->plotWidget));
-
-        QFile file(currentFileName());
-        if (file.open(QFile::ReadOnly))
-            m_ui->fileContent->setText(QTextStream(&file).readAll());
+    if (m_loader) {
+        m_loader->previewOfGraph(m_ui->plotWidget);
 
         m_loader->fillImportDetailsTable(m_ui->dataTable, m_ui->originalRowCheckBox->isChecked(),
                                          m_ui->rawDataCheckBox->isChecked(),
