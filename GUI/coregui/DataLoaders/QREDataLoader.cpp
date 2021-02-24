@@ -113,26 +113,26 @@ QString QREDataLoader::persistentClassName() const
     return "QREDataLoader";
 }
 
-QString QREDataLoader::preview(const QString& filepath, QCustomPlot* plotWidget) const
+void QREDataLoader::previewOfGraph(QCustomPlot* plotWidget) const
 {
     // -- create plot
-    int dRCol = m_parsingResult.importSettings.m_columnDefinitions[DataType::dR].column;
+    int dRCol = m_importResult.importSettings.columnDefinitions[DataType::dR].column;
 
     QVector<double> qVec;
     QVector<double> rVec;
     QVector<double> eVec;
 
-    const bool addError = m_parsingResult.importSettings.m_columnDefinitions[DataType::dR].enabled
-                          && (m_parsingResult.columnCount > dRCol);
+    const bool addError = m_importResult.importSettings.columnDefinitions[DataType::dR].enabled
+                          && (m_importResult.maxColumnCount > dRCol);
 
-    for (const auto d : m_parsingResult.qValues)
+    for (const auto d : m_importResult.qValues)
         qVec << d.second;
 
-    for (const auto d : m_parsingResult.rValues)
+    for (const auto d : m_importResult.rValues)
         rVec << d.second;
 
     if (addError)
-        for (const auto d : m_parsingResult.eValues)
+        for (const auto d : m_importResult.eValues)
             eVec << d.second;
 
     auto graph = plotWidget->addGraph();
@@ -149,8 +149,6 @@ QString QREDataLoader::preview(const QString& filepath, QCustomPlot* plotWidget)
     plotWidget->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
     plotWidget->xAxis->setLabel("Q [1/nm]");
     plotWidget->yAxis->setLabel("R");
-
-    return "";
 }
 
 void QREDataLoader::populatePropertiesWidget(QWidget* parent)
@@ -163,29 +161,28 @@ void QREDataLoader::populatePropertiesWidget(QWidget* parent)
     parent->setLayout(l);
     l->addWidget(m_propertiesWidget);
 
-    if (m_importSettings.m_separator == " ")
+    if (m_importSettings.separator == " ")
         m_propertiesWidget->m_ui->separatorCombo->setCurrentText("<SPACE>");
-    else if (m_importSettings.m_separator == "\t")
+    else if (m_importSettings.separator == "\t")
         m_propertiesWidget->m_ui->separatorCombo->setCurrentText("<TAB>");
     else
-        m_propertiesWidget->m_ui->separatorCombo->setCurrentText(m_importSettings.m_separator);
+        m_propertiesWidget->m_ui->separatorCombo->setCurrentText(m_importSettings.separator);
 
-    m_propertiesWidget->m_ui->headerPrefixEdit->setText(m_importSettings.m_headerPrefix);
-    m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_importSettings.m_linesToSkip);
+    m_propertiesWidget->m_ui->headerPrefixEdit->setText(m_importSettings.headerPrefix);
+    m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_importSettings.linesToSkip);
 
     for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
         m_propertiesWidget->columnSpinBox((int)dataType)
-            ->setValue(m_importSettings.m_columnDefinitions[dataType].column
-                       + 1); // view is 1-based
+            ->setValue(m_importSettings.columnDefinitions[dataType].column + 1); // view is 1-based
 
         m_propertiesWidget->factorSpinBox((int)dataType)
-            ->setValue(m_importSettings.m_columnDefinitions[dataType].factor);
+            ->setValue(m_importSettings.columnDefinitions[dataType].factor);
     }
 
     m_propertiesWidget->m_ui->enableErrorCheckBox->setChecked(
-        m_importSettings.m_columnDefinitions[DataType::dR].enabled);
+        m_importSettings.columnDefinitions[DataType::dR].enabled);
 
-    if (m_importSettings.m_columnDefinitions[DataType::Q].unit == UnitInFile::perAngstrom)
+    if (m_importSettings.columnDefinitions[DataType::Q].unit == UnitInFile::perAngstrom)
         m_propertiesWidget->m_ui->qUnitCombo->setCurrentIndex(1);
     else
         m_propertiesWidget->m_ui->qUnitCombo->setCurrentIndex(0); // 1/nm
@@ -198,18 +195,18 @@ void QREDataLoader::populatePropertiesWidget(QWidget* parent)
 
 void QREDataLoader::initWithDefaultProperties()
 {
-    m_importSettings.m_separator = ";";
-    m_importSettings.m_headerPrefix = "#,//";
-    m_importSettings.m_linesToSkip = "";
+    m_importSettings.separator = ";";
+    m_importSettings.headerPrefix = "#,//";
+    m_importSettings.linesToSkip = "";
 
     for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
-        m_importSettings.m_columnDefinitions[dataType].enabled = true;
-        m_importSettings.m_columnDefinitions[dataType].column = (int)dataType;
-        m_importSettings.m_columnDefinitions[dataType].unit = UnitInFile::none;
-        m_importSettings.m_columnDefinitions[dataType].factor = 1.0;
+        m_importSettings.columnDefinitions[dataType].enabled = true;
+        m_importSettings.columnDefinitions[dataType].column = (int)dataType;
+        m_importSettings.columnDefinitions[dataType].unit = UnitInFile::none;
+        m_importSettings.columnDefinitions[dataType].factor = 1.0;
     }
 
-    m_importSettings.m_columnDefinitions[DataType::Q].unit = UnitInFile::perNanoMeter;
+    m_importSettings.columnDefinitions[DataType::Q].unit = UnitInFile::perNanoMeter;
 }
 
 QByteArray QREDataLoader::serialize() const
@@ -220,16 +217,16 @@ QByteArray QREDataLoader::serialize() const
     QDataStream s(&a, QIODevice::WriteOnly);
 
     s << m_importSettings.toByteArray();
-    s << m_parsingResult.lines;
-    s << m_parsingResult.originalEntriesAsDouble;
-    s << m_parsingResult.qValues;
-    s << m_parsingResult.rValues;
-    s << m_parsingResult.eValues;
-    s << m_parsingResult.columnCount;
-    s << m_parsingResult.hashOfFile;
-    s << m_parsingResult.errors;
-    s << m_parsingResult.warnings;
-    s << m_parsingResult.importSettings.toByteArray();
+    s << m_importResult.lines;
+    s << m_importResult.originalEntriesAsDouble;
+    s << m_importResult.qValues;
+    s << m_importResult.rValues;
+    s << m_importResult.eValues;
+    s << m_importResult.maxColumnCount;
+    s << m_importResult.hashOfFile;
+    s << m_importResult.errors;
+    s << m_importResult.warnings;
+    s << m_importResult.importSettings.toByteArray();
 
     return a;
 }
@@ -238,26 +235,26 @@ void QREDataLoader::deserialize(const QByteArray& data)
 {
     // #baimport ++ check version
 
-    m_parsingResult.clear();
+    m_importResult.clear();
     QDataStream s(data);
 
     QByteArray b;
     s >> b;
     m_importSettings.fromByteArray(b);
 
-    s >> m_parsingResult.lines;
-    s >> m_parsingResult.originalEntriesAsDouble;
-    s >> m_parsingResult.qValues;
-    s >> m_parsingResult.rValues;
-    s >> m_parsingResult.eValues;
-    s >> m_parsingResult.columnCount;
-    s >> m_parsingResult.hashOfFile;
-    s >> m_parsingResult.errors;
-    s >> m_parsingResult.warnings;
+    s >> m_importResult.lines;
+    s >> m_importResult.originalEntriesAsDouble;
+    s >> m_importResult.qValues;
+    s >> m_importResult.rValues;
+    s >> m_importResult.eValues;
+    s >> m_importResult.maxColumnCount;
+    s >> m_importResult.hashOfFile;
+    s >> m_importResult.errors;
+    s >> m_importResult.warnings;
 
     b.clear();
     s >> b;
-    m_parsingResult.importSettings.fromByteArray(b); // #badataloader ++ check result
+    m_importResult.importSettings.fromByteArray(b); // #badataloader ++ check result
 }
 
 AbstractDataLoader* QREDataLoader::clone() const
@@ -287,54 +284,54 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
 
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
-        m_parsingResult.clear();
+        m_importResult.clear();
         *errors << "File '" + filename + "' could not be opened";
         return;
     }
 
     QCryptographicHash hash(QCryptographicHash::Md5);
     if (!hash.addData(&file)) {
-        m_parsingResult.clear();
+        m_importResult.clear();
         *errors << "File '" + filename + "' could not be read";
         return;
     }
 
     const bool fileChanged =
-        m_parsingResult.hashOfFile.isEmpty() || (hash.result() != m_parsingResult.hashOfFile);
-    const bool settingsChanged = m_parsingResult.importSettings != m_importSettings;
+        m_importResult.hashOfFile.isEmpty() || (hash.result() != m_importResult.hashOfFile);
+    const bool settingsChanged = m_importResult.importSettings != m_importSettings;
     const bool parsingSettingsChanged =
-        m_parsingResult.importSettings.m_headerPrefix != m_importSettings.m_headerPrefix
-        || m_parsingResult.importSettings.m_linesToSkip != m_importSettings.m_linesToSkip
-        || m_parsingResult.importSettings.m_separator != m_importSettings.m_separator;
+        m_importResult.importSettings.headerPrefix != m_importSettings.headerPrefix
+        || m_importResult.importSettings.linesToSkip != m_importSettings.linesToSkip
+        || m_importResult.importSettings.separator != m_importSettings.separator;
     const bool calculationSettingsChanged =
-        m_parsingResult.importSettings.m_columnDefinitions != m_importSettings.m_columnDefinitions;
+        m_importResult.importSettings.columnDefinitions != m_importSettings.columnDefinitions;
     const bool calculationIsNecessary =
         (fileChanged || parsingSettingsChanged || calculationSettingsChanged);
     const bool creationOfOutputDataIsNecessary = calculationIsNecessary;
 
     if (fileChanged || parsingSettingsChanged) {
         // everything has to be re-read
-        m_parsingResult.clear();
+        m_importResult.clear();
         file.seek(0);
         parseFile(file);
-        m_parsingResult.hashOfFile = hash.result();
+        m_importResult.hashOfFile = hash.result();
     }
 
     if (calculationIsNecessary) {
         calculateFromParseResult();
     }
 
-    m_parsingResult.importSettings = m_importSettings;
+    m_importResult.importSettings = m_importSettings;
 
     // -- make a few checks (mainly for fulfilling PointwiseAxis::sanityCheck())
-    if (m_parsingResult.qValues.size() < 2) {
+    if (m_importResult.qValues.size() < 2) {
         *errors << "At least two full rows must exist";
     }
-    if (!std::is_sorted(m_parsingResult.qValues.begin(), m_parsingResult.qValues.end())) {
+    if (!std::is_sorted(m_importResult.qValues.begin(), m_importResult.qValues.end())) {
         *errors << "Q coordinates must be sorted in ascending order";
     }
-    if (std::adjacent_find(m_parsingResult.qValues.begin(), m_parsingResult.qValues.end())
-        != m_parsingResult.qValues.end()) {
+    if (std::adjacent_find(m_importResult.qValues.begin(), m_importResult.qValues.end())
+        != m_importResult.qValues.end()) {
         *errors << "Q coordinates must not contain duplicate values";
     }
 
@@ -358,7 +355,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
                                            bool processedContent) const
 {
     bool showErrorColumn =
-        m_parsingResult.importSettings.m_columnDefinitions[QREDataLoader::DataType::dR].enabled;
+        m_importResult.importSettings.columnDefinitions[QREDataLoader::DataType::dR].enabled;
     QString qUnit = " [1/nm]";
 
     auto t = table;
@@ -369,7 +366,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         colCount++;
 
     if (rawContent)
-        colCount += m_parsingResult.columnCount;
+        colCount += m_importResult.maxColumnCount;
 
     if (processedContent)
         colCount += showErrorColumn ? 3 : 2;
@@ -380,8 +377,8 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     }
 
     t->setColumnCount(colCount);
-    t->setRowCount(fileContent ? m_parsingResult.lines.size()
-                               : m_parsingResult.originalEntriesAsDouble.size());
+    t->setRowCount(fileContent ? m_importResult.lines.size()
+                               : m_importResult.originalEntriesAsDouble.size());
 
     const auto cell = [t](int row, int col, double s, const QColor& backColor) {
         auto tableItem = new QTableWidgetItem(QString::number(s));
@@ -400,7 +397,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         headerItem->setBackgroundColor(backgroundColorFileContent.darker(150));
         t->setHorizontalHeaderItem(0, headerItem);
         int row = 0;
-        for (auto line : m_parsingResult.lines) {
+        for (auto line : m_importResult.lines) {
             const bool skipped = line.first;
             QString lineContent = line.second;
             lineContent.replace("\t", " --> ");
@@ -415,12 +412,12 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     }
 
     if (rawContent) {
-        for (int col = 0; col < m_parsingResult.columnCount; col++) {
+        for (int col = 0; col < m_importResult.maxColumnCount; col++) {
             t->setHorizontalHeaderItem(dataCol + col,
                                        new QTableWidgetItem(QString("Column %1 raw").arg(col + 1)));
         }
 
-        for (auto rowContent : m_parsingResult.originalEntriesAsDouble) {
+        for (auto rowContent : m_importResult.originalEntriesAsDouble) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
 
@@ -428,7 +425,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
                 cell(dataRow, dataCol++, v, backgroundColorRawContent);
             dataCol -= rowContent.second.size();
         }
-        dataCol += m_parsingResult.columnCount;
+        dataCol += m_importResult.maxColumnCount;
     }
 
     if (processedContent) {
@@ -437,14 +434,14 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         if (showErrorColumn)
             t->setHorizontalHeaderItem(dataCol + 2, new QTableWidgetItem("E"));
 
-        for (auto rowContent : m_parsingResult.qValues) {
+        for (auto rowContent : m_importResult.qValues) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
             auto v = rowContent.second;
             cell(dataRow, dataCol + 0, v, backgroundColorProcessedContent);
         }
 
-        for (auto rowContent : m_parsingResult.rValues) {
+        for (auto rowContent : m_importResult.rValues) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
             auto v = rowContent.second;
@@ -452,7 +449,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         }
 
         if (showErrorColumn) {
-            for (auto rowContent : m_parsingResult.eValues) {
+            for (auto rowContent : m_importResult.eValues) {
                 int lineNr = rowContent.first;
                 int dataRow = lineNr - 1; // lineNr is 1-based
                 auto v = rowContent.second;
@@ -468,18 +465,11 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
 
 void QREDataLoader::parseFile(QFile& file) const
 {
-    // #baimport optimize: check which import settings changed. E.g. if only q-factor changed, only
-    // regenerate qValues
-    // #baimport optimize: better error handling
-    // #baimport ++ problem: errors/warnings can't be deleted separately for parsing and
-    // calculation. When caching them, this results in wrong lists. Maybe they are obsolete anyway?
-    // Only one error at a time? Or have parseErrors, calculationErrors?
+    m_importResult.clear();
 
-    m_parsingResult.clear();
-
-    const QStringList headerPrefixes = (m_importSettings.m_headerPrefix.trimmed().isEmpty())
+    const QStringList headerPrefixes = (m_importSettings.headerPrefix.trimmed().isEmpty())
                                            ? QStringList()
-                                           : m_importSettings.m_headerPrefix.split(",");
+                                           : m_importSettings.headerPrefix.split(",");
 
     const auto lineIsHeader = [headerPrefixes](const QString& line) {
         for (auto prefix : headerPrefixes) {
@@ -490,7 +480,7 @@ void QREDataLoader::parseFile(QFile& file) const
         return false;
     };
 
-    const auto skippedLines = expandLineNumberPattern(m_importSettings.m_linesToSkip);
+    const auto skippedLines = expandLineNumberPattern(m_importSettings.linesToSkip);
     const auto lineShouldBeSkipped = [skippedLines](int lineNr) {
         for (auto pair : skippedLines) {
             if (lineNr >= pair.first && lineNr <= pair.second)
@@ -505,7 +495,7 @@ void QREDataLoader::parseFile(QFile& file) const
     // if separator is SPACE: e.g. three consecutive SPACEs do not represent 3 columns => delete
     // empty parts
     QString::SplitBehavior splitBehavior =
-        m_importSettings.m_separator == " " ? QString::SkipEmptyParts : QString::KeepEmptyParts;
+        m_importSettings.separator == " " ? QString::SkipEmptyParts : QString::KeepEmptyParts;
 
     while (!in.atEnd()) {
         lineNr++;
@@ -515,21 +505,23 @@ void QREDataLoader::parseFile(QFile& file) const
         const bool skip =
             lineIsHeader(line) || lineShouldBeSkipped(lineNr) || line.trimmed().isEmpty();
 
-        m_parsingResult.lines << qMakePair(skip, line);
+        m_importResult.lines << qMakePair(skip, line);
         if (skip)
             continue;
 
-        QStringList lineEntries = line.split(m_importSettings.m_separator, splitBehavior);
+        QStringList lineEntries = line.split(m_importSettings.separator, splitBehavior);
 
         if (lastColumnCount == -1)
             lastColumnCount = lineEntries.count();
-        else if (lastColumnCount != lineEntries.count()) {
-            m_parsingResult.warnings
+        else if (lastColumnCount
+                 != lineEntries.count()) { // #baimport move this to error generation in importFile
+            m_importResult.warnings
                 << QString("Number of columns is not constant over all lines (found in line %1)")
                        .arg(lineNr);
         }
 
-        m_parsingResult.columnCount = std::max(m_parsingResult.columnCount, lineEntries.count());
+        m_importResult.maxColumnCount =
+            std::max(m_importResult.maxColumnCount, lineEntries.count());
 
         QVector<double> rowEntriesAsDouble;
 
@@ -542,16 +534,16 @@ void QREDataLoader::parseFile(QFile& file) const
             rowEntriesAsDouble << val;
         }
 
-        m_parsingResult.originalEntriesAsDouble << qMakePair(lineNr, rowEntriesAsDouble);
+        m_importResult.originalEntriesAsDouble << qMakePair(lineNr, rowEntriesAsDouble);
     }
 }
 
 void QREDataLoader::calculateFromParseResult() const
 {
-    m_parsingResult.clearCalculatedValues();
+    m_importResult.clearCalculatedValues();
 
     // -- calculate the Q/R/E values (take from specified column, use factor)
-    const auto& c = m_importSettings.m_columnDefinitions; // easier access
+    const auto& c = m_importSettings.columnDefinitions; // easier access
     const bool errorColumnIsEnabled = c[DataType::dR].enabled;
     const double unitFac = (c[DataType::Q].unit == UnitInFile::perAngstrom) ? 10.0 : 1.0;
     const double qFactor = c[DataType::Q].factor * unitFac;
@@ -564,7 +556,7 @@ void QREDataLoader::calculateFromParseResult() const
 
     QSet<double> foundQValues;
 
-    for (auto rowContent : m_parsingResult.originalEntriesAsDouble) {
+    for (auto rowContent : m_importResult.originalEntriesAsDouble) {
         int lineNr = rowContent.first;
         const auto& rawValues = rowContent.second;
 
@@ -590,9 +582,9 @@ void QREDataLoader::calculateFromParseResult() const
         // ignore lines when a resulting value would be NAN or in case of duplicate Q values
         // #baimport make this dependent from a UI checkbox?
         if (!containsNaN && !isDuplicateQ) {
-            m_parsingResult.qValues << qMakePair(lineNr, q);
-            m_parsingResult.rValues << qMakePair(lineNr, r);
-            m_parsingResult.eValues << qMakePair(lineNr, e);
+            m_importResult.qValues << qMakePair(lineNr, q);
+            m_importResult.rValues << qMakePair(lineNr, r);
+            m_importResult.eValues << qMakePair(lineNr, e);
             foundQValues << q;
         }
     }
@@ -604,10 +596,10 @@ void QREDataLoader::createOutputDataFromParsingResult(RealDataItem* item) const
     std::vector<double> qVec;
     std::vector<double> rVec;
 
-    for (const auto d : m_parsingResult.qValues)
+    for (const auto d : m_importResult.qValues)
         qVec.push_back(d.second);
 
-    for (const auto d : m_parsingResult.rValues)
+    for (const auto d : m_importResult.rValues)
         rVec.push_back(d.second);
 
     OutputData<double>* oData = new OutputData<double>();
@@ -646,27 +638,27 @@ void QREDataLoader::applyProperties()
 
     auto ui = m_propertiesWidget->m_ui;
 
-    m_importSettings.m_separator = ui->separatorCombo->currentText();
-    if (m_importSettings.m_separator == "<TAB>")
-        m_importSettings.m_separator = "\t";
-    if (m_importSettings.m_separator == "<SPACE>")
-        m_importSettings.m_separator = " ";
+    m_importSettings.separator = ui->separatorCombo->currentText();
+    if (m_importSettings.separator == "<TAB>")
+        m_importSettings.separator = "\t";
+    if (m_importSettings.separator == "<SPACE>")
+        m_importSettings.separator = " ";
 
-    m_importSettings.m_headerPrefix = ui->headerPrefixEdit->text();
-    m_importSettings.m_linesToSkip = ui->linesToSkipEdit->text();
+    m_importSettings.headerPrefix = ui->headerPrefixEdit->text();
+    m_importSettings.linesToSkip = ui->linesToSkipEdit->text();
 
-    for (auto dataType : m_importSettings.m_columnDefinitions.keys()) {
-        auto& colDef = m_importSettings.m_columnDefinitions[dataType];
+    for (auto dataType : m_importSettings.columnDefinitions.keys()) {
+        auto& colDef = m_importSettings.columnDefinitions[dataType];
 
         colDef.column = m_propertiesWidget->columnSpinBox((int)dataType)->value() - 1;
         colDef.factor = m_propertiesWidget->factor((int)dataType);
     }
 
-    m_importSettings.m_columnDefinitions[DataType::Q].unit =
+    m_importSettings.columnDefinitions[DataType::Q].unit =
         m_propertiesWidget->m_ui->qUnitCombo->currentIndex() == 0 ? UnitInFile::perNanoMeter
                                                                   : UnitInFile::perAngstrom;
 
-    m_importSettings.m_columnDefinitions[DataType::dR].enabled =
+    m_importSettings.columnDefinitions[DataType::dR].enabled =
         m_propertiesWidget->m_ui->enableErrorCheckBox->isChecked();
 }
 
@@ -677,11 +669,11 @@ void QREDataLoader::ParsingResult::clear()
     qValues.clear();
     rValues.clear();
     eValues.clear();
-    columnCount = 0;
+    maxColumnCount = 0;
     hashOfFile.clear();
     errors.clear();
     warnings.clear();
-    importSettings.m_columnDefinitions.clear(); // sufficient
+    importSettings.columnDefinitions.clear(); // sufficient
 }
 
 void QREDataLoader::ParsingResult::clearCalculatedValues()
@@ -701,17 +693,17 @@ QByteArray QREDataLoader::ImportSettings::toByteArray() const
     // #badataloader ++ add version
     QByteArray a;
     QDataStream s(&a, QIODevice::WriteOnly);
-    s << m_separator;
-    s << m_headerPrefix;
-    s << m_linesToSkip;
+    s << separator;
+    s << headerPrefix;
+    s << linesToSkip;
 
-    s << (quint8)m_columnDefinitions.count();
-    for (auto dataType : m_columnDefinitions.keys()) {
+    s << (quint8)columnDefinitions.count();
+    for (auto dataType : columnDefinitions.keys()) {
         s << (quint8)dataType;
-        s << m_columnDefinitions[dataType].enabled;
-        s << m_columnDefinitions[dataType].column;
-        s << (quint8)m_columnDefinitions[dataType].unit;
-        s << m_columnDefinitions[dataType].factor;
+        s << columnDefinitions[dataType].enabled;
+        s << columnDefinitions[dataType].column;
+        s << (quint8)columnDefinitions[dataType].unit;
+        s << columnDefinitions[dataType].factor;
     }
 
     return a;
@@ -721,17 +713,17 @@ bool QREDataLoader::ImportSettings::fromByteArray(const QByteArray& data)
 {
     // #baimport ++ check version
     QDataStream s(data);
-    s >> m_separator;
-    s >> m_headerPrefix;
-    s >> m_linesToSkip;
+    s >> separator;
+    s >> headerPrefix;
+    s >> linesToSkip;
 
-    m_columnDefinitions.clear();
+    columnDefinitions.clear();
     quint8 nDefs;
     s >> nDefs;
     for (int i = 0; i < nDefs; i++) {
         quint8 dataType;
         s >> dataType;
-        auto& colDef = m_columnDefinitions[(DataType)dataType];
+        auto& colDef = columnDefinitions[(DataType)dataType];
         s >> colDef.enabled;
         s >> colDef.column;
         quint8 unit;
@@ -743,7 +735,6 @@ bool QREDataLoader::ImportSettings::fromByteArray(const QByteArray& data)
     return true;
 }
 
-// #baimport why is this necessary?
 bool QREDataLoader::ColumnDefinition::operator==(const ColumnDefinition& other) const
 {
     return enabled == other.enabled && column == other.column && unit == other.unit

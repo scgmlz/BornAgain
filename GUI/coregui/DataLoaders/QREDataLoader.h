@@ -27,7 +27,7 @@ public:
     virtual QString name() const override;
     virtual QString info() const override;
     virtual QString persistentClassName() const override;
-    virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const override;
+    virtual void previewOfGraph(QCustomPlot* plotWidget) const override;
     virtual void populatePropertiesWidget(QWidget* parent) override;
     virtual void initWithDefaultProperties() override;
     virtual void applyProperties() override;
@@ -59,10 +59,10 @@ private:
     enum class DataType { Q, R, dR };
 
     struct ImportSettings {
-        QString m_separator;    //!< column separator
-        QString m_headerPrefix; //!< prefix denoting header line
-        QString m_linesToSkip;  //!< pattern denoting line to skip (i.e. '1,10-12,42')
-        QMap<DataType, ColumnDefinition> m_columnDefinitions;
+        QString separator;    //!< column separator
+        QString headerPrefix; //!< prefix denoting header line
+        QString linesToSkip;  //!< pattern denoting line to skip (i.e. '1,10-12,42')
+        QMap<DataType, ColumnDefinition> columnDefinitions;
 
         bool operator!=(const ImportSettings& other) const;
         QByteArray toByteArray() const;
@@ -77,13 +77,13 @@ private:
         QVector<QPair<int, double>> qValues;
         QVector<QPair<int, double>> rValues;
         QVector<QPair<int, double>> eValues;
-        int columnCount; // #baimport rename to maxColumnCount
+        int maxColumnCount;
         QByteArray hashOfFile;
         QStringList errors;
         QStringList warnings;
         ImportSettings importSettings;
     };
-    mutable ParsingResult m_parsingResult; // #baimport: rename to importResult
+    mutable ParsingResult m_importResult;
 
     QPointer<QREDataLoaderProperties> m_propertiesWidget;
 };

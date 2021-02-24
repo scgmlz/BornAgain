@@ -56,8 +56,8 @@ public:
 
     virtual QByteArray defaultProperties() const;
 
-    //! Returns a Qt rich text formatted preview
-    virtual QString preview(const QString& filepath, QCustomPlot* plotWidget) const = 0;
+    //! Plots the graph as a preview
+    virtual void previewOfGraph(QCustomPlot* plotWidget) const = 0;
 
     virtual void importFile(const QString& filename, RealDataItem* item, QStringList* errors,
                             QStringList* warnings) const = 0;

@@ -58,9 +58,9 @@ void UserDefinedDataLoader1D::deserialize(const QByteArray& data)
     m_wrappedLoader->deserialize(data);
 }
 
-QString UserDefinedDataLoader1D::preview(const QString& filepath, QCustomPlot* plotWidget) const
+void UserDefinedDataLoader1D::previewOfGraph(QCustomPlot* plotWidget) const
 {
-    return m_wrappedLoader->preview(filepath, plotWidget);
+    m_wrappedLoader->previewOfGraph(plotWidget);
 }
 
 AbstractDataLoader* UserDefinedDataLoader1D::clone() const

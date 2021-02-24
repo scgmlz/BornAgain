@@ -72,8 +72,10 @@ QString AutomaticDataLoader1D::persistentClassName() const
     return "AutomaticDataLoader1D";
 }
 
-QString AutomaticDataLoader1D::preview(const QString& filepath, QCustomPlot* plotWidget) const
+void AutomaticDataLoader1D::previewOfGraph(QCustomPlot* plotWidget) const
 {
+    // #baimport implement AutomaticDataLoader1D::previewOfGraph
+    /*
     std::string line;
     std::vector<std::vector<double>> vecVec;
     std::map<double, double> QvsR;
@@ -153,6 +155,7 @@ QString AutomaticDataLoader1D::preview(const QString& filepath, QCustomPlot* plo
     graph->addData(qVec, rVec);
     plotWidget->rescaleAxes();
     return outputDataToTable(oData);
+    */
 }
 
 AbstractDataLoader* AutomaticDataLoader1D::clone() const
