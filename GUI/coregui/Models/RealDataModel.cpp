@@ -15,6 +15,7 @@
 #include "GUI/coregui/Models/RealDataModel.h"
 #include "GUI/coregui/Models/DataItem.h"
 #include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/utils/MessageService.h"
 
 RealDataModel::RealDataModel(QObject* parent)
     : SessionModel(SessionXML::RealDataModelTag, parent), m_instrumentModel(nullptr)
@@ -70,8 +71,23 @@ void RealDataModel::readFrom(QXmlStreamReader* reader, MessageService* messageSe
 
     connect(this, &SessionModel::rowsInserted, this, &RealDataModel::onRowsChange);
 
-    // #baimport If there are realDataItems with no loader => old version. Either create loader, or
-    // refuse loading with "project too old
+    bool containsOldRealData = false;
+    for (auto item : realDataItems())
+        if (item->dataLoader() == nullptr) {
+            containsOldRealData = true;
+            break;
+        }
+
+    // If there are realDataItems with no loader => old file version
+    // In this case, all realData items are discarded. Project loading will still go on.
+    // #baimport Improvement: Use legacy loader
+    if (containsOldRealData) {
+        messageService->send_warning(
+            this, "You are loading an older project. The real data files from this project are not "
+                  "supported any more. Please add them after loading the project.");
+
+        clear();
+    }
 
     if (!realDataItems().isEmpty())
         emit realDataAddedOrRemoved();
