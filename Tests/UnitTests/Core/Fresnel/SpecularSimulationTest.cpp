@@ -132,7 +132,7 @@ TEST_F(SpecularSimulationTest, SetAngularScan)
 
     SpecularSimulation sim4;
     AngularSpecScan scan4(1.0, 10, .0 * Units::deg, 2.0 * Units::deg);
-    const auto polarization = kvector_t({0., 0., 1.});
+    const auto polarization = kvector_t({0., 0., 0.876});
     const auto analyzer     = kvector_t({0., 0., 1.});
     sim4.beam().setPolarization(polarization);
     sim4.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
@@ -149,9 +149,8 @@ TEST_F(SpecularSimulationTest, SetAngularScan)
 
     EXPECT_EQ(sim4.beam().getBlochVector(), polarization);
     EXPECT_EQ(sim4.detector().detectionProperties().analyzerDirection(), analyzer);
-
-    sim3.setInstrument(Instrument());
-    checkBeamState(sim3);
+    EXPECT_EQ(sim4.detector().detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(sim4.detector().detectionProperties().analyzerTotalTransmission(), 0.22);
 }
 
 TEST_F(SpecularSimulationTest, SetQScan)
@@ -219,6 +218,11 @@ TEST_F(SpecularSimulationTest, SimulationClone)
 {
     auto sim = defaultSimulation();
 
+    const auto polarization = kvector_t({0., 0., 0.876});
+    const auto analyzer     = kvector_t({0., 0., 1.});
+    sim->beam().setPolarization(polarization);
+    sim->detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+
     std::unique_ptr<SpecularSimulation> clone(sim->clone());
 
     EXPECT_EQ(3u, clone->sample()->numberOfLayers());
@@ -227,6 +231,13 @@ TEST_F(SpecularSimulationTest, SimulationClone)
     auto data = clone_result.data();
     EXPECT_EQ(data->getAllocatedSize(), 10u);
     EXPECT_EQ(data->totalSum(), 0.0);
+    EXPECT_EQ(0.0 * Units::deg, clone->coordinateAxis()->lowerBound());
+    EXPECT_EQ(2.0 * Units::deg, clone->coordinateAxis()->upperBound());
+
+    EXPECT_EQ(clone->beam().getBlochVector(), polarization);
+    EXPECT_EQ(clone->detector().detectionProperties().analyzerDirection(), analyzer);
+    EXPECT_EQ(clone->detector().detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(clone->detector().detectionProperties().analyzerTotalTransmission(), 0.22);
 
     checkBeamState(*clone);
 
