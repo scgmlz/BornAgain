@@ -186,6 +186,29 @@ TEST_F(SpecularSimulationTest, SetQScan)
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
     checkBeamState(sim2);
+
+
+    SpecularSimulation sim3;
+    QSpecScan scan3(10, 1.0, 10.0);
+    const auto polarization = kvector_t({0., 0., 0.876});
+    const auto analyzer     = kvector_t({0., 0., 1.});
+    sim3.beam().setPolarization(polarization);
+    sim3.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim3.setScan(scan3);
+
+    EXPECT_EQ(1.0, sim3.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0, sim3.coordinateAxis()->upperBound());
+    EXPECT_EQ(10u, sim3.coordinateAxis()->size());
+    EXPECT_EQ(1.0, sim3.beam().intensity());
+    EXPECT_EQ(1.0, sim3.beam().wavelength());
+    EXPECT_EQ(0.0, sim3.beam().direction().alpha());
+    EXPECT_EQ(0.0, sim3.beam().direction().phi());
+
+    EXPECT_EQ(sim3.beam().getBlochVector(), polarization);
+    EXPECT_EQ(sim3.detector().detectionProperties().analyzerDirection(), analyzer);
+    EXPECT_EQ(sim3.detector().detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(sim3.detector().detectionProperties().analyzerTotalTransmission(), 0.22);
+
 }
 
 TEST_F(SpecularSimulationTest, ConstructSimulation)
