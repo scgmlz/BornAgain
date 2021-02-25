@@ -61,6 +61,18 @@ QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern, bool* o
     return result;
 }
 
+struct Palette {
+    static QColor backgroundColorFileContent;
+    static QColor backgroundColorRawContent;
+    static QColor backgroundColorProcessedContent;
+    static QColor skippedLineTextColor;
+};
+
+QColor Palette::backgroundColorFileContent(239, 237, 248);
+QColor Palette::backgroundColorRawContent(247, 240, 210);
+QColor Palette::backgroundColorProcessedContent(191, 232, 242);
+QColor Palette::skippedLineTextColor(Qt::lightGray);
+
 } // namespace
 
 QREDataLoader::QREDataLoader() : m_propertiesWidget(nullptr)
@@ -243,7 +255,6 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
     errors->clear();
     warnings->clear();
 
-    // #baimport refactor all the error handling
     ASSERT(item != nullptr);
     ASSERT(item->isSpecularData());
 
@@ -298,7 +309,7 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
             m_importResult.hashOfFile = hashOfFileOnDisk.result();
         } else {
             for (auto line : m_importResult.lines)
-                fileContent.append(line.second + "\n"); // #baimport unit test? Linux?
+                fileContent.append(line.second + "\n");
 
             auto backupHash = m_importResult.hashOfFile; // will be cleared while parsing
             parseFile(fileContent);
@@ -366,9 +377,9 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     }
 
     t->setColumnCount(colCount);
-    // #baimport this may be an improvement to hide empty lines, but then also info about omitted
-    // lines is not available. If implementing this, then the filling of the table also has to be
-    // reworked
+    // #baimport the following may be an improvement to hide empty lines, but then also info about
+    // omitted lines is not available. If implementing this, then the filling of the table also has
+    // to be reworked
     /*
     t->setRowCount(fileContent ? m_importResult.lines.size()
                                : m_importResult.originalEntriesAsDouble.size());
@@ -382,14 +393,10 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         t->setItem(row, col, tableItem);
     };
 
-    QColor backgroundColorFileContent(239, 237, 248);
-    QColor backgroundColorRawContent(247, 240, 210);
-    QColor backgroundColorProcessedContent(191, 232, 242);
-
     int dataCol = 0;
     if (fileContent) {
         auto headerItem = new QTableWidgetItem("File content (text)");
-        headerItem->setBackgroundColor(backgroundColorFileContent.darker(150));
+        headerItem->setBackgroundColor(Palette::backgroundColorFileContent.darker(150));
         t->setHorizontalHeaderItem(0, headerItem);
         int row = 0;
         for (auto line : m_importResult.lines) {
@@ -398,8 +405,8 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
             lineContent.replace("\t", " --> ");
             auto tableItem = new QTableWidgetItem(lineContent);
             if (skipped)
-                tableItem->setTextColor(Qt::lightGray); // #baimport review
-            tableItem->setBackgroundColor(backgroundColorFileContent);
+                tableItem->setTextColor(Palette::skippedLineTextColor);
+            tableItem->setBackgroundColor(Palette::backgroundColorFileContent);
             tableItem->setFlags(tableItem->flags() & ~Qt::ItemIsEditable);
             t->setItem(row++, 0, tableItem);
         }
@@ -417,7 +424,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
             int dataRow = lineNr - 1; // lineNr is 1-based
 
             for (auto v : rowContent.second)
-                cell(dataRow, dataCol++, v, backgroundColorRawContent);
+                cell(dataRow, dataCol++, v, Palette::backgroundColorRawContent);
             dataCol -= rowContent.second.size();
         }
         dataCol += m_importResult.maxColumnCount;
@@ -433,14 +440,14 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
             auto v = rowContent.second;
-            cell(dataRow, dataCol + 0, v, backgroundColorProcessedContent);
+            cell(dataRow, dataCol + 0, v, Palette::backgroundColorProcessedContent);
         }
 
         for (auto rowContent : m_importResult.rValues) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
             auto v = rowContent.second;
-            cell(dataRow, dataCol + 1, v, backgroundColorProcessedContent);
+            cell(dataRow, dataCol + 1, v, Palette::backgroundColorProcessedContent);
         }
 
         if (showErrorColumn) {
@@ -448,7 +455,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
                 int lineNr = rowContent.first;
                 int dataRow = lineNr - 1; // lineNr is 1-based
                 auto v = rowContent.second;
-                cell(dataRow, dataCol + 2, v, backgroundColorProcessedContent);
+                cell(dataRow, dataCol + 2, v, Palette::backgroundColorProcessedContent);
             }
         }
     }
