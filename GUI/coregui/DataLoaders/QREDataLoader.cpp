@@ -252,22 +252,29 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
         item->specularDataItem()->setOutputData(nullptr);
     };
 
+    const bool fileWasAlreadyImported = !m_importResult.hashOfFile.isEmpty();
+
     QFile file(filename);
-    if (!file.open(QFile::ReadOnly)) {
+    const bool fileCouldBeOpened = file.open(QFile::ReadOnly | QIODevice::Text);
+
+    if (!fileCouldBeOpened && !fileWasAlreadyImported) {
         m_importResult.clear();
         *errors << "File '" + filename + "' could not be opened";
         return;
     }
 
-    QCryptographicHash hash(QCryptographicHash::Md5);
-    if (!hash.addData(&file)) {
-        m_importResult.clear();
-        *errors << "File '" + filename + "' could not be read";
-        return;
+    QCryptographicHash hashOfFileOnDisk(QCryptographicHash::Md5);
+    if (fileCouldBeOpened) {
+        if (!hashOfFileOnDisk.addData(&file)) {
+            m_importResult.clear();
+            *errors << "File '" + filename + "' could not be read";
+            return;
+        }
     }
 
-    const bool fileChanged =
-        m_importResult.hashOfFile.isEmpty() || (hash.result() != m_importResult.hashOfFile);
+    const bool fileOnDiskChanged =
+        fileCouldBeOpened && (hashOfFileOnDisk.result() != m_importResult.hashOfFile);
+    const bool fileHasToBeReadFromDisk = fileOnDiskChanged;
     const bool settingsChanged = m_importResult.importSettings != m_importSettings;
     const bool parsingSettingsChanged =
         m_importResult.importSettings.headerPrefix != m_importSettings.headerPrefix
@@ -276,15 +283,27 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
     const bool calculationSettingsChanged =
         m_importResult.importSettings.columnDefinitions != m_importSettings.columnDefinitions;
     const bool calculationIsNecessary =
-        (fileChanged || parsingSettingsChanged || calculationSettingsChanged);
+        (fileOnDiskChanged || parsingSettingsChanged || calculationSettingsChanged);
     const bool creationOfOutputDataIsNecessary = calculationIsNecessary;
 
-    if (fileChanged || parsingSettingsChanged) {
-        // everything has to be re-read
-        m_importResult.clear();
-        file.seek(0);
-        parseFile(file);
-        m_importResult.hashOfFile = hash.result();
+    if (fileOnDiskChanged || parsingSettingsChanged) {
+        // everything has to be re-parsed
+
+        QString fileContent;
+        if (fileHasToBeReadFromDisk) {
+            file.seek(0);
+            fileContent = file.readAll();
+            file.close();
+            parseFile(fileContent);
+            m_importResult.hashOfFile = hashOfFileOnDisk.result();
+        } else {
+            for (auto line : m_importResult.lines)
+                fileContent.append(line.second + "\n"); // #baimport unit test? Linux?
+
+            auto backupHash = m_importResult.hashOfFile; // will be cleared while parsing
+            parseFile(fileContent);
+            m_importResult.hashOfFile = backupHash;
+        }
     }
 
     if (calculationIsNecessary) {
@@ -439,7 +458,13 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     return true;
 }
 
-void QREDataLoader::parseFile(QFile& file) const
+void QREDataLoader::estimateSettings(const QString& filename)
+{
+    // #baimport implement estimateSettings (separator)
+    // search for lines which have start with numbers, then try the separators
+}
+
+void QREDataLoader::parseFile(QString& fileContent) const
 {
     m_importResult.clear();
 
@@ -465,7 +490,7 @@ void QREDataLoader::parseFile(QFile& file) const
         return false;
     };
 
-    QTextStream in(&file);
+    QTextStream in(&fileContent);
     int lineNr = 0;
     int lastColumnCount = -1;
     // if separator is SPACE: e.g. three consecutive SPACEs do not represent 3 columns => delete

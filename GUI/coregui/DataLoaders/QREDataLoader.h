@@ -38,9 +38,10 @@ public:
                             QStringList* warnings) const override;
     virtual bool fillImportDetailsTable(QTableWidget* table, bool fileContent, bool rawContent,
                                         bool processedContent) const override;
+    void estimateSettings(const QString& filename);
 
 private:
-    void parseFile(QFile& file) const;
+    void parseFile(QString& fileContent) const;
     void calculateFromParseResult() const;
     void createOutputDataFromParsingResult(RealDataItem* item) const;
 
