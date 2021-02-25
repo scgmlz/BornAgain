@@ -208,7 +208,6 @@ TEST_F(SpecularSimulationTest, SetQScan)
     EXPECT_EQ(sim3.detector().detectionProperties().analyzerDirection(), analyzer);
     EXPECT_EQ(sim3.detector().detectionProperties().analyzerEfficiency(), 0.33);
     EXPECT_EQ(sim3.detector().detectionProperties().analyzerTotalTransmission(), 0.22);
-
 }
 
 TEST_F(SpecularSimulationTest, ConstructSimulation)
@@ -245,6 +244,7 @@ TEST_F(SpecularSimulationTest, SimulationClone)
     const auto analyzer     = kvector_t({0., 0., 1.});
     sim->beam().setPolarization(polarization);
     sim->detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim->beam().setIntensity(42.42);
 
     std::unique_ptr<SpecularSimulation> clone(sim->clone());
 
@@ -258,6 +258,7 @@ TEST_F(SpecularSimulationTest, SimulationClone)
     EXPECT_EQ(2.0 * Units::deg, clone->coordinateAxis()->upperBound());
 
     EXPECT_EQ(clone->beam().getBlochVector(), polarization);
+    EXPECT_EQ(clone->beam().intensity(), 42.42);
     EXPECT_EQ(clone->detector().detectionProperties().analyzerDirection(), analyzer);
     EXPECT_EQ(clone->detector().detectionProperties().analyzerEfficiency(), 0.33);
     EXPECT_EQ(clone->detector().detectionProperties().analyzerTotalTransmission(), 0.22);
