@@ -21,6 +21,8 @@
 class QString;
 class QREDataLoaderProperties;
 
+//! Real data loader for Q/R/E reflectometry CSV files
+
 class QREDataLoader : public AbstractDataLoader1D {
 public:
     QREDataLoader();
@@ -49,16 +51,17 @@ private:
     enum class UnitInFile { none, perNanoMeter, perAngstrom, other };
 
     struct ColumnDefinition {
-        bool enabled;
-        int column;
-        UnitInFile unit;
-        double factor;
+        bool enabled;    //< shall data type be used
+        int column;      //< read the value from this raw column
+        UnitInFile unit; //< the unit of the data in the file
+        double factor;   //< in case the raw data shall be multiplied
 
         bool operator==(const ColumnDefinition& other) const;
     };
 
     enum class DataType { Q, R, dR };
 
+    //! Settings for importing the file
     struct ImportSettings {
         QString separator;    //!< column separator
         QString headerPrefix; //!< prefix denoting header line
@@ -70,6 +73,7 @@ private:
         bool fromByteArray(const QByteArray& data);
     } m_importSettings;
 
+    //! Result of the file parsing.
     struct ParsingResult {
         void clear();
         void clearCalculatedValues();

@@ -69,6 +69,7 @@ void SpecularDataImportWidget::setItem(SessionItem* _realDataItem)
 
     m_loader = dynamic_cast<AbstractDataLoader1D*>(realDataItem()->dataLoader());
 
+    // #baimport check whether file exists. If not, add hint of this
     m_ui->fileNameEdit->setText(QDir::toNativeSeparators(realDataItem()->nativeFileName()));
 
     QSignalBlocker b(m_ui->formatSelectionComboBox);

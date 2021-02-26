@@ -261,7 +261,6 @@ void RealDataItem::setInstrumentId(const QString& id)
 void RealDataItem::clearInstrumentId()
 {
     setItemValue(P_INSTRUMENT_ID, QString());
-    // #baimport ++ should m_linkedInstrument be set to null?
 }
 
 InstrumentItem* RealDataItem::linkedInstrument() const
