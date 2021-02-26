@@ -27,6 +27,8 @@ namespace Ui {
 class QREDataLoaderProperties;
 }
 
+//! Properties widget for the QREDataLoader
+
 class QREDataLoaderProperties : public QWidget {
     Q_OBJECT
 public:
@@ -34,6 +36,8 @@ public:
 
     Ui::QREDataLoaderProperties* m_ui;
 
+    //! Factors shall not be supported. However, since the requirements have been there,
+    //! they are only deactivated. Call allowFactors(true) to enable them.
     void allowFactors(bool b);
 
     double factor(int dataType) const;

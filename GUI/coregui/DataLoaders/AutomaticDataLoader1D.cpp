@@ -12,6 +12,8 @@
 //
 //  ************************************************************************************************
 
+// #baimport This file/class is quite preliminary - rework this!
+
 #include "GUI/coregui/DataLoaders/AutomaticDataLoader1D.h"
 #include "Base/Axis/PointwiseAxis.h"
 #include "Device/Data/OutputData.h"

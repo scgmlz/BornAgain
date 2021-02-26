@@ -17,9 +17,14 @@
 #include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/DataLoaders/UserDefinedDataLoader1D.h"
 
-DataLoaders1D* DataLoaders1D::m_instance = nullptr;
+namespace {
 
-DataLoaders1D dataLoadres1D;
+// the one and only instance of DataLoaders1D
+DataLoaders1D dataLoaders1D;
+
+} // namespace
+
+DataLoaders1D* DataLoaders1D::m_instance = nullptr;
 
 DataLoaders1D::DataLoaders1D()
 {

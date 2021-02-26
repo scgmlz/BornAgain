@@ -27,6 +27,11 @@ namespace Ui {
 class SpecularDataImportWidget;
 }
 
+//! Widget to define and show 1D (specular) imports by data loaders, e.g. CSV file import
+//! Contains space for the loader-defined import properties, a table for the raw and the imported
+//! data and a graph to show the plot of the imported data.
+//! The UI is defined via QtDesigner (.ui file)
+
 class SpecularDataImportWidget : public SessionItemWidget {
     Q_OBJECT
 

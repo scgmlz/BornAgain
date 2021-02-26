@@ -17,6 +17,8 @@
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader.h"
 
+//! Base class for data loaders for 1D import
+
 class AbstractDataLoader1D : public AbstractDataLoader {
 };
 

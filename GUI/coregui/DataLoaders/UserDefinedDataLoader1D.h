@@ -17,6 +17,9 @@
 
 #include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
 
+//! A user defined data loader. This is a thin wrapper around the real loader implementation,
+//! storing the relevant settings to make it user definable (namely name and import settings).
+
 class UserDefinedDataLoader1D : public AbstractDataLoader1D {
 public:
     UserDefinedDataLoader1D(AbstractDataLoader1D* wrappedLoader, const QString& name,
