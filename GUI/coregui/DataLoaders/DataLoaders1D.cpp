@@ -39,7 +39,8 @@ DataLoaders1D& DataLoaders1D::instance()
 
 void DataLoaders1D::initBuiltInLoaders()
 {
-    m_builtInLoaders << new AutomaticDataLoader1D();
+    // #baimport enable again when implementation is completed
+    // m_builtInLoaders << new AutomaticDataLoader1D();
     m_builtInLoaders << new QREDataLoader();
 }
 

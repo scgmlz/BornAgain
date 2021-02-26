@@ -40,6 +40,8 @@ SpecularDataImportWidget::SpecularDataImportWidget(QWidget* parent)
     m_ui->setupUi(this);
     m_ui->linkedInstrumentGroup->hide(); // #baimport - remove from UI if not used in the future
 
+    m_ui->createNewFormatButton->hide(); // #baimport - show again when implementation is complete
+
     if (DataLoaders1D::instance().loaders().isEmpty())
         DataLoaders1D::instance().initBuiltInLoaders();
 
