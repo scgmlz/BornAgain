@@ -84,7 +84,7 @@ private:
         QVector<QPair<int, double>> eValues;
         int maxColumnCount;
         QByteArray hashOfFile;
-        QStringList errors;
+        QMap<int, QString> calculationErrors; // calculation error per line
         QStringList warnings;
         ImportSettings importSettings;
     };

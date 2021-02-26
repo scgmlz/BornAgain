@@ -65,12 +65,14 @@ struct Palette {
     static QColor backgroundColorFileContent;
     static QColor backgroundColorRawContent;
     static QColor backgroundColorProcessedContent;
+    static QColor backgroundColorErrors;
     static QColor skippedLineTextColor;
 };
 
 QColor Palette::backgroundColorFileContent(239, 237, 248);
 QColor Palette::backgroundColorRawContent(247, 240, 210);
 QColor Palette::backgroundColorProcessedContent(191, 232, 242);
+QColor Palette::backgroundColorErrors(247, 140, 146);
 QColor Palette::skippedLineTextColor(Qt::lightGray);
 
 } // namespace
@@ -206,7 +208,7 @@ QByteArray QREDataLoader::serialize() const
     s << m_importResult.eValues;
     s << m_importResult.maxColumnCount;
     s << m_importResult.hashOfFile;
-    s << m_importResult.errors;
+    s << m_importResult.calculationErrors;
     s << m_importResult.warnings;
     s << m_importResult.importSettings.toByteArray();
 
@@ -231,7 +233,7 @@ void QREDataLoader::deserialize(const QByteArray& data)
     s >> m_importResult.eValues;
     s >> m_importResult.maxColumnCount;
     s >> m_importResult.hashOfFile;
-    s >> m_importResult.errors;
+    s >> m_importResult.calculationErrors;
     s >> m_importResult.warnings;
 
     b.clear();
@@ -319,6 +321,11 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
 
     if (calculationIsNecessary) {
         calculateFromParseResult();
+        // #baimport calculation of values may issue errors. The respective lines are ignored. But
+        // since this makes it possible to use files which may be corrupt in general, maybe in case
+        // of calculation errors the whole file should be denied to load?
+        // Ignore means more flexibility, but may hide that the data/file
+        // is corrupted in general
     }
 
     m_importResult.importSettings = m_importSettings;
@@ -371,6 +378,9 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     if (processedContent)
         colCount += showErrorColumn ? 3 : 2;
 
+    if (!m_importResult.calculationErrors.isEmpty())
+        colCount++;
+
     if (!fileContent && !rawContent && !processedContent) {
         t->setRowCount(0);
         return true;
@@ -379,17 +389,19 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     t->setColumnCount(colCount);
     // #baimport the following may be an improvement to hide empty lines, but then also info about
     // omitted lines is not available. If implementing this, then the filling of the table also has
-    // to be reworked
+    // to be reworked (also row -> lineNr in lambda "cell"!)
     /*
     t->setRowCount(fileContent ? m_importResult.lines.size()
                                : m_importResult.originalEntriesAsDouble.size());
     */
     t->setRowCount(m_importResult.lines.size());
 
-    const auto cell = [t](int row, int col, double s, const QColor& backColor) {
+    const auto cell = [this, t](int row, int col, double s, const QColor& backColor) {
         auto tableItem = new QTableWidgetItem(QString::number(s));
         tableItem->setBackgroundColor(backColor);
         tableItem->setFlags(tableItem->flags() & ~Qt::ItemIsEditable);
+        if (m_importResult.calculationErrors.contains(row))
+            tableItem->setToolTip(m_importResult.calculationErrors[row]);
         t->setItem(row, col, tableItem);
     };
 
@@ -457,6 +469,24 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
                 auto v = rowContent.second;
                 cell(dataRow, dataCol + 2, v, Palette::backgroundColorProcessedContent);
             }
+        }
+        dataCol += showErrorColumn ? 3 : 2;
+    }
+
+    // - now the calculation errors if existing
+    for (auto lineNr : m_importResult.calculationErrors.keys()) {
+        auto headerItem = new QTableWidgetItem("Parsing errors");
+        headerItem->setBackgroundColor(Palette::backgroundColorErrors.darker(150));
+        t->setHorizontalHeaderItem(dataCol, headerItem);
+
+        for (auto lineNr : m_importResult.calculationErrors.keys()) {
+            const int dataRow = lineNr - 1; // lineNr is 1-based
+            QString lineContent = m_importResult.calculationErrors[lineNr];
+
+            auto tableItem = new QTableWidgetItem(lineContent);
+            tableItem->setBackgroundColor(Palette::backgroundColorErrors);
+            tableItem->setFlags(tableItem->flags() & ~Qt::ItemIsEditable);
+            t->setItem(dataRow, dataCol, tableItem);
         }
     }
 
@@ -579,22 +609,53 @@ void QREDataLoader::calculateFromParseResult() const
         const double e =
             eColIsValid ? rawValues[eCol] * eFactor : std::numeric_limits<double>::quiet_NaN();
 
-        const bool containsNaN =
+        const bool lineContainsNaN =
             (std::isnan(q) || std::isnan(r) || (std::isnan(e) && errorColumnIsEnabled));
 
-        const bool isDuplicateQ = foundQValues.contains(q);
-
-        // #baimport lines could be ignored or loading could be refused. Ignore means more
-        // flexibility, but may hide that the data/file is corrupted in general
-
-        // ignore lines when a resulting value would be NAN or in case of duplicate Q values
-        // #baimport make this dependent from a UI checkbox?
-        if (!containsNaN && !isDuplicateQ) {
-            m_importResult.qValues << qMakePair(lineNr, q);
-            m_importResult.rValues << qMakePair(lineNr, r);
-            m_importResult.eValues << qMakePair(lineNr, e);
-            foundQValues << q;
+        if (std::isnan(q)) {
+            m_importResult.calculationErrors[lineNr] =
+                QString("Raw column %1 does not contain a valid number - line is discarded")
+                    .arg(qCol + 1);
+            continue;
         }
+
+        if (std::isnan(r)) {
+            m_importResult.calculationErrors[lineNr] =
+                QString("Raw column %1 does not contain a valid number - line is discarded")
+                    .arg(rCol + 1);
+            continue;
+        }
+
+        if (std::isnan(e) && errorColumnIsEnabled) {
+            m_importResult.calculationErrors[lineNr] =
+                QString("Raw column %1 does not contain a valid number - line is discarded")
+                    .arg(eCol + 1);
+            continue;
+        }
+
+        const bool isDuplicateQ = foundQValues.contains(q);
+        if (isDuplicateQ) {
+            m_importResult.calculationErrors[lineNr] =
+                QString("The value %1 for Q is duplicate - line is discarded").arg(q);
+            continue;
+        }
+
+        if (r > 1.0) {
+            m_importResult.calculationErrors[lineNr] =
+                QString("The value %1 for R is greater than 1.0 - line is discarded").arg(r);
+            continue;
+        }
+
+        if (r < 0.0) {
+            m_importResult.calculationErrors[lineNr] =
+                QString("The value %1 for R is less than 0 - line is discarded").arg(r);
+            continue;
+        }
+
+        m_importResult.qValues << qMakePair(lineNr, q);
+        m_importResult.rValues << qMakePair(lineNr, r);
+        m_importResult.eValues << qMakePair(lineNr, e);
+        foundQValues << q;
     }
 }
 
@@ -679,7 +740,7 @@ void QREDataLoader::ParsingResult::clear()
     eValues.clear();
     maxColumnCount = 0;
     hashOfFile.clear();
-    errors.clear();
+    calculationErrors.clear();
     warnings.clear();
     importSettings.columnDefinitions.clear(); // sufficient
 }
@@ -689,6 +750,7 @@ void QREDataLoader::ParsingResult::clearCalculatedValues()
     qValues.clear();
     rValues.clear();
     eValues.clear();
+    calculationErrors.clear();
 }
 
 bool QREDataLoader::ImportSettings::operator!=(const ImportSettings& other) const
