@@ -18,13 +18,12 @@
 #include "GUI/coregui/Views/SampleDesigner/MultiLayerView.h"
 #include "GUI/coregui/Views/SampleDesigner/ParticleLayoutView.h"
 #include "GUI/coregui/mainwindow/tooltipdatabase.h"
-#include "mvvm/widgets/widgetutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
 LayerView::LayerView(QGraphicsItem* parent) : ILayerView(parent)
 {
-    setColor(ModelView::Utils::RandomColor());
+    setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
     setName("Layer");
     setRectangle(DesignerHelper::getDefaultBoundingRect("Layer"));
     setAcceptDrops(false);
