@@ -276,16 +276,14 @@ Data1DViewItem* JobItem::dataItemView()
 void JobItem::updateIntensityDataFileName()
 {
     if (DataItem* item = dataItem())
-        item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::jobResultsFileName(*this));
+        item->setFileName(ItemFileNameUtils::jobResultsFileName(*this));
 
     if (RealDataItem* realItem = realDataItem()) {
         if (DataItem* item = realItem->dataItem())
-            item->setItemValue(DataItem::P_FILE_NAME,
-                               ItemFileNameUtils::jobReferenceFileName(*this));
+            item->setFileName(ItemFileNameUtils::jobReferenceFileName(*this));
 
         if (DataItem* item = realItem->nativeData())
-            item->setItemValue(DataItem::P_FILE_NAME,
-                               ItemFileNameUtils::jobNativeDataFileName(*this));
+            item->setFileName(ItemFileNameUtils::jobNativeDataFileName(*this));
     }
 }
 

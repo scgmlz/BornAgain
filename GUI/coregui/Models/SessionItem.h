@@ -27,6 +27,8 @@ Q_DECLARE_METATYPE(RealLimits)
 class SessionItemData;
 class SessionItemTags;
 class IPathTranslator;
+class QXmlStreamWriter;
+class QXmlStreamReader;
 
 class BA_CORE_API_ SessionItem {
     friend class SessionModel;
@@ -125,6 +127,9 @@ public:
 
     virtual QStringList translateList(const QStringList& list) const;
     void addTranslator(const IPathTranslator& translator);
+
+    virtual void writeNonSessionItemData(QXmlStreamWriter* writer) const;
+    virtual void readNonSessionItemData(QXmlStreamReader* reader);
 
 private:
     void childDeleted(SessionItem* child);

@@ -27,8 +27,10 @@ class MaskContainerItem;
 class RealDataItem;
 
 class BA_CORE_API_ InstrumentItem : public SessionItem {
-public:
+private:
     static const QString P_IDENTIFIER;
+
+public:
     static const QString P_BEAM;
     static const QString P_BACKGROUND;
 
@@ -37,6 +39,9 @@ public:
 
     QString id() const;
     void setId(const QString& id);
+
+    void setName(const QString& instrumentName);
+    QString name() const;
 
     virtual BeamItem* beamItem() const;
     BackgroundItem* backgroundItem() const;

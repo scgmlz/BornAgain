@@ -19,7 +19,7 @@ public:
         QTest::qSleep(nap_time);
 
         // changing item (file name)
-        item->setItemValue(DataItem::P_FILE_NAME, "name.txt");
+        item->setFileName("name.txt");
         QDateTime time2 = item->lastModified();
         EXPECT_TRUE(time.msecsTo(time2) > nap_time / 2);
 

@@ -65,6 +65,16 @@ void InstrumentItem::setId(const QString& id)
     setItemValue(P_IDENTIFIER, id);
 }
 
+void InstrumentItem::setName(const QString& instrumentName)
+{
+    setItemName(instrumentName);
+}
+
+QString InstrumentItem::name() const
+{
+    return itemName();
+}
+
 BeamItem* InstrumentItem::beamItem() const
 {
     return item<BeamItem>(P_BEAM);
@@ -141,7 +151,7 @@ void SpecularInstrumentItem::updateToRealData(const RealDataItem* item)
         throw GUIHelpers::Error("Error in SpecularInstrumentItem::updateToRealData: The type "
                                 "of instrument is incompatible with passed data shape.");
 
-    const auto& data = item->nativeData()->getOutputData()->axis(0);
+    const auto& data = item->nativeOutputData()->axis(0);
     beamItem()->updateToData(data, item->nativeDataUnits());
 }
 
@@ -162,7 +172,10 @@ bool SpecularInstrumentItem::alignedWith(const RealDataItem* item) const
         if (!instrument_axis)
             return false;
 
-        const auto& native_axis = item->nativeData()->getOutputData()->axis(0);
+        if (!item->hasNativeData())
+            return false;
+
+        const auto& native_axis = item->nativeOutputData()->axis(0);
         return *instrument_axis == native_axis;
         ;
     }

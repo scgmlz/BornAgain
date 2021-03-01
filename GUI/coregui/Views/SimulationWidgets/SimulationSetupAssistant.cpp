@@ -34,7 +34,8 @@ bool SimulationSetupAssistant::isValidSimulationSetup(const MultiLayerItem* mult
     checkFittingSetup(instrumentItem, realData);
 
     if (!m_isValid)
-        QMessageBox::warning(nullptr, "Can't run the job", composeMessage());
+        QMessageBox::warning(nullptr, "Can't run the job",
+                             composeMessage()); // #baTODO fix modality
 
     return m_isValid;
 }

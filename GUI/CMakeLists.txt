@@ -5,6 +5,7 @@
 message(STATUS "Configuring BornAgain GUI")
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 
 add_subdirectory(ba3d)
 add_subdirectory(coregui)

@@ -149,7 +149,6 @@ void ProjectDocument::load(const QString& project_file_name)
 
         timer2.start();
         m_dataService->load(projectDir(), m_messageService);
-        m_applicationModels->jobModel()->link_instruments();
         connectModels();
 
         if (m_messageService->warningCount())

@@ -86,8 +86,7 @@ void JobModelFunctions::initDataView(JobItem* job_item)
 void JobModelFunctions::setupJobItemSampleData(JobItem* jobItem, const MultiLayerItem* sampleItem)
 {
     auto model = jobItem->model();
-    MultiLayerItem* multilayer =
-        static_cast<MultiLayerItem*>(model->copyItem(sampleItem, jobItem, JobItem::T_SAMPLE));
+    auto multilayer = model->copyItem(sampleItem, jobItem, JobItem::T_SAMPLE);
     multilayer->setItemName("MultiLayer");
 
     // copying materials
@@ -113,12 +112,12 @@ void JobModelFunctions::setupJobItemSampleData(JobItem* jobItem, const MultiLaye
 void JobModelFunctions::setupJobItemInstrument(JobItem* jobItem, const InstrumentItem* from)
 {
     auto model = jobItem->model();
-    SessionItem* to = model->copyItem(from, jobItem, JobItem::T_INSTRUMENT);
-    to->setItemName(from->modelType());
-    to->setItemValue(InstrumentItem::P_IDENTIFIER, GUIHelpers::createUuid());
+    auto copiedInstrument = model->copyItem(from, jobItem, JobItem::T_INSTRUMENT);
+    copiedInstrument->setItemName(from->modelType());
+    copiedInstrument->setId(GUIHelpers::createUuid());
     jobItem->getItem(JobItem::P_INSTRUMENT_NAME)->setValue(from->itemName());
 
-    auto spec_to = dynamic_cast<SpecularInstrumentItem*>(to);
+    auto spec_to = dynamic_cast<SpecularInstrumentItem*>(copiedInstrument);
     if (!spec_to)
         return;
 
@@ -195,23 +194,21 @@ void JobModelFunctions::copyRealDataItem(JobItem* jobItem, const RealDataItem* r
 
     SessionModel* model = jobItem->model();
 
-    RealDataItem* realDataItemCopy =
-        dynamic_cast<RealDataItem*>(model->copyItem(realDataItem, jobItem, JobItem::T_REALDATA));
+    RealDataItem* realDataItemCopy = model->copyItem(realDataItem, jobItem, JobItem::T_REALDATA);
     ASSERT(realDataItemCopy);
 
     realDataItemCopy->dataItem()->setOutputData(realDataItem->dataItem()->getOutputData()->clone());
 
     // adapting the name to job name
-    realDataItemCopy->dataItem()->setItemValue(DataItem::P_FILE_NAME,
-                                               ItemFileNameUtils::jobReferenceFileName(*jobItem));
+    realDataItemCopy->dataItem()->setFileName(ItemFileNameUtils::jobReferenceFileName(*jobItem));
 
-    if (!realDataItem->nativeData())
+    // #baimport ++ copy members of realDataItem
+
+    if (!realDataItem->hasNativeData())
         return;
 
-    realDataItemCopy->nativeData()->setOutputData(
-        realDataItem->nativeData()->getOutputData()->clone());
-    realDataItemCopy->nativeData()->setItemValue(
-        DataItem::P_FILE_NAME, ItemFileNameUtils::jobNativeDataFileName(*jobItem));
+    realDataItemCopy->setNativeOutputData(realDataItem->nativeOutputData()->clone());
+    realDataItemCopy->nativeData()->setFileName(ItemFileNameUtils::jobNativeDataFileName(*jobItem));
 }
 
 const JobItem* JobModelFunctions::findJobItem(const SessionItem* item)
@@ -228,7 +225,8 @@ void processInstrumentLink(JobItem* jobItem)
     if (!realData)
         throw GUIHelpers::Error("JobModelFunctions::processInstrumentLink() -> Error. No data.");
 
-    realData->linkToInstrument(jobItem->instrumentItem());
+    realData->setInstrumentId(jobItem->instrumentItem()->id());
+    realData->updateToInstrument(jobItem->instrumentItem());
 }
 
 void copyMasksToInstrument(JobItem* jobItem)

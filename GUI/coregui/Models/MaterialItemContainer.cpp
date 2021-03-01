@@ -27,8 +27,7 @@ MaterialItemContainer::MaterialItemContainer() : SessionItem("MaterialContainer"
 
 MaterialItem* MaterialItemContainer::insertCopy(MaterialItem* material_item)
 {
-    MaterialItem* item_copy =
-        dynamic_cast<MaterialItem*>(model()->copyItem(material_item, this, T_MATERIALS));
+    MaterialItem* item_copy = model()->copyItem(material_item, this, T_MATERIALS);
     item_copy->setItemValue(MaterialItem::P_IDENTIFIER, GUIHelpers::createUuid());
 
     return item_copy;

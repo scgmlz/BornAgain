@@ -91,13 +91,14 @@ void InstrumentViewActions::onCloneInstrument()
     if (currentIndex.isValid()) {
         SessionItem* item = m_model->itemForIndex(currentIndex);
         QString nameOfClone = suggestInstrumentName(item->itemName());
-        SessionItem* clone = m_model->insertNewItem(item->modelType());
+        InstrumentItem* clone =
+            static_cast<InstrumentItem*>(m_model->insertNewItem(item->modelType()));
+        const QString idBackup = clone->id(); // will be overwritten by the following
         for (auto child : item->children()) {
-            if (child->displayName() == InstrumentItem::P_IDENTIFIER)
-                continue;
             auto tag = item->tagFromItem(child);
             m_model->copyItem(child, clone, tag);
         }
+        clone->setId(idBackup);
         clone->setItemName(nameOfClone);
 
         // copying non-uniform axis data

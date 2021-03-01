@@ -37,15 +37,15 @@ public:
     JobItem* addJob(const MultiLayerItem* multiLayerItem, const InstrumentItem* instrumentItem,
                     const RealDataItem* realDataItem, const SimulationOptionsItem* optionItem);
 
+    QVector<JobItem*> jobItems() const;
+
     void restore(JobItem* jobItem);
 
     bool hasUnfinishedJobs();
 
     void clear() override;
-
     QVector<SessionItem*> nonXMLItems() const override;
-
-    void link_instruments();
+    virtual void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0) override;
 
 signals:
     void aboutToDeleteJobItem(JobItem* item);

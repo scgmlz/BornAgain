@@ -28,8 +28,20 @@ public:
 
     InstrumentModel* createCopy(SessionItem* parent = nullptr) override;
     QVector<SessionItem*> nonXMLItems() const override;
+    virtual void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0) override;
 
-    QVector<InstrumentItem*> instrumentItems();
+    QVector<InstrumentItem*> instrumentItems() const;
+
+    InstrumentItem* findInstrumentById(const QString& instrumentId) const;
+    bool instrumentExists(const QString& instrumentId) const;
+
+signals:
+    void instrumentAddedOrRemoved();
+    void instrumentNameChanged(const InstrumentItem* instrument);
+
+private:
+    void onRowsChange(const QModelIndex& parent, int, int);
+    void onInstrumentPropertyChange(const InstrumentItem* instrument, const QString& propertyName);
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_INSTRUMENTMODEL_H

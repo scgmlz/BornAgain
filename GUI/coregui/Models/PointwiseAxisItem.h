@@ -50,6 +50,8 @@ private:
     void setLastModified(const QDateTime& dtime);
 
     bool checkValidity() const;
+
+    //! Sets internal m_instrument to containing SpecularInstrumentItem
     void findInstrument();
 
     const SpecularInstrumentItem* m_instrument;

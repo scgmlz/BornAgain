@@ -53,6 +53,8 @@ ApplicationModels::ApplicationModels(QObject* parent)
     m_realDataModel = new RealDataModel(this);
     m_jobModel = new JobModel(this);
 
+    m_realDataModel->setInstrumentModel(m_instrumentModel);
+
     connectModel(m_documentModel);
     connectModel(m_materialModel);
     connectModel(m_sampleModel);

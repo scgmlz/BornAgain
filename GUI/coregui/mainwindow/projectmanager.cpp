@@ -151,6 +151,13 @@ void ProjectManager::setImportDir(const QString& dirname)
     m_importDirectory = dirname;
 }
 
+//! Sets user import directory in system settings.
+
+void ProjectManager::setImportDirFromFilePath(const QString& filePath)
+{
+    m_importDirectory = QFileInfo(filePath).absolutePath();
+}
+
 bool ProjectManager::isAutosaveEnabled() const
 {
     return m_saveService->isAutosaveEnabled();

@@ -55,6 +55,12 @@ ImportDataInfo::ImportDataInfo(std::unique_ptr<OutputData<double>> data, const Q
     checkValidity();
 }
 
+ImportDataInfo::ImportDataInfo(OutputData<double>&& data, Axes::Units units)
+    : ImportDataInfo(std::unique_ptr<OutputData<double>>(new OutputData<double>(std::move(data))),
+                     units)
+{
+}
+
 ImportDataInfo::~ImportDataInfo() = default;
 
 ImportDataInfo::operator bool() const

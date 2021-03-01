@@ -177,7 +177,7 @@ TEST_F(TestSaveService, test_saveServiceWithData)
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
                                            models.instrumentModel()->instrumentItems().front());
-    intensityItem->setItemValue(DataItem::P_FILE_NAME, "realdata.int.gz");
+    intensityItem->setFileName("realdata.int.gz");
 
     std::unique_ptr<ProjectDocument> document(new ProjectDocument);
     document->setApplicationModels(&models);
@@ -211,7 +211,7 @@ TEST_F(TestSaveService, test_autosaveEnabled)
     DataItem* intensityItem = realData->dataItem();
     JobItemUtils::createDefaultDetectorMap(intensityItem,
                                            models.instrumentModel()->instrumentItems().front());
-    intensityItem->setItemValue(DataItem::P_FILE_NAME, "realdata.int.gz");
+    intensityItem->setFileName("realdata.int.gz");
 
     std::unique_ptr<ProjectDocument> document(new ProjectDocument(projectFileName));
     document->setApplicationModels(&models);

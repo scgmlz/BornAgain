@@ -15,38 +15,6 @@
 class TestLinkInstrument : public ::testing::Test {
 };
 
-//! Checks that LinkInstrumentManager listens instrument model.
-
-TEST_F(TestLinkInstrument, test_linkInstrumentManager)
-{
-    InstrumentModel instrumentModel;
-    RealDataModel realDataModel;
-    LinkInstrumentManager manager;
-    manager.setModels(&instrumentModel, &realDataModel);
-
-    // initial state of LinkInstrumentManager
-    EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined");
-    QSignalSpy spy(&manager, SIGNAL(instrumentMapUpdated()));
-
-    // populating instrument model
-    auto instrument = instrumentModel.insertItem<GISASInstrumentItem>();
-    const QString identifier = instrument->id();
-
-    // checking that LinkInstrumentManager was notified about new instrument
-    EXPECT_EQ(spy.count(), 1);
-    EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined" << instrument->itemName());
-
-    EXPECT_EQ(manager.instrument(identifier), instrument);
-    EXPECT_EQ(manager.instrumentComboIndex(identifier), 1);
-
-    // removing instrument
-    instrumentModel.removeRow(0);
-    EXPECT_EQ(spy.count(), 2);
-    EXPECT_EQ(manager.instrumentNames(), QStringList() << "Undefined");
-    QVERIFY(manager.instrument(identifier) == nullptr);
-    EXPECT_EQ(manager.instrumentComboIndex(identifier), -1);
-}
-
 TEST_F(TestLinkInstrument, test_canLinkToInstrument)
 {
     InstrumentModel instrumentModel;
@@ -62,21 +30,21 @@ TEST_F(TestLinkInstrument, test_canLinkToInstrument)
     RealDataItem* realData = GuiUnittestUtils::createRealData("RealData", realDataModel);
     JobItemUtils::createDefaultDetectorMap(realData->dataItem(), instrument);
 
-    QVERIFY(manager.canLinkDataToInstrument(realData, identifier));
+    ASSERT_TRUE(manager.canLinkDataToInstrument(realData, identifier, true));
 
     // making link
     realData->setInstrumentId(identifier);
-    EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
+    EXPECT_EQ(manager.linkedRealDataItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector type and checking that link remain
     instrument->setDetectorGroup("RectangularDetector");
-    EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>() << realData);
+    EXPECT_EQ(manager.linkedRealDataItems(instrument), QList<RealDataItem*>() << realData);
 
     // changing detector binning and checking that link is destroyed
     DetectorItem* detectorItem = instrument->detectorItem();
     auto x_axis = detectorItem->item<BasicAxisItem>(RectangularDetectorItem::P_X_AXIS);
     x_axis->setItemValue(BasicAxisItem::P_NBINS, 10);
 
-    EXPECT_EQ(manager.linkedItems(instrument), QList<RealDataItem*>());
+    EXPECT_EQ(manager.linkedRealDataItems(instrument), QList<RealDataItem*>());
     EXPECT_EQ(realData->instrumentId(), QString());
 }

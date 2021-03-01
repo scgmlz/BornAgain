@@ -249,12 +249,13 @@ TEST_F(TestOutputDataIOService, test_RealDataItemWithNativeData)
     EXPECT_EQ(dataItems.size(), 0);
 
     // adding RealDataItem
-    auto realData = models.realDataModel()->insertRealDataItem();
-    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 0);
+    auto realData = models.realDataModel()->insertIntensityDataItem();
+    EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 1);
 
     ImportDataInfo import_data(std::unique_ptr<OutputData<double>>(m_data.clone()), "nbins");
     realData->setImportData(std::move(import_data));
 
+    EXPECT_TRUE(realData->isIntensityData());
     EXPECT_EQ(models.realDataModel()->nonXMLItems().size(), 2);
     realData->setName("RealData");
 

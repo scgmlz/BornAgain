@@ -35,6 +35,7 @@ public:
 
     OutputData();
     OutputData(const OutputData&) = delete;
+    OutputData(OutputData&&);
     const OutputData& operator=(const OutputData&) = delete;
     ~OutputData();
     OutputData* clone() const;
@@ -234,6 +235,15 @@ private:
 // --------------------------------------------------------------------- //
 // Implementation
 // --------------------------------------------------------------------- //
+
+template <class T> OutputData<T>::OutputData(OutputData<T>&& other) 
+{
+    m_value_axes = std::move(other.m_value_axes);
+    m_ll_data = other.m_ll_data;
+
+    other.m_ll_data = nullptr;
+    other.allocate();
+}
 
 template <class T> OutputData<T>::OutputData() : m_value_axes(), m_ll_data(nullptr)
 {

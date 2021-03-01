@@ -20,6 +20,9 @@ InstrumentModel::InstrumentModel(QObject* parent)
     : SessionModel(SessionXML::InstrumentModelTag, parent)
 {
     setObjectName(SessionXML::InstrumentModelTag);
+
+    connect(this, &SessionModel::rowsInserted, this, &InstrumentModel::onRowsChange);
+    connect(this, &SessionModel::rowsRemoved, this, &InstrumentModel::onRowsChange);
 }
 
 InstrumentModel::~InstrumentModel() = default;
@@ -47,7 +50,69 @@ QVector<SessionItem*> InstrumentModel::nonXMLItems() const
     return result;
 }
 
-QVector<InstrumentItem*> InstrumentModel::instrumentItems()
+void InstrumentModel::readFrom(QXmlStreamReader* reader, MessageService* messageService /*= 0*/)
+{
+    // do not send added-notifications until completely read - otherwise partially
+    // initialized items will be notified
+    disconnect(this, &SessionModel::rowsInserted, this, &InstrumentModel::onRowsChange);
+
+    SessionModel::readFrom(reader, messageService);
+
+    connect(this, &SessionModel::rowsInserted, this, &InstrumentModel::onRowsChange);
+
+    for (auto instrumentItem : instrumentItems()) {
+        instrumentItem->mapper()->setOnPropertyChange(
+            [this, instrumentItem](const QString& name) {
+                onInstrumentPropertyChange(instrumentItem, name);
+            },
+            this);
+    }
+
+    if (!instrumentItems().isEmpty())
+        emit instrumentAddedOrRemoved();
+}
+
+QVector<InstrumentItem*> InstrumentModel::instrumentItems() const
 {
     return topItems<InstrumentItem>();
+}
+
+InstrumentItem* InstrumentModel::findInstrumentById(const QString& instrumentId) const
+{
+    for (auto instrument : instrumentItems())
+        if (instrument->id() == instrumentId)
+            return instrument;
+
+    return nullptr;
+}
+
+bool InstrumentModel::instrumentExists(const QString& instrumentId) const
+{
+    return findInstrumentById(instrumentId) != nullptr;
+}
+
+void InstrumentModel::onRowsChange(const QModelIndex& parent, int, int)
+{
+    // valid parent means not an instrument (which is top level item) but something below
+    if (parent.isValid())
+        return;
+
+    for (auto instrumentItem : instrumentItems()) {
+        instrumentItem->mapper()->unsubscribe(this);
+
+        instrumentItem->mapper()->setOnPropertyChange(
+            [this, instrumentItem](const QString& name) {
+                onInstrumentPropertyChange(instrumentItem, name);
+            },
+            this);
+    }
+
+    emit instrumentAddedOrRemoved();
+}
+
+void InstrumentModel::onInstrumentPropertyChange(const InstrumentItem* instrument,
+                                                 const QString& propertyName)
+{
+    if (propertyName == SessionItem::P_NAME)
+        emit instrumentNameChanged(instrument);
 }

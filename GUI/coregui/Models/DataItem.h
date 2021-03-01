@@ -27,12 +27,16 @@ class InstrumentItem;
 //! Provides common functionality for IntensityDataItem and SpecularDataItem
 
 class BA_CORE_API_ DataItem : public SessionItem, public SaveLoadInterface {
-public:
+private:
     static const QString P_FILE_NAME;
+
+public:
     static const QString P_AXES_UNITS;
 
     OutputData<double>* getOutputData() { return m_data.get(); }
     const OutputData<double>* getOutputData() const { return m_data.get(); }
+
+    //! The given pointer becomes owned by this class!!
     virtual void setOutputData(OutputData<double>* data) = 0;
 
     //! Sets the raw data vector from external source
@@ -42,6 +46,7 @@ public:
 
     using SaveLoadInterface::fileName;
     QString fileName() const override;
+    void setFileName(const QString& filename);
     QDateTime lastModified() const override;
     bool containsNonXMLData() const override;
     bool load(const QString& projectDir) override;
@@ -57,7 +62,7 @@ public:
     virtual void updateAxesUnits(const InstrumentItem* instrument) = 0;
     virtual std::vector<int> shape() const = 0;
 
-    //! Returns data to the state defined by user (imported)
+    //! Resets data to the state defined by user (imported)
     //! data.
     virtual void reset(ImportDataInfo data) = 0;
 

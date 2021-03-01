@@ -8,6 +8,7 @@ set(include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow
     ${CMAKE_CURRENT_SOURCE_DIR}/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/Models
+    ${CMAKE_CURRENT_SOURCE_DIR}/DataLoaders
     ${CMAKE_CURRENT_SOURCE_DIR}/Views
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/SampleDesigner
     ${CMAKE_CURRENT_SOURCE_DIR}/Views/JobWidgets
@@ -30,12 +31,15 @@ set(include_dirs
 
 set(source_files)
 set(include_files)
+set(form_files)
 
 foreach(dir ${include_dirs})
     file(GLOB source ${dir}/*.cpp)
     file(GLOB include ${dir}/*.h)
+    file(GLOB forms ${dir}/*.ui)
     list(APPEND source_files ${source})
     list(APPEND include_files ${include})
+    list(APPEND form_files ${forms})
 endforeach()
 
 set(source_widgetbox
@@ -83,7 +87,7 @@ endif()
 
 # --- making library ---------
 
-add_library(${library_name} SHARED ${source_files} ${RC_SRCS} ${include_files})
+add_library(${library_name} SHARED ${source_files} ${RC_SRCS} ${include_files} ${form_files})
 set_target_properties(${library_name} PROPERTIES PREFIX ${libprefix} SUFFIX ${libsuffix})
 set(${library_name}_LIBRARY_TYPE SHARED)
 # exposing library name and list of include directories outside

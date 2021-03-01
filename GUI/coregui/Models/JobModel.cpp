@@ -102,6 +102,11 @@ JobItem* JobModel::addJob(const MultiLayerItem* multiLayerItem,
     return jobItem;
 }
 
+QVector<JobItem*> JobModel::jobItems() const
+{
+    return topItems<JobItem>();
+}
+
 //! restore instrument and sample model from backup for given JobItem
 void JobModel::restore(JobItem* jobItem)
 {
@@ -153,15 +158,14 @@ QVector<SessionItem*> JobModel::nonXMLItems() const
     return result;
 }
 
-//! Link instruments to real data on project load.
-
-void JobModel::link_instruments()
+void JobModel::readFrom(QXmlStreamReader* reader, MessageService* messageService /*= 0*/)
 {
-    for (int i = 0; i < rowCount(QModelIndex()); ++i) {
-        JobItem* jobItem = getJobItemForIndex(index(i, 0, QModelIndex()));
+    SessionModel::readFrom(reader, messageService);
+
+    // Check instrument links. JobItem and realDataItem have to reference the same instrument.
+    for (auto jobItem : jobItems())
         if (RealDataItem* refItem = jobItem->realDataItem())
-            refItem->linkToInstrument(jobItem->instrumentItem(), false);
-    }
+            ASSERT(refItem->instrumentId() == jobItem->instrumentItem()->id());
 }
 
 void JobModel::onCancelAllJobs()

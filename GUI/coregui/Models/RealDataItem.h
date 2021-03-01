@@ -15,15 +15,20 @@
 #ifndef BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H
 #define BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H
 
+#include "GUI/coregui/DataLoaders/AbstractDataLoader.h"
 #include "GUI/coregui/Models/SessionItem.h"
+#include <QPointer>
 
 class DataItem;
 class InstrumentItem;
+class InstrumentModel;
 class IntensityDataItem;
 class SpecularDataItem;
 class MaskContainerItem;
 template <class T> class OutputData;
 class ImportDataInfo;
+class RealDataModel;
+class AbstractDataLoader;
 
 //! The RealDataItem class represents intensity data imported from file and intended for fitting.
 
@@ -43,6 +48,9 @@ private:
 public:
     RealDataItem();
 
+    void initAsSpecularItem();
+    void initAsIntensityItem();
+
     //! The name which is presented to the user
     QString name() const;
     void setName(const QString& name);
@@ -58,17 +66,24 @@ public:
 
     DataItem* nativeData();
     const DataItem* nativeData() const;
+    void initNativeData();
     QString nativeDataUnits() const;
+    void setNativeDataUnits(const QString& units);
+    void removeNativeData();
+    bool hasNativeData() const;
+    const OutputData<double>* nativeOutputData() const;
+    void setNativeOutputData(OutputData<double>* data);
 
     void setOutputData(OutputData<double>* data);
     void setImportData(ImportDataInfo data);
     bool holdsDimensionalData() const;
 
-    void linkToInstrument(const InstrumentItem* instrument, bool make_update = true);
-
+    void updateToInstrument(const InstrumentItem* instrument);
+    void updateToInstrument(const QString& id);
     QString instrumentId() const;
     void setInstrumentId(const QString& id);
     void clearInstrumentId();
+    InstrumentItem* linkedInstrument() const;
 
     //! Returns the shape of underlying data item
     std::vector<int> shape() const;
@@ -79,11 +94,28 @@ public:
     //! Returns mask container item
     MaskContainerItem* maskContainerItem();
 
+    //! The name from where the native data was originally imported
+    void setNativeFileName(const QString& filename);
+    QString nativeFileName() const;
+
+    virtual void writeNonSessionItemData(QXmlStreamWriter* writer) const override;
+    virtual void readNonSessionItemData(QXmlStreamReader* reader) override;
+
+    //! Takes ownership of loader
+    void setDataLoader(AbstractDataLoader* loader);
+    AbstractDataLoader* dataLoader() const;
+
 private:
     void initDataItem(size_t data_rank, const QString& tag);
     void updateNonXMLDataFileNames();
-    void updateToInstrument();
-    const InstrumentItem* m_linkedInstrument;
+
+    RealDataModel* realDataModel() const;
+    InstrumentModel* instrumentModel() const;
+
+    QByteArray m_importSettings;
+    QString m_nativeFileName;
+
+    std::unique_ptr<AbstractDataLoader> m_dataLoader;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_MODELS_REALDATAITEM_H

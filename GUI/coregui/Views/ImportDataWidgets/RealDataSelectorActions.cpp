@@ -14,6 +14,8 @@
 
 #include "GUI/coregui/Views/ImportDataWidgets/RealDataSelectorActions.h"
 #include "Device/Data/DataUtils.h"
+#include "GUI/coregui/DataLoaders/DataLoaders1D.h"
+#include "GUI/coregui/DataLoaders/QREDataLoader.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/MaskItems.h"
 #include "GUI/coregui/Models/ProjectionItems.h"
@@ -138,7 +140,13 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         filter_string_ba = "Intensity File (*.int *.gz *.tif *.tiff *.txt *.csv);;"
                            "Other (*.*)";
     } else {
-        filter_string_ba = "";
+
+        for (auto loader : DataLoaders1D::instance().loaders()) {
+            if (!filter_string_ba.isEmpty())
+                filter_string_ba += ";;";
+            filter_string_ba += loader->name() + "(*.txt *.csv *.dat)";
+        }
+        filter_string_ba += ";; Other (*.*)";
     }
     QString dirname = AppSvc::projectManager()->userImportDir();
     QStringList fileNames =
@@ -158,21 +166,27 @@ void RealDataSelectorActions::importDataLoop(int ndim)
         if (ndim == 2) {
             std::unique_ptr<OutputData<double>> data = ImportDataUtils::Import2dData(fileName);
             if (data) {
-                auto realDataItem = m_realDataModel->insertRealDataItem();
+                auto realDataItem = m_realDataModel->insertIntensityDataItem();
                 realDataItem->setName(baseNameOfLoadedFile);
                 realDataItem->setOutputData(data.release());
                 m_selectionModel->clearSelection();
                 m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
             }
         } else if (ndim == 1) {
-            auto data = ImportDataUtils::Import1dData(fileName);
-            if (data) {
-                auto realDataItem = m_realDataModel->insertRealDataItem();
-                realDataItem->setName(baseNameOfLoadedFile);
-                realDataItem->setImportData(std::move(data));
-                m_selectionModel->clearSelection();
-                m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
-            }
+            // realDataItems are generated immediately and then the data is directly imported
+            // by the current dataloader of the realDataItem.
+            auto realDataItem = m_realDataModel->insertSpecularDataItem();
+            realDataItem->setName(baseNameOfLoadedFile);
+            realDataItem->setNativeFileName(fileName);
+            auto loader =
+                new QREDataLoader(); // #baimport use loader which was selected in the import dialog
+            loader->initWithDefaultProperties();
+            realDataItem->setDataLoader(loader);
+
+            ImportDataUtils::Import1dData(realDataItem);
+
+            m_selectionModel->clearSelection();
+            m_selectionModel->select(realDataItem->index(), QItemSelectionModel::Select);
         }
     }
 }

@@ -81,14 +81,14 @@ public:
     // Returns root item if index is not valid
     SessionItem* itemForIndex(const QModelIndex& index) const;
 
-    void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0);
-    void writeTo(QXmlStreamWriter* writer, SessionItem* parent = 0);
+    virtual void readFrom(QXmlStreamReader* reader, MessageService* messageService = 0);
+    virtual void writeTo(QXmlStreamWriter* writer, SessionItem* parent = 0);
 
     SessionItem* moveItem(SessionItem* item, SessionItem* new_parent = 0, int row = -1,
                           const QString& tag = "");
 
-    SessionItem* copyItem(const SessionItem* item_to_copy, SessionItem* new_parent = 0,
-                          const QString& tag = "");
+    template <typename T>
+    T* copyItem(const T* item_to_copy, SessionItem* new_parent = 0, const QString& tag = "");
 
     virtual SessionModel* createCopy(SessionItem* parent = 0);
 
@@ -108,6 +108,10 @@ protected:
     void setRootItem(SessionItem* root) { m_root_item = root; }
 
 private:
+    SessionItem* copy(const SessionItem* item_to_copy, SessionItem* new_parent = 0,
+                      const QString& tag = "");
+
+private:
     SessionItem* m_root_item;
     QString m_dragged_item_type;
     QString m_name;      //!< model name
@@ -122,6 +126,12 @@ template <typename T> T* SessionModel::insertItem(SessionItem* parent, int row, 
 template <typename T> T* SessionModel::insertItem(const QModelIndex& parent, int row, QString tag)
 {
     return insertItem<T>(itemForIndex(parent), row, tag);
+}
+
+template <typename T>
+T* SessionModel::copyItem(const T* item_to_copy, SessionItem* new_parent, const QString& tag)
+{
+    return static_cast<T*>(copy(item_to_copy, new_parent, tag));
 }
 
 template <typename T> T* SessionModel::topItem() const

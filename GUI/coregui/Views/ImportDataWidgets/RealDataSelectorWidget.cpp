@@ -38,7 +38,7 @@ RealDataSelectorWidget::RealDataSelectorWidget(QWidget* parent)
     setWindowTitle("RealDataSelectorWidget");
 
     m_renameDataAction->setText("Rename");
-    m_renameDataAction->setIcon(QIcon()); // #TODO: Icon needed?
+    m_renameDataAction->setIcon(QIcon()); // #baTODO: Icon needed?
     m_renameDataAction->setIconText("Rename");
     m_renameDataAction->setToolTip("Rename data");
     connect(m_renameDataAction, &QAction::triggered, this,
@@ -88,7 +88,6 @@ void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
 {
     m_realDataModel = realDataModel;
     m_selectorWidget->setModel(realDataModel);
-    m_propertiesWidget->setModels(instrumentModel, realDataModel);
 
     m_selectorActions->setRealDataModel(realDataModel);
     m_selectorActions->setSelectionModel(m_selectorWidget->selectionModel());
@@ -97,7 +96,7 @@ void RealDataSelectorWidget::setModels(InstrumentModel* instrumentModel,
 void RealDataSelectorWidget::onSelectionChanged(SessionItem* item)
 {
     updateActionEnabling();
-    m_propertiesWidget->setItem(item);
+    m_propertiesWidget->setItem(dynamic_cast<RealDataItem*>(item));
     emit selectionChanged(item);
 }
 

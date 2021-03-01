@@ -12,6 +12,8 @@
 //
 //  ************************************************************************************************
 
+// #migration move this file to better folder
+
 #ifndef BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 #define BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H
 
@@ -25,7 +27,6 @@ class RealDataModel;
 class SessionItem;
 class InstrumentItem;
 class RealDataItem;
-class SessionModel;
 
 //! The LinkInstrumentManager class provides communication between InstrumentModel and
 //! RealDataModel. Particularly, it notifies RealDataItem about changes in linked instruments
@@ -35,48 +36,27 @@ class LinkInstrumentManager : public QObject {
     Q_OBJECT
 
 public:
-    class InstrumentInfo {
-    public:
-        InstrumentInfo();
-        QString m_identifier;
-        QString m_name;
-        InstrumentItem* m_instrument;
-    };
-
     explicit LinkInstrumentManager(QObject* parent = nullptr);
 
     void setModels(InstrumentModel* instrumentModel, RealDataModel* realDataModel);
 
-    InstrumentItem* instrument(const QString& identifier);
-    QStringList instrumentNames() const;
-    int instrumentComboIndex(const QString& identifier);
-    QString instrumentIdentifier(int comboIndex);
-    bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier);
+    //! quiet defines whether a "not possible" message box is shown if link is not possible. Use
+    //! this e.g. for unit tests. The question for adjusting the instrument is not suppressed by
+    //! this flag.
+    bool canLinkDataToInstrument(const RealDataItem* realDataItem, const QString& identifier,
+                                 bool quiet = false);
 
-    QList<RealDataItem*> linkedItems(InstrumentItem* instrumentItem);
-
-signals:
-    void instrumentMapUpdated();
+    QList<RealDataItem*> linkedRealDataItems(InstrumentItem* instrumentItem);
 
 private slots:
-    void setOnInstrumentPropertyChange(SessionItem* instrument, const QString& property);
-    void setOnRealDataPropertyChange(SessionItem* dataItem, const QString& property);
     void onInstrumentChildChange(InstrumentItem* instrument, SessionItem* child);
-    void onInstrumentRowsChange(const QModelIndex& parent, int, int);
-    void onRealDataRowsChange(const QModelIndex& parent, int, int);
+    void onInstrumentAddedOrRemoved();
 
-    void updateLinks();
-    void updateInstrumentMap();
-    void updateRealDataMap();
-    void onInstrumentLayoutChange(InstrumentItem* changedInstrument);
+    void updateInstrumentSubscriptions();
 
 private:
-    void setInstrumentModel(InstrumentModel* model);
-    void setRealDataModel(RealDataModel* model);
-
     InstrumentModel* m_instrumentModel;
     RealDataModel* m_realDataModel;
-    QVector<InstrumentInfo> m_instrumentVec;
 };
 
 #endif // BORNAGAIN_GUI_COREGUI_VIEWS_IMPORTDATAWIDGETS_LINKINSTRUMENTMANAGER_H

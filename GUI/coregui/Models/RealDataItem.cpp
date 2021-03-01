@@ -13,14 +13,20 @@
 //  ************************************************************************************************
 
 #include "GUI/coregui/Models/RealDataItem.h"
+#include "GUI/coregui/DataLoaders/AbstractDataLoader1D.h"
+#include "GUI/coregui/DataLoaders/DataLoaders1D.h"
 #include "GUI/coregui/Models/InstrumentItems.h"
+#include "GUI/coregui/Models/InstrumentModel.h"
 #include "GUI/coregui/Models/IntensityDataItem.h"
 #include "GUI/coregui/Models/ItemFileNameUtils.h"
 #include "GUI/coregui/Models/JobItemUtils.h"
+#include "GUI/coregui/Models/RealDataModel.h"
 #include "GUI/coregui/Models/SessionModel.h"
 #include "GUI/coregui/Models/SpecularDataItem.h"
 #include "GUI/coregui/utils/GUIHelpers.h"
 #include "GUI/coregui/utils/ImportDataInfo.h"
+#include <QtCore/QXmlStreamReader>
+#include <QtCore/QXmlStreamWriter>
 
 const QString RealDataItem::P_INSTRUMENT_ID = "Instrument Id";
 const QString RealDataItem::P_INSTRUMENT_NAME = "Instrument";
@@ -28,7 +34,15 @@ const QString RealDataItem::T_INTENSITY_DATA = "Intensity data";
 const QString RealDataItem::T_NATIVE_DATA = "Native user data axis";
 const QString RealDataItem::P_NATIVE_DATA_UNITS = "Native user data units";
 
-RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullptr)
+namespace XMLTags {
+const QString Version("Version");
+const QString NativeFilename("NativeFileName");
+const QString PersistentLoaderClassName("LoaderClass");
+const QString LoaderData("LoaderData");
+const QString Value("Value");
+} // namespace XMLTags
+
+RealDataItem::RealDataItem() : SessionItem("RealData")
 {
     setItemName("undefined");
 
@@ -39,7 +53,8 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
     setDefaultTag(T_INTENSITY_DATA);
 
     addProperty(P_INSTRUMENT_ID, QString());
-    addProperty(P_INSTRUMENT_NAME, QString());
+    addProperty(P_INSTRUMENT_NAME, QString()); // #migration This is never used - remove after
+                                               // checking whether this breaks loading old files
 
     registerTag(T_NATIVE_DATA, 1, 1,
                 QStringList() << "IntensityData"
@@ -58,11 +73,11 @@ RealDataItem::RealDataItem() : SessionItem("RealData"), m_linkedInstrument(nullp
 
     mapper()->setOnChildPropertyChange([this](SessionItem* item, const QString& name) {
         auto data_item = dynamic_cast<DataItem*>(item);
-        if (!data_item || !m_linkedInstrument || name != DataItem::P_AXES_UNITS)
+        if (!data_item || !linkedInstrument() || name != DataItem::P_AXES_UNITS)
             return;
 
         mapper()->setActive(false);
-        data_item->updateAxesUnits(m_linkedInstrument);
+        data_item->updateAxesUnits(linkedInstrument());
         mapper()->setActive(true);
     });
 }
@@ -117,43 +132,87 @@ const DataItem* RealDataItem::nativeData() const
     return dynamic_cast<const DataItem*>(getItem(T_NATIVE_DATA));
 }
 
+void RealDataItem::initNativeData()
+{
+    const size_t rank = isSpecularData() ? 1 : 2;
+    initDataItem(rank, T_NATIVE_DATA);
+}
+
 QString RealDataItem::nativeDataUnits() const
 {
     return getItemValue(P_NATIVE_DATA_UNITS).toString();
 }
 
-//! Sets OutputData to underlying item. Creates it, if not exists.
+void RealDataItem::setNativeDataUnits(const QString& units)
+{
+    getItem(P_NATIVE_DATA_UNITS)->setValue(units);
+}
+
+void RealDataItem::removeNativeData()
+{
+    ASSERT(isSpecularData()); // not implemented for intensityDataItem
+
+    if (nativeData() != nullptr)
+        nativeData()->setOutputData(nullptr);
+}
+
+bool RealDataItem::hasNativeData() const
+{
+    return (nativeData() != nullptr) && (nativeData()->getOutputData() != nullptr);
+}
+
+const OutputData<double>* RealDataItem::nativeOutputData() const
+{
+    return hasNativeData() ? nativeData()->getOutputData() : nullptr;
+}
+
+//! takes ownership of data
+
+void RealDataItem::setNativeOutputData(OutputData<double>* data)
+{
+    nativeData()->setOutputData(data); // takes ownership of odata
+}
+
+//! Creates data item if not existing so far. Checks for rank compatibility if already existing. No
+//! further initialization like clearing the data etc.
+
+void RealDataItem::initDataItem(size_t rank, const QString& tag)
+{
+    ASSERT(rank <= 2 && rank > 0);
+
+    auto data_item = getItem(tag);
+    if (data_item != nullptr) {
+        const bool rankMismatch = (rank == 1 && !data_item->is<SpecularDataItem>())
+                                  || (rank == 2 && !data_item->is<IntensityDataItem>());
+
+        if (rankMismatch)
+            throw GUIHelpers::Error("Error in RealDataItem::initDataItem: trying to set data "
+                                    "incompatible with underlying data item");
+    } else {
+        if (rank == 1)
+            model()->insertItem<SpecularDataItem>(this, 0, tag);
+        else
+            model()->insertItem<IntensityDataItem>(this, 0, tag);
+
+        ASSERT(getItem(tag)
+               && "Assertion failed in RealDataItem::initDataItem: inserting data item failed.");
+    }
+}
+
+//! Sets OutputData to underlying item. Creates it if not existing.
 
 void RealDataItem::setOutputData(OutputData<double>* data)
 {
     ASSERT(data && "Assertion failed in RealDataItem::setOutputData: passed data is nullptr");
-    ASSERT(data->rank() < 3 && data->rank() > 0);
 
-    const QString& target_model_type =
-        data->rank() == 2 ? "IntensityData" : data->rank() == 1 ? "SpecularData" : "";
-    auto data_item = getItem(T_INTENSITY_DATA);
-    if (data_item && data_item->modelType() != target_model_type)
-        throw GUIHelpers::Error("Error in RealDataItem::setOutputData: trying to set data "
-                                "incompatible with underlying data item");
-    if (!data_item) {
-        model()->insertNewItem(target_model_type, this, 0, T_INTENSITY_DATA);
-        ASSERT(getItem(T_INTENSITY_DATA)
-               && "Assertion failed in RealDataItem::setOutputData: inserting data item failed.");
-    }
+    initDataItem(data->rank(), T_INTENSITY_DATA);
+
     dataItem()->setOutputData(data);
 }
 
-void RealDataItem::initDataItem(size_t data_rank, const QString& tag)
-{
-    ASSERT(data_rank <= 2 && data_rank > 0);
-    const QString& target_model_type = data_rank == 2 ? "IntensityData" : "SpecularData";
-    auto data_item = getItem(tag);
-    if (data_item && data_item->modelType() != target_model_type)
-        throw GUIHelpers::Error("Error in RealDataItem::initDataItem: trying to set data "
-                                "incompatible with underlying data item");
-    if (!data_item)
-        model()->insertNewItem(target_model_type, this, 0, tag);
-}
+//! Sets imported data to underlying item. Creates it if not existing.
+//! This is used for 1-D import (2-D only using setOutputData). BUT: This last
+//! statement seems wrong - in the unit tests it is used for 2D import
 
 void RealDataItem::setImportData(ImportDataInfo data)
 {
@@ -168,20 +227,25 @@ void RealDataItem::setImportData(ImportDataInfo data)
     auto output_data = data.intensityData();
 
     dataItem()->reset(std::move(data));
-    getItem(P_NATIVE_DATA_UNITS)->setValue(units_name);
+    setNativeDataUnits(units_name);
     item<DataItem>(T_NATIVE_DATA)->setOutputData(output_data.release());
+}
+
+void RealDataItem::initAsSpecularItem()
+{
+    const size_t rank = 1;
+    initDataItem(rank, T_INTENSITY_DATA);
+}
+
+void RealDataItem::initAsIntensityItem()
+{
+    const size_t rank = 2;
+    initDataItem(rank, T_INTENSITY_DATA);
 }
 
 bool RealDataItem::holdsDimensionalData() const
 {
-    return getItemValue(P_NATIVE_DATA_UNITS).toString() != "nbins";
-}
-
-void RealDataItem::linkToInstrument(const InstrumentItem* instrument, bool make_update)
-{
-    m_linkedInstrument = instrument;
-    if (make_update)
-        updateToInstrument();
+    return nativeDataUnits() != "nbins";
 }
 
 QString RealDataItem::instrumentId() const
@@ -197,6 +261,12 @@ void RealDataItem::setInstrumentId(const QString& id)
 void RealDataItem::clearInstrumentId()
 {
     setItemValue(P_INSTRUMENT_ID, QString());
+}
+
+InstrumentItem* RealDataItem::linkedInstrument() const
+{
+    return instrumentModel() != nullptr ? instrumentModel()->findInstrumentById(instrumentId())
+                                        : nullptr;
 }
 
 std::vector<int> RealDataItem::shape() const
@@ -226,31 +296,128 @@ MaskContainerItem* RealDataItem::maskContainerItem()
     return nullptr;
 }
 
+void RealDataItem::setNativeFileName(const QString& filename)
+{
+    m_nativeFileName = filename;
+}
+
+QString RealDataItem::nativeFileName() const
+{
+    return m_nativeFileName;
+}
+
+void RealDataItem::writeNonSessionItemData(QXmlStreamWriter* writer) const
+{
+    writer->writeEmptyElement(XMLTags::Version);
+    writer->writeAttribute(XMLTags::Value, "1");
+
+    writer->writeEmptyElement(XMLTags::NativeFilename);
+    writer->writeAttribute(XMLTags::Value, m_nativeFileName);
+
+    if (m_dataLoader) {
+        writer->writeEmptyElement(XMLTags::PersistentLoaderClassName);
+        writer->writeAttribute(XMLTags::Value, m_dataLoader->persistentClassName());
+
+        // #baimport better: also loader can store in XML syntax
+        writer->writeEmptyElement(XMLTags::LoaderData);
+        writer->writeAttribute(XMLTags::Value, m_dataLoader->serialize().toBase64());
+    }
+}
+
+void RealDataItem::readNonSessionItemData(QXmlStreamReader* reader)
+{
+    m_nativeFileName.clear();
+    m_importSettings.clear();
+
+    // #baimport ++ check version
+    // #baimport ++ check compatible versions
+    m_dataLoader.release();
+    QString persistentLoaderClassName;
+    QByteArray loaderData;
+    while (reader->readNextStartElement()) {
+        if (reader->name() == XMLTags::NativeFilename) {
+            m_nativeFileName = reader->attributes().value(XMLTags::Value).toString();
+        } else if (reader->name() == XMLTags::PersistentLoaderClassName) {
+            persistentLoaderClassName = reader->attributes().value(XMLTags::Value).toString();
+        } else if (reader->name() == XMLTags::LoaderData) {
+            QStringRef valueAsBase64 = reader->attributes().value(XMLTags::Value);
+            loaderData = QByteArray::fromBase64(
+                valueAsBase64.toLatin1()); // #baimport add a unit test for this!
+        }
+
+        reader->skipCurrentElement();
+    }
+
+    if (!persistentLoaderClassName.isEmpty()) {
+        m_dataLoader.reset(
+            DataLoaders1D::instance().createFromPersistentName(persistentLoaderClassName));
+        m_dataLoader->deserialize(loaderData);
+        // no m_dataLoader->import() necessary, because the resulting outputData is also loaded
+        // #baimport the only reason for call to import would be to update error states of the file
+    }
+}
+
+void RealDataItem::setDataLoader(AbstractDataLoader* loader)
+{
+    m_dataLoader.reset(loader);
+}
+
+AbstractDataLoader* RealDataItem::dataLoader() const
+{
+    return m_dataLoader.get();
+}
+
 //! Updates the name of file to store intensity data.
 
 void RealDataItem::updateNonXMLDataFileNames()
 {
     if (DataItem* item = dataItem())
-        item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::realDataFileName(*this));
+        item->setFileName(ItemFileNameUtils::realDataFileName(*this));
     if (DataItem* item = nativeData())
-        item->setItemValue(DataItem::P_FILE_NAME, ItemFileNameUtils::nativeDataFileName(*this));
+        item->setFileName(ItemFileNameUtils::nativeDataFileName(*this));
 }
 
-void RealDataItem::updateToInstrument()
+RealDataModel* RealDataItem::realDataModel() const
+{
+    return dynamic_cast<RealDataModel*>(model());
+}
+
+InstrumentModel* RealDataItem::instrumentModel() const
+{
+    return realDataModel() != nullptr ? realDataModel()->instrumentModel() : nullptr;
+}
+
+void RealDataItem::updateToInstrument(const InstrumentItem* instrument)
 {
     DataItem* data_item = dataItem();
     if (!data_item)
         return;
 
-    if (m_linkedInstrument) {
-        JobItemUtils::setIntensityItemAxesUnits(data_item, m_linkedInstrument);
+    if (instrument) {
+        JobItemUtils::setIntensityItemAxesUnits(data_item, instrument);
         return;
     }
 
-    auto native_data_item = nativeData();
-    auto data_source = native_data_item ? native_data_item : data_item;
+    // unlinking => going back to native data
+    if (isSpecularData()) {
+        if (hasNativeData()) {
+            std::unique_ptr<OutputData<double>> native_data(nativeData()->getOutputData()->clone());
+            const QString units_label = nativeDataUnits();
+            data_item->reset(ImportDataInfo(std::move(native_data), units_label));
+        } else {
+            specularDataItem()->setOutputData(nullptr);
+        }
+    } else {
+        auto native_data_item = nativeData();
+        auto data_source = native_data_item ? native_data_item : data_item;
 
-    std::unique_ptr<OutputData<double>> native_data(data_source->getOutputData()->clone());
-    const QString units_label = getItemValue(P_NATIVE_DATA_UNITS).toString();
-    data_item->reset(ImportDataInfo(std::move(native_data), units_label));
+        std::unique_ptr<OutputData<double>> native_data(data_source->getOutputData()->clone());
+        const QString units_label = nativeDataUnits();
+        data_item->reset(ImportDataInfo(std::move(native_data), units_label));
+    }
+}
+
+void RealDataItem::updateToInstrument(const QString& id)
+{
+    updateToInstrument(instrumentModel()->findInstrumentById(id));
 }
