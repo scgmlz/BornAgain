@@ -495,7 +495,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     return true;
 }
 
-void QREDataLoader::estimateSettings(const QString& filename)
+void QREDataLoader::guessSettings(const QString& filename)
 {
     // #baimport implement estimateSettings (separator)
     // search for lines which have start with numbers, then try the separators
@@ -633,8 +633,7 @@ void QREDataLoader::calculateFromParseResult() const
             continue;
         }
 
-        const bool isDuplicateQ = foundQValues.contains(q);
-        if (isDuplicateQ) {
+        if (foundQValues.contains(q)) {
             m_importResult.calculationErrors[lineNr] =
                 QString("The value %1 for Q is duplicate - line is discarded").arg(q);
             continue;

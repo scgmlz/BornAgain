@@ -40,7 +40,7 @@ public:
                             QStringList* warnings) const override;
     virtual bool fillImportDetailsTable(QTableWidget* table, bool fileContent, bool rawContent,
                                         bool processedContent) const override;
-    void estimateSettings(const QString& filename);
+    void guessSettings(const QString& filename);
 
 private:
     void parseFile(QString& fileContent) const;

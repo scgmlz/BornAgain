@@ -38,11 +38,10 @@ QString table(int nColumns, const QStringList& entries, const QString& attribute
     int col = 0;
     bool bShowAsHorizontalHeader = bHasHorizontalHeader;
     for (QStringList::size_type i = 0; i < entries.size(); i++) {
-        if (bShowAsHorizontalHeader) {
+        if (bShowAsHorizontalHeader)
             result += "<th>" + entries[i] + "</th>";
-        } else {
+        else
             result += "<td valign=\"top\">" + entries[i] + "</td>";
-        }
 
         col++;
         if ((col == nColumns) && (i < entries.size() - 1)) // start new line?
@@ -60,7 +59,7 @@ QString table(int nColumns, const QStringList& entries, const QString& attribute
 
 QString AutomaticDataLoader1D::name() const
 {
-    return "Automatic 1D import (BornAgain 1.18.0)";
+    return "Legacy from BornAgain 1.18";
 }
 
 QString AutomaticDataLoader1D::info() const
