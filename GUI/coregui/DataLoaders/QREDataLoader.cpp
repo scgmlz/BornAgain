@@ -37,7 +37,7 @@ QVector<QPair<int, int>> expandLineNumberPattern(const QString& pattern, bool* o
 
     // splitting "1, 2-3" first on comma-separated tokens
     for (const auto& token : pattern.split(",")) {
-        auto parts = token.split("-");
+        const auto parts = token.split("-");
         // splitting on dash-separated tokens
         if (!parts.empty()) {
             // if no "-" is present, make from "1" a pair {1, 1}
@@ -155,7 +155,7 @@ void QREDataLoader::populatePropertiesWidget(QWidget* parent)
     m_propertiesWidget->m_ui->headerPrefixEdit->setText(m_importSettings.headerPrefix);
     m_propertiesWidget->m_ui->linesToSkipEdit->setText(m_importSettings.linesToSkip);
 
-    for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
+    for (const auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
         m_propertiesWidget->columnSpinBox((int)dataType)
             ->setValue(m_importSettings.columnDefinitions[dataType].column + 1); // view is 1-based
 
@@ -183,7 +183,7 @@ void QREDataLoader::initWithDefaultProperties()
     m_importSettings.headerPrefix = "#,//";
     m_importSettings.linesToSkip = "";
 
-    for (auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
+    for (const auto dataType : {DataType::Q, DataType::R, DataType::dR}) {
         m_importSettings.columnDefinitions[dataType].enabled = true;
         m_importSettings.columnDefinitions[dataType].column = (int)dataType;
         m_importSettings.columnDefinitions[dataType].unit = UnitInFile::none;
@@ -310,10 +310,10 @@ void QREDataLoader::importFile(const QString& filename, RealDataItem* item, QStr
             parseFile(fileContent);
             m_importResult.hashOfFile = hashOfFileOnDisk.result();
         } else {
-            for (auto line : m_importResult.lines)
+            for (const auto line : m_importResult.lines)
                 fileContent.append(line.second + "\n");
 
-            auto backupHash = m_importResult.hashOfFile; // will be cleared while parsing
+            const auto backupHash = m_importResult.hashOfFile; // will be cleared while parsing
             parseFile(fileContent);
             m_importResult.hashOfFile = backupHash;
         }
@@ -411,7 +411,7 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         headerItem->setBackgroundColor(Palette::backgroundColorFileContent.darker(150));
         t->setHorizontalHeaderItem(0, headerItem);
         int row = 0;
-        for (auto line : m_importResult.lines) {
+        for (const auto line : m_importResult.lines) {
             const bool skipped = line.first;
             QString lineContent = line.second;
             lineContent.replace("\t", " --> ");
@@ -431,11 +431,11 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
                                        new QTableWidgetItem(QString("Column %1 raw").arg(col + 1)));
         }
 
-        for (auto rowContent : m_importResult.originalEntriesAsDouble) {
+        for (const auto rowContent : m_importResult.originalEntriesAsDouble) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
 
-            for (auto v : rowContent.second)
+            for (const auto v : rowContent.second)
                 cell(dataRow, dataCol++, v, Palette::backgroundColorRawContent);
             dataCol -= rowContent.second.size();
         }
@@ -448,25 +448,25 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
         if (showErrorColumn)
             t->setHorizontalHeaderItem(dataCol + 2, new QTableWidgetItem("E"));
 
-        for (auto rowContent : m_importResult.qValues) {
+        for (const auto rowContent : m_importResult.qValues) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
-            auto v = rowContent.second;
+            const auto v = rowContent.second;
             cell(dataRow, dataCol + 0, v, Palette::backgroundColorProcessedContent);
         }
 
-        for (auto rowContent : m_importResult.rValues) {
+        for (const auto rowContent : m_importResult.rValues) {
             int lineNr = rowContent.first;
             int dataRow = lineNr - 1; // lineNr is 1-based
-            auto v = rowContent.second;
+            const auto v = rowContent.second;
             cell(dataRow, dataCol + 1, v, Palette::backgroundColorProcessedContent);
         }
 
         if (showErrorColumn) {
-            for (auto rowContent : m_importResult.eValues) {
+            for (const auto rowContent : m_importResult.eValues) {
                 int lineNr = rowContent.first;
                 int dataRow = lineNr - 1; // lineNr is 1-based
-                auto v = rowContent.second;
+                const auto v = rowContent.second;
                 cell(dataRow, dataCol + 2, v, Palette::backgroundColorProcessedContent);
             }
         }
@@ -474,12 +474,12 @@ bool QREDataLoader::fillImportDetailsTable(QTableWidget* table, bool fileContent
     }
 
     // - now the calculation errors if existing
-    for (auto lineNr : m_importResult.calculationErrors.keys()) {
+    for (const auto lineNr : m_importResult.calculationErrors.keys()) {
         auto headerItem = new QTableWidgetItem("Parsing errors");
         headerItem->setBackgroundColor(Palette::backgroundColorErrors.darker(150));
         t->setHorizontalHeaderItem(dataCol, headerItem);
 
-        for (auto lineNr : m_importResult.calculationErrors.keys()) {
+        for (const auto lineNr : m_importResult.calculationErrors.keys()) {
             const int dataRow = lineNr - 1; // lineNr is 1-based
             QString lineContent = m_importResult.calculationErrors[lineNr];
 
@@ -510,7 +510,7 @@ void QREDataLoader::parseFile(QString& fileContent) const
                                            : m_importSettings.headerPrefix.split(",");
 
     const auto lineIsHeader = [headerPrefixes](const QString& line) {
-        for (auto prefix : headerPrefixes) {
+        for (const auto prefix : headerPrefixes) {
             if (line.startsWith(prefix.trimmed()))
                 return true;
         }
@@ -520,7 +520,7 @@ void QREDataLoader::parseFile(QString& fileContent) const
 
     const auto skippedLines = expandLineNumberPattern(m_importSettings.linesToSkip);
     const auto lineShouldBeSkipped = [skippedLines](int lineNr) {
-        for (auto pair : skippedLines) {
+        for (const auto pair : skippedLines) {
             if (lineNr >= pair.first && lineNr <= pair.second)
                 return true;
         }
@@ -594,7 +594,7 @@ void QREDataLoader::calculateFromParseResult() const
 
     QSet<double> foundQValues;
 
-    for (auto rowContent : m_importResult.originalEntriesAsDouble) {
+    for (const auto rowContent : m_importResult.originalEntriesAsDouble) {
         int lineNr = rowContent.first;
         const auto& rawValues = rowContent.second;
 
@@ -704,7 +704,7 @@ void QREDataLoader::applyProperties()
     if (!m_propertiesWidget)
         return;
 
-    auto ui = m_propertiesWidget->m_ui;
+    const auto ui = m_propertiesWidget->m_ui;
 
     m_importSettings.separator = ui->separatorCombo->currentText();
     if (m_importSettings.separator == "<TAB>")
@@ -715,7 +715,7 @@ void QREDataLoader::applyProperties()
     m_importSettings.headerPrefix = ui->headerPrefixEdit->text();
     m_importSettings.linesToSkip = ui->linesToSkipEdit->text();
 
-    for (auto dataType : m_importSettings.columnDefinitions.keys()) {
+    for (const auto dataType : m_importSettings.columnDefinitions.keys()) {
         auto& colDef = m_importSettings.columnDefinitions[dataType];
 
         colDef.column = m_propertiesWidget->columnSpinBox((int)dataType)->value() - 1;
@@ -767,7 +767,7 @@ QByteArray QREDataLoader::ImportSettings::toByteArray() const
     s << linesToSkip;
 
     s << (quint8)columnDefinitions.count();
-    for (auto dataType : columnDefinitions.keys()) {
+    for (const auto dataType : columnDefinitions.keys()) {
         s << (quint8)dataType;
         s << columnDefinitions[dataType].enabled;
         s << columnDefinitions[dataType].column;

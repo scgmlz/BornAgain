@@ -58,7 +58,7 @@ void QREDataLoaderProperties::allowFactors(bool b)
 
 double QREDataLoaderProperties::factor(int dataType) const
 {
-    auto spinBox = factorSpinBox(dataType);
+    const auto spinBox = factorSpinBox(dataType);
     return spinBox->isVisible() ? spinBox->value() : 1.0;
 }
 
@@ -67,7 +67,7 @@ void QREDataLoaderProperties::updateErrorEnabling(bool enabled)
     const int lineInLayout = 2;
 
     for (int col = 2; col < m_ui->gridLayout->columnCount(); col++) {
-        auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
+        const auto layoutItem = m_ui->gridLayout->itemAtPosition(lineInLayout, col);
         if (layoutItem) {
             QWidget* w = layoutItem->widget();
             if (w) {
