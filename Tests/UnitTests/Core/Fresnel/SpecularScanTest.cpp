@@ -178,12 +178,24 @@ TEST_F(SpecularScanTest, QScanClone)
 {
     QSpecScan scan(std::vector<double>{0.1, 0.2, 0.3});
     scan.setOffset(2.22);
+    const auto distribution = RangedDistributionGaussian(42, 3.);
+    scan.setRelativeQResolution(distribution, 0.42);
 
     std::unique_ptr<QSpecScan> scan_clone(scan.clone());
     EXPECT_EQ(*scan_clone->coordinateAxis(), *scan.coordinateAxis());
     EXPECT_NE(scan_clone->coordinateAxis(), scan.coordinateAxis());
     EXPECT_EQ(scan_clone->footprintFactor(), nullptr);
     EXPECT_EQ(scan_clone->offset(), scan.offset());
+
+    auto resolution = scan.resolution();
+    auto distributionClone =
+        dynamic_cast<const RangedDistributionGaussian*>(resolution->distribution());
+    EXPECT_NE(distributionClone, nullptr);
+    EXPECT_NE(distributionClone, &distribution);
+    if (distributionClone) {
+        EXPECT_EQ(distributionClone->sigmaFactor(), 3);
+        EXPECT_EQ(distributionClone->nSamples(), 42);
+    }
 }
 
 TEST_F(SpecularScanTest, GenerateSimElements)
