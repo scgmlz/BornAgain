@@ -2,6 +2,7 @@
 #include "Base/Axis/VariableBinAxis.h"
 #include "Base/Const/Units.h"
 #include "Base/Math/Constants.h"
+#include "Core/Computation/ConstantBackground.h"
 #include "Core/Scan/AngularSpecScan.h"
 #include "Core/Scan/QSpecScan.h"
 #include "Device/Histo/Histogram1D.h"
@@ -238,15 +239,19 @@ TEST_F(SpecularSimulationTest, ConstructSimulation)
 
 TEST_F(SpecularSimulationTest, SimulationClone)
 {
-    auto sim = defaultSimulation();
+    auto sim = SpecularSimulation();
 
     const auto polarization = kvector_t({0., 0., 0.876});
     const auto analyzer     = kvector_t({0., 0., 1.});
-    sim->beam().setPolarization(polarization);
-    sim->detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
-    sim->beam().setIntensity(42.42);
+    sim.beam().setPolarization(polarization);
+    sim.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim.beam().setIntensity(42.42);
+    sim.setBackground(ConstantBackground(1.e-7));
+    sim.setSample(multilayer);
+    const auto scan = AngularSpecScan(1.0, 10, 0.0 * Units::deg, 2.0 * Units::deg);
+    sim.setScan(scan);
 
-    std::unique_ptr<SpecularSimulation> clone(sim->clone());
+    std::unique_ptr<SpecularSimulation> clone(sim.clone());
 
     EXPECT_EQ(3u, clone->sample()->numberOfLayers());
 
@@ -263,11 +268,21 @@ TEST_F(SpecularSimulationTest, SimulationClone)
     EXPECT_EQ(clone->detector().detectionProperties().analyzerEfficiency(), 0.33);
     EXPECT_EQ(clone->detector().detectionProperties().analyzerTotalTransmission(), 0.22);
 
+    const auto background = dynamic_cast<const ConstantBackground*>(clone->background());
+    EXPECT_NE(background, nullptr);
+    if(background){
+        EXPECT_EQ(background->backgroundValue(), 1.e-7);
+    }
+    auto scanClone = dynamic_cast<const AngularSpecScan*>(clone->dataHandler());
+    EXPECT_NE(scanClone, nullptr);
+    EXPECT_NE(scanClone->coordinateAxis(), scan.coordinateAxis());
+    EXPECT_EQ(*scanClone->coordinateAxis(), *scan.coordinateAxis());
+
     checkBeamState(*clone);
 
-    sim->runSimulation();
+    sim.runSimulation();
 
-    std::unique_ptr<SpecularSimulation> clone2(sim->clone());
+    std::unique_ptr<SpecularSimulation> clone2(sim.clone());
     clone_result = clone2->result();
 
     const auto output_data = clone_result.data();
