@@ -28,8 +28,10 @@ void GISASSpecularComputation::compute(SimulationElement& elem) const
         return;
     complex_t R = m_fresnel_map->getInCoefficients(elem, 0)->getScalarR();
     double sin_alpha_i = std::abs(std::sin(elem.getAlphaI()));
-    if (sin_alpha_i == 0.0)
-        sin_alpha_i = 1.0;
+    if (sin_alpha_i == 0.0) {
+        elem.setIntensity(0);
+        return;
+    }
     const double solid_angle = elem.solidAngle();
     if (solid_angle <= 0.0)
         return;
