@@ -162,8 +162,11 @@ TEST_F(MultiLayerTest, CloneWithRoughness)
     LayerRoughness lr0(-2.1, 7.3, 12.1);
     LayerRoughness lr1(1.1, -7.3, 0.1);
 
+    auto magnetization = kvector_t{0., 1.e8, 0.};
+    auto magneticLayer = Layer(HomogeneousMaterial("iron", 2e-5, 8e-5, magnetization), 20 * Units::nm);
+
     mLayer.addLayer(topLayer);
-    mLayer.addLayerWithTopRoughness(layer1, lr0);
+    mLayer.addLayerWithTopRoughness(magneticLayer, lr0);
     mLayer.addLayerWithTopRoughness(substrate, lr1);
 
     MultiLayer* mLayerClone = mLayer.clone();
@@ -183,6 +186,9 @@ TEST_F(MultiLayerTest, CloneWithRoughness)
     EXPECT_EQ(1.1, roughness1->getSigma());
     EXPECT_EQ(-7.3, roughness1->getHurstParameter());
     EXPECT_EQ(0.1, roughness1->getLatteralCorrLength());
+
+    EXPECT_EQ(mLayerClone->layer(1)->material()->isMagneticMaterial(), true);
+    EXPECT_EQ(mLayerClone->layer(1)->material()->magnetization(), magnetization);
 
     delete mLayerClone;
 }
