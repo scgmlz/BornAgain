@@ -14,7 +14,7 @@ def get_sample():
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # Finite sample layer, contains particles in solution:
-    ff = ba.FormFactorDodecahedron(2*nm)
+    ff = ba.FormFactorDodecahedron(12*nm)
     particle = ba.Particle(m_particle, ff)
     layout = ba.ParticleLayout()
     layout.addParticle(particle)
@@ -33,7 +33,7 @@ def get_sample():
 
 def get_simulation(sample):
     # Beam from above (perpendicular to sample):
-    beam = ba.Beam(1, 0.1*nm, ba.Direction(90*deg, 0.0*deg))
+    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0.0*deg))
 
     # Detector opposite to source:
     detPos = 2000 # distance from sample center to detector in mm
