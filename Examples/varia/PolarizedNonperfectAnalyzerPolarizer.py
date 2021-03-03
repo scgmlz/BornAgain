@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example that shows how to simulate
 a non-perfect polarizer and analyzer

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import bornagain as ba
 from bornagain import deg, nm
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example of defining reflectometry instrument
 for time of flight experiment. In this example

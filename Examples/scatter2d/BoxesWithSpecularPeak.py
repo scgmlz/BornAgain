@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Square lattice of boxes on substrate (including the specular peak)
 """

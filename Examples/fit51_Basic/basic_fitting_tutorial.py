@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: 4 parameters fit for mixture of cylinders and prisms on top
 of substrate.

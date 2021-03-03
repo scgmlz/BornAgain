@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 In this example we demonstrate how to plot simulation results with
 axes in different units (nbins, mm, degs and QyQz).

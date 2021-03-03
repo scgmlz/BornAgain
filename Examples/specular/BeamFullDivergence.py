@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example of taking into account beam angular and wavelength
 divergence in reflectometry calculations with BornAgain.

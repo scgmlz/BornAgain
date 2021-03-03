@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Real life example:
 Fitting data from an X-ray reflectometer

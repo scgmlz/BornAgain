@@ -3344,9 +3344,13 @@ Copy constructor for functor based on ROOT::Math::IMultiGenFunction
 ";
 
 %feature("docstring")  ROOT::Math::Functor::Clone "ImplBase* ROOT::Math::Functor::Clone() const
+
+Clone a function. Each derived class must implement their version of the Clone method 
 ";
 
 %feature("docstring")  ROOT::Math::Functor::NDim "unsigned int ROOT::Math::Functor::NDim() const
+
+Retrieve the dimension of the function 
 ";
 
 
@@ -3596,6 +3600,71 @@ C++ includes: GenericFunction.h
 ";
 
 
+// File: classGeneticMinimizer.xml
+%feature("docstring") GeneticMinimizer "
+
+Wrapper for the CERN  ROOT Genetic minimizer.
+
+C++ includes: GeneticMinimizer.h
+";
+
+%feature("docstring")  GeneticMinimizer::GeneticMinimizer "GeneticMinimizer::GeneticMinimizer()
+";
+
+%feature("docstring")  GeneticMinimizer::~GeneticMinimizer "GeneticMinimizer::~GeneticMinimizer()
+";
+
+%feature("docstring")  GeneticMinimizer::setTolerance "void GeneticMinimizer::setTolerance(double value)
+
+Sets tolerance on the function value at the minimum. Minimization will stop when the estimated vertical distance to the minimum (EDM) is less than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5 for negative log likelihood fit. 
+";
+
+%feature("docstring")  GeneticMinimizer::tolerance "double GeneticMinimizer::tolerance() const
+";
+
+%feature("docstring")  GeneticMinimizer::setPrintLevel "void GeneticMinimizer::setPrintLevel(int value)
+
+Sets minimizer internal print level. 
+";
+
+%feature("docstring")  GeneticMinimizer::printLevel "int GeneticMinimizer::printLevel() const
+";
+
+%feature("docstring")  GeneticMinimizer::setMaxIterations "void GeneticMinimizer::setMaxIterations(int value)
+
+Sets maximum number of iterations to try at each step. 
+";
+
+%feature("docstring")  GeneticMinimizer::maxIterations "int GeneticMinimizer::maxIterations() const
+";
+
+%feature("docstring")  GeneticMinimizer::setPopulationSize "void GeneticMinimizer::setPopulationSize(int value)
+
+Sets population size. 
+";
+
+%feature("docstring")  GeneticMinimizer::populationSize "int GeneticMinimizer::populationSize() const
+";
+
+%feature("docstring")  GeneticMinimizer::setRandomSeed "void GeneticMinimizer::setRandomSeed(int value)
+
+Sets random seed. 
+";
+
+%feature("docstring")  GeneticMinimizer::randomSeed "int GeneticMinimizer::randomSeed() const
+";
+
+%feature("docstring")  GeneticMinimizer::statusToString "std::string GeneticMinimizer::statusToString() const override
+
+Returns string representation of current minimizer status. 
+";
+
+%feature("docstring")  GeneticMinimizer::statusMap "std::map< std::string, std::string > GeneticMinimizer::statusMap() const override
+
+Returns map of string representing different minimizer statuses. 
+";
+
+
 // File: classROOT_1_1Math_1_1GeneticMinimizer.xml
 %feature("docstring") ROOT::Math::GeneticMinimizer "
 
@@ -3707,71 +3776,6 @@ retrieve the minimizer options (implement derived class if needed)
 ";
 
 %feature("docstring")  ROOT::Math::GeneticMinimizer::SetOptions "virtual void ROOT::Math::GeneticMinimizer::SetOptions(const ROOT::Math::MinimizerOptions &opt)
-";
-
-
-// File: classGeneticMinimizer.xml
-%feature("docstring") GeneticMinimizer "
-
-Wrapper for the CERN  ROOT Genetic minimizer.
-
-C++ includes: GeneticMinimizer.h
-";
-
-%feature("docstring")  GeneticMinimizer::GeneticMinimizer "GeneticMinimizer::GeneticMinimizer()
-";
-
-%feature("docstring")  GeneticMinimizer::~GeneticMinimizer "GeneticMinimizer::~GeneticMinimizer()
-";
-
-%feature("docstring")  GeneticMinimizer::setTolerance "void GeneticMinimizer::setTolerance(double value)
-
-Sets tolerance on the function value at the minimum. Minimization will stop when the estimated vertical distance to the minimum (EDM) is less than 0.001*tolerance*ErrorDef. Here ErrorDef=1.0 for chi squared fit and ErrorDef=0.5 for negative log likelihood fit. 
-";
-
-%feature("docstring")  GeneticMinimizer::tolerance "double GeneticMinimizer::tolerance() const
-";
-
-%feature("docstring")  GeneticMinimizer::setPrintLevel "void GeneticMinimizer::setPrintLevel(int value)
-
-Sets minimizer internal print level. 
-";
-
-%feature("docstring")  GeneticMinimizer::printLevel "int GeneticMinimizer::printLevel() const
-";
-
-%feature("docstring")  GeneticMinimizer::setMaxIterations "void GeneticMinimizer::setMaxIterations(int value)
-
-Sets maximum number of iterations to try at each step. 
-";
-
-%feature("docstring")  GeneticMinimizer::maxIterations "int GeneticMinimizer::maxIterations() const
-";
-
-%feature("docstring")  GeneticMinimizer::setPopulationSize "void GeneticMinimizer::setPopulationSize(int value)
-
-Sets population size. 
-";
-
-%feature("docstring")  GeneticMinimizer::populationSize "int GeneticMinimizer::populationSize() const
-";
-
-%feature("docstring")  GeneticMinimizer::setRandomSeed "void GeneticMinimizer::setRandomSeed(int value)
-
-Sets random seed. 
-";
-
-%feature("docstring")  GeneticMinimizer::randomSeed "int GeneticMinimizer::randomSeed() const
-";
-
-%feature("docstring")  GeneticMinimizer::statusToString "std::string GeneticMinimizer::statusToString() const override
-
-Returns string representation of current minimizer status. 
-";
-
-%feature("docstring")  GeneticMinimizer::statusMap "std::map< std::string, std::string > GeneticMinimizer::statusMap() const override
-
-Returns map of string representing different minimizer statuses. 
 ";
 
 
@@ -8003,8 +8007,8 @@ This table describes the properties of the MIXMAX generators. MIXMAX is a genuin
        $p=2^{61}-1$ is the Mersenne prime number.
       The MIXMAX generators with these parameters pass all of the BigCrush
       tests in the <a href=\"http://simul.iro.umontreal.ca/testu01/tu01.html\">TestU01 suite</a\\\\>.
-
-\\\\begin{table}[h]
+ 
+ \\\\begin{table}[h]
    \\\\centering
      \\\\begin{tabular}{@{} rrlcrr @{}} 
      
@@ -8871,12 +8875,12 @@ ask for  MinosError (Lower + Upper) can be printed via std::cout
 ";
 
 
-// File: classROOT_1_1Minuit2_1_1MinimumError_1_1MnNotPosDef.xml
-%feature("docstring") ROOT::Minuit2::MinimumError::MnNotPosDef "";
-
-
 // File: classROOT_1_1Minuit2_1_1BasicMinimumError_1_1MnNotPosDef.xml
 %feature("docstring") ROOT::Minuit2::BasicMinimumError::MnNotPosDef "";
+
+
+// File: classROOT_1_1Minuit2_1_1MinimumError_1_1MnNotPosDef.xml
+%feature("docstring") ROOT::Minuit2::MinimumError::MnNotPosDef "";
 
 
 // File: classROOT_1_1Minuit2_1_1MnParabola.xml
@@ -12602,6 +12606,8 @@ Return the number of Parameters
 ";
 
 %feature("docstring")  ROOT::Math::WrappedParamFunctionGen::NDim "unsigned int ROOT::Math::WrappedParamFunctionGen< FuncPtr >::NDim() const
+
+Retrieve the dimension of the function 
 ";
 
 
@@ -12701,6 +12707,9 @@ Returns translation of GSL error code to string.
 
 Returns horizontal line of 80 characters length with section name in it. 
 ";
+
+
+// File: namespaceParentFunctor.xml
 
 
 // File: namespaceROOT.xml
@@ -13219,6 +13228,9 @@ LAPACK Algebra function specialize the Outer_product function for  LAVector;
 ";
 
 
+// File: namespacestd.xml
+
+
 // File: namespaceTestFunctions.xml
 %feature("docstring")  TestFunctions::RosenBrock "double TestFunctions::RosenBrock(const std::vector< double > &par)
 
@@ -13239,6 +13251,9 @@ start point: F(-3,-1,-3,-1) = 19192 minimum : F(1,1,1,1) = 0.
 
 Decaying sinus from lmfit tutorial. 
 ";
+
+
+// File: namespacetesting.xml
 
 
 // File: namespaceTMath.xml
@@ -15056,10 +15071,10 @@ Decaying sinus from lmfit tutorial.
 // File: dir_ead683f11b26d141553bc0f1c348dc86.xml
 
 
-// File: dir_892d84e8d1420bf45a9053cf0eede900.xml
-
-
 // File: dir_05e24f99ab216f03e9d0cf366ad39939.xml
+
+
+// File: dir_892d84e8d1420bf45a9053cf0eede900.xml
 
 
 // File: dir_ddbc8017d498762c6500a9e593e25277.xml
@@ -15071,10 +15086,10 @@ Decaying sinus from lmfit tutorial.
 // File: dir_346bee264126587e5b77542d134e4add.xml
 
 
-// File: dir_5432497378cfbce702dc5799f292905b.xml
-
-
 // File: dir_7c95011753c2f8fb6f2a9c22c1fbdc50.xml
+
+
+// File: dir_5432497378cfbce702dc5799f292905b.xml
 
 
 // File: dir_60772aca5f018fa4d428540699d2a67c.xml

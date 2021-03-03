@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Cylinder form factor in DWBA with detector resolution function applied
 """

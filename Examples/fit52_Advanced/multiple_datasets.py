@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: simultaneous fit of two datasets
 """

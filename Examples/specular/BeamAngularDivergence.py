@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example of taking into account beam angular divergence
 and beam footprint correction in reflectometry calculations

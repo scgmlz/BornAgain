@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Cylindrical particle made from two materials.
 Particle crosses air/substrate interface.

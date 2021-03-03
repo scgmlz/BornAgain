@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Simple example demonstrating how polarized SANS experiments can be
 simulated with BornAgain.

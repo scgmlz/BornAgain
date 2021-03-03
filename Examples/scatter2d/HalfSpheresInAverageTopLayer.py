@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Square lattice of half spheres on substrate with usage of average material
 and slicing

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Using custom objective function to fit GISAS data.
 

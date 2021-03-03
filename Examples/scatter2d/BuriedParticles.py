@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Spherical particles embedded in the middle of the layer on top of substrate.
 """

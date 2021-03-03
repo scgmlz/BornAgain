@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting experimental data: spherical nanoparticles with size distribution
 in 3 layers system (experiment at GALAXI).

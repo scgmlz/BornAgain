@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Square lattice of cylinders inside finite layer with usage of average material
 """

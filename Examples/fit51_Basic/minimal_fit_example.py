@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Minimal working fit examples: finds radius of sphere in Born approximation.
 """

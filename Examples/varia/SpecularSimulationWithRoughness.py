@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Example of simulating a reflectometry experiment
 with a rough sample using BornAgain.

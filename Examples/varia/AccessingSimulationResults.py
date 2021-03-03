@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Extended example for simulation results treatment (cropping, slicing, exporting)
 The standard "Cylinders in DWBA" sample is used to setup the simulation.

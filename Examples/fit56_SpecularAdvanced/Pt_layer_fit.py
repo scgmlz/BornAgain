@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This example demonstrates how to fit actual experimental data
 by M. Fitzsimmons et al. that is published in 

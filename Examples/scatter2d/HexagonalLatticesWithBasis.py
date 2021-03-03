@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Spheres on two hexagonal close packed layers
 """

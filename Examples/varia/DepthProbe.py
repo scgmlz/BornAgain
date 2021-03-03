@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Basic example of depth-probe simulation with BornAgain.
 Sample structure:

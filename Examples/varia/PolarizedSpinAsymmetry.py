@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This simulation example demonstrates how to replicate the
 fitting example "Magnetically Dead Layers in Spinel Films"

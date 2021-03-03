@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This example demonstrates new experimental feature of release-1.8.0:
 particles can now cross interfaces.

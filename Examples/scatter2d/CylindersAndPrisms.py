@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Mixture of cylinders and prisms without interference
 """

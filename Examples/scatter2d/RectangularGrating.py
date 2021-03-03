@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Simulation of grating using very long boxes and 1D lattice.
 Monte-carlo integration is used to get rid of

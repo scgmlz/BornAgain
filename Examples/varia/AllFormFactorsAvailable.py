@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 All form factors available in BornAgain in the Born Approximation
 """

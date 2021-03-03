@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Basic example of specular simulation with BornAgain.
 

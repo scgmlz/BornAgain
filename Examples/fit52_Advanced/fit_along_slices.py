@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: fit along slices
 """

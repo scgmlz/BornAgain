@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Example for producing a profile of SLD of a multilayer with particles
 and slicing.

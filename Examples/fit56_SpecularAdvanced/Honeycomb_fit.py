@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This example demonstrates how to fit a complex experimental setup using BornAgain.
 It is based on real data published in  https://doi.org/10.1002/advs.201700856

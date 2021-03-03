@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Cosine ripple on a 2D lattice
 """

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 External minimize: using lmfit minimizers for BornAgain fits.
 Fit progress is plotted using lmfit iteration calbback function.

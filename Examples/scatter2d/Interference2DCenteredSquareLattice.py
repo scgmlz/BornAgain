@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 2D lattice with disorder, centered square lattice
 """

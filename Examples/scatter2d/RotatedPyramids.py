@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Rotated pyramids on top of substrate
 """

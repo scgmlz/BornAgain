@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example of computing reflectivity on a
 magnetized sample.

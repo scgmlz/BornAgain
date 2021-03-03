@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Spheres on a hexagonal lattice
 """

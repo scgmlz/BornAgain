@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: running one fit after another using different minimizers.
 

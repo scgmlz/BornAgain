@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Basic example for producing a profile of SLD of a multilayer.
 """

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Simulation with rectangular detector. Pilatus3-1M detector is used as an example.
 Results will be compared against simulation with spherical detector.

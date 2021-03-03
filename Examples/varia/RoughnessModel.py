@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Example of simulating a rough sample with a
 tanh and Nevot-Croce roughness model using BornAgain.

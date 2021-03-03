@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: looking for background and scale factors.
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Example demonstrates how to fit specular data.
 Our sample represents twenty interchanging layers of Ti and Ni. We will fit

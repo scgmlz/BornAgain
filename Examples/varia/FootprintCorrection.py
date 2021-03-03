@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Specular simulation with a footprint correction
 for a square beam

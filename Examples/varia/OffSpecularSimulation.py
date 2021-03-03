@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Long boxes at 1D lattice, ba.OffSpecular simulation
 """

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 3 layers system (substrate, teflon, air).
 Vacuum layer is populated with spheres with size distribution.
