@@ -13,11 +13,11 @@ def get_sample():
     m_solution = ba.HomogeneousMaterial("Solution", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
+    # Finite sample layer, contains particles in solution:
     ff = ba.FormFactorDodecahedron(2*nm)
     particle = ba.Particle(m_particle, ff)
     layout = ba.ParticleLayout()
     layout.addParticle(particle)
-
     solution_layer = ba.Layer(m_solution, 1000*nm)
        # TODO: make intensity proportional to thickness,
        #       https://github.com/scgmlz/BornAgain/issues/1222
@@ -32,11 +32,16 @@ def get_sample():
 
 
 def get_simulation(sample):
+    # Beam from above (perpendicular to sample):
     beam = ba.Beam(1, 0.1*nm, ba.Direction(90*deg, 0.0*deg))
-    detWid = 500
-    detPix = 200
+
+    # Detector opposite to source:
+    detPos = 2000 # distance from sample center to detector in mm
+    detWid =  500 # detector width in mm
+    detPix =  200 # number of pixels per direction
     det = ba.RectangularDetector(detPix, detWid, detPix, detWid)
-    det.setPerpendicularToDirectBeam(2000, detWid/2, detWid/2)
+    det.setPerpendicularToDirectBeam(detPos, detWid/2, detWid/2)
+
     return ba.GISASSimulation(beam, sample, det)
 
 
