@@ -23,11 +23,12 @@ def get_sample():
        #       https://github.com/scgmlz/BornAgain/issues/1222
     solution_layer.addLayout(layout)
 
-    multi_layer = ba.MultiLayer()
-    multi_layer.addLayer(ba.Layer(m_vacuum))
-    multi_layer.addLayer(solution_layer)
-    multi_layer.addLayer(ba.Layer(m_vacuum))
-    return multi_layer
+    # Flat sample layer sandwiched between two semi-infinite vacuum layers:
+    sample = ba.MultiLayer()
+    sample.addLayer(ba.Layer(m_vacuum))
+    sample.addLayer(solution_layer)
+    sample.addLayer(ba.Layer(m_vacuum))
+    return sample
 
 
 def get_simulation(sample):
