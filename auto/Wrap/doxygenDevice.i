@@ -1608,6 +1608,9 @@ C++ includes: OutputData.h
 %feature("docstring")  OutputData::OutputData "OutputData< T >::OutputData(const OutputData &)=delete
 ";
 
+%feature("docstring")  OutputData::OutputData "OutputData< T >::OutputData(OutputData &&)
+";
+
 %feature("docstring")  OutputData::~OutputData "OutputData< T >::~OutputData()
 ";
 

@@ -2226,13 +2226,14 @@ class IntensityData(object):
     thisown = property(lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag")
     __repr__ = _swig_repr
 
-    def __init__(self):
+    def __init__(self, *args):
         r"""
         __init__(IntensityData self) -> IntensityData
-        OutputData< T >::OutputData(const OutputData &)=delete
+        __init__(IntensityData self, IntensityData arg2) -> IntensityData
+        OutputData< T >::OutputData(OutputData &&)
 
         """
-        _libBornAgainDevice.IntensityData_swiginit(self, _libBornAgainDevice.new_IntensityData())
+        _libBornAgainDevice.IntensityData_swiginit(self, _libBornAgainDevice.new_IntensityData(*args))
     __swig_destroy__ = _libBornAgainDevice.delete_IntensityData
 
     def clone(self):

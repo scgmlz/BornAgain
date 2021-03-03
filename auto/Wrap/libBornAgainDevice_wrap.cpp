@@ -28861,16 +28861,70 @@ SWIGINTERN PyObject *vector_cvector_t_swiginit(PyObject *SWIGUNUSEDPARM(self), P
   return SWIG_Python_InitShadowInstance(args);
 }
 
-SWIGINTERN PyObject *_wrap_new_IntensityData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_new_IntensityData__SWIG_0(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **SWIGUNUSEDPARM(swig_obj)) {
   PyObject *resultobj = 0;
   OutputData< double > *result = 0 ;
   
-  if (!SWIG_Python_UnpackTuple(args, "new_IntensityData", 0, 0, 0)) SWIG_fail;
+  if ((nobjs < 0) || (nobjs > 0)) SWIG_fail;
   result = (OutputData< double > *)new OutputData< double >();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OutputDataT_double_t, SWIG_POINTER_NEW |  0 );
   return resultobj;
 fail:
   return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_IntensityData__SWIG_1(PyObject *SWIGUNUSEDPARM(self), Py_ssize_t nobjs, PyObject **swig_obj) {
+  PyObject *resultobj = 0;
+  OutputData< double > *arg1 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  OutputData< double > *result = 0 ;
+  
+  if ((nobjs < 1) || (nobjs > 1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1, SWIGTYPE_p_OutputDataT_double_t,  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_IntensityData" "', argument " "1"" of type '" "OutputData< double > &&""'"); 
+  }
+  if (!argp1) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "new_IntensityData" "', argument " "1"" of type '" "OutputData< double > &&""'"); 
+  }
+  arg1 = reinterpret_cast< OutputData< double > * >(argp1);
+  result = (OutputData< double > *)new OutputData< double >((OutputData< double > &&)*arg1);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_OutputDataT_double_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_IntensityData(PyObject *self, PyObject *args) {
+  Py_ssize_t argc;
+  PyObject *argv[2] = {
+    0
+  };
+  
+  if (!(argc = SWIG_Python_UnpackTuple(args, "new_IntensityData", 0, 1, argv))) SWIG_fail;
+  --argc;
+  if (argc == 0) {
+    return _wrap_new_IntensityData__SWIG_0(self, argc, argv);
+  }
+  if (argc == 1) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_OutputDataT_double_t, SWIG_POINTER_NO_NULL);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      return _wrap_new_IntensityData__SWIG_1(self, argc, argv);
+    }
+  }
+  
+fail:
+  SWIG_Python_RaiseOrModifyTypeError("Wrong number or type of arguments for overloaded function 'new_IntensityData'.\n"
+    "  Possible C/C++ prototypes are:\n"
+    "    OutputData< double >::OutputData()\n"
+    "    OutputData< double >::OutputData(OutputData< double > &&)\n");
+  return 0;
 }
 
 
@@ -44424,9 +44478,10 @@ static PyMethodDef SwigMethods[] = {
 	 { "delete_vector_cvector_t", _wrap_delete_vector_cvector_t, METH_O, "delete_vector_cvector_t(vector_cvector_t self)"},
 	 { "vector_cvector_t_swigregister", vector_cvector_t_swigregister, METH_O, NULL},
 	 { "vector_cvector_t_swiginit", vector_cvector_t_swiginit, METH_VARARGS, NULL},
-	 { "new_IntensityData", _wrap_new_IntensityData, METH_NOARGS, "\n"
-		"new_IntensityData() -> IntensityData\n"
-		"OutputData< T >::OutputData(const OutputData &)=delete\n"
+	 { "new_IntensityData", _wrap_new_IntensityData, METH_VARARGS, "\n"
+		"IntensityData()\n"
+		"new_IntensityData(IntensityData arg1) -> IntensityData\n"
+		"OutputData< T >::OutputData(OutputData &&)\n"
 		"\n"
 		""},
 	 { "delete_IntensityData", _wrap_delete_IntensityData, METH_O, "\n"
