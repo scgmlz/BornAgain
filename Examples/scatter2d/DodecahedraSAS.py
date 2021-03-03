@@ -19,13 +19,15 @@ def get_sample():
     layout = ba.ParticleLayout()
     layout.addParticle(particle)
 
-    solution_layer = ba.Layer(m_solution, 0*nm) # should have finite width
+    solution_layer = ba.Layer(m_solution, 1000*nm)
+       # TODO: make intensity proportional to thickness,
+       #       https://github.com/scgmlz/BornAgain/issues/1222
     solution_layer.addLayout(layout)
 
     multi_layer = ba.MultiLayer()
-#    multi_layer.addLayer(ba.Layer(m_vacuum))
+    multi_layer.addLayer(ba.Layer(m_vacuum))
     multi_layer.addLayer(solution_layer)
-#    multi_layer.addLayer(ba.Layer(m_vacuum))
+    multi_layer.addLayer(ba.Layer(m_vacuum))
     return multi_layer
 
 
