@@ -4,7 +4,6 @@ Basic example for regular small-angle scattering (SAS).
 Sample is a dilute assembly of ordered dodecahedra.
 """
 
-import numpy as np
 import bornagain as ba
 from bornagain import deg, nm
 
