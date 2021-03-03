@@ -58,11 +58,6 @@ ParticleLayoutComputation::~ParticleLayoutComputation() = default;
 
 void ParticleLayoutComputation::compute(SimulationElement& elem) const
 {
-    const double alpha_f = elem.getAlphaMean();
-    const size_t n_layers = m_layout.numberOfSlices();
-    if (n_layers > 1 && alpha_f < 0)
-        return; // zero for transmission with multilayers (n>1) # TODO: support transmission GISAS
-
     elem.addIntensity(m_interference_function_strategy->evaluate(elem) * m_layout.surfaceDensity());
 }
 
