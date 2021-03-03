@@ -8,25 +8,18 @@ from bornagain import deg, nm
 
 
 def get_sample():
-    """
-    Returns a sample with cylinders on a substrate.
-    """
-
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-08)
     material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-08)
     material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
-    # Define form factors
-    ff = ba.FormFactorCylinder(5*nm, 5*nm)
-
     # Define particles
+    ff = ba.FormFactorCylinder(5*nm, 5*nm)
     particle = ba.Particle(material_Particle, ff)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle, 1)
-    layout.setWeight(1)
+    layout.addParticle(particle)
     layout.setTotalParticleSurfaceDensity(0.01)
 
     # Define layers
@@ -43,10 +36,16 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
-    detector = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0*deg, 2*deg)
-    simulation = ba.GISASSimulation(beam, sample, detector)
-    return simulation
+    # Define beam
+    wavelength = 0.1*nm
+    alpha_i = 0.2*deg
+    beam = ba.Beam(1, wavelength, ba.Direction(alpha_i, 0*deg))
+
+    # Define detector
+    nPix = 200 # pixels per direction
+    detector = ba.SphericalDetector(nPix, -2*deg, 2*deg, nPix, 0*deg, 2*deg)
+
+    return ba.GISASSimulation(beam, sample, detector)
 
 
 if __name__ == '__main__':
