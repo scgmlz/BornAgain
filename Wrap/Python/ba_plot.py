@@ -105,9 +105,10 @@ def plot_array(array, axes_limits=None, **kwargs):
     ylabel = kwargs.pop('ylabel', None)
     zlabel = kwargs.pop('zlabel', "Intensity")
     title = kwargs.pop('title', None)
+    aspect = kwargs.pop('apsect', 'auto')
     cmap = kwargs.pop('cmap', CMAP)
 
-    im = plt.imshow(array, cmap=cmap, norm=norm, extent=axes_limits, **kwargs)
+    im = plt.imshow(array, cmap=cmap, norm=norm, aspect=aspect, extent=axes_limits, **kwargs)
     cb = plt.colorbar(im, pad=0.025)
 
     if xlabel:
