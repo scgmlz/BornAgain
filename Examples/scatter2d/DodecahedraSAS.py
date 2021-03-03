@@ -23,7 +23,7 @@ def get_sample():
        #       https://github.com/scgmlz/BornAgain/issues/1222
     solution_layer.addLayout(layout)
 
-    # Flat sample layer sandwiched between two semi-infinite vacuum layers:
+    # Flat sample layer sandwiched between semi-infinite vacuum layers:
     sample = ba.MultiLayer()
     sample.addLayer(ba.Layer(m_vacuum))
     sample.addLayer(solution_layer)
