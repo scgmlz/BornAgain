@@ -102,7 +102,7 @@ test_example(scatter2d/SpheresAtHexLattice 2e-10)
 test_example(scatter2d/TriangularRipple 2e-10)
 test_example(scatter2d/TwoTypesOfCylindersWithSizeDistribution 2e-10)
 
-test_example(specular/BasicSpecularSimulation 2e-10)
+test_example(specular/AlternatingLayers 2e-10)
 test_example(specular/BeamAngularDivergence 2e-10)
 test_example(specular/BeamFullDivergence 2e-10)
 test_example(specular/TOFRWithResolution 2e-10)
