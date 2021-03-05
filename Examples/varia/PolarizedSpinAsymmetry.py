@@ -92,7 +92,7 @@ def get_simulation(q_axis, parameters, polarization, analyzer):
     scan.setAbsoluteQResolution(distr, parameters["q_res"])
 
     simulation.beam().setPolarization(polarization)
-    simulation.setAnalyzerProperties(analyzer, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer, 1.0, 0.5)
 
     simulation.setScan(scan)
     return simulation

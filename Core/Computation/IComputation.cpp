@@ -19,10 +19,10 @@
 #include "Sample/Processed/ProcessedSample.h"
 
 IComputation::IComputation(const MultiLayer& sample, const SimulationOptions& options,
-                           ProgressHandler& progress)
+                           ProgressHandler& progress, bool forcePolarized)
     : m_sim_options(options)
     , m_progress(&progress)
-    , m_processed_sample(std::make_unique<ProcessedSample>(sample, options))
+    , m_processed_sample(std::make_unique<ProcessedSample>(sample, options, forcePolarized))
 {
 }
 

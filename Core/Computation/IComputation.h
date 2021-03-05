@@ -39,7 +39,7 @@ class ProgressHandler;
 class IComputation {
 public:
     IComputation(const MultiLayer& sample, const SimulationOptions& options,
-                 ProgressHandler& progress);
+                 ProgressHandler& progress, bool forcePolarized=false);
     virtual ~IComputation();
 
     void run();

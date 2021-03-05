@@ -64,7 +64,7 @@ GISASSimulation* StandardSimulations::BasicGISAS00()
     GISASSimulation* result = BasicGISAS();
     kvector_t zplus(0.0, 0.0, 1.0);
     result->beam().setPolarization(zplus);
-    result->setAnalyzerProperties(zplus, 1.0, 0.5);
+    result->detector().setAnalyzerProperties(zplus, 1.0, 0.5);
     return result;
 }
 
@@ -75,7 +75,7 @@ GISASSimulation* StandardSimulations::BasicPolarizedGISAS()
     GISASSimulation* result = BasicGISAS();
     kvector_t zplus(0.0, 0.0, 1.0);
     result->beam().setPolarization(zplus);
-    result->setAnalyzerProperties(zplus, -1.0, 0.5);
+    result->detector().setAnalyzerProperties(zplus, -1.0, 0.5);
     return result;
 }
 
@@ -170,7 +170,7 @@ GISASSimulation* StandardSimulations::MiniGISASPolarizationPP()
     kvector_t beampol(0.0, 0.0, 1.0);
 
     result->beam().setPolarization(beampol);
-    result->setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
+    result->detector().setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
     return result;
 }
 
@@ -182,7 +182,7 @@ GISASSimulation* StandardSimulations::MiniGISASPolarizationPM()
     kvector_t beampol(0.0, 0.0, 1.0);
 
     result->beam().setPolarization(beampol);
-    result->setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
+    result->detector().setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
     return result;
 }
 
@@ -194,7 +194,7 @@ GISASSimulation* StandardSimulations::MiniGISASPolarizationMP()
     kvector_t beampol(0.0, 0.0, -1.0);
 
     result->beam().setPolarization(beampol);
-    result->setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
+    result->detector().setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
     return result;
 }
 
@@ -206,7 +206,7 @@ GISASSimulation* StandardSimulations::MiniGISASPolarizationMM()
     kvector_t beampol(0.0, 0.0, -1.0);
 
     result->beam().setPolarization(beampol);
-    result->setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
+    result->detector().setAnalyzerProperties(analyzer_dir, 1.0, 0.5);
     return result;
 }
 
@@ -238,7 +238,7 @@ GISASSimulation* StandardSimulations::MaxiGISAS00()
     GISASSimulation* result = MaxiGISAS();
     kvector_t zplus(0.0, 0.0, 1.0);
     result->beam().setPolarization(zplus);
-    result->setAnalyzerProperties(zplus, 1.0, 0.5);
+    result->detector().setAnalyzerProperties(zplus, 1.0, 0.5);
     return result;
 }
 
@@ -492,7 +492,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularPP()
 {
     auto* simulation = BasicSpecular();
     simulation->beam().setPolarization({0.0, 1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -500,7 +500,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularPM()
 {
     auto* simulation = BasicSpecular();
     simulation->beam().setPolarization({0.0, 1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -508,7 +508,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularMP()
 {
     auto* simulation = BasicSpecular();
     simulation->beam().setPolarization({0.0, -1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -516,7 +516,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularMM()
 {
     auto* simulation = BasicSpecular();
     simulation->beam().setPolarization({0.0, -1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -524,7 +524,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularQPP()
 {
     auto* simulation = BasicSpecularQ();
     simulation->beam().setPolarization({0.0, 1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -532,7 +532,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularQMM()
 {
     auto* simulation = BasicSpecularQ();
     simulation->beam().setPolarization({0.0, -1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -540,7 +540,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularQPM()
 {
     auto* simulation = BasicSpecularQ();
     simulation->beam().setPolarization({0.0, 1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, -1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 
@@ -548,7 +548,7 @@ SpecularSimulation* StandardSimulations::BasicSpecularQMP()
 {
     auto* simulation = BasicSpecularQ();
     simulation->beam().setPolarization({0.0, -1.0, 0.0});
-    simulation->setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
+    simulation->detector().setAnalyzerProperties({0.0, 1.0, 0.0}, 1.0, 0.5);
     return simulation;
 }
 

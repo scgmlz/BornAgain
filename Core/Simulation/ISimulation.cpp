@@ -181,13 +181,6 @@ void ISimulation::setDetectorResolutionFunction(const IResolutionFunction2D& res
     detector().setResolutionFunction(resolution_function);
 }
 
-//! Sets the polarization analyzer characteristics of the detector
-void ISimulation::setAnalyzerProperties(const kvector_t direction, double efficiency,
-                                        double total_transmission)
-{
-    detector().setAnalyzerProperties(direction, efficiency, total_transmission);
-}
-
 void ISimulation::prepareSimulation()
 {
     m_sample_provider.updateSample();

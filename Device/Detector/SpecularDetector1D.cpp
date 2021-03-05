@@ -20,6 +20,12 @@ SpecularDetector1D::SpecularDetector1D(const IAxis& axis)
     addAxis(axis);
 }
 
+SpecularDetector1D::SpecularDetector1D()
+{
+    initialize();
+}
+
+
 SpecularDetector1D::SpecularDetector1D(const SpecularDetector1D& detector) : IDetector(detector)
 {
     initialize();
@@ -49,4 +55,10 @@ std::string SpecularDetector1D::axisName(size_t index) const
 void SpecularDetector1D::initialize()
 {
     setName("SpecularDetector1D");
+}
+
+void SpecularDetector1D::setAxis(const IAxis& axis)
+{
+    clear();
+    addAxis(axis);
 }

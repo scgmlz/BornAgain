@@ -47,6 +47,10 @@ TEST_F(SpecularDetectorTest, Clone)
 {
     FixedBinAxis axis("axis0", 5, 1.0 * Units::deg, 10.0 * Units::deg);
     SpecularDetector1D detector(axis);
+
+    const auto analyzer = kvector_t({0., 0., 1.});
+    detector.setAnalyzerProperties(analyzer, 0.33, 0.22);
+
     std::unique_ptr<SpecularDetector1D> clone(detector.clone());
 
     const auto data = clone->createDetectorMap();
@@ -69,4 +73,8 @@ TEST_F(SpecularDetectorTest, Clone)
     }
     EXPECT_EQ(detectorIndexes, expectedDetectorIndexes);
     EXPECT_EQ(elementIndexes, expectedElementIndexes);
+
+    EXPECT_EQ(clone->detectionProperties().analyzerDirection(), analyzer);
+    EXPECT_EQ(clone->detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(clone->detectionProperties().analyzerTotalTransmission(), 0.22);
 }

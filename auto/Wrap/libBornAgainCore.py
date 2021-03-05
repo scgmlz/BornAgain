@@ -3563,16 +3563,6 @@ class ISimulation(libBornAgainBase.ICloneable, libBornAgainParam.INode):
         """
         return _libBornAgainCore.ISimulation_setDetectorResolutionFunction(self, resolution_function)
 
-    def setAnalyzerProperties(self, direction, efficiency, total_transmission):
-        r"""
-        setAnalyzerProperties(ISimulation self, kvector_t direction, double efficiency, double total_transmission)
-        void ISimulation::setAnalyzerProperties(const kvector_t direction, double efficiency, double total_transmission)
-
-        Sets the polarization analyzer characteristics of the detector. 
-
-        """
-        return _libBornAgainCore.ISimulation_setAnalyzerProperties(self, direction, efficiency, total_transmission)
-
     def setSample(self, sample):
         r"""
         setSample(ISimulation self, MultiLayer const & sample)

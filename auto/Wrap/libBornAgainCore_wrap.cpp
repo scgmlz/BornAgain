@@ -39208,59 +39208,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_ISimulation_setAnalyzerProperties(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  ISimulation *arg1 = (ISimulation *) 0 ;
-  kvector_t arg2 ;
-  double arg3 ;
-  double arg4 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 ;
-  int res2 = 0 ;
-  double val3 ;
-  int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
-  PyObject *swig_obj[4] ;
-  
-  if (!SWIG_Python_UnpackTuple(args, "ISimulation_setAnalyzerProperties", 4, 4, swig_obj)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(swig_obj[0], &argp1,SWIGTYPE_p_ISimulation, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ISimulation_setAnalyzerProperties" "', argument " "1"" of type '" "ISimulation *""'"); 
-  }
-  arg1 = reinterpret_cast< ISimulation * >(argp1);
-  {
-    res2 = SWIG_ConvertPtr(swig_obj[1], &argp2, SWIGTYPE_p_BasicVector3DT_double_t,  0  | 0);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ISimulation_setAnalyzerProperties" "', argument " "2"" of type '" "kvector_t const""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ISimulation_setAnalyzerProperties" "', argument " "2"" of type '" "kvector_t const""'");
-    } else {
-      kvector_t * temp = reinterpret_cast< kvector_t * >(argp2);
-      arg2 = *temp;
-      if (SWIG_IsNewObj(res2)) delete temp;
-    }
-  }
-  ecode3 = SWIG_AsVal_double(swig_obj[2], &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ISimulation_setAnalyzerProperties" "', argument " "3"" of type '" "double""'");
-  } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(swig_obj[3], &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ISimulation_setAnalyzerProperties" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  (arg1)->setAnalyzerProperties(arg2,arg3,arg4);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_ISimulation_setSample(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   ISimulation *arg1 = (ISimulation *) 0 ;
@@ -44798,13 +44745,6 @@ static PyMethodDef SwigMethods[] = {
 	 { "ISimulation_setDetectorResolutionFunction", _wrap_ISimulation_setDetectorResolutionFunction, METH_VARARGS, "\n"
 		"ISimulation_setDetectorResolutionFunction(ISimulation self, IResolutionFunction2D const & resolution_function)\n"
 		"void ISimulation::setDetectorResolutionFunction(const IResolutionFunction2D &resolution_function)\n"
-		"\n"
-		""},
-	 { "ISimulation_setAnalyzerProperties", _wrap_ISimulation_setAnalyzerProperties, METH_VARARGS, "\n"
-		"ISimulation_setAnalyzerProperties(ISimulation self, kvector_t direction, double efficiency, double total_transmission)\n"
-		"void ISimulation::setAnalyzerProperties(const kvector_t direction, double efficiency, double total_transmission)\n"
-		"\n"
-		"Sets the polarization analyzer characteristics of the detector. \n"
 		"\n"
 		""},
 	 { "ISimulation_setSample", _wrap_ISimulation_setSample, METH_VARARGS, "\n"

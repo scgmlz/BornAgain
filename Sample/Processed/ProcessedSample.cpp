@@ -108,10 +108,11 @@ std::vector<ZLimits> particleRegions(const MultiLayer& multilayer, bool use_slic
 //  class ProcessedSample
 //  ************************************************************************************************
 
-ProcessedSample::ProcessedSample(const MultiLayer& sample, const SimulationOptions& options)
+ProcessedSample::ProcessedSample(const MultiLayer& sample, const SimulationOptions& options,
+                                 bool forcePolarized)
     : m_slices{}
     , m_top_z{0.0}
-    , m_polarized{false}
+    , m_polarized{forcePolarized}
     , m_crossCorrLength{sample.crossCorrLength()}
     , m_ext_field{sample.externalField()}
 {
@@ -277,7 +278,8 @@ void ProcessedSample::initSlices(const MultiLayer& sample, const SimulationOptio
 void ProcessedSample::initLayouts(const MultiLayer& sample)
 {
     double z_ref = -m_top_z;
-    m_polarized = sample.isMagnetic();
+    m_polarized = m_polarized || sample.isMagnetic();
+
     for (size_t i = 0; i < sample.numberOfLayers(); ++i) {
         if (i > 1)
             z_ref -= sample.layer(i - 1)->thickness();

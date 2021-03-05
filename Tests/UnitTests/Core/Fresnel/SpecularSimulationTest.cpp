@@ -2,6 +2,7 @@
 #include "Base/Axis/VariableBinAxis.h"
 #include "Base/Const/Units.h"
 #include "Base/Math/Constants.h"
+#include "Core/Computation/ConstantBackground.h"
 #include "Core/Scan/AngularSpecScan.h"
 #include "Core/Scan/QSpecScan.h"
 #include "Device/Histo/Histogram1D.h"
@@ -100,31 +101,57 @@ TEST_F(SpecularSimulationTest, SetAngularScan)
     sim.beam().setIntensity(2.0);
     EXPECT_EQ(2.0, beam.intensity());
 
+    SpecularSimulation sim2;
     AngularSpecScan scan2(1.0, 10, 1.0 * Units::deg, 10.0 * Units::deg);
-    sim.setScan(scan2);
-    EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
-    EXPECT_EQ(10.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    sim2.setScan(scan2);
+    EXPECT_EQ(10u, sim2.coordinateAxis()->size());
+    EXPECT_EQ(1.0 * Units::deg, sim2.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0 * Units::deg, sim2.coordinateAxis()->upperBound());
     EXPECT_EQ(2.0, beam.intensity());
     EXPECT_EQ(1.0, beam.wavelength());
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
-    checkBeamState(sim);
+    checkBeamState(sim2);
 
+    SpecularSimulation sim3;
     AngularSpecScan scan3(1.0, 10, -1.0 * Units::deg, 2.0 * Units::deg);
-    EXPECT_THROW(sim.setScan(scan3), std::runtime_error);
+    EXPECT_THROW(sim3.setScan(scan3), std::runtime_error);
 
-    EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0 * Units::deg, sim.coordinateAxis()->lowerBound());
-    EXPECT_EQ(10.0 * Units::deg, sim.coordinateAxis()->upperBound());
+    checkBeamState(sim3);
+
+    EXPECT_THROW(sim2.setScan(scan2), std::runtime_error);
+    EXPECT_EQ(10u, sim2.coordinateAxis()->size());
+    EXPECT_EQ(1.0 * Units::deg, sim2.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0 * Units::deg, sim2.coordinateAxis()->upperBound());
     EXPECT_EQ(2.0, beam.intensity());
     EXPECT_EQ(1.0, beam.wavelength());
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
-    checkBeamState(sim);
 
-    sim.setInstrument(Instrument());
-    checkBeamState(sim);
+    sim3.setInstrument(Instrument());
+    checkBeamState(sim3);
+
+    SpecularSimulation sim4;
+    AngularSpecScan scan4(1.0, 10, .0 * Units::deg, 2.0 * Units::deg);
+    const auto polarization = kvector_t({0., 0., 0.876});
+    const auto analyzer     = kvector_t({0., 0., 1.});
+    sim4.beam().setPolarization(polarization);
+    sim4.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim4.setScan(scan4);
+    EXPECT_THROW(sim4.setScan(scan4), std::runtime_error);
+
+    EXPECT_EQ(.0 * Units::deg, sim4.coordinateAxis()->lowerBound());
+    EXPECT_EQ(2.0 * Units::deg, sim4.coordinateAxis()->upperBound());
+    EXPECT_EQ(10u, sim4.coordinateAxis()->size());
+    EXPECT_EQ(1.0, sim4.beam().intensity());
+    EXPECT_EQ(1.0, sim4.beam().wavelength());
+    EXPECT_EQ(0.0, sim4.beam().direction().alpha());
+    EXPECT_EQ(0.0, sim4.beam().direction().phi());
+
+    EXPECT_EQ(sim4.beam().getBlochVector(), polarization);
+    EXPECT_EQ(sim4.detector().detectionProperties().analyzerDirection(), analyzer);
+    EXPECT_EQ(sim4.detector().detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(sim4.detector().detectionProperties().analyzerTotalTransmission(), 0.22);
 }
 
 TEST_F(SpecularSimulationTest, SetQScan)
@@ -149,16 +176,39 @@ TEST_F(SpecularSimulationTest, SetQScan)
     sim.beam().setIntensity(2.0);
     EXPECT_EQ(2.0, beam.intensity());
 
+    SpecularSimulation sim2;
     QSpecScan scan2(10, 1.0, 10.0);
-    sim.setScan(scan2);
-    EXPECT_EQ(10u, sim.coordinateAxis()->size());
-    EXPECT_EQ(1.0, sim.coordinateAxis()->lowerBound());
-    EXPECT_EQ(10.0, sim.coordinateAxis()->upperBound());
+    sim2.setScan(scan2);
+    EXPECT_EQ(10u, sim2.coordinateAxis()->size());
+    EXPECT_EQ(1.0, sim2.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0, sim2.coordinateAxis()->upperBound());
     EXPECT_EQ(2.0, beam.intensity());
     EXPECT_EQ(1.0, beam.wavelength());
     EXPECT_EQ(0.0, beam.direction().alpha());
     EXPECT_EQ(0.0, beam.direction().phi());
-    checkBeamState(sim);
+    checkBeamState(sim2);
+
+
+    SpecularSimulation sim3;
+    QSpecScan scan3(10, 1.0, 10.0);
+    const auto polarization = kvector_t({0., 0., 0.876});
+    const auto analyzer     = kvector_t({0., 0., 1.});
+    sim3.beam().setPolarization(polarization);
+    sim3.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim3.setScan(scan3);
+
+    EXPECT_EQ(1.0, sim3.coordinateAxis()->lowerBound());
+    EXPECT_EQ(10.0, sim3.coordinateAxis()->upperBound());
+    EXPECT_EQ(10u, sim3.coordinateAxis()->size());
+    EXPECT_EQ(1.0, sim3.beam().intensity());
+    EXPECT_EQ(1.0, sim3.beam().wavelength());
+    EXPECT_EQ(0.0, sim3.beam().direction().alpha());
+    EXPECT_EQ(0.0, sim3.beam().direction().phi());
+
+    EXPECT_EQ(sim3.beam().getBlochVector(), polarization);
+    EXPECT_EQ(sim3.detector().detectionProperties().analyzerDirection(), analyzer);
+    EXPECT_EQ(sim3.detector().detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(sim3.detector().detectionProperties().analyzerTotalTransmission(), 0.22);
 }
 
 TEST_F(SpecularSimulationTest, ConstructSimulation)
@@ -189,9 +239,19 @@ TEST_F(SpecularSimulationTest, ConstructSimulation)
 
 TEST_F(SpecularSimulationTest, SimulationClone)
 {
-    auto sim = defaultSimulation();
+    auto sim = SpecularSimulation();
 
-    std::unique_ptr<SpecularSimulation> clone(sim->clone());
+    const auto polarization = kvector_t({0., 0., 0.876});
+    const auto analyzer     = kvector_t({0., 0., 1.});
+    sim.beam().setPolarization(polarization);
+    sim.detector().setAnalyzerProperties(analyzer, 0.33, 0.22);
+    sim.beam().setIntensity(42.42);
+    sim.setBackground(ConstantBackground(1.e-7));
+    sim.setSample(multilayer);
+    const auto scan = AngularSpecScan(1.0, 10, 0.0 * Units::deg, 2.0 * Units::deg);
+    sim.setScan(scan);
+
+    std::unique_ptr<SpecularSimulation> clone(sim.clone());
 
     EXPECT_EQ(3u, clone->sample()->numberOfLayers());
 
@@ -199,12 +259,30 @@ TEST_F(SpecularSimulationTest, SimulationClone)
     auto data = clone_result.data();
     EXPECT_EQ(data->getAllocatedSize(), 10u);
     EXPECT_EQ(data->totalSum(), 0.0);
+    EXPECT_EQ(0.0 * Units::deg, clone->coordinateAxis()->lowerBound());
+    EXPECT_EQ(2.0 * Units::deg, clone->coordinateAxis()->upperBound());
+
+    EXPECT_EQ(clone->beam().getBlochVector(), polarization);
+    EXPECT_EQ(clone->beam().intensity(), 42.42);
+    EXPECT_EQ(clone->detector().detectionProperties().analyzerDirection(), analyzer);
+    EXPECT_EQ(clone->detector().detectionProperties().analyzerEfficiency(), 0.33);
+    EXPECT_EQ(clone->detector().detectionProperties().analyzerTotalTransmission(), 0.22);
+
+    const auto background = dynamic_cast<const ConstantBackground*>(clone->background());
+    EXPECT_NE(background, nullptr);
+    if(background){
+        EXPECT_EQ(background->backgroundValue(), 1.e-7);
+    }
+    auto scanClone = dynamic_cast<const AngularSpecScan*>(clone->dataHandler());
+    EXPECT_NE(scanClone, nullptr);
+    EXPECT_NE(scanClone->coordinateAxis(), scan.coordinateAxis());
+    EXPECT_EQ(*scanClone->coordinateAxis(), *scan.coordinateAxis());
 
     checkBeamState(*clone);
 
-    sim->runSimulation();
+    sim.runSimulation();
 
-    std::unique_ptr<SpecularSimulation> clone2(sim->clone());
+    std::unique_ptr<SpecularSimulation> clone2(sim.clone());
     clone_result = clone2->result();
 
     const auto output_data = clone_result.data();

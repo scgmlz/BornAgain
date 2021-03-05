@@ -31,11 +31,15 @@ static_assert(std::is_copy_assignable<DWBAComputation>::value == false,
 DWBAComputation::DWBAComputation(const MultiLayer& multilayer, const SimulationOptions& options,
                                  ProgressHandler& progress,
                                  std::vector<SimulationElement>::iterator begin_it,
-                                 std::vector<SimulationElement>::iterator end_it)
-    : IComputation(multilayer, options, progress), m_begin_it(begin_it), m_end_it(end_it)
+                                 std::vector<SimulationElement>::iterator end_it,
+                                 bool forcePolarized)
+    : IComputation(multilayer, options, progress, forcePolarized)
+    , m_begin_it(begin_it)
+    , m_end_it(end_it)
 {
     const IFresnelMap* p_fresnel_map = m_processed_sample->fresnelMap();
-    bool polarized = m_processed_sample->containsMagneticMaterial();
+    bool polarized = m_processed_sample->containsMagneticMaterial() || forcePolarized;
+
     for (const ProcessedLayout& layout : m_processed_sample->layouts()) {
         m_single_computation.addLayoutComputation(
             new ParticleLayoutComputation(layout, m_sim_options, polarized));
