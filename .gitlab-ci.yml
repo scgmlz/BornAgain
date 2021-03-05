@@ -13,9 +13,9 @@ mac:
     - ctest --output-on-failure
     # - cpack .
   artifacts:
-    paths:
-    - build/*zip
-    expire_in: 10 days
+#    paths:
+#    - build/*zip
+#    expire_in: 10 days
 
 windows:
   tags:
