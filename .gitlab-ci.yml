@@ -28,7 +28,7 @@ windows:
     - cd build
     - cmd.exe "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
     - cmake --version
-    - cmake -G "Visual Studio 16 2019" -A x64 -T host=x64 -DLIB_MAN=OFF -DQTDIR=C:/Qt/5.14.1/msvc2017_64 -DCPACK_IFW_ROOT=C:\Qt\Tools\QtInstallerFramework\3.2 -DCMAKE_INCLUDE_PATH=%OPTLIBS%/include -DCMAKE_LIBRARY_PATH=%OPTLIBS%/lib -B. ..
+    - cmake -G "Visual Studio 16 2019" -A x64 -T host=x64 -DLIB_MAN=OFF -DQTDIR=C:/Qt/5.14.1/msvc2017_64 -DCPACK_IFW_ROOT=C:\Qt\Tools\QtInstallerFramework\3.2 -DCMAKE_INCLUDE_PATH=%OPTLIBS%/include -DCMAKE_LIBRARY_PATH=%OPTLIBS%/lib -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -B. ..
     - cmake --build . --config Release
     - Get-Location
     - ctest -C Release --output-on-failure
