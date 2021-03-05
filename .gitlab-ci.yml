@@ -66,6 +66,6 @@ native_Debian_clang:
     - pwd
     - mkdir build
     - cd build
-    - cmake -DWERROR=ON ..
+    - cmake .. # -DWERROR=ON
     - make -j6
     - ctest -j6 --output-on-failure
