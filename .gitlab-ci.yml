@@ -67,5 +67,5 @@ native_Debian_clang:
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_CXX_COMPILER_LAUNCHER=ccache #-DWERROR=ON
-    - make -j6
+    - xvfb-run make -j6 # TODO rm mvvm tests, then rm xvfb-run
     - xvfb-run ctest -j6 --output-on-failure
