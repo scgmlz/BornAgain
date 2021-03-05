@@ -6,8 +6,8 @@ mac:
   - MacOS
   stage: build
   script:
-    - mkdir pub/build
-    - cd pub/build
+    - mkdir build
+    - cd build
     - cmake ..
     - make
     - ctest --output-on-failure
