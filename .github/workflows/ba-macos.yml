@@ -82,7 +82,7 @@ jobs:
         echo 'export PATH="/usr/local/opt/qt@5/bin:$PATH"' >> /Users/runner/.bash_profile
         cd $GITHUB_WORKSPACE
         mkdir build && cd build
-        cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt -DBORNAGAIN_APPLE_BUNDLE=ON \
+        cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt@5 -DBORNAGAIN_APPLE_BUNDLE=ON \
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         make -j4
