@@ -63,9 +63,9 @@ native_Debian_clang:
     - clang --version
   stage: build
   script: &native_scr
-    - pwd && ls
-    - mkdir pub/build
-    - cd pub/build
+    - pwd
+    - mkdir build
+    - cd build
     - cmake -DWERROR=ON ..
     - make -j6
     - ctest -j6 --output-on-failure
