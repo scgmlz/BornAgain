@@ -45,7 +45,6 @@ jobs:
     - name: setup dependencies
       run: |
         brew install cmake ccache fftw gsl boost qt5 libtiff eigen python numpy scipy libcerf
-        echo "Qt5 is installed to $QTDIR"
 
     - name: Install Python packages
       run: |
@@ -77,10 +76,10 @@ jobs:
         CMAKE_CXX_STANDARD: 14
         PYTHON_VERSION: 3.8
         LLVM_BC_GENERATOR: /usr/bin/clang++
-        LDFLAGS: "-L/usr/local/opt/qt/lib"
-        CPPFLAGS: "-I/usr/local/opt/qt/include"
+        LDFLAGS: "-L/usr/local/opt/qt@5/lib"
+        CPPFLAGS: "-I/usr/local/opt/qt@5/include"
       run: |
-        echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> /Users/runner/.bash_profile
+        echo 'export PATH="/usr/local/opt/qt@5/bin:$PATH"' >> /Users/runner/.bash_profile
         cd $GITHUB_WORKSPACE
         mkdir build && cd build
         cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt -DBORNAGAIN_APPLE_BUNDLE=ON \
@@ -104,7 +103,7 @@ jobs:
 
     - name: Build package
       env:
-        QTDIR: /usr/local/opt/qt
+        QTDIR: /usr/local/opt/qt@5
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE/build
