@@ -58,6 +58,7 @@ protected:
         EXPECT_EQ(clone->volume(), V);
         cvector_t q(.1, .2, complex_t(.3, .004));
         EXPECT_EQ(clone->evaluate_for_q(q), p->evaluate_for_q(q));
+        delete clone;
     }
     double V, R;
 };
