@@ -65,6 +65,7 @@ TEST_F(ParticleCoreShellTest, ComplexCoreShellClone)
     ParticleCoreShell* clone = coreshell.clone();
     EXPECT_EQ(coreshell.coreParticle()->position(), relative_pos);
     EXPECT_EQ(clone->coreParticle()->position(), relative_pos);
+    delete clone;
 }
 
 TEST_F(ParticleCoreShellTest, getChildren)

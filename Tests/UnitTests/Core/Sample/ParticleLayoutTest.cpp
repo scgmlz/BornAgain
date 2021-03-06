@@ -147,6 +147,7 @@ TEST_F(ParticleLayoutTest, ParticleLayoutClone)
     auto p_iff = node_progeny::OnlyChildOfType<IInterferenceFunction>(*clone);
 
     EXPECT_TRUE(nullptr != p_iff);
+    delete clone;
 }
 
 TEST_F(ParticleLayoutTest, ParticleLayoutInterferenceFunction)

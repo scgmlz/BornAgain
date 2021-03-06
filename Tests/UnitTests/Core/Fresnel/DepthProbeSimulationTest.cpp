@@ -93,6 +93,7 @@ TEST_F(DepthProbeSimulationTest, CheckAxesOfDefaultSimulation)
     const auto sim_clone = sim->clone();
     EXPECT_FALSE(alpha_axis == sim_clone->getAlphaAxis());
     EXPECT_FALSE(z_axis == sim_clone->getZAxis());
+    delete sim_clone;
 }
 
 TEST_F(DepthProbeSimulationTest, SetBeamParameters)

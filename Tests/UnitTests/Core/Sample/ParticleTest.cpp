@@ -35,13 +35,15 @@ TEST_F(ParticleTest, Constructors)
     // construction with form factor
     std::unique_ptr<Particle> p2(new Particle(mat, sphere));
     EXPECT_EQ(mat, *p2->material());
-    EXPECT_TRUE(dynamic_cast<FormFactorDecoratorMaterial*>(p2->createFormFactor()));
+    auto p2_formfactor = std::unique_ptr<IFormFactor>(p2->createFormFactor());
+    EXPECT_TRUE(dynamic_cast<FormFactorDecoratorMaterial*>(p2_formfactor.get()));
     EXPECT_EQ(nullptr, p2->rotation());
 
     // construction with transformation
     std::unique_ptr<Particle> p3(new Particle(mat, sphere, transform));
     EXPECT_EQ(mat, *p3->material());
-    EXPECT_TRUE(dynamic_cast<FormFactorDecoratorMaterial*>(p3->createFormFactor()));
+    auto p3_formfactor = std::unique_ptr<IFormFactor>(p3->createFormFactor());
+    EXPECT_TRUE(dynamic_cast<FormFactorDecoratorMaterial*>(p3_formfactor.get()));
 }
 
 TEST_F(ParticleTest, setters)

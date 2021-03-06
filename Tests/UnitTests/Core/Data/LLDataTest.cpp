@@ -6,6 +6,7 @@
 class LLDataTest : public ::testing::Test {
 protected:
     LLDataTest();
+    ~LLDataTest();
 
     LLData<int>* int_data_0d;
     LLData<float>* fl_data_1d;
@@ -35,6 +36,26 @@ LLDataTest::LLDataTest()
     db_data_3d = new LLData<double>(3u, dim3);
 
     matrix_data_2d = new LLData<Eigen::Matrix2d>(2u, dim2);
+
+    delete[] dim0;
+    delete[] dim1;
+    delete[] dim2;
+    delete[] dim3;
+}
+
+LLDataTest::~LLDataTest()
+{
+    if(int_data_0d)
+        delete int_data_0d;
+
+    if(fl_data_1d)
+        delete fl_data_1d;
+
+    if(db_data_3d)
+        delete db_data_3d;
+
+    if(matrix_data_2d)
+        delete matrix_data_2d;
 }
 
 TEST_F(LLDataTest, TotalSize)

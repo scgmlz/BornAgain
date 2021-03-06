@@ -21,6 +21,7 @@ OutputDataIteratorTest::OutputDataIteratorTest()
         value += 1.0;
         ++it;
     }
+    delete[] dims;
 }
 
 TEST_F(OutputDataIteratorTest, Iterate)
