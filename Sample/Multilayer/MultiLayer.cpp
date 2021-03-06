@@ -40,11 +40,10 @@ MultiLayer* MultiLayer::clone() const
     ret->setRoughnessModel(roughnessModel());
     for (size_t i = 0; i < numberOfLayers(); ++i) {
         const auto* interface = i > 0 ? m_interfaces[i - 1] : nullptr;
-        Layer* layer = m_layers[i]->clone();
         if (i > 0 && interface->getRoughness())
-            ret->addLayerWithTopRoughness(*layer, *interface->getRoughness());
+            ret->addLayerWithTopRoughness(std::as_const(*m_layers[i]), *interface->getRoughness());
         else
-            ret->addLayer(*layer);
+            ret->addLayer(std::as_const(*m_layers[i]));
     }
     return ret;
 }
