@@ -55,7 +55,8 @@ def get_sample(lattice_rotation_angle=0*deg):
 
 def get_simulation(sample):
     beam = ba.Beam(100000000, 0.134*nm, ba.Direction(0.4*deg, 0))
-    detector = ba.SphericalDetector(200, -0.5*deg, 0.5*deg, 200, 0, 0.6*deg)
+    detector = ba.SphericalDetector(200, -0.5*deg, 0.5*deg, 200, 0,
+                                    0.6*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     simulation.getOptions().setMonteCarloIntegration(True, 100)
     return simulation

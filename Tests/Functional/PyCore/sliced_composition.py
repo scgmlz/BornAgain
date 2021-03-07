@@ -55,13 +55,13 @@ class SlicedSpheresTest(unittest.TestCase):
 
         topCup = ba.Particle(
             top_material,
-            ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height,
-                                         0))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         bottomCup = ba.Particle(
             bottom_material,
-            ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2,
-                                         sphere_radius*2 - bottom_cup_height))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2,
+                sphere_radius*2 - bottom_cup_height))
 
         #  origin of resulting sphere will be at the bottom
         result = ba.ParticleComposition()
@@ -79,12 +79,12 @@ class SlicedSpheresTest(unittest.TestCase):
 
         topCup = ba.Particle(
             top_material,
-            ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height,
-                                         0))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         bottomCup = ba.Particle(
             bottom_material,
-            ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height, 0))
+            ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height,
+                                         0))
         bottomCup.setRotation(ba.RotationX(180*deg))
 
         #  origin of resulting sphere will be at the bottom
@@ -102,7 +102,8 @@ class SlicedSpheresTest(unittest.TestCase):
         """
 
         # spherical particle
-        sphere = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
+        sphere = ba.Particle(mParticle,
+                             ba.FormFactorFullSphere(sphere_radius))
         reference = self.get_result(sphere)
 
         # spherical composition
@@ -164,7 +165,8 @@ class SlicedSpheresTest(unittest.TestCase):
         shift = 3*nm
 
         # spherical particle
-        sphere = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
+        sphere = ba.Particle(mParticle,
+                             ba.FormFactorFullSphere(sphere_radius))
         sphere.setPosition(0, 0, -shift)
         reference = self.get_result(sphere)
 
@@ -189,9 +191,8 @@ class SlicedSpheresTest(unittest.TestCase):
         # truncated sphere on top of substrate with height 16nm
         truncatedSphere = ba.Particle(
             mParticle,
-            ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height,
-                                         0))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         reference = self.get_result(truncatedSphere)
 
         # Particle composition, top part made of same material, as particle. Bottom part made of same material as substrate.

@@ -53,7 +53,8 @@ def run_test():
     result = runSimulation()
     # ba.IntensityDataIOFactory.writeIntensityData(result, 'polmagcylinders1_reference.int')
 
-    reference = utils.get_reference_data('polmagcylinders1_reference.int.gz')
+    reference = utils.get_reference_data(
+        'polmagcylinders1_reference.int.gz')
 
     diff = utils.get_difference(result.array(), reference.getArray())
 

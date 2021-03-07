@@ -46,7 +46,8 @@ def get_real_data(filename="mg6a_Merged.txt.gz"):
     and the third one being weights to restore intensity values from experiment
     """
     if not hasattr(get_real_data, "data"):
-        filepath = path.join(path.dirname(path.realpath(__file__)), filename)
+        filepath = path.join(path.dirname(path.realpath(__file__)),
+                             filename)
         real_data = np.loadtxt(filepath, usecols=(0, 1, 3), skiprows=1)
 
         # translating axis values from double incident angle (degs)
@@ -111,9 +112,9 @@ def buildSample(arg_dict):
     """
     # defining materials
     m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
-    m_si_o2 = ba.HomogeneousMaterial("SiO2",
-                                     8.57040868e-06*arg_dict["concentration"],
-                                     1.11016654e-07*arg_dict["concentration"])
+    m_si_o2 = ba.HomogeneousMaterial(
+        "SiO2", 8.57040868e-06*arg_dict["concentration"],
+        1.11016654e-07*arg_dict["concentration"])
     m_si = ba.HomogeneousMaterial("Si", 7.57211137e-06, 1.72728178e-07)
 
     # roughness
@@ -193,7 +194,8 @@ def objective_fine(args, intensity, footprint_factor, divergence):
 
     bin_start = 404  # first bin in the experimental data to calculate
     bin_end = -1  # last bin in the experimental data to calculate
-    arg_dict = create_par_dict(intensity, footprint_factor, divergence, *args)
+    arg_dict = create_par_dict(intensity, footprint_factor, divergence,
+                               *args)
 
     sim_result = run_simulation(arg_dict, bin_start, bin_end)
     sim_data = sim_result.array()
@@ -237,7 +239,8 @@ def run_fitting():
         preliminary_result.x[2]  # beam divergence
     )
 
-    print("\nStart fitting big incident angle part of experimental data:\n")
+    print(
+        "\nStart fitting big incident angle part of experimental data:\n")
 
     fine_tuning_result = differential_evolution(objective_fine,
                                                 bounds,
@@ -264,8 +267,8 @@ def plot_result(sim_result, ref_result, bin_start=0, bin_end=-1):
 
     plt.semilogy(
         get_real_data_axis(bin_start, bin_end)*180/np.pi,
-        get_real_data_values(bin_start, bin_end), sim_result.axis(), sim_data,
-        ref_result.axis(), ref_data)
+        get_real_data_values(bin_start, bin_end), sim_result.axis(),
+        sim_data, ref_result.axis(), ref_data)
 
     xlabel = ba.get_axes_labels(sim_result, ba.Axes.DEFAULT)[0]
     ylabel = "Intensity"

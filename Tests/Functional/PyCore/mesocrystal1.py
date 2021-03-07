@@ -33,20 +33,23 @@ class MySampleBuilder(ISampleBuilder):
             "lattice_length_c", ctypes.addressof(
                 self.lattice_length_c)).setUnit("nm").setNonnegative()
         self.registerParameter(
-            "nanoparticle_radius", ctypes.addressof(
+            "nanoparticle_radius",
+            ctypes.addressof(
                 self.nanoparticle_radius)).setUnit("nm").setNonnegative()
         self.registerParameter(
             "sigma_nanoparticle_radius",
-            ctypes.addressof(
-                self.sigma_nanoparticle_radius)).setUnit("nm").setNonnegative()
-        self.registerParameter("meso_height", ctypes.addressof(
-            self.meso_height)).setUnit("nm").setNonnegative()
-        self.registerParameter("meso_radius", ctypes.addressof(
-            self.meso_radius)).setUnit("nm").setNonnegative()
+            ctypes.addressof(self.sigma_nanoparticle_radius)).setUnit(
+                "nm").setNonnegative()
+        self.registerParameter(
+            "meso_height", ctypes.addressof(
+                self.meso_height)).setUnit("nm").setNonnegative()
+        self.registerParameter(
+            "meso_radius", ctypes.addressof(
+                self.meso_radius)).setUnit("nm").setNonnegative()
         self.registerParameter(
             "sigma_lattice_length_a",
-            ctypes.addressof(
-                self.sigma_lattice_length_a)).setUnit("nm").setNonnegative()
+            ctypes.addressof(self.sigma_lattice_length_a)).setUnit(
+                "nm").setNonnegative()
         self.registerParameter(
             "surface_filling_ratio",
             ctypes.addressof(self.surface_filling_ratio)).setNonnegative()
@@ -61,11 +64,13 @@ class MySampleBuilder(ISampleBuilder):
         n_particle = complex(1.0 - 2.84e-5, 4.7e-7)
         avg_n_squared_meso = complex(0.7886*n_particle*n_particle + 0.2114)
         n_avg = complex(
-            numpy.sqrt(self.surface_filling_ratio.value*avg_n_squared_meso +
-                       1.0 - self.surface_filling_ratio.value))
+            numpy.sqrt(self.surface_filling_ratio.value*
+                       avg_n_squared_meso + 1.0 -
+                       self.surface_filling_ratio.value))
         n_particle_adapted = complex(
             numpy.sqrt(n_avg*n_avg + n_particle*n_particle - 1))
-        ff = FormFactorCylinder(self.meso_radius.value, self.meso_height.value)
+        ff = FormFactorCylinder(self.meso_radius.value,
+                                self.meso_height.value)
 
         # Create multilayer
         p_multi_layer = MultiLayer()
@@ -73,8 +78,10 @@ class MySampleBuilder(ISampleBuilder):
         n_substrate = complex(1.0 - 7.57e-6, 1.73e-7)
 
         p_vacuum_material = HomogeneousMaterial("Vacuum", n_air)
-        p_average_layer_material = HomogeneousMaterial("Averagelayer", n_avg)
-        p_substrate_material = HomogeneousMaterial("Substrate", n_substrate)
+        p_average_layer_material = HomogeneousMaterial(
+            "Averagelayer", n_avg)
+        p_substrate_material = HomogeneousMaterial("Substrate",
+                                                   n_substrate)
         vacuum_layer = Layer(p_vacuum_material)
         avg_layer = Layer(p_average_layer_material, self.meso_height.value)
         substrate_layer = Layer(p_substrate_material)
@@ -144,7 +151,8 @@ class MySampleBuilder(ISampleBuilder):
     # create lattice
     # -------------------------------------------------------------------------
     def createLattice(self, stacking_radius_a, stacking_radius_c):
-        result = HexagonalLattice(stacking_radius_a*2, stacking_radius_c*2*2.3)
+        result = HexagonalLattice(stacking_radius_a*2,
+                                  stacking_radius_c*2*2.3)
         result.setSelectionRule(SimpleSelectionRule(-1, 1, 1, 3))
         return result
 

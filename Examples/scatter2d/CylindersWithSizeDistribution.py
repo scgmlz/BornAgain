@@ -24,8 +24,8 @@ def get_sample():
 
     # Define particles with parameter following a distribution
     distr_1 = ba.DistributionGaussian(5*nm, 1*nm)
-    par_distr_1 = ba.ParameterDistribution("/Particle/Cylinder/Radius", distr_1,
-                                           100, 2)
+    par_distr_1 = ba.ParameterDistribution("/Particle/Cylinder/Radius",
+                                           distr_1, 100, 2)
     particle_distrib = ba.ParticleDistribution(particle, par_distr_1)
 
     # Define particle layouts

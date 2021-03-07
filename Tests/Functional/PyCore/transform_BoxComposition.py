@@ -57,7 +57,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 10.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxComposition.int")
@@ -89,7 +90,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 20.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateX.int")
@@ -120,7 +122,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 50.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateY.int")
@@ -152,7 +155,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 10.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateZ.int")
@@ -184,7 +188,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 20.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateZandY.int")
@@ -216,7 +221,8 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 50.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxStackComposition.int")
 
@@ -227,16 +233,18 @@ class TransformBoxCompositionTest(unittest.TestCase):
         box1_length = 20.0
         box1_width = 50.0
         box1_height = 5.0
-        box1 = Particle(particle_material,
-                        FormFactorBox(box1_length, box1_width, box1_height))
+        box1 = Particle(
+            particle_material,
+            FormFactorBox(box1_length, box1_width, box1_height))
         box1.setRotation(RotationZ(90*deg))
 
         # box2 (5,20,50), rotatedY
         box2_length = 5.0
         box2_width = 20.0
         box2_height = 50.0
-        box2 = Particle(particle_material,
-                        FormFactorBox(box2_length, box2_width, box2_height))
+        box2 = Particle(
+            particle_material,
+            FormFactorBox(box2_length, box2_width, box2_height))
         box2.setRotation(RotationY(90*deg))
         box2.setPosition(kvector_t(-box2_height/2, 0, box2_length/2))
 

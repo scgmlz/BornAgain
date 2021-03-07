@@ -45,8 +45,7 @@ def get_simulation(params):
     incident_angle = params["incident_angle"]
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0,
-                                     2*deg)
+    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0, 2*deg)
     simulation.setBeamParameters(1*angstrom, incident_angle, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
@@ -110,13 +109,15 @@ class PlotObserver():
 
             plt.subplot(canvas[i_dataset*3])
             ba.plot_colormap(real_data,
-                             title="\"Real\" data - #" + str(i_dataset + 1),
+                             title="\"Real\" data - #" +
+                             str(i_dataset + 1),
                              zmin=1,
                              zmax=zmax,
                              zlabel="")
             plt.subplot(canvas[1 + i_dataset*3])
             ba.plot_colormap(simul_data,
-                             title="Simulated data - #" + str(i_dataset + 1),
+                             title="Simulated data - #" +
+                             str(i_dataset + 1),
                              zmin=1,
                              zmax=zmax,
                              zlabel="")
@@ -138,13 +139,14 @@ class PlotObserver():
         iteration_info = fit_objective.iterationInfo()
 
         plt.text(
-            0.01, 0.85,
-            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+            0.01, 0.85, "Iterations  " +
+            '{:d}'.format(iteration_info.iterationCount()))
         plt.text(0.01, 0.75,
                  "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
-            plt.text(0.01, 0.55 - index*0.1,
-                     '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
+            plt.text(
+                0.01, 0.55 - index*0.1,
+                '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
 
     @staticmethod
     def plot_fit_parameters(fit_objective):
@@ -156,13 +158,14 @@ class PlotObserver():
         iteration_info = fit_objective.iterationInfo()
 
         plt.text(
-            0.01, 0.95,
-            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+            0.01, 0.95, "Iterations  " +
+            '{:d}'.format(iteration_info.iterationCount()))
         plt.text(0.01, 0.70,
                  "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
-            plt.text(0.01, 0.30 - index*0.3,
-                     '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
+            plt.text(
+                0.01, 0.30 - index*0.3,
+                '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
 
     def update(self, fit_objective):
         self.fig.clf()

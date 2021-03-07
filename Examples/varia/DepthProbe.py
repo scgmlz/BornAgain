@@ -92,8 +92,8 @@ def get_simulation(sample):
     simulation = ba.DepthProbeSimulation()
     simulation.setBeamParameters(wl, n_ai_bins, ai_min, ai_max, footprint)
     simulation.setZSpan(n_z_bins, z_min, z_max)
-    simulation.addParameterDistribution("*/Beam/InclinationAngle", alpha_distr,
-                                        n_points, n_sig)
+    simulation.addParameterDistribution("*/Beam/InclinationAngle",
+                                        alpha_distr, n_points, n_sig)
     simulation.setSample(sample)
     return simulation
 

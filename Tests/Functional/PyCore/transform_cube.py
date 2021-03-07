@@ -62,7 +62,8 @@ class RotationsCubeTest(unittest.TestCase):
         pos = data[2]
         layout_rot = data[3]
         layout_pos = data[4]
-        sample = self.get_sample(ff, rot, pos, layout_rot, layout_pos, add_to)
+        sample = self.get_sample(ff, rot, pos, layout_rot, layout_pos,
+                                 add_to)
         # simulation = self.get_simulation(sample)
         simulation = utils.get_simulation_MiniGISAS(sample)
         simulation.runSimulation()
@@ -82,7 +83,8 @@ class RotationsCubeTest(unittest.TestCase):
         data_to_test = [
             # ff  rot                     pos                    layout_rot              layout_pos
             (box, None, None, None, None),  # reference
-            (box, RotationZ(90.*deg), None, None, None),  # rotating particle
+            (box, RotationZ(90.*deg), None, None,
+             None),  # rotating particle
             (box, RotationZ(-90.*deg), None, None, None),
             (box, RotationZ(180.*deg), None, None, None),
             (box, None, None, RotationZ(90.*deg),
@@ -118,7 +120,8 @@ class RotationsCubeTest(unittest.TestCase):
              kvector_t(0, 0, 5)),  # rotating and translating
             (box, RotationY(90.*deg), None, None,
              kvector_t(0, 0, 5)),  # rotating and translating
-            (box, RotationY(45.*deg), kvector_t(0, 0, 0), RotationY(45.*deg),
+            (box, RotationY(45.*deg), kvector_t(0, 0,
+                                                0), RotationY(45.*deg),
              kvector_t(0, 0, 5)),  # rotating and translating
         ]
 
@@ -149,7 +152,8 @@ class RotationsCubeTest(unittest.TestCase):
              kvector_t(0, 0, 5)),  # rotating and translating
             (box, RotationX(90.*deg), None, None,
              kvector_t(0, 0, 5)),  # rotating and translating
-            (box, RotationX(45.*deg), kvector_t(0, 0, 0), RotationX(45.*deg),
+            (box, RotationX(45.*deg), kvector_t(0, 0,
+                                                0), RotationX(45.*deg),
              kvector_t(0, 0, 5)),  # rotating and translating
         ]
 

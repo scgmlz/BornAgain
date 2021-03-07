@@ -18,7 +18,8 @@ def get_sample():
 
     # Define materials
     magnetic_field = kvector_t(0, 0, 10000000)
-    material_Core = ba.HomogeneousMaterial("Core", 6e-06, 2e-08, magnetic_field)
+    material_Core = ba.HomogeneousMaterial("Core", 6e-06, 2e-08,
+                                           magnetic_field)
     material_Shell = ba.HomogeneousMaterial("Shell", 1e-07, 2e-08)
     material_Solvent = ba.HomogeneousMaterial("Solvent", 5e-06, 0)
 
@@ -59,7 +60,8 @@ def get_simulation(sample):
     simulation = ba.GISASSimulation()
 
     # Defining detector
-    simulation.setDetectorParameters(200, -3*deg, 3*deg, 200, -3*deg, 3*deg)
+    simulation.setDetectorParameters(200, -3*deg, 3*deg, 200, -3*deg,
+                                     3*deg)
 
     # Defining beam parameters
     simulation.setBeamParameters(0.5*nm, 0, 0)

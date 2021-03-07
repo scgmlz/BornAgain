@@ -108,7 +108,12 @@ def plot_array(array, axes_limits=None, **kwargs):
     aspect = kwargs.pop('aspect', 'equal')
     cmap = kwargs.pop('cmap', CMAP)
 
-    im = plt.imshow(array, cmap=cmap, norm=norm, aspect=aspect, extent=axes_limits, **kwargs)
+    im = plt.imshow(array,
+                    cmap=cmap,
+                    norm=norm,
+                    aspect=aspect,
+                    extent=axes_limits,
+                    **kwargs)
     cb = plt.colorbar(im, pad=0.025)
 
     if xlabel:
@@ -144,7 +149,10 @@ def plot_histogram(hist, **kwargs):
 
     title = kwargs.pop('title', None)
 
-    plot_array(hist.array(), title=title, axes_limits=axes_limits, **kwargs)
+    plot_array(hist.array(),
+               title=title,
+               axes_limits=axes_limits,
+               **kwargs)
 
 
 def plot_colormap(result, **kwargs):
@@ -181,7 +189,8 @@ def plot_specular_simulation_result(result, **kwargs):
     x_axis = result.axis(units)
 
     ymax = kwargs.pop('intensity_max', np.amax(np.amax(intensity)*2))
-    ymin = kwargs.pop('intensity_min', max(np.amin(intensity)*0.5, 1e-18*ymax))
+    ymin = kwargs.pop('intensity_min',
+                      max(np.amin(intensity)*0.5, 1e-18*ymax))
 
     xlabel = kwargs.pop('xlabel', get_axes_labels(result, units)[0])
     ylabel = kwargs.pop('ylabel', "Intensity")
@@ -211,7 +220,8 @@ def plot_simulation_result(result, **kwargs):
     """
     noshow = kwargs.pop('noshow', NOSHOW)
 
-    if len(result.array().shape) == 1:  # 1D data, specular simulation assumed
+    if len(result.array().shape
+           ) == 1:  # 1D data, specular simulation assumed
         plot_specular_simulation_result(result, **kwargs)
     else:
         plot_colormap(result, **kwargs)
@@ -220,6 +230,7 @@ def plot_simulation_result(result, **kwargs):
         plt.show()
     else:
         print("plot_simulation_result: noshow")
+
 
 def run_and_plot(simulation, **kwargs):
     simulation.runSimulation()

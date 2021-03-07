@@ -48,11 +48,11 @@ def get_simulation(sample):
     distr_1 = ba.DistributionLogNormal(0.1*nm, 0.1)
     simulation.addParameterDistribution("*/Beam/Wavelength", distr_1, 5, 0)
     distr_2 = ba.DistributionGaussian(0.2*deg, 0.1*deg)
-    simulation.addParameterDistribution("*/Beam/InclinationAngle", distr_2, 5,
-                                        0)
+    simulation.addParameterDistribution("*/Beam/InclinationAngle", distr_2,
+                                        5, 0)
     distr_3 = ba.DistributionGaussian(0, 0.1*deg)
-    simulation.addParameterDistribution("*/Beam/AzimuthalAngle", distr_3, 5,
-                                        0)
+    simulation.addParameterDistribution("*/Beam/AzimuthalAngle", distr_3,
+                                        5, 0)
     return simulation
 
 

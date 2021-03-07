@@ -63,7 +63,8 @@ def get_real_data():
     """
     if not hasattr(get_real_data, "data"):
         filename = "genx_interchanging_layers.dat.gz"
-        filepath = path.join(path.dirname(path.realpath(__file__)), filename)
+        filepath = path.join(path.dirname(path.realpath(__file__)),
+                             filename)
         real_data = np.loadtxt(filepath, usecols=(0, 1), skiprows=3)
 
         # translating axis values from double incident angle (degs)

@@ -8,8 +8,8 @@ from bornagain import angstrom, deg
 
 # input parameters
 wavelength = 1.54*angstrom
-alpha_i_min = 0     # min incident angle, deg
-alpha_i_max = 2*deg # max incident angle, rad
+alpha_i_min = 0  # min incident angle, deg
+alpha_i_max = 2*deg  # max incident angle, rad
 
 # convolution parameters
 d_wl = 0.01*wavelength  # spread width for wavelength
@@ -59,7 +59,8 @@ def get_simulation(sample, scan_size=500):
     alpha_distr = ba.RangedDistributionGaussian(n_points, n_sig)
     wavelength_distr = ba.RangedDistributionGaussian(n_points, n_sig)
 
-    scan = ba.AngularSpecScan(wavelength, scan_size, alpha_i_min, alpha_i_max)
+    scan = ba.AngularSpecScan(wavelength, scan_size, alpha_i_min,
+                              alpha_i_max)
     scan.setAbsoluteAngularResolution(alpha_distr, d_ang)
     scan.setAbsoluteWavelengthResolution(wavelength_distr, d_wl)
 

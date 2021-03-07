@@ -107,7 +107,9 @@ def simulate_and_plot():
 
         zmin = condition['zmin']
         zmax = condition['zmax']
-        ba_plot.plot_colormap(result, intensity_min=zmin, intensity_max=zmax)
+        ba_plot.plot_colormap(result,
+                              intensity_min=zmin,
+                              intensity_max=zmax)
 
         plt.text(0,
                  2.1,

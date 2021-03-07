@@ -69,8 +69,9 @@ class Doxy2SWIG:
                         'innerclass', 'name', 'declname', 'incdepgraph',
                         'invincdepgraph', 'programlisting', 'type',
                         'references', 'referencedby', 'location',
-                        'collaborationgraph', 'reimplements', 'reimplementedby',
-                        'derivedcompoundref', 'basecompoundref')
+                        'collaborationgraph', 'reimplements',
+                        'reimplementedby', 'derivedcompoundref',
+                        'basecompoundref')
         #self.generics = []
 
     def generate(self):
@@ -188,8 +189,8 @@ class Doxy2SWIG:
             prot = node.attributes['prot'].value
             if prot != 'public':
                 return
-            names = ('compoundname', 'briefdescription', 'detaileddescription',
-                     'includes')
+            names = ('compoundname', 'briefdescription',
+                     'detaileddescription', 'includes')
             first = self.get_specific_nodes(node, names)
             for n in names:
                 #if first.has_key(n):

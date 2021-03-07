@@ -67,7 +67,8 @@ def get_real_data():
     """
     if not hasattr(get_real_data, "data"):
         filename = "genx_interchanging_layers.dat.gz"
-        filepath = path.join(path.dirname(path.realpath(__file__)), filename)
+        filepath = path.join(path.dirname(path.realpath(__file__)),
+                             filename)
         real_data = np.loadtxt(filepath, usecols=(0, 1), skiprows=3)
 
         # translating axis values from double incident angle (degs)
@@ -117,7 +118,8 @@ def run_fitting():
     uncertainties = real_data*0.5
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(get_simulation, real_data, uncertainties)
+    fit_objective.addSimulationAndData(get_simulation, real_data,
+                                       uncertainties)
 
     plot_observer = ba_fitmonitor.PlotterSpecular(units=ba.Axes.RQ4)
     fit_objective.initPrint(10)

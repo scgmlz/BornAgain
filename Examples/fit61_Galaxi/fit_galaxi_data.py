@@ -40,7 +40,8 @@ def create_simulation(params):
     simulation.setBeamParameters(wavelength, alpha_i, 0)
     simulation.beam().setIntensity(1.2e7)
     simulation.setRegionOfInterest(85, 70, 120, 92.)
-    simulation.addMask(ba.Rectangle(101.9, 82.1, 103.7, 85.2), True)  # beamstop
+    simulation.addMask(ba.Rectangle(101.9, 82.1, 103.7, 85.2),
+                       True)  # beamstop
 
     sample_builder = SampleBuilder()
     sample = sample_builder.create_sample(params)

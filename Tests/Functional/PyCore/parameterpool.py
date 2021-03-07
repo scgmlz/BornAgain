@@ -18,8 +18,9 @@ class ParameterPoolTest(unittest.TestCase):
 
         pool = particle.parameterPool()
         self.assertEqual(pool.size(), 4)
-        self.assertEqual(pool.parameterNames(),
-                         ('Abundance', 'PositionX', 'PositionY', 'PositionZ'))
+        self.assertEqual(
+            pool.parameterNames(),
+            ('Abundance', 'PositionX', 'PositionY', 'PositionZ'))
 
         expected = {
             'Abundance': 1,

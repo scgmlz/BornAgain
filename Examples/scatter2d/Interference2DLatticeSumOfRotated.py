@@ -41,7 +41,8 @@ def get_simulation(sample):
     detector = ba.SphericalDetector(100, 2*deg, 1*deg, 1*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     distr_1 = ba.DistributionGate(0, 240*deg)
-    simulation.addParameterDistribution("*/SquareLattice2D/Xi", distr_1, 3, 0)
+    simulation.addParameterDistribution("*/SquareLattice2D/Xi", distr_1, 3,
+                                        0)
     return simulation
 
 

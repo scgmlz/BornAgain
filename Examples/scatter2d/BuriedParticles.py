@@ -16,7 +16,8 @@ def get_sample():
     material_IntermLayer = ba.HomogeneousMaterial("IntermLayer", 3.45e-06,
                                                   5.24e-09)
     material_Particle = ba.HomogeneousMaterial("Particle", 0, 0)
-    material_Substrate = ba.HomogeneousMaterial("Substrate", 7.43e-06, 1.72e-07)
+    material_Substrate = ba.HomogeneousMaterial("Substrate", 7.43e-06,
+                                                1.72e-07)
     material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors

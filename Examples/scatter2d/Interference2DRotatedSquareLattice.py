@@ -27,8 +27,8 @@ def get_sample():
 
     # Define interference functions
     iff = ba.InterferenceFunction2DLattice(lattice)
-    iff_pdf = ba.FTDecayFunction2DCauchy(47.7464829276*nm, 15.9154943092*nm,
-                                         30*deg)
+    iff_pdf = ba.FTDecayFunction2DCauchy(47.7464829276*nm,
+                                         15.9154943092*nm, 30*deg)
     iff.setDecayFunction(iff_pdf)
 
     # Define particle layouts

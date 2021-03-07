@@ -56,7 +56,8 @@ class StandaloneFitTest(unittest.TestCase):
         Testing fit of rosenbrock function
         """
         params = ba.Parameters()
-        params.add(ba.Parameter("x", -1.2, ba.AttLimits.limited(-5, 5), 0.01))
+        params.add(
+            ba.Parameter("x", -1.2, ba.AttLimits.limited(-5, 5), 0.01))
         params.add(ba.Parameter("y", 1, ba.AttLimits.limited(-5, 5), 0.01))
 
         model = Rosenbrock()
@@ -77,7 +78,8 @@ class StandaloneFitTest(unittest.TestCase):
         params = ba.Parameters()
         params.add(ba.Parameter('amp', 1, ba.AttLimits.positive()))
         params.add(ba.Parameter('decay', 0.1, ba.AttLimits.positive()))
-        params.add(ba.Parameter('phase', 0.1, ba.AttLimits.limited(0, 3.1)))
+        params.add(ba.Parameter('phase', 0.1, ba.AttLimits.limited(0,
+                                                                   3.1)))
         params.add(ba.Parameter('frequency', 1, ba.AttLimits.positive()))
 
         model = DecayingSin()

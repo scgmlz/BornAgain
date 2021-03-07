@@ -47,8 +47,9 @@ def python_version_string():
 
 def add_rpath(newpath, filename):
     print("add_rpath ", newpath, filename)
-    p = subprocess.Popen(['install_name_tool', '-add_rpath', newpath, filename],
-                         stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        ['install_name_tool', '-add_rpath', newpath, filename],
+        stdout=subprocess.PIPE)
     p.communicate()
     return
 
@@ -90,8 +91,8 @@ def get_python_shared_library():
     Returns full path to the python shared library on which current interpreter is relying
     """
     prefix = sys.prefix
-    suffix = sysconfig.get_config_var('LDVERSION') or sysconfig.get_config_var(
-        'VERSION')
+    suffix = sysconfig.get_config_var(
+        'LDVERSION') or sysconfig.get_config_var('VERSION')
     result = sys.prefix + "/lib/libpython" + suffix + ".dylib"
     return result
 
@@ -113,10 +114,12 @@ def get_application_dir():
         app_dir = sys.argv[1]
     else:
         script_dir = get_script_path()
-        app_dir = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
+        app_dir = os.path.abspath(
+            os.path.join(script_dir, "..", "..", ".."))
 
     # getting version number
-    lib_dir = glob.glob(os.path.join(app_dir, "Contents", "lib", "BornAgain-*"))
+    lib_dir = glob.glob(
+        os.path.join(app_dir, "Contents", "lib", "BornAgain-*"))
     if len(lib_dir) != 1:
         exit("Can't find BornAgain libraries in " + app_dir)
 
@@ -192,7 +195,8 @@ setup(name='bornagain',
 
 def prepare_init_module(app_dir, bundle_dir):
     source_dir = os.path.join(app_dir, "Contents", "libexec")
-    libexec_dir = os.path.join(source_dir, "BornAgain-" + BORNAGAIN_VERSION,
+    libexec_dir = os.path.join(source_dir,
+                               "BornAgain-" + BORNAGAIN_VERSION,
                                "bornagain")
     package_dir = os.path.join(bundle_dir, "bornagain")
     print("--> Copying modules from '{0}' to '{1}'".format(
@@ -216,7 +220,8 @@ def copy_libraries(app_dir, destination_dir):
         os.path.join(destination_dir, "BornAgain-" + BORNAGAIN_VERSION))
 
     # cleaning unnecessary files
-    libfiles = glob.glob(os.path.join(destination_dir, '*/libBornAgainGUI*'))
+    libfiles = glob.glob(
+        os.path.join(destination_dir, '*/libBornAgainGUI*'))
     for f in libfiles:
         os.remove(f)
     pass
@@ -227,8 +232,8 @@ def copy_libraries(app_dir, destination_dir):
     if not os.path.exists(frameworks_dest):
         os.makedirs(frameworks_dest)
     for lib in frameworks_libs:
-        shutil.copyfile(lib, os.path.join(frameworks_dest,
-                                          os.path.basename(lib)))
+        shutil.copyfile(
+            lib, os.path.join(frameworks_dest, os.path.basename(lib)))
 
 
 def patch_libraries(dir_name):
@@ -296,8 +301,8 @@ def install_bundle(dir_name):
     os.chdir(bundle_dir)
     sys.argv = ['setup.py', 'install']
     exec_full('setup.py')
-    print("\nBornAgain Python bundle is successfully installed in '{0}'".format(
-        get_python_lib()))
+    print("\nBornAgain Python bundle is successfully installed in '{0}'".
+          format(get_python_lib()))
     print("Congratulations!")
 
 
@@ -316,7 +321,9 @@ if __name__ == '__main__':
     print("To   :", get_python_lib())
     print(" ")
     print("Possible options:")
-    print("[0] - Generate bundle with BornAgain libraries, do not install it.")
+    print(
+        "[0] - Generate bundle with BornAgain libraries, do not install it."
+    )
     print(
         "[1] - Generate bundle and install it into site-packages of your Python."
     )

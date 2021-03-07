@@ -20,7 +20,8 @@ def getSimulationIntensity(rho_beam, efficiency):
 
     magnetization = kvector_t(0, 1e6, 0)
 
-    magParticle = HomogeneousMaterial("magParticle", 5e-6, 0, magnetization)
+    magParticle = HomogeneousMaterial("magParticle", 5e-6, 0,
+                                      magnetization)
     # collection of particles
     cylinder_ff = FormFactorCylinder(5*nm, 5*nm)
     cylinder = Particle(magParticle, cylinder_ff)
@@ -79,16 +80,20 @@ def run_test():
     diff = 0.0
     diff += get_difference(
         getSimulationIntensity(zplus, 1).array(),
-        get_reference_data('polmagcylinders2_reference_00.int.gz').getArray())
+        get_reference_data(
+            'polmagcylinders2_reference_00.int.gz').getArray())
     diff += get_difference(
         getSimulationIntensity(zplus, -1).array(),
-        get_reference_data('polmagcylinders2_reference_01.int.gz').getArray())
+        get_reference_data(
+            'polmagcylinders2_reference_01.int.gz').getArray())
     diff += get_difference(
         getSimulationIntensity(zmin, 1).array(),
-        get_reference_data('polmagcylinders2_reference_10.int.gz').getArray())
+        get_reference_data(
+            'polmagcylinders2_reference_10.int.gz').getArray())
     diff += get_difference(
         getSimulationIntensity(zmin, -1).array(),
-        get_reference_data('polmagcylinders2_reference_11.int.gz').getArray())
+        get_reference_data(
+            'polmagcylinders2_reference_11.int.gz').getArray())
 
     diff /= 4.0
     status = "OK"

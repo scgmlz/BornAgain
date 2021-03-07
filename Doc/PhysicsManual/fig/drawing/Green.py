@@ -59,8 +59,8 @@ for P in PP:
             DeltaPath.append(0)
         elif inside(y, -T[0], 0) and inside(yold, -T[0], 0):
             DeltaPath.append(DeltaLayer[0])
-        elif inside(y, -T[0] - T[1], -T[0]) and inside(yold, -T[0] - T[1],
-                                                       -T[0]):
+        elif inside(y, -T[0] - T[1], -T[0]) and inside(
+                yold, -T[0] - T[1], -T[0]):
             DeltaPath.append(DeltaLayer[1])
         else:
             sys.stderr.write("Invalid input => layer ill defined\n")
@@ -89,8 +89,10 @@ for P in PP:
     cmd1 += "st\n"
     cmd2 += "st\n"
     len1 = math.sqrt((xtot + x0 - x1)**2 + yd**2) - 8
-    cmd1 += "%6.3g %6.3g %7.3g .8 %6.3g pfeiL\n" % (x1, y, 180*a0/math.pi, len1)
-    cmd2 += "%6.3g %6.3g %7.3g .8 %6.3g pfeiL\n" % (x2, y, 180*b0/math.pi, 7)
+    cmd1 += "%6.3g %6.3g %7.3g .8 %6.3g pfeiL\n" % (x1, y, 180*a0/math.pi,
+                                                    len1)
+    cmd2 += "%6.3g %6.3g %7.3g .8 %6.3g pfeiL\n" % (x2, y, 180*b0/math.pi,
+                                                    7)
     cmd1 += "\n"
     cmd2 += "\n"
 #/pfeiL { % (arrow anchored at base) x y rot siz len

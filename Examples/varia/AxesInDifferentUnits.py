@@ -54,7 +54,8 @@ def get_simulation(sample):
     pilatus_npx, pilatus_npy = 981, 1043  # number of pixels
     width = pilatus_npx*pilatus_pixel_size
     height = pilatus_npy*pilatus_pixel_size
-    detector = ba.RectangularDetector(pilatus_npx, width, pilatus_npy, height)
+    detector = ba.RectangularDetector(pilatus_npx, width, pilatus_npy,
+                                      height)
     detector.setPerpendicularToSampleX(detector_distance, width/2., 0)
 
     simulation = ba.GISASSimulation(beam, sample, detector)
@@ -110,7 +111,11 @@ def plot(result):
                           ylabel=r'$Q_{z} [1/nm]$',
                           zlabel=None)
 
-    plt.subplots_adjust(left=0.07, right=0.97, top=0.9, bottom=0.1, hspace=0.25)
+    plt.subplots_adjust(left=0.07,
+                        right=0.97,
+                        top=0.9,
+                        bottom=0.1,
+                        hspace=0.25)
     plt.show()
 
 

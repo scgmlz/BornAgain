@@ -225,9 +225,10 @@ def get_Experimental_data(filename, qmin, qmax):
     if not hasattr(get_Experimental_data, "zipfile"):
         get_Experimental_data.zipfile = ZipFile("honeycomb_data.zip")
 
-    input_Data = numpy.genfromtxt(get_Experimental_data.zipfile.open(filename),
-                                  unpack=True,
-                                  usecols=(0, 2, 3))
+    input_Data = numpy.genfromtxt(
+        get_Experimental_data.zipfile.open(filename),
+        unpack=True,
+        usecols=(0, 2, 3))
     data = normalizeData(input_Data)
 
     minIndex = numpy.argmin(numpy.abs(data[0] - qmin))
@@ -270,7 +271,8 @@ class FitObjective:
         self._parameterNames = parameterNames
 
     def __call__(self, *args):
-        fitParameters = create_Parameter_dictionary(self._parameterNames, *args)
+        fitParameters = create_Parameter_dictionary(self._parameterNames,
+                                                    *args)
         print(f"FitParamters = {fitParameters}")
 
         result_metric = 0
@@ -290,7 +292,8 @@ def run_fit_differential_evolution(q_axis, rdata, simulationFactory,
     parameterNames = [n for n, par in startParams.items()]
     print(f"Bounds = {bounds}")
 
-    objective = FitObjective(q_axis, rdata, simulationFactory, parameterNames)
+    objective = FitObjective(q_axis, rdata, simulationFactory,
+                             parameterNames)
 
     chi2_initial = objective(parameters)
 
@@ -302,7 +305,8 @@ def run_fit_differential_evolution(q_axis, rdata, simulationFactory,
                                     disp=True,
                                     tol=1e-2)
 
-    resultParameters = create_Parameter_dictionary(parameterNames, result.x)
+    resultParameters = create_Parameter_dictionary(parameterNames,
+                                                   result.x)
     chi2_final = objective(resultParameters.values())
 
     print(f"Initial chi2: {chi2_initial}")
@@ -405,7 +409,8 @@ if __name__ == '__main__':
     data_150_p = get_Experimental_data("honeycomb_150_p.dat", qmin, qmax)
     data_150_m = get_Experimental_data("honeycomb_150_m.dat", qmin, qmax)
 
-    plot_sld_profile(paramsInitial, f"Honeycomb_Fit_sld_profile_initial.pdf")
+    plot_sld_profile(paramsInitial,
+                     f"Honeycomb_Fit_sld_profile_initial.pdf")
     plot([q_300_p, q_300_m, q_150_p, q_150_m],
          [r_300_p, r_300_m, r_150_p, r_150_m],
          [data_300_p, data_300_m, data_150_p, data_150_m], [1, 1, 10, 10],
@@ -422,7 +427,8 @@ if __name__ == '__main__':
                             run_Simulation_150_p, run_Simulation_150_m
                         ]]
 
-        fitResult = run_fit_differential_evolution(*dataSimTuple, startParams)
+        fitResult = run_fit_differential_evolution(*dataSimTuple,
+                                                   startParams)
 
         print("Fit Result:")
         print(fitResult)
@@ -435,7 +441,8 @@ if __name__ == '__main__':
 
         plot([q_300_p, q_300_m, q_150_p, q_150_m],
              [r_300_p, r_300_m, r_150_p, r_150_m],
-             [data_300_p, data_300_m, data_150_p, data_150_m], [1, 1, 10, 10],
+             [data_300_p, data_300_m, data_150_p, data_150_m],
+             [1, 1, 10, 10],
              ["300K $+$", "300K $-$", "150K $+$", "150K $-$"],
              f"Honeycomb_Fit_reflectivity_fit.pdf")
 

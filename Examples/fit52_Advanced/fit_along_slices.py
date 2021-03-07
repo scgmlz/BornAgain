@@ -43,8 +43,7 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0,
-                                     2*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
     simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
@@ -115,7 +114,9 @@ class PlotObserver:
         """
         plt.subplots_adjust(wspace=0.2, hspace=0.3)
         for label, slice in slices:
-            plt.semilogy(slice.binCenters(), slice.binValues(), label=label)
+            plt.semilogy(slice.binCenters(),
+                         slice.binValues(),
+                         label=label)
             plt.xlim(slice.getXmin(), slice.getXmax())
             plt.ylim(1, slice.getMaximum()*10)
         plt.legend(loc='upper right')
@@ -132,13 +133,14 @@ class PlotObserver:
         iteration_info = fit_objective.iterationInfo()
 
         plt.text(
-            0.01, 0.85,
-            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+            0.01, 0.85, "Iterations  " +
+            '{:d}'.format(iteration_info.iterationCount()))
         plt.text(0.01, 0.75,
                  "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
-            plt.text(0.01, 0.55 - index*0.1,
-                     '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
+            plt.text(
+                0.01, 0.55 - index*0.1,
+                '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
 
         plt.tight_layout()
         plt.draw()
@@ -168,7 +170,8 @@ class PlotObserver:
         # vertical slices
         slices = [("real", real_data.projectionY(phi_slice_value)),
                   ("simul", simul_data.projectionY(phi_slice_value))]
-        title = "Vertical slice at phi =" + '{:3.1f}'.format(phi_slice_value)
+        title = "Vertical slice at phi =" + '{:3.1f}'.format(
+            phi_slice_value)
         plt.subplot(2, 2, 3)
         self.plot_slices(slices, title)
 

@@ -46,8 +46,10 @@ class SampleBuilder:
         m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
         m_Si = ba.HomogeneousMaterial("Si", 5.78164736e-6, 1.02294578e-7)
         m_Ag = ba.HomogeneousMaterial("Ag", 2.24749529E-5, 1.61528396E-6)
-        m_PTFE = ba.HomogeneousMaterial("PTFE", 5.20508729E-6, 1.96944292E-8)
-        m_HMDSO = ba.HomogeneousMaterial("HMDSO", 2.0888308E-6, 1.32605651E-8)
+        m_PTFE = ba.HomogeneousMaterial("PTFE", 5.20508729E-6,
+                                        1.96944292E-8)
+        m_HMDSO = ba.HomogeneousMaterial("HMDSO", 2.0888308E-6,
+                                         1.32605651E-8)
 
         # collection of particles with size distribution
         nparticles = 20

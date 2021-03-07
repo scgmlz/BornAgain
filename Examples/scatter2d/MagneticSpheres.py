@@ -15,7 +15,8 @@ def get_sample():
     magnetic_field = kvector_t(0, 0, 10000000)
     material_Particle = ba.HomogeneousMaterial("Particle", 2e-05, 4e-07,
                                                magnetic_field)
-    material_Substrate = ba.HomogeneousMaterial("Substrate", 7e-06, 1.8e-07)
+    material_Substrate = ba.HomogeneousMaterial("Substrate", 7e-06,
+                                                1.8e-07)
     material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors

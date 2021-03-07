@@ -60,11 +60,13 @@ class SlicedSpheresTest(unittest.TestCase):
         truncatedSphere = ba.Particle(
             mSubstrate,
             ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - sphere_shift, 0))
+                                         sphere_radius*2 - sphere_shift,
+                                         0))
         reference = self.get_result(truncatedSphere)
 
         # sphere crossing interface to look like truncated sphere above
-        sphere = ba.Particle(mSubstrate, ba.FormFactorFullSphere(sphere_radius))
+        sphere = ba.Particle(mSubstrate,
+                             ba.FormFactorFullSphere(sphere_radius))
         sphere.setPosition(0, 0, -sphere_shift)
         data = self.get_result(sphere)
 
@@ -90,7 +92,8 @@ class SlicedSpheresTest(unittest.TestCase):
         reference = self.get_result(truncatedSphere)
 
         # sphere crossing interface to look like truncated sphere above
-        sphere = ba.Particle(mAmbience, ba.FormFactorFullSphere(sphere_radius))
+        sphere = ba.Particle(mAmbience,
+                             ba.FormFactorFullSphere(sphere_radius))
         sphere.setPosition(0, 0, -sphere_shift)
         data = self.get_result(sphere)
 
@@ -111,12 +114,14 @@ class SlicedSpheresTest(unittest.TestCase):
         sphere_shift = 4.0  # shift beneath interface in absolute units
 
         # Sphere intended for vacuum layer and crossing interface
-        sphere1 = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
+        sphere1 = ba.Particle(mParticle,
+                              ba.FormFactorFullSphere(sphere_radius))
         sphere1.setPosition(0, 0, -sphere_shift)
         reference = self.get_result(particle_to_air=sphere1)
 
         # Sphere intended for substrate layer and crossing interface
-        sphere2 = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
+        sphere2 = ba.Particle(mParticle,
+                              ba.FormFactorFullSphere(sphere_radius))
         sphere2.setPosition(0, 0, -sphere_shift)
         data = self.get_result(particle_to_substrate=sphere2)
 

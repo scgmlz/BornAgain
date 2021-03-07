@@ -17,7 +17,8 @@ def get_sample():
     # Define materials
     material_Ambient = ba.MaterialBySLD("Ambient", 0, 0)
     magnetic_field = kvector_t(50000000, 86602540.3784, 0)
-    material_Layer = ba.MaterialBySLD("Layer", 0.0001, 1e-08, magnetic_field)
+    material_Layer = ba.MaterialBySLD("Layer", 0.0001, 1e-08,
+                                      magnetic_field)
     material_Substrate = ba.MaterialBySLD("Substrate", 7e-05, 2e-06)
 
     # Define layers
@@ -79,11 +80,15 @@ def plot(data, labels):
 
 
 if __name__ == '__main__':
-    results_pp = run_simulation(ba.kvector_t(0, 1, 0), ba.kvector_t(0, 1, 0))
-    results_mm = run_simulation(ba.kvector_t(0, -1, 0), ba.kvector_t(0, -1, 0))
+    results_pp = run_simulation(ba.kvector_t(0, 1, 0),
+                                ba.kvector_t(0, 1, 0))
+    results_mm = run_simulation(ba.kvector_t(0, -1, 0),
+                                ba.kvector_t(0, -1, 0))
 
-    results_pm = run_simulation(ba.kvector_t(0, 1, 0), ba.kvector_t(0, -1, 0))
-    results_mp = run_simulation(ba.kvector_t(0, -1, 0), ba.kvector_t(0, 1, 0))
+    results_pm = run_simulation(ba.kvector_t(0, 1, 0),
+                                ba.kvector_t(0, -1, 0))
+    results_mp = run_simulation(ba.kvector_t(0, -1, 0),
+                                ba.kvector_t(0, 1, 0))
 
     plot([results_pp, results_mm, results_pm, results_mp],
          ["$++$", "$--$", "$+-$", "$-+$"])

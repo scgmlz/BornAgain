@@ -29,7 +29,8 @@ class SimulationBuilder:
 
         simulation = ba.GISASSimulation()
         simulation.setSample(ml)
-        simulation.setDetectorParameters(self.m_ncol, 0, 1, self.m_nrow, 0, 1)
+        simulation.setDetectorParameters(self.m_ncol, 0, 1, self.m_nrow, 0,
+                                         1)
         return simulation
 
     def create_data(self):
@@ -43,7 +44,8 @@ class FitObserver:
 
     def update(self, fit_objective):
         self.m_ncalls += 1
-        self.m_iterations.append(fit_objective.iterationInfo().iterationCount())
+        self.m_iterations.append(
+            fit_objective.iterationInfo().iterationCount())
 
 
 class FitObjectiveAPITest(unittest.TestCase):
@@ -78,7 +80,8 @@ class FitObjectiveAPITest(unittest.TestCase):
             expected_sim.append(0)
             expected_data.append(1)
         self.assertEqual(expected_sim, list(objective.simulation_array()))
-        self.assertEqual(expected_data, list(objective.experimental_array()))
+        self.assertEqual(expected_data,
+                         list(objective.experimental_array()))
 
     def test_FittingObserver(self):
         """

@@ -49,10 +49,11 @@ class BuilderPrototype(ba.ISampleBuilder):
                             " in given class")
         # defining the name for new ctype variable and creating dynamic attribute
         wrapper_key = "wrapper_" + var_key
-        setattr(self, wrapper_key, ctypes.c_double(self.__dict__.get(var_key)))
+        setattr(self, wrapper_key,
+                ctypes.c_double(self.__dict__.get(var_key)))
         # registering new attribute in BornAgain
-        self.registerParameter(par_name,
-                               ctypes.addressof(getattr(self, wrapper_key)))
+        self.registerParameter(
+            par_name, ctypes.addressof(getattr(self, wrapper_key)))
 
 
 class SampleBuilderTest(unittest.TestCase):

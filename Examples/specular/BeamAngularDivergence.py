@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 
 # input parameters
 wavelength = 1.54*angstrom
-alpha_i_min = 0      # min incident angle, deg
+alpha_i_min = 0  # min incident angle, deg
 alpha_i_max = 2*deg  # max incident angle, rad
 beam_sample_ratio = 0.01  # beam-to-sample size ratio
 
@@ -76,7 +76,8 @@ def get_simulation(sample, scan_size=500):
     footprint = ba.FootprintSquare(beam_sample_ratio)
     alpha_distr = ba.RangedDistributionGaussian(n_points, n_sig)
 
-    scan = ba.AngularSpecScan(wavelength, scan_size, alpha_i_min, alpha_i_max)
+    scan = ba.AngularSpecScan(wavelength, scan_size, alpha_i_min,
+                              alpha_i_max)
     scan.setFootprintFactor(footprint)
     scan.setAbsoluteAngularResolution(alpha_distr, d_ang)
 
