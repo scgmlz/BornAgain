@@ -8,8 +8,8 @@ import bornagain as ba
 
 # input parameters
 wavelength = 1.54*ba.angstrom
-alpha_i_min = 0.0*ba.deg  # min incident angle, deg
-alpha_i_max = 2.0*ba.deg  # max incident angle, rad
+alpha_i_min = 0*ba.deg  # min incident angle, deg
+alpha_i_max = 2*ba.deg  # max incident angle, rad
 
 # convolution parameters
 d_wl = 0.01*wavelength  # spread width for wavelength
@@ -33,10 +33,10 @@ def get_sample():
     # defining materials
     # this example implies beam divergence in the wavelength,
     # thus MaterialBySLD must be used to provide correct result
-    m_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
-    m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0.0)
-    m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0.0)
-    m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0.0)
+    m_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
+    m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0)
+    m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0)
+    m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0)
 
     vacuum_layer = ba.Layer(m_vacuum)
     ni_layer = ba.Layer(m_ni, d_ni)

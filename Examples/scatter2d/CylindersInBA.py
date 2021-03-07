@@ -39,7 +39,7 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
     detector = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0*deg, 3*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation

@@ -21,7 +21,7 @@ def get_sample(cylinder_radius, cylinder_height):
     Returns a sample with cylindrical particles on a substrate.
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -29,7 +29,7 @@ def get_sample(cylinder_radius, cylinder_height):
     cylinder_ff = ba.FormFactorCylinder(cylinder_radius, cylinder_height)
     cylinder = ba.Particle(m_particle, cylinder_ff)
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(cylinder, 1.0)
+    particle_layout.addParticle(cylinder, 1)
 
     vacuum_layer = ba.Layer(m_vacuum)
     vacuum_layer.addLayout(particle_layout)
@@ -46,7 +46,7 @@ def get_simulation(sample, integration_flag):
     Returns a GISAXS simulation with defined beam and detector.
     If integration_flag=True, the simulation will integrate over detector bins.
     """
-    beam = ba.Beam(1, 1.0*angstrom, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
     det = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0*deg, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     simulation.getOptions().setMonteCarloIntegration(integration_flag, 50)
@@ -109,7 +109,7 @@ def simulate_and_plot():
         zmax = condition['zmax']
         ba_plot.plot_colormap(result, intensity_min=zmin, intensity_max=zmax)
 
-        plt.text(0.0,
+        plt.text(0,
                  2.1,
                  conditions[i_plot]['title'],
                  horizontalalignment='center',

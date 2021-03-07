@@ -10,14 +10,14 @@ import ba_plot
 from matplotlib import pyplot as plt
 
 
-def get_sample(lattice_rotation_angle=0.0*deg):
+def get_sample(lattice_rotation_angle=0*deg):
     """
     Returns a sample with a grating on a substrate.
     lattice_rotation_angle = 0 - beam parallel to grating lines
     lattice_rotation_angle = 90*deg - beam perpendicular to grating lines
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_si = ba.HomogeneousMaterial("Si", 5.78164736e-6, 1.02294578e-7)
 
     box_length, box_width, box_height = 50*micrometer, 70*nm, 50*nm
@@ -25,16 +25,16 @@ def get_sample(lattice_rotation_angle=0.0*deg):
 
     # collection of particles
     interference = ba.InterferenceFunction1DLattice(
-        lattice_length, 90.0*deg - lattice_rotation_angle)
+        lattice_length, 90*deg - lattice_rotation_angle)
 
-    pdf = ba.FTDecayFunction1DGauss(450.0)
+    pdf = ba.FTDecayFunction1DGauss(450)
     interference.setDecayFunction(pdf)
 
     box_ff = ba.FormFactorLongBoxLorentz(box_length, box_width, box_height)
     box = ba.Particle(m_si, box_ff)
 
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(box, 1.0, ba.kvector_t(0.0, 0.0, 0.0),
+    particle_layout.addParticle(box, 1, ba.kvector_t(0, 0, 0),
                                 ba.RotationZ(lattice_rotation_angle))
     particle_layout.setInterferenceFunction(interference)
 
@@ -44,9 +44,9 @@ def get_sample(lattice_rotation_angle=0.0*deg):
     substrate_layer = ba.Layer(m_si)
 
     roughness = ba.LayerRoughness()
-    roughness.setSigma(5.0*nm)
+    roughness.setSigma(5*nm)
     roughness.setHurstParameter(0.5)
-    roughness.setLatteralCorrLength(10.0*nm)
+    roughness.setLatteralCorrLength(10*nm)
 
     multi_layer = ba.MultiLayer()
     multi_layer.addLayer(vacuum_layer)
@@ -55,7 +55,7 @@ def get_sample(lattice_rotation_angle=0.0*deg):
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1e8, 1.34*angstrom, ba.Direction(0.4*deg, 0.0*deg))
+    beam = ba.Beam(1e8, 1.34*angstrom, ba.Direction(0.4*deg, 0*deg))
     det = ba.SphericalDetector(200, -0.5*deg, 0.5*deg, 200, 0*deg, 0.6*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     simulation.getOptions().setMonteCarloIntegration(True, 100)

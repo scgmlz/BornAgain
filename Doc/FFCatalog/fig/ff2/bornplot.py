@@ -106,7 +106,7 @@ def get_sample(ff, trafo):
     :param trafo: Optional rotation
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_particle = ba.HomogeneousMaterial("Particle", 1e-5, 0)
 
     # collection of particles

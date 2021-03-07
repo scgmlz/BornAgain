@@ -11,7 +11,7 @@ import bornagain as ba
 from bornagain import deg, kvector_t, nm
 
 mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
-mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+mAmbience = ba.HomogeneousMaterial("Vacuum", 0, 0)
 mParticle = ba.HomogeneousMaterial("Ag", 1.245e-5, 5.419e-7)
 sphere_radius = 10.0
 bottom_cup_height = 4.0
@@ -65,8 +65,8 @@ class SlicedSpheresTest(unittest.TestCase):
 
         #  origin of resulting sphere will be at the bottom
         result = ba.ParticleComposition()
-        result.addParticle(topCup, kvector_t(0.0, 0.0, bottom_cup_height))
-        result.addParticle(bottomCup, kvector_t(0.0, 0.0, 0.0))
+        result.addParticle(topCup, kvector_t(0, 0, bottom_cup_height))
+        result.addParticle(bottomCup, kvector_t(0, 0, 0))
 
         return result
 
@@ -89,8 +89,8 @@ class SlicedSpheresTest(unittest.TestCase):
 
         #  origin of resulting sphere will be at the bottom
         result = ba.ParticleComposition()
-        result.addParticle(topCup, kvector_t(0.0, 0.0, bottom_cup_height))
-        result.addParticle(bottomCup, kvector_t(0.0, 0.0, bottom_cup_height))
+        result.addParticle(topCup, kvector_t(0, 0, bottom_cup_height))
+        result.addParticle(bottomCup, kvector_t(0, 0, bottom_cup_height))
 
         return result
 

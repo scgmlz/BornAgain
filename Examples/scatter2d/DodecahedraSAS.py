@@ -9,7 +9,7 @@ from bornagain import deg, nm
 
 
 def get_sample():
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_solution = ba.HomogeneousMaterial("Solution", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -33,7 +33,7 @@ def get_sample():
 
 def get_simulation(sample):
     # Beam from above (perpendicular to sample):
-    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0.0*deg))
+    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0*deg))
 
     # Detector opposite to source:
     detPos = 2000 # distance from sample center to detector in mm

@@ -16,7 +16,7 @@ layer_thickness = 100
 
 class BoxTransformationsTest(unittest.TestCase):
     def get_sample(self, particle):
-        mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+        mAmbience = ba.HomogeneousMaterial("Vacuum", 0, 0)
         mMiddle = ba.HomogeneousMaterial("Teflon", 2.900e-6, 6.019e-9)
         mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
 

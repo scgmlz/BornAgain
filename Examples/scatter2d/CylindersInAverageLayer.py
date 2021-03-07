@@ -11,7 +11,7 @@ def get_sample(cyl_height=5*nm):
     Returns a sample with cylinders on a substrate.
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_layer = ba.HomogeneousMaterial("Layer", 3e-6, 2e-8)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 3e-5, 2e-8)
@@ -19,9 +19,9 @@ def get_sample(cyl_height=5*nm):
     # cylindrical particle
     cylinder_ff = ba.FormFactorCylinder(5*nm, cyl_height)
     cylinder = ba.Particle(m_particle, cylinder_ff)
-    position = ba.kvector_t(0.0, 0.0, -cyl_height)
+    position = ba.kvector_t(0, 0, -cyl_height)
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(cylinder, 1.0, position)
+    particle_layout.addParticle(cylinder, 1, position)
 
     # interference function
     interference = ba.InterferenceFunction2DLattice(
@@ -43,7 +43,7 @@ def get_sample(cyl_height=5*nm):
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
     detector = ba.SphericalDetector(100, -2*deg, 2*deg, 100, 0*deg, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     simulation.getOptions().setUseAvgMaterials(True)

@@ -40,9 +40,9 @@ def get_sample(params):
 
     # defining materials
     m_vacuum = ba.MaterialBySLD()
-    m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0.0)
-    m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0.0)
-    m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0.0)
+    m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0)
+    m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0)
+    m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0)
 
     # vacuum layer and substrate form multi layer
     vacuum_layer = ba.Layer(m_vacuum)

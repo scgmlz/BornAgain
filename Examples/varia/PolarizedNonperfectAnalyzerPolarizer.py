@@ -27,7 +27,7 @@ def get_sample(*, magnetization=magnetizationVector):
     """
 
     # create materials
-    mat_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
+    mat_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
     mat_Pd = ba.MaterialBySLD("Pd", *sldPd)
     mat_Fe = ba.MaterialBySLD("Fe", *sldFe, magnetizationVector)
     mat_substrate = ba.MaterialBySLD("MgO", *sldMgO)

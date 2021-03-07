@@ -12,8 +12,8 @@ from matplotlib import pyplot as plt
 
 # input parameters
 wavelength = 1.54*ba.angstrom
-alpha_i_min = 0.0*ba.deg  # min incident angle, deg
-alpha_i_max = 2.0*ba.deg  # max incident angle, rad
+alpha_i_min = 0*ba.deg  # min incident angle, deg
+alpha_i_max = 2*ba.deg  # max incident angle, rad
 beam_sample_ratio = 0.01  # beam-to-sample size ratio
 
 # convolution parameters
@@ -35,10 +35,10 @@ d_ti = 30*ba.angstrom
 
 def get_sample():
     # defining materials
-    m_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
-    m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0.0)
-    m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0.0)
-    m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0.0)
+    m_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
+    m_ni = ba.MaterialBySLD("Ni", ni_sld_real, 0)
+    m_ti = ba.MaterialBySLD("Ti", ti_sld_real, 0)
+    m_substrate = ba.MaterialBySLD("SiSubstrate", si_sld_real, 0)
 
     vacuum_layer = ba.Layer(m_vacuum)
     ni_layer = ba.Layer(m_ni, d_ni)

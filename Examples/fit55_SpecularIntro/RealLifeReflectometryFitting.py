@@ -110,7 +110,7 @@ def buildSample(arg_dict):
     Creates sample and returns it
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_si_o2 = ba.HomogeneousMaterial("SiO2",
                                      8.57040868e-06*arg_dict["concentration"],
                                      1.11016654e-07*arg_dict["concentration"])
@@ -208,11 +208,11 @@ def run_fitting():
     # running preliminary optimization on the total range of experimental data.
     bounds = [
         (1e6, 1e8),  # beam intensity
-        (0.0, 0.1),  # beam-to-sample width ratio
-        (0.0, 0.08*ba.deg),  # beam_divergence
-        (0.0, 1.0),  # oxide_concentration
-        (0.0, 2.0*ba.nm),  # oxide_thickness
-        (0.0, 2.0*ba.nm)
+        (0, 0.1),  # beam-to-sample width ratio
+        (0, 0.08*ba.deg),  # beam_divergence
+        (0, 1),  # oxide_concentration
+        (0, 2*ba.nm),  # oxide_thickness
+        (0, 2*ba.nm)
     ]  # roughness
 
     print("Start preliminary fitting of experimental data:\n")
@@ -226,9 +226,9 @@ def run_fitting():
                                                 tol=1e-5)
 
     bounds = [
-        (0.0, 1.0),  # oxide_concentration
-        (0.0, 2.0*ba.nm),  # oxide_thickness
-        (0.0, 2.0*ba.nm)
+        (0, 1),  # oxide_concentration
+        (0, 2*ba.nm),  # oxide_thickness
+        (0, 2*ba.nm)
     ]  # roughness
 
     fixed_args = (

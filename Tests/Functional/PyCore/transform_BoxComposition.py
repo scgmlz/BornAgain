@@ -22,7 +22,7 @@ particle_material = HomogeneousMaterial("Ag", 1.245e-5, 5.419e-7)
 
 class TransformBoxCompositionTest(unittest.TestCase):
     def get_sample(self, particle):
-        mAmbience = HomogeneousMaterial("Vacuum", 0.0, 0.0)
+        mAmbience = HomogeneousMaterial("Vacuum", 0, 0)
         mMiddle = HomogeneousMaterial("Teflon", 2.900e-6, 6.019e-9)
         mSubstrate = HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
 
@@ -57,20 +57,20 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 10.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2.0))
+        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxComposition.int")
 
         # composition
         box = Particle(particle_material,
-                       FormFactorBox(com_length/2.0, com_width, com_height))
+                       FormFactorBox(com_length/2, com_width, com_height))
         composition = ParticleComposition()
         # composition = ParticleComposition(box, positions)
-        composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
-        composition.addParticle(box, kvector_t(com_length/2.0, 0.0, 0.0))
+        composition.addParticle(box, kvector_t(0, 0, 0))
+        composition.addParticle(box, kvector_t(com_length/2, 0, 0))
         composition.setPosition(
-            kvector_t(0.0, 0.0, -layer_thickness/2.0 - com_height/2.0))
+            kvector_t(0, 0, -layer_thickness/2.0 - com_height/2))
 
         data = self.get_result(composition)
 
@@ -89,19 +89,19 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 20.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2.0))
+        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateX.int")
 
         # composition
         box = Particle(particle_material,
-                       FormFactorBox(com_length/2.0, com_width, com_height))
+                       FormFactorBox(com_length/2, com_width, com_height))
         composition = ParticleComposition()
-        composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
-        composition.addParticle(box, kvector_t(com_length/2.0, 0.0, 0.0))
+        composition.addParticle(box, kvector_t(0, 0, 0))
+        composition.addParticle(box, kvector_t(com_length/2, 0, 0))
         composition.setRotation(RotationX(90*deg))
-        composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.))
+        composition.setPosition(kvector_t(0, 0, -layer_thickness/2.))
 
         data = self.get_result(composition)
 
@@ -120,20 +120,20 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 50.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2.0))
+        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateY.int")
 
         # composition
         box = Particle(particle_material,
-                       FormFactorBox(com_length/2.0, com_width, com_height))
+                       FormFactorBox(com_length/2, com_width, com_height))
         composition = ParticleComposition()
-        composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
-        composition.addParticle(box, kvector_t(com_length/2.0, 0.0, 0.0))
+        composition.addParticle(box, kvector_t(0, 0, 0))
+        composition.addParticle(box, kvector_t(com_length/2, 0, 0))
         composition.setRotation(RotationY(90*deg))
         composition.setPosition(
-            kvector_t(0.0, 0.0, -layer_thickness/2. + com_length/4.))
+            kvector_t(0, 0, -layer_thickness/2. + com_length/4.))
 
         data = self.get_result(composition)
 
@@ -153,20 +153,20 @@ class TransformBoxCompositionTest(unittest.TestCase):
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
         particle.setPosition(
-            kvector_t(0.0, 0.0, -layer_thickness/2.0 - height/2.0))
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateZ.int")
 
         # composition
         box = Particle(particle_material,
-                       FormFactorBox(com_length/2.0, com_width, com_height))
+                       FormFactorBox(com_length/2, com_width, com_height))
         composition = ParticleComposition()
-        composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
-        composition.addParticle(box, kvector_t(com_length/2.0, 0.0, 0.0))
+        composition.addParticle(box, kvector_t(0, 0, 0))
+        composition.addParticle(box, kvector_t(com_length/2, 0, 0))
         composition.setRotation(RotationZ(90*deg))
         composition.setPosition(
-            kvector_t(0.0, 0.0, -layer_thickness/2.0 - com_height/2.0))
+            kvector_t(0, 0, -layer_thickness/2.0 - com_height/2))
 
         data = self.get_result(composition)
 
@@ -186,20 +186,20 @@ class TransformBoxCompositionTest(unittest.TestCase):
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
         particle.setPosition(
-            kvector_t(0.0, 0.0, -layer_thickness/2.0 - height/2.0))
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateZandY.int")
 
         # composition
         box = Particle(particle_material,
-                       FormFactorBox(com_length/2.0, com_width, com_height))
+                       FormFactorBox(com_length/2, com_width, com_height))
         composition = ParticleComposition()
-        composition.addParticle(box, kvector_t(0.0, 0.0, 0.0))
-        composition.addParticle(box, kvector_t(com_length/2.0, 0.0, 0.0))
+        composition.addParticle(box, kvector_t(0, 0, 0))
+        composition.addParticle(box, kvector_t(com_length/2, 0, 0))
         composition.setRotation(RotationZ(90*deg))
         composition.rotate(RotationY(90*deg))
-        composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.))
+        composition.setPosition(kvector_t(0, 0, -layer_thickness/2.))
 
         data = self.get_result(composition)
 
@@ -219,7 +219,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
         particle.setPosition(
-            kvector_t(0.0, 0.0, -layer_thickness/2.0 - height/2.0))
+            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxStackComposition.int")
 
@@ -241,12 +241,12 @@ class TransformBoxCompositionTest(unittest.TestCase):
         box2 = Particle(particle_material,
                         FormFactorBox(box2_length, box2_width, box2_height))
         box2.setRotation(RotationY(90*deg))
-        box2.setPosition(kvector_t(-box2_height/2.0, 0.0, box2_length/2.0))
+        box2.setPosition(kvector_t(-box2_height/2, 0, box2_length/2))
 
-        composition.addParticle(box1, kvector_t(0.0, 0.0, 0.0))
-        composition.addParticle(box2, kvector_t(0.0, 0.0, box1_height))
+        composition.addParticle(box1, kvector_t(0, 0, 0))
+        composition.addParticle(box2, kvector_t(0, 0, box1_height))
         composition.setRotation(RotationY(90*deg))
-        composition.setPosition(kvector_t(0.0, 0.0, -layer_thickness/2.))
+        composition.setPosition(kvector_t(0, 0, -layer_thickness/2.))
 
         data = self.get_result(composition)
 

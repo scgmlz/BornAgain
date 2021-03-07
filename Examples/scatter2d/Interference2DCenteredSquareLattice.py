@@ -15,16 +15,16 @@ def get_sample():
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
     material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff_1 = ba.FormFactorCylinder(3.0*nm, 3.0*nm)
-    ff_2 = ba.FormFactorCylinder(3.0*nm, 3.0*nm)
+    ff_1 = ba.FormFactorCylinder(3*nm, 3*nm)
+    ff_2 = ba.FormFactorCylinder(3*nm, 3*nm)
 
     # Define particles
     particle_1 = ba.Particle(material_Particle, ff_1)
     particle_2 = ba.Particle(material_Particle, ff_2)
-    particle_2_position = kvector_t(12.5*nm, 12.5*nm, 0.0*nm)
+    particle_2_position = kvector_t(12.5*nm, 12.5*nm, 0*nm)
     particle_2.setPosition(particle_2_position)
 
     # Define composition of particles at specific positions
@@ -33,16 +33,16 @@ def get_sample():
     particle_3.addParticle(particle_2)
 
     # Define 2D lattices
-    lattice = ba.BasicLattice2D(25.0*nm, 25.0*nm, 90.0*deg, 0.0*deg)
+    lattice = ba.BasicLattice2D(25*nm, 25*nm, 90*deg, 0*deg)
 
     # Define interference functions
     iff = ba.InterferenceFunction2DLattice(lattice)
-    iff_pdf = ba.FTDecayFunction2DCauchy(48.0*nm, 16.0*nm, 0.0*deg)
+    iff_pdf = ba.FTDecayFunction2DCauchy(48*nm, 16*nm, 0*deg)
     iff.setDecayFunction(iff_pdf)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle_3, 1.0)
+    layout.addParticle(particle_3, 1)
     layout.setInterferenceFunction(iff)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.0016)
@@ -61,7 +61,7 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
     detector = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0*deg, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation

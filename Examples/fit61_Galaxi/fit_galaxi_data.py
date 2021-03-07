@@ -37,9 +37,9 @@ def create_simulation(params):
     """
     simulation = ba.GISASSimulation()
     simulation.setDetector(create_detector())
-    simulation.setBeamParameters(wavelength, alpha_i, 0.0)
+    simulation.setBeamParameters(wavelength, alpha_i, 0)
     simulation.beam().setIntensity(1.2e7)
-    simulation.setRegionOfInterest(85.0, 70.0, 120.0, 92.)
+    simulation.setRegionOfInterest(85, 70, 120, 92.)
     simulation.addMask(ba.Rectangle(101.9, 82.1, 103.7, 85.2), True)  # beamstop
 
     sample_builder = SampleBuilder()
@@ -60,14 +60,14 @@ def run_fitting():
     real_data = load_real_data()
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(create_simulation, real_data, 1.0)
+    fit_objective.addSimulationAndData(create_simulation, real_data, 1)
     fit_objective.initPrint(10)
     fit_objective.initPlot(10)
 
     params = ba.Parameters()
-    params.add("radius", 5.*nm, min=4.0, max=6.0, step=0.1*nm)
+    params.add("radius", 5.*nm, min=4, max=6, step=0.1*nm)
     params.add("sigma", 0.55, min=0.2, max=0.8, step=0.01)
-    params.add("distance", 27.*nm, min=20.0, max=70.0)
+    params.add("distance", 27.*nm, min=20, max=70)
 
     minimizer = ba.Minimizer()
     result = minimizer.minimize(fit_objective.evaluate, params)

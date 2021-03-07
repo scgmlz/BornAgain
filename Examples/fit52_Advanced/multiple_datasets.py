@@ -18,7 +18,7 @@ def get_sample(params):
     radius_b = params["radius_b"]
     height = params["height"]
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -45,9 +45,9 @@ def get_simulation(params):
     incident_angle = params["incident_angle"]
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, incident_angle, 0.0*deg)
+    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0*deg,
+                                     2*deg)
+    simulation.setBeamParameters(1*angstrom, incident_angle, 0*deg)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     return simulation
@@ -68,9 +68,9 @@ def create_real_data(incident_alpha):
     Generating "real" data by adding noise to the simulated data.
     """
     params = {
-        'radius_a': 5.0*nm,
-        'radius_b': 6.0*nm,
-        'height': 8.0*nm,
+        'radius_a': 5*nm,
+        'radius_b': 6*nm,
+        'height': 8*nm,
         "incident_angle": incident_alpha
     }
 
@@ -111,20 +111,20 @@ class PlotObserver():
             plt.subplot(canvas[i_dataset*3])
             ba.plot_colormap(real_data,
                              title="\"Real\" data - #" + str(i_dataset + 1),
-                             zmin=1.0,
+                             zmin=1,
                              zmax=zmax,
                              zlabel="")
             plt.subplot(canvas[1 + i_dataset*3])
             ba.plot_colormap(simul_data,
                              title="Simulated data - #" + str(i_dataset + 1),
-                             zmin=1.0,
+                             zmin=1,
                              zmax=zmax,
                              zlabel="")
             plt.subplot(canvas[2 + i_dataset*3])
             ba.plot_colormap(chi2_map,
                              title="Chi2 map - #" + str(i_dataset + 1),
                              zmin=0.001,
-                             zmax=10.0,
+                             zmax=10,
                              zlabel="")
 
     @staticmethod
@@ -192,8 +192,8 @@ def run_fitting():
     data2 = create_real_data(0.4*deg)
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(simulation1, data1, 1.0)
-    fit_objective.addSimulationAndData(simulation2, data2, 1.0)
+    fit_objective.addSimulationAndData(simulation1, data1, 1)
+    fit_objective.addSimulationAndData(simulation2, data2, 1)
     fit_objective.initPrint(10)
 
     # creating custom observer which will draw fit progress
@@ -201,9 +201,9 @@ def run_fitting():
     fit_objective.initPlot(10, plotter.update)
 
     params = ba.Parameters()
-    params.add("radius_a", 4.*nm, min=2.0, max=10.0)
+    params.add("radius_a", 4.*nm, min=2, max=10)
     params.add("radius_b", 6.*nm, vary=False)
-    params.add("height", 4.*nm, min=2.0, max=10.0)
+    params.add("height", 4.*nm, min=2, max=10)
 
     minimizer = ba.Minimizer()
     result = minimizer.minimize(fit_objective.evaluate, params)

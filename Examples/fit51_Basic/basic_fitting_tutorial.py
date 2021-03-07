@@ -20,7 +20,7 @@ def get_sample(params):
     prism_base_edge = params["prism_base_edge"]
 
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -48,9 +48,9 @@ def get_simulation(params):
     Returns a GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
+                                     2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     return simulation
@@ -64,10 +64,10 @@ def create_real_data():
 
     # default sample parameters
     params = {
-        'cylinder_height': 5.0*nm,
-        'cylinder_radius': 5.0*nm,
-        'prism_height': 5.0*nm,
-        'prism_base_edge': 5.0*nm
+        'cylinder_height': 5*nm,
+        'cylinder_radius': 5*nm,
+        'prism_height': 5*nm,
+        'prism_base_edge': 5*nm
     }
 
     # retrieving simulated data in the form of numpy array

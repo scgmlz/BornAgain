@@ -63,8 +63,8 @@ class SampleBuilderTest(unittest.TestCase):
         builder = SampleBuilder()
 
         self.assertEqual(builder.m_width.value, initial_width)
-        builder.setParameterValue("width", 43.0)
-        self.assertEqual(builder.m_width.value, 43.0)
+        builder.setParameterValue("width", 43)
+        self.assertEqual(builder.m_width.value, 43)
 
     def test_parameterString(self):
         """
@@ -79,13 +79,13 @@ class SampleBuilderTest(unittest.TestCase):
         """
         builder = SampleBuilder()
         self.assertEqual(builder.m_onchange_counter, 0)
-        builder.setParameterValue("width", 43.0)
+        builder.setParameterValue("width", 43)
         self.assertEqual(builder.m_onchange_counter, 1)
-        builder.setParameterValue("width", 44.0)
+        builder.setParameterValue("width", 44)
         self.assertEqual(builder.m_onchange_counter, 2)
 
         # setting same value, onChange shouldn't be triggered
-        builder.setParameterValue("width", 44.0)
+        builder.setParameterValue("width", 44)
         self.assertEqual(builder.m_onchange_counter, 2)
 
     def test_registerPrototype(self):
@@ -94,8 +94,8 @@ class SampleBuilderTest(unittest.TestCase):
         self.assertEqual(builder.m_onchange_counter, 0)
         self.assertEqual(builder.m_length, initial_length)
 
-        builder.setParameterValue("length", 43.0)
-        self.assertEqual(builder.m_length, 43.0)
+        builder.setParameterValue("length", 43)
+        self.assertEqual(builder.m_length, 43)
         self.assertEqual(builder.m_onchange_counter, 1)
 
 

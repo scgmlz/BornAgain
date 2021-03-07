@@ -211,7 +211,7 @@ class PlotterSpecular(Plotter):
                           colLabels=labels,
                           cellLoc='center',
                           loc='bottom left',
-                          bbox=[0.0, 0.0, 1.0, 1.0])
+                          bbox=[0, 0, 1, 1.0])
 
     def plot_graph(self, fit_objective):
         # retrieving data from fit suite

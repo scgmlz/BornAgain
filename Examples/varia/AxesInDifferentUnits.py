@@ -18,17 +18,17 @@ def get_sample():
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
     material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
+    ff = ba.FormFactorCylinder(5*nm, 5*nm)
 
     # Define particles
     particle = ba.Particle(material_Particle, ff)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle, 1.0)
+    layout.addParticle(particle, 1)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.01)
 
@@ -46,7 +46,7 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 1.0*angstrom, ba.Direction(0.2*deg, 0.0*deg))
+    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
 
     # PILATUS detector
     detector_distance = 2000.0  # in mm
@@ -55,7 +55,7 @@ def get_simulation(sample):
     width = pilatus_npx*pilatus_pixel_size
     height = pilatus_npy*pilatus_pixel_size
     detector = ba.RectangularDetector(pilatus_npx, width, pilatus_npy, height)
-    detector.setPerpendicularToSampleX(detector_distance, width/2., 0.0)
+    detector.setPerpendicularToSampleX(detector_distance, width/2., 0)
 
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation

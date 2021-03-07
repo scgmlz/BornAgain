@@ -14,25 +14,25 @@ def get_sample():
 
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff_1 = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
-    ff_2 = ba.FormFactorCylinder(10.0*nm, 10.0*nm)
+    ff_1 = ba.FormFactorCylinder(5*nm, 5*nm)
+    ff_2 = ba.FormFactorCylinder(10*nm, 10*nm)
 
     # Define particles
     particle_1 = ba.Particle(material_Particle, ff_1)
     particle_2 = ba.Particle(material_Particle, ff_2)
 
     # Define particles with parameter following a distribution
-    distr_1 = ba.DistributionGaussian(5.0*nm, 1.0*nm)
+    distr_1 = ba.DistributionGaussian(5*nm, 1*nm)
     par_distr_1 = ba.ParameterDistribution("/Particle/Cylinder/Radius",
-                                           distr_1, 150, 3.0,
+                                           distr_1, 150, 3,
                                            ba.RealLimits.nonnegative())
     particle_distrib_1 = ba.ParticleDistribution(particle_1, par_distr_1)
-    distr_2 = ba.DistributionGaussian(10.0*nm, 0.2*nm)
+    distr_2 = ba.DistributionGaussian(10*nm, 0.2*nm)
     par_distr_2 = ba.ParameterDistribution("/Particle/Cylinder/Radius",
-                                           distr_2, 150, 3.0,
+                                           distr_2, 150, 3,
                                            ba.RealLimits.nonnegative())
     particle_distrib_2 = ba.ParticleDistribution(particle_2, par_distr_2)
 
@@ -55,7 +55,7 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
     detector = ba.SphericalDetector(200, 2*deg, 1*deg, 1*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation

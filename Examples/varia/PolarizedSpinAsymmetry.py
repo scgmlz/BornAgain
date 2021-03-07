@@ -52,7 +52,7 @@ def get_sample(params):
         magnetizationMagnitude*numpy.sin(angle*deg),
         magnetizationMagnitude*numpy.cos(angle*deg), 0)
 
-    mat_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
+    mat_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
     mat_layer = ba.MaterialBySLD("(Mg,Al,Fe)3O4", params["rho_Mafo"]*1e-6, 0,
                                  magnetizationVector)
     mat_substrate = ba.MaterialBySLD("MgAl2O4", *sldMao)
@@ -93,7 +93,7 @@ def get_simulation(q_axis, parameters, polarization, analyzer):
     scan.setAbsoluteQResolution(distr, parameters["q_res"])
 
     simulation.beam().setPolarization(polarization)
-    simulation.detector().setAnalyzerProperties(analyzer, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer, 1, 0.5)
 
     simulation.setScan(scan)
     return simulation

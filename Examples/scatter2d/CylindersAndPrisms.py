@@ -14,11 +14,11 @@ def get_sample():
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
     material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff_1 = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
-    ff_2 = ba.FormFactorPrism3(10.0*nm, 5.0*nm)
+    ff_1 = ba.FormFactorCylinder(5*nm, 5*nm)
+    ff_2 = ba.FormFactorPrism3(10*nm, 5*nm)
 
     # Define particles
     particle_1 = ba.Particle(material_Particle, ff_1)
@@ -49,7 +49,7 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
     detector = ba.SphericalDetector(100, 2*deg, 0*deg, 1*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation

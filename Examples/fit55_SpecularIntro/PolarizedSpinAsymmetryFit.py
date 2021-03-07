@@ -52,7 +52,7 @@ def get_sample(params):
         magnetizationMagnitude*numpy.sin(angle*deg),
         magnetizationMagnitude*numpy.cos(angle*deg), 0)
 
-    mat_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
+    mat_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
     mat_layer = ba.MaterialBySLD("(Mg,Al,Fe)3O4", params["rho_Mafo"]*1e-6, 0,
                                  magnetizationVector)
     mat_substrate = ba.MaterialBySLD("MgAl2O4", *sldMao)
@@ -93,7 +93,7 @@ def get_simulation(q_axis, parameters, polarization, analyzer):
     scan.setAbsoluteQResolution(distr, parameters["q_res"])
 
     simulation.beam().setPolarization(polarization)
-    simulation.setAnalyzerProperties(analyzer, 1.0, 0.5)
+    simulation.setAnalyzerProperties(analyzer, 1, 0.5)
 
     simulation.setScan(scan)
     return simulation
@@ -272,10 +272,10 @@ def run_fit_ba(q_axis, r_data, r_uncertainty, simulationFactory, startParams):
 
     fit_objective.addSimulationAndData(
         lambda params: simulationFactory[0](q_axis[0], params), r_data[0],
-        r_uncertainty[0], 1.0)
+        r_uncertainty[0], 1)
     fit_objective.addSimulationAndData(
         lambda params: simulationFactory[1](q_axis[1], params), r_data[1],
-        r_uncertainty[1], 1.0)
+        r_uncertainty[1], 1)
 
     fit_objective.initPrint(10)
 
@@ -305,7 +305,7 @@ if __name__ == '__main__':
 
         startParams = {
             # own starting values
-            "q_res": (0.0, 0, 0.1),
+            "q_res": (0, 0, 0.1),
             "q_offset": (0, -0.002, 0.002),
             "rho_Mafo": (6.3649, 2, 7),
             "rhoM_Mafo": (0, 0, 2),

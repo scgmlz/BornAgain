@@ -33,7 +33,7 @@ sldSi = (2.0728e-06, 2.3747e-11)
 
 def get_sample(params):
 
-    mat_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
+    mat_ambient = ba.MaterialBySLD("Ambient", 0, 0)
     mat_layer = ba.MaterialBySLD("Pt", *sldPt)
     mat_substrate = ba.MaterialBySLD("Si", *sldSi)
 
@@ -178,7 +178,7 @@ def run_fit_ba(q_axis, r_data, r_uncertainty, simulationFactory, startParams):
 
     fit_objective.addSimulationAndData(
         lambda params: simulationFactory(q_axis, params), r_data, r_uncertainty,
-        1.0)
+        1)
 
     fit_objective.initPrint(10)
 
@@ -208,8 +208,8 @@ if __name__ == '__main__':
 
         startParams = {
             # own starting values
-            "q_offset": (0.0, -0.02, 0.02),
-            "q_res/q": (0.0, 0, 0.02),
+            "q_offset": (0, -0.02, 0.02),
+            "q_res/q": (0, 0, 0.02),
             "t_pt/nm": (53, 40, 60),
             "r_si/nm": (1.22, 0, 5),
             "r_pt/nm": (0.25, 0, 5),

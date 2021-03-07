@@ -17,7 +17,7 @@ def get_sample(params):
     radius = params["radius"]
     height = params["height"]
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -42,9 +42,9 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
+                                     2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
 
@@ -58,7 +58,7 @@ def create_real_data():
     """
     Generating "real" data by adding noise to the simulated data.
     """
-    params = {'radius': 5.0*nm, 'height': 10.0*nm}
+    params = {'radius': 5*nm, 'height': 10*nm}
 
     # retrieving simulated data in the form of numpy array
     simulation = get_simulation(params, add_masks=False)
@@ -90,14 +90,14 @@ def add_mask_to_simulation(simulation):
     simulation.maskAll()
 
     # set mask to simulate pacman's head
-    simulation.addMask(ba.Ellipse(0.0*deg, 1.0*deg, 0.5*deg, 0.5*deg), False)
+    simulation.addMask(ba.Ellipse(0*deg, 1*deg, 0.5*deg, 0.5*deg), False)
 
     # set mask for pacman's eye
     simulation.addMask(ba.Ellipse(0.11*deg, 1.25*deg, 0.05*deg, 0.05*deg), True)
 
     # set mask for pacman's mouth
-    points = [[0.0*deg, 1.0*deg], [0.5*deg, 1.2*deg], [0.5*deg, 0.8*deg],
-              [0.0*deg, 1.0*deg]]
+    points = [[0*deg, 1*deg], [0.5*deg, 1.2*deg], [0.5*deg, 0.8*deg],
+              [0*deg, 1*deg]]
     simulation.addMask(ba.Polygon(points), True)
 
     # giving pacman something to eat
@@ -116,13 +116,13 @@ def run_fitting():
     real_data = create_real_data()
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(get_simulation, real_data, 1.0)
+    fit_objective.addSimulationAndData(get_simulation, real_data, 1)
     fit_objective.initPrint(10)
     fit_objective.initPlot(10)
 
     params = ba.Parameters()
-    params.add("radius", 6.*nm, min=4.0, max=8.0)
-    params.add("height", 9.*nm, min=8.0, max=12.0)
+    params.add("radius", 6.*nm, min=4, max=8)
+    params.add("height", 9.*nm, min=8, max=12)
 
     minimizer = ba.Minimizer()
     result = minimizer.minimize(fit_objective.evaluate, params)

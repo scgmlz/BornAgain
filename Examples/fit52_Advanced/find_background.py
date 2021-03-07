@@ -20,7 +20,7 @@ def get_sample(params):
     radius = params["radius"]
     height = params["height"]
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -48,9 +48,9 @@ def get_simulation(params):
     scale = params["scale"]
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
+                                     2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
     simulation.beam().setIntensity(1e12*scale)
     simulation.setBackground(ba.ConstantBackground(background))
     simulation.setSample(get_sample(params))
@@ -68,9 +68,9 @@ def create_real_data():
     """
 
     params = {
-        'radius': 5.0*nm,
-        'height': 10.0*nm,
-        'scale': 2.0,
+        'radius': 5*nm,
+        'height': 10*nm,
+        'scale': 2,
         'background': 1000
     }
 
@@ -88,7 +88,7 @@ def run_fitting():
     real_data = create_real_data()
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(get_simulation, real_data, 1.0)
+    fit_objective.addSimulationAndData(get_simulation, real_data, 1)
 
     fit_objective.initPrint(10)
     fit_objective.initPlot(10)
@@ -96,8 +96,8 @@ def run_fitting():
     params = ba.Parameters()
     params.add("radius", 5.*nm, vary=False)
     params.add("height", 9.*nm, min=8.*nm, max=12.*nm)
-    params.add("scale", 1.5, min=1.0, max=3.0)
-    params.add("background", 200, min=100.0, max=2000.0, step=100.0)
+    params.add("scale", 1.5, min=1, max=3)
+    params.add("background", 200, min=100, max=2000, step=100)
 
     minimizer = ba.Minimizer()
     result = minimizer.minimize(fit_objective.evaluate, params)

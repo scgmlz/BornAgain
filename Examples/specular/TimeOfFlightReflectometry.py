@@ -19,10 +19,10 @@ def get_sample():
     """
 
     # creating materials
-    m_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
-    m_ti = ba.MaterialBySLD("Ti", -1.9493e-06, 0.0)
-    m_ni = ba.MaterialBySLD("Ni", 9.4245e-06, 0.0)
-    m_substrate = ba.MaterialBySLD("SiSubstrate", 2.0704e-06, 0.0)
+    m_ambient = ba.MaterialBySLD("Ambient", 0, 0)
+    m_ti = ba.MaterialBySLD("Ti", -1.9493e-06, 0)
+    m_ni = ba.MaterialBySLD("Ni", 9.4245e-06, 0)
+    m_substrate = ba.MaterialBySLD("SiSubstrate", 2.0704e-06, 0)
 
     # creating layers
     ambient_layer = ba.Layer(m_ambient)
@@ -46,7 +46,7 @@ def get_simulation(sample, scan_size=500):
     Defines and returns specular simulation
     with a qz-defined beam
     """
-    qzs = np.linspace(0.01, 1.0, scan_size)  # qz-values
+    qzs = np.linspace(0.01, 1, scan_size)  # qz-values
     scan = ba.QSpecScan(qzs)
     simulation = ba.SpecularSimulation()
     simulation.setScan(scan)

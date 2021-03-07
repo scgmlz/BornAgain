@@ -11,7 +11,7 @@ import bornagain as ba
 from bornagain import deg, kvector_t
 
 mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
-mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+mAmbience = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
 
 class SlicedSpheresTest(unittest.TestCase):
