@@ -105,7 +105,7 @@ def plot_array(array, axes_limits=None, **kwargs):
     ylabel = kwargs.pop('ylabel', None)
     zlabel = kwargs.pop('zlabel', "Intensity")
     title = kwargs.pop('title', None)
-    aspect = kwargs.pop('apsect', 'auto')
+    aspect = kwargs.pop('aspect', 'auto')
     cmap = kwargs.pop('cmap', CMAP)
 
     im = plt.imshow(array, cmap=cmap, norm=norm, aspect=aspect, extent=axes_limits, **kwargs)

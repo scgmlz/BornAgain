@@ -49,4 +49,4 @@ if __name__ == '__main__':
     import ba_plot
     sample = get_sample()
     simulation = get_simulation(sample)
-    ba_plot.run_and_plot(simulation)
+    ba_plot.run_and_plot(simulation, aspect='equal')
