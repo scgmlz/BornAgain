@@ -42,7 +42,7 @@ def get_simulation(footprint):
     Defines and returns a specular simulation.
     """
     simulation = ba.SpecularSimulation()
-    scan = ba.AngularSpecScan(1.54*angstrom, 500, 0*deg, 0.6*deg)
+    scan = ba.AngularSpecScan(1.54*angstrom, 500, 0, 0.6*deg)
     scan.setFootprintFactor(footprint)
     simulation.setScan(scan)
     return simulation

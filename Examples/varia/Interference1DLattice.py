@@ -53,8 +53,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
-    det = ba.SphericalDetector(200, -1*deg, 1*deg, 200, 0*deg, 2*deg)
+    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0))
+    det = ba.SphericalDetector(200, -1*deg, 1*deg, 200, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     simulation.getOptions().setMonteCarloIntegration(True, 100)
     if not "__no_terminal__" in globals():

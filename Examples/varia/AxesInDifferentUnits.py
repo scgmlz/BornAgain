@@ -46,7 +46,7 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
+    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0))
 
     # PILATUS detector
     detector_distance = 2000.0  # in mm
@@ -81,34 +81,34 @@ def plot(result):
     # default units for rectangular detector are millimeters
 
     ba_plot.plot_colormap(result,
-                     title="In default units",
-                     xlabel=r'$X_{mm}$',
-                     ylabel=r'$Y_{mm}$',
-                     zlabel=None)
+                          title="In default units",
+                          xlabel=r'$X_{mm}$',
+                          ylabel=r'$Y_{mm}$',
+                          zlabel=None)
 
     plt.subplot(2, 2, 2)
     ba_plot.plot_colormap(result,
-                     units=ba.Axes.NBINS,
-                     title="In number of bins",
-                     xlabel=r'$X_{nbins}$',
-                     ylabel=r'$Y_{nbins}$',
-                     zlabel=None)
+                          units=ba.Axes.NBINS,
+                          title="In number of bins",
+                          xlabel=r'$X_{nbins}$',
+                          ylabel=r'$Y_{nbins}$',
+                          zlabel=None)
 
     plt.subplot(2, 2, 3)
     ba_plot.plot_colormap(result,
-                     units=ba.Axes.DEGREES,
-                     title="In degs",
-                     xlabel=r'$\phi_f ^{\circ}$',
-                     ylabel=r'$\alpha_f ^{\circ}$',
-                     zlabel=None)
+                          units=ba.Axes.DEGREES,
+                          title="In degs",
+                          xlabel=r'$\phi_f ^{\circ}$',
+                          ylabel=r'$\alpha_f ^{\circ}$',
+                          zlabel=None)
 
     plt.subplot(2, 2, 4)
     ba_plot.plot_colormap(result,
-                     units=ba.Axes.QSPACE,
-                     title="Q-space",
-                     xlabel=r'$Q_{y} [1/nm]$',
-                     ylabel=r'$Q_{z} [1/nm]$',
-                     zlabel=None)
+                          units=ba.Axes.QSPACE,
+                          title="Q-space",
+                          xlabel=r'$Q_{y} [1/nm]$',
+                          ylabel=r'$Q_{z} [1/nm]$',
+                          zlabel=None)
 
     plt.subplots_adjust(left=0.07, right=0.97, top=0.9, bottom=0.1, hspace=0.25)
     plt.show()

@@ -34,7 +34,7 @@ t_Ti_top = 100*angstrom
 t_TiO2 = 30*angstrom
 
 #  beam data
-ai_min = 0*deg  # minimum incident angle
+ai_min = 0  # minimum incident angle
 ai_max = 1*deg  # maximum incident angle
 n_ai_bins = 5000  # number of bins in incident angle axis
 beam_sample_ratio = 0.01  # beam-to-sample size ratio

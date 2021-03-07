@@ -35,8 +35,7 @@ class Histogram2DTest(unittest.TestCase):
         Testing construction of 2D histogram from numpy array
         """
         arr = numpy.array(
-            [[1, 2, 3, 4, 5.0], [6, 7, 8, 9, 10.0],
-             [11, 12, 13, 14, 15.0]],
+            [[1, 2, 3, 4, 5.0], [6, 7, 8, 9, 10.0], [11, 12, 13, 14, 15.0]],
             dtype=numpy.float64)
         hist = ba.Histogram2D(arr)
 
@@ -78,8 +77,7 @@ class Histogram2DTest(unittest.TestCase):
         Adding to the histogram content from numpy array
         """
         arr = numpy.array(
-            [[1, 2, 3, 4, 5.0], [6, 7, 8, 9, 10.0],
-             [11, 12, 13, 14, 15.0]],
+            [[1, 2, 3, 4, 5.0], [6, 7, 8, 9, 10.0], [11, 12, 13, 14, 15.0]],
             dtype=numpy.float64)
         hist = ba.Histogram2D(arr)
         # adding same content once again
@@ -113,8 +111,7 @@ class Histogram2DTest(unittest.TestCase):
         Testing newly create object
         """
         arr = numpy.array(
-            [[1, 2, 3, 4, 5.0], [6, 7, 8, 9, 10.0],
-             [11, 12, 13, 14, 15.0]],
+            [[1, 2, 3, 4, 5.0], [6, 7, 8, 9, 10.0], [11, 12, 13, 14, 15.0]],
             dtype=numpy.float64)
         hist = self.create_histogram(arr)
         arr_from_hist = hist.getArray()

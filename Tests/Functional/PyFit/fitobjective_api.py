@@ -29,8 +29,7 @@ class SimulationBuilder:
 
         simulation = ba.GISASSimulation()
         simulation.setSample(ml)
-        simulation.setDetectorParameters(self.m_ncol, 0, 1, self.m_nrow,
-                                         0, 1)
+        simulation.setDetectorParameters(self.m_ncol, 0, 1, self.m_nrow, 0, 1)
         return simulation
 
     def create_data(self):

@@ -45,7 +45,7 @@ def get_simulation(sample, scan_size=500):
     Defines and returns a specular simulation.
     """
     simulation = ba.SpecularSimulation()
-    scan = ba.AngularSpecScan(1.54*angstrom, scan_size, 0*deg, 2*deg)
+    scan = ba.AngularSpecScan(1.54*angstrom, scan_size, 0, 2*deg)
     simulation.setScan(scan)
     simulation.setSample(sample)
     return simulation

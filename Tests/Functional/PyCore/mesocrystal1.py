@@ -144,8 +144,7 @@ class MySampleBuilder(ISampleBuilder):
     # create lattice
     # -------------------------------------------------------------------------
     def createLattice(self, stacking_radius_a, stacking_radius_c):
-        result = HexagonalLattice(stacking_radius_a*2,
-                                  stacking_radius_c*2*2.3)
+        result = HexagonalLattice(stacking_radius_a*2, stacking_radius_c*2*2.3)
         result.setSelectionRule(SimpleSelectionRule(-1, 1, 1, 3))
         return result
 
@@ -175,9 +174,9 @@ def runTest():
 # create simulation
 def createSimulation():
     simulation = GISASSimulation()
-    simulation.setBeamParameters(1.77*angstrom, 0.4*deg, 0*deg)
+    simulation.setBeamParameters(1.77*angstrom, 0.4*deg, 0)
     simulation.beam().setIntensity(5.0090e+12)
-    simulation.setDetectorParameters(50, 0.2*deg, 2.5*deg, 50, 0*deg, 2.5*deg)
+    simulation.setDetectorParameters(50, 0.2*deg, 2.5*deg, 50, 0, 2.5*deg)
     return simulation
 
 

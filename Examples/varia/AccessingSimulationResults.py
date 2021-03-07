@@ -51,8 +51,8 @@ def get_simulation(sample):
     """
     Returns a GISAXS simulation with beam and detector defined.
     """
-    beam = ba.Beam(1e5, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
-    det = ba.SphericalDetector(201, -2*deg, 2*deg, 201, 0*deg, 2*deg)
+    beam = ba.Beam(1e5, 1*angstrom, ba.Direction(0.2*deg, 0))
+    det = ba.SphericalDetector(201, -2*deg, 2*deg, 201, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     return simulation
 

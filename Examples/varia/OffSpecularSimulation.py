@@ -30,7 +30,7 @@ def get_sample():
     particle.setRotation(particle_rotation)
 
     # Define interference functions
-    iff = ba.InterferenceFunction1DLattice(100*nm, 0*deg)
+    iff = ba.InterferenceFunction1DLattice(100*nm, 0)
     iff_pdf = ba.FTDecayFunction1DCauchy(1000000*nm)
     iff.setDecayFunction(iff_pdf)
 
@@ -64,7 +64,7 @@ def get_simulation(sample):
     # define the beam with alpha_i varied between alpha_i_min and alpha_i_max
     alpha_i_axis = ba.FixedBinAxis("alpha_i", 200, alpha_i_min*deg,
                                    alpha_i_max*deg)
-    simulation.setBeamParameters(1*angstrom, alpha_i_axis, 0*deg)
+    simulation.setBeamParameters(1*angstrom, alpha_i_axis, 0)
     simulation.beam().setIntensity(1e9)
     simulation.setSample(sample)
     return simulation

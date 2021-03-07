@@ -55,7 +55,7 @@ class SampleBuilder:
         sphere_ff = ba.FormFactorFullSphere(self.radius)
 
         sphere = ba.Particle(m_Ag, sphere_ff)
-        position = ba.kvector_t(0*ba.nm, 0*ba.nm, -1*self.hmdso_thickness)
+        position = ba.kvector_t(0, 0, -1*self.hmdso_thickness)
         sphere.setPosition(position)
         ln_distr = ba.DistributionLogNormal(self.radius, self.sigma)
         par_distr = ba.ParameterDistribution(

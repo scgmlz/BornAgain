@@ -43,9 +43,9 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0,
                                      2*deg)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     if add_masks:

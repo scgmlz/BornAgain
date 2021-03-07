@@ -152,8 +152,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 10.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(
-            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateZ.int")
@@ -185,8 +184,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 20.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(
-            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
 
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxCompositionRotateZandY.int")
@@ -218,8 +216,7 @@ class TransformBoxCompositionTest(unittest.TestCase):
         height = 50.0
         particle = Particle(particle_material,
                             FormFactorBox(length, width, height))
-        particle.setPosition(
-            kvector_t(0, 0, -layer_thickness/2.0 - height/2))
+        particle.setPosition(kvector_t(0, 0, -layer_thickness/2.0 - height/2))
         reference_data = self.get_result(particle)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_BoxStackComposition.int")
 

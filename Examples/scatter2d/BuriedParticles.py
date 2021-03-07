@@ -24,7 +24,7 @@ def get_sample():
 
     # Define particles
     particle = ba.Particle(material_Particle, ff)
-    particle_position = kvector_t(0*nm, 0*nm, -25.2*nm)
+    particle_position = kvector_t(0, 0, -25.2*nm)
     particle.setPosition(particle_position)
 
     # Define particle layouts
@@ -49,8 +49,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.15*nm, ba.Direction(0.15*deg, 0*deg))
-    detector = ba.SphericalDetector(200, 2*deg, 0*deg, 1*deg)
+    beam = ba.Beam(1, 0.15*nm, ba.Direction(0.15*deg, 0))
+    detector = ba.SphericalDetector(200, 2*deg, 0, 1*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation
 

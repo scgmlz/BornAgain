@@ -37,8 +37,8 @@ def runSimulation():
 
     # build and run experiment
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0*deg, 2*deg, 100, 0*deg, 2*deg)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setDetectorParameters(100, 0, 2*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.setSample(multi_layer)
     simulation.beam().setIntensity(1e2)
     simulation.runSimulation()

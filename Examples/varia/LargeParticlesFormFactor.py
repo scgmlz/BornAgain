@@ -46,8 +46,8 @@ def get_simulation(sample, integration_flag):
     Returns a GISAXS simulation with defined beam and detector.
     If integration_flag=True, the simulation will integrate over detector bins.
     """
-    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0*deg))
-    det = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0*deg, 2*deg)
+    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0))
+    det = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     simulation.getOptions().setMonteCarloIntegration(integration_flag, 50)
     if not "__no_terminal__" in globals():

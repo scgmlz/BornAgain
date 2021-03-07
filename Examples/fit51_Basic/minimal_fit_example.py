@@ -21,9 +21,8 @@ def get_simulation(params):
     multi_layer.addLayer(layer)
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
-                                     2*deg)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.setSample(multi_layer)
 
     return simulation

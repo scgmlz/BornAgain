@@ -91,7 +91,7 @@ class OutputDataIOTest(unittest.TestCase):
                                get_boundaries_flat_in_sin(10, -5*deg, 5*deg)))
         data.addAxis(
             ba.VariableBinAxis("axis1", 3,
-                               get_boundaries_flat_in_sin(3, 0*deg, 2*deg)))
+                               get_boundaries_flat_in_sin(3, 0, 2*deg)))
         fill_data(data)
         ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
         newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
@@ -102,7 +102,7 @@ class OutputDataIOTest(unittest.TestCase):
         data.addAxis(ba.FixedBinAxis("axis0", 10, -5, 5))
         data.addAxis(
             ba.VariableBinAxis("axis1", 3,
-                               get_boundaries_flat_in_sin(3, 0*deg, 2*deg)))
+                               get_boundaries_flat_in_sin(3, 0, 2*deg)))
         fill_data(data)
         ba.IntensityDataIOFactory.writeOutputData(data, "tmp.int")
         newdata = ba.IntensityDataIOFactory.readOutputData("tmp.int")
@@ -155,15 +155,13 @@ class OutputDataIOTest(unittest.TestCase):
         self.assertTrue(is_the_same_data(data, newdata))
 
     def test_SaveNumpyArray_ReadOutputData(self):
-        arr = numpy.array([[0, 1, 2, 3.0], [4, 5, 6, 7.0],
-                           [8, 9, 10, 11.0]])
+        arr = numpy.array([[0, 1, 2, 3.0], [4, 5, 6, 7.0], [8, 9, 10, 11.0]])
         numpy.savetxt('tmp.txt', arr)
         newdata = ba.IntensityDataIOFactory.readOutputData("tmp.txt")
         self.assertTrue(numpy.array_equal(newdata.getArray(), arr))
 
     def test_SaveNumpyArray_ReadRawDataVector(self):
-        arr = numpy.array([[0, 1, 2, 3.0], [4, 5, 6, 7.0],
-                           [8, 9, 10, 11.0]])
+        arr = numpy.array([[0, 1, 2, 3.0], [4, 5, 6, 7.0], [8, 9, 10, 11.0]])
         numpy.savetxt('tmp.txt', arr)
         newdata = numpy.array(
             ba.IntensityDataIOFactory.readOutputData(

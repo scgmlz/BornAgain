@@ -24,11 +24,11 @@ def get_sample():
     particle = ba.Particle(material_Particle, ff)
 
     # Define 2D lattices
-    lattice = ba.BasicLattice2D(200*nm, 50*nm, 90*deg, 0*deg)
+    lattice = ba.BasicLattice2D(200*nm, 50*nm, 90*deg, 0)
 
     # Define interference functions
     iff = ba.InterferenceFunction2DLattice(lattice)
-    iff_pdf = ba.FTDecayFunction2DCauchy(160*nm, 16*nm, 0*deg)
+    iff_pdf = ba.FTDecayFunction2DCauchy(160*nm, 16*nm, 0)
     iff.setDecayFunction(iff_pdf)
 
     # Define particle layouts
@@ -52,8 +52,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.16*nm, ba.Direction(0.3*deg, 0*deg))
-    detector = ba.SphericalDetector(100, -1.5*deg, 1.5*deg, 100, 0*deg, 2.5*deg)
+    beam = ba.Beam(1, 0.16*nm, ba.Direction(0.3*deg, 0))
+    detector = ba.SphericalDetector(100, -1.5*deg, 1.5*deg, 100, 0, 2.5*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation
 

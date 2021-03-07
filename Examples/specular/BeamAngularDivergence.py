@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 """
 An example of taking into account beam angular divergence
-and beam footprint correction in reflectometry calculations
-with BornAgain.
-
+and beam footprint correction in reflectometry calculations.
 """
 import numpy as np
 import bornagain as ba
+from bornagain import angstrom, deg
 from os import path
 from matplotlib import pyplot as plt
 
 # input parameters
-wavelength = 1.54*ba.angstrom
-alpha_i_min = 0*ba.deg  # min incident angle, deg
-alpha_i_max = 2*ba.deg  # max incident angle, rad
+wavelength = 1.54*angstrom
+alpha_i_min = 0      # min incident angle, deg
+alpha_i_max = 2*deg  # max incident angle, rad
 beam_sample_ratio = 0.01  # beam-to-sample size ratio
 
 # convolution parameters
-d_ang = 0.01*ba.deg  # spread width for incident angle
+d_ang = 0.01*deg  # spread width for incident angle
 n_sig = 3  # number of sigmas to convolve over
 n_points = 25  # number of points to convolve over
 
@@ -27,10 +26,10 @@ si_sld_real = 2.0704e-06  # \AA^{-2}
 n_repetitions = 10
 # Ni
 ni_sld_real = 9.4245e-06  # \AA^{-2}
-d_ni = 70*ba.angstrom
+d_ni = 70*angstrom
 # Ti
 ti_sld_real = -1.9493e-06  # \AA^{-2}
-d_ti = 30*ba.angstrom
+d_ti = 30*angstrom
 
 
 def get_sample():

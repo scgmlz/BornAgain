@@ -31,8 +31,7 @@ class Shape2DTest(unittest.TestCase):
         """
 
         # initialization from numpy array
-        points = numpy.array([[-1, -0.5], [2, -0.5], [2, 1.5],
-                              [-1, 1.5]])
+        points = numpy.array([[-1, -0.5], [2, -0.5], [2, 1.5], [-1, 1.5]])
 
         p = ba.Polygon(points)
         self.assertTrue(p.contains(-0.75, -0.25))

@@ -56,10 +56,8 @@ class StandaloneFitTest(unittest.TestCase):
         Testing fit of rosenbrock function
         """
         params = ba.Parameters()
-        params.add(
-            ba.Parameter("x", -1.2, ba.AttLimits.limited(-5, 5), 0.01))
-        params.add(ba.Parameter("y", 1, ba.AttLimits.limited(-5, 5),
-                                0.01))
+        params.add(ba.Parameter("x", -1.2, ba.AttLimits.limited(-5, 5), 0.01))
+        params.add(ba.Parameter("y", 1, ba.AttLimits.limited(-5, 5), 0.01))
 
         model = Rosenbrock()
         minimizer = ba.Minimizer()

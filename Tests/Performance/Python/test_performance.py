@@ -187,7 +187,7 @@ class CustomTest(FactoryTest):
         simulation.getOptions().setNumberOfThreads(-1)
         simulation.setDetectorParameters(100, phi_min*deg, phi_max*deg, 100,
                                          alpha_min*deg, alpha_max*deg)
-        simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+        simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
         return simulation
 
 

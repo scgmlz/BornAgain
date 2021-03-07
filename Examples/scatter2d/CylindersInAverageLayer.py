@@ -25,7 +25,7 @@ def get_sample(cyl_height=5*nm):
 
     # interference function
     interference = ba.InterferenceFunction2DLattice(
-        ba.SquareLattice2D(15*nm, 0*deg))
+        ba.SquareLattice2D(15*nm, 0))
     pdf = ba.FTDecayFunction2DCauchy(300*nm, 300*nm, 0)
     interference.setDecayFunction(pdf)
     particle_layout.setInterferenceFunction(interference)
@@ -43,8 +43,8 @@ def get_sample(cyl_height=5*nm):
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
-    detector = ba.SphericalDetector(100, -2*deg, 2*deg, 100, 0*deg, 2*deg)
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0))
+    detector = ba.SphericalDetector(100, -2*deg, 2*deg, 100, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     simulation.getOptions().setUseAvgMaterials(True)
     return simulation

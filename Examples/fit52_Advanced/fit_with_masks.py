@@ -42,9 +42,9 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0,
                                      2*deg)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
 
@@ -90,7 +90,7 @@ def add_mask_to_simulation(simulation):
     simulation.maskAll()
 
     # set mask to simulate pacman's head
-    simulation.addMask(ba.Ellipse(0*deg, 1*deg, 0.5*deg, 0.5*deg), False)
+    simulation.addMask(ba.Ellipse(0, 1*deg, 0.5*deg, 0.5*deg), False)
 
     # set mask for pacman's eye
     simulation.addMask(ba.Ellipse(0.11*deg, 1.25*deg, 0.05*deg, 0.05*deg), True)

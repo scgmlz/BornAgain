@@ -45,9 +45,9 @@ def get_simulation(params):
     incident_angle = params["incident_angle"]
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0*deg,
+    simulation.setDetectorParameters(50, -1.5*deg, 1.5*deg, 50, 0,
                                      2*deg)
-    simulation.setBeamParameters(1*angstrom, incident_angle, 0*deg)
+    simulation.setBeamParameters(1*angstrom, incident_angle, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     return simulation

@@ -33,7 +33,7 @@ def get_sample():
 
 def get_simulation(sample):
     # Beam from above (perpendicular to sample):
-    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0*deg))
+    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0))
 
     # Detector opposite to source:
     detPos = 2000 # distance from sample center to detector in mm

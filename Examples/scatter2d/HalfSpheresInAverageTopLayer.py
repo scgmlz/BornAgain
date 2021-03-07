@@ -18,17 +18,17 @@ def get_sample():
     material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff = ba.FormFactorTruncatedSphere(5*nm, 5*nm, 0*nm)
+    ff = ba.FormFactorTruncatedSphere(5*nm, 5*nm, 0)
 
     # Define particles
     particle = ba.Particle(material_Particle, ff)
 
     # Define 2D lattices
-    lattice = ba.BasicLattice2D(10*nm, 10*nm, 90*deg, 0*deg)
+    lattice = ba.BasicLattice2D(10*nm, 10*nm, 90*deg, 0)
 
     # Define interference functions
     iff = ba.InterferenceFunction2DLattice(lattice)
-    iff_pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm, 0*deg)
+    iff_pdf = ba.FTDecayFunction2DCauchy(100*nm, 100*nm, 0)
     iff.setDecayFunction(iff_pdf)
 
     # Define particle layouts
@@ -53,8 +53,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
-    detector = ba.SphericalDetector(100, -2*deg, 2*deg, 100, 0*deg, 2*deg)
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0))
+    detector = ba.SphericalDetector(100, -2*deg, 2*deg, 100, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     simulation.getOptions().setUseAvgMaterials(True)
     return simulation

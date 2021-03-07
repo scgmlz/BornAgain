@@ -28,7 +28,7 @@ def get_sample():
 
     # Define particles
     particle_1 = ba.Particle(material_Core, ff_1)
-    particle_1_position = kvector_t(0*nm, 0*nm, 2*nm)
+    particle_1_position = kvector_t(0, 0, 2*nm)
     particle_1.setPosition(particle_1_position)
     particle_2 = ba.Particle(material_Shell, ff_2)
 
@@ -59,11 +59,10 @@ def get_simulation(sample):
     simulation = ba.GISASSimulation()
 
     # Defining detector
-    simulation.setDetectorParameters(200, -3*deg, 3*deg, 200, -3*deg,
-                                     3*deg)
+    simulation.setDetectorParameters(200, -3*deg, 3*deg, 200, -3*deg, 3*deg)
 
     # Defining beam parameters
-    simulation.setBeamParameters(0.5*nm, 0*deg, 0*deg)
+    simulation.setBeamParameters(0.5*nm, 0, 0)
     simulation.beam().setIntensity(1e12)
 
     # Defining beam polarization and polarization analysis for spin-flip channel

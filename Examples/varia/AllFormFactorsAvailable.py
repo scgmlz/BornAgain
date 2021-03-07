@@ -65,7 +65,7 @@ def get_simulation(sample):
     simulation = ba.GISASSimulation()
     simulation.setDetectorParameters(100, phi_min*deg, phi_max*deg, 100,
                                      alpha_min*deg, alpha_max*deg)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.setSample(sample)
     return simulation
 

@@ -40,11 +40,10 @@ def getSimulationIntensity(rho_beam, efficiency):
 
     # build and run experiment
     simulation = GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
-                                     2*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
     zplus = kvector_t(0, 0, 1)
     simulation.detector().setAnalyzerProperties(zplus, efficiency, 0.5)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setPolarization(rho_beam)
     simulation.setSample(multi_layer)
     simulation.beam().setIntensity(1e9)

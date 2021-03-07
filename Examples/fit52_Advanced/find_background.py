@@ -48,9 +48,9 @@ def get_simulation(params):
     scale = params["scale"]
 
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0*deg,
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0,
                                      2*deg)
-    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e12*scale)
     simulation.setBackground(ba.ConstantBackground(background))
     simulation.setSample(get_sample(params))

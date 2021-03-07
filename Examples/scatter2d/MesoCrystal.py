@@ -24,9 +24,9 @@ def get_sample():
     particle_1 = ba.Particle(material_Particle, ff_1)
 
     # Define 3D lattices
-    lattice = ba.Lattice3D(ba.kvector_t(5*nm, 0*nm, 0*nm),
-                           ba.kvector_t(0*nm, 5*nm, 0*nm),
-                           ba.kvector_t(0*nm, 0*nm, 5*nm))
+    lattice = ba.Lattice3D(ba.kvector_t(5*nm, 0, 0),
+                           ba.kvector_t(0, 5*nm, 0),
+                           ba.kvector_t(0, 0, 5*nm))
 
     # Define crystals
     crystal = ba.Crystal(particle_1, lattice)
@@ -54,8 +54,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
-    detector = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0*deg, 2*deg)
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0))
+    detector = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation
 
