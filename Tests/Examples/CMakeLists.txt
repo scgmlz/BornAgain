@@ -44,7 +44,6 @@ file(GLOB examples
     ${EXAMPLES_DIR}/specular/*.py
     ${EXAMPLES_DIR}/varia/*.py
     ${EXAMPLES_DIR}/fit55_Specular/FitSpecularBasics.py)
-list(REMOVE_ITEM examples ${EXAMPLES_DIR}/varia/SimulationParameters.py)
 run_examples("${examples}" "")
 
 ############################################################################
@@ -111,6 +110,3 @@ test_example(varia/CustomFormFactor 2e-10)
 test_example(varia/DepthProbe 2e-10)
 test_example(varia/Interference1DLattice 1.5)
 test_example(varia/OffSpecularSimulation 2e-10)
-
-# TODO replace after revision of parameter machinery
-# test_example(varia/SimulationParameters 2e-10)
