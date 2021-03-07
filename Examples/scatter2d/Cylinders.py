@@ -43,7 +43,7 @@ def get_simulation(sample):
 
     # Define detector
     nPix = 200 # pixels per direction
-    detector = ba.SphericalDetector(nPix, -2*deg, 2*deg, nPix, 0*deg, 2*deg)
+    detector = ba.SphericalDetector(nPix, -2*deg, 2*deg, nPix, 0*deg, 3*deg)
 
     return ba.GISASSimulation(beam, sample, detector)
 
