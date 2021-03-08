@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Core shell nanoparticles
 """
@@ -13,11 +14,11 @@ def get_sample():
     # Define materials
     material_Core = ba.HomogeneousMaterial("Core", 6e-05, 2e-08)
     material_Shell = ba.HomogeneousMaterial("Shell", 0.0001, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff_1 = ba.FormFactorBox(12.0*nm, 12.0*nm, 7.0*nm)
-    ff_2 = ba.FormFactorBox(16.0*nm, 16.0*nm, 8.0*nm)
+    ff_1 = ba.FormFactorBox(12*nm, 12*nm, 7*nm)
+    ff_2 = ba.FormFactorBox(16*nm, 16*nm, 8*nm)
 
     # Define particles
     particle_1 = ba.Particle(material_Core, ff_1)
@@ -31,7 +32,7 @@ def get_sample():
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle_3, 1.0)
+    layout.addParticle(particle_3, 1)
     layout.setInterferenceFunction(iff)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.01)
@@ -48,8 +49,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 0.1*nm, ba.Direction(0.2*deg, 0*deg))
-    detector = ba.SphericalDetector(200, 2*deg, 0*deg, 1*deg)
+    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0))
+    detector = ba.SphericalDetector(200, 2*deg, 0, 1*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
     return simulation
 

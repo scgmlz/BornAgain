@@ -15,18 +15,19 @@ from bornagain import *
 def getSimulationIntensity(rho_beam, efficiency):
     print("- simulate", flush=True)
     # defining materials
-    mAmbience = HomogeneousMaterial("Vacuum", 0.0, 0.0)
-    mSubstrate = HomogeneousMaterial("Substrate", 15e-6, 0.0)
+    mAmbience = HomogeneousMaterial("Vacuum", 0, 0)
+    mSubstrate = HomogeneousMaterial("Substrate", 15e-6, 0)
 
     magnetization = kvector_t(0, 1e6, 0)
 
-    magParticle = HomogeneousMaterial("magParticle", 5e-6, 0.0, magnetization)
+    magParticle = HomogeneousMaterial("magParticle", 5e-6, 0,
+                                      magnetization)
     # collection of particles
     cylinder_ff = FormFactorCylinder(5*nm, 5*nm)
     cylinder = Particle(magParticle, cylinder_ff)
 
     particle_layout = ParticleLayout()
-    particle_layout.addParticle(cylinder, 1.0)
+    particle_layout.addParticle(cylinder, 1)
     interference = InterferenceFunctionNone()
     particle_layout.setInterferenceFunction(interference)
 
@@ -40,11 +41,10 @@ def getSimulationIntensity(rho_beam, efficiency):
 
     # build and run experiment
     simulation = GISASSimulation()
-    simulation.setDetectorParameters(100, -1*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    zplus = kvector_t(0.0, 0.0, 1.0)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
+    zplus = kvector_t(0, 0, 1)
     simulation.detector().setAnalyzerProperties(zplus, efficiency, 0.5)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setPolarization(rho_beam)
     simulation.setSample(multi_layer)
     simulation.beam().setIntensity(1e9)
@@ -70,26 +70,30 @@ def get_reference_data(filename):
 # --------------------------------------------------------------
 def run_test():
     print("run test", flush=True)
-    zplus = kvector_t(0.0, 0.0, 1.0)
-    zmin = kvector_t(0.0, 0.0, -1.0)
+    zplus = kvector_t(0, 0, 1)
+    zmin = kvector_t(0, 0, -1)
 
-    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zplus, 1.0), 'polmagcylinders2_reference_00.int')
-    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zplus, -1.0), 'polmagcylinders2_reference_01.int')
-    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zmin, 1.0), 'polmagcylinders2_reference_10.int')
-    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zmin, -1.0), 'polmagcylinders2_reference_11.int')
+    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zplus, 1), 'polmagcylinders2_reference_00.int')
+    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zplus, -1), 'polmagcylinders2_reference_01.int')
+    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zmin, 1), 'polmagcylinders2_reference_10.int')
+    # IntensityDataIOFactory.writeIntensityData(getSimulationIntensity(zmin, -1), 'polmagcylinders2_reference_11.int')
     diff = 0.0
     diff += get_difference(
-        getSimulationIntensity(zplus, 1.0).array(),
-        get_reference_data('polmagcylinders2_reference_00.int.gz').getArray())
+        getSimulationIntensity(zplus, 1).array(),
+        get_reference_data(
+            'polmagcylinders2_reference_00.int.gz').getArray())
     diff += get_difference(
-        getSimulationIntensity(zplus, -1.0).array(),
-        get_reference_data('polmagcylinders2_reference_01.int.gz').getArray())
+        getSimulationIntensity(zplus, -1).array(),
+        get_reference_data(
+            'polmagcylinders2_reference_01.int.gz').getArray())
     diff += get_difference(
-        getSimulationIntensity(zmin, 1.0).array(),
-        get_reference_data('polmagcylinders2_reference_10.int.gz').getArray())
+        getSimulationIntensity(zmin, 1).array(),
+        get_reference_data(
+            'polmagcylinders2_reference_10.int.gz').getArray())
     diff += get_difference(
-        getSimulationIntensity(zmin, -1.0).array(),
-        get_reference_data('polmagcylinders2_reference_11.int.gz').getArray())
+        getSimulationIntensity(zmin, -1).array(),
+        get_reference_data(
+            'polmagcylinders2_reference_11.int.gz').getArray())
 
     diff /= 4.0
     status = "OK"

@@ -11,7 +11,7 @@ import bornagain as ba
 from bornagain import deg, kvector_t, nm
 
 mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
-mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+mAmbience = ba.HomogeneousMaterial("Vacuum", 0, 0)
 mParticle = ba.HomogeneousMaterial("Ag", 1.245e-5, 5.419e-7)
 sphere_radius = 10.0
 bottom_cup_height = 4.0
@@ -55,18 +55,18 @@ class SlicedSpheresTest(unittest.TestCase):
 
         topCup = ba.Particle(
             top_material,
-            ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height,
-                                         0))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         bottomCup = ba.Particle(
             bottom_material,
-            ba.FormFactorTruncatedSphere(sphere_radius, sphere_radius*2,
-                                         sphere_radius*2 - bottom_cup_height))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2,
+                sphere_radius*2 - bottom_cup_height))
 
         #  origin of resulting sphere will be at the bottom
         result = ba.ParticleComposition()
-        result.addParticle(topCup, kvector_t(0.0, 0.0, bottom_cup_height))
-        result.addParticle(bottomCup, kvector_t(0.0, 0.0, 0.0))
+        result.addParticle(topCup, kvector_t(0, 0, bottom_cup_height))
+        result.addParticle(bottomCup, kvector_t(0, 0, 0))
 
         return result
 
@@ -79,18 +79,18 @@ class SlicedSpheresTest(unittest.TestCase):
 
         topCup = ba.Particle(
             top_material,
-            ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height,
-                                         0))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         bottomCup = ba.Particle(
             bottom_material,
-            ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height, 0))
+            ba.FormFactorTruncatedSphere(sphere_radius, bottom_cup_height,
+                                         0))
         bottomCup.setRotation(ba.RotationX(180*deg))
 
         #  origin of resulting sphere will be at the bottom
         result = ba.ParticleComposition()
-        result.addParticle(topCup, kvector_t(0.0, 0.0, bottom_cup_height))
-        result.addParticle(bottomCup, kvector_t(0.0, 0.0, bottom_cup_height))
+        result.addParticle(topCup, kvector_t(0, 0, bottom_cup_height))
+        result.addParticle(bottomCup, kvector_t(0, 0, bottom_cup_height))
 
         return result
 
@@ -102,7 +102,8 @@ class SlicedSpheresTest(unittest.TestCase):
         """
 
         # spherical particle
-        sphere = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
+        sphere = ba.Particle(mParticle,
+                             ba.FormFactorFullSphere(sphere_radius))
         reference = self.get_result(sphere)
 
         # spherical composition
@@ -164,7 +165,8 @@ class SlicedSpheresTest(unittest.TestCase):
         shift = 3*nm
 
         # spherical particle
-        sphere = ba.Particle(mParticle, ba.FormFactorFullSphere(sphere_radius))
+        sphere = ba.Particle(mParticle,
+                             ba.FormFactorFullSphere(sphere_radius))
         sphere.setPosition(0, 0, -shift)
         reference = self.get_result(sphere)
 
@@ -189,9 +191,8 @@ class SlicedSpheresTest(unittest.TestCase):
         # truncated sphere on top of substrate with height 16nm
         truncatedSphere = ba.Particle(
             mParticle,
-            ba.FormFactorTruncatedSphere(sphere_radius,
-                                         sphere_radius*2 - bottom_cup_height,
-                                         0))
+            ba.FormFactorTruncatedSphere(
+                sphere_radius, sphere_radius*2 - bottom_cup_height, 0))
         reference = self.get_result(truncatedSphere)
 
         # Particle composition, top part made of same material, as particle. Bottom part made of same material as substrate.

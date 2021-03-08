@@ -23,14 +23,14 @@ class SimulationBuilder:
         self.m_pars = dict(pars)
 
         ml = ba.MultiLayer()
-        material = ba.HomogeneousMaterial("Shell", 0.0, 0.0)
+        material = ba.HomogeneousMaterial("Shell", 0, 0)
         ml.addLayer(ba.Layer(material))
         ml.addLayer(ba.Layer(material))
 
         simulation = ba.GISASSimulation()
         simulation.setSample(ml)
-        simulation.setDetectorParameters(self.m_ncol, 0.0, 1.0, self.m_nrow,
-                                         0.0, 1.0)
+        simulation.setDetectorParameters(self.m_ncol, 0, 1, self.m_nrow, 0,
+                                         1)
         return simulation
 
     def create_data(self):
@@ -44,7 +44,8 @@ class FitObserver:
 
     def update(self, fit_objective):
         self.m_ncalls += 1
-        self.m_iterations.append(fit_objective.iterationInfo().iterationCount())
+        self.m_iterations.append(
+            fit_objective.iterationInfo().iterationCount())
 
 
 class FitObjectiveAPITest(unittest.TestCase):
@@ -53,15 +54,15 @@ class FitObjectiveAPITest(unittest.TestCase):
         Testing simulation construction using Python callback
         """
         pars = ba.Parameters()
-        pars.add(ba.Parameter("par0", 0.0))
-        pars.add(ba.Parameter("par1", 1.0))
+        pars.add(ba.Parameter("par0", 0))
+        pars.add(ba.Parameter("par1", 1))
 
         builder = SimulationBuilder()
         data = builder.create_data()
 
         # adding simulation callback and experimental data
         objective = ba.FitObjective()
-        objective.addSimulationAndData(builder.build_simulation, data, 1.0)
+        objective.addSimulationAndData(builder.build_simulation, data, 1)
         self.assertEqual(builder.m_ncalls, 0)
         self.assertEqual(objective.numberOfFitElements(), 0)
 
@@ -69,31 +70,32 @@ class FitObjectiveAPITest(unittest.TestCase):
         objective.evaluate(pars)
         self.assertEqual(builder.m_ncalls, 1)
         self.assertEqual(objective.numberOfFitElements(), builder.size())
-        self.assertEqual(builder.m_pars["par0"], 0.0)
-        self.assertEqual(builder.m_pars["par1"], 1.0)
+        self.assertEqual(builder.m_pars["par0"], 0)
+        self.assertEqual(builder.m_pars["par1"], 1)
 
         # checking arrays of experimental and simulated data
         expected_sim = []
         expected_data = []
         for i in range(0, builder.size()):
-            expected_sim.append(0.0)
-            expected_data.append(1.0)
+            expected_sim.append(0)
+            expected_data.append(1)
         self.assertEqual(expected_sim, list(objective.simulation_array()))
-        self.assertEqual(expected_data, list(objective.experimental_array()))
+        self.assertEqual(expected_data,
+                         list(objective.experimental_array()))
 
     def test_FittingObserver(self):
         """
         Testing simulation construction using Python callback
         """
         pars = ba.Parameters()
-        pars.add(ba.Parameter("par0", 0.0))
-        pars.add(ba.Parameter("par1", 1.0))
+        pars.add(ba.Parameter("par0", 0))
+        pars.add(ba.Parameter("par1", 1))
 
         # adding simulation callback and experimental data
         builder = SimulationBuilder()
         data = builder.create_data()
         objective = ba.FitObjective()
-        objective.addSimulationAndData(builder.build_simulation, data, 1.0)
+        objective.addSimulationAndData(builder.build_simulation, data, 1)
 
         # adding observer
         observer = FitObserver()
@@ -112,15 +114,15 @@ class FitObjectiveAPITest(unittest.TestCase):
         """
 
         params = ba.Parameters()
-        params.add("bbb", 1.0)
-        params.add("aaa", 2.0)
+        params.add("bbb", 1)
+        params.add("aaa", 2)
 
         info = ba.IterationInfo()
-        info.update(params, 3.0)
+        info.update(params, 3)
         par_map = info.parameterMap()
 
         expected_names = ["aaa", "bbb"]
-        expected_values = [2.0, 1.0]
+        expected_values = [2, 1.0]
         names = []
         values = []
         for key in par_map:

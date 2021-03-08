@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Custom form factor in DWBA.
 """
@@ -49,15 +50,15 @@ def get_sample():
     Returns a sample with particles, having a custom form factor, on a substrate.
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
     # collection of particles
-    ff = CustomFormFactor(20.0*nm, 15.0*nm)
+    ff = CustomFormFactor(20*nm, 15*nm)
     particle = ba.Particle(m_particle, ff)
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(particle, 1.0)
+    particle_layout.addParticle(particle, 1)
     vacuum_layer = ba.Layer(m_vacuum)
     vacuum_layer.addLayout(particle_layout)
     substrate_layer = ba.Layer(m_substrate)
@@ -70,8 +71,8 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1.0, 1.0*angstrom, ba.Direction(0.2*deg, 0.0*deg))
-    det = ba.SphericalDetector(100, -1*deg, 1*deg, 100, 0*deg, 2*deg)
+    beam = ba.Beam(1, 1*angstrom, ba.Direction(0.2*deg, 0))
+    det = ba.SphericalDetector(100, -1*deg, 1*deg, 100, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     simulation.getOptions().setNumberOfThreads(
         -1)  # deactivate multithreading (why?)

@@ -7,7 +7,7 @@ from bornagain import nm, deg
 import bornplot as bp
 import math
 
-det = ba.SphericalDetector(200, 10*deg, 0*deg, 0*deg)
+det = ba.SphericalDetector(200, 10*deg, 0, 0)
 n = 3
 results = []
 edge = 3.2

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Simulation demo: magnetic spheres in substrate
 """
@@ -14,20 +15,21 @@ def get_sample():
     magnetic_field = kvector_t(0, 0, 10000000)
     material_Particle = ba.HomogeneousMaterial("Particle", 2e-05, 4e-07,
                                                magnetic_field)
-    material_Substrate = ba.HomogeneousMaterial("Substrate", 7e-06, 1.8e-07)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Substrate = ba.HomogeneousMaterial("Substrate", 7e-06,
+                                                1.8e-07)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff = ba.FormFactorFullSphere(5.0*nm)
+    ff = ba.FormFactorFullSphere(5*nm)
 
     # Define particles
     particle = ba.Particle(material_Particle, ff)
-    particle_position = kvector_t(0.0*nm, 0.0*nm, -10.0*nm)
+    particle_position = kvector_t(0, 0, -10*nm)
     particle.setPosition(particle_position)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle, 1.0)
+    layout.addParticle(particle, 1)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.01)
 
@@ -45,13 +47,13 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1e+12, 0.1*nm, ba.Direction(0.5*deg, 0*deg))
-    beam_polarization = kvector_t(0.0, 0.0, 1.0)
+    beam = ba.Beam(1e+12, 0.1*nm, ba.Direction(0.5*deg, 0))
+    beam_polarization = kvector_t(0, 0, 1)
     beam.setPolarization(beam_polarization)
-    detector = ba.SphericalDetector(200, 6*deg, 0*deg, 3*deg)
+    detector = ba.SphericalDetector(200, 6*deg, 0, 3*deg)
     simulation = ba.GISASSimulation(beam, sample, detector)
-    analyzer_direction = kvector_t(0.0, 0.0, -1.0)
-    simulation.detector().setAnalyzerProperties(analyzer_direction, 1.0, 0.5)
+    analyzer_direction = kvector_t(0, 0, -1)
+    simulation.detector().setAnalyzerProperties(analyzer_direction, 1, 0.5)
     return simulation
 
 

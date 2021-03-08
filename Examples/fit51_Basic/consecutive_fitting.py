@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: running one fit after another using different minimizers.
 
@@ -19,7 +20,7 @@ def get_sample(params):
     radius = params["radius"]
     height = params["height"]
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -44,9 +45,8 @@ def get_simulation(params):
     Returns a GISAXS simulation with beam and detector defined.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0.0*deg, 2.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, 0, 2*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     return simulation
@@ -56,7 +56,7 @@ def create_real_data():
     """
     Generating "real" data by adding noise to the simulated data.
     """
-    params = {'radius': 5.0*nm, 'height': 5.0*nm}
+    params = {'radius': 5*nm, 'height': 5*nm}
 
     simulation = get_simulation(params)
     simulation.runSimulation()
@@ -78,7 +78,7 @@ def run_fitting():
     real_data = create_real_data()
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(get_simulation, real_data, 1.0)
+    fit_objective.addSimulationAndData(get_simulation, real_data, 1)
     fit_objective.initPrint(10)
     fit_objective.initPlot(10)
     """
@@ -87,8 +87,8 @@ def run_fitting():
     to puzzle our minimizer's as much as possible.
     """
     params = ba.Parameters()
-    params.add("height", 1.*nm, min=0.01, max=30.0, step=0.05*nm)
-    params.add("radius", 20.*nm, min=0.01, max=30.0, step=0.05*nm)
+    params.add("height", 1.*nm, min=0.01, max=30, step=0.05*nm)
+    params.add("radius", 20.*nm, min=0.01, max=30, step=0.05*nm)
     """
     Now we run first minimization round using the Genetic minimizer.
     The Genetic minimizer is able to explore large parameter space

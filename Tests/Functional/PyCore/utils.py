@@ -41,6 +41,6 @@ def get_reference_data(filename):
 
 
 def get_simulation_MiniGISAS(sample):
-    detector = ba.SphericalDetector(25, -2*deg, 2*deg, 25, 0*deg, 2*deg)
+    detector = ba.SphericalDetector(25, -2*deg, 2*deg, 25, 0, 2*deg)
     beam = ba.Beam(1., 1*angstrom, ba.Direction(0.2*deg, 0))
     return ba.GISASSimulation(beam, sample, detector)

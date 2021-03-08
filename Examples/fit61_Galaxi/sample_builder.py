@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 3 layers system (substrate, teflon, air).
 Vacuum layer is populated with spheres with size distribution.
@@ -42,11 +43,13 @@ class SampleBuilder:
         """
 
         # defining materials
-        m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+        m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
         m_Si = ba.HomogeneousMaterial("Si", 5.78164736e-6, 1.02294578e-7)
         m_Ag = ba.HomogeneousMaterial("Ag", 2.24749529E-5, 1.61528396E-6)
-        m_PTFE = ba.HomogeneousMaterial("PTFE", 5.20508729E-6, 1.96944292E-8)
-        m_HMDSO = ba.HomogeneousMaterial("HMDSO", 2.0888308E-6, 1.32605651E-8)
+        m_PTFE = ba.HomogeneousMaterial("PTFE", 5.20508729E-6,
+                                        1.96944292E-8)
+        m_HMDSO = ba.HomogeneousMaterial("HMDSO", 2.0888308E-6,
+                                         1.32605651E-8)
 
         # collection of particles with size distribution
         nparticles = 20
@@ -54,31 +57,31 @@ class SampleBuilder:
         sphere_ff = ba.FormFactorFullSphere(self.radius)
 
         sphere = ba.Particle(m_Ag, sphere_ff)
-        position = ba.kvector_t(0*ba.nm, 0*ba.nm, -1.0*self.hmdso_thickness)
+        position = ba.kvector_t(0, 0, -1*self.hmdso_thickness)
         sphere.setPosition(position)
         ln_distr = ba.DistributionLogNormal(self.radius, self.sigma)
         par_distr = ba.ParameterDistribution(
             "/Particle/FullSphere/Radius", ln_distr, nparticles, nfwhm,
-            ba.RealLimits.limited(0.0, self.hmdso_thickness/2.0))
+            ba.RealLimits.limited(0, self.hmdso_thickness/2))
         part_coll = ba.ParticleDistribution(sphere, par_distr)
 
         # interference function
         interference = ba.InterferenceFunctionRadialParaCrystal(
             self.distance, 1e6*ba.nm)
         interference.setKappa(self.kappa)
-        interference.setDomainSize(20000.0)
+        interference.setDomainSize(20000)
         pdf = ba.FTDistribution1DGauss(self.disorder)
         interference.setProbabilityDistribution(pdf)
 
         # assembling particle layout
         layout = ba.ParticleLayout()
-        layout.addParticle(part_coll, 1.0)
+        layout.addParticle(part_coll, 1)
         layout.setInterferenceFunction(interference)
         layout.setTotalParticleSurfaceDensity(1)
 
         # roughness
-        r_ptfe = ba.LayerRoughness(2.3*ba.nm, 0.3, 5.0*ba.nm)
-        r_hmdso = ba.LayerRoughness(1.1*ba.nm, 0.3, 5.0*ba.nm)
+        r_ptfe = ba.LayerRoughness(2.3*ba.nm, 0.3, 5*ba.nm)
+        r_hmdso = ba.LayerRoughness(1.1*ba.nm, 0.3, 5*ba.nm)
 
         # layers
         vacuum_layer = ba.Layer(m_vacuum)

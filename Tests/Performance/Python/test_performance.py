@@ -42,8 +42,8 @@ except:
     get_cpu_time = lambda: None
 
 # globals used in custom form factor
-phi_min, phi_max = -1.0, 1.0
-alpha_min, alpha_max = 0.0, 2.0
+phi_min, phi_max = -1, 1.0
+alpha_min, alpha_max = 0, 2.0
 
 
 # user-defined custom form factor
@@ -76,7 +76,8 @@ class CustomFormFactor(IBornFF):
 
 # class for performance test, constructed using sample factories
 class FactoryTest:
-    def __init__(self, name, simulation_name, sample_builder, nrepetitions):
+    def __init__(self, name, simulation_name, sample_builder,
+                 nrepetitions):
         self.m_test_name = name
         self.m_simulation_name = simulation_name
         self.m_sample_builder_name = sample_builder
@@ -158,15 +159,15 @@ class CustomTest(FactoryTest):
         Build and return the sample to calculate custom form factor in Distorted Wave Born Approximation.
         """
         # defining materials
-        m_vacuum = HomogeneousMaterial("Vacuum", 0.0, 0.0)
+        m_vacuum = HomogeneousMaterial("Vacuum", 0, 0)
         m_substrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
         m_particle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
         # collection of particles
-        ff = CustomFormFactor(343.0*nm, 7.0*nm)
+        ff = CustomFormFactor(343*nm, 7*nm)
         particle = Particle(m_particle, ff)
         particle_layout = ParticleLayout()
-        particle_layout.addParticle(particle, 1.0)
+        particle_layout.addParticle(particle, 1)
         vacuum_layer = Layer(m_vacuum)
         vacuum_layer.addLayout(particle_layout)
         substrate_layer = Layer(m_substrate)
@@ -185,9 +186,9 @@ class CustomTest(FactoryTest):
         """
         simulation = GISASSimulation()
         simulation.getOptions().setNumberOfThreads(-1)
-        simulation.setDetectorParameters(100, phi_min*deg, phi_max*deg, 100,
-                                         alpha_min*deg, alpha_max*deg)
-        simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+        simulation.setDetectorParameters(100, phi_min*deg, phi_max*deg,
+                                         100, alpha_min*deg, alpha_max*deg)
+        simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
         return simulation
 
 
@@ -201,17 +202,24 @@ class PerformanceTests:
         self.m_pyversion = ""
         self.m_filename = filename
 
-        self.add("MultiLayer", "MaxiGISAS", "MultiLayerWithRoughnessBuilder", 1)
-        self.add("CylindersInDWBA", "MaxiGISAS", "CylindersInDWBABuilder", 10)
-        self.add("RotatedPyramids", "MaxiGISAS", "RotatedPyramidsBuilder", 10)
-        self.add("CoreShell", "MaxiGISAS", "CoreShellParticleBuilder", 10)
-        self.add("SquareLattice2D", "MaxiGISAS", "SquareLattice2DBuilder", 10)
-        self.add("RadialParaCrystal", "MaxiGISAS", "RadialParaCrystalBuilder",
+        self.add("MultiLayer", "MaxiGISAS",
+                 "MultiLayerWithRoughnessBuilder", 1)
+        self.add("CylindersInDWBA", "MaxiGISAS", "CylindersInDWBABuilder",
                  10)
-        self.add("HexParaCrystal", "BasicGISAS", "HexParaCrystalBuilder", 1)
-        self.add("SSCA", "MaxiGISAS", "SizeDistributionSSCAModelBuilder", 10)
+        self.add("RotatedPyramids", "MaxiGISAS", "RotatedPyramidsBuilder",
+                 10)
+        self.add("CoreShell", "MaxiGISAS", "CoreShellParticleBuilder", 10)
+        self.add("SquareLattice2D", "MaxiGISAS", "SquareLattice2DBuilder",
+                 10)
+        self.add("RadialParaCrystal", "MaxiGISAS",
+                 "RadialParaCrystalBuilder", 10)
+        self.add("HexParaCrystal", "BasicGISAS", "HexParaCrystalBuilder",
+                 1)
+        self.add("SSCA", "MaxiGISAS", "SizeDistributionSSCAModelBuilder",
+                 10)
         self.add("Mesocrystal", "MaxiGISAS", "MesoCrystalBuilder", 2)
-        self.add("PolMagCyl", "MaxiGISAS00", "MagneticCylindersBuilder", 10)
+        self.add("PolMagCyl", "MaxiGISAS00", "MagneticCylindersBuilder",
+                 10)
 
         # custom form factor is a special case since it's not in the registry
         self.m_tests.append(CustomTest("Custom FF", 10))
@@ -221,7 +229,8 @@ class PerformanceTests:
 
     def add(self, name, simulation_name, sample_builder, nrepetitions):
         self.m_tests.append(
-            FactoryTest(name, simulation_name, sample_builder, nrepetitions))
+            FactoryTest(name, simulation_name, sample_builder,
+                        nrepetitions))
 
     # execute all performance tests
     def execute(self):
@@ -279,7 +288,8 @@ class PerformanceTests:
 
     # determine platform, architecture, python version, etc.
     def init_sysinfo(self):
-        system, node, release, version, machine, processor = platform.uname()
+        system, node, release, version, machine, processor = platform.uname(
+        )
         self.m_datime = datetime.datetime.strftime(datetime.datetime.now(),
                                                    '%Y-%m-%d %H:%M:%S')
         self.m_hostname = node

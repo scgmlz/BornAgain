@@ -9,7 +9,7 @@ from bornagain import deg, nm
 
 
 def get_sample():
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_solution = ba.HomogeneousMaterial("Solution", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -19,8 +19,8 @@ def get_sample():
     layout = ba.ParticleLayout()
     layout.addParticle(particle)
     solution_layer = ba.Layer(m_solution, 1000*nm)
-       # TODO: make intensity proportional to thickness,
-       #       https://github.com/scgmlz/BornAgain/issues/1222
+    # TODO: make intensity proportional to thickness,
+    #       https://github.com/scgmlz/BornAgain/issues/1222
     solution_layer.addLayout(layout)
 
     # Flat sample layer sandwiched between semi-infinite vacuum layers:
@@ -33,12 +33,12 @@ def get_sample():
 
 def get_simulation(sample):
     # Beam from above (perpendicular to sample):
-    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0.0*deg))
+    beam = ba.Beam(1, 0.4*nm, ba.Direction(90*deg, 0))
 
     # Detector opposite to source:
-    detPos = 2000 # distance from sample center to detector in mm
-    detWid =  500 # detector width in mm
-    detPix =  200 # number of pixels per direction
+    detPos = 2000  # distance from sample center to detector in mm
+    detWid = 500  # detector width in mm
+    detPix = 200  # number of pixels per direction
     det = ba.RectangularDetector(detPix, detWid, detPix, detWid)
     det.setPerpendicularToDirectBeam(detPos, detWid/2, detWid/2)
 

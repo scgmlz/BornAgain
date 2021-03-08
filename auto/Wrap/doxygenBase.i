@@ -767,7 +767,7 @@ Returns value of last on-axis point.
 
 %feature("docstring")  PointwiseAxis::binCenter "double PointwiseAxis::binCenter(size_t index) const override
 
-Returns the coordinate corresponding to the given index. 
+Returns the coordinate corresponding to the given index. For this type of axis (\"pointwise\") this equals returning an explicitly defined coordinate. 
 ";
 
 %feature("docstring")  PointwiseAxis::findClosestIndex "size_t PointwiseAxis::findClosestIndex(double value) const override
@@ -1434,6 +1434,9 @@ Returns string representing python stack trace.
 
 %feature("docstring")  PyUtils::createNumpyArray "PyObject * PyUtils::createNumpyArray(const std::vector< double > &data)
 ";
+
+
+// File: namespacestd.xml
 
 
 // File: namespaceStringUtils.xml

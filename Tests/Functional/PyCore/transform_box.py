@@ -16,9 +16,10 @@ layer_thickness = 100
 
 class BoxTransformationsTest(unittest.TestCase):
     def get_sample(self, particle):
-        mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+        mAmbience = ba.HomogeneousMaterial("Vacuum", 0, 0)
         mMiddle = ba.HomogeneousMaterial("Teflon", 2.900e-6, 6.019e-9)
-        mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6, 3.244e-8)
+        mSubstrate = ba.HomogeneousMaterial("Substrate", 3.212e-6,
+                                            3.244e-8)
 
         layout = ba.ParticleLayout()
         layout.addParticle(particle)
@@ -52,7 +53,8 @@ class BoxTransformationsTest(unittest.TestCase):
         width = 50
         height = 20
 
-        box = ba.Particle(mParticle, ba.FormFactorBox(length, width, height))
+        box = ba.Particle(mParticle,
+                          ba.FormFactorBox(length, width, height))
         box.setPosition(kvector_t(0, 0, -layer_thickness/2 - height/2))
         reference_data = self.get_result(box)
         #IntensityDataIOFactory.writeIntensityData(reference_data, "ref_TransformBox.int")
@@ -61,7 +63,8 @@ class BoxTransformationsTest(unittest.TestCase):
         length = 50
         width = 20
         height = 10
-        box = ba.Particle(mParticle, ba.FormFactorBox(length, width, height))
+        box = ba.Particle(mParticle,
+                          ba.FormFactorBox(length, width, height))
         box.setRotation(ba.RotationZ(90*deg))
         box.rotate(ba.RotationY(90*deg))
         box.setPosition(kvector_t(0, 0, -layer_thickness/2))

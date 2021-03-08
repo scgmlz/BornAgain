@@ -6,7 +6,7 @@ import bornagain as ba
 from bornagain import nm, deg
 import bornplot as bp
 
-det = ba.SphericalDetector(200, 10*deg, 0*deg, 0*deg)
+det = ba.SphericalDetector(200, 10*deg, 0, 0)
 n = 4
 results = []
 for i in range(n):

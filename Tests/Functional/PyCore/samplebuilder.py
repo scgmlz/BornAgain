@@ -49,10 +49,11 @@ class BuilderPrototype(ba.ISampleBuilder):
                             " in given class")
         # defining the name for new ctype variable and creating dynamic attribute
         wrapper_key = "wrapper_" + var_key
-        setattr(self, wrapper_key, ctypes.c_double(self.__dict__.get(var_key)))
+        setattr(self, wrapper_key,
+                ctypes.c_double(self.__dict__.get(var_key)))
         # registering new attribute in BornAgain
-        self.registerParameter(par_name,
-                               ctypes.addressof(getattr(self, wrapper_key)))
+        self.registerParameter(
+            par_name, ctypes.addressof(getattr(self, wrapper_key)))
 
 
 class SampleBuilderTest(unittest.TestCase):
@@ -63,8 +64,8 @@ class SampleBuilderTest(unittest.TestCase):
         builder = SampleBuilder()
 
         self.assertEqual(builder.m_width.value, initial_width)
-        builder.setParameterValue("width", 43.0)
-        self.assertEqual(builder.m_width.value, 43.0)
+        builder.setParameterValue("width", 43)
+        self.assertEqual(builder.m_width.value, 43)
 
     def test_parameterString(self):
         """
@@ -79,13 +80,13 @@ class SampleBuilderTest(unittest.TestCase):
         """
         builder = SampleBuilder()
         self.assertEqual(builder.m_onchange_counter, 0)
-        builder.setParameterValue("width", 43.0)
+        builder.setParameterValue("width", 43)
         self.assertEqual(builder.m_onchange_counter, 1)
-        builder.setParameterValue("width", 44.0)
+        builder.setParameterValue("width", 44)
         self.assertEqual(builder.m_onchange_counter, 2)
 
         # setting same value, onChange shouldn't be triggered
-        builder.setParameterValue("width", 44.0)
+        builder.setParameterValue("width", 44)
         self.assertEqual(builder.m_onchange_counter, 2)
 
     def test_registerPrototype(self):
@@ -94,8 +95,8 @@ class SampleBuilderTest(unittest.TestCase):
         self.assertEqual(builder.m_onchange_counter, 0)
         self.assertEqual(builder.m_length, initial_length)
 
-        builder.setParameterValue("length", 43.0)
-        self.assertEqual(builder.m_length, 43.0)
+        builder.setParameterValue("length", 43)
+        self.assertEqual(builder.m_length, 43)
         self.assertEqual(builder.m_onchange_counter, 1)
 
 

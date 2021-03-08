@@ -20,7 +20,7 @@ class RotationsCubeTest(unittest.TestCase):
                    layout_rot=None,
                    layout_pos=None,
                    add_to="Vacuum"):
-        mAmbience = HomogeneousMaterial("Vacuum", 0.0, 0.0)
+        mAmbience = HomogeneousMaterial("Vacuum", 0, 0)
         mParticle = HomogeneousMaterial("Particle", 6e-4, 2e-8)
         mMiddle = HomogeneousMaterial("MidleLayer", 5e-5, 2e-8)
         mSubstrate = HomogeneousMaterial("Substrate", 6e-6, 2e-8)
@@ -33,16 +33,16 @@ class RotationsCubeTest(unittest.TestCase):
 
         layout = ParticleLayout()
         if layout_rot and layout_pos:
-            layout.addParticle(particle, 1.0, layout_pos, layout_rot)
+            layout.addParticle(particle, 1, layout_pos, layout_rot)
         elif layout_rot and not layout_pos:
-            layout.addParticle(particle, 1.0, kvector_t(0, 0, 0), layout_rot)
+            layout.addParticle(particle, 1, kvector_t(0, 0, 0), layout_rot)
         elif not layout_rot and layout_pos:
-            layout.addParticle(particle, 1.0, layout_pos)
+            layout.addParticle(particle, 1, layout_pos)
         else:
             layout.addParticle(particle)
 
         vacuum_layer = Layer(mAmbience)
-        middle_layer = Layer(mSubstrate, 50.0)
+        middle_layer = Layer(mSubstrate, 50)
         substrate = Layer(mSubstrate)
 
         if add_to == "Vacuum":
@@ -62,7 +62,8 @@ class RotationsCubeTest(unittest.TestCase):
         pos = data[2]
         layout_rot = data[3]
         layout_pos = data[4]
-        sample = self.get_sample(ff, rot, pos, layout_rot, layout_pos, add_to)
+        sample = self.get_sample(ff, rot, pos, layout_rot, layout_pos,
+                                 add_to)
         # simulation = self.get_simulation(sample)
         simulation = utils.get_simulation_MiniGISAS(sample)
         simulation.runSimulation()
@@ -82,7 +83,8 @@ class RotationsCubeTest(unittest.TestCase):
         data_to_test = [
             # ff  rot                     pos                    layout_rot              layout_pos
             (box, None, None, None, None),  # reference
-            (box, RotationZ(90.*deg), None, None, None),  # rotating particle
+            (box, RotationZ(90.*deg), None, None,
+             None),  # rotating particle
             (box, RotationZ(-90.*deg), None, None, None),
             (box, RotationZ(180.*deg), None, None, None),
             (box, None, None, RotationZ(90.*deg),
@@ -112,14 +114,15 @@ class RotationsCubeTest(unittest.TestCase):
         data_to_test = [
             # ff  rot                     pos                    layout_rot              layout_pos
             (box, None, None, None, None),  # reference
-            (box, RotationY(90.*deg), kvector_t(0, 0, 5.0), None,
+            (box, RotationY(90.*deg), kvector_t(0, 0, 5), None,
              None),  # rotating and translating
             (box, None, None, RotationY(90.*deg),
-             kvector_t(0, 0, 5.0)),  # rotating and translating
+             kvector_t(0, 0, 5)),  # rotating and translating
             (box, RotationY(90.*deg), None, None,
-             kvector_t(0, 0, 5.0)),  # rotating and translating
-            (box, RotationY(45.*deg), kvector_t(0, 0, 0.0), RotationY(45.*deg),
-             kvector_t(0, 0, 5.0)),  # rotating and translating
+             kvector_t(0, 0, 5)),  # rotating and translating
+            (box, RotationY(45.*deg), kvector_t(0, 0,
+                                                0), RotationY(45.*deg),
+             kvector_t(0, 0, 5)),  # rotating and translating
         ]
 
         reference_data = self.get_result(data_to_test[0])
@@ -143,14 +146,15 @@ class RotationsCubeTest(unittest.TestCase):
         data_to_test = [
             # ff  rot                     pos                    layout_rot              layout_pos
             (box, None, None, None, None),  # reference
-            (box, RotationX(90.*deg), kvector_t(0, 0, 5.0), None,
+            (box, RotationX(90.*deg), kvector_t(0, 0, 5), None,
              None),  # rotating and translating
             (box, None, None, RotationX(90.*deg),
-             kvector_t(0, 0, 5.0)),  # rotating and translating
+             kvector_t(0, 0, 5)),  # rotating and translating
             (box, RotationX(90.*deg), None, None,
-             kvector_t(0, 0, 5.0)),  # rotating and translating
-            (box, RotationX(45.*deg), kvector_t(0, 0, 0.0), RotationX(45.*deg),
-             kvector_t(0, 0, 5.0)),  # rotating and translating
+             kvector_t(0, 0, 5)),  # rotating and translating
+            (box, RotationX(45.*deg), kvector_t(0, 0,
+                                                0), RotationX(45.*deg),
+             kvector_t(0, 0, 5)),  # rotating and translating
         ]
 
         reference_data = self.get_result(data_to_test[0])
@@ -171,8 +175,8 @@ class RotationsCubeTest(unittest.TestCase):
 
         data_to_test = [
             # ff  rot                     pos                    layout_rot              layout_pos
-            (box, None, kvector_t(0, 0, -25.0), None, None),  # reference
-            (box, RotationX(90.*deg), kvector_t(0, 0, -20.0), None,
+            (box, None, kvector_t(0, 0, -25), None, None),  # reference
+            (box, RotationX(90.*deg), kvector_t(0, 0, -20), None,
              None),  # rotating and translating
         ]
 

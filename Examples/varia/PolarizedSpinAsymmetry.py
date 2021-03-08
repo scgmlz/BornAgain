@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This simulation example demonstrates how to replicate the
 fitting example "Magnetically Dead Layers in Spinel Films"
@@ -51,9 +52,9 @@ def get_sample(params):
         magnetizationMagnitude*numpy.sin(angle*deg),
         magnetizationMagnitude*numpy.cos(angle*deg), 0)
 
-    mat_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
-    mat_layer = ba.MaterialBySLD("(Mg,Al,Fe)3O4", params["rho_Mafo"]*1e-6, 0,
-                                 magnetizationVector)
+    mat_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
+    mat_layer = ba.MaterialBySLD("(Mg,Al,Fe)3O4", params["rho_Mafo"]*1e-6,
+                                 0, magnetizationVector)
     mat_substrate = ba.MaterialBySLD("MgAl2O4", *sldMao)
 
     ambient_layer = ba.Layer(mat_vacuum)
@@ -92,7 +93,7 @@ def get_simulation(q_axis, parameters, polarization, analyzer):
     scan.setAbsoluteQResolution(distr, parameters["q_res"])
 
     simulation.beam().setPolarization(polarization)
-    simulation.detector().setAnalyzerProperties(analyzer, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer, 1, 0.5)
 
     simulation.setScan(scan)
     return simulation
@@ -173,7 +174,8 @@ def plotSpinAsymmetry(data_pp, data_mm, q, r_pp, r_mm, filename):
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
-    ax.errorbar(data_pp[0], (data_pp[1] - data_mm[1])/(data_pp[1] + data_mm[1]),
+    ax.errorbar(data_pp[0],
+                (data_pp[1] - data_mm[1])/(data_pp[1] + data_mm[1]),
                 xerr=data_pp[3],
                 yerr=delta,
                 fmt='.',
@@ -240,7 +242,8 @@ def get_Experimental_data(qmin, qmax):
         get_Experimental_data.data_mm = data_mm
         get_Experimental_data.raw_data = True
 
-    return (filterData(data_pp, qmin, qmax), filterData(data_mm, qmin, qmax))
+    return (filterData(data_pp, qmin,
+                       qmax), filterData(data_mm, qmin, qmax))
 
 
 def downloadAndExtractData():
@@ -256,11 +259,11 @@ def downloadAndExtractData():
                   read().decode("utf-8")
 
     table_pp = match(
-        r'.*# "polarization": "\+\+"\n#.*?\n# "units".*?\n(.*?)#.*', rawdata,
-        DOTALL).group(1)
+        r'.*# "polarization": "\+\+"\n#.*?\n# "units".*?\n(.*?)#.*',
+        rawdata, DOTALL).group(1)
     table_mm = match(
-        r'.*# "polarization": "\-\-"\n#.*?\n# "units".*?\n(.*?)#.*', rawdata,
-        DOTALL).group(1)
+        r'.*# "polarization": "\-\-"\n#.*?\n# "units".*?\n(.*?)#.*',
+        rawdata, DOTALL).group(1)
 
     data_pp = numpy.genfromtxt(BytesIO(table_pp.encode()), unpack=True)
     data_mm = numpy.genfromtxt(BytesIO(table_mm.encode()), unpack=True)

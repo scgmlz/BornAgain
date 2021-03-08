@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 External minimize: using lmfit minimizers for BornAgain fits.
 Fit progress is plotted using lmfit iteration calbback function.
@@ -17,7 +18,7 @@ def get_sample(params):
     radius = params['radius']
     lattice_length = params['length']
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -27,7 +28,7 @@ def get_sample(params):
     particle_layout.addParticle(sphere)
 
     interference = ba.InterferenceFunction2DLattice(
-        ba.HexagonalLattice2D(lattice_length, 0*deg))
+        ba.HexagonalLattice2D(lattice_length, 0))
     pdf = ba.FTDecayFunction2DCauchy(10*nm, 10*nm, 0)
     interference.setDecayFunction(pdf)
 
@@ -47,9 +48,8 @@ def get_simulation(params):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     return simulation
@@ -95,7 +95,7 @@ def run_fitting():
     real_data = create_real_data()
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(get_simulation, real_data, 1.0)
+    fit_objective.addSimulationAndData(get_simulation, real_data, 1)
     fit_objective.initPrint(10)
 
     params = lmfit.Parameters()

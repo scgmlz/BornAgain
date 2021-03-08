@@ -23,6 +23,7 @@ except Exception as e:
 
 label_fontsize = 16
 
+
 class Plotter:
     """
     Draws fit progress. Base class for simulation-specific classes (PlotterGISAS etc).
@@ -123,8 +124,8 @@ class PlotterGISAS(Plotter):
         iteration_info = fit_objective.iterationInfo()
 
         plt.text(
-            0.01, 0.85,
-            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+            0.01, 0.85, "Iterations  " +
+            '{:d}'.format(iteration_info.iterationCount()))
         plt.text(0.01, 0.75,
                  "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         index = 0
@@ -175,7 +176,8 @@ class PlotterSpecular(Plotter):
         :param length: max non-truncated length
         :return:
         """
-        return (token[:length - 2] + '..') if len(token) > length else token
+        return (token[:length - 2] +
+                '..') if len(token) > length else token
 
     def plot_table(self, fit_objective):
 
@@ -211,7 +213,7 @@ class PlotterSpecular(Plotter):
                           colLabels=labels,
                           cellLoc='center',
                           loc='bottom left',
-                          bbox=[0.0, 0.0, 1.0, 1.0])
+                          bbox=[0, 0, 1, 1.0])
 
     def plot_graph(self, fit_objective):
         # retrieving data from fit suite
@@ -222,10 +224,15 @@ class PlotterSpecular(Plotter):
         # data values
         sim_values = sim_data.array(self.units)
         real_values = real_data.array(self.units)
-        unc_values = None if unc_data is None else unc_data.array(self.units)
+        unc_values = None if unc_data is None else unc_data.array(
+            self.units)
 
         # default font properties dictionary to use
-        font = {'family': 'serif', 'weight': 'normal', 'size': label_fontsize}
+        font = {
+            'family': 'serif',
+            'weight': 'normal',
+            'size': label_fontsize
+        }
 
         plt.subplot(self.gs[0])
         plt.semilogy(sim_data.axis(), sim_values, 'b', real_data.axis(),

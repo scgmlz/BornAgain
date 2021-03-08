@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Basic example of depth-probe simulation with BornAgain.
 Sample structure:
@@ -27,14 +28,14 @@ import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 # layer thicknesses in angstroms
-t_Ti = 130.0*angstrom
-t_Pt = 320.0*angstrom
-t_Ti_top = 100.0*angstrom
-t_TiO2 = 30.0*angstrom
+t_Ti = 130*angstrom
+t_Pt = 320*angstrom
+t_Ti_top = 100*angstrom
+t_TiO2 = 30*angstrom
 
 #  beam data
-ai_min = 0.0*deg  # minimum incident angle
-ai_max = 1.0*deg  # maximum incident angle
+ai_min = 0  # minimum incident angle
+ai_max = 1*deg  # maximum incident angle
 n_ai_bins = 5000  # number of bins in incident angle axis
 beam_sample_ratio = 0.01  # beam-to-sample size ratio
 wl = 10*angstrom  # wavelength in angstroms
@@ -58,16 +59,16 @@ def get_sample():
     # Define materials
     material_D2O = ba.HomogeneousMaterial("D2O", 0.00010116, 1.809e-12)
     material_Pt = ba.HomogeneousMaterial("Pt", 0.00010117, 3.01822e-08)
-    material_Si = ba.HomogeneousMaterial("Si", 3.3009e-05, 0.0)
+    material_Si = ba.HomogeneousMaterial("Si", 3.3009e-05, 0)
     material_Ti = ba.HomogeneousMaterial("Ti", -3.0637e-05, 1.5278e-08)
     material_TiO2 = ba.HomogeneousMaterial("TiO2", 4.1921e-05, 8.1293e-09)
 
     # Define layers
     layer_1 = ba.Layer(material_Si)
-    layer_2 = ba.Layer(material_Ti, 13.0*nm)
-    layer_3 = ba.Layer(material_Pt, 32.0*nm)
-    layer_4 = ba.Layer(material_Ti, 10.0*nm)
-    layer_5 = ba.Layer(material_TiO2, 3.0*nm)
+    layer_2 = ba.Layer(material_Ti, 13*nm)
+    layer_3 = ba.Layer(material_Pt, 32*nm)
+    layer_4 = ba.Layer(material_Ti, 10*nm)
+    layer_5 = ba.Layer(material_TiO2, 3*nm)
     layer_6 = ba.Layer(material_D2O)
 
     # Define sample
@@ -86,13 +87,13 @@ def get_simulation(sample):
     """
     Returns a depth-probe simulation.
     """
-    alpha_distr = ba.DistributionGaussian(0.0, d_ang)
+    alpha_distr = ba.DistributionGaussian(0, d_ang)
     footprint = ba.FootprintSquare(beam_sample_ratio)
     simulation = ba.DepthProbeSimulation()
     simulation.setBeamParameters(wl, n_ai_bins, ai_min, ai_max, footprint)
     simulation.setZSpan(n_z_bins, z_min, z_max)
-    simulation.addParameterDistribution("*/Beam/InclinationAngle", alpha_distr,
-                                        n_points, n_sig)
+    simulation.addParameterDistribution("*/Beam/InclinationAngle",
+                                        alpha_distr, n_points, n_sig)
     simulation.setSample(sample)
     return simulation
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Example for producing a profile of SLD of a multilayer with particles
 and slicing.
@@ -15,11 +16,11 @@ def get_sample():
     """
 
     # creating materials
-    m_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
-    m_ti = ba.MaterialBySLD("Ti", -1.9493e-06, 0.0)
-    m_ni = ba.MaterialBySLD("Ni", 9.4245e-06, 0.0)
-    m_particle = ba.MaterialBySLD("Particle", 5e-6, 0.0)
-    m_substrate = ba.MaterialBySLD("SiSubstrate", 2.0704e-06, 0.0)
+    m_ambient = ba.MaterialBySLD("Ambient", 0, 0)
+    m_ti = ba.MaterialBySLD("Ti", -1.9493e-06, 0)
+    m_ni = ba.MaterialBySLD("Ni", 9.4245e-06, 0)
+    m_particle = ba.MaterialBySLD("Particle", 5e-6, 0)
+    m_substrate = ba.MaterialBySLD("SiSubstrate", 2.0704e-06, 0)
 
     # creating layers
     ambient_layer = ba.Layer(m_ambient)

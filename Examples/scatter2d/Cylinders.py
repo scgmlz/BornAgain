@@ -1,33 +1,25 @@
 #!/usr/bin/env python3
 """
-Rotated pyramids on top of substrate
+Basic example of a DWBA simulation of a GISAS experiment:
+Scattering by a dilute random assembly of cylinders on a substrate.
 """
 import bornagain as ba
 from bornagain import deg, nm
 
 
 def get_sample():
-    """
-    Returns a sample with rotated pyramids on top of a substrate.
-    """
-
     # Define materials
-    material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
-    material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
+    material_Particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-08)
+    material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-08)
     material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
-    # Define form factors
-    ff = ba.FormFactorPyramid(10*nm, 5*nm, 54.73*deg)
-
     # Define particles
+    ff = ba.FormFactorCylinder(5*nm, 5*nm)
     particle = ba.Particle(material_Particle, ff)
-    particle_rotation = ba.RotationZ(45*deg)
-    particle.setRotation(particle_rotation)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle, 1)
-    layout.setWeight(1)
+    layout.addParticle(particle)
     layout.setTotalParticleSurfaceDensity(0.01)
 
     # Define layers
@@ -44,10 +36,16 @@ def get_sample():
 
 
 def get_simulation(sample):
-    beam = ba.Beam(1, 0.1*nm, ba.Direction(0.2*deg, 0))
-    detector = ba.SphericalDetector(200, -2*deg, 2*deg, 200, 0, 2*deg)
-    simulation = ba.GISASSimulation(beam, sample, detector)
-    return simulation
+    # Define beam
+    wavelength = 0.1*nm
+    alpha_i = 0.2*deg
+    beam = ba.Beam(1, wavelength, ba.Direction(alpha_i, 0))
+
+    # Define detector
+    nPix = 200  # pixels per direction
+    detector = ba.SphericalDetector(nPix, -2*deg, 2*deg, nPix, 0, 3*deg)
+
+    return ba.GISASSimulation(beam, sample, detector)
 
 
 if __name__ == '__main__':

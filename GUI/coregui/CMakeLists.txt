@@ -115,7 +115,6 @@ install (TARGETS ${library_name} DESTINATION ${destination_lib} COMPONENT Librar
 
 if(WIN32)
     # --- Qt ---
-    string(REGEX REPLACE "\\\\" "/" QTDIR $ENV{QTDIR} ) # Convert C:\Qt\ to C:/Qt/
     install(FILES
     ${QTDIR}/bin/Qt5Widgets.DLL
     ${QTDIR}/bin/Qt5Core.dll

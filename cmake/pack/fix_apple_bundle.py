@@ -53,8 +53,8 @@ def bundle_main_executables():
 
 
 def bundle_python_library():
-    return os.path.join("Python.framework", "Versions", python_version_string(),
-                        "Python")
+    return os.path.join("Python.framework", "Versions",
+                        python_version_string(), "Python")
 
 
 def qtlibs_path():
@@ -75,7 +75,8 @@ def bundle_plugins():
 
 
 def bornagain_binaries():
-    return bundle_main_executables() + bundle_libraries() + bundle_plugins()
+    return bundle_main_executables() + bundle_libraries() + bundle_plugins(
+    )
 
 
 def get_list_of_files(dirname):
@@ -121,7 +122,8 @@ def otool(filename):
     """
     Parses dependencies of given binary file
     """
-    p = subprocess.Popen(['otool', '-XL', filename], stdout=subprocess.PIPE)
+    p = subprocess.Popen(['otool', '-XL', filename],
+                         stdout=subprocess.PIPE)
     # return iter(p.stdout.readline, b'')
     for line in iter(p.stdout.readline, b''):
         if is_python3():
@@ -145,8 +147,9 @@ def fixDependency(filename, old, new):
     Replaces old dependency with new one for given binary file
     """
     print("    fixDependency(filename, old, new)", filename, old, new)
-    p = subprocess.Popen(['install_name_tool', '-change', old, new, filename],
-                         stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        ['install_name_tool', '-change', old, new, filename],
+        stdout=subprocess.PIPE)
     p.communicate()
     return
 
@@ -253,7 +256,8 @@ def get_dependency_dest_location(dependency):
     libname = os.path.basename(dependency)
 
     if is_python_framework_dependency(dependency):
-        return os.path.join(bundle_frameworks_path(), bundle_python_library())
+        return os.path.join(bundle_frameworks_path(),
+                            bundle_python_library())
 
     if is_qt_framework_dependency(dependency):
         libpath = os.path.join(libname + ".framework", "Versions", "5")
@@ -269,7 +273,8 @@ def get_special_dependency_id(dependency):
     if is_python_framework_dependency(dependency):
         return "@rpath/" + bundle_python_library()
 
-    if is_qt_framework_dependency(dependency) and not "@rpath" in dependency:
+    if is_qt_framework_dependency(
+            dependency) and not "@rpath" in dependency:
         libname = os.path.basename(dependency)
         return "@rpath/" + libname + ".framework/Versions/5/" + libname
     return None
@@ -288,8 +293,8 @@ def get_python_library_location():
     # Let's try to find library directly
 
     prefix = sys.prefix
-    suffix = sysconfig.get_config_var('LDVERSION') or sysconfig.get_config_var(
-        'VERSION')
+    suffix = sysconfig.get_config_var(
+        'LDVERSION') or sysconfig.get_config_var('VERSION')
     result = sys.prefix + "/lib/libpython" + suffix + ".dylib"
     if os.path.exists(result):
         return result
@@ -308,7 +313,8 @@ def copy_python_framework():
     """
     print("--> Copying Python framework")
     python_lib = get_python_library_location()
-    destfile = os.path.join(bundle_frameworks_path(), bundle_python_library())
+    destfile = os.path.join(bundle_frameworks_path(),
+                            bundle_python_library())
     make_dir(os.path.dirname(destfile))
     print("    From '{0}'\n    To '{1}'".format(python_lib, destfile))
     if not os.path.exists(destfile):

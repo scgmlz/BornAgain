@@ -7867,7 +7867,7 @@ Complex form factor of rectangular ripple (bar).
 
 %feature("docstring")  ripples::profile_yz_cosine "complex_t ripples::profile_yz_cosine(complex_t qy, complex_t qz, double width, double height)
 
-Complex form factor of triangular ripple. 
+Complex form factor of cosine ripple. 
 ";
 
 %feature("docstring")  ripples::profile_yz_triangular "complex_t ripples::profile_yz_triangular(complex_t qy, complex_t qz, double width, double height, double asymmetry)

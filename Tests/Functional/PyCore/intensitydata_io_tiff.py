@@ -35,8 +35,8 @@ class OutputDataIOTiffTest(unittest.TestCase):
     """
     def test_SaveToTiff(self):
         data = ba.IntensityData()
-        data.addAxis(ba.FixedBinAxis("x", 10, 0.0, 10.0))
-        data.addAxis(ba.FixedBinAxis("y", 5, 0.0, 5.0))
+        data.addAxis(ba.FixedBinAxis("x", 10, 0, 10))
+        data.addAxis(ba.FixedBinAxis("y", 5, 0, 5))
         fill_data(data)
 
         ba.IntensityDataIOFactory.writeOutputData(data, "tmp.tif")

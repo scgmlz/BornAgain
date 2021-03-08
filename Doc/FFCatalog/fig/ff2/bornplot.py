@@ -19,9 +19,11 @@ class Result:
         self.data = data
         self.title = title
 
+
 def rectangle(det):
     return (det.axis(0).lowerBound(), det.axis(0).upperBound(),
             det.axis(1).lowerBound(), det.axis(1).upperBound())
+
 
 def make_plot(results, det, name, nrow=1):
     """
@@ -66,13 +68,19 @@ def make_plot(results, det, name, nrow=1):
     # Plot the subfigures.
     for res in results:
         ax = axes[res.idx]
-        im = ax.imshow(res.data, norm=norm, extent=rectangle(det), aspect=1)
+        im = ax.imshow(res.data,
+                       norm=norm,
+                       extent=rectangle(det),
+                       aspect=1)
         ax.set_xlabel(r'$\phi_{\rm f} (^{\circ})$', fontsize=fontsize)
         if res.idx % ncol == 0:
-            ax.set_ylabel(r'$\alpha_{\rm f} (^{\circ})$', fontsize=fontsize)
+            ax.set_ylabel(r'$\alpha_{\rm f} (^{\circ})$',
+                          fontsize=fontsize)
         if res.title != "":
             ax.set_title(res.title, fontsize=fontsize)
-        ax.tick_params(axis='both', which='major', labelsize=fontsize*21/24)
+        ax.tick_params(axis='both',
+                       which='major',
+                       labelsize=fontsize*21/24)
     # Adjust whitespace around and between subfigures.
     plt.subplots_adjust(wspace=xskip,
                         hspace=yskip,
@@ -106,7 +114,7 @@ def get_sample(ff, trafo):
     :param trafo: Optional rotation
     """
     # defining materials
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_particle = ba.HomogeneousMaterial("Particle", 1e-5, 0)
 
     # collection of particles

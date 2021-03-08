@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Simple example demonstrating how polarized SANS experiments can be
 simulated with BornAgain.
@@ -7,7 +8,7 @@ import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
 
 # Magnetization of the particle's core material (A/m)
-magnetization_core = kvector_t(0.0, 0.0, 1e7)
+magnetization_core = kvector_t(0, 0, 1e7)
 
 
 def get_sample():
@@ -17,17 +18,18 @@ def get_sample():
 
     # Define materials
     magnetic_field = kvector_t(0, 0, 10000000)
-    material_Core = ba.HomogeneousMaterial("Core", 6e-06, 2e-08, magnetic_field)
+    material_Core = ba.HomogeneousMaterial("Core", 6e-06, 2e-08,
+                                           magnetic_field)
     material_Shell = ba.HomogeneousMaterial("Shell", 1e-07, 2e-08)
-    material_Solvent = ba.HomogeneousMaterial("Solvent", 5e-06, 0.0)
+    material_Solvent = ba.HomogeneousMaterial("Solvent", 5e-06, 0)
 
     # Define form factors
-    ff_1 = ba.FormFactorFullSphere(10.0*nm)
-    ff_2 = ba.FormFactorFullSphere(12.0*nm)
+    ff_1 = ba.FormFactorFullSphere(10*nm)
+    ff_2 = ba.FormFactorFullSphere(12*nm)
 
     # Define particles
     particle_1 = ba.Particle(material_Core, ff_1)
-    particle_1_position = kvector_t(0.0*nm, 0.0*nm, 2.0*nm)
+    particle_1_position = kvector_t(0, 0, 2*nm)
     particle_1.setPosition(particle_1_position)
     particle_2 = ba.Particle(material_Shell, ff_2)
 
@@ -36,7 +38,7 @@ def get_sample():
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle_3, 1.0)
+    layout.addParticle(particle_3, 1)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.01)
 
@@ -58,18 +60,18 @@ def get_simulation(sample):
     simulation = ba.GISASSimulation()
 
     # Defining detector
-    simulation.setDetectorParameters(200, -3.0*deg, 3.0*deg, 200, -3.0*deg,
-                                     3.0*deg)
+    simulation.setDetectorParameters(200, -3*deg, 3*deg, 200, -3*deg,
+                                     3*deg)
 
     # Defining beam parameters
-    simulation.setBeamParameters(0.5*nm, 0.0*deg, 0.0*deg)
+    simulation.setBeamParameters(0.5*nm, 0, 0)
     simulation.beam().setIntensity(1e12)
 
     # Defining beam polarization and polarization analysis for spin-flip channel
-    analyzer_dir = kvector_t(0.0, 0.0, -1.0)
-    beampol = kvector_t(0.0, 0.0, 1.0)
+    analyzer_dir = kvector_t(0, 0, -1)
+    beampol = kvector_t(0, 0, 1)
     simulation.beam().setPolarization(beampol)
-    simulation.detector().setAnalyzerProperties(analyzer_dir, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer_dir, 1, 0.5)
     simulation.setSample(sample)
     return simulation
 

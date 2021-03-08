@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 This example demonstrates how to fit actual experimental data
 by M. Fitzsimmons et al. that is published in 
@@ -32,7 +33,7 @@ sldSi = (2.0728e-06, 2.3747e-11)
 
 def get_sample(params):
 
-    mat_ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
+    mat_ambient = ba.MaterialBySLD("Ambient", 0, 0)
     mat_layer = ba.MaterialBySLD("Pt", *sldPt)
     mat_substrate = ba.MaterialBySLD("Si", *sldSi)
 
@@ -170,14 +171,15 @@ def get_Experimental_data(qmin, qmax):
 ####################################################################
 
 
-def run_fit_ba(q_axis, r_data, r_uncertainty, simulationFactory, startParams):
+def run_fit_ba(q_axis, r_data, r_uncertainty, simulationFactory,
+               startParams):
 
     fit_objective = ba.FitObjective()
     fit_objective.setObjectiveMetric("chi2")
 
     fit_objective.addSimulationAndData(
-        lambda params: simulationFactory(q_axis, params), r_data, r_uncertainty,
-        1.0)
+        lambda params: simulationFactory(q_axis, params), r_data,
+        r_uncertainty, 1)
 
     fit_objective.initPrint(10)
 
@@ -207,8 +209,8 @@ if __name__ == '__main__':
 
         startParams = {
             # own starting values
-            "q_offset": (0.0, -0.02, 0.02),
-            "q_res/q": (0.0, 0, 0.02),
+            "q_offset": (0, -0.02, 0.02),
+            "q_res/q": (0, 0, 0.02),
             "t_pt/nm": (53, 40, 60),
             "r_si/nm": (1.22, 0, 5),
             "r_pt/nm": (0.25, 0, 5),
@@ -246,4 +248,5 @@ if __name__ == '__main__':
         print(fitResult)
 
         q, r = qr(run_simulation(qzs, fitParams=fitResult))
-        plot(q, r, data, f'PtLayerFit_fit.pdf', dict(fitResult, **fixedParams))
+        plot(q, r, data, f'PtLayerFit_fit.pdf',
+             dict(fitResult, **fixedParams))

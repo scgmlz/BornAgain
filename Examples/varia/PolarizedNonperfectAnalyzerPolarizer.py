@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example that shows how to simulate
 a non-perfect polarizer and analyzer
@@ -15,9 +16,9 @@ sldMgO = (5.9803e-06, 9.3996e-12)
 
 magnetizationMagnitude = 1.6e6
 angle = 0
-magnetizationVector = ba.kvector_t(magnetizationMagnitude*numpy.sin(angle*deg),
-                                   magnetizationMagnitude*numpy.cos(angle*deg),
-                                   0)
+magnetizationVector = ba.kvector_t(
+    magnetizationMagnitude*numpy.sin(angle*deg),
+    magnetizationMagnitude*numpy.cos(angle*deg), 0)
 
 
 def get_sample(*, magnetization=magnetizationVector):
@@ -26,7 +27,7 @@ def get_sample(*, magnetization=magnetizationVector):
     """
 
     # create materials
-    mat_vacuum = ba.MaterialBySLD("Vacuum", 0.0, 0.0)
+    mat_vacuum = ba.MaterialBySLD("Vacuum", 0, 0)
     mat_Pd = ba.MaterialBySLD("Pd", *sldPd)
     mat_Fe = ba.MaterialBySLD("Fe", *sldFe, magnetizationVector)
     mat_substrate = ba.MaterialBySLD("MgO", *sldMgO)
@@ -82,7 +83,8 @@ def run_simulation(*,
     simulation = get_simulation(sample)
 
     simulation.beam().setPolarization(polarization*polarizer_efficiency)
-    simulation.detector().setAnalyzerProperties(analyzer, analyzer_efficiency, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer,
+                                                analyzer_efficiency, 0.5)
 
     simulation.setBackground(ba.ConstantBackground(1e-7))
 

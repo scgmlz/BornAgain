@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Using custom objective function to fit GISAS data.
 
@@ -42,7 +43,7 @@ def get_sample(params):
     radius = params['radius']
     lattice_length = params['length']
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -72,9 +73,8 @@ def get_simulation(params):
     Create and return GISAXS simulation with beam and detector defined.
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     return simulation
@@ -106,7 +106,7 @@ def run_fitting():
     real_data = create_real_data()
 
     objective = MyObjective()
-    objective.addSimulationAndData(get_simulation, real_data, 1.0)
+    objective.addSimulationAndData(get_simulation, real_data, 1)
     objective.initPrint(10)
 
     params = ba.Parameters()

@@ -11,7 +11,7 @@ import numpy as np
 class Rosenbrock:
     def __init__(self):
         self.m_expected_minimum = 0.0
-        self.m_expected_params = [1.0, 1.0]
+        self.m_expected_params = [1, 1.0]
         pass
 
     def objective_function(self, params):
@@ -35,13 +35,13 @@ def decaying_sin(params, x):
 
 class DecayingSin:
     def __init__(self):
-        self.m_x = np.linspace(0.0, 10.0, 100)
+        self.m_x = np.linspace(0, 10, 100)
         self.m_params = ba.Parameters()
-        self.m_params.add(ba.Parameter('amp', 10.0))
+        self.m_params.add(ba.Parameter('amp', 10))
         self.m_params.add(ba.Parameter('decay', 0.05))
-        self.m_params.add(ba.Parameter('phase', 1.0))
-        self.m_params.add(ba.Parameter('frequency', 4.0))
-        self.m_eps_data = np.linspace(0.0, 10.0, 100)
+        self.m_params.add(ba.Parameter('phase', 1))
+        self.m_params.add(ba.Parameter('frequency', 4))
+        self.m_eps_data = np.linspace(0, 10, 100)
         self.m_eps_data.fill(0.01)
         self.m_data = decaying_sin(self.m_params, self.m_x)
 
@@ -57,9 +57,8 @@ class StandaloneFitTest(unittest.TestCase):
         """
         params = ba.Parameters()
         params.add(
-            ba.Parameter("x", -1.2, ba.AttLimits.limited(-5.0, 5.0), 0.01))
-        params.add(ba.Parameter("y", 1.0, ba.AttLimits.limited(-5.0, 5.0),
-                                0.01))
+            ba.Parameter("x", -1.2, ba.AttLimits.limited(-5, 5), 0.01))
+        params.add(ba.Parameter("y", 1, ba.AttLimits.limited(-5, 5), 0.01))
 
         model = Rosenbrock()
         minimizer = ba.Minimizer()
@@ -79,8 +78,9 @@ class StandaloneFitTest(unittest.TestCase):
         params = ba.Parameters()
         params.add(ba.Parameter('amp', 1, ba.AttLimits.positive()))
         params.add(ba.Parameter('decay', 0.1, ba.AttLimits.positive()))
-        params.add(ba.Parameter('phase', 0.1, ba.AttLimits.limited(0.0, 3.1)))
-        params.add(ba.Parameter('frequency', 1.0, ba.AttLimits.positive()))
+        params.add(ba.Parameter('phase', 0.1, ba.AttLimits.limited(0,
+                                                                   3.1)))
+        params.add(ba.Parameter('frequency', 1, ba.AttLimits.positive()))
 
         model = DecayingSin()
         minimizer = ba.Minimizer()

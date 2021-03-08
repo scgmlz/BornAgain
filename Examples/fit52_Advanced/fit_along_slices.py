@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Fitting example: fit along slices
 """
@@ -17,7 +18,7 @@ def get_sample(params):
     radius = params["radius"]
     height = params["height"]
 
-    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    m_vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
     m_substrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
     m_particle = ba.HomogeneousMaterial("Particle", 6e-4, 2e-8)
 
@@ -42,9 +43,8 @@ def get_simulation(params, add_masks=True):
     Create and return GISAXS simulation with beam and detector defined
     """
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, -1.0*deg, 1.0*deg, 100, 0.0*deg,
-                                     2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, -1*deg, 1*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.beam().setIntensity(1e+08)
     simulation.setSample(get_sample(params))
     if add_masks:
@@ -64,7 +64,7 @@ def create_real_data():
     Generating "real" data by adding noise to the simulated data.
     """
     # initial values which we will have to find later during the fit
-    params = {'radius': 5.0*nm, 'height': 10.0*nm}
+    params = {'radius': 5*nm, 'height': 10*nm}
 
     # retrieving simulated data in the form of numpy array
     simulation = get_simulation(params, add_masks=False)
@@ -114,9 +114,11 @@ class PlotObserver:
         """
         plt.subplots_adjust(wspace=0.2, hspace=0.3)
         for label, slice in slices:
-            plt.semilogy(slice.binCenters(), slice.binValues(), label=label)
+            plt.semilogy(slice.binCenters(),
+                         slice.binValues(),
+                         label=label)
             plt.xlim(slice.getXmin(), slice.getXmax())
-            plt.ylim(1.0, slice.getMaximum()*10.0)
+            plt.ylim(1, slice.getMaximum()*10)
         plt.legend(loc='upper right')
         plt.title(title)
 
@@ -131,13 +133,14 @@ class PlotObserver:
         iteration_info = fit_objective.iterationInfo()
 
         plt.text(
-            0.01, 0.85,
-            "Iterations  " + '{:d}'.format(iteration_info.iterationCount()))
+            0.01, 0.85, "Iterations  " +
+            '{:d}'.format(iteration_info.iterationCount()))
         plt.text(0.01, 0.75,
                  "Chi2       " + '{:8.4f}'.format(iteration_info.chi2()))
         for index, params in enumerate(iteration_info.parameters()):
-            plt.text(0.01, 0.55 - index*0.1,
-                     '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
+            plt.text(
+                0.01, 0.55 - index*0.1,
+                '{:30.30s}: {:6.3f}'.format(params.name(), params.value))
 
         plt.tight_layout()
         plt.draw()
@@ -167,7 +170,8 @@ class PlotObserver:
         # vertical slices
         slices = [("real", real_data.projectionY(phi_slice_value)),
                   ("simul", simul_data.projectionY(phi_slice_value))]
-        title = "Vertical slice at phi =" + '{:3.1f}'.format(phi_slice_value)
+        title = "Vertical slice at phi =" + '{:3.1f}'.format(
+            phi_slice_value)
         plt.subplot(2, 2, 3)
         self.plot_slices(slices, title)
 
@@ -184,7 +188,7 @@ def run_fitting():
     real_data = create_real_data()
 
     fit_objective = ba.FitObjective()
-    fit_objective.addSimulationAndData(get_simulation, real_data, 1.0)
+    fit_objective.addSimulationAndData(get_simulation, real_data, 1)
     fit_objective.initPrint(10)
 
     # creating custom observer which will draw fit progress
@@ -192,8 +196,8 @@ def run_fitting():
     fit_objective.initPlot(10, plotter)
 
     params = ba.Parameters()
-    params.add("radius", 6.*nm, min=4.0, max=8.0)
-    params.add("height", 9.*nm, min=8.0, max=12.0)
+    params.add("radius", 6.*nm, min=4, max=8)
+    params.add("height", 9.*nm, min=8, max=12)
 
     minimizer = ba.Minimizer()
     result = minimizer.minimize(fit_objective.evaluate, params)

@@ -11,7 +11,7 @@ from bornagain import nm, angstrom, deg
 # ----------------------------------
 def runSimulation():
     # defining materials
-    mAmbience = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    mAmbience = ba.HomogeneousMaterial("Vacuum", 0, 0)
     mSubstrate = ba.HomogeneousMaterial("Substrate", 6e-6, 2e-8)
 
     magnetic_field = ba.kvector_t(0, 0, 0)
@@ -23,7 +23,7 @@ def runSimulation():
     cylinder = ba.Particle(magParticle, cylinder_ff)
 
     particle_layout = ba.ParticleLayout()
-    particle_layout.addParticle(cylinder, 1.0)
+    particle_layout.addParticle(cylinder, 1)
     interference = ba.InterferenceFunctionNone()
     particle_layout.setInterferenceFunction(interference)
 
@@ -37,8 +37,8 @@ def runSimulation():
 
     # build and run experiment
     simulation = ba.GISASSimulation()
-    simulation.setDetectorParameters(100, 0*deg, 2.0*deg, 100, 0.0*deg, 2.0*deg)
-    simulation.setBeamParameters(1.0*angstrom, 0.2*deg, 0.0*deg)
+    simulation.setDetectorParameters(100, 0, 2*deg, 100, 0, 2*deg)
+    simulation.setBeamParameters(1*angstrom, 0.2*deg, 0)
     simulation.setSample(multi_layer)
     simulation.beam().setIntensity(1e2)
     simulation.runSimulation()
@@ -53,7 +53,8 @@ def run_test():
     result = runSimulation()
     # ba.IntensityDataIOFactory.writeIntensityData(result, 'polmagcylinders1_reference.int')
 
-    reference = utils.get_reference_data('polmagcylinders1_reference.int.gz')
+    reference = utils.get_reference_data(
+        'polmagcylinders1_reference.int.gz')
 
     diff = utils.get_difference(result.array(), reference.getArray())
 

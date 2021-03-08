@@ -29,7 +29,7 @@ function(run_examples examples label)
 endfunction()
 
 # Examples from scatter2d; all but one prototype get the label XL
-set(prototype ${EXAMPLES_DIR}/scatter2d/CylindersInDWBA.py)
+set(prototype ${EXAMPLES_DIR}/scatter2d/Cylinders.py)
 file(GLOB examples ${EXAMPLES_DIR}/scatter2d/*.py)
 list(REMOVE_ITEM examples ${prototype})
 if (WIN32)
@@ -44,7 +44,6 @@ file(GLOB examples
     ${EXAMPLES_DIR}/specular/*.py
     ${EXAMPLES_DIR}/varia/*.py
     ${EXAMPLES_DIR}/fit55_Specular/FitSpecularBasics.py)
-list(REMOVE_ITEM examples ${EXAMPLES_DIR}/varia/SimulationParameters.py)
 run_examples("${examples}" "")
 
 ############################################################################
@@ -80,10 +79,10 @@ test_example(scatter2d/ConstantBackground 2e-10)
 test_example(scatter2d/CoreShellNanoparticles 2e-10)
 test_example(scatter2d/CorrelatedRoughness 2e-10)
 test_example(scatter2d/CosineRipplesAtRectLattice 2e-10)
+test_example(scatter2d/Cylinders 2e-10)
 test_example(scatter2d/CylindersAndPrisms 2e-10)
 test_example(scatter2d/CylindersInAverageLayer 2e-10)
 test_example(scatter2d/CylindersInBA 2e-10)
-test_example(scatter2d/CylindersInDWBA 2e-10)
 test_example(scatter2d/CylindersWithSizeDistribution 2e-10)
 test_example(scatter2d/DetectorResolutionFunction 2e-10)
 test_example(scatter2d/DodecahedraSAS.py 2e-10)
@@ -94,7 +93,6 @@ test_example(scatter2d/Interference2DCenteredSquareLattice 2e-10)
 test_example(scatter2d/Interference2DLatticeSumOfRotated 2e-10)
 test_example(scatter2d/Interference2DParaCrystal 2e-10)
 test_example(scatter2d/Interference2DRotatedSquareLattice 2e-10)
-test_example(scatter2d/Interference2DSquareLattice 2e-10)
 test_example(scatter2d/MagneticSpheres 2e-10)
 test_example(scatter2d/RectangularGrating 0.5)
 test_example(scatter2d/RotatedPyramids 2e-10)
@@ -102,7 +100,7 @@ test_example(scatter2d/SpheresAtHexLattice 2e-10)
 test_example(scatter2d/TriangularRipple 2e-10)
 test_example(scatter2d/TwoTypesOfCylindersWithSizeDistribution 2e-10)
 
-test_example(specular/BasicSpecularSimulation 2e-10)
+test_example(specular/AlternatingLayers 2e-10)
 test_example(specular/BeamAngularDivergence 2e-10)
 test_example(specular/BeamFullDivergence 2e-10)
 test_example(specular/TOFRWithResolution 2e-10)
@@ -112,6 +110,3 @@ test_example(varia/CustomFormFactor 2e-10)
 test_example(varia/DepthProbe 2e-10)
 test_example(varia/Interference1DLattice 1.5)
 test_example(varia/OffSpecularSimulation 2e-10)
-
-# TODO replace after revision of parameter machinery
-# test_example(varia/SimulationParameters 2e-10)

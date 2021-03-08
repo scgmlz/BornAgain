@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Extended example for simulation results treatment (cropping, slicing, exporting)
 The standard "Cylinders in DWBA" sample is used to setup the simulation.
@@ -19,17 +20,17 @@ def get_sample():
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
     material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff = ba.FormFactorCylinder(5.0*nm, 5.0*nm)
+    ff = ba.FormFactorCylinder(5*nm, 5*nm)
 
     # Define particles
     particle = ba.Particle(material_Particle, ff)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle, 1.0)
+    layout.addParticle(particle, 1)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.01)
 
@@ -50,8 +51,8 @@ def get_simulation(sample):
     """
     Returns a GISAXS simulation with beam and detector defined.
     """
-    beam = ba.Beam(1e5, 1.0*angstrom, ba.Direction(0.2*deg, 0*deg))
-    det = ba.SphericalDetector(201, -2*deg, 2*deg, 201, 0*deg, 2*deg)
+    beam = ba.Beam(1e5, 1*angstrom, ba.Direction(0.2*deg, 0))
+    det = ba.SphericalDetector(201, -2*deg, 2*deg, 201, 0, 2*deg)
     simulation = ba.GISASSimulation(beam, sample, det)
     return simulation
 
@@ -94,7 +95,7 @@ def plot_slices(hist):
     noisy = get_noisy_image(hist)
 
     # projection along Y, slice at fixed x-value
-    proj1 = noisy.projectionY(0.0)
+    proj1 = noisy.projectionY(0)
     plt.semilogy(proj1.binCenters(),
                  proj1.binValues(),
                  label=r'$\phi=0.0^{\circ}$')
@@ -112,7 +113,7 @@ def plot_slices(hist):
                  label=r'$<\phi>=0.5^{\circ}$')
 
     plt.xlim(proj1.getXmin(), proj1.getXmax())
-    plt.ylim(proj2.getMinimum(), proj1.getMaximum()*10.0)
+    plt.ylim(proj2.getMinimum(), proj1.getMaximum()*10)
     plt.xlabel(r'$\alpha_f ^{\circ}$', fontsize=16)
     plt.legend(loc='upper right')
     plt.tight_layout()
@@ -130,7 +131,7 @@ def plot(hist):
     plt.title("Intensity as colormap")
 
     plt.subplot(2, 2, 2)
-    crop = hist.crop(-1.0, 0.5, 1.0, 1.0)
+    crop = hist.crop(-1, 0.5, 1, 1)
     ba_plot.plot_histogram(crop)
     plt.title("Cropping")
 

@@ -1,12 +1,13 @@
+#!/usr/bin/env python3
 """
 Long boxes at 1D lattice, ba.OffSpecular simulation
 """
 import bornagain as ba
 from bornagain import angstrom, deg, nm, nm2, kvector_t
 
-phi_f_min, phi_f_max = -1.0, 1.0
-alpha_f_min, alpha_f_max = 0.0, 10.0
-alpha_i_min, alpha_i_max = 0.0, 10.0  # incoming beam
+phi_f_min, phi_f_max = -1, 1.0
+alpha_f_min, alpha_f_max = 0, 10.0
+alpha_i_min, alpha_i_max = 0, 10.0  # incoming beam
 
 
 def get_sample():
@@ -18,24 +19,24 @@ def get_sample():
     # Define materials
     material_Particle = ba.HomogeneousMaterial("Particle", 0.0006, 2e-08)
     material_Substrate = ba.HomogeneousMaterial("Substrate", 6e-06, 2e-08)
-    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0.0, 0.0)
+    material_Vacuum = ba.HomogeneousMaterial("Vacuum", 0, 0)
 
     # Define form factors
-    ff = ba.FormFactorBox(1000.0*nm, 20.0*nm, 10.0*nm)
+    ff = ba.FormFactorBox(1000*nm, 20*nm, 10*nm)
 
     # Define particles
     particle = ba.Particle(material_Particle, ff)
-    particle_rotation = ba.RotationZ(90.0*deg)
+    particle_rotation = ba.RotationZ(90*deg)
     particle.setRotation(particle_rotation)
 
     # Define interference functions
-    iff = ba.InterferenceFunction1DLattice(100.0*nm, 0.0*deg)
-    iff_pdf = ba.FTDecayFunction1DCauchy(1000000.0*nm)
+    iff = ba.InterferenceFunction1DLattice(100*nm, 0)
+    iff_pdf = ba.FTDecayFunction1DCauchy(1000000*nm)
     iff.setDecayFunction(iff_pdf)
 
     # Define particle layouts
     layout = ba.ParticleLayout()
-    layout.addParticle(particle, 1.0)
+    layout.addParticle(particle, 1)
     layout.setInterferenceFunction(iff)
     layout.setWeight(1)
     layout.setTotalParticleSurfaceDensity(0.01)
@@ -63,7 +64,7 @@ def get_simulation(sample):
     # define the beam with alpha_i varied between alpha_i_min and alpha_i_max
     alpha_i_axis = ba.FixedBinAxis("alpha_i", 200, alpha_i_min*deg,
                                    alpha_i_max*deg)
-    simulation.setBeamParameters(1.0*angstrom, alpha_i_axis, 0.0*deg)
+    simulation.setBeamParameters(1*angstrom, alpha_i_axis, 0)
     simulation.beam().setIntensity(1e9)
     simulation.setSample(sample)
     return simulation
@@ -73,4 +74,4 @@ if __name__ == '__main__':
     import ba_plot
     sample = get_sample()
     simulation = get_simulation(sample)
-    ba_plot.run_and_plot(simulation, intensity_min=1.0)
+    ba_plot.run_and_plot(simulation, intensity_min=1)

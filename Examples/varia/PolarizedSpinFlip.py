@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 An example of computing splin-flip reflectivity from
 a magnetized sample.
@@ -14,14 +15,15 @@ def get_sample():
     """
 
     # Define materials
-    material_Ambient = ba.MaterialBySLD("Ambient", 0.0, 0.0)
+    material_Ambient = ba.MaterialBySLD("Ambient", 0, 0)
     magnetic_field = kvector_t(50000000, 86602540.3784, 0)
-    material_Layer = ba.MaterialBySLD("Layer", 0.0001, 1e-08, magnetic_field)
+    material_Layer = ba.MaterialBySLD("Layer", 0.0001, 1e-08,
+                                      magnetic_field)
     material_Substrate = ba.MaterialBySLD("Substrate", 7e-05, 2e-06)
 
     # Define layers
     layer_1 = ba.Layer(material_Ambient)
-    layer_2 = ba.Layer(material_Layer, 10.0*nm)
+    layer_2 = ba.Layer(material_Layer, 10*nm)
     layer_3 = ba.Layer(material_Substrate)
 
     # Define sample
@@ -38,7 +40,7 @@ def get_simulation(sample, scan_size=500):
     Defines and returns a specular simulation.
     """
     simulation = ba.SpecularSimulation()
-    scan = ba.AngularSpecScan(1.54*angstrom, scan_size, 0.0*deg, 5.0*deg)
+    scan = ba.AngularSpecScan(1.54*angstrom, scan_size, 0, 5*deg)
     simulation.setScan(scan)
     simulation.setSample(sample)
     return simulation
@@ -54,7 +56,7 @@ def run_simulation(polarization=ba.kvector_t(0, 1, 0),
 
     # adding polarization and analyzer operator
     simulation.beam().setPolarization(polarization)
-    simulation.detector().setAnalyzerProperties(analyzer, 1.0, 0.5)
+    simulation.detector().setAnalyzerProperties(analyzer, 1, 0.5)
 
     simulation.runSimulation()
     return simulation.result()
@@ -78,11 +80,15 @@ def plot(data, labels):
 
 
 if __name__ == '__main__':
-    results_pp = run_simulation(ba.kvector_t(0, 1, 0), ba.kvector_t(0, 1, 0))
-    results_mm = run_simulation(ba.kvector_t(0, -1, 0), ba.kvector_t(0, -1, 0))
+    results_pp = run_simulation(ba.kvector_t(0, 1, 0),
+                                ba.kvector_t(0, 1, 0))
+    results_mm = run_simulation(ba.kvector_t(0, -1, 0),
+                                ba.kvector_t(0, -1, 0))
 
-    results_pm = run_simulation(ba.kvector_t(0, 1, 0), ba.kvector_t(0, -1, 0))
-    results_mp = run_simulation(ba.kvector_t(0, -1, 0), ba.kvector_t(0, 1, 0))
+    results_pm = run_simulation(ba.kvector_t(0, 1, 0),
+                                ba.kvector_t(0, -1, 0))
+    results_mp = run_simulation(ba.kvector_t(0, -1, 0),
+                                ba.kvector_t(0, 1, 0))
 
     plot([results_pp, results_mm, results_pm, results_mp],
          ["$++$", "$--$", "$+-$", "$-+$"])

@@ -12,7 +12,7 @@ results = []
 for i in range(n):
     omega = 45*i/(n - 1)
     title = r'$\omega=%d^\circ$' % omega
-    ff = ba.FormFactorPyramid(10*nm, 4.2*nm, 60.0*deg)
+    ff = ba.FormFactorPyramid(10*nm, 4.2*nm, 60*deg)
     trafo = ba.RotationZ(omega*deg)
     data = bp.run_simulation(det, ff, trafo)
     results.append(bp.Result(i, data, title))
