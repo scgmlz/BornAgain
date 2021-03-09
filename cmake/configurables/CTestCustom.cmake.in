@@ -1,3 +1,0 @@
-set(CTEST_CUSTOM_POST_TEST "echo For details, see the log files in Testing/Temporary/LastTest.log
-More info at http://bornagainproject.org/documentation/howto/troubleshooting,
-  section: Functional test (ctest) fails")
